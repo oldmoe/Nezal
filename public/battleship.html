@@ -1,7 +1,8 @@
 <html>
 	<head>
 		<title>Nezal, 7aytho masra3 al2abtal</title>
-		<style>
+    <script src='javascripts/battleship.js'></script>
+    <style>
 			body { background : #000; color : #fff; padding : 0px; font-family : verdana; margin:0px }
 			#header { background : #333; color : #fff ; padding : 4px; margin:0px;}
 			#header h4 {  margin: 4px; margin-right : 10px }
@@ -12,7 +13,7 @@
 			#footer { background : #333; color : #fff; padding : 4px } 			
 			#main .column {float:left;width:24%;padding:4px}
 			#main .column#game {width:50%;}
-			
+			canvas {color:#fff}
 		</style>
 	</head>
 	<body>
@@ -24,7 +25,10 @@
 				</div>				
 			</div>
 			<div class="column" id="game">
-				<div >qweqwewew</div>
+				<div>
+				  <h2>Battle Ship,</h2>
+				  <canvas id="gameCanvas" width="640" height="480"> </canvas>
+				</div>
 			</div>
 			<div class="column" id="status">
 				<div >qwewqe</div>			
