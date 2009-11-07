@@ -35,7 +35,10 @@
       this.originalPlace = {x: x, y: y, image: this.parent.context.getImageData(x, y, this.width * this.parent.pitch, this.height*this.parent.pitch)};
       this.parent.context.drawImage(this.image, this.x, this.y)
     }
-
+    
+    this.highlight = function(){
+      this.parent.context.fillRect(this.x, this.y, this.width*this.parent.pitch-1, this.height*this.parent.pitch);
+    }
         
     this.setDirection = function(direction){
       if(direction == 0 ){
@@ -47,8 +50,8 @@
       }
       this.direction = direction;
       this.image = new Image();
-      this.direction = ["", "-vert"]
-      this.image.src = "images/ship-" + parent.pitch * width + this.direction[direction]+ ".png"
+      this.imageDir = ["", "-vert"]
+      this.image.src = "images/ship-" + parent.pitch * width + this.imageDir[direction]+ ".png"
     }    
     
     this.setDirection(direction);
@@ -59,28 +62,39 @@
     this.xPos = x;
     this.yPos = y;
     this.parent = parent;
+    this.background = null;
     this.ships = []; 
+          
+    var that = this;
+    
+    this.saveBackground = function(x, y){
+      this.background = {x: x, y: y, image: this.parent.context.getImageData(x, y, that.width, that.height)}
+    }
     
     function init()
     {
       that.width = that.parent.pitch*3;
-      that.height = that.parent.pitch;
+      that.height = that.parent.pitch+10;
       that.ships[0] = new Ship(that.parent, that.xPos + that.width/10, that.yPos, 1, 0);
       that.ships[1] = new Ship(that.parent, that.xPos + that.width - that.width/10 - that.parent.pitch, that.yPos, 1, 1);
     }
-      
-    var that = this;
-    
+
     /*
      * Draw Vertical or horizontal direction option grid
      */
     this.draw = function(){
-      that.parent.context.fillStyle = "rgba(255, 255, 200, 0.4)";
-      that.parent.context.fillRect(that.xPos, that.yPos-5, that.width, that.height+10);
+      if(that.background == null)
+      {
+        that.saveBackground(that.xPos, that.yPos);
+      }
+      that.parent.context.clearRect(that.xPos, that.yPos-5, that.width, that.height);
+      that.parent.context.putImageData(that.background.image, that.xPos, that.yPos-5);
+      that.parent.context.fillStyle = "rgba(255, 255, 255, 0.4)";
+      that.parent.context.fillRect(that.xPos, that.yPos-5, that.width, that.height);
       that.ships[0].draw();
       that.ships[1].draw();
-    }
-    
+      that.ships[that.parent.shipDirection].highlight();
+    }    
     init();
   }
 
@@ -106,8 +120,6 @@
      */
     this.canvas.xPos = this.canvas.offsetLeft;
     this.canvas.yPos = this.canvas.offsetTop;
-  
-    this.directionGrid =  new DirectionGrid(this, gridXPos, gridYPos + that.pitch*(numOfColumns+1))
 
     this.ships = [];
     
@@ -116,9 +128,13 @@
      */
     this.init = function(){
       var pitch = this.pitch
+      
+      that.directionGrid =  new DirectionGrid(this, gridXPos, gridYPos + that.pitch*(numOfColumns+1))
       /* Load Background Image
        */
       that.seaImage.src = "images/sea.jpg";
+      /* Initialize and draw the directionGrid
+       */
       /* Initialize ships and set their location 
        * This location shall change when the player place them on the  board
        * Each element in the list has an X, Y, Width in number of cells to occupy
@@ -168,6 +184,9 @@
 
     this.shipSelected = function(i){
       this.selectedShip = this.ships[i]
+      this.selectedShip.highlight();
+      this.selectedShip.setDirection(this.shipDirection);
+
       var that = this
       this.canvas.onmousemove = function(event){
         // check if mouse is inside the grid
@@ -195,21 +214,30 @@
     this.placeShip = function(cursorX, cursorY){
       var column = Math.round(cursorX/that.pitch);
       var row = Math.floor((cursorY+that.pitch/2)/that.pitch);
-      for(var i=0; i< that.selectedShip.width; i++)
+      var size = that.selectedShip.width + that.selectedShip.height -1;
+      var increaseColumn = 1; 
+      var increaseRow = 0; 
+      if(that.selectedShip.direction){
+        increaseColumn = 0; 
+        increaseRow = 1; 
+      }
+      for(var i=0; i< size; i++)
       {
-        if(that.map[row][column+i] == null && column+i < numOfColumns)
+        if(column+i*increaseColumn < numOfColumns && 
+              row+i*increaseRow < numOfColumns && that.map[row+i*increaseRow][column+i*increaseColumn] == null )
         {
-           that.map[row][column+i] = that.selectedShip;
+           that.map[row+i*increaseRow][column+i*increaseColumn] = that.selectedShip;
         }else{
           while((i-=1)>-1)
           {
-            that.map[row][column-i] = null;
+            alert(i + ".." + (row+i*increaseRow) + ".." + (column-i*increaseColumn));
+            that.map[row+i*increaseRow][column-i*increaseColumn] = null;
           }
           return false
         }
       }
       that.selectedShip.y = gridYPos + row*that.pitch;
-      that.selectedShip.x = gridXPos + column*that.  pitch;
+      that.selectedShip.x = gridXPos + column*that.pitch;
       return true;
     }
         
@@ -231,20 +259,32 @@
     
     this.onClick  =  function (evt) {
       var pitch = that.pitch
+
+      evt.canvasX = evt.pageX-that.canvas.xPos;
+      evt.canvasY = evt.pageY-that.canvas.yPos;      
+      
       if(that.selectedShip === null){
         for(var i=0; i < that.ships.length; i++)
         {
             if ( evt.pageX-that.canvas.xPos  > that.ships[i].x  && evt.pageX-that.canvas.xPos < that.ships[i].x+that.ships[i].width*pitch && 
-                evt.pageY-that.canvas.yPos > that.ships[i].y && evt.pageY-that.canvas.yPos < that.ships[i].y+pitch ) {
-                that.context.fillStyle = "rgba(255, 255, 255, 0.4)";
-                that.context.fillRect(that.ships[i].x, that.ships[i].y, pitch*that.ships[i].width, pitch);
+                evt.pageY-that.canvas.yPos > that.ships[i].y && evt.pageY-that.canvas.yPos < that.ships[i].y+pitch*that.ships[i].height ) {
                 that.shipSelected(i);
               break;
             }
         }
+        if(evt.canvasX > that.directionGrid.ships[0].x && evt.canvasX < that.directionGrid.ships[0].x+that.pitch &&
+           evt.canvasY > that.directionGrid.ships[0].y && evt.canvasY < (that.directionGrid.ships[0].y + pitch) )
+        {
+          that.shipDirection = 0;
+          that.directionGrid.draw();
+        }else if(evt.canvasX > that.directionGrid.ships[1].x && evt.canvasX < that.directionGrid.ships[1].x+that.pitch &&
+           evt.canvasY > that.directionGrid.ships[1].y && evt.canvasY < (that.directionGrid.ships[1].y + pitch) )
+        {
+          that.shipDirection = 1;
+          that.directionGrid.draw();
+        }
+
       }else {
-        evt.canvasX = evt.pageX-that.canvas.xPos;
-        evt.canvasY = evt.pageY-that.canvas.yPos;      
         if(evt.canvasX > gridXPos && evt.canvasX < (gridXPos + numOfColumns*pitch) &&
            evt.canvasY > gridYPos && evt.canvasY < (gridYPos + numOfColumns*pitch) )
         {
