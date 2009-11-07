@@ -102,9 +102,7 @@ var AI = {
 
 var s = {width:4}
 var a = [s,s,s,s,s,s,s,s,s]
-
 AI.init(16, 16, a)
-
 for(var i = 0; i < AI.map.length; i++){
 	console.log(AI.map[i].collect(function(e, i){return e == null ? 0 : e}))
 }
