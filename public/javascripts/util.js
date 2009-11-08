@@ -25,11 +25,27 @@ Array.prototype.collect = function(collector){
 	return result
 }
 
+Array.prototype.inject = function(base, injector){
+  result = base;
+  this.each(function(element, index){result = injector(result, element)})
+  return result;
+}
+
 function Clone(){}
 
 Object.prototype.clone = function(){
+  var inheritance = true
+  if(arguments.length > 0 && this.init && this.init.constructor == Function){
+    inheritance = false;
+  }
 	Clone.prototype = this;
-	return new Clone();
+	var obj = new Clone();
+	if(!inheritance) obj.init.apply(obj, arguments)
+	return obj
+}
+
+Object.prototype.super = function(){
+  return this.__proto__.__proto__
 }
 
 Math.rand = function(number){
