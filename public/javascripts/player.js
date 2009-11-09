@@ -4,21 +4,15 @@ var Player = {
     this.map = Map.clone(x, y);
     this.enemyMap = Map.clone(x, y);
     this.ships = [ Ship.clone( 2 ), Ship.clone( 2 ), Ship.clone( 2 ), Ship.clone( 3 ), Ship.clone( 3 ), Ship.clone( 4 ) ]
+    //this.ships = [ Ship.clone( 2 ), Ship.clone( 1 ) ]
     this.hitPoints = this.ships.inject(0, function(total, ship){return total + ship.length});
+    this.placeShips();
+    this.map._draw();
     return this
   },
     
   play : function( ){
     console.log( "player played" )
-    var done = false
-    while(!done){
-      var x = Math.rand(this.enemyMap.length - 1)
-      var y = Math.rand(this.enemyMap[0].length - 1)
-      if(this.enemyMap[x][y] == null){        
-        this.enemyMap[x][y] = this.game.fireAt(x, y);
-        done = true
-      }
-    }
     return this;
   },
   
@@ -45,7 +39,8 @@ var ComputerPlayer = Player.clone();
 
 // given an array, extract consecutive spaces that are >= length
 // this is an O(n) operation
-ComputerPlayer.findSpaces = function(array, length){
+Player.findSpaces = function(array, length){
+//ComputerPlayer.findSpaces = function(array, length){
 	var spaces = []
 	var started = false;
 	array.each(function(e, i){
@@ -61,6 +56,22 @@ ComputerPlayer.findSpaces = function(array, length){
 	return spaces.select(function(space){return space[1] >= length})
 }
 
+ComputerPlayer.play = function( ){
+  console.log( "player played" )
+  var done = false
+  while(!done){
+    var x = Math.rand(this.enemyMap.length - 1)
+    var y = Math.rand(this.enemyMap[0].length - 1)
+    if(this.enemyMap[x][y] == null){        
+      this.enemyMap[x][y] = this.game.fireAt(x, y);
+      done = true
+    }
+  }
+  var me = this
+  window.setTimeout(function(){me.game.turn()}, 100);
+  return this;
+}
+
 
 // the real meat goes here, we determine the locations of the ships on the map using a simple algorithm
 // we first determine the ship orientation, either horizontal or vertical
@@ -71,7 +82,10 @@ ComputerPlayer.findSpaces = function(array, length){
 // wash, rinse, repeat
 // @todo : this method will loop forever if there are not enough spaces to be found.
 // @todo : can we opt for a layoutin randomization strategy? may be
-ComputerPlayer.placeShips = function(){
+
+Player.placeShips = function(){
+
+//ComputerPlayer.placeShips = function(){
 	for(var i = 0; i < this.ships.length; i++){
 		var orientation = Math.round(Math.random()) // 0 means horizontal, 1 means vertical
 		var length = this.ships[i].length
@@ -86,7 +100,6 @@ ComputerPlayer.placeShips = function(){
 				var localIndex = Math.rand(rows.length-1)
 				var rowIndex = rows[localIndex];
 				var row = this.map.collect(function(col){ return col[rowIndex] })
-        console.log("finding space in row : " + row );
 				spaces = this.findSpaces(row, length)
 				if(spaces.length > 0){
 					// we found enough space, pick one randomly
@@ -108,17 +121,16 @@ ComputerPlayer.placeShips = function(){
 				var localIndex = Math.rand(columns.length-1)
 				var columnIndex = columns[localIndex];
 				var column = this.map[columnIndex]
-        console.log("finding space in column : " + column + " with index = " + columnIndex + "and localIndex = " + localIndex );
 				spaces = this.findSpaces(column, length)
 				if(spaces.length > 0){
 					var space = spaces[Math.rand(spaces.length-1)]
-					var shipStart = space[0] + Math.rand(space[1] - length)
+					var shipStart = space[0] + Math.rand(space[1] - length);
 					for(var w = 0 ; w < length; w++){
-						this.map[columnIndex][shipStart+w] = i
+						this.map[columnIndex][shipStart+w] = i;
 					}
-					done = true
+					done = true;
 				}else{
-					columns.splice(localIndex, 1)
+					columns.splice(localIndex, 1);
 				}
 			}				
 		}
@@ -128,7 +140,7 @@ ComputerPlayer.placeShips = function(){
 ComputerPlayer.init = function(){
   this.super().init.apply(this, arguments)
   console.log("computer player initialized")
-  this.placeShips();
-  this.map._draw();
+  //this.placeShips();
+  //this.map._draw();
   return this;
 }

@@ -9,7 +9,6 @@ Map.init = function(x, y){
     }
     this.push(col);
   }
-  this._draw();
   return this; 
 }
 

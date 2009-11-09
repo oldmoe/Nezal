@@ -40,7 +40,7 @@ Object.prototype.clone = function(){
   }
 	Clone.prototype = this;
 	var obj = new Clone();
-	if(!inheritance) obj.init.apply(obj, arguments)
+	if(!inheritance) return obj.init.apply(obj, arguments)
 	return obj
 }
 
