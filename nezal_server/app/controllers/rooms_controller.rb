@@ -22,7 +22,8 @@ class RoomsController < ApplicationController
   def update
     @room = $data[:rooms][params[:id]]    
     @room[:users][user[:id]] = nil unless @room[:users][user[:id]]   
-    render :action => :show, :id => @room[:id] 
+    @user = user[:id];
+    render :layout => 'room', :action => :show, :id => @room[:id] 
   end
   
 end

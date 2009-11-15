@@ -28,10 +28,10 @@ function appendChatMsg(json)
     userSpan.innerHTML = json.user.id + ": "; 
     userSpan.setAttribute('class', 'chatUser');
   }
-  var span =  document.createElement('span');
+  var span =  document.createElement('pre');
   span = newMsg.appendChild(span);
   span.setAttribute('class', 'chatMsg');
-  span.innerHTML = json.data;
+  span.innerHTML = unescape(json.data);
   chatHistory.scrollTop = chatHistory.scrollHeight;
 }
 

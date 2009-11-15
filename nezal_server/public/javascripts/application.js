@@ -13,27 +13,32 @@ function submitOnEnter(submitter, event, url, callback)
   else 
     return true;
      
-  if (keycode == 13)
+  if (keycode == 13 && !event.shiftKey)
   {
-    var dataJson  = {"data":submitter.value}
-    window[callback](dataJson); 
-    submitter.value = "";
- 
-    new Ajax.Request(url, { 
-        method:'post', 
-        parameters: {data: dataJson["data"]},
-        onSuccess: function(transport, json){
-          //alert("Success! \n\n" + /*JSON.parse(response).data*/  json.id );
-          if(json.data != dataJson["data"])
-          {
-            window["eventError"]("Error");            
+    var data = submitter.value.replace(/^\s*/, "").replace(/\s*$/, "");
+    var dataJson  = {"data": escape(data)}
+    if( data.length >0 )
+    {
+      
+      window[callback](dataJson); 
+      submitter.value = "";
+   
+      new Ajax.Request(url, { 
+          method:'post', 
+          parameters: {data: dataJson["data"]},
+          onSuccess: function(transport, json){
+            //alert("Success! \n\n" + /*JSON.parse(response).data*/  json.id );
+            if(json.data != dataJson["data"])
+            {
+              window["eventError"]("Error");            
+            }
+          },
+          onFailure: function(){
+            window["eventError"]("Error");              
           }
-        },
-        onFailure: function(){
-          window["eventError"]("Error");              
-        }
-    });
-    return false;
+      });
+      return false;
+    }
   }
   else
     return true;

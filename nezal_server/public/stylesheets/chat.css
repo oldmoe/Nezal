@@ -28,6 +28,12 @@
 }
 .chatMsg {
   word-wrap : break-word;
+  display : inline;
+  background : none;
+  padding : 0px;
+  font-family : verdana;
+  font-size : 12px;
+
 }
 .chatUser {
   font-weight : bold;
