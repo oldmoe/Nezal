@@ -6,8 +6,8 @@ class LinkedHash < Hash
       v[:value] = value
     else
       v = {:value => value, :next => nil }
-      if self.last
-        self.last[:next] = v
+      if self.linked_values.last
+        self.linked_values.last[:next] = v
       end
     end
     self.store(key, v)
@@ -21,6 +21,10 @@ class LinkedHash < Hash
 
   def values
     self.collect{|k,v| v[:value]}
+  end
+  
+  def linked_values
+     self.collect{|k,v| v}
   end
   
 end

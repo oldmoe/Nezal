@@ -1,0 +1,40 @@
+<h1>Show Room</h1>
+
+<table>
+  <tr>
+    <td>Room id: </td>
+    <td> <%= @room[:id] %> </td>
+  </tr>
+<!-- 
+  <tr>
+    <td>Room Events: </td>
+    <% @room[:events].values.each do |event| %>
+        <td> <%= event[:id] %> </td>
+        <td> <%= event[:data] %> </td>
+    <% end %>
+  </tr>
+!-->  
+  <tr>
+    <td>Room Users: </td>
+    <% @room[:users].each_key do |user| %>
+        <td> <%= user %> </td>
+    <% end %>    
+  </tr>
+</table>
+
+<a href="/rooms">All rooms</a>
+
+<br/>
+<br/>
+<br/>
+
+<div id="chat">
+  <input id='userName' type="hidden" name="<%=@user%>" /> 
+  <div id="chatHistory" class="chatHistory">
+  </div>
+  <div id='errorMsg'>
+     &nbsp &nbsp
+  </div>
+  <textarea id="chatBox" onKeyPress="return submitOnEnter(this, event, '/rooms/<%=@room[:id]%>/events', 'appendChatMsg' )"></textarea>
+  
+</div>

@@ -1,0 +1,56 @@
+function eventError( error)
+{
+  document.getElementById('errorMsg').innerHTML = "Something went wrong while sending message"
+}
+
+
+function appendChatMsg(json)
+{
+  var chatHistory = document.getElementById('chatHistory');
+  var msgs = chatHistory.getElementsByTagName('div');
+  var newMsg;
+  if(!json.user)
+  { 
+    json.user = { id: document.getElementById('userName').name};
+  }
+  if ( msgs.length >0 && msgs.item(msgs.length-1).getElementsByTagName('span').item(0).innerHTML.split(":")[0] == json.user.id )
+  {
+    newMsg = msgs.item(msgs.length-1);
+    var chatMsgs = msgs.item(msgs.length-1).getElementsByTagName('span');
+    newline = document.createElement('br');
+    newMsg.appendChild(newline);
+  }else
+  {
+    newMsg = document.createElement('div');
+    newMsg = chatHistory.appendChild(newMsg);
+    var userSpan =  document.createElement('span');
+    userSpan = newMsg.appendChild(userSpan);
+    userSpan.innerHTML = json.user.id + ": "; 
+    userSpan.setAttribute('class', 'chatUser');
+  }
+  var span =  document.createElement('span');
+  span = newMsg.appendChild(span);
+  span.setAttribute('class', 'chatMsg');
+  span.innerHTML = json.data;
+  chatHistory.scrollTop = chatHistory.scrollHeight;
+}
+
+function updateChat(url)
+{
+  var url = url;
+  new Ajax.Request( url, { 
+    method:'get', 
+    onSuccess: function(transport, json){
+      //alert("Success! \n\n" + /*JSON.parse(response).data*/  json.id );
+    //      window[callback](json);
+      for(var i=0; i< json.length; i++)
+      {
+        appendChatMsg(json[i]);
+      }
+      window.setTimeout(window['updateChat'], 1000, url);
+    }
+  });
+
+}
+
+

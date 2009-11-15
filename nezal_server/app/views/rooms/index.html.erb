@@ -1,0 +1,21 @@
+<h1>Listing rooms</h1>
+<ul>
+<% @rooms.each_value do |room| %>
+    <li><%= link_to "room#{room[:id]}", "rooms/#{room[:id]}" %> |
+    <% unless room[:users].has_key? user[:id] %>
+      <form id="join_room" action="/rooms/<%=room[:id]%>" method="post" style="display:inline">
+        <input type="hidden" name="_method" value="put"/>
+        <a href="#" onclick="document.getElementById('join_room').submit(); return false;">Join</a>
+       </form> 
+    <% else %>
+      You are currently a member of this room
+    <% end %>
+    </li>
+<% end %>
+</ul>
+
+<form id="create_room" action="/rooms" method="post">
+  <a href="#" onclick="document.getElementById('create_room').submit(); return false;">Create Room</a>
+</form>
+
+<br />
