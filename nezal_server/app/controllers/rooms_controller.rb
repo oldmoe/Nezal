@@ -1,27 +1,27 @@
-class RoomsController < ApplicationController 
+class RoomsController < ApplicationController
       
   def index
-    @rooms = $data[:rooms]  
+    @rooms = Room.list
     @rooms
   end  
   
   def create
-    @rooms = $data[:rooms]  
-    @room = Room.create(user)
-    @rooms[@room[:id]] = @room
-    puts "====RoomController: Inside Create : Room is #{@room}"
+    @room = Room.create(user[:id])
+    @room[:users] = Room.users(@room[:id])
     redirect_to :action => :show, :id => @room[:id]
   end
   
   def show
-    @room = $data[:rooms][params[:id]];
+    @room = Room.get(params[:id]);
+    @room[:users] =  Room.users(@room[:id])
     @user = user[:id];
     render :layout => 'room'
   end
   
   def update
-    @room = $data[:rooms][params[:id]]    
-    @room[:users][user[:id]] = nil unless @room[:users][user[:id]]   
+    Room.update(params[:id], user[:id], nil)
+    @room = Room.get(params[:id])
+    @room[:users] =  Room.users(@room[:id]) 
     @user = user[:id];
     render :layout => 'room', :action => :show, :id => @room[:id] 
   end

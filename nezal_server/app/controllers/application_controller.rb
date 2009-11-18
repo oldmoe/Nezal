@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
 
   if($data.nil?)
     puts "Instantiating Data"      
-    $data = { :rooms => {}, :users => {} }    
+    $data = { :users => {} }    
   end
 
   before_filter { |c|

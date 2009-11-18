@@ -5,15 +5,7 @@
     <td>Room id: </td>
     <td> <%= @room[:id] %> </td>
   </tr>
-<!-- 
-  <tr>
-    <td>Room Events: </td>
-    <% @room[:events].values.each do |event| %>
-        <td> <%= event[:id] %> </td>
-        <td> <%= event[:data] %> </td>
-    <% end %>
-  </tr>
-!-->  
+
   <tr>
     <td>Room Users: </td>
     <% @room[:users].each_key do |user| %>

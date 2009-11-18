@@ -11,9 +11,9 @@ function appendChatMsg(json)
   var newMsg;
   if(!json.user)
   { 
-    json.user = { id: document.getElementById('userName').name};
+    json.user =document.getElementById('userName').name;
   }
-  if ( msgs.length >0 && msgs.item(msgs.length-1).getElementsByTagName('span').item(0).innerHTML.split(":")[0] == json.user.id )
+  if ( msgs.length >0 && msgs.item(msgs.length-1).getElementsByTagName('span').item(0).innerHTML.split(":")[0] == json.user )
   {
     newMsg = msgs.item(msgs.length-1);
     var chatMsgs = msgs.item(msgs.length-1).getElementsByTagName('span');
@@ -25,7 +25,7 @@ function appendChatMsg(json)
     newMsg = chatHistory.appendChild(newMsg);
     var userSpan =  document.createElement('span');
     userSpan = newMsg.appendChild(userSpan);
-    userSpan.innerHTML = json.user.id + ": "; 
+    userSpan.innerHTML = json.user + ": "; 
     userSpan.setAttribute('class', 'chatUser');
   }
   var span =  document.createElement('pre');
