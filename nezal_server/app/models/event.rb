@@ -42,7 +42,7 @@ class Event
       end
     rescue Exception => e
       #TODO There should be some error handling in here we will see
-      RAILS_DEFAULT_LOGGER.debug ">>>>>>>>>>> Exception in Event.after #{e} "
+      RAILS_DEFAULT_LOGGER.debug ">>>>>>>>>>> Exception in Event.after #{e}"
       cursor.close
     end
     cursor.close

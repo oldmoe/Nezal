@@ -1,17 +1,17 @@
 #chat{
-  width : 320px;
+  width :95%;
   height : 350px;
   border : 1px solid #bbbbbb;
 }
 #chatHistory{
-  width : 300px;
+  width : 90%;
   height : 200px;
   overflow-y : auto; 
   margin : auto;
   margin-bottom : 10px;
 }
 #chatBox{
-  width : 294px;
+  width : 90%;
   height : 130px;
   overflow-y :  auto;
   margin : auto;

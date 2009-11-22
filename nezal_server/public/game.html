@@ -1,0 +1,61 @@
+<html>
+  <head>
+    <script src="/javascripts/prototype.js"></script>
+    <script src="/javascripts/effects.js"></script>
+    <script src="/javascripts/events.js"></script>
+    <script src="/javascripts/application.js"></script>
+    <script src="/javascripts/battleship/util.js"></script>
+    <script src="/javascripts/battleship/ship.js"></script>
+    <script src="/javascripts/battleship/map.js"></script>
+    <script src="/javascripts/battleship/player.js"></script>
+    <script src="/javascripts/battleship/game.js"></script>
+    <script src="/javascripts/battleship/aspect.js"></script>
+    <script src="/javascripts/battleship/dhtml.js"></script>
+    <script src="/javascripts/battleship/SimpleBattleship.js"></script>
+    <style>
+      .grid {
+        border :1px solid blue;
+        background : white;
+        padding:0px;
+        margin:0px;
+        margin-right:8px;
+        margin-bottom:8px;
+        float: left
+      }
+      .grid td {
+        border :1px solid white;
+        background : blue;
+        margin:0px;
+        padding :0px;
+        width : 32px;
+        height : 34px;
+      }
+      
+      .grid td.ship{
+        background : orange;
+      }
+      .grid td.hit{
+        background : red;  
+      }
+      .grid td.miss{
+        background : navy;
+      }
+    </style>
+  </head>
+  <body>
+    <div id='game'>
+    </div>
+  </body>
+  <script>
+    var player1 = Player.clone(8, 8)
+    var player2 = ComputerPlayer.clone(8, 8)
+    //var game = DHTMLBattleship.clone([player1, player2]);
+    //var game = Battleship.clone([player1, player2]);
+    var game = SimpleBattleship.clone([player1, player2]);
+//    var game = ConsoleBattleship.clone([player1, player2]);
+    game.start();
+    //while(!game.finished){
+    game.turn();
+    //}
+  </script>
+</html>

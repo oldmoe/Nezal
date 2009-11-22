@@ -4,7 +4,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-  <title>Nezal, bla bla bla bla bla blaaaaaaaaaaaa</title>
+  <title>Nezal!, bla bla bla bla bla blaaaaaaaaaaaas</title>
+  <script>
+    alert(window)
+    if(!console){
+      window.console = { 
+        log : function(){} 
+      }
+    }
+  </script>
   <script src="/javascripts/prototype.js"></script>
   <script src="/javascripts/effects.js"></script>
   <script src="/javascripts/events.js"></script>
@@ -17,13 +25,30 @@
       window.setTimeout(window['updateChat'], 1000, '/rooms/<%=@room[:id]%>/events')
     }
   </script>
+  <style>
+  	body { background : #000; color : #fff; padding : 0px; font-family : verdana; margin:0px }
+		#header { background : #333; color : #fff ; padding : 4px; margin:0px;}
+		#header h4 {  margin: 4px; margin-right : 10px }
+		
+		#main { min-height:450px }
+		#main a {color:white; text-decoration:none}
+		#main a:hover {background:white; color:black}
+		#footer { background : #333; color : #fff; padding : 4px } 			
+		#main .column {float:left;width:23%;padding:4px}
+		#main .column#game {width:52%;}
+		canvas {color:#fff;}
+	</style>
+  	
 </head>
 
 <body onload="activateChat()">
 
-<p style="color: green"><%= flash[:notice] %></p>
-
-<%= yield %>
-
+		<div id="header"><h4>Nezal : 7aytho Masra3 Al-2abtal</h4></div>
+		<div id="main">
+      <%= yield %>
+		</div>
+		<div id="footer">About | Jobs | Other</div>
+		
 </body>
+<%= render :partial => 'game' %>
 </html>
