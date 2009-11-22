@@ -1,31 +1,12 @@
-require 'bdb'
-require 'yaml'
-
-# There should be some initialization for the environment. Not quite sure to put it
-# Perhaps a separate file for the database initialization  
-if($load.nil?)
-  $load = "test"
-  $config = YAML.load_file(Dir.pwd + "/config/bdb.yml")  #rescue nil || {}
-  $dbs = { :rooms => nil, :room_users => nil, :events => nil }
-  $env = Bdb::Env.new(0)
-  $env_flags =  Bdb::DB_CREATE |    # Create the environment if it does not already exist.
-    Bdb::DB_INIT_TXN  | # Initialize transactions
-    Bdb::DB_INIT_MPOOL| # Initialize the in-memory cache.
-    Bdb::DB_INIT_LOCK   # Initialize locking.
-  $env.open(File.join($config["store_path"], $config["env_name"]), $env_flags, 0);
-  $dbs[:rooms] = $env.db
-  $dbs[:rooms].open(nil, self.class.name, nil, Bdb::Db::BTREE, Bdb::DB_CREATE, 0)
-  $dbs[:room_users] = $env.db
-  $dbs[:room_users].open(nil, 'Room_User', nil, Bdb::Db::BTREE, Bdb::DB_CREATE , 0)
-  $dbs[:events] = $env.db
-  $dbs[:events].open(nil, 'Events', nil, Bdb::Db::BTREE, Bdb::DB_CREATE, 0)
-  Kernel.at_exit {
-    $dbs.each_value do |value|
-      value.close(0)
-    end
-    $env.close 
-  }
-end
+# This class currently responsible for persistance of room db, room_users db
+# room db holds the room data 
+# room_users db holds the latest event seen by user in this room. It can also 
+# be used to get all users in a room
+#
+# Currently key , value pairs of the tables are as follows :
+#
+#   Room Data  : room_id ,  { :id -> id }
+#   Room_users : room_id + SEPARATOR + user_id , event_id
 
 class Room 
   
@@ -35,26 +16,33 @@ class Room
     room =  { :id => id }
     $dbs[:rooms].put(nil, room[:id], Marshal.dump(room), 0)
     #This should add a user to the room_users
-    self.update(room[:id], user_id, nil)
+    self.update(room[:id], user_id)
     room
   end
   
-  def self.update(room_id, user_id, event_id)    
-    $dbs[:room_users].put(nil, room_id+"-"+user_id, Marshal.dump( { :event => event_id }), 0)
+  def self.update(room_id, user_id, event_id = "#{room_id}-") 
+    $dbs[:room_users].put(nil, room_id+"-"+user_id, event_id, 0)
   end
   
   def self.get(id)
     room = (record=$dbs[:rooms].get(nil, id, nil, 0)).nil?  ? nil :  Marshal.load(record)
   end
 
+  def self.user_events(room_id, user_id)
+    event_id = $dbs[:room_users].get(nil, "#{room_id}-#{user_id}", nil, 0)
+    events = Event.after(room_id, user_id, event_id)
+    self.update(room_id, user_id, events.last[:id]) unless events.empty? 
+    events    
+  end
+
   def self.users(room_id)
     users = {}
     begin
       cursor = $dbs[:room_users].cursor(nil, 0)
-      result =  cursor.get(room_id+"-", nil, Bdb::DB_SET_RANGE)
+      result =  cursor.get("#{room_id}-", nil, Bdb::DB_SET_RANGE)
       while result
         user_id = result[0].split("-")[1]
-        user = Marshal.load(result[1])
+        user = result[1]
         if result[0].index(room_id)==0
           users[user_id] = user
           result = cursor.get(result[0], nil, Bdb::DB_NEXT)
@@ -64,6 +52,7 @@ class Room
       end
     rescue 
       #TODO There should be some error handling in here we will see
+      RAILS_DEFAULT_LOGGER.debug ">>>>>>>>>>>>>> Exception in Room.User: #{e}"
       cursor.close
     end
     cursor.close

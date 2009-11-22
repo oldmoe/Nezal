@@ -47,7 +47,7 @@ function updateChat(url)
       {
         appendChatMsg(json[i]);
       }
-      window.setTimeout(window['updateChat'], 1000, url);
+      window.setTimeout(window['updateChat'], 5000, url);
     }
   });
 

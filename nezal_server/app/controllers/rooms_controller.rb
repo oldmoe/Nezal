@@ -12,17 +12,17 @@ class RoomsController < ApplicationController
   end
   
   def show
-    @room = Room.get(params[:id]);
+    @room = Room.get(params[:id])
     @room[:users] =  Room.users(@room[:id])
-    @user = user[:id];
+    @user = user[:id]
     render :layout => 'room'
   end
   
   def update
-    Room.update(params[:id], user[:id], nil)
+    Room.update(params[:id], user[:id])
     @room = Room.get(params[:id])
     @room[:users] =  Room.users(@room[:id]) 
-    @user = user[:id];
+    @user = user[:id]
     render :layout => 'room', :action => :show, :id => @room[:id] 
   end
   
