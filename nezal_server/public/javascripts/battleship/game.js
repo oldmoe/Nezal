@@ -1,4 +1,4 @@
-var Game = Object.new({
+var Game = Object.protoClone({
 
   init : function(players){
     this.players = players;

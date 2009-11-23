@@ -48,7 +48,7 @@ var SimpleBattleship  = {
                   player.hasTurn = false;
                   game.fireAt(event.target.getAttribute('_x'), event.target.getAttribute('_y'));
                   event.target.onclick = null;
-                  window.setTimeout(function(){ game.turn() }, 10)
+                  window.setTimeout(function(){ game.turn() }, 500)
                 }
               }              
           }
@@ -68,6 +68,12 @@ var SimpleBattleship  = {
       }
       return result;
     });
+    
+    Aspect.after(game, 'finish', function(){
+      console.log("Player: " + this.currentPlayer  +  "  Won" );
+    });
+    
+    
                 
     return game;   
 

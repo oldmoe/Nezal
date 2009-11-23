@@ -1,9 +1,8 @@
-var Player = Object.new({
+var Player = Object.protoClone({
   init : function( x, y ){
     console.log( "player initialized" )
-    this.map = Map.cloneProto(x, y);
-    console.log(this.map)
-    this.map._draw()
+    this.battleMap = Map.cloneProto(x, y);
+    this.battleMap._draw()
     this.enemyMap = Map.cloneProto(x, y);
     this.ships = [ Ship.cloneProto( 2 ), Ship.cloneProto( 2 ), Ship.cloneProto( 2 ), Ship.cloneProto( 3 ), Ship.cloneProto( 3 ), Ship.cloneProto( 4 ) ]
     this.hitPoints = this.ships.inject(0, function(total, ship){return total + ship.length});
@@ -24,7 +23,7 @@ var Player = Object.new({
 
   hitAt : function(x, y){
     console.log( "Player Got hit @ " + x + "," + y );
-    if(this.map[x][y] != null){
+    if(this.battleMap[x][y] != null){
       this.hitPoints--;
       console.log("hit, hit points now: " + this.hitPoints)
       return 1;
@@ -41,6 +40,7 @@ var ComputerPlayer = Player.cloneProto();
 // this is an O(n) operation
 Player.findSpaces = function(array, length){
 //ComputerPlayer.findSpaces = function(array, length){
+  console.log( "Placing ships" )
 	var spaces = []
 	var started = false;
 	array.each(function(e, i){
@@ -87,9 +87,8 @@ Player.placeShips = function(){
 	for(var i = 0; i < this.ships.length; i++){
 		var orientation = Math.round(Math.random()) // 0 means horizontal, 1 means vertical
 		var length = this.ships[i].length
-		var rows = this.map.collect(function(e, i){ return i})
-		console.log(this.map)
-		var columns = this.map[0].collect(function(e, i){ return i}) 
+		var rows = this.battleMap.collect(function(e, i){ return i})
+		var columns = this.battleMap[0].collect(function(e, i){ return i}) 
 		var done = false
 		if(orientation == 0){ // horizontal
 			// select one row randomly
@@ -98,7 +97,7 @@ Player.placeShips = function(){
 			while(!done && rows.length > 0){
 				var localIndex = Math.rand(rows.length-1)
 				var rowIndex = rows[localIndex];
-				var row = this.map.collect(function(col){ return col[rowIndex] })
+				var row = this.battleMap.collect(function(col){ return col[rowIndex] })
 				spaces = this.findSpaces(row, length)
 				if(spaces.length > 0){
 					// we found enough space, pick one randomly
@@ -107,7 +106,7 @@ Player.placeShips = function(){
 					var shipStart = space[0] + Math.rand(space[1] - length)
 					// actually add the ship's data to the location
 					for(var w = 0 ; w < length; w++){
-						this.map[shipStart+w][rowIndex] = i
+						this.battleMap[shipStart+w][rowIndex] = i
 					}
 					done = true
 				}else{
@@ -119,13 +118,13 @@ Player.placeShips = function(){
 			while(!done && columns.length > 0){
 				var localIndex = Math.rand(columns.length-1)
 				var columnIndex = columns[localIndex];
-				var column = this.map[columnIndex]
+				var column = this.battleMap[columnIndex]
 				spaces = this.findSpaces(column, length)
 				if(spaces.length > 0){
 					var space = spaces[Math.rand(spaces.length-1)]
 					var shipStart = space[0] + Math.rand(space[1] - length);
 					for(var w = 0 ; w < length; w++){
-						this.map[columnIndex][shipStart+w] = i;
+						this.battleMap[columnIndex][shipStart+w] = i;
 					}
 					done = true;
 				}else{

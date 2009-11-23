@@ -1,9 +1,6 @@
-console.log("inside map.js")
-
-var Map = Object.new([])
+var Map = Object.protoClone([])
 
 Map.init = function(x, y){
-  console.log("map initialized with : "+x+", "+y)
   for(var i = 0; i < x; i++){
     var col = []
     for(var j = 0; j < y; j++){ 
@@ -11,10 +8,12 @@ Map.init = function(x, y){
     }
     this.push(col);
   }
+  console.log("map initialized with .... : "+x+", "+y)
   return this; 
 }
 
 Map._draw = function(){
+  console.log("map draw with")
   for(var y = 0; y < this[0].length; y++){
     var row = [];
     for(var x = 0; x < this.length; x++){
@@ -22,5 +21,6 @@ Map._draw = function(){
     }
     console.log(row)
   } 
+  
 }
 

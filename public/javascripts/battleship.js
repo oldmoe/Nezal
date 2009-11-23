@@ -9,6 +9,7 @@
   }
     
   function Ship(parent, x, y, width, direction){
+  
     this.parent = parent
     this.x = x
     this.y = y
@@ -58,7 +59,12 @@
         
   }
   
+  /*
+   * This object is resposible for drawing the grid displaying the options
+   * for the direction of the ship (horizontal, vertical)
+   */
   function DirectionGrid(parent, x, y){
+  
     this.xPos = x;
     this.yPos = y;
     this.parent = parent;
@@ -79,8 +85,14 @@
       that.ships[1] = new Ship(that.parent, that.xPos + that.width - that.width/10 - that.parent.pitch, that.yPos, 1, 1);
     }
 
+    this.highlight = function() {
+      that.parent.context.fillStyle = "rgba(255, 255, 255, 0.4)";
+      that.parent.context.fillRect(that.xPos, that.yPos-5, that.width, that.height);
+    }
+    
     /*
-     * Draw Vertical or horizontal direction option grid
+     * Draw Vertical or horizontal direction option grid and highlight 
+     * the selected option
      */
     this.draw = function(){
       if(that.background == null)
@@ -89,13 +101,19 @@
       }
       that.parent.context.clearRect(that.xPos, that.yPos-5, that.width, that.height);
       that.parent.context.putImageData(that.background.image, that.xPos, that.yPos-5);
-      that.parent.context.fillStyle = "rgba(255, 255, 255, 0.4)";
-      that.parent.context.fillRect(that.xPos, that.yPos-5, that.width, that.height);
+      that.highlight();
       that.ships[0].draw();
       that.ships[1].draw();
       that.ships[that.parent.shipDirection].highlight();
     }    
+    
     init();
+    
+  }
+  
+  function Grid()
+  {
+    
   }
 
   function Battleship()
@@ -128,13 +146,13 @@
      */
     this.init = function(){
       var pitch = this.pitch
-      
+      /* Initialize and draw the directionGrid
+       */
       that.directionGrid =  new DirectionGrid(this, gridXPos, gridYPos + that.pitch*(numOfColumns+1))
       /* Load Background Image
        */
       that.seaImage.src = "images/sea.jpg";
-      /* Initialize and draw the directionGrid
-       */
+
       /* Initialize ships and set their location 
        * This location shall change when the player place them on the  board
        * Each element in the list has an X, Y, Width in number of cells to occupy
@@ -182,6 +200,21 @@
       }
     }
 
+    /*
+     * This method checks if the user is trying to place a ship on the grid
+     * If yes, then highlight the positions to be occupied, were the user to 
+     * click to place the ship
+     */
+    this.highlightGrid = function(cursorX, cursorY)
+    {
+      if(that.selectedShip != null && cursorX > gridXPos && cursorX < (gridXPos + numOfColumns*that.pitch) &&
+           cursorY > gridYPos && cursorY < (gridYPos + numOfColumns*that.pitch) ) {
+        var column = Math.round((cursorX-gridXPos)/that.pitch);
+        var row = Math.floor((cursorY-gridYPos+that.pitch/2)/that.pitch);
+        that.context.fillRect(column*that.pitch+gridXPos, row*that.pitch+gridYPos, that.selectedShip.width*that.pitch, that.selectedShip.height*that.pitch);
+      }
+    }
+
     this.shipSelected = function(i){
       this.selectedShip = this.ships[i]
       this.selectedShip.highlight();
@@ -199,12 +232,10 @@
           that.selectedShip.x = event.pageX - that.canvas.xPos
           that.selectedShip.y = event.pageY - that.canvas.yPos
           that.selectedShip.drawMove()
+          
         }
+        that.highlightGrid(event.pageX-that.canvas.xPos, event.pageY-that.canvas.yPos);
       }
-    }
-    
-    this.directionSelected = function(){
-      
     }
     
     /* This method checks that the user has clicked to place
@@ -230,7 +261,6 @@
         }else{
           while((i-=1)>-1)
           {
-            alert(i + ".." + (row+i*increaseRow) + ".." + (column-i*increaseColumn));
             that.map[row+i*increaseRow][column-i*increaseColumn] = null;
           }
           return false
@@ -293,7 +323,6 @@
             that.selectedShip.drawMove();
             that.selectedShip.draw();
             that.selectedShip = null;
-            
           }
         }
       }

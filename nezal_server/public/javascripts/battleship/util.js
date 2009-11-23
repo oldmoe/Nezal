@@ -35,7 +35,7 @@ Array.prototype.inject = function(base, injector){
 
 function Clone(){}
 
-Object.new = function(object){
+Object.protoClone = function(object){
   object.cloneProto = function(){
     var inheritance = true
     if(arguments.length > 0 && this.init && this.init.constructor == Function){

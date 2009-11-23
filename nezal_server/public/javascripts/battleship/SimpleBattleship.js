@@ -1,4 +1,4 @@
-var SimpleBattleship  = Object.new({
+var SimpleBattleship  = Object.protoClone({
 
   init : function(players){
 
@@ -16,7 +16,7 @@ var SimpleBattleship  = Object.new({
        */ 
       
       var div = document.getElementById('game'); 
-      var maps = [this.players[0].map, this.players[0].enemyMap];
+      var maps = [this.players[0].battleMap, this.players[0].enemyMap];
       var tables = [];
       for(var i=0; i< maps.length; i++) 
       {

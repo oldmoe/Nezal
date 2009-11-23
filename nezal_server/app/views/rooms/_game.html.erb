@@ -36,11 +36,11 @@
       }
     </style>
     <script>
-      var player1 = Player.clone(8, 8)
-      var player2 = ComputerPlayer.clone(8, 8)
+      var player1 = Player.cloneProto(8, 8)
+      var player2 = ComputerPlayer.cloneProto(8, 8)
       //var game = DHTMLBattleship.clone([player1, player2]);
       //var game = Battleship.clone([player1, player2]);
-      var game = SimpleBattleship.clone([player1, player2]);
+      var game = SimpleBattleship.cloneProto([player1, player2]);
   //    var game = ConsoleBattleship.clone([player1, player2]);
       game.start();
       //while(!game.finished){
