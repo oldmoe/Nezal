@@ -1,4 +1,4 @@
-var SimpleBattleship  = Object.new({
+var SimpleBattleship  = Object.cloneProto({
 
   init : function(players){
 

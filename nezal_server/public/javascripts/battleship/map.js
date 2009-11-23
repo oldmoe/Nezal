@@ -1,6 +1,6 @@
 console.log("inside map.js")
 
-var Map = Object.new([])
+var Map = Object.cloneProto([])
 
 Map.init = function(x, y){
   console.log("map initialized with : "+x+", "+y)

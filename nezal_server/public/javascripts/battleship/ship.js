@@ -1,4 +1,4 @@
-var Ship = Object.new({
+var Ship = Object.cloneProto({
   
   HORIZONTAL : 0,
   VERTICAL : 1,
