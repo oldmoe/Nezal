@@ -37,20 +37,15 @@ function appendChatMsg(json)
 
 function updateChat(url)
 {
-  var url = url;
   new Ajax.Request( url, { 
     method:'get', 
     onSuccess: function(transport, json){
-      //alert("Success! \n\n" + /*JSON.parse(response).data*/  json.id );
-    //      window[callback](json);
-      for(var i=0; i< json.length; i++)
-      {
+      for(var i=0; i< json.length; i++){
         appendChatMsg(json[i]);
       }
       window.setTimeout(window['updateChat'], 5000, url);
     }
   });
-
 }
 
 

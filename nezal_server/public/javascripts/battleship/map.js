@@ -1,4 +1,4 @@
-var Map = Object.protoClone([])
+var Map = Object.cloneProto([])
 
 Map.init = function(x, y){
   for(var i = 0; i < x; i++){

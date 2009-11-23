@@ -1,4 +1,4 @@
-var Player = Object.protoClone({
+var Player = Object.cloneProto({
   init : function( x, y ){
     console.log( "player initialized" )
     this.battleMap = Map.cloneProto(x, y);

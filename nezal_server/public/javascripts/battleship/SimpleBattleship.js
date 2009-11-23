@@ -1,4 +1,8 @@
+<<<<<<< HEAD:nezal_server/public/javascripts/battleship/SimpleBattleship.js
 var SimpleBattleship  = Object.protoClone({
+=======
+var SimpleBattleship  = Object.cloneProto({
+>>>>>>> 37c4875d37b0ed1fb3775e8dd35803c1ebbd6a01:nezal_server/public/javascripts/battleship/SimpleBattleship.js
 
   init : function(players){
 
