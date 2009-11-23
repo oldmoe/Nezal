@@ -1,8 +1,8 @@
-var SimpleBattleship  = {
+var SimpleBattleship  = Object.new({
 
   init : function(players){
 
-    var game = Battleship.clone(players);   
+    var game = Battleship.cloneProto(players);   
     
     var player = game.players[0];
     player.hasTurn = false
@@ -70,6 +70,7 @@ var SimpleBattleship  = {
     });
     
     Aspect.after(game, 'finish', function(){
+      alert(this.currentPlayer == 0 ? "You Won" : "You Lost! ya lost!")
       console.log("Player: " + this.currentPlayer  +  "  Won" );
     });
     
@@ -79,4 +80,4 @@ var SimpleBattleship  = {
 
   }
 
-}
+})

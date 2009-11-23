@@ -1,4 +1,4 @@
-var Ship = {
+var Ship = Object.new({
   
   HORIZONTAL : 0,
   VERTICAL : 1,
@@ -8,4 +8,4 @@ var Ship = {
     this.orientation = Ship.HORIZONTAL; // 0 = horizontal, 1 = vertical
     return this;
   }
-} 
+}) 

@@ -1,4 +1,4 @@
-var Game = {
+var Game = Object.new({
 
   init : function(players){
     this.players = players;
@@ -34,9 +34,9 @@ var Game = {
     this.finished = true;
   }   
   
-}
+})
 
-var Battleship = Game.clone();
+var Battleship = Game.cloneProto();
 
 Battleship.fireAt = function(x, y){
   var targetPlayer = this.players[(this.currentPlayer + 1) % this.players.length]

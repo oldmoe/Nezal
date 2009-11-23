@@ -2,7 +2,7 @@ var ConsoleBattleship = {
 
   init : function(players){
 
-    var game = Battleship.clone(players);   
+    var game = Battleship.cloneProto(players);   
     
     Aspect.before(game, "start", function(){
       console.log("game started");

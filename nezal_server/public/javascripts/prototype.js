@@ -1229,7 +1229,6 @@ Ajax.Request = Class.create(Ajax.Base, {
 
       this.transport.onreadystatechange = this.onStateChange.bind(this);
       this.setRequestHeaders();
-
       this.body = this.method == 'post' ? (this.options.postBody || params) : null;
       this.transport.send(this.body);
 
@@ -1255,7 +1254,6 @@ Ajax.Request = Class.create(Ajax.Base, {
       'X-Prototype-Version': Prototype.Version,
       'Accept': 'text/javascript, text/html, application/xml, text/xml, */*'
     };
-
     if (this.method == 'post') {
       headers['Content-type'] = this.options.contentType +
         (this.options.encoding ? '; charset=' + this.options.encoding : '');
@@ -1280,8 +1278,9 @@ Ajax.Request = Class.create(Ajax.Base, {
         $H(extras).each(function(pair) { headers[pair.key] = pair.value });
     }
 
-    for (var name in headers)
+   for (var name in headers){
       this.transport.setRequestHeader(name, headers[name]);
+   }   
   },
 
   success: function() {

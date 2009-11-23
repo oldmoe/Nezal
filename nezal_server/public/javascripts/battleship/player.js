@@ -1,11 +1,11 @@
-var Player = {
+var Player = Object.new({
   init : function( x, y ){
     console.log( "player initialized" )
-    this.map = Map.clone(x, y);
+    this.map = Map.cloneProto(x, y);
     console.log(this.map)
     this.map._draw()
-    this.enemyMap = Map.clone(x, y);
-    this.ships = [ Ship.clone( 2 ), Ship.clone( 2 ), Ship.clone( 2 ), Ship.clone( 3 ), Ship.clone( 3 ), Ship.clone( 4 ) ]
+    this.enemyMap = Map.cloneProto(x, y);
+    this.ships = [ Ship.cloneProto( 2 ), Ship.cloneProto( 2 ), Ship.cloneProto( 2 ), Ship.cloneProto( 3 ), Ship.cloneProto( 3 ), Ship.cloneProto( 4 ) ]
     this.hitPoints = this.ships.inject(0, function(total, ship){return total + ship.length});
     this.placeShips();
     return this
@@ -33,9 +33,9 @@ var Player = {
     return 0;
   }
   
-}
+})
 
-var ComputerPlayer = Player.clone();
+var ComputerPlayer = Player.cloneProto();
 
 // given an array, extract consecutive spaces that are >= length
 // this is an O(n) operation

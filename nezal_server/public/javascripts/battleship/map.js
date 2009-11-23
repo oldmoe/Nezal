@@ -1,6 +1,6 @@
 console.log("inside map.js")
 
-var Map = []
+var Map = Object.new([])
 
 Map.init = function(x, y){
   console.log("map initialized with : "+x+", "+y)
@@ -24,5 +24,3 @@ Map._draw = function(){
   } 
 }
 
-var m = Map.clone(8, 8)
-m._draw()

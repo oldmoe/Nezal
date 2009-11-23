@@ -4,26 +4,21 @@
 function submitOnEnter(submitter, event, url, callback)
 {
   var keycode;
-  var url = url;
-  
   if (window.event) 
     keycode = window.event.keyCode;
   else if (event) 
     keycode = event.which;
   else 
     return true;
-     
   if (keycode == 13 && !event.shiftKey)
   {
     var data = submitter.value.replace(/^\s*/, "").replace(/\s*$/, "");
     var dataJson  = {"data": escape(data)}
     if( data.length >0 )
     {
-      
       window[callback](dataJson); 
       submitter.value = "";
-   
-      new Ajax.Request(url, { 
+      req = new Ajax.Request(url, { 
           method:'post', 
           parameters: {data: dataJson["data"]},
           onSuccess: function(transport, json){
@@ -41,7 +36,6 @@ function submitOnEnter(submitter, event, url, callback)
     }
   }
   else
-    return true;
-    
+    return true;    
 }
 

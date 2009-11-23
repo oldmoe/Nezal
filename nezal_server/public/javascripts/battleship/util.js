@@ -1,3 +1,4 @@
+/*
 Array.prototype.each = function(visitor){
 	for(var i = 0; i < this.length; i++){visitor(this[i], i)}
 	return this
@@ -30,10 +31,28 @@ Array.prototype.inject = function(base, injector){
   this.each(function(element, index){result = injector(result, element)})
   return result;
 }
+*/
 
 function Clone(){}
 
-Object.prototype.clone = function(){
+Object.new = function(object){
+  object.cloneProto = function(){
+    var inheritance = true
+    if(arguments.length > 0 && this.init && this.init.constructor == Function){
+      inheritance = false;
+    }
+	  Clone.prototype = this;
+	  var obj = new Clone();
+	  if(!inheritance) return obj.init.apply(obj, arguments)
+	  return obj
+  }
+  object.super = function(){
+    return this.__proto__.__proto__
+  }
+  return object;
+}
+/*
+Object.prototype.cloneProto = function(){
   var inheritance = true
   if(arguments.length > 0 && this.init && this.init.constructor == Function){
     inheritance = false;
@@ -44,12 +63,12 @@ Object.prototype.clone = function(){
 	return obj
 }
 
-Array.prototype.clone = Object.prototype.clone
+//Array.prototype.clone = Object.prototype.clone
 
 Object.prototype.super = function(){
   return this.__proto__.__proto__
 }
-
+*/
 Math.rand = function(number){
 	return Math.round(Math.random()*number)
 }
