@@ -1,7 +1,7 @@
 // Place your application-specific JavaScript functions and classes here
 // This file is automatically included by javascript_include_tag :defaults
 
-function submitOnEnter(submitter, event, url, callback)
+function submitOnEnter(submitter, event, eventHandler)
 {
   var keycode;
   if (window.event) 
@@ -13,25 +13,10 @@ function submitOnEnter(submitter, event, url, callback)
   if (keycode == 13 && !event.shiftKey)
   {
     var data = submitter.value.replace(/^\s*/, "").replace(/\s*$/, "");
-    var dataJson  = {"data": escape(data)}
     if( data.length >0 )
     {
-      window[callback](dataJson); 
+      eventHandler(escape(data));
       submitter.value = "";
-      req = new Ajax.Request(url, { 
-          method:'post', 
-          parameters: {data: dataJson["data"]},
-          onSuccess: function(transport, json){
-            //alert("Success! \n\n" + /*JSON.parse(response).data*/  json.id );
-            if(json.data != dataJson["data"])
-            {
-              window["eventError"]("Error");            
-            }
-          },
-          onFailure: function(){
-            window["eventError"]("Error");              
-          }
-      });
       return false;
     }
   }

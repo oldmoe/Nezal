@@ -14,14 +14,19 @@
   </script>
   <script src="/javascripts/prototype.js"></script>
   <script src="/javascripts/effects.js"></script>
-  <script src="/javascripts/events.js"></script>
   <script src="/javascripts/application.js"></script>
+  
+  <script src="/javascripts/application/chat.js"></script>
+  <script src="/javascripts/application/room.js"></script>
+  <script src="/javascripts/application/event.js"></script>
+  
   <%= stylesheet_link_tag 'scaffold' %>
   <%= stylesheet_link_tag 'chat' %>
   <script type="text/javascript">  
+    Event.url =  '/rooms/<%=@room[:id]%>/events'
     function activateChat()
     {
-      window.setTimeout(window['updateChat'], 1000, '/rooms/<%=@room[:id]%>/events')
+      window.setTimeout("Event.fetch()", 1000)
     }
   </script>
   <style>

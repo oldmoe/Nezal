@@ -13,7 +13,7 @@ class EventsController < ApplicationController
   end
   
   def create
-    @event = Event.create(params[:data], params[:room_id], user[:id])
+    @event = Event.create(params[:room_id], user[:id], params[:type],  params[:data]) 
     response.headers['X-JSON'] = @event.to_json()
     render :nothing => true #:json => @event.to_json()#:layout=>false, :show=>false
   end  

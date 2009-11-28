@@ -8,10 +8,11 @@
 class Event
   
   SEPARATOR = "-"
+  TYPE = {:game => 'game', :chat => 'chat', :room => 'room'}
 
-  def self.create(data, room_id, user_id)
+  def self.create(room_id, user_id, type, data)
     id = room_id + SEPARATOR + (Time.now.to_f * 10000).to_i.to_s(36)
-    event =  { :id => id, :data => data, :user => user_id }
+    event =  { :id => id, :data => data, :user => user_id, :type => type}
     $dbs[:events].put(nil, event[:id], Marshal.dump(event), 0)
     self.clean(room_id)
     event

@@ -20,6 +20,11 @@ class Room
     room
   end
   
+  def self.addUser(room_id, user_id)
+    self.update(room_id, user_id)
+    Event.create(room_id, user_id, Event::TYPE[:room], "Join")
+  end
+  
   def self.update(room_id, user_id, event_id = "#{room_id}-") 
     $dbs[:room_users].put(nil, room_id+"-"+user_id, event_id, 0)
   end

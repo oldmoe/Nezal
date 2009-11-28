@@ -1,14 +1,12 @@
 var SimpleBattleship  = Object.cloneProto({
 
-  init : function(players){
-
+  init : function(players, player_num){
+    
     var game = Battleship.cloneProto(players);   
     
-    var player = game.players[0];
-    player.hasTurn = false
-    player.play = function(){
-      player.hasTurn = true;      
-    }
+    var player_num = player_num;
+    
+    var player = game.players[player_num];
     
     Aspect.before(game, "start", function(){
       /* Here we should get the dom and place the tables for the 
@@ -16,7 +14,9 @@ var SimpleBattleship  = Object.cloneProto({
        */ 
       
       var div = document.getElementById('game'); 
-      var maps = [this.players[0].battleMap, this.players[0].enemyMap];
+      var maps = [];
+      maps[player_num] = player.battleMap ;
+      maps[(player_num+1)%2] =  player.enemyMap;
       var tables = [];
       for(var i=0; i< maps.length; i++) 
       {
@@ -37,7 +37,7 @@ var SimpleBattleship  = Object.cloneProto({
               cell.setAttribute('_x', k)
               cell.setAttribute('_y', j)
               cell.setAttribute('id', i+"_"+k+"_"+j);
-              if(i == 0){
+              if(i == player_num){
                 if(maps[i][k][j] != null){
                   cell.setAttribute('class', 'ship')
                 }
@@ -46,20 +46,30 @@ var SimpleBattleship  = Object.cloneProto({
                 cell.onclick = function(event){
                   if(!player.hasTurn) return;
                   player.hasTurn = false;
-                  game.fireAt(event.target.getAttribute('_x'), event.target.getAttribute('_y'));
+                  game.fireAt(event.target.getAttribute('_x'), event.target.getAttribute('_y'));  
                   event.target.onclick = null;
-                  window.setTimeout(function(){ game.turn() }, 500)
+//                  window.setTimeout(function(){ game.turn() }, 500)
                 }
               }              
           }
         }
       }
+    });   
+    
+    Aspect.before(game, 'fireCallback', function( result, x, y, hitPoints){
+      console.log("Inside Before fireCallback " + result)
+      var mapId = (this.currentPlayer+1) % 2
+      var targetCell = document.getElementById(mapId + '_' + x + '_' + y)
+      if(result){
+         targetCell.setAttribute('class', 'hit')
+      }else{
+         targetCell.setAttribute('class', 'miss')
+      }
+      return result;
     });
     
-    Aspect.after(game, 'fireAt', function(result, x, y){
-      console.log(this.currentPlayer)
-      var mapId = (this.currentPlayer + 1) % 2
-      console.log("map id = "+mapId)
+    Aspect.after(player, 'hitAtttttttttt', function(result, x, y){
+      var mapId = 0
       var targetCell = document.getElementById(mapId + '_' + x + '_' + y)
       if(result){
          targetCell.setAttribute('class', 'hit')
@@ -70,12 +80,10 @@ var SimpleBattleship  = Object.cloneProto({
     });
     
     Aspect.after(game, 'finish', function(){
-      alert(this.currentPlayer == 0 ? "You Won" : "You Lost! ya lost!")
+      alert(this.currentPlayer == player_num ? "You Won" : "You Lost! ya lost!")
       console.log("Player: " + this.currentPlayer  +  "  Won" );
     });
     
-    
-                
     return game;   
 
   }

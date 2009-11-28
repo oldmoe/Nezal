@@ -2,10 +2,12 @@
     <script src="/javascripts/battleship/ship.js"></script>
     <script src="/javascripts/battleship/map.js"></script>
     <script src="/javascripts/battleship/player.js"></script>
+    <script src="/javascripts/battleship/computer-player.js"></script>
+    <script src="/javascripts/battleship/network-player.js"></script>
     <script src="/javascripts/battleship/game.js"></script>
     <script src="/javascripts/battleship/aspect.js"></script>
-    <script src="/javascripts/battleship/dhtml.js"></script>
-    <script src="/javascripts/battleship/SimpleBattleship.js"></script>
+    <script src="/javascripts/battleship/console-ui.js"></script>
+    <script src="/javascripts/battleship/simple-ui.js"></script>
     <style>
       .grid {
         border :1px solid blue;
@@ -24,7 +26,6 @@
         width : 32px;
         height : 34px;
       }
-      
       .grid td.ship{
         background : orange;
       }
@@ -36,15 +37,39 @@
       }
     </style>
     <script>
-      var player1 = Player.cloneProto(8, 8)
-      var player2 = ComputerPlayer.cloneProto(8, 8)
-      //var game = DHTMLBattleship.clone([player1, player2]);
+      
+      alert(<%= @room[:users].length %>);
+      var player_num = <%= @room[:users].length  %> -1 ;
+      var total_players = 2;
+      var players = [];
+      
+      for(var i=0; i<total_players; i++){
+        if(i==player_num){
+          players[i] = Player.cloneProto(4, 4);
+        }else{
+          players[i]= NetworkPlayer.cloneProto(4, 4)
+        }
+      }
+      
       //var game = Battleship.clone([player1, player2]);
-      var game = SimpleBattleship.cloneProto([player1, player2]);
-  //    var game = ConsoleBattleship.clone([player1, player2]);
+      //var game = ConsoleBattleship.clone([player1, player2]);
+      
+      var game = SimpleBattleship.cloneProto(players, player_num);
+
+      game.process = function(data){
+        event = data["data"].evalJSON(true)
+        if(event.event == "fire"){
+          result = players[player_num].hitAt(event.x, event.y)
+        }else if (event.event == "result"){
+          game.fireCallback(event.result, event.x, event.y, event.hitPoints)
+        }
+      }
+           
       game.start();
-      //while(!game.finished){
-      game.turn();
-      //}
+      
+      if(player_num == 0){
+        players[0].play()
+      }
+      
     </script>
 

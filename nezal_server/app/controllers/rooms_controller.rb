@@ -19,7 +19,7 @@ class RoomsController < ApplicationController
   end
   
   def update
-    Room.update(params[:id], user[:id])
+    Room.addUser(params[:id], user[:id])
     @room = Room.get(params[:id])
     @room[:users] =  Room.users(@room[:id]) 
     @user = user[:id]

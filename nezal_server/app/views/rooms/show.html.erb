@@ -1,18 +1,3 @@
-<div class="column" id="chatArea">
-  <div id="chat">
-    <input id='userName' type="hidden" name="<%=@user%>" /> 
-    <div id="chatHistory" class="chatHistory">
-    </div>
-    <div id='errorMsg'>
-       &nbsp &nbsp
-    </div>
-    <textarea id="chatBox" onKeyPress="return submitOnEnter(this, event, '/rooms/<%=@room[:id]%>/events', 'appendChatMsg' )"></textarea>  
-  </div>
-</div>
-
-<div class="column" id='game'>
-</div>
-
 <div class="column" id="status">
   <table>
     <tr>
@@ -29,6 +14,21 @@
   </table>
 
   <a href="/rooms">All rooms</a>
+</div>
+
+<div class="column" id='game'>
+</div>
+
+<div class="column" id="chatArea">
+  <div id="chat">
+    <input id='userName' type="hidden" name="<%=@user%>" /> 
+    <div id="chatHistory" class="chatHistory">
+    </div>
+    <div id='errorMsg'>
+       &nbsp &nbsp
+    </div>
+    <textarea id="chatBox" onKeyPress="return submitOnEnter(this, event, Chat.send )"></textarea>  
+  </div>
 </div>
 
 <div style="clear:both"></div>
