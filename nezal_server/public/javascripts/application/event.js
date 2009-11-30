@@ -13,7 +13,7 @@ var Event = {
           }else if (json[i]["type"]=="room"){
             Room.process(json[i]);
           }else if (json[i]["type"]=="game"){
-            game.process(json[i]);
+            GameEngine.process(json[i]);
           }
         }
         window.setTimeout("Event.fetch()", 5000);

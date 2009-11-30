@@ -6,6 +6,8 @@ var SimpleBattleship  = Object.cloneProto({
     
     var player_num = player_num;
     
+    game.player_num = player_num;
+    
     var player = game.players[player_num];
     
     Aspect.before(game, "start", function(){
@@ -14,15 +16,34 @@ var SimpleBattleship  = Object.cloneProto({
        */ 
       
       var div = document.getElementById('game'); 
+      
+      /* Clearing any initial game already drawen 
+       * within the div
+       */
+    	while (div.hasChildNodes())
+	    {
+	      div.removeChild(div.firstChild);
+	    }
+	    
+	    /* Drawing the maps
+	     */
       var maps = [];
       maps[player_num] = player.battleMap ;
       maps[(player_num+1)%2] =  player.enemyMap;
       var tables = [];
       for(var i=0; i< maps.length; i++) 
       {
+        var playerGrid = document.createElement('div');
+        playerGrid = div.appendChild(playerGrid);
+        playerGrid.setAttribute('class', 'playerGrid')
+        var title = document.createElement('div');
+        title = playerGrid.appendChild(title);
+        title.innerHTML= "Player : " + i
+        title.setAttribute('class', 'title')
         tables[i] = document.createElement('table');
-        tables[i] = div.appendChild(tables[i]);
+        tables[i] = playerGrid.appendChild(tables[i]);
         tables[i].setAttribute('class', 'grid')
+
         /* loop on every row*/
         for(var j=0; j<maps[i].length; j++)
         {
@@ -48,7 +69,6 @@ var SimpleBattleship  = Object.cloneProto({
                   player.hasTurn = false;
                   game.fireAt(event.target.getAttribute('_x'), event.target.getAttribute('_y'));  
                   event.target.onclick = null;
-//                  window.setTimeout(function(){ game.turn() }, 500)
                 }
               }              
           }
@@ -67,20 +87,9 @@ var SimpleBattleship  = Object.cloneProto({
       }
       return result;
     });
-    
-    Aspect.after(player, 'hitAtttttttttt', function(result, x, y){
-      var mapId = 0
-      var targetCell = document.getElementById(mapId + '_' + x + '_' + y)
-      if(result){
-         targetCell.setAttribute('class', 'hit')
-      }else{
-         targetCell.setAttribute('class', 'miss')
-      }
-      return result;
-    });
-    
+     
     Aspect.after(game, 'finish', function(){
-      alert(this.currentPlayer == player_num ? "You Won" : "You Lost! ya lost!")
+      alert("Player: " + this.currentPlayer  +  "  Won" )
       console.log("Player: " + this.currentPlayer  +  "  Won" );
     });
     

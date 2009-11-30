@@ -4,12 +4,13 @@
 function submitOnEnter(submitter, event, eventHandler)
 {
   var keycode;
-  if (window.event) 
-    keycode = window.event.keyCode;
-  else if (event) 
+  if(event){
     keycode = event.which;
-  else 
+  } else if (window.event) {
+    keycode = window.event.keyCode;
+  } else {
     return true;
+  }
   if (keycode == 13 && !event.shiftKey)
   {
     var data = submitter.value.replace(/^\s*/, "").replace(/\s*$/, "");
@@ -19,6 +20,7 @@ function submitOnEnter(submitter, event, eventHandler)
       submitter.value = "";
       return false;
     }
+    submitter.value = "";
   }
   else
     return true;    

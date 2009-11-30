@@ -5,8 +5,8 @@ var Player = Object.cloneProto({
     this.battleMap = Map.cloneProto(x, y);
     this.battleMap._draw();
     this.enemyMap = Map.cloneProto(x, y);
-    //this.ships = [ Ship.cloneProto( 2 ), Ship.cloneProto( 2 ), Ship.cloneProto( 2 ), Ship.cloneProto( 3 ), Ship.cloneProto( 3 ), Ship.cloneProto( 4 ) ];
-    this.ships = [ Ship.cloneProto( 2 ), Ship.cloneProto( 2 )];
+    this.ships = [ Ship.cloneProto( 2 ), Ship.cloneProto( 2 ), Ship.cloneProto( 2 ), Ship.cloneProto( 3 ), Ship.cloneProto( 3 ), Ship.cloneProto( 4 ) ];
+    //this.ships = [ Ship.cloneProto( 2 ), Ship.cloneProto( 2 )];
     this.hitPoints = this.ships.inject(0, function(total, ship){return total + ship.length});
     this.placeShips();
     this.battleMap._draw();
