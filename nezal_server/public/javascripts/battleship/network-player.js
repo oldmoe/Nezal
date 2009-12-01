@@ -5,10 +5,14 @@ NetworkPlayer.hitAt = function(x, y){
   Event.send("game", Object.toJSON({"event": "fire", "x":x, "y":y}) );
 }
 
-NetworkPlayer.temp = function(x, y, result, hitPoints){
-  Event.send("game", Object.toJSON({"event": "result", "x" : x, "y" : y, "hitPoints": hitPoints, "result" : result}) );
+NetworkPlayer.temp = function(player, x, y, result, hitPoints){
+  Event.send("game", Object.toJSON({"event": "result", "player" : player,  "x" : x, "y" : y, "hitPoints": hitPoints, "result" : result}) );
 }
 
 NetworkPlayer.play = function( ){
   Event.send("game", Object.toJSON({"event": "turn"}) );
+}
+
+NetworkPlayer.finishedPlaying = function( ){
+//   Event.send("game", Object.toJSON({"event": "turn"}) );
 }

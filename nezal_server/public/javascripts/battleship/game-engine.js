@@ -51,7 +51,10 @@ var GameEngine = {
     if(event.event == "fire"){
       result = this.game.players[this.game.player_num].hitAt(event.x, event.y)
     }else if (event.event == "result"){
+      this.game.currentPlayer = event.player;
       this.game.fireCallback(event.result, event.x, event.y, event.hitPoints)
+    }else if (event.event == "turn"){
+      this.game.turn();
     }
   },
   

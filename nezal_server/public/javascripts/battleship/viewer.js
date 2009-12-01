@@ -10,3 +10,5 @@ Viewer.hitAt = function(x, y){
     return 0;
 }
 
+Viewer.finishedPlaying = function(){
+}

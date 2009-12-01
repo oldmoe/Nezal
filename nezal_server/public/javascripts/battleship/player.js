@@ -35,7 +35,11 @@ var Player = Object.cloneProto({
     return 0;
   },
   
-  temp : function(x, y, z, k){
+  finishedPlaying : function(){
+    this.game.turn();
+  },
+  
+  temp : function(player, x, y, z, k){
   }
   
 })

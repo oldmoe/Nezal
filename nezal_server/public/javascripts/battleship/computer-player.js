@@ -14,7 +14,6 @@ ComputerPlayer.play = function( ){
     }
   } 
   var me = this
-//  window.setTimeout(function(){ game.turn() }, 500)
   return this;
 }
 

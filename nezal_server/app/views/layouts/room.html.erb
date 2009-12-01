@@ -30,16 +30,15 @@
     }
   </script>
   <style>
-  	body { background : #000; color : #fff; padding : 0px; font-family : verdana; margin:0px }
-		#header { background : #333; color : #fff ; padding : 4px; margin:0px;}
-		#header h4 {  margin: 4px; margin-right : 10px }
+		#header h1 { margin-right : 10px }
+		#header h4 { }
 		
 		#main { min-height:450px }
 		#main a {color:white; text-decoration:none}
 		#main a:hover {background:white; color:black}
 		#footer { background : #333; color : #fff; padding : 4px } 			
 		#main .column {float:left;width:23%;padding:4px}
-		#main .column#game {width:52%;}
+		#main .column#gameArea {width:52%;}
 		canvas {color:#fff;}
 	</style>
   	
@@ -47,7 +46,7 @@
 
 <body onload="activateChat()">
 
-		<div id="header"><h4>Nezal : 7aytho Masra3 Al-2abtal</h4></div>
+		<div id="header"><h1>Nezal</h1><h4> 7aytho Masra3 Al-2abtal</h4><div style="clear:both"></div></div>
 		<div id="main">
       <%= yield %>
 		</div>

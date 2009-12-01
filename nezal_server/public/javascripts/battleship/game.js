@@ -42,12 +42,12 @@ Battleship.fireCallback = function(result, x, y, hitPoints){
   var targetPlayer = this.players[(this.currentPlayer+1) % this.players.length];
   targetPlayer.hitPoints = hitPoints;
   this.players[this.currentPlayer].enemyMap[x][y] = result;
-  this.players[this.currentPlayer].temp(x, y, result, hitPoints)
+  this.players[this.currentPlayer].temp(this.currentPlayer, x, y, result, hitPoints)
   if(targetPlayer.hitPoints == 0){
     this.finish();
     return;
   }
-  this.turn();
+  this.players[this.currentPlayer].finishedPlaying();
   return result;
 }
 
