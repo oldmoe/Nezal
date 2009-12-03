@@ -65,8 +65,9 @@ var SimpleBattleship  = Object.cloneProto({
               }else{
                 var game = this
                 cell.onclick = function(event){
-                  if(!player.hasTurn) return;
+                  if( !player.hasTurn) return;
                   player.hasTurn = false;
+                  event.target.setAttribute('class', 'wait');                                
                   game.fireAt(event.target.getAttribute('_x'), event.target.getAttribute('_y'));  
                   event.target.onclick = null;
                 }

@@ -16,7 +16,7 @@ var Event = {
             GameEngine.process(json[i]);
           }
         }
-        window.setTimeout("Event.fetch()", 5000);
+        window.setTimeout("Event.fetch()", 10000);
       }
     });
   },

@@ -47,7 +47,8 @@ Battleship.fireCallback = function(result, x, y, hitPoints){
     this.finish();
     return;
   }
-  this.players[this.currentPlayer].finishedPlaying();
+//  this.players[this.currentPlayer].finishedPlaying();
+  this.turn();
   return result;
 }
 

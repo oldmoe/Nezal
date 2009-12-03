@@ -27,11 +27,11 @@ var Player = Object.cloneProto({
     if(this.battleMap[x][y] != null){
       this.hitPoints--;
       console.log("hit, hit points now: " + this.hitPoints);
-      window.setTimeout(function(){ me.game.fireCallback(1, x, y, me.hitPoints) }, 500)
+      window.setTimeout(function(){ me.game.fireCallback(1, x, y, me.hitPoints) }, 1)
       return 1;
     }
     console.log("miss")
-    window.setTimeout(function(){ me.game.fireCallback(0, x, y, me.hitPoints) }, 500)
+    window.setTimeout(function(){ me.game.fireCallback(0, x, y, me.hitPoints) }, 1)
     return 0;
   },
   

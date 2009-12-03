@@ -1,3 +1,20 @@
+<script type='text/javascript'>
+  
+  function logout() {
+    new Ajax.Request( "/rooms/<%=@room[:id]%>" , { 
+      method:'put', 
+      parameters: { action : 'delete' } ,
+      onSuccess: function(transport, json){
+      },
+      onFailure: function(){
+          Event.error("Error"); 
+      }
+    });
+  }
+  window.onunload = logout;
+  
+</script>
+
 <div class="column" id="chatArea">
   <div id="chat">
     <input id='userName' type="hidden" name="<%=@user%>" /> 
@@ -17,22 +34,23 @@
   </div>
 </div>
 
-<div class="column" id="status">
-  <table>
-    <tr>
-      <td>Room id: </td>
-      <td> <%= @room[:id] %> </td>
-    </tr>
-
-    <tr>
-      <td>Room Users: </td>
+<div id="room" class="column">
+  <div id="name" >
+    Room id: <%= @room[:id] %> 
+  </div>
+  
+  <div id="event" class="invisible">
+    This is the place for the new events
+  </div>
+  
+  <a href="/rooms" onclick="logout();">All rooms</a>
+  
+  <div>
+      Users in room:
       <% @room[:users].each_key do |user| %>
-          <td> <%= user %> </td>
+        <div class='user'> <%= user %> </div>
       <% end %>    
-    </tr>
-  </table>
-
-  <a href="/rooms">All rooms</a>
+  </div>
 </div>
 
 <div style="clear:both"></div>

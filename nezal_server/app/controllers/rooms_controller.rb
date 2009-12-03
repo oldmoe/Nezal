@@ -19,11 +19,19 @@ class RoomsController < ApplicationController
   end
   
   def update
-    Room.addUser(params[:id], user[:id])
-    @room = Room.get(params[:id])
-    @room[:users] =  Room.users(@room[:id]) 
-    @user = user[:id]
-    render :layout => 'room', :action => :show, :id => @room[:id] 
+    if(params[:_action] == 'add')
+      Room.addUser(params[:id], user[:id])
+      @room = Room.get(params[:id])
+      @room[:users] =  Room.users(@room[:id]) 
+      @user = user[:id]
+      render :layout => 'room', :action => :show, :id => @room[:id] 
+    else 
+      Room.delUser(params[:id], user[:id])
+      render :nothing => true
+    end
+  end
+  
+  def destroy
   end
   
 end

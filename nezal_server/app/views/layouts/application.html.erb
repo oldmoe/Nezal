@@ -13,27 +13,17 @@
   
 	<style>
 
-		#header h1 { float : left ; margin-right : 10px }
-		#header h4 { float : left }
-		
-		#main { min-height:450px }
-		#main a {color:white; text-decoration:none}
-		#main a:hover {background:white; color:black}
-		#footer { background : #333; color : #fff; padding : 10px } 
-		
-		.game-list li {width : 500px; padding:10px;}
-		.game-list li p {width:350px}
-		.game-list li:hover {background:#555}
-		.game-list li img {width : 350px; height:200px}
-		
 	</style>
 
 </head>
 <body>
-		<div id="header"><h1>Nezal</h1><h4>7aytho Masra3 Al-2abtal</h4><div style="clear:both"></div></div>
-<p style="color: green"><%= flash[:notice] %></p>
-
-<%= yield %>
+		<div id="header"><h1></h1><h4></h4></div></div>
+		<div id="main">
+		  <div id="main-side" >
+          <%= yield %>
+  		</div>
+		</div>
+		<div id="footer">About | Jobs | Other</div>
 
 </body>
 </html>

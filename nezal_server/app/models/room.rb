@@ -25,6 +25,11 @@ class Room
     Event.create(room_id, user_id, Event::TYPE[:room], "Join")
   end
   
+  def self.delUser(room_id, user_id)
+    $dbs[:room_users].del(nil, room_id+"-"+user_id, 0)
+    Event.create(room_id, user_id, Event::TYPE[:room], "Leave")
+  end
+  
   def self.update(room_id, user_id, event_id = "#{room_id}-") 
     $dbs[:room_users].put(nil, room_id+"-"+user_id, event_id, 0)
   end

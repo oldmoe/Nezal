@@ -22,6 +22,7 @@
   
   <%= stylesheet_link_tag 'scaffold' %>
   <%= stylesheet_link_tag 'chat' %>
+  <%= stylesheet_link_tag 'room' %>
   <script type="text/javascript">  
     Event.url =  '/rooms/<%=@room[:id]%>/events'
     function activateChat()
@@ -30,25 +31,20 @@
     }
   </script>
   <style>
-		#header h1 { margin-right : 10px }
-		#header h4 { }
-		
-		#main { min-height:450px }
-		#main a {color:white; text-decoration:none}
-		#main a:hover {background:white; color:black}
-		#footer { background : #333; color : #fff; padding : 4px } 			
-		#main .column {float:left;width:23%;padding:4px}
-		#main .column#gameArea {width:52%;}
-		canvas {color:#fff;}
+				  
+		#main .column { float:left;width:23%;padding:4px; margin-top : 50px;}
+		#main .column#gameArea {width:51%;}
+
 	</style>
   	
 </head>
 
 <body onload="activateChat()">
-
-		<div id="header"><h1>Nezal</h1><h4> 7aytho Masra3 Al-2abtal</h4><div style="clear:both"></div></div>
+		<div id="header"><h1></h1></div>
 		<div id="main">
+		  <div id="main-side" >
       <%= yield %>
+  		</div>
 		</div>
 		<div id="footer">About | Jobs | Other</div>
 		

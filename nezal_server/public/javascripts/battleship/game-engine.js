@@ -16,7 +16,7 @@ var GameEngine = {
   init : function(){
     this.player = this.player_types['viewer'];
     this.opponent = this.player_types['viewer'];
-    this.setup(0);
+    this.setup(1);
   },
   
   setup: function(player_num){
@@ -54,7 +54,7 @@ var GameEngine = {
       this.game.currentPlayer = event.player;
       this.game.fireCallback(event.result, event.x, event.y, event.hitPoints)
     }else if (event.event == "turn"){
-      this.game.turn();
+//      this.game.turn();
     }
   },
   

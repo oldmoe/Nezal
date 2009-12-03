@@ -16,14 +16,13 @@
       }
       .title {
         background : #333333;
-        color : white;
         font-weight : bold;
         margin : 10px 8px 10px 0px;
         padding : 5px;
       }
       .grid {
-        border :1px solid blue;
-        background : white;
+        border :1px solid #333;
+        background : #444;
         padding:0px;
         margin:0px;
         margin-right:8px;
@@ -35,21 +34,24 @@
         background : white;
       }
       .grid td {
-        border :1px solid white;
-        background : blue;
-        margin:0px;
-        padding :0px;
-        width : 32px;
-        height : 34px;
+        border :1px solid #555  ;
+        background : #151515;
+        margin : 0px;
+        padding : 0px;
+        width : 28px;
+        height : 30px;
       }
       .grid td.ship{
         background : orange;
       }
       .grid td.hit{
-        background : red;  
+        background : #B01000;  
       }
       .grid td.miss{
-        background : navy;
+        background : grey;
+      }
+      .grid td.wait{
+        background : LightSkyBlue;  
       }
     </style>
 
@@ -57,7 +59,8 @@
     </script>
     
     <script> 
-      var player_num = <%= @room[:users].length %> -1 ;
+ 
+      var player_num =  <%= @room[:users].length %> - 1//<%= ( user == @room[:users].keys[0]) ? 0 : ( user == @room[:users].keys[1 ])? 1: 2 %> 
       GameEngine.init();
       if(player_num < 2 )
       {
