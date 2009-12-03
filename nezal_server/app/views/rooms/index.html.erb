@@ -5,6 +5,7 @@
     <% unless room[:users].has_key? user[:id] %>
       <form id="join_room_<%=room[:id]%>" action="/rooms/<%=room[:id]%>" method="post" style="display:inline">
         <input type="hidden" name="_method" value="put"/>
+        <input type="hidden" name="_action" value="add"/>
         <a href="#" onclick="document.getElementById('join_room_<%=room[:id]%>').submit(); return false;">Join</a>
        </form> 
     <% else %>
