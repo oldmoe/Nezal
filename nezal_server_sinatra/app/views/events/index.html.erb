@@ -1,0 +1,15 @@
+<h1>Listing events</h1>
+
+<table>
+  <tr>
+  </tr>
+
+<% @events.each do |event| %>
+  <tr>
+    <td>Event: <%= event[:id] %></td>
+    <td>Data: <%= event[:data] %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
