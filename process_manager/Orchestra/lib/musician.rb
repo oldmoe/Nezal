@@ -7,9 +7,9 @@ module Orchestra
 	  include Reactor		
 
 	  def initialize(sockets, channel)
-		  @sockets=sockets
-		  @reactor=Base.new()
-		  @monitor=channel
+		  @sockets = sockets
+		  @reactor = Base.new()
+		  @monitor = channel
 	  end
 
     def run 		
@@ -17,7 +17,7 @@ module Orchestra
       @sockets.each { |socket|    
 		    @reactor.attach(:read, socket[:socket]) do |socket, reactor|
 			    begin
-				    conn = server.accept
+				    conn = socket.accept
 				    handle_request(conn)
 			    rescue Exception => e
 				    puts ">>Exception"
@@ -25,7 +25,20 @@ module Orchestra
 	     		end	
 		    end
 	    }
-		  @reactor.run
+	    @reactor.add_periodical_timer(1) {
+        begin
+          result = @monitor.write_nonblock("1")
+        rescue Errno::EWOULDBLOCK, Errno::EAGAIN, Errno::EINTR => e
+          return
+        rescue Errno::EPIPE => e
+          exit!
+        end
+      }
+      begin
+  		  @reactor.run
+		  rescue Exception => e
+		    puts "Exception in run  #{e.message} #{e.backtrace}"
+		  end
 	  end
    
     private
@@ -41,13 +54,18 @@ module Orchestra
       @sockets.each{ |server|
         server[:socket].close
       }
+      @monitor.close
     end
 
     def trap_sigs
-      set_traps([:TERM , :QUIT, :INT]) { |signal|
-        cleanup
-        exit!
-      }
+      [:TERM, :QUIT, :INT].each do |signal|
+        trap(signal) do
+          @reactor.next_tick do
+            cleanup
+            exit!
+          end
+        end
+       end
     end
     
   end
