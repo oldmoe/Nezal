@@ -1,0 +1,28 @@
+class Reactor::TCPHandler
+
+	BUFFER_SIZE = 128
+
+	def initialize(conn, reactor)
+		@conn = conn
+		@conn.fcntl(Fcntl::F_SETFL, Fcntl::O_NONBLOCK)
+		# attempt to read data from the request right away
+		# after that we attach to the reactor (unless the connection was closed)		
+		data = @conn.sysread(BUFFER_SIZE)
+		data_recieved(data)
+		
+	end
+
+	def data_received(data)
+
+	end
+
+	def write(data)
+	end
+
+	def close
+		conn.close unless conn.closed?
+		reactor.detach(:read, conn)
+		reactor.detach(:write, conn)
+	end
+
+end
