@@ -4,8 +4,8 @@ require 'shehab'
 module Orchestra
 
   class Maestro
-
-	  DEFAULTS = {
+  
+    DEFAULTS = {
       # This should include list of listen addresses
       :server   => {:host => "0.0.0.0", :port => "3000", :class => Orchestra::Shehab},
       # Declare worker for recycle if it remains inactive for longer than timeout
@@ -69,7 +69,7 @@ module Orchestra
     #   USR1 : increase number of workers
     #   USR2 : decrease number of workers
     #   TERM, QUIT, INT : kill workers and cleanup
-	  def set_traps
+    def set_traps
       [:TERM , :QUIT, :INT].each do |signal|
         @sig_handlers[signal] = Proc.new do 
           # send shutdown signals to children
@@ -88,7 +88,7 @@ module Orchestra
       @sig_handlers.each_key do |signal|
         trap(signal) { @sig_queue << signal }
       end
-	  end
+    end
 	
     # This method does the following:
     #   Handles received signals
@@ -143,21 +143,20 @@ module Orchestra
     # Set up the pipe 
     # Close all unnessecary IO objects inherited from parent
     def new_worker
-      r_channel, w_channel = IO.pipe
-      
-	    worker_pid = Process.fork do
-	      Process.egid= @options[:group]
-	      Process.euid= @options[:user]
-	      # Close all sockets inherited from parent
+      r_channel, w_channel = IO.pipe     
+      worker_pid = Process.fork do
+        Process.egid= @options[:group]
+        Process.euid= @options[:user]
+        # Close all sockets inherited from parent
         @workers.each_value { |worker| worker[:pipe].close }
         @workers = nil
-	      # Create a new musician 
-	      r_channel.close
-			  worker = Musician.new(@servers, w_channel)
-		    worker.run 
-			  exit
-		  end
-		  w_channel.close
+        # Create a new musician 
+        r_channel.close
+        worker = Musician.new(@servers, w_channel)
+        worker.run 
+        exit
+      end
+      w_channel.close
       @workers[worker_pid] = { :pipe => r_channel, :inactive => 0 }
       @reactor.attach(:read, r_channel) do | pipe | 
         begin
