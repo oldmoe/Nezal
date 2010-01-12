@@ -27,34 +27,51 @@ module Orchestra
        
         opts.separator "Listen options:"    
         opts.on("-h", "--host   HOST", "Set default bind host to HOST  " +
-                              "(default: #{Orchestra::Configurator::DEFAULTS[:servers].first[:host]}) " )  { |host|  @server_opts[:host] = host }
+                      "(default: #{Orchestra::Configurator::DEFAULTS[:servers].first[:host]}) " ) { |host|  @server_opts[:host] = host }
         opts.on("-p", "--port   PORT", Integer, "Set default port to listen on to PORT  " +
-                              "(default: #{Orchestra::Configurator::DEFAULTS[:servers].first[:port]})")    { |port|  @server_opts[:port] = port }
-        opts.on("-s", "--socket FILE", "Set default unix domain socket to bind to FILE" )                  { |file|  @server_opts[:socket] = file }
-        opts.on("-d", "--dir    DIR", "Set server root dir to DIR")                                        { |dir|   @server_opts[:dir] = dir }
+                      "(default: #{Orchestra::Configurator::DEFAULTS[:servers].first[:port]})") { |port|  @server_opts[:port] = port }
+        opts.on("-s", "--socket FILE", "Set default unix domain socket to bind to FILE" ) { |file|  @server_opts[:socket] = file }
+        opts.on("-d", "--dir    DIR", "Set server root dir to DIR") { |dir|   @server_opts[:dir] = dir }
+
         opts.separator "    Providing both --socket  and --host/--port honours --socket"                
         
         opts.separator ""
         opts.separator "Maestro options:"
-        opts.on("-c", "--config   FILE", "Use config file FILE")                                  { |config|  @maestro_opts[:config_file] = config }
-        opts.on("-w", "--workers  NUMBER", Integer, "Fork NUMBER of worker processes")            { |worker|  @maestro_opts[:workers] = worker }
+        opts.on("-c", "--config   FILE", "Use config file FILE")  { |config|  @maestro_opts[:config_file] = config }
+        opts.on("-w", "--workers  NUMBER", Integer, "Fork NUMBER of worker processes")  { |worker|  @maestro_opts[:workers] = worker }
         opts.on("-t", "--timeout  TIMEOUT", Float, "Recycle worker if nonresponsive for TIMEOUT") { |timeout| @maestro_opts[:timeout] = timeout}  
-        opts.on("-D", "--daemonize", "Run in a daemonized mode")  
-        opts.on("-P", "--pid File", "Set pid file to File")
+
+        opts.on("-P", "--pid FILE", "Set pid file to FILE") { |pid_file| @maestro_opts[:pid_file] = pid_file }
+        opts.on("-U", "--user USER", "Run workers as user USER")  { |user| @maestro_opts[:user] = user }
+        opts.on("-G", "--group GROUP", "Run workers with group GROUP")  { |group| @maestro_opts[:group] = group }        
+        opts.on("-D", "--daemonize", "Run in a daemonized mode")  { |daemonize| @maestro_opts[:daemonize] = daemonize }  
+
         opts.separator "    The previous inline options overides config file options"
       end
     end
     
     def parse 
-      @parser.parse!
+      @parser.parse! @argv
+      @command = @argv.shift
       @configurator.listen(@server_opts)
-      @configurator.load_config(@maestro_opts[:config_file])        
+      @configurator.load_config(@maestro_opts[:config_file])   
       @maestro_opts.each { |key, value|   @configurator.send key, value }
     end
     
     def run
       parse
-      Orchestra::Maestro.new(@configurator.configs).run
+      procs = {
+        "start" => Proc.new do
+                    puts "I am starting" 
+                    Orchestra::Maestro.new(@configurator.configs).run
+                  end ,
+        "stop"  => Proc.new do
+                    puts "I am stoping"
+                  end , 
+        "reload" => Proc.new do 
+                   end
+      }
+      procs[@command].call
     end
     
   end

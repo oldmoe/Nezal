@@ -1,6 +1,6 @@
-require 'reactor'
-require 'tcp_server'
-require 'http_connection'
+require 'neverblock'
+require './http_connection'
+require './tcp_server'
 
 module Orchestra 
 
@@ -10,17 +10,11 @@ module Orchestra
       @options = {
         :host => host, 
         :port => port,
-        :handler => Reactor::HTTPConnection,
+        :handler => NB::HTTPConnection
       }
-      @server = Reactor::TCPServer.new(@options)
+      @server = NB::TCPServer.new(@options)
     end  
-    
-    def reactor= (reactor)
-      @options[:reactor] = reactor 
-      @options[:socket] = @server.socket
-      @server = Reactor::TCPServer.new(@options)
-    end
-        
+           
     def start
       @server.start
     end

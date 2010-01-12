@@ -1,4 +1,6 @@
 require 'ipaddr'
+require 'etc'
+
 module Orchestra
   
   class Configurator
@@ -6,22 +8,28 @@ module Orchestra
     attr_reader :configs
     
     DEFAULTS = {
-  	  :servers => [{:host => "0.0.0.0", :port => 9000}], 
+  	  :servers    =>  [{:host => "0.0.0.0", :port => 9000, :dir => Dir.pwd}], 
   	  # This should contain number of workers to maintain
-  	  :workers => 1,
+  	  :workers    =>  1,
   	  # Declare worker for recycle if it remains inactive for longer than timeout
-  	  :timeout => 60, 
-  	  :pre_fork => nil,
-  	  :post_fork => nil
+  	  :timeout    =>  90, 
+  	  :pre_fork   =>  nil,
+  	  :post_fork  =>  nil, 
+  	  :daemonize  =>  false,
+      :pid_file   =>  "tmp/pids/shehab.pid",
+      :user       =>  "shehabd",
+      :group      =>  "shehabd"
     }
     
     ERROR_MSGS = {
-      :worker => "Workers number is not an integer",
-      :timeout => "Timeout is not a number",
-      :socket => "Socket path not found",
-      :file => "Config file not found",
-      :port => "Invalid port",
-      :host => "Invalid host"
+      :worker   =>  "Workers number is not an integer",
+      :timeout  =>  "Timeout is not a number",
+      :socket   =>  "Socket path not found",
+      :file     =>  "Config file not found",
+      :port     =>  "Invalid port",
+      :host     =>  "Invalid host",
+      :dir      =>  "Directory doesn't exist",
+      :user     =>  "User doesn't exist in system",
     }
     
     def initialize ()
@@ -38,28 +46,18 @@ module Orchestra
           raise ArgumentError, ERROR_MSGS[:file]
         end
       end
-      puts @configs
       DEFAULTS.each do |key, value|
-        puts key, @configs.key?(key)
         @configs[key] = value unless @configs.key?(key)
-      end
-    end
-    
-    def server(address)
-      @configs[:servers] = [] unless @configs[:servers]
-      if Integer === address 
-        @configs[:servers] << { :host => "0.0.0.0", :port => address } 
-      elsif File.exists?(File.dirname(File.expand_path(address))) 
-        @configs[:servers] << { :host => address }
-      else
-        raise ArgumentError, ERROR_MSGS[:server]
       end
     end
     
     def listen(options)
       @configs[:servers] = [] unless @configs[:servers]
       server = {}
-      server[:dir] = options[:dir]
+      puts options
+      server[:dir] = if options[:dir] 
+                       File.exists?(options[:dir])? options[:dir] : (raise ArgumentError, ERROR_MSGS[:dir])
+                     end
       if options[:socket] 
         File.exists?(File.dirname(File.expand_path(options[:socket])))? 
             server[:socket] = options[:socket] : (raise ArgumentError, ERROR_MSGS[:socket])
@@ -94,6 +92,16 @@ module Orchestra
     
     def post_fork(&block)
       @configs[:post_fork] = block
+    end
+    
+    def user(user)
+      (String === user)? 
+          @configs[:user] = Etc::getpwnam(user).uid rescue ( raise ArguementError, ERROR_MSGS[:user] ) : ( raise ArguementError, ERROR_MSGS[:user] )
+    end
+    
+    def group(group)
+      (String === group)? 
+          @configs[:group] = Etc::getgrnam(group).gid rescue ( raise ArguementError, ERROR_MSGS[:group] ) : ( raise ArguementError, ERROR_MSGS[:group] )
     end
     
     def config_file(file)

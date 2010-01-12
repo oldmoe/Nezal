@@ -17,7 +17,7 @@ timeout 20
 #     :host => host to bind to, default is "0.0.0.0"
 #     :port => port to listen on, default is 9000
 #     :dir => main application dir the server will be serving from 
-listen({:host => "127.0.0.1", :port => 4000, :dir => "current" })
+listen :host => "127.0.0.1", :port => 4000, :dir => "public"
 
 # listen on a unix socket file
 # you provide the listen call with a hash having the following options:
