@@ -1,5 +1,5 @@
 require 'neverblock'
-require './server'
+require 'server'
 
 class NB::TCPServer < NB::Server
 		

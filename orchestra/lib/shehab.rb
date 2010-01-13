@@ -1,16 +1,17 @@
 require 'neverblock'
-require './http_connection'
-require './tcp_server'
+require 'http_connection'
+require 'tcp_server'
 
 module Orchestra 
 
   class Shehab
        
-    def initialize(host, port)
+    def initialize(host, port, app)
       @options = {
         :host => host, 
         :port => port,
-        :handler => NB::HTTPConnection
+        :handler => NB::HTTPConnection, 
+        :app  => app
       }
       @server = NB::TCPServer.new(@options)
     end  

@@ -1,5 +1,6 @@
 require 'ipaddr'
 require 'etc'
+require 'rack'
 
 module Orchestra
   
@@ -12,13 +13,13 @@ module Orchestra
   	  # This should contain number of workers to maintain
   	  :workers    =>  1,
   	  # Declare worker for recycle if it remains inactive for longer than timeout
-  	  :timeout    =>  90, 
+  	  :timeout    =>  10, 
   	  :pre_fork   =>  nil,
   	  :post_fork  =>  nil, 
   	  :daemonize  =>  false,
       :pid_file   =>  "tmp/pids/shehab.pid",
-      :user       =>  "shehabd",
-      :group      =>  "shehabd"
+      :user       =>  0,
+      :group      =>  0
     }
     
     ERROR_MSGS = {
@@ -50,6 +51,7 @@ module Orchestra
       DEFAULTS.each do |key, value|
         @configs[key] = value unless @configs.key?(key)
       end
+      @configs[:app] = app
     end
     
     def listen(options)
@@ -116,6 +118,15 @@ module Orchestra
     
     def config_file(file)
       @config_file = file
+    end
+    
+    def app()
+      require 'config/boot'
+      require 'config/environment'
+      Rack::Builder.new do
+        use Rails::Rack::Static
+        run ActionController::Dispatcher.new
+      end.to_app
     end
     
     def [](key) # :nodoc:

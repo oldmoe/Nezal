@@ -1,5 +1,6 @@
 require 'musician'
 require 'shehab'
+require 'logger'
 
 module Orchestra
 
@@ -13,9 +14,10 @@ module Orchestra
       # This should contain number of workers to maintain
       :workers  => 1,
       # This should contain the user to run the workers as
-      :user     => 'root',
+      :user     => 0,
       # This should contain the group to run the workers as
-      :group    => 'root'
+      :group    => 0,
+      # This is the file name to use as log file 
     }
 	  	  
     def initialize(options={})
@@ -37,6 +39,7 @@ module Orchestra
       # This is an array containing signals received
       @sig_queue = []
       @reactor = Reactor::Base.new()
+      @app = options[:app]
 
     end
 
@@ -54,7 +57,7 @@ module Orchestra
     def setup_servers
       @servers.each do |server|
         server[:class] ||= DEFAULTS[:server][:class]
-        listner = server[:class].new(server[:host], server[:port])
+        listner = server[:class].new(server[:host], server[:port], @app)
         server[:listner] = listner
       end
     end
@@ -145,8 +148,8 @@ module Orchestra
     def new_worker
       r_channel, w_channel = IO.pipe     
       worker_pid = Process.fork do
-#        Process.egid= @options[:group]
-#        Process.euid= @options[:user]
+        Process.egid= @options[:group]
+        Process.euid= @options[:user]
         # Close all sockets inherited from parent
         @workers.each_value { |worker| worker[:pipe].close }
         @workers = nil

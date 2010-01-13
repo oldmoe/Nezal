@@ -23,6 +23,7 @@ class NB::Server
 		@timeout = (options[:timeout] || CONNECTION_TIMEOUT) # timeout in milliseconds (not really used yet)
 		@wdir = options[:wdir] || Dir.getwd + '/public' # set the working directory to the process' working directory by default
 		@handler = options[:handler] || NB::Connection	
+		@app = options[:app]
 		initialize_socket(options)
 		setup_socket
 	end

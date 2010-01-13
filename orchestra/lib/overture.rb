@@ -78,7 +78,6 @@ module Orchestra
                       Daemonizer.start(@configurator.configs[:pid_file]) 
                       Orchestra::Maestro.new(@configurator.configs).run
                     end ,
-
       }
       procs[@command].call
     end
@@ -86,5 +85,3 @@ module Orchestra
   end
 
 end
-
-overture = Orchestra::Overture.new(ARGV).run

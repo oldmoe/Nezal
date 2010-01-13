@@ -1,4 +1,4 @@
-require './connection'
+require 'connection'
 require 'unicorn_http'
 require 'rack'
 
@@ -34,7 +34,9 @@ class NB::HTTPConnection < NB::Connection
 
 	def post_init		
 		@data = ''
-		@env = { REMOTE_ADDR => (@peer_address ||= (self === TCPSocket ? @conn.peeraddr.last : LOCALHOST)) }
+		@env = {} unless @env
+		@env['rack.input'] = @conn
+		@env[REMOTE_ADDR] =  @peer_address ||= (self === TCPSocket ? @conn.peeraddr.last : LOCALHOST) 
 		@parser ||= @@parsers.shift || ::Unicorn::HttpParser.new		
 		@keepalive = false
 	end
