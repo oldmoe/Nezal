@@ -48,7 +48,7 @@ module Orchestra
       @reactor.run  
       exit!
     end
-    
+
     private
 	  
     def setup_servers
@@ -145,8 +145,8 @@ module Orchestra
     def new_worker
       r_channel, w_channel = IO.pipe     
       worker_pid = Process.fork do
-        Process.egid= @options[:group]
-        Process.euid= @options[:user]
+#        Process.egid= @options[:group]
+#        Process.euid= @options[:user]
         # Close all sockets inherited from parent
         @workers.each_value { |worker| worker[:pipe].close }
         @workers = nil

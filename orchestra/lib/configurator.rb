@@ -30,6 +30,7 @@ module Orchestra
       :host     =>  "Invalid host",
       :dir      =>  "Directory doesn't exist",
       :user     =>  "User doesn't exist in system",
+      :pid_file =>  "Directory for the pid file not found",
     }
     
     def initialize ()
@@ -102,6 +103,15 @@ module Orchestra
     def group(group)
       (String === group)? 
           @configs[:group] = Etc::getgrnam(group).gid rescue ( raise ArguementError, ERROR_MSGS[:group] ) : ( raise ArguementError, ERROR_MSGS[:group] )
+    end
+    
+    def pid_file(pid)
+      File.exists?(File.dirname(File.expand_path(pid)))? 
+        server[:pid_file] = pid : (raise ArgumentError, ERROR_MSGS[:pid_file])
+    end
+    
+    def daemonize(daemonize)
+      @configs[:daemonize] = daemonize
     end
     
     def config_file(file)

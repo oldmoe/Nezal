@@ -1,6 +1,7 @@
 require 'optparse'
 require 'configurator'
 require 'maestro'
+require 'daemonizer'
 
 module Orchestra
 
@@ -63,13 +64,21 @@ module Orchestra
       procs = {
         "start" => Proc.new do
                     puts "I am starting" 
-                    Orchestra::Maestro.new(@configurator.configs).run
-                  end ,
+                    Daemonizer.start(@configurator.configs[:pid_file]) if @configurator.configs[:daemonize]
+                    Orchestra::Maestro.new(@configurator.configs).run 
+                   end ,
         "stop"  => Proc.new do
-                    puts "I am stoping"
-                  end , 
+                     Daemonizer.stop(@configurator.configs[:pid_file]) 
+                   end , 
         "reload" => Proc.new do 
-                   end
+                      Daemonizer.reload(@configurator.configs[:pid_file]) 
+                    end ,
+        "restart" => Proc.new do 
+                      Daemonizer.stop(@configurator.configs[:pid_file]) 
+                      Daemonizer.start(@configurator.configs[:pid_file]) 
+                      Orchestra::Maestro.new(@configurator.configs).run
+                    end ,
+
       }
       procs[@command].call
     end
