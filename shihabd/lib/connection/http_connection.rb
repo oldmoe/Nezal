@@ -34,8 +34,8 @@ class NB::HTTPConnection < NB::Connection
 
 	def post_init		
 		@data = ''
+		@body = ''
 		@env = {} unless @env
-		@env['rack.input'] = @conn
 		@env[REMOTE_ADDR] =  @peer_address ||= (self === TCPSocket ? @conn.peeraddr.last : LOCALHOST) 
 		@parser ||= @@parsers.shift || ::Unicorn::HttpParser.new		
 		@keepalive = false
@@ -45,16 +45,26 @@ class NB::HTTPConnection < NB::Connection
 		@data << data
 		if @data.length > MAX_HEADER
 			# we need to log this incident
+			# and send back a proper error code
 			close
 			return
 		end
-		if @parser.headers(@env, @data)
+    if @finished_headers
+      # we should extract the body
+			@parser.filter_body(@body, @data)
+			# if the body gets too big we need to write it to a file (later)
+      handle_http_request if @parser.body_eof?
+    elsif @parser.headers(@env, @data)
+      @finished_headers = true
+      # headers are done, let's handle keepalive now
 			@keepalive = @env[HTTP_CONNECTION] == KEEP_ALIVE
-			handle_http_request
+      @parser.filter_body(@body, @data)
+      handle_http_request if @parser.body_eof?
 		end
 	end
 
 	def handle_http_request
+			@env['rack.input'] = ::StringIO.new(@body)
 			path = @server.wdir + @env[REQUEST_PATH]
 			path += 'index.html' if @env[REQUEST_PATH] == '/'
 			# check if file exists
