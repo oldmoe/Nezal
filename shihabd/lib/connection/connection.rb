@@ -4,7 +4,7 @@ require 'neverblock/core/system/timeout'
 
 class NB::Connection
 
-	CHUNK_SIZE = 128 * 1024
+	CHUNK_SIZE = 1024 * 1024
 
 	attr_reader :last_activity	
 	attr_writer :server

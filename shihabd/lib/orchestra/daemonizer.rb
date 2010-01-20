@@ -11,9 +11,9 @@ module Orchestra
       running = self.running?(pid_file)
       pwd = Dir.pwd
       unless running 
-        puts "running"
         self.cleanup(pid_file)
-        Daemonize.daemonize("log.log", "hi-there")  rescue puts "Errrrrrrrrrooooorrrrrrr"
+        log = pwd + ::File::SEPARATOR + "Shihabd.log"
+        Daemonize.daemonize( log , Orchestra::Configurator::DEFAULTS[:name])
         Dir.chdir(pwd)
         pid = File.open(pid_file, "w")
         pid.write(Process.pid)
@@ -21,10 +21,14 @@ module Orchestra
       end
     end
     
-    def self.stop(pid_file=DEFAULT_PID_FILE)
+    def self.stop( pid_file )
+      pid_file ||= DEFAULT_PID_FILE 
       running = self.running?(pid_file)
       if running
+        puts "Process running #{running} .. killing it"
         Process.kill(:TERM, self.pid(pid_file))
+      else 
+        puts "Process not running #{running}"
       end
       sleep 2
       if self.running?(pid_file)
@@ -34,17 +38,16 @@ module Orchestra
       self.cleanup(pid_file)
     end
     
-    def self.reload(pid_file=DEFAULT_PID_FILE)
+    def self.reload(pid_file=DEFAULT_PID_FILE) 
     end
     
     # Returns whether there is a process running with the pid existing in the file
     def self.running?(pid_file)
       pid = self.pid(pid_file)
-      running = pid && ( Process.getpgid(pid) rescue false )
-      return running  
+      running = pid if ( Process.getpgid(pid) rescue false )
     end
     
-    def self.pid(pid_file=DEFAULT_PID_FILE)
+    def self.pid( pid_file = DEFAULT_PID_FILE )
       begin 
         file = File.open(pid_file, "r") 
       rescue Errno::ENOENT   

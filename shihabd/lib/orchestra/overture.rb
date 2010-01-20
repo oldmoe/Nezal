@@ -45,7 +45,8 @@ module Orchestra
         opts.on("-P", "--pid FILE", "Set pid file to FILE") { |pid_file| @maestro_opts[:pid_file] = pid_file }
         opts.on("-U", "--user USER", "Run workers as user USER")  { |user| @maestro_opts[:user] = user }
         opts.on("-G", "--group GROUP", "Run workers with group GROUP")  { |group| @maestro_opts[:group] = group }        
-        opts.on("-D", "--daemonize", "Run in a daemonized mode")  { |daemonize| @maestro_opts[:daemonize] = daemonize }  
+        opts.on("-D", "--daemonize", "Run in a daemonized mode")  { |daemonize| @maestro_opts[:daemonize] = true }  
+        opts.on("-L", "--log Dir", "Use direcoty Dir for log files")  { |log| @maestro_opts[:log_dir] = log }
 
         opts.separator "    The previous inline options overides config file options"
       end
@@ -64,8 +65,7 @@ module Orchestra
       parse
       procs = {
         "start" => Proc.new do
-                    puts "I am starting" 
-                    Daemonizer.start(@maestro.configs[:pid_file]) if @maestro.configs[:daemonize]
+                    Daemonizer.start( @maestro.configs[:pid_file] || Orchestra::Configurator::DEFAULTS[:pid_file]) if @maestro.configs[:daemonize]
                     @maestro.run
                    end ,
         "stop"  => Proc.new do

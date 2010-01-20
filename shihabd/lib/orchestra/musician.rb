@@ -1,24 +1,28 @@
 require 'reactor'
 require 'neverblock'
+require 'logger'
 
 module Orchestra
 
   class	Musician
 
-	  def initialize(sockets, channel)
+	  def initialize(sockets, channel, logger)
 		  @servers = sockets
 		  @monitor = channel
 		  @reactor = NB.reactor
+		  @logger = logger
+		  @name   = "Shihabd #{Process.pid}"
 	  end
 
     def run 		
       trap_sigs
 	    @reactor.add_periodical_timer(1){
         begin
-          result = @monitor.write_nonblock("1")
+          result = @monitor.syswrite("1")
         rescue Errno::EWOULDBLOCK, Errno::EAGAIN, Errno::EINTR => e
           return
         rescue Errno::EPIPE => e
+          @logger.log(Logger::Severity::Error, "Channel with master broken .. exiting", @name)
           exit!
         end
       }
@@ -28,7 +32,7 @@ module Orchestra
       begin
 		  	loop { NB::Fiber.new { @reactor.run }.resume }
 		  rescue Exception => e
-		    puts "Exception in run  #{e.message} #{e.backtrace}"
+        @logger.log(Logger::Severity::Error, "Exception in run : #{e.backtrace}", nil)
 		  end
 	  end
    
@@ -48,6 +52,7 @@ module Orchestra
         trap(signal) do
           @reactor.next_tick do
             cleanup
+            @logger.log(Logger::Severity::INFO, "Received termination signal .. Shutting down", @name)
             exit!
           end
         end

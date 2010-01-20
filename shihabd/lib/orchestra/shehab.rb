@@ -7,7 +7,7 @@ module Orchestra
 
   class Shehab
     
-    DEFAULTS = {  :rackup => "config.ru", 
+    DEFAULTS = {  :rackup => "rackup.ru", 
                   :environment => "development",
                 }
        
@@ -18,8 +18,9 @@ module Orchestra
         :wdir  => ::File.join(options[:dir], "public"),
         :handler => NB::RackConnection,
       }
-      @options[:app] = app().to_app
+
       @rackup = options[:rackup] || DEFAULTS[:rackup]
+      @options[:app] = app().to_app
       @environment = options[:environment]  || DEFAULTS[:environment]
       @server = NB::TCPServer.new(@options)
     end      
@@ -35,6 +36,8 @@ module Orchestra
     private
 
     def app()
+      puts @rackup
+      puts DEFAULTS[:rackup]
       app = case @rackup
       when /\.rb$/
         Kernel.load(@rackup)
@@ -42,7 +45,7 @@ module Orchestra
       when /\.ru$/
         begin 
           rackup_code = File.read(@rackup)
-          eval("Rack::Builder.new {( #{rackup_code}\n )}.to_app", TOPLEVEL_BINDING, @rackup)
+          eval("Rack::Builder.new {( #{rackup_code}\n )}", TOPLEVEL_BINDING, @rackup)
         rescue Errno::ENOENT 
         end
       end

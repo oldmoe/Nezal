@@ -1,5 +1,5 @@
 #!/usr/local/ruby-1.9.1/bin/ruby
 
-require 'overture'
+require 'orchestra/overture'
 
 Orchestra::Overture.new(ARGV).run

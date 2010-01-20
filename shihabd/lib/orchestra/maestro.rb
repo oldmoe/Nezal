@@ -28,14 +28,24 @@ module Orchestra
       @sig_queue = []
       @reactor = Reactor::Base.new()
       options.each_pair { |key, value| send key, value }
+
+      # Setup logger .. STDERR for none daemonized servers and log_file for daemonized ones
+      @logger = if @options[:daemonize]
+                  puts "creating log in dir #{@options[:log_dir]}"
+                  Logger.new( @options[:log_dir] + ::File::SEPARATOR + "#{@options[:name]}" )
+                else 
+                  Logger.new(STDOUT)
+                end
     end
 
     def run
+      @logger.log(Logger::Severity::INFO, "Starting #{@options[:name]} .. ", @options[:name])
       @options = @configs.dup
       DEFAULTS.each_pair { |key, value| @options[key] = value unless @options[key]}
       @servers = @options[:servers] || [DEFAULTS[:server]]
       setup_servers
       @options[:workers].times { new_worker }
+        @logger.log(Logger::Severity::INFO, "Workers instantiated .. ", @options[:name])
       set_traps
       @reactor.add_periodical_timer(1) { calibrate_workers }
       @reactor.run  
@@ -64,16 +74,19 @@ module Orchestra
     def set_traps
       [:TERM , :QUIT, :INT].each do |signal|
         @sig_handlers[signal] = Proc.new do 
+          @logger.log(Logger::Severity::INFO, "Received termination signal .. shutting down workers then exiting", @options[:name])
           # send shutdown signals to children
           @workers.each_key { |worker|  kill_worker(signal, worker) }
           cleanup
         end
       end
       @sig_handlers[:USR1] = Proc.new do 
+        @logger.log(Logger::Severity::INFO, "Received USR1 signal .. Increasing number of workers to #{@options[:workers]+1}", @options[:name])
         @options[:workers] += 1
         new_worker
       end
       @sig_handlers[:USR2] = Proc.new do 
+        @logger.log(Logger::Severity::INFO, "Received USR2 signal .. Decreasing number of workers to #{@options[:workers]-1}", @options[:name])
         @options[:workers] -= 1
         kill_worker(:TERM, @workers.first[0]) unless @workers.first.nil?
       end
@@ -95,13 +108,14 @@ module Orchestra
       @workers.each_pair { |pid, worker|
         worker[:inactive] += 1
         if worker[:inactive] > @options[:timeout]
-          puts "killing worker #{pid} #{worker[:inactive]}"
+          @logger.log(Logger::Severity::WARN, "Worker #{pid} timed out .. Recycling the worker process", @options[:name])
           kill_worker(:KILL, pid)
         end
       }
       reap_workers
       # Fork new_workers if needed
       while @workers.length < @options[:workers]
+        @logger.log(Logger::Severity::WARN, "Missing  workers .. Currently workers: #{@workers.length} .. Forking new ones ", @options[:name])
         new_worker
       end
     end
@@ -144,7 +158,13 @@ module Orchestra
         @workers = nil
         # Create a new musician 
         r_channel.close
-        worker = Musician.new(@servers, w_channel)
+        logger = if @options[:daemonize]
+                  puts "creating log in dir #{@options[:log_dir]}"
+                  Logger.new(@options[:log_dir] + ::File::SEPARATOR + "#{@options[:name]}.#{Process.pid}.log")
+                else 
+                  Logger.new(STDOUT)
+                end
+        worker = Musician.new(@servers, w_channel, logger )
         worker.run 
         exit
       end

@@ -11,7 +11,7 @@ module Orchestra
     attr_reader :configs
     
     DEFAULTS = {
-  	  :server     =>  {:host => "0.0.0.0", :port => 9000, :dir => Dir.pwd, :class => Orchestra::Shehab,  :rackup => "config.ru"}, 
+  	  :server     =>  {:host => "0.0.0.0", :port => 9000, :dir => Dir.pwd, :class => Orchestra::Shehab,  :rackup => "rackup.ru"}, 
   	  # This should contain number of workers to maintain
   	  :workers    =>  1,
   	  # Declare worker for recycle if it remains inactive for longer than timeout
@@ -19,9 +19,11 @@ module Orchestra
   	  :pre_fork   =>  nil,
   	  :post_fork  =>  nil, 
   	  :daemonize  =>  false,
-      :pid_file   =>  "tmp/pids/shehab.pid",
-      :user       =>  0,
-      :group      =>  0
+      :pid_file   =>  "tmp/pids/shihabd.pid",
+      :log_dir   =>  "log", 
+      :user       =>  Process.uid,
+      :group      =>  Process.gid,
+      :name       =>  "Shihabd"
     }
     
     ERROR_MSGS = {
@@ -34,6 +36,7 @@ module Orchestra
       :dir      =>  "Directory doesn't exist",
       :user     =>  "User doesn't exist in system",
       :pid_file =>  "Directory for the pid file not found",
+      :log_dir  =>  "Directory for the log file not found",
       :rackup   =>  "Rackup file not found",
     }
     
@@ -56,8 +59,8 @@ module Orchestra
     def listen(options, default=false)
       @configs[:servers] = [] unless @configs[:servers]
       server = DEFAULTS[:server].dup
-      server[:dir] = File.exists?(options[:dir])? options[:dir] : (raise ArgumentError, ERROR_MSGS[:dir]) if options[:dir] 
-      server[:rackup] = File.exists?(options[:rackup])? options[:rackup] : (raise ArgumentError, ERROR_MSGS[:rackup]) if options[:rackup] 
+      server[:dir] = (File.exists?(options[:dir])) ? options[:dir] : (raise ArgumentError, ERROR_MSGS[:dir]) if options[:dir] 
+      server[:rackup] = File.exists?(options[:rackup]) ? options[:rackup] : (raise ArgumentError, ERROR_MSGS[:rackup]) if options[:rackup] 
       if options[:socket] 
         File.exists?(File.dirname(File.expand_path(options[:socket])))? 
             server[:socket] = options[:socket] : (raise ArgumentError, ERROR_MSGS[:socket])
@@ -109,6 +112,11 @@ module Orchestra
     def pid_file(pid)
       File.exists?(File.dirname(File.expand_path(pid)))? 
         server[:pid_file] = pid : (raise ArgumentError, ERROR_MSGS[:pid_file])
+    end
+    
+    def log_dir(dir)
+      File.exists?(File.expand_path(file))? 
+        server[:log_dir] = dir : (raise ArgumentError, ERROR_MSGS[:log_dir])
     end
     
     def daemonize(daemonize)
