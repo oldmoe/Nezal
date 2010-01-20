@@ -1,0 +1,28 @@
+<script type='text/javascript'>
+  
+  function logout() {
+    new Ajax.Request( "/games/<%=@game_id%>/courts" , { 
+      method:'put', 
+      parameters: { action : 'delete' } ,
+      onSuccess: function(transport, json){
+      },
+      onFailure: function(){
+          Event.error("Error"); 
+      }
+    });
+  }
+  window.onunload = logout;
+  
+</script>
+
+<div id="gameArea" class="column">
+  <div id="gameStatus">
+  </div>
+  <div id='game'>
+  </div>
+</div>
+
+<%= erb(:_chat, :layout => false) %>
+<div style="clear:both"></div>
+
+

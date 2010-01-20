@@ -1,0 +1,15 @@
+<h1> Awesome Games List, Join one right now !!! </h1>
+<% @games.each do |game | %>
+  <div class="game">
+    <div>
+		  <img src="/game_images/<%=game[:value][:image]%>" class="image"/>
+    </div>
+    <div>
+      <a href="/games/<%=game[:key]%>/courts"><%=game[:value][:name]%></a>
+      <span>
+        <%=game[:value][:description]%>
+      </span>
+    </div>
+    <div style="clear:both"></div>
+  </div>
+<% end %>
