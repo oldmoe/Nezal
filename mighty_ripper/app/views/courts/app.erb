@@ -14,15 +14,29 @@
   <script src="/javascripts/application/event.js"></script>
   
   <link rel="stylesheet" href="/stylesheets/scaffold.css" type="text/css" media="screen" title="no title" charset="utf-8">
-  <link rel="stylesheet" href="/stylesheets/chat.css" type="text/css" media="screen" title="no title" charset="utf-8">
-  <link rel="stylesheet" href="/stylesheets/court.css" type="text/css" media="screen" title="no title" charset="utf-8">
+  <link rel="stylesheet" href="/stylesheets/chat.css"     type="text/css" media="screen" title="no title" charset="utf-8">
+  <link rel="stylesheet" href="/stylesheets/court.css"    type="text/css" media="screen" title="no title" charset="utf-8">
   
   <script type="text/javascript">  
     Event.url =  "/games/<%=@game_id%>/courts/<%=@court[:key]%>/events"
-    function activateChat()
+    function fetchEvents()
     {
       window.setTimeout("Event.fetch()", 1000)
     }
+    
+    function logout() {
+      new Ajax.Request( "/games/<%=@game_id%>/courts/<%=@court[:key]%>" , { 
+        method:'put', 
+        parameters: { action : 'delete' } ,
+        onSuccess: function(transport, json){
+        },
+        onFailure: function(){
+            Event.error("Error"); 
+        }
+      });
+    }
+    window.onunload = logout;
+    
   </script>
   <style>
 				  
@@ -33,7 +47,7 @@
   	
 </head>
 
-<body onload="activateChat()">
+<body onload="fetchEvents()">
 		<div id="header">
 		  <h1></h1> 
 		</div>

@@ -6,7 +6,7 @@ class Game
     new_image = Image.new(image).image
     game =  { :value => {:name => name, :description => description, :image => new_image[:filename] } }
     @game = self.class.create(game)
-    court = Court.new(@game[:key], name, description)
+    Court.new(@game[:key], name, description)
     @game
   end
   

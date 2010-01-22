@@ -1,0 +1,25 @@
+#room #name{
+  background : #333;
+  margin : 10px;
+  padding : 10px;
+}
+
+#room #event{
+  background : #333;
+  margin : 10px;
+  padding : 10px;
+  text-align : center;
+}
+
+#room .invisible{
+  background : #333;
+  margin : 10px;
+  padding : 10px;
+  display : none;
+  text-align : center;
+}
+
+
+#room .user{
+  margin : 10px;
+}

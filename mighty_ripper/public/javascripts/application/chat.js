@@ -8,7 +8,7 @@ var Chat =  {
     { 
       json.user =document.getElementById('userName').name;
     }
-    if ( msgs.length >0 && msgs.item(msgs.length-1).getElementsByTagName('span').item(0).innerHTML.split(":")[0] == json.user )
+    if ( msgs && msgs.length >0 && msgs.item(msgs.length-1).getElementsByTagName('span').item(0).innerHTML.split(":")[0] == json.user )
     {
       newMsg = msgs.item(msgs.length-1);
       var chatMsgs = msgs.item(msgs.length-1).getElementsByTagName('span');

@@ -10,10 +10,11 @@ var Event = {
           if(json[i]["type"]=="chat")
           {
             Chat.process(json[i]);
-          }else if (json[i]["type"]=="room"){
-            Room.process(json[i]);
-          }else if (json[i]["type"]=="game"){
-            GameEngine.process(json[i]);
+//          }else if (json[i]["type"]=="room"){
+//            Room.process(json[i]);
+//          }else if (json[i]["type"]=="game"){
+//            GameEngine.process(json[i]);
+//          }
           }
         }
         window.setTimeout("Event.fetch()", 10000);

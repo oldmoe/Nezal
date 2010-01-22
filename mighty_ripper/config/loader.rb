@@ -48,8 +48,8 @@ module Bdb
   module ClassMethods
     
     def find(key)
-      value = (record=@@db_handler.get(nil, key, nil, 0)).nil?  ? nil :  Marshal.load(record)
-      options = { :key => key, :value => value}
+      value = (record = class_variable_get(:@@db_handler).get(nil, key, nil, 0)).nil?  ? nil :  Marshal.load(record)
+      options = { :key => key, :value => value }
     end
     
     def select()
@@ -60,22 +60,21 @@ module Bdb
     end
     
     def restore(data)
-      Marshal.restore(data)
+      Marshal.load(data)
     end
     
     def create(options = {})
       key = options[:key] || class_variable_get(:@@seq_handler).get(nil, 1, 0).to_s
       new_value = dump(options[:value]) 
       class_variable_get(:@@db_handler).put(nil, key, new_value, 0)
-      options[:key] = key 
-      options
+      find(key)
     end
     
     def update(options = {})
     end
     
     def destroy(key)
-      @@db_handler.del(nil, key, 0)
+      class_variable_get(:@@db_handler).del(nil, key, 0)
     end
     
     def generate_key
@@ -96,8 +95,7 @@ module Bdb
         #TODO There should be some error handling in here we will see
         cursor.close
       end
-      cursor.close
-      puts values
+      cursor.close  
       values
     end
     

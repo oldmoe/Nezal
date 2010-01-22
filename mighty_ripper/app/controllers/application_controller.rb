@@ -4,6 +4,8 @@ require_all 'app/models/'
 
 class ApplicationController < Sinatra::Base
 
+  enable :sessions 
+
   set :root,  File.dirname(File.dirname(File.dirname(__FILE__)))
   set :static, true
   set :public, "#{root}/public"
@@ -19,16 +21,13 @@ class ApplicationController < Sinatra::Base
   
   before do 
     init
-    puts params
-    puts session
-    
     if session[:user_id] && ! ( @user = $users[session[:user_id]] ).nil? 
       puts "====Application Controller: User Found : #{user}"
     else
       puts "====Application Controller: Session Doesnt Exist"
       @user = User.create
-      $users[@user[:id]] = @user
-      session[:user_id] = @user[:id]
+      $users[@user[:key]] = @user
+      session[:user_id] = @user[:key]
       puts "====Application Controller: User created : #{user.inspect}"
     end  
   end

@@ -17,7 +17,6 @@ class GamesController < ApplicationController
   end
     
   post '/admin' do
-    puts "Inside post"
     @game = Game.new(params[:name], params[:description], params[:image])
     redirect "/games"
   end
