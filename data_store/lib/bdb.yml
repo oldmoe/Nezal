@@ -1,0 +1,10 @@
+production :
+  store_path : /home/riham/BerkeleyStore
+  env_name : MightyRipper
+  
+test : 
+  store_path : /home/riham/BerkeleyStore
+  env_name : MightyRipperTest
+
+  
+
