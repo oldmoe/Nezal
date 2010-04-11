@@ -1,0 +1,94 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<!--meta equiv="X-UA-Compatible" content="chrome=1"-->
+	<head>
+		<!--meta http-equiv="X-UA-Compatible" content="chrome=1"-->
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<link type="text/css" href="/city-defender/css/game.css" rel="stylesheet" />
+		<script src="/city-defender/js/base/excanvas.compiled.js"></script>
+		<script src="/city-defender/js/base/prototype.js"></script>
+		<script src="/city-defender/js/base/sound.js"></script>
+		<script src="/city-defender/js/base/template.js"></script>
+		<script src="/city-defender/js/game/images.js"></script>
+		<script src="/city-defender/js/game/unit.js"></script>
+		<script src="/city-defender/js/game/turret.js"></script>
+		<script src="/city-defender/js/game/ghost_turret.js"></script>
+		<script src="/city-defender/js/game/double_turret.js"></script>
+		<script src="/city-defender/js/game/launcher.js"></script>
+		<script src="/city-defender/js/game/creep.js"></script>
+		<script src="/city-defender/js/game/tanks.js"></script>
+		<script src="/city-defender/js/game/plane.js"></script>
+		<script src="/city-defender/js/game/rocket.js"></script>
+		<script src="/city-defender/js/game/config.js"></script>
+		<script src="/city-defender/js/game/game.js"></script>
+	</head>
+	<body>
+		<textarea id='towers_tpl' style="display:none">
+		{for tower in towers}
+			<div class="frame tower" title="${tower.name}" id="tower_${tower.name}" style="lefts: ${36*tower_index}px">
+				<div class="border">
+					<img src="/city-defender/images/cannon_base.png" />					
+					<img class="top" src="/city-defender/images/cannon.png" />					
+				</div>
+			</div>
+		{/for}
+		</textarea>
+		<textarea id='tpl' style="display:none">
+			<table>
+				<tbody>
+					<tr>
+						<td>Health Points</td>
+						<td>${unit.hp}/${unit.maxHp}</td>
+					</tr>
+					{for attr in unit.attributes}
+					<tr>
+						<td>${attr[0]}</td>
+						<td>${unit[attr[1]]}</td>
+					</tr>
+					{/for}
+					</tr>
+				</tbody>
+			
+		</table>
+		</textarea>
+		<div id="header">
+		</div>
+		<div id="gameContainer">
+			<div id="canvasHeader">
+				<span>Escaped :</span> <span id="escaped">0</span> 
+				<span>Money :</span> <span id="money"></span>
+			</div>
+			<div id="canvasContainer">
+				<canvas id="gameBackground" width="736" height="480"></canvas>
+				<canvas id="gameForeground" width="736" height="480"></canvas>
+				<canvas id="droppingGround" width="736" height="480"></canvas>
+			</div>
+			<div id="canvasFooter">
+				<div id="towers">
+					<!--
+					<div class="frame" title="Add Tower ">
+						<div class="border">
+							<img src="/city-defender/images/cannon_base.png" />					
+							<img class="top" src="/city-defender/images/cannon.png" />					
+						</div>
+					</div>
+					-->
+				</div>
+				<div id="creeps">
+					<div class="frame" title="Send Creep">
+						<div class="border">
+							<img src="/city-defender/images/humvy.png" />					
+							<img class="top" src="/city-defender/images/turret.png" />					
+						</div>
+					</div>
+				</div>
+			</div>
+				<div id="unitData">
+					
+				</div>
+			</div>
+	</body>
+</html>
+<script>
+
+</script>
