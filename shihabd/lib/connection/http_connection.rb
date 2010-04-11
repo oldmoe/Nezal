@@ -39,6 +39,7 @@ class NB::HTTPConnection < NB::Connection
 		@env[REMOTE_ADDR] =  @peer_address ||= (self === TCPSocket ? @conn.peeraddr.last : LOCALHOST) 
 		@parser ||= @@parsers.shift || ::Unicorn::HttpParser.new		
 		@keepalive = false
+		@finished_headers = false
 	end
 
 	def receive_data(data)
