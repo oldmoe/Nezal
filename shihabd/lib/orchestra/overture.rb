@@ -32,7 +32,7 @@ module Orchestra
                       "(default: #{Orchestra::Configurator::DEFAULTS[:server][:port]})") { |port|  @server_opts[:port] = port }
         opts.on("-s", "--socket FILE", "Set default unix domain socket to bind to FILE" ) { |file|  @server_opts[:socket] = file }
         opts.on("-d", "--dir    DIR", "Set server root dir to DIR") { |dir|   @server_opts[:dir] = dir }
-        opts.on("-r", "--rackup   FILE", "Use rack config file FILE")  { |config|  @server_opts[:rackup_file] = config }
+        opts.on("-r", "--rackup   FILE", "Use rack config file FILE")  { |config|  @server_opts[:rackup] = config }
 
         opts.separator "    Providing both --socket  and --host/--port honours --socket"                
         

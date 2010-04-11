@@ -42,10 +42,10 @@ module Orchestra
       @logger.log(Logger::Severity::INFO, "Starting #{@options[:name]} .. ", @options[:name])
       @options = @configs.dup
       DEFAULTS.each_pair { |key, value| @options[key] = value unless @options[key]}
-      @servers = @options[:servers] || [DEFAULTS[:server]]
+      @servers = @options[:servers].empty? ? [DEFAULTS[:server]] : @options[:servers]
       setup_servers
       @options[:workers].times { new_worker }
-        @logger.log(Logger::Severity::INFO, "Workers instantiated .. ", @options[:name])
+      @logger.log(Logger::Severity::INFO, "Workers instantiated .. ", @options[:name])
       set_traps
       @reactor.add_periodical_timer(1) { calibrate_workers }
       @reactor.run  

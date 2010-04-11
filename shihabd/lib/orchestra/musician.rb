@@ -6,17 +6,17 @@ module Orchestra
 
   class	Musician
 
-	  def initialize(sockets, channel, logger)
-		  @servers = sockets
-		  @monitor = channel
-		  @reactor = NB.reactor
-		  @logger = logger
-		  @name   = "Shihabd #{Process.pid}"
-	  end
+    def initialize(sockets, channel, logger)
+      @servers = sockets
+      @monitor = channel
+      @reactor = NB.reactor
+      @logger = logger
+      @name   = "Shihabd #{Process.pid}"
+    end
 
     def run 		
       trap_sigs
-	    @reactor.add_periodical_timer(1){
+      @reactor.add_periodical_timer(1) do
         begin
           result = @monitor.syswrite("1")
         rescue Errno::EWOULDBLOCK, Errno::EAGAIN, Errno::EINTR => e
@@ -25,25 +25,25 @@ module Orchestra
           @logger.log(Logger::Severity::Error, "Channel with master broken .. exiting", @name)
           exit!
         end
-      }
-      @servers.each { |server|
-        server[:listner].start
+      end
+      @servers.each { |server| 
+        server[:listner].start 
       }    
       begin
-		  	loop { NB::Fiber.new { @reactor.run }.resume }
-		  rescue Exception => e
+        loop { 
+          NB::Fiber.new{ @reactor.run }.resume 
+        }
+      rescue Exception => e
         @logger.log(Logger::Severity::Error, "Exception in run : #{e.backtrace}", nil)
-		  end
-	  end
+      end
+    end
    
     private
 
     # Clean up before exit
     def cleanup   
       # close the sockets 
-      @servers.each{ |server|
-        server[:listner].stop
-      }
+      @servers.each{ |server| server[:listner].stop }
       @monitor.close
     end
 

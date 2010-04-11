@@ -5,7 +5,7 @@ require 'server/tcp_server'
 
 module Orchestra 
 
-  class Shehab
+  class Shihabd
     
     DEFAULTS = {  :rackup => "rackup.ru", 
                   :environment => "development",
@@ -18,7 +18,6 @@ module Orchestra
         :wdir  => ::File.join(options[:dir], "public"),
         :handler => NB::RackConnection,
       }
-
       @rackup = options[:rackup] || DEFAULTS[:rackup]
       @options[:app] = app().to_app
       @environment = options[:environment]  || DEFAULTS[:environment]
@@ -36,8 +35,6 @@ module Orchestra
     private
 
     def app()
-      puts @rackup
-      puts DEFAULTS[:rackup]
       app = case @rackup
       when /\.rb$/
         Kernel.load(@rackup)

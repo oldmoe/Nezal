@@ -49,18 +49,22 @@ class NB::HTTPConnection < NB::Connection
 			close
 			return
 		end
-    if @finished_headers
-      # we should extract the body
-			@parser.filter_body(@body, @data)
-			# if the body gets too big we need to write it to a file (later)
-      handle_http_request if @parser.body_eof?
-    elsif @parser.headers(@env, @data)
-      @finished_headers = true
-      # headers are done, let's handle keepalive now
-			@keepalive = @env[HTTP_CONNECTION] == KEEP_ALIVE
-      @parser.filter_body(@body, @data)
-      handle_http_request if @parser.body_eof?
-		end
+		begin 
+		  if @finished_headers
+			# we should extract the body
+				@parser.filter_body(@body, @data)
+				# if the body gets too big we need to write it to a file (later)
+				handle_http_request if @parser.body_eof?
+		  elsif @parser.headers(@env, @data)
+		    @finished_headers = true
+		    # headers are done, let's handle keepalive now
+        @keepalive = @env[HTTP_CONNECTION] == KEEP_ALIVE
+		    @parser.filter_body(@body, @data)
+		    handle_http_request if @parser.body_eof?
+			end
+		rescue Exception => e 
+			raise Exception, e.message + @data
+		end 
 	end
 
 	def handle_http_request

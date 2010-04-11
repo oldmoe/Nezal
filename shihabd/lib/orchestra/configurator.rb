@@ -2,7 +2,7 @@ require 'ipaddr'
 require 'etc'
 require 'rack'
 
-require 'orchestra/shehab'
+require 'orchestra/shihabd'
 
 module Orchestra
   
@@ -11,7 +11,7 @@ module Orchestra
     attr_reader :configs
     
     DEFAULTS = {
-  	  :server     =>  {:host => "0.0.0.0", :port => 9000, :dir => Dir.pwd, :class => Orchestra::Shehab,  :rackup => "rackup.ru"}, 
+  	  :server     =>  {:host => "0.0.0.0", :port => 9000, :dir => Dir.pwd, :class => Orchestra::Shihabd,  :rackup => "rackup.ru"}, 
   	  # This should contain number of workers to maintain
   	  :workers    =>  1,
   	  # Declare worker for recycle if it remains inactive for longer than timeout
