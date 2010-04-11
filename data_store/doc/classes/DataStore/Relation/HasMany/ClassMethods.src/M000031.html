@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>has_many_associated_field_name (DataStore::Relation::HasMany::ClassMethods)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/data_store/has_many.rb, line 110</span>
+        <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">has_many_associated_field_name</span>(<span class="ruby-identifier">attr_name</span>)
+          <span class="ruby-identifier">hash</span> = <span class="ruby-identifier">:many_associations_hash</span>
+          <span class="ruby-identifier">attr_configs</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">hash</span>)[<span class="ruby-identifier">attr_name</span>]
+          <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">attr_configs</span>
+            <span class="ruby-identifier">associated_field_name</span> = (<span class="ruby-identifier">attr_configs</span>[<span class="ruby-identifier">:as</span>] <span class="ruby-operator">||</span> 
+                                        <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">Inflector</span>.<span class="ruby-identifier">singularize</span>(<span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">Inflector</span>.<span class="ruby-identifier">tableize</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">name</span>))).<span class="ruby-identifier">to_sym</span>
+            <span class="ruby-identifier">attr_configs</span>[<span class="ruby-identifier">:class</span>] <span class="ruby-operator">||=</span> <span class="ruby-constant">Kernel</span>.<span class="ruby-identifier">const_get</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">hash</span>)[<span class="ruby-identifier">attr_name</span>][<span class="ruby-identifier">:class_name</span>])
+            <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">attr_configs</span>[<span class="ruby-identifier">:class</span>].<span class="ruby-identifier">single_associations_hash</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">associated_field_name</span>) <span class="ruby-operator">&amp;&amp;</span>
+                    <span class="ruby-identifier">attr_configs</span>[<span class="ruby-identifier">:class</span>].<span class="ruby-identifier">single_associations_hash</span>[<span class="ruby-identifier">associated_field_name</span>][<span class="ruby-identifier">:class_name</span>] <span class="ruby-operator">==</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_sym</span>
+               <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">associated_field_name</span>
+            <span class="ruby-keyword kw">end</span>
+            <span class="ruby-identifier">associated_field_name</span> = <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">Inflector</span>.<span class="ruby-identifier">pluralize</span>(<span class="ruby-identifier">associated_field_name</span>).<span class="ruby-identifier">to_sym</span>
+            <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">attr_configs</span>[<span class="ruby-identifier">:class</span>].<span class="ruby-identifier">many_associations_hash</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">associated_field_name</span>) <span class="ruby-operator">&amp;&amp;</span>
+                    <span class="ruby-identifier">attr_configs</span>[<span class="ruby-identifier">:class</span>].<span class="ruby-identifier">many_associations_hash</span>[<span class="ruby-identifier">associated_field_name</span>][<span class="ruby-identifier">:class_name</span>] <span class="ruby-operator">==</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_sym</span>
+               <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">associated_field_name</span>
+             <span class="ruby-keyword kw">end</span>
+          <span class="ruby-keyword kw">end</span>
+          <span class="ruby-keyword kw">nil</span>
+        <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>save (DataStore::Storable)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/data_store/storable.rb, line 13</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">save</span>
+      <span class="ruby-identifier">attributes</span>[<span class="ruby-identifier">:id</span>] <span class="ruby-operator">||=</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">generate</span>
+      <span class="ruby-identifier">saved</span>
+      <span class="ruby-identifier">relations</span> = <span class="ruby-identifier">save_relations</span>
+      <span class="ruby-identifier">storable</span> = <span class="ruby-identifier">attributes</span>.<span class="ruby-identifier">merge</span>({<span class="ruby-identifier">:relations</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">_relations</span>})
+      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">db_handle</span>.<span class="ruby-identifier">put</span>(<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">attributes</span>[<span class="ruby-identifier">:id</span>], <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">dump</span>(<span class="ruby-identifier">storable</span>), <span class="ruby-value">0</span>)
+      <span class="ruby-keyword kw">self</span>  
+    <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

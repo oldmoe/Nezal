@@ -2,7 +2,7 @@ require 'bdb'
 require 'yaml'
 
 module DataStore
-  
+
   class Database
   
     SINGLE_FILE = 0
@@ -26,7 +26,7 @@ module DataStore
 
       @@env.open(@@config["store_path"] + ::File::SEPARATOR + @@config["env_name"], ENV_FLAGS, 0);
       @@dbs = {}
-      Kernel.at_exit {  ::DataStore::Database.close } 
+      Kernel.at_exit { ::DataStore::Database.close } 
     end
     
     def self.close
@@ -34,11 +34,15 @@ module DataStore
       @@env.close 
     end
     
-    def self.open(name, mode = MULTIPLE_FILES )
-      @@dbs[name] ||= @@env.db.open(nil, name, nil, Bdb::Db::BTREE, Bdb::DB_CREATE, 0)
+    def self.open(name, options={} )
+      @@dbs[name] ||= ->(){ 
+        db = @@env.db
+        db.flags= options[:flags] if options[:flags]
+        db.open(nil, name, nil, Bdb::Db::BTREE, Bdb::DB_CREATE, 0) 
+      }.call()
+      @@dbs[name]
     end
 
-    
   end  
   
 end

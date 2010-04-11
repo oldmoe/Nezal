@@ -2,16 +2,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>included (DataStore::Storable)</title>
+  <title>dirty? (DataStore::Storable)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/data_store/storable.rb, line 7</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">included</span>(<span class="ruby-identifier">base</span>)
-      <span class="ruby-identifier">base</span>.<span class="ruby-identifier">extend</span>(<span class="ruby-constant">Enumerable</span>)
-      <span class="ruby-identifier">base</span>.<span class="ruby-identifier">extend</span>(<span class="ruby-constant">DataStore</span><span class="ruby-operator">::</span><span class="ruby-constant">CRUD</span>)
-      <span class="ruby-identifier">base</span>.<span class="ruby-identifier">extend</span>(<span class="ruby-constant">DataStore</span><span class="ruby-operator">::</span><span class="ruby-constant">RelationCRUD</span>)        
+  <pre><span class="ruby-comment cmt"># File lib/data_store/storable.rb, line 47</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">dirty?</span>
+      <span class="ruby-identifier">instance_variable_defined?</span>(<span class="ruby-identifier">:@__dirty__</span>)<span class="ruby-operator">?</span> <span class="ruby-ivar">@__dirty__</span> <span class="ruby-operator">:</span> <span class="ruby-ivar">@__dirty__</span> = <span class="ruby-keyword kw">true</span>
     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

@@ -1,25 +1,33 @@
 module DataStore
 
   module Storable
-    include(DataStore::Relation)  
     SEPARATOR = ":"
   
     def self.included(base)
-      base.extend(Enumerable)
+      base.extend(Enumerable) 
       base.extend(DataStore::CRUD)
-      base.extend(DataStore::RelationCRUD)        
+      base.send(:include, DataStore::Relation)  
     end  
   
     def save
       attributes[:id] ||= self.class.generate
       saved
-      relations = save_relations
-      storable = attributes.merge({:relations => relations})
+      relations = _save_relations
+      storable = attributes.merge({:relations => _unmapped_relations})
+      self.class.db_handle.put(nil, attributes[:id], self.class.dump(storable), 0)
+      self  
+    end
+    
+    def _save
+      attributes[:id] ||= self.class.generate
+      saved
+      storable = attributes.merge({:relations => _unmapped_relations})
       self.class.db_handle.put(nil, attributes[:id], self.class.dump(storable), 0)
       self  
     end
     
     def destroy
+      self._delete_relations()
       self.class.db_handle.del(nil, @attributes[:id], 0)
     end
     

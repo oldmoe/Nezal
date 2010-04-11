@@ -57,7 +57,7 @@ class QueryProxyTest < MiniTest::Unit::TestCase
 
   def test_where
     query = DataStore::QueryProxy.new(TestModel.name).where(id: "6")
-    query.each {|obj| puts obj}
+#    query.each {|obj| puts obj}
   end
 
   def test_where_with_true_block

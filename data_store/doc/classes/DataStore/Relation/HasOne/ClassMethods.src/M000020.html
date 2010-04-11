@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>define_has_one_accessors (DataStore::Relation::HasOne::ClassMethods)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/data_store/has_one.rb, line 64</span>
+        <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">define_has_one_accessors</span>(<span class="ruby-identifier">attr_name</span>)
+          <span class="ruby-identifier">module_eval</span> <span class="ruby-node">%Q{ 
+            def #{attr_name}()
+              if @#{attr_name}.nil? &amp;&amp; _relations[self.class.single_associations_hash[:#{attr_name}][:field_name]]
+                klass = Kernel.const_get(self.class.single_associations_hash[:#{attr_name}][:class_name])
+                @#{attr_name} = klass.get(_relations[self.class.single_associations_hash[:#{attr_name}][:field_name]])
+              end
+              @#{attr_name}
+            end
+          }</span>
+          <span class="ruby-identifier">module_eval</span> <span class="ruby-node">%Q{ 
+            def #{attr_name}=(attr_val)
+              associated_attr = self.class.single_associations_hash[:#{attr_name}][:associated_attr] ||= self.class.has_one_associated_field_name(:#{attr_name})
+              if attr_val.class.single_associations_hash.has_key? associated_attr
+                attr_val.send(&quot;_&quot;+associated_attr.to_s+&quot;=&quot;, self) unless attr_val.send(associated_attr) ==  self
+              elsif attr_val.class.many_associations_hash.has_key? associated_attr
+                attr_val.send(associated_attr.to_s)._add self unless attr_val.send(associated_attr).include? self
+              end
+              @#{attr_name} = attr_val
+            end
+          }</span>
+          <span class="ruby-identifier">module_eval</span> <span class="ruby-node">%Q{ 
+            def _#{attr_name}=(attr_val)
+              @#{attr_name} = attr_val
+            end
+          }</span>
+        <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

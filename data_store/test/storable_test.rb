@@ -1,5 +1,5 @@
 require 'lib/data_store'
-require 'test/test_model'
+require 'test/models/test_model'
 require 'minitest/unit'
 
 ENV["environment"] = "test"
@@ -69,86 +69,7 @@ class DataStoreTest < MiniTest::Unit::TestCase
     assert_nil TestModel.get(@record[:id])
   end
 
-  # Test creation, retrieval of a record with a storable attribute
-  # Delete the record post creation
-  def create_record_with_storable_attrs
-    @rel_attributes = {x: 1, y: 2}
-    @relation = TestModel.new(@rel_attributes)
-    @attributes = {x: 1, y: 2, relation: @relation}
-    @record = TestModel.create(@attributes)    
-  end
-  
-  def delete_record_with_storable_attrs
-    TestModel.delete(@relation[:id]) 
-    TestModel.delete(@record[:id]) 
-  end
-  
-  def post_test_create_record_with_storable_attrs
-    delete_record_with_storable_attrs
-  end
-  
-  def test_create_record_with_storable_attrs
-    create_record_with_storable_attrs
-    assert_instance_of TestModel, @record[:relation]
-    assert_instance_of String, @record[:relation][:id]
-    assert_equal @record[:relation].attributes, @relation.attributes
-  end
-  
-  def pre_test_get_record_with_storable_attrs
-    create_record_with_storable_attrs
-  end
-  
-  def post_test_get_record_with_storable_attrs
-    delete_record_with_storable_attrs
-  end
-  
-  def test_get_record_with_storable_attrs
-    @result = TestModel.get(@record[:id])
-    assert_equal @result[:id], @record[:id]
-    assert_equal @record[:relation].attributes, @rel_attributes
-  end
-  
-  # Test creation of a record with a StorableList attribute
-  # Delete the record post creation
-  def create_record_with_storable_list_attrs
-    @storable_attrs = { x: 1, y: 2 }
-    @list = DataStore::StorableList.new(TestModel.name)
-    3.times { @list << TestModel.new(@storable_attrs.dup) }
-    @attributes = {x: 1, y: 2, list: @list}
-    @record = TestModel.create(@attributes)    
-  end
-  
-  def delete_record_with_storable_list_attrs
-    @record[:list].each { |rec| TestModel.delete(rec[:id]) }
-    TestModel.delete(@record[:id]) 
-  end
-  
-  def post_test_create_record_with_storable_list_attrs
-    delete_record_with_storable_list_attrs
-  end
-  
-  def test_create_record_with_storable_list_attrs
-    create_record_with_storable_list_attrs
-    assert_instance_of TestModel, @record[:list][0]
-    assert_instance_of String, @record[:list][0][:id]
-    assert_equal @record[:list][0].attributes, @list[0].attributes
-  end
-  
-  def pre_test_get_record_with_storable_list_attrs
-    create_record_with_storable_list_attrs
-  end
-  
-  def post_test_get_record_with_storable_list_attrs
-    delete_record_with_storable_list_attrs
-  end
-  
-  def test_get_record_with_storable_list_attrs
-    @result = TestModel.get(@record[:id])
-    assert_equal @result[:id], @record[:id]
-    @storable_attrs.each_key { |key| assert_equal @result[:list][0][key], @storable_attrs[key] }
-    assert_equal @result[:list].length, @list.length
-  end  
-  
+=begin    
   # Test Object methods save, destroy, saved?, dirty?
   def save_record_with_storable_list_attrs
     @storable_attrs = { x: 1, y: 2 }
@@ -179,7 +100,7 @@ class DataStoreTest < MiniTest::Unit::TestCase
     @record.destroy
     assert_nil TestModel.get(@record[:id])
   end
-  
+=end  
   def post_test_saved? 
     TestModel.delete(@record[:id])
     TestModel.delete(@record2[:id])

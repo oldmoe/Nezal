@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>load_relation_records (DataStore::Relation::HasMany)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/data_store/has_many.rb, line 30</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">load_relation_records</span>(<span class="ruby-identifier">attr_name</span>)
+        <span class="ruby-comment cmt"># We should like load the records from the DB to begin with </span>
+        <span class="ruby-comment cmt"># then the each should work correctly and afterwards we check </span>
+        <span class="ruby-comment cmt"># rest of the collection interface</span>
+        <span class="ruby-identifier">keys</span> = []
+        <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">:id</span>]
+          <span class="ruby-identifier">cursor</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">relation_db_handle</span>(<span class="ruby-identifier">attr_name</span>).<span class="ruby-identifier">cursor</span>(<span class="ruby-keyword kw">nil</span>, <span class="ruby-value">0</span>)
+          <span class="ruby-identifier">result</span> = <span class="ruby-identifier">cursor</span>.<span class="ruby-identifier">get</span>(<span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">:id</span>], <span class="ruby-keyword kw">nil</span>, <span class="ruby-constant">Bdb</span><span class="ruby-operator">::</span><span class="ruby-constant">DB_SET_RANGE</span> ) 
+          <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">result</span>
+            <span class="ruby-identifier">keys</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">result</span>[<span class="ruby-value">1</span>]
+            <span class="ruby-identifier">result</span> = <span class="ruby-identifier">cursor</span>.<span class="ruby-identifier">get</span>(<span class="ruby-keyword kw">nil</span>, <span class="ruby-keyword kw">nil</span>, <span class="ruby-constant">Bdb</span><span class="ruby-operator">::</span><span class="ruby-constant">DB_NEXT</span>)
+          <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">end</span>
+        <span class="ruby-identifier">records</span> = []
+        <span class="ruby-identifier">keys</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span><span class="ruby-operator">|</span> 
+          <span class="ruby-identifier">klass</span> = <span class="ruby-constant">Kernel</span>.<span class="ruby-identifier">const_get</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">many_associations_hash</span>[<span class="ruby-identifier">attr_name</span>][<span class="ruby-identifier">:class_name</span>])
+          <span class="ruby-identifier">records</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">get</span>(<span class="ruby-identifier">key</span>)
+        <span class="ruby-keyword kw">end</span>
+        <span class="ruby-identifier">records</span>
+      <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

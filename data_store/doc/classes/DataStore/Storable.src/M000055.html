@@ -2,14 +2,15 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>destroy (DataStore::Storable)</title>
+  <title>modified (DataStore::Storable)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/data_store/storable.rb, line 22</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">destroy</span>
-      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">db_handle</span>.<span class="ruby-identifier">del</span>(<span class="ruby-keyword kw">nil</span>, <span class="ruby-ivar">@attributes</span>[<span class="ruby-identifier">:id</span>], <span class="ruby-value">0</span>)
+  <pre><span class="ruby-comment cmt"># File lib/data_store/storable.rb, line 56</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">modified</span>
+      <span class="ruby-ivar">@__dirty__</span> = <span class="ruby-keyword kw">true</span>
+      <span class="ruby-keyword kw">self</span>
     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

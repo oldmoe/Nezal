@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>save_one_to_one_relations (DataStore::Relation::OneToOne)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/data_store/one-to-one.rb, line 19</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">save_one_to_one_relations</span>
+        <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">_one_to_one_hash</span>.<span class="ruby-identifier">each_pair</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span> <span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span> <span class="ruby-operator">|</span>
+          <span class="ruby-identifier">attribute</span> = <span class="ruby-identifier">send</span>(<span class="ruby-identifier">key</span>)
+          <span class="ruby-identifier">associated_attr</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">_one_to_one_hash</span>[<span class="ruby-identifier">key</span>][<span class="ruby-identifier">:associated_attr</span>]
+          <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span>(<span class="ruby-identifier">value</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">_one_to_one_hash</span>.<span class="ruby-identifier">has_key?</span> <span class="ruby-identifier">associated_attr</span>)
+            <span class="ruby-identifier">attribute</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">_one_to_one_hash</span>[<span class="ruby-identifier">key</span>][<span class="ruby-identifier">:foreign_key</span>]]= <span class="ruby-identifier">attributes</span>[<span class="ruby-identifier">:id</span>]
+          <span class="ruby-keyword kw">end</span>
+          <span class="ruby-identifier">attribute</span>.<span class="ruby-identifier">save</span> <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">attribute</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">attribute</span>.<span class="ruby-identifier">dirty?</span>)
+          <span class="ruby-identifier">attributes</span>[<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">_one_to_one_hash</span>[<span class="ruby-identifier">key</span>][<span class="ruby-identifier">:identified_by</span>]] = <span class="ruby-identifier">attribute</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">attribute</span>[<span class="ruby-identifier">:id</span>]
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

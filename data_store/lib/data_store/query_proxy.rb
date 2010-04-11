@@ -19,13 +19,16 @@ module DataStore
     def where(*args, &block)
       conditions = args
       # Check the arguements and turn them into conditions
-      if (conditions.empty? && !block_given?) || !( conditions.length > 0  && (conditions[0].is_a? Hash))
+      if (conditions.empty? && !block_given?) || ( conditions.length > 0  && !(conditions[0].is_a? Hash))
+        puts block
         raise ArgumentError, ErrorMsg 
       end
-      conditions[0].each_pair do |key, value|
-        @state[:conditions] << Proc.new { |object|
-          object[key] == value
-        }        
+      if conditions[0]
+        conditions[0].each_pair do |key, value|
+          @state[:conditions] << Proc.new { |object|
+            object[key] == value
+          }        
+        end
       end
       @state[:conditions] << block if block_given?
       return clone
