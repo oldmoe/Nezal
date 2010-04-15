@@ -1,13 +1,12 @@
-<script type='text/javascript'>
-
-</script>
+<link type="text/css" href="/stylesheets/user.css" rel="stylesheet" />
 
 <div id="gameArea" class="column">
   <div id='game'>
-	  <%= erb(@game_name, :layout => false) %>
+	  <%= erb(@game_erb, :layout => false) %>
+  </div>
+  <div id='user'>
+	  <%= erb(@user_erb, :layout => false) %>
   </div>
 </div>
 
 <div style="clear:both"></div>
-
-
