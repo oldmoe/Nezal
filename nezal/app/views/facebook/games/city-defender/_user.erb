@@ -1,0 +1,7 @@
+<% @friends.each do | friend | %>
+  <div class="friend">
+    <a href="<%=friend['profile_url']%>" target="_parent">
+		  <img src="<%=friend['pic_small']%>" class="image"/>
+	  </a>
+  </div>
+<% end %>
