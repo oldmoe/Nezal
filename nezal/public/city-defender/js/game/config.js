@@ -1,87 +1,182 @@
 var Config = {
-	delay : 10000, //delay between waves, in milliseconds
+	delay : 2000, //delay between waves, in milliseconds
 	towers : [
-		{ klass : Turret, name : 'Basic', values : {hp:200, power:15, rate:0.3, price: 5, range: 2} },
-		{ klass : Turret, name : 'Moderate', values : {hp:400, power:30, rate:0.4, price: 10, range: 2} },
-		{ klass : DoubleTurret, name : 'Heavy', values : {hp:600, power:60, rate:0.5, price: 20, range: 3} },
-		{ klass : RocketLauncher, name : 'Ultra', values : {hp:800, power:100, rate:0.05, price: 30, range: 6} }
+		{ klass : Turret, name : 'Basic', values : {hp:300, power:5, rate:0.1, price: 10, range: 2} },
+		{ klass : DoubleTurret, name : 'Double', values : {hp:600, power:10, rate:0.2, price: 30, range: 2} },
+		{ klass : Patriot, name : 'Patriot Air Defense', values : {hp:1000, power:15, rate:0.3, price: 60, range: 3} },
+		{ klass : RocketLauncher, name : 'Rocket Launcher', values : {hp:800, power:100, rate:0.05, price: 50, range: 2} }
 	],
 	waves : [
-		{ creeps : [
-			{klass : Plane, count : 3, values : {hp:6000, speed:1, power:10, rate:0.5, price: 7, range: 4} }
-		] },
-		{ creeps : [
-			{klass : Plane, count : 13, values : {hp:2800, speed:2, power:2, rate:0.2, price: 6, range: 2} }
-		] },
-		{ creeps : [
-			{klass : Plane, count : 13, values : {hp:2380, speed:2, power:2, rate:0.2, price: 6, range: 2} }
-		] },
-		{ creeps : [
-			{klass : Plane, count : 13, values : {hp:2000, speed:2, power:2, rate:0.2, price: 6, range: 2} }
-		] },
-		{ creeps : [
-			{klass : Plane, count : 13, values : {hp:1740, speed:2, power:2, rate:0.2, price: 6, range: 2} }
-		] },
-		{ creeps : [
-			{klass : Plane, count : 13, values : {hp:1480, speed:2, power:2, rate:0.2, price: 5, range: 2} }
-		] },
-		{ creeps : [
-			{klass : Plane, count : 13, values : {hp:1260, speed:2, power:2, rate:0.2, price: 5, range: 2} }
-		] },
-		{ creeps : [
-			{klass : Humvee, count : 13, values : {hp:1080, speed:2, power:2, rate:0.2, price: 5, range: 2} }
-		] },
-		{ creeps : [
-			{klass : Humvee, count : 13, values : {hp:925, speed:2, power:2, rate:0.2, price: 5, range: 2} }
-		] },
-		{ creeps : [
-			{klass : Humvee, count : 13, values : {hp:790, speed:2, power:2, rate:0.2, price: 4, range: 2} }
-		] },
-		{ creeps : [
-			{klass : Humvee, count : 13, values : {hp:675, speed:2, power:2, rate:0.2, price: 4, range: 2} }
-		] },
-		{ creeps : [
-			{klass : Humvee, count : 13, values : {hp:580, speed:2, power:2, rate:0.2, price: 4, range: 2} }
-		] },
-		{ creeps : [
-			{klass : Humvee, count : 13, values : {hp:500, speed:2, power:2, rate:0.2, price: 4, range: 2} }
-		] },
-		{ creeps : [
-			{klass : TankII, count : 13, values : {hp:420, speed:2, power:1, rate:0.1, price: 3, range: 1} }
-		] },
-		{ creeps : [
-			{klass : TankII, count : 13, values : {hp:360, speed:2, power:1, rate:0.1, price: 3, range: 1} }
-		] },
-		{ creeps : [
-			{klass : TankII, count : 13, values : {hp:310, speed:2, power:1, rate:0.1, price: 3, range: 1} }
-		] },
-		{ creeps : [
-			{klass : TankII, count : 13, values : {hp:265, speed:2, power:1, rate:0.1, price: 3, range: 1} }
-		] },
-		{ creeps : [
-			{klass : TankII, count : 13, values : {hp:225, speed:2, power:1, rate:0.1, price: 2, range: 1} }
-		] },
-		{ creeps : [
-			{klass : TankII, count : 13, values : {hp:200, speed:2, power:1, rate:0.1, price: 2, range: 1} }
-		] },
-		{ creeps : [
-			{klass : TankI, count : 13, values : {hp:170, speed:2, power:1, rate:0.1, price: 2, range: 1} }
-		] },
-		{ creeps : [
-			{klass : TankI, count : 13, values : {hp:140, speed:2, power:1, rate:0.1, price: 2, range: 1} }
-		] },
-		{ creeps : [
-			{klass : TankI, count : 13, values : {hp:120, speed:2, power:1, rate:0.1, price: 1, range: 1} }
-		] },
-		{ creeps : [
-			{klass : TankI, count : 13, values : {hp:105, speed:2, power:1, rate:0.1, price: 1, range: 1} }
-		] },
-		{ creeps : [
-			{klass : TankI, count : 13, values : {hp:90, speed:2, power:1, rate:0.1, price: 1, range: 1} }
-		] },
 
 		{ creeps : [
-			{klass : TankI, count : 13, values : {hp:75, speed:2, power:1, rate:0.1, price: 1, range: 1} }
+			{klass : Humvee, count : 1, values : {hp:15000, speed:4, power:3, rate:0.1, price: 100, range: 2} }
+		] },
+		{ creeps : [
+			{klass : TankI, count : 10, values : {hp:650, speed:8, power:2, rate:0.1, price: 3, range: 2} },
+			{klass : TankII, count : 10, values : {hp:680, speed:8, power:2, rate:0.1, price: 3, range: 2} }
+		] },
+		{ creeps : [
+			{klass : Tank, count : 10, values : {hp:620, speed:8, power:2, rate:0.1, price: 3, range: 2} },
+			{klass : TankI, count : 10, values : {hp:650, speed:8, power:2, rate:0.1, price: 3, range: 2} }
+		] },
+		{ creeps : [
+			{klass : Plane, count : 20, values : {hp:120, speed:8, power:3, rate:0.1, price: 4, range: 3} }
+		] },
+		{ creeps : [
+			{klass : TankII, count : 5, values : {hp:600, speed:8, power:2, rate:0.1, price: 3, range: 2} },
+			{klass : Humvee, count : 5, values : {hp:620, speed:8, power:2, rate:0.1, price: 3, range: 2} },
+			{klass : Plane, count : 10, values : {hp:120, speed:8, power:3, rate:0.1, price: 4, range: 3} }
+		] },
+		{ creeps : [
+			{klass : TankI, count : 5, values : {hp:580, speed:8, power:2, rate:0.1, price: 3, range: 2} },
+			{klass : TankII, count : 5, values : {hp:600, speed:8, power:2, rate:0.1, price: 3, range: 2} },
+			{klass : Plane, count : 10, values : {hp:120, speed:8, power:3, rate:0.1, price: 4, range: 3} }
+		] },
+		{ creeps : [
+			{klass : Tank, count : 5, values : {hp:560, speed:8, power:2, rate:0.1, price: 3, range: 2} },
+			{klass : TankI, count : 5, values : {hp:580, speed:8, power:2, rate:0.1, price: 3, range: 2} },
+			{klass : Plane, count : 10, values : {hp:120, speed:8, power:3, rate:0.1, price: 4, range: 3} }
+		] },
+		{ creeps : [
+			{klass : TankI, count : 5, values : {hp:540, speed:8, power:2, rate:0.1, price: 3, range: 2} },
+			{klass : TankII, count : 5, values : {hp:560, speed:8, power:2, rate:0.1, price: 3, range: 2} },
+			{klass : Humvee, count : 5, values : {hp:580, speed:8, power:2, rate:0.1, price: 3, range: 2} },
+			{klass : Plane, count : 5, values : {hp:120, speed:8, power:3, rate:0.1, price: 4, range: 3} }
+		] },
+		{ creeps : [
+			{klass : Tank, count : 5, values : {hp:520, speed:8, power:2, rate:0.1, price: 3, range: 2} },
+			{klass : TankI, count : 5, values : {hp:540, speed:8, power:2, rate:0.1, price: 3, range: 2} },
+			{klass : TankII, count : 5, values : {hp:560, speed:8, power:2, rate:0.1, price: 3, range: 2} },
+			{klass : Plane, count : 5, values : {hp:120, speed:8, power:3, rate:0.1, price: 4, range: 3} }
+		] },
+		{ creeps : [
+			{klass : Tank, count : 5, values : {hp:500, speed:8, power:2, rate:0.1, price: 3, range: 2} },
+			{klass : TankI, count : 5, values : {hp:520, speed:8, power:2, rate:0.1, price: 3, range: 2} },
+			{klass : TankII, count : 5, values : {hp:540, speed:8, power:2, rate:0.1, price: 3, range: 2} },
+			{klass : Humvee, count : 5, values : {hp:560, speed:8, power:3, rate:0.1, price: 4, range: 2} }
+		] },
+		{ creeps : [
+			{klass : Plane, count : 10, values : {hp:100, speed:8, power:3, rate:0.1, price: 4, range: 3} },
+			{klass : Humvee, count : 10, values : {hp:500, speed:8, power:2, rate:0.1, price: 3, range: 2} }
+		] },
+		{ creeps : [
+			{klass : TankI, count : 10, values : {hp:480, speed:8, power:2, rate:0.1, price: 3, range: 2} },
+			{klass : TankII, count : 5, values : {hp:500, speed:8, power:2, rate:0.1, price: 3, range: 2} },
+			{klass : Humvee, count : 5, values : {hp:520, speed:8, power:2, rate:0.1, price: 3, range: 2} }
+		] },
+		{ creeps : [
+			{klass : Tank, count : 10, values : {hp:460, speed:8, power:2, rate:0.1, price: 3, range: 2} },
+			{klass : TankI, count : 5, values : {hp:480, speed:8, power:2, rate:0.1, price: 3, range: 2} },
+			{klass : TankII, count : 5, values : {hp:500, speed:8, power:2, rate:0.1, price: 3, range: 2} }
+		] },
+		{ creeps : [
+			{klass : Humvee, count : 20, values : {hp:460, speed:8, power:2, rate:0.1, price: 3, range: 2} }
+		] },
+		{ creeps : [
+			{klass : TankII, count : 10, values : {hp:430, speed:8, power:2, rate:0.1, price: 3, range: 2} },
+			{klass : Humvee, count : 10, values : {hp:460, speed:8, power:2, rate:0.1, price: 3, range: 2} }
+		] },
+		{ creeps : [
+			{klass : TankII, count : 20, values : {hp:430, speed:8, power:2, rate:0.1, price: 3, range: 2} }
+		] },
+		{ creeps : [
+			{klass : TankI, count : 10, values : {hp:400, speed:8, power:2, rate:0.1, price: 3, range: 2} },
+			{klass : TankII, count : 10, values : {hp:430, speed:8, power:2, rate:0.1, price: 3, range: 2} }
+		] },
+		{ creeps : [
+			{klass : TankI, count : 20, values : {hp:400, speed:8, power:2, rate:0.1, price: 3, range: 2} }
+		] },
+		{ creeps : [
+			{klass : Tank, count : 10, values : {hp:380, speed:8, power:2, rate:0.1, price: 3, range: 2} },
+			{klass : TankI, count : 10, values : {hp:400, speed:8, power:2, rate:0.1, price: 3, range: 2} }
+		] },
+		{ creeps : [
+			{klass : Tank, count : 20, values : {hp:380, speed:8, power:2, rate:0.1, price: 3, range: 2} }
+		] },
+		{ creeps : [
+			{klass : Humvee, count : 1, values : {hp:6000, speed:2, power:3, rate:0.1, price: 50, range: 2} }
+		] },
+		{ creeps : [
+			{klass : TankI, count : 10, values : {hp:350, speed:4, power:1, rate:0.1, price: 2, range: 2} },
+			{klass : TankII, count : 10, values : {hp:380, speed:4, power:1, rate:0.1, price: 2, range: 2} }
+		] },
+		{ creeps : [
+			{klass : Tank, count : 10, values : {hp:320, speed:4, power:1, rate:0.1, price: 2, range: 2} },
+			{klass : TankI, count : 10, values : {hp:350, speed:4, power:1, rate:0.1, price: 2, range: 2} }
+		] },
+		{ creeps : [
+			{klass : Plane, count : 20, values : {hp:300, speed:4, power:2, rate:0.1, price: 2, range: 3} }
+		] },
+		{ creeps : [
+			{klass : TankII, count : 5, values : {hp:300, speed:4, power:1, rate:0.1, price: 2, range: 2} },
+			{klass : Humvee, count : 5, values : {hp:320, speed:4, power:1, rate:0.1, price: 2, range: 2} },
+			{klass : Plane, count : 10, values : {hp:350, speed:4, power:2, rate:0.1, price: 2, range: 3} }
+		] },
+		{ creeps : [
+			{klass : TankI, count : 5, values : {hp:280, speed:4, power:1, rate:0.1, price: 2, range: 2} },
+			{klass : TankII, count : 5, values : {hp:300, speed:4, power:1, rate:0.1, price: 2, range: 2} },
+			{klass : Plane, count : 10, values : {hp:60, speed:4, power:2, rate:0.1, price: 2, range: 3} }
+		] },
+		{ creeps : [
+			{klass : Tank, count : 5, values : {hp:260, speed:4, power:1, rate:0.1, price: 2, range: 2} },
+			{klass : TankI, count : 5, values : {hp:280, speed:4, power:1, rate:0.1, price: 2, range: 2} },
+			{klass : Plane, count : 10, values : {hp:60, speed:4, power:2, rate:0.1, price: 2, range: 3} }
+		] },
+		{ creeps : [
+			{klass : TankI, count : 5, values : {hp:240, speed:4, power:1, rate:0.1, price: 2, range: 2} },
+			{klass : TankII, count : 5, values : {hp:260, speed:4, power:1, rate:0.1, price: 2, range: 2} },
+			{klass : Humvee, count : 5, values : {hp:280, speed:4, power:1, rate:0.1, price: 2, range: 2} },
+			{klass : Plane, count : 5, values : {hp:60, speed:4, power:2, rate:0.1, price: 2, range: 3} }
+		] },
+		{ creeps : [
+			{klass : Tank, count : 5, values : {hp:220, speed:4, power:1, rate:0.1, price: 2, range: 2} },
+			{klass : TankI, count : 5, values : {hp:240, speed:4, power:1, rate:0.1, price: 2, range: 2} },
+			{klass : TankII, count : 5, values : {hp:260, speed:4, power:1, rate:0.1, price: 2, range: 2} },
+			{klass : Plane, count : 5, values : {hp:60, speed:4, power:2, rate:0.1, price: 2, range: 3} }
+		] },
+		{ creeps : [
+			{klass : Tank, count : 5, values : {hp:200, speed:4, power:1, rate:0.1, price: 2, range: 2} },
+			{klass : TankI, count : 5, values : {hp:220, speed:4, power:1, rate:0.1, price: 2, range: 2} },
+			{klass : TankII, count : 5, values : {hp:240, speed:4, power:1, rate:0.1, price: 2, range: 2} },
+			{klass : Humvee, count : 5, values : {hp:260, speed:4, power:1, rate:0.1, price: 2, range: 2} }
+		] },
+		{ creeps : [
+			{klass : Plane, count : 10, values : {hp:60, speed:4, power:2, rate:0.1, price: 2, range: 3} },
+			{klass : Humvee, count : 10, values : {hp:200, speed:4, power:1, rate:0.1, price: 1, range: 2} }
+		] },
+		{ creeps : [
+			{klass : TankI, count : 10, values : {hp:160, speed:4, power:1, rate:0.1, price: 1, range: 2} },
+			{klass : TankII, count : 5, values : {hp:180, speed:4, power:1, rate:0.1, price: 1, range: 2} },
+			{klass : Humvee, count : 5, values : {hp:200, speed:4, power:1, rate:0.1, price: 1, range: 2} }
+		] },
+		{ creeps : [
+			{klass : Tank, count : 10, values : {hp:140, speed:4, power:1, rate:0.1, price: 1, range: 2} },
+			{klass : TankI, count : 5, values : {hp:160, speed:4, power:1, rate:0.1, price: 1, range: 2} },
+			{klass : TankII, count : 5, values : {hp:180, speed:4, power:1, rate:0.1, price: 1, range: 2} }
+		] },
+		{ creeps : [
+			{klass : Humvee, count : 20, values : {hp:140, speed:4, power:1, rate:0.1, price: 1, range: 2} }
+		] },
+		{ creeps : [
+			{klass : TankII, count : 10, values : {hp:120, speed:4, power:1, rate:0.1, price: 1, range: 2} },
+			{klass : Humvee, count : 10, values : {hp:140, speed:4, power:1, rate:0.1, price: 1, range: 2} }
+		] },
+		{ creeps : [
+			{klass : TankII, count : 20, values : {hp:120, speed:4, power:1, rate:0.1, price: 1, range: 2} }
+		] },
+		{ creeps : [
+			{klass : TankI, count : 10, values : {hp:105, speed:4, power:1, rate:0.1, price: 1, range: 2} },
+			{klass : TankII, count : 10, values : {hp:120, speed:4, power:1, rate:0.1, price: 1, range: 2} }
+		] },
+		{ creeps : [
+			{klass : TankI, count : 20, values : {hp:105, speed:4, power:1, rate:0.1, price: 1, range: 2} }
+		] },
+		{ creeps : [
+			{klass : Tank, count : 10, values : {hp:90, speed:4, power:1, rate:0.1, price: 1, range: 2} },
+			{klass : TankI, count : 10, values : {hp:105, speed:4, power:1, rate:0.1, price: 1, range: 2} }
+		] },
+		{ creeps : [
+			{klass : Tank, count : 20, values : {hp:90, speed:4, power:1, rate:0.1, price: 1, range: 2} }
 		] }
 	]
 }

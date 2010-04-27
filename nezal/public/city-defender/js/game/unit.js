@@ -1,4 +1,5 @@
 var Unit = Class.create({
+	_oldRenders : [],
 	initialize: function(canvas, x, y, extension){
 		this.gridX = x
 		this.gridY = y
@@ -10,12 +11,17 @@ var Unit = Class.create({
 			Object.extend(this, extension)
 		}
 		this.maxHp = this.hp
+		this.initImages();
 	},
-		
+	initImages: function(){
+		//alert('initImages not implemented')
+	},
+	
 	render: function(){
 		alert('render not implemented')
-	},
+	},	
 	target: function(){
+		if(this.dead) return
 		if(!this.reloaded){
 			this.toFire += this.rate;
 			if(this.toFire >= 1){
@@ -44,10 +50,14 @@ var Unit = Class.create({
 	pickTarget: function(targets){
 	},
 	takeHit: function(power){
+		if(this.dead) return
 		this.hp -= power
-		if(this.hp <= 0 ){this.die(); this.dead = true}
+		if(this.hp <= 0 ){this.die(); this.dead = true; 
+			Game.animations.push(new CreepBoom(this.ctx, this.x, this.y))
+			Sounds.play(Sounds.boom.unit)
+		}
 		if(Game.selectedTurret == this){
-			$('unitData').innerHTML = Game.templates['unitData'].process({unit: Game.selectedTurret})
+			//$('unitData').innerHTML = Game.templates['unitData'].process({unit: Game.selectedTurret})
 		}
 		return this;
 	},
@@ -60,15 +70,4 @@ var Unit = Class.create({
 	reloded: true,	fired: false,
 	power: 2.5, range: 2,
 	x: 0, y: 0, gridX: 0, gridY: 0,
-	attributes : [
-		['Firing Rate', 'rate'],
-		['Power', 'power'],
-		['Range', 'range']
-	]
 })
-
-Unit.attributes = [
-		['Firing Rate', 'rate'],
-		['Power', 'power'],
-		['Range', 'range']
-]
