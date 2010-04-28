@@ -57,6 +57,7 @@ var Plane = Class.create(Creep, {
 		}
 		Game.money += this.price;
 		this.dead = true	
+		Game.stats.creepsDestroyed++
 	}
 	
 })
