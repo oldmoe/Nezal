@@ -6,11 +6,12 @@ module DataStore
     def self.included(base)
       base.extend(Enumerable) 
       base.extend(DataStore::CRUD)
+      base.extend(DataStore::QueryAPI)
       base.send(:include, DataStore::Relation)  
     end  
   
     def save
-      attributes[:id] ||= self.class.generate
+      attributes[:id] ||= self.class.generate(self)
       saved
       relations = _save_relations
       storable = attributes.merge({:relations => _unmapped_relations})
@@ -19,7 +20,7 @@ module DataStore
     end
     
     def _save
-      attributes[:id] ||= self.class.generate
+      attributes[:id] ||= self.class.generate(self)
       saved
       storable = attributes.merge({:relations => _unmapped_relations})
       self.class.db_handle.put(nil, attributes[:id], self.class.dump(storable), 0)
