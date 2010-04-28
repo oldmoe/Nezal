@@ -191,5 +191,6 @@ var Creep = Class.create(Unit,{
 		cell.splice(cell.indexOf(this), 1);
 		Game.money += this.price;
 		this.dead = true
+		Game.stats.creepsDestroyed++
 	}
 })
