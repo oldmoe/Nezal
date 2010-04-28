@@ -10,30 +10,25 @@ class ApplicationController < Sinatra::Base
   set :static, true
   set :public, "#{root}/public"
   
-  def init()
-    if($users.nil?)
-      puts "Instantiating Data"      
-      $users = {}    
-    end
-  end
-    
   attr_accessor :user
   
   before do 
-    init
-    if session[:user_id] && ( @user = $users[session[:user_id]] )
-      puts "====Application Controller: User Found : #{user}"
-    elsif session[:fb_user_id]
-      puts "====Application Controller: FB Session Exists"
-      @user = User.get(session[:fb_user_id])
-      @user = User.create( {:id => session[:fb_user_id]} ) unless @user
-      p @user
-    else
-      puts "====Application Controller: Session Doesnt Exist"
-      @user = User.create({})
-      $users[@user[:id]] = @user
-      session[:user_id] = @user[:id]
-      puts "====Application Controller: User created : #{user.inspect}"
+    puts ">>> "
+    puts ">>>>>> Cookie :  #{env['rack.request.cookie_hash']}"
+    puts ">>>>>> Request Path :  #{env['REQUEST_PATH']}"
+        
+    if  env['rack.request.cookie_hash'] && env['rack.request.cookie_hash'][FBConfigs::CONFIG[session[:fb_app_id]]["key"] + "_user"] &&
+      env['rack.request.cookie_hash'][FBConfigs::CONFIG[session[:fb_app_id]]["key"] + "_expires"]  > session[:fb_session_expires]
+      session[:fb_user_id] = env['rack.request.cookie_hash'][FBConfigs::CONFIG[session[:fb_app_id]]["key"] + "_user"] 
+      session[:fb_session_key] = env['rack.request.cookie_hash'][FBConfigs::CONFIG[session[:fb_app_id]]["key"] + "_session_key"] 
+      session[:fb_session_expires] = env['rack.request.cookie_hash'][FBConfigs::CONFIG[session[:fb_app_id]]["key"] + "_expires"] 
+      puts ">>>>>> FB User Id :  #{session[:fb_user_id]}"
+      puts ">>>>>> FB Session Key :  #{session[:fb_session_key]}"
+      puts ">>>>>> FB Session Expire :  #{session[:fb_session_expires]}"
+    end
+
+    if session[:fb_user_id]
+      @user = FBUser.get(session[:fb_user_id])
     end  
   end
   

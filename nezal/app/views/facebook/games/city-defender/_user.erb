@@ -1,7 +1,48 @@
-<% @friends.each do | friend | %>
+<% if @friends[0] %>
   <div class="friend">
-    <a href="<%=friend['profile_url']%>" target="_parent">
-		  <img src="<%=friend['pic_small']%>" class="image"/>
-	  </a>
+    <div class="order">
+      1st
+    </div>
+    <div class="score">
+      <%=@friends[0].user_campaigns.where{ | camp| camp.campaign[:id] == @current_camp[:id] }.first[:score]%>
+    </div>
+    <div class="name">
+      <%=@friends[0][:user_info]['first_name']%>
+    </div>
+    <a href="<%=@friends[0][:user_info]['profile_url']%>" target="_parent">
+	    <img src="<%=@friends[0][:user_info]['pic_small']||'/city-defender/images/user/default.png'%>" class="image"/>
+    </a>
   </div>
 <% end %>
+<% if @friends[1] %>
+  <div class="friend">
+    <div class="order">
+      2nd
+    </div>
+    <div class="score">
+      <%=@friends[1].user_campaigns.where{ | camp| camp.campaign[:id] == @current_camp[:id] }.first[:score]%>
+    </div>
+    <div class="name">
+      <%=@friends[1][:user_info]['first_name']%>
+    </div>
+    <a href="<%=@friends[1][:user_info]['profile_url']%>" target="_parent">
+	    <img src="<%=@friends[1][:user_info]['pic_small']||'/city-defender/images/user/default.png'%>" class="image"/>
+    </a>
+  </div>
+<% end %>
+<% if @friends[2] %>
+  <div class="friend">
+    <div class="order">
+      3rd
+    </div>
+    <div class="score">
+      <%=@friends[2].user_campaigns.where{ | camp| camp.campaign[:id] == @current_camp[:id] }.first[:score]%>
+    </div>
+    <div class="name">
+      <%=@friends[2][:user_info]['first_name']%>
+    </div>
+    <a href="<%=@friends[2][:user_info]['profile_url']%>" target="_parent">
+	    <img src="<%=@friends[2][:user_info]['pic_small']||'/city-defender/images/user/default.png'%>" class="image"/>
+    </a>
+  </div>
+<% end %>  

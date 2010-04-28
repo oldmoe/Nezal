@@ -1,0 +1,120 @@
+<html>
+  <head>
+    <link type="text/css" href="/city-defender/css/game.css" rel="stylesheet" />
+    <link type="text/css" href="/city-defender/css/user.css" rel="stylesheet" />
+    
+		<script src="/javascripts/prototype.js"></script>
+    <script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript"></script>
+ 
+  </head>
+
+  <body>
+    <div id="fb-root"></div>
+    <script>
+      var FBApi = {
+        api : null,
+      }; 
+      
+      var AjaxReq = {
+        refresh : function() {
+            FBApi.api._refreshSession(function(){
+              console.log(FBApi.api.get_session());
+            });
+            new Ajax.Request( "http://127.0.0.1:5500/fb-games/city-defender/1", { 
+                            method:'get', 
+                            onSuccess: function(transport, json){
+                                window.setTimeout("AjaxReq.refresh()", 60000); 
+                            }
+                    });
+
+        },
+      }
+      
+      console.log("About to get log-in status");
+
+      api_key = '3f08e7205c0eb87bdebeb26638946e1d'
+      channel_path = "/html/facebook/xd_receiver.htm"
+      
+
+      FB_RequireFeatures(["Connect"], function(){
+        // Create an ApiClient object, passing app's API key and 
+        // a site relative URL to xd_receiver.htm
+        FB.Facebook.init(api_key, channel_path);  
+
+        api = FB.Facebook.apiClient;
+        
+        FBApi.api = api;
+                
+        // require user to login 
+        api.requireLogin(function(exception){
+          console.log(api.get_session().session_key)
+          FB.FBDebug.logLevel=1;
+          FB.FBDebug.dump("Current user id is " + api.get_session());
+          FB.FBDebug.dump("Current user id is " + api.get_session().uid);
+          FB.FBDebug.dump("Current user id is " + api.get_session().session_key);
+          FB.FBDebug.dump("Current user id is " + api.get_session().expires);
+          // Get friends list 
+          
+//          for(var key in api.get_session()){
+//            console.log(key); 
+//            console.log(api.key); 
+//         }  
+        });
+//        FB.init("3f0ba1d70537bbf9381bca2bbb9f9a93","xd_receiver.htm");
+//        console.log(FB.Connect.get_status())
+//        console.log(FB.Connect.get_loggedInUser())
+//         for(var key in FB.Connect){
+//            console.log(key); 
+//         }  
+
+        AjaxReq.refresh();
+      });
+
+/*
+
+      var SessionHandler = {
+        refresh : function(){ 
+                      // require user to login 
+//                      api = new FB.ApiClient(api_key, channel_path, null);
+//                      api._refreshSession( function(response){})
+//                      FB.Connect.forceSessionRefresh(function(){
+//                        console.log("hi")
+ //                     }
+ //                     )
+                      console.log(api.get_session());
+                      console.log(FB.Connect.get_loggedInUser())
+                      
+                      
+//                      var session  =  api._getSessionFromCookies()
+//                      console.log(session)
+        
+////                      api._refreshSession( function(response){
+////                        console.log("Refresh Session")
+////                        console.log(response)
+////                      });
+
+
+//                      api.requireLogin(function(exception){
+//                        FB.FBDebug.logLevel=1;
+//                        FB.FBDebug.dump("Current user id is " + api.get_session().uid);
+//                        FB.FBDebug.dump("Current user id is " + api.get_session().session_key);
+//                        FB.FBDebug.dump("Current user id is " + api.get_session().expires);
+                        // Get friends list 
+  
+//                     });  
+                      window.setTimeout("SessionHandler.refresh()", 20000);
+                    }
+               }
+      window.setTimeout("SessionHandler.refresh()", 10000);
+*/
+    </script>
+    <div id="gameArea" class="column">
+      <div id='game'>
+	      <%= erb(@game_erb, :layout => false) %>
+      </div>
+      <div id='user'>
+	      <%= erb(@user_erb, :layout => false) %>
+      </div>
+    </div>
+  </body>
+</html>

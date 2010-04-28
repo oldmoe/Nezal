@@ -358,7 +358,7 @@ $(document).observe('dom:loaded',function(){
 			GhostTurret = new Turret(top, 0, 0, ghostTurretFeatures)
 			Game.start();
 			//Object.extend(GhostTurret, ghostTurretFeatures)
-			new Ajax.Request('templates/towers.tpl', {method:'get', onComplete: function(t){
+			new Ajax.Request('/city-defender/templates/towers.tpl', {method:'get', onComplete: function(t){
 					Game.templates['towers'] = TrimPath.parseTemplate(t.responseText) 
 					if(!t.responseText){Game.templates['towers'] = TrimPath.parseTemplate($('towers_tpl').value) }
 					$('towers').innerHTML = Game.templates['towers'].process(Config);

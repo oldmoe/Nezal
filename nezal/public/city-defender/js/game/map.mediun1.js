@@ -1,5 +1,5 @@
 var bg = new Image();
-bg.src = 'images/background/path.png'
+bg.src = '../images/background/path.png'
 
 var Map = {
 	pitch : 32,

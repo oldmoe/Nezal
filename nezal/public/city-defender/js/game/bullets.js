@@ -162,5 +162,5 @@ var DoubleTurret = Class.create(Turret, {
 		}
 		this.ctx.restore();
 		this.renderRank();
-	},
+	}
 })

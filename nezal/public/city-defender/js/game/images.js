@@ -61,10 +61,10 @@ var images = [
              ]
 
 
-//Game.imagesDir = '/city-defender/images/game/'
-//Game.animationFramesDir = '/city-defender/images/animations/'
-Game.imagesDir = 'images/game/'
-Game.animationFramesDir = 'images/animations/'
+Game.imagesDir = '/city-defender/images/game/'
+Game.animationFramesDir = '/city-defender/images/animations/'
+//Game.imagesDir = 'images/game/'
+//Game.animationFramesDir = 'images/animations/'
 
 Game.totalImages = images.length 
 for(var anim in Game.animationFrames){

@@ -8,7 +8,7 @@ DataStore::Database.initialize
 
 MiniTest::Unit.autorun
 
-class TestBlog 
+class TestBlog
   one_to_one :owner, :class_name => :TestWriter, :identified_by => :writer_id
 end
 

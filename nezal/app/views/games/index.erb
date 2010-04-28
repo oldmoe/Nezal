@@ -1,0 +1,12 @@
+<h1> Awesome Games List, Join one right now !!! </h1>
+<% @games.each do |game | %>
+  <div class="game">
+    <div>
+      <a href="/games/admin/<%=game[:name]%>"><%=game[:name]%></a>
+      <span>
+        <%=game[:description]%>
+      </span>
+    </div>
+    <div style="clear:both"></div>
+  </div>
+<% end %>

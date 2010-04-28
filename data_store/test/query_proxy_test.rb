@@ -1,5 +1,5 @@
 require 'lib/data_store'
-require 'test/test_model'
+require 'test/models/test_model'
 require 'minitest/unit'
 
 ENV["environment"] = "test"
@@ -26,8 +26,8 @@ class QueryProxyTest < MiniTest::Unit::TestCase
   # Test creation, retrieval of a simple non relational creation
   # Each test_method defines its own pre, post methods to create 
   #   nessecarry records / delete them after completion
-  def create_simple_record
-    @attributes = {x: 1, y: 2}
+  def create_simple_record(hash)
+    @attributes = hash
     @record = TestModel.create(@attributes)    
   end
   
@@ -40,39 +40,140 @@ class QueryProxyTest < MiniTest::Unit::TestCase
   #   nessecarry records / delete them after completion
   def pre_test_each
     @records = []
-    4.times { @records << create_simple_record }
+    4.times { |i| @records << create_simple_record({x: i, y: i*2}) }
   end
   
   def post_test_each
-    4.times { 
-      @record
-      delete_simple_record 
-    }
+    @records.each do |rec| 
+      @record = rec 
+      delete_simple_record
+    end
   end
   
-  # This should create a simple records and call the each method on it 
-  def test_each
-  
-  end
-
+  # Test simple where
   def test_where
-    query = DataStore::QueryProxy.new(TestModel.name).where(id: "6")
-#    query.each {|obj| puts obj}
+    pre_test_each
+    puts "************** begin : test_where"
+    rec = @records[2]
+    query = DataStore::QueryProxy.new(TestModel.name).where(id: rec[:id])
+    query.each do |obj|
+     p obj
+     assert_equal rec[:id], obj[:id]
+    end
+    puts "************** end : test_where"
+    post_test_each
   end
 
+  # Test Range where
+  def test_where_range
+    pre_test_each
+    puts "************** begin : test_where_range"
+    query = DataStore::QueryProxy.new(TestModel.name).where(id: @records[0][:id]..@records[2][:id])
+    query.each { |obj| p obj}
+    puts "************** end : test_where_range"
+    post_test_each
+  end
+
+  # Test cascaded where
+  def test_where_cascaded
+    pre_test_each
+    puts "************** begin : test_where_cascaded"
+    query = DataStore::QueryProxy.new(TestModel.name).where(id: @records[0][:id]..@records[2][:id]).where(x: 1..2)
+    query.each { |obj| p obj}
+    puts "************** end : test_where_cascaded"
+    post_test_each
+  end
+  
   def test_where_with_true_block
+    pre_test_each
+    puts "************** begin : test_where_true"
     query = DataStore::QueryProxy.new(TestModel.name).where{ true }
-    query.each {|obj| puts obj}
+    query.each {|obj| p obj}
+    puts "************** end : test_where_true"
+    post_test_each
   end
 
   def test_where_with_false_block
+    pre_test_each
+    puts "************** begin : test_where_false"
     query = DataStore::QueryProxy.new(TestModel.name).where{ false }
     query.each {|obj| puts obj}
+    puts "************** end : test_where_false"
+    post_test_each
   end
 
   def test_where_with_both_blocks
+    pre_test_each
+    puts "************** begin : test_where_with_both_blocks"
     query = DataStore::QueryProxy.new(TestModel.name).where{ true }.where{ false }
     query.each {|obj| puts obj}
+    puts "************** end : test_where_with_both_blocks"
+    post_test_each
+  end
+  
+    # Test creation, retrieval of a simple non relational creation
+  # Each test_method defines its own pre, post methods to create 
+  #   nessecarry records / delete them after completion
+  def pre_test_order
+    @records = []
+    4.times do |i| 
+      @records << create_simple_record({x: -i, y: i*2}) 
+      @records << create_simple_record({x: -i, y: i*2}) 
+    end
+  end
+  
+  def post_test_order
+    @records.each do |rec| 
+      @record = rec 
+      delete_simple_record
+    end
+  end
+  
+  def test_order
+    puts "************** begin : test_order"
+    query = DataStore::QueryProxy.new(TestModel.name).order(:x)
+    query.each {|obj| p obj}
+    puts "************** end : test_order"
+  end
+  
+  def test_order_cascaded
+    pre_test_order
+    puts "************** begin : test_order_cascaded"
+    query = DataStore::QueryProxy.new(TestModel.name).order(:x).order(:id)
+    query.each {|obj| p obj}
+    puts "************** end : test_order_cascaded"
+    post_test_order
+  end
+
+  def test_limit
+    pre_test_each
+    puts "************** begin : test_limit"
+    query = DataStore::QueryProxy.new(TestModel.name).limit(2)
+    query.each {|obj| puts obj}
+    puts "************** end : test_limit"
+    post_test_each
+  end
+  
+  def test_limit_with_where
+    pre_test_each
+    puts "************** begin : test_limit_with_where"
+    query = DataStore::QueryProxy.new(TestModel.name).where(id: @records[1][:id]..@records[3][:id]).limit(2)
+    query.each {|obj| p obj}
+    puts "************** end : test_limit_with_where"
+    post_test_each
+  end
+
+  def test_limit_with_where_after
+    pre_test_each
+    puts "************** begin : test_limit_with_where_after"
+    query = DataStore::QueryProxy.new(TestModel.name).limit(3).where(id: @records[1][:id]..@records[3][:id])
+    query.each {|obj| p obj}
+    puts "&&&&&&&&&&&&&&"
+    TestModel.each {|obj| p obj}
+    puts "&&&&&&&&&&&&&&"
+    p TestModel.first
+    puts "************** end : test_limit_with_where_after"
+    post_test_each
   end
 
 

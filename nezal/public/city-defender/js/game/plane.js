@@ -59,5 +59,4 @@ var Plane = Class.create(Creep, {
 		this.dead = true	
 		Game.stats.creepsDestroyed++
 	}
-	
 })

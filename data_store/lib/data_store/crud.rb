@@ -43,7 +43,7 @@ module DataStore
       cursor.close
       values
     end
-    
+        
     def db_handle
       @db_handle ||= Database::open(db_name)
     end
