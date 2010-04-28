@@ -9,8 +9,48 @@
 		<script src="js/base/effects.js"></script>
 		<script src="js/base/sound.js"></script>
 		<script src="js/base/template.js"></script>
+		<script>
+			function clone_obj(obj) {
+				if (typeof obj !== 'object' || obj == null) {
+					return obj;
+				}
+			 
+				var c = obj instanceof Array ? [] : {};
+			 
+				for (var i in obj) {
+					var prop = obj[i];
+			 
+					if (typeof prop == 'object') {
+					   if (prop instanceof Array) {
+						   c[i] = [];
+			 
+						   for (var j = 0; j < prop.length; j++) {
+							   if (typeof prop[j] != 'object') {
+								   c[i].push(prop[j]);
+							   } else {
+								   c[i].push(clone_obj(prop[j]));
+							   }
+						   }
+					   } else {
+						   c[i] = clone_obj(prop);
+					   }
+					} else {
+					   c[i] = prop;
+					}
+				}
+			 
+				return c;
+			}		
+		</script>
 	</head>
 	<body>
+		<textarea id='statsTemplate' style="display:none">
+			Score : ${Game.score}
+			Towers Built : ${Game.stats.towersCreated}
+			Towers Lost : ${Game.stats.towersDestroyed}
+			Units Destroyed : ${Game.stats.creepsDestroyed}
+			Escaped Units : ${Game.escaped}
+		</textarea>
 		<textarea id='towerInfoTemplate' style="display:none">
 			<div class="diagram ${tower.cssClass}"></div>
 			<div id="towerData">
@@ -60,6 +100,7 @@
 				<div class="status">
 					<div id="score" class="score">0</div>
 					<div id="lives" class="lives">0</div>
+					<div id="waves" class="waves">0/0</div>
 				</div>
 				<div class="fps"></div>
 				<div class="rank"></div>
@@ -79,12 +120,12 @@
 				<div class="upgrades">
 					<div class="upgradesBar"></div>
 					<div class="upgradeItems">
-							<div class="upgradeItem active"></div>
-							<div class="upgradeItem active"></div>
+							<div class="upgradeItem bullets"></div>
+							<div class="upgradeItem rockets"></div>
+							<div class="upgradeItem shields"></div>
 							<div class="upgradeItem"></div>
 							<div class="upgradeItem"></div>
-							<div class="upgradeItem active"></div>
-							<div class="upgradeItem active"></div>
+							<div class="upgradeItem"></div>
 							<div class="upgradeItem"></div>
 							<div class="upgradeItem"></div>
 					</div>
@@ -133,7 +174,9 @@
 					</div>
 				</div>			</div>
 			<canvas id="droppingGround" width="672" height="480"></canvas>
-			<div id="result" style="display:none"></div>
+			<div id="result" style="display:none">
+				<pre id="stats"></pre>
+			</div>
 			<div id="splashScreen">
 				<div class="loading_bar_bg">
 					<div id="loading_bar"></div>
