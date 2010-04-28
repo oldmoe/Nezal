@@ -1,41 +1,41 @@
-var images = ['air_craft.png', 
+var images = [
+		      'air_craft.png', 
               'air_craft_shade.png',
               'air_craft_in_action.png',
-              'canon_1.png',
-              'canon_2.png',
-              'canon_1_in_action.png',
-              'canon_2_in_action_right.png',
-              'canon_2_in_action_left.png',
-              'guide.jpg',
+              'cannon_1.png',
+              'cannon_2.png',
+              'cannon_1_in_action.png',
+              'cannon_2_in_action_right.png',
+              'cannon_2_in_action_left.png',
               'humvee_body.png',
               'humvee_tower.png',
-              'humvee_trace_100.png',
-              'humvee_trace_20.png',
-              'humvee_trace_50.png',
               'humvee_tower_in_action.png',
               'rocket.png',
+              'rocket_in_action.png',
               'rocket_launcher.png',
               'tank_tower_in_action.png',
               'tank_1_tower_in_action.png',
               'tank_2_tower_in_action.png',
               'tank_body.png',
               'tank_tower.png',
-              'tank_trace_20.png',
-              'tank_trace_50.png',
-              'tank_trace_100.png',
-              'tower_base.png',
               'tank_1_2_body.png',
               'tank_1_tower.png',
               'tank_2_tower.png',
-              ]
+              'tower_base.png',
+			  'patriot_launcher.png',
+			  'patriot_launcher_in_action_right.png',
+			  'patriot_launcher_in_action_left.png',
+			  'patriot_rocket.png'
+             ]
               
-var cityDefenderImages = {};
-var cityDefenderImageDir = '/city-defender/images/game/'
+Game.images = {};
+//Game.imagesDir = '/city-defender/images/game/'
+Game.imagesDir = 'images/game/'
 
 for ( var  i=0 ; i< images.length ; i++ )
 { 
-  cityDefenderImages[images[i]] = new Image(); 
-  cityDefenderImages[images[i]].src = cityDefenderImageDir + images[i]; 
+  Game.images[images[i]] = new Image(); 
+  Game.images[images[i]].src = Game.imagesDir + images[i]; 
 } 
 
                                                     

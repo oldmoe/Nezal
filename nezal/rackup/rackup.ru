@@ -11,6 +11,7 @@ use Rack::Static, :urls => [ "/stylesheets", "/javascripts", "/favicon.ico", "/g
 use Rack::ShowExceptions
   
 router = Rack::Router.new(nil) do |r|
+  r.map "/fb-games/users", :to => FBUsersController
   r.map "/fb-games", :to => FBGamesController
   r.map "/games", :to => GamesController
   r.map "/", :to => InitController

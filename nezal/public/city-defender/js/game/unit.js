@@ -10,12 +10,17 @@ var Unit = Class.create({
 			Object.extend(this, extension)
 		}
 		this.maxHp = this.hp
+		this.initImages();
 	},
-		
+	initImages: function(){
+		//alert('initImages not implemented')
+	},
+	
 	render: function(){
 		alert('render not implemented')
 	},
 	target: function(){
+		if(this.dead) return
 		if(!this.reloaded){
 			this.toFire += this.rate;
 			if(this.toFire >= 1){
@@ -44,10 +49,14 @@ var Unit = Class.create({
 	pickTarget: function(targets){
 	},
 	takeHit: function(power){
+		if(this.dead) return
 		this.hp -= power
-		if(this.hp <= 0 ){this.die(); this.dead = true}
+		if(this.hp <= 0 ){this.die(); this.dead = true; 
+			Game.animations.push(new CreepBoom(this.ctx, this.x, this.y))
+			Sounds.play(Sounds.boom.unit)
+		}
 		if(Game.selectedTurret == this){
-			$('unitData').innerHTML = Game.templates['unitData'].process({unit: Game.selectedTurret})
+			//$('unitData').innerHTML = Game.templates['unitData'].process({unit: Game.selectedTurret})
 		}
 		return this;
 	},

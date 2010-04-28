@@ -1,0 +1,73 @@
+.game-init
+{
+  height : 560px;
+  background : url("/city-defender/images/user/background.png") no-repeat scroll 0 0 ;
+  text-align : center;
+}
+
+.game-init img
+{
+  height : 500px;
+}
+
+.campaign
+{
+  background : url("/city-defender/images/user/score-3.png") no-repeat scroll 0 0 ;
+  width : 100px;
+  height : 100px;
+}
+
+#user
+{
+  background : url("/city-defender/images/user/user-backk.png") repeat scroll 0 0 transparent;
+  margin : 10px;
+  overflow : auto;
+  padding : 10px;
+}
+
+#user .friend
+{
+  background:url("/city-defender/images/user/user-7.png") repeat scroll 0 0 transparent;
+  float:left;
+  height:130px;
+  margin:5px;
+  width:100px;
+}
+
+#user .image 
+{
+  width : 70px;
+  height : 60px;
+  padding : 5 15 15 15;
+  border : none;
+}
+#user .name
+{
+  color:aliceBlue;
+  text-align : center;
+  font-family : verdana;
+  font-size : 13px;
+}
+
+#user .score
+{
+  background : url("/city-defender/images/user/score-6.png") no-repeat scroll center bottom transparent;
+  font-family : verdana;
+  font-size : 14px;
+  font-weight : bold;
+  height : 23px;
+  margin-left : 33px;
+  margin-top : 10px;
+  text-align : center;
+}
+
+#user .order
+{
+  background:none repeat scroll 0 0 black;
+  color:orange;
+  float:left;
+  font-weight:bold;
+  height:25px;
+  margin-top:0;
+  width:35px;
+}

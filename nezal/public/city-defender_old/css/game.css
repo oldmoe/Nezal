@@ -1,0 +1,123 @@
+body{
+	padding : 0px;
+	margin : 0px;
+	background: black;
+}
+
+#gameContainer {
+	padding-top: 20px;
+	position : relative;
+	width : 736px;
+	height: 610px;
+	bottom: 0px;
+	margin-left:auto;
+	margin-right:auto;
+	font-family : verdana;
+}
+
+#canvasHeader{
+	background: #2b2;
+	padding: 8px;
+	height: 20px;
+	font-weight: bold;
+	font-size: 16px;
+	color: white;
+}
+
+#canvasHeader #escaped{
+	margin-right: 30px;
+}
+
+#canvasFooter{
+	margin-top : -5px;
+	background: #2b2;
+	padding: 4px;
+	position: relative;
+	height: 36px;
+}
+
+#canvasContainer{
+	width:736px;
+	height: auto;
+	position: relative;
+}
+
+#gameContainer canvas#gameForeground{
+	position :absolute;	
+	top : 0px;
+	left: 0px;
+}
+
+#gameContainer canvas#droppingGround{
+	position :absolute;	
+	top : 0px;
+	left: 0px;
+}
+
+#gameContainer #towers{
+	position : relative;
+	padding: 2px;
+	height:32px;
+	float :  left;
+}
+
+#gameContainer #creeps {
+	position : relative;
+	left: 36px;
+	padding: 2px;
+	width:32px;
+	height:32px;
+	float: right;
+	padding-right : 32px;
+}
+
+#gameContainer #towers .frame{
+	position : relative;
+	width:34px;
+	height:34px;
+	float: left;
+	margin-right: 6px;
+}
+
+#gameContainer #towers img{
+	display : block;
+	position : absolute;
+	top: 1px;
+	left: 1px;
+}
+
+#gameContainer #towers .selected{
+	background-color: white;
+}
+
+
+#gameContainer #creeps img.top{
+	top	: 17px;
+	left : 	19px;
+}
+
+
+#gameContainer #creeps img{
+	display : block;
+	position : absolute;
+	top : 2px;
+}
+
+canvas.turret{
+	cursor : none
+}
+
+#unitData {
+	padding: 4px;
+	background: #ee9;
+	height : 106px;
+}
+
+#unitData td{
+	font-weight: bold;
+	font-size: 12px;
+	margin: 4px;
+	padding: 4px;
+	background : #cc7;
+	width: 150px;
+}

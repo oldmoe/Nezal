@@ -20,20 +20,27 @@ class ApplicationController < Sinatra::Base
   attr_accessor :user
   
   before do 
+    puts "!!!!!!!!!!!!!! Inside App"
+    p env['rack.request.cookie_hash']
+    p env['REQUEST_PATH']
+    
+    if env['rack.request.cookie_hash'][FBConfigs::CONFIG[session[:fb_app_id]]["key"] + "_user"] 
+      session[:fb_user_id] = env['rack.request.cookie_hash'][FBConfigs::CONFIG[session[:fb_app_id]]["key"] + "_user"] 
+      session[:fb_session_key] = env['rack.request.cookie_hash'][FBConfigs::CONFIG[session[:fb_app_id]]["key"] + "_session_key"] 
+      session[:fb_session_expires] = env['rack.request.cookie_hash'][FBConfigs::CONFIG[session[:fb_app_id]]["key"] + "_expires"] 
+      puts [session[:fb_user_id]]  
+      puts [session[:fb_session_key]]  
+      puts [session[:fb_session_expires]]  
+    end
+    puts "!!!!!!!!!!!!!!!!!!!!!!!!!"
     init
     if session[:user_id] && ( @user = $users[session[:user_id]] )
       puts "====Application Controller: User Found : #{user}"
     elsif session[:fb_user_id]
       puts "====Application Controller: FB Session Exists"
-      @user = User.get(session[:fb_user_id])
-      @user = User.create( {:id => session[:fb_user_id]} ) unless @user
-      p @user
+      @user = FBUser.get(session[:fb_user_id])
     else
       puts "====Application Controller: Session Doesnt Exist"
-      @user = User.create({})
-      $users[@user[:id]] = @user
-      session[:user_id] = @user[:id]
-      puts "====Application Controller: User created : #{user.inspect}"
     end  
   end
   

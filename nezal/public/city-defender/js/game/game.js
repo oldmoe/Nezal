@@ -1,21 +1,27 @@
 var Game = {
 	waitingCreeps : 0,
 	escaped: 0,
-	maxEscaped : 12,
+	maxEscaped : 50,
 	money : 100,
+	delay : 33,
 	turrets : [],
 	creeps : [],
 	objects : [],
+	animations : [],
 	planes : [],
 	templates : {},
+	slowed : false,
+	slowFactor : 2,
+	fps : 0,
+	score: 0,
 	selectedTurret : null,
 	add : function(turret){
 	},
 	start : function(){
-		new Ajax.Request('/city-defender/templates/unit_values.tpl', {method:'get', onComplete: function(t){
+		new Ajax.Request('templates/unit_values.tpl', {method:'get', onComplete: function(t){
 				Game.templates['unitData'] = TrimPath.parseTemplate(t.responseText) 
 				if(!t.responseText){Game.templates['unitData'] = TrimPath.parseTemplate($('tpl').value) }
-				window.setTimeout(Game.renderLoop, 20)
+				window.setTimeout(Game.renderLoop, Game.delay)
 			}
 		})
 	},
@@ -23,37 +29,44 @@ var Game = {
 		Game.render();
 		if(Game.escaped >= Game.maxEscaped){
 			Game.render();
-			alert('game over');
-			return;
+			$("result").innerHTML = '<br/>Game Over!'
+			new Effect.Appear("result", {delay : 1.0})
+			return
 		}else if(Game.config){
 			if(Game.config.waves.length == 0 && Game.creeps.length == 0 && Game.planes.length == 0 && Game.waitingCreeps == 0 ){
 				Game.render();
-				alert('you win')
+				$("result").innerHTML = '<br/>You Win!'
+				new Effect.Appear("result", {delay : 1.0})
 				return
 			}
-		}
-		window.setTimeout(Game.renderLoop, 50)
+		}	
+		window.setTimeout(Game.renderLoop, Game.delay)
 	},
 	render : function(){
-		$('money').innerHTML = Game.money;
-		$('escaped').innerHTML = Game.escaped+' / '+Game.maxEscaped;
-		if(Game.selectedTurret){
-			$('unitData').innerHTML = Game.templates['unitData'].process({unit: Game.selectedTurret})
-		}
+		var startTime = new Date;
+		//$('money').innerHTML = Game.money;
+		$('lives').innerHTML = Game.maxEscaped - Game.escaped;
+		$('score').innerHTML = Game.score;
+		//if(Game.selectedTurret){
+			//$('unitData').innerHTML = Game.templates['unitData'].process({unit: Game.selectedTurret})
+		//}
+		$$('#gameElements .fps').first().innerHTML = "FPS: "+this.fps;
 		this.ctx.clearRect(0,0, this.canvas.width, this.canvas.height);
 		this.creeps.invoke('render')
 		this.turrets.invoke('render')
 		this.objects.invoke('render')
 		this.planes.invoke('render')
+		this.animations.invoke('render')
 		this.creeps.invoke('move')
 		this.objects.invoke('move')
 		this.planes.invoke('move')
 		GhostTurret.clear()
-		if(GhostTurret.select && GhostTurret.isIn){
+		if(GhostTurret.selected && GhostTurret.isIn){
 			GhostTurret.x = Map.transform(GhostTurret.x) + 16;
 			GhostTurret.y = Map.transform(GhostTurret.y) + 16;
 			GhostTurret.render()
 		}
+		this.fps = Math.round(1000/(new Date - startTime))
 	}
 	
 }
@@ -63,9 +76,9 @@ Game.sendWaves = function(config){
 	var wave = config.waves.pop()
 	if(wave){
 		Game.sendWave(wave);
-		window.setTimeout(function(){
-			Game.sendWaves(config)
-		}, config.delay)
+		//window.setTimeout(function(){
+			//Game.sendWaves(config)
+		//}, config.delay)
 	}else{
 		// game finished
 	}
@@ -77,52 +90,143 @@ Game.sendWave = function(wave){
 		slots[i] = i;
 	}
 	var canvas = $('gameForeground')
+	var delay = 0
+	var entry = Map.entry[0]
+	var theta = 0
+	var x = 0;
+	var y = 0;
+	if(entry[0] == 0){
+		theta = 0
+		x = 0
+	}else if(entry[0] == Map.width - 1){
+		theta = 180
+		x = map.width - 1
+	}else if(entry[1] == 0){
+		theta = 90
+		y = 0	
+	}else if(entry[1] == Map.height - 1){
+		theta = 270
+		y = Map.height - 1
+	}
 	wave.creeps.each(function(creep){
+		//delay = 0;
 		for(var i=0; i < creep.count; i++){
-			var index = Math.round(Math.random() * (slots.length - 1))
-			var y = slots[index]
-			slots.splice(index, 1)
-			Game.issueCreep(canvas, creep, y, Math.round(Math.random()*1500))
+			var entry = Map.entry[Math.round(Math.random()*(Map.entry.length - 1))]
+			if(creep.klass == Plane){
+				creep.theta = theta;
+				Game.issueCreep(canvas, creep, 
+						(theta == 90 || theta == 270) ? Math.round(Math.random()* (Map.width - 1)) : x,
+						(theta == 0 || theta == 180) ? (Math.round(Math.random()* (Map.height - 2)) + 1) : y, 
+						delay)
+			}else{
+				Game.issueCreep(canvas, creep,  entry[0], entry[1], delay)
+			}
+			delay += 500 + (Math.random() * 40)//(Map.pitch * 4 * Game.delay)
 			Game.waitingCreeps++;
 		}
+		window.setTimeout(function(){
+			Game.sendWaves(Config)
+		}, Config.delay + delay)
+		
 	})
 }
 
-Game.issueCreep = function(canvas, creep, y, delay){
+Game.issueCreep = function(canvas, creep, x , y, delay){
 	window.setTimeout(function(){
 		var store = Game.creeps
 		if(creep.klass == Plane) store = Game.planes
-		store.push(new creep.klass(canvas, 0, y,  creep.values))
+		var obj = new creep.klass(canvas, x, y,  creep.values)
+		if(Game.slowed){
+			obj.speed = obj.speed / Game.slowFactor;
+		}
+		store.push(obj)
 		Game.waitingCreeps--;
 	}, delay)
 
 }
 
-var Map = {
-	pitch : 32,
-	width : 23,
-	height: 13,
-	grid : [],
-	init : function(){
-		for(var i = 0; i < this.width; i++){
-			this.grid[i] = []
-			for(var j = 0; j< this.height; j++){
-				this.grid[i][j] = []
-				this.grid[i][j].tower = null
-			}
-		}
-	},
-	findTile : function(x, y){
-		return [Math.floor(x/this.pitch),Math.floor(y/this.pitch)]
-	},
-	transform : function(x){
-		return Math.floor(x/this.pitch)*this.pitch
-	},
-	empty : function(x, y){
-		if(!this.grid[x]) return false;
-		if(!this.grid[x][y]) return true;
-		return this.grid[x][y].tower == null //&& this.grid[x][y].length == 0
+Game.allCreeps = function(){
+	var creeps = Game.creeps.collect(function(creep){return creep})
+	return creeps.concat(Game.planes.collect(function(creep){return creep}))
+}
+
+Game.slow = function(){
+	Game.slowed = true;
+	wave.creeps.each(function(creep){
+		creep.speed = creep.speed / Game.slowFactor;
+	})	
+}
+
+Game.nuke = function(){
+	if(Game.nukeDisabled) return
+	Game.nukeDisabled = true
+	Game.allCreeps().each(function(creep){
+		creep.takeHit(Math.round(creep.hp * 1));
+		Game.animations.push(new NukeBoom($('gameForeground').getContext('2d'), 320, 240))
+	})
+	var nukeDiv = $$('#gameElements .superWeapons div.nuke')[0]
+	Game.initTimeout(nukeDiv, "nukeDisabled", 1000)
+}
+
+Game.initTimeout = function(div, variable, time){
+	div.setOpacity(0);
+	window.setTimeout(function(){
+		Game.timeout(div, variable, time/14)
+	}, time/14)
+}
+
+Game.timeout = function(div, variable, time){
+	div.setOpacity(div.getOpacity() + 0.05)
+	if(div.getOpacity() == 0.7){
+		Game[variable] = false
+		div.setOpacity(1)
+	}else{
+		window.setTimeout(function(){Game.timeout(div,variable, time)}, time)
 	}
+}
+
+
+Game.splash = function(){
+	if(Game.splashDisabled) return
+	Game.splashDisabled = true	
+	var x = [0, Map.width * Map.pitch - 1][Math.round(Math.random())]
+	var y = [0, Map.height * Map.pitch - 1][Math.round(Math.random())]
+	Game.allCreeps().each(function(creep){
+		Game.objects.push(new PatriotRocket(creep.canvas, 0, 0,  {theta: 0, targetUnit : creep, x : x, y : y, power: 900, speed: 15}))
+		//creep.takeHit(100);
+	})
+	var div = $$('#gameElements .superWeapons div.splash')[0]
+	Game.initTimeout(div, "splashDisabled", 1000)
+}
+
+Game.heal = function(){
+	if(Game.healDisabled) return
+	Game.healDisabled = true	
+	Game.turrets.each(function(tower){
+		tower.hp += Math.round(tower.maxHp / 2)
+		if(tower.hp > tower.maxHp){
+			tower.hp = tower.maxHp
+		}
+		Game.animations.push(new HealAnimation(tower.ctx, tower.x, tower.y - 43))
+	})
+	var div = $$('#gameElements .superWeapons div.heal')[0]
+	Game.initTimeout(div, "healDisabled", 1000)
+}
+
+Game.hyper = function(){
+	if(Game.hyperDisabled) return
+	Game.hyperDisabled = true	
+	Game.turrets.each(function(tower){
+		tower.rate *= 8;
+	});
+	window.setTimeout(Game.unhyper, 10000)
+	var div = $$('#gameElements .superWeapons div.hyper')[0]
+	Game.initTimeout(div, "hyperDisabled", 1000)
+}
+Game.unhyper = function(){
+	Game.turrets.each(function(tower){
+		tower.rate /= 8;
+	});
 }
 
 var GhostTurret = null
@@ -136,7 +240,7 @@ $(document).observe('dom:loaded',function(){
 			var bg = $('gameBackground');
 			var bgctx = bg.getContext('2d') 
 			bgctx.fillStyle = "rgb(100,250,100)";
-			bgctx.fillRect (0, 0, bg.width, bg.height);
+			//bgctx.fillRect (0, 0, bg.width, bg.height);
 			var fg = $('gameForeground');
 			var top = $('droppingGround')
 			top.getContext('2d').globalAlpha = 0.5
@@ -145,7 +249,7 @@ $(document).observe('dom:loaded',function(){
 			Game.start();
 			GhostTurret = new Turret($('droppingGround'), 0, 0, ghostTurretFeatures)
 			//Object.extend(GhostTurret, ghostTurretFeatures)
-			new Ajax.Request('/city-defender/templates/towers.tpl', {method:'get', onComplete: function(t){
+			new Ajax.Request('templates/towers.tpl', {method:'get', onComplete: function(t){
 					Game.templates['towers'] = TrimPath.parseTemplate(t.responseText) 
 					if(!t.responseText){Game.templates['towers'] = TrimPath.parseTemplate($('towers_tpl').value) }
 					$('towers').innerHTML = Game.templates['towers'].process(Config);
@@ -154,9 +258,9 @@ $(document).observe('dom:loaded',function(){
 					})
 				}
 			})				
-			//$('towers').observe('click', GhostTurret.select)
-			$('creeps').observe('click', function(){Game.sendWaves(Config)})
-			Map.init();
+			$$('.towers div').invoke('observe','click', GhostTurret.select)
+			$$('#gameElements .start').first().observe('click', function(){Game.sendWaves(Config)})
+			Map.init(bgctx);
 			//Game.creeps.push(proto(Creep,fg, 12, 0))
-		}, 100)
+		}, 200)
 })

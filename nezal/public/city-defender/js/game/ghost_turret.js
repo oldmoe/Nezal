@@ -1,10 +1,9 @@
 var ghostTurretFeatures = {			
 	validate : function(x, y, tower){			
 		this.valid = true
-		if(Game.money < tower.values.price)this.valid = false
-		this.checkMap(x, y)
-		if(Map.grid[x-1])this.checkMap(x-1, y)
-		if(Map.grid[x+1])this.checkMap(x+1, y)
+		if(Map.grid[x][y].tower || Map.bgGrid[x][y] == 1 || Game.money < tower.values.price){
+			this.valid = false
+		}
 	},
 	checkMap : function(x, y){
 		if(!Map.empty(x, y-1) || !Map.empty(x, y) || !Map.empty(x, y + 1)){
@@ -14,19 +13,23 @@ var ghostTurretFeatures = {
 	select : function(){
 		Game.selectedTurret = null
 		$('droppingGround').stopObserving("mouseenter")
-		$$('.tower').each(function(t){t.removeClassName('selected')})
-		$('unitData').innerHTML = ''
+		//$$('.tower').each(function(t){t.removeClassName('selected')})
+		//$('unitData').innerHTML = ''
 		var self = GhostTurret
 		var div = this;
-		this.addClassName('selected')
+		//this.addClassName('selected')
 		var tower = Config.towers.find(function(tower){return tower.name == div.title})
+		if(tower == null) return;
 		tower.values.maxHp = tower.values.hp
 		Object.extend(self, tower.values)
 		self.images = tower.klass.prototype.images
+		self.initImages = tower.klass.prototype.initImages
+		self.initImages()
 		//tower.attributes = Tower.attributes
-		$('unitData').innerHTML = Game.templates['unitData'].process({unit: tower.values})
+		//$('unitData').innerHTML = Game.templates['unitData'].process({unit: tower.values})
 		self.selected = true;
 		$('droppingGround').observe("mouseenter", function(e){
+			//alert('in')
 			self.isIn = true
 			self.x = e.layerX
 			self.y = e.layerY					
@@ -63,10 +66,7 @@ var ghostTurretFeatures = {
 
 	},
 	clear : function(){
-		//this.ctx.save()
-		//this.ctx.fillStyle ="rgba(255,255,255,0)"
-		this.ctx.fillRect(0,0, this.canvas.width, this.canvas.height)
-		//this.ctx.restore()
+		//this.ctx.fillRect(0,0, this.canvas.width, this.canvas.height)
 		this.ctx.clearRect(0,0, this.canvas.width, this.canvas.height)
 	},
 	render : function(){
@@ -80,7 +80,7 @@ var ghostTurretFeatures = {
 			this.ctx.drawImage(this.images.rocket, -48, -16)
 		}		
 		if(this.valid){
-			this.ctx.fillStyle = 'rgba(55,55,55,0.2)'
+			this.ctx.fillStyle = 'rgba(55,55,55,0.5)'
 			this.ctx.beginPath();
 			this.ctx.arc(0, 0, this.range * Map.pitch, 0, Math.PI*2, false)
 			this.ctx.closePath();
