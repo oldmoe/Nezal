@@ -122,6 +122,7 @@ var Turret = Class.create(Unit, {
 		if(Game.selectedTurret == this){
 			Game.selectedTurret = null;
 		}
+		Game.stats.towersDestroyed++;
 	}
 })
 
