@@ -13,7 +13,6 @@ var GameStart = {
 	events : [],
 	creepMutators : [],
 	towerMutators : [],
-	templates : {},
 	fps : 0,
 	score: 0,
 	ticks : 0,
@@ -22,6 +21,7 @@ var GameStart = {
 	playing : false,
 	paused : false,
 	sound : true,
+	wave : 0,
 	skipFrames : 0,
 	superWeapons : {
 		weak : {max : 5, used : 0, factor: 2} ,
@@ -29,24 +29,36 @@ var GameStart = {
 		nuke : {max : 1, used : 0},
 		heal : {max : 3, used : 0},
 		splash : {max : 3, used : 0},
+	},
+	stats : {
+		towersCreated : 0,
+		towersDestroyed : 0,
+		creepsDestroyed : 0
 	}
 }
 
 var Game = {
+	templates : {},
+	init : function(){
+		this.waves = [],
+		this.turrets = []
+		this.creeps = []
+		this.objects = []
+		this.animations = []
+		this.planes = []
+		this.events = []
+		this.creepMutators = []
+		this.towerMutators = []
+	},
+
 	add : function(turret){
 	},
 	start : function(){
-		Object.extend(this, GameStart)
+		Game.reset()
 		Game.templates['towerInfo'] = TrimPath.parseTemplate($('towerInfoTemplate').value) 
+		Game.templates['stats'] = TrimPath.parseTemplate($('statsTemplate').value) 
 		this.renderLoop();
 		this.renderData();
-		/*new Ajax.Request('templates/unit_values.tpl', {method:'get', onComplete: function(t){
-				Game.templates['unitData'] = TrimPath.parseTemplate(t.responseText) 
-				if(!t.responseText){Game.templates['unitData'] = TrimPath.parseTemplate($('tpl').value) }
-				Game.renderLoop();
-				this.renderData();
-			}
-		})*/
 	},
 	
 	play : function(){
@@ -75,30 +87,61 @@ var Game = {
 	},
 	
 	reset : function(){
-		Object.extend(this, GameStart);
+		Object.extend(this, JSON.parse(JSON.stringify(GameStart), function(x,y){
+			return typeof y == 'string' ? JSON.parse(y) : y 
+		}));
+		//this.init();
+		this.render();
+		this.renderData();
 	},
 	
-	eventLoop : function(){
-		
+	displayStats : function(){
+		if(Game.statText){
+			if(Game.statText.length == Game.statTextIndex){
+				return
+			}else{
+				var data = $('stats').innerHTML
+				$('stats').innerHTML = data + Game.statText[Game.statTextIndex]
+				Game.statTextIndex++
+			}
+		}else{
+			Game.statText = Game.templates['stats'].process({})
+			Game.statTextIndex = 0
+			$('stats').innerHTML = ''
+		}
+		window.setTimeout(Game.displayStats, 50)
+	},
+	
+	win : function(){
+		this.render();
+		this.renderData();
+		Game.playing = false;
+		$("result").addClassName('win');
+		new Effect.Appear("result", {delay : 1.0})
+		//new Effect.Fade('canvasContainer', {delay : 1.0})			
+		//new Effect.Fade('gameElements', {delay : 1.0})
+		window.setTimeout(Game.displayStats, 1000)
+	},
+	
+	lose : function(){
+		this.render();
+		this.renderData();
+		Game.playing = false;
+		$("result").addClassName('lose');
+		new Effect.Appear("result", {delay : 1.0})
+		//new Effect.Fade('canvasContainer', {delay : 1.0})			
+		//new Effect.Fade('gameElements', {delay : 1.0})
+		window.setTimeout(Game.displayStats, 1000)
 	},
 	
 	renderLoop : function(){
 		Game.tick();
-		if(Game.escaped >= Game.maxEscaped){
-			Game.render();
-			Game.renderData();
-			$("result").innerHTML = '<br/>Game Over!'
-			new Effect.Appear("result", {delay : 1.0})
-			new Effect.Fade('canvasContainer', {delay : 1.0})			
-			new Effect.Fade('gameElements', {delay : 1.0})
+		if(Game.playing && Game.escaped >= Game.maxEscaped){
+			Game.lose();
 			return
-		}else if(Game.config){
+		}else if(Game.config && Game.playing){
 			if(Game.config.waves.length == 0 && Game.creeps.length == 0 && Game.planes.length == 0 && Game.waitingCreeps == 0 ){
-				Game.render();
-				$("result").innerHTML = '<br/>You Win!'
-				new Effect.Appear("result", {delay : 1.0})
-				new Effect.Fade('canvasContainer', {delay : 1.0})
-				new Effect.Fade('gameElements', {delay : 1.0})
+				Game.win();
 				return
 			}else if(Game.creeps.length == 0 && Game.planes.length == 0 && Game.config.waves.length > 0 && !Game.wavePending && Game.playing){
 				Game.push(10, function(){Game.sendWave(Game.config.waves.pop())})
@@ -118,7 +161,6 @@ var Game = {
 	
 	push : function(ticks, func){
 		var delay = this.ticks + ticks
-		//console.log('pushed at:'+ delay)
 		this.events.splice(this.eventIndex(delay, true), 0, [delay, func])
 	},
 	
@@ -156,12 +198,13 @@ var Game = {
 		$('money').innerHTML = Game.money;
 		$('lives').innerHTML = Game.maxEscaped - Game.escaped;
 		$('score').innerHTML = Game.score;
-		$$('#gameElements .fps').first().innerHTML = "FPS: "+this.fps;
+		//$$('#gameElements .fps').first().innerHTML = "FPS: "+this.fps;
 		$('splash').innerHTML = Game.superWeapons.splash.max - Game.superWeapons.splash.used
 		$('heal').innerHTML = Game.superWeapons.heal.max - Game.superWeapons.heal.used
 		$('nuke').innerHTML = Game.superWeapons.nuke.max - Game.superWeapons.nuke.used
 		$('weak').innerHTML = Game.superWeapons.weak.max - Game.superWeapons.weak.used
 		$('hyper').innerHTML = Game.superWeapons.hyper.max - Game.superWeapons.hyper.used
+		$('waves').innerHTML = Game.wave +'/'+Game.wavesCount;
 		if(Game.selectedTurret){
 			$('towerInfo').innerHTML = Game.templates['towerInfo'].process({unit: Game.selectedTurret})
 		}
@@ -192,8 +235,14 @@ var Game = {
 Game.sendWaves = function(config){
 	if(Game.playing) return;
 	Game.playing = true;
-	Game.config = config
-	var wave = config.waves.pop()
+	Game.config = clone_obj(config)
+	//JSON.parse(JSON.stringify(config), function(x,y){
+	//	return typeof y == 'string' ? JSON.parse(y) : y 
+	//});
+	//console.log(Game.config)
+	Game.wavesCount = Game.config.waves.length
+	Game.wave = 0
+	var wave = Game.config.waves.pop()
 	if(wave){
 		Game.sendWave(wave);
 		Game.wavePending = true
@@ -203,6 +252,7 @@ Game.sendWaves = function(config){
 }
 
 Game.sendWave = function(wave){
+	Game.wave++
 	var slots = []
 	for(var i=0;i<Map.height;i++){
 		slots[i] = i;
@@ -229,6 +279,7 @@ Game.sendWave = function(wave){
 	wave.creeps.each(function(creep){
 		for(var i=0; i < creep.count; i++){
 			var entry = Map.entry[Math.round(Math.random()*(Map.entry.length - 1))]
+			console.log(creep)
 			if(creep.klass == Plane){
 				creep.theta = theta;
 				Game.issueCreep(canvas, creep, 
