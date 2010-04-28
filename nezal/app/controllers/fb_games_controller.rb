@@ -12,7 +12,7 @@ class FBGamesController < ApplicationController
     puts session[:fb_app_id]
     puts session[:fb_session_key]
     puts [session[:fb_user_id]]  
-  
+    puts session[:fb_session_expires]  
     user_info = FacebookUser.getUserInfo( session[:fb_app_id], session[:fb_session_key], [session[:fb_user_id]] )
     @user = FBUser.load(session[:fb_user_id], @game[:id], @current_camp, user_info[0])
     

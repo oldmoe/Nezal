@@ -17,6 +17,16 @@ class InitController < ApplicationController
         session[:fb_app_id] = uri_params["fb_sig_app_id"][0]
         session[:fb_session_key] = uri_params["fb_sig_session_key"][0]
         session[:fb_user_id] = uri_params["fb_sig_user"][0]
+        session[:fb_session_expires] = uri_params["fb_sig_expires"][0]
+        session[:fb_sig_ss] =  uri_params["fb_sig_ss"][0]
+        if env['rack.request.cookie_hash'][FBConfigs::CONFIG[session[:fb_app_id]]["key"] + "_user"] 
+          response.set_cookie(FBConfigs::CONFIG[session[:fb_app_id]]["key"] + "_session_key", session[:fb_session_key])
+          response.set_cookie(FBConfigs::CONFIG[session[:fb_app_id]]["key"] + "_expires" , session[:fb_session_expires])
+          response.set_cookie(FBConfigs::CONFIG[session[:fb_app_id]]["key"] + "_ss" , session[:fb_sig_ss])
+        end
+        puts [session[:fb_user_id]]  
+        puts [session[:fb_session_key]]  
+        puts [session[:fb_session_expires]]       
         redirect "/fb-games/#{FBConfigs::CONFIG[@app_id]['game_name']}"
       end
     else

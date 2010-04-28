@@ -24,13 +24,22 @@ class ApplicationController < Sinatra::Base
     p env['rack.request.cookie_hash']
     p env['REQUEST_PATH']
     
-    if env['rack.request.cookie_hash'][FBConfigs::CONFIG[session[:fb_app_id]]["key"] + "_user"] 
+    puts "/////"
+    puts request.cookies[FBConfigs::CONFIG[session[:fb_app_id]]["key"] + "_user"]
+    puts "/////////////////////////////"
+    
+    if env['rack.request.cookie_hash'][FBConfigs::CONFIG[session[:fb_app_id]]["key"] + "_user"] &&
+      env['rack.request.cookie_hash'][FBConfigs::CONFIG[session[:fb_app_id]]["key"] + "_expires"]  > session[:fb_session_expires]
       session[:fb_user_id] = env['rack.request.cookie_hash'][FBConfigs::CONFIG[session[:fb_app_id]]["key"] + "_user"] 
       session[:fb_session_key] = env['rack.request.cookie_hash'][FBConfigs::CONFIG[session[:fb_app_id]]["key"] + "_session_key"] 
       session[:fb_session_expires] = env['rack.request.cookie_hash'][FBConfigs::CONFIG[session[:fb_app_id]]["key"] + "_expires"] 
       puts [session[:fb_user_id]]  
       puts [session[:fb_session_key]]  
       puts [session[:fb_session_expires]]  
+    else 
+      response.set_cookie(FBConfigs::CONFIG[session[:fb_app_id]]["key"] + "_session_key", session[:fb_session_key])
+      response.set_cookie(FBConfigs::CONFIG[session[:fb_app_id]]["key"] + "_expires" , session[:fb_session_expires])
+      response.set_cookie(FBConfigs::CONFIG[session[:fb_app_id]]["key"] + "_ss" , session[:fb_sig_ss])
     end
     puts "!!!!!!!!!!!!!!!!!!!!!!!!!"
     init

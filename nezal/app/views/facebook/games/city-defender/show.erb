@@ -5,7 +5,6 @@
     
 		<script src="/javascripts/prototype.js"></script>
     <script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript"></script>
-    <script src="javascripts/application/XFBML.js" type="text/javascript"></script>
  
   </head>
 
@@ -21,18 +20,15 @@
         refresh : function() {
             FBApi.api._refreshSession(function(){
               console.log(FBApi.api.get_session());
-            
+            FBApi.api._setSessionCookies(FBApi.api.get_session());
             });
-              new Ajax.Request( "http://api.connect.facebook.com/session_state.php", { 
-                            method:'post', 
-                            parameters:{ api_key : '3f08e7205c0eb87bdebeb26638946e1d', session_key : '2._Yuqf3vsS3tSrnuvMDz0RQ__.3600.1272420000-750199343' },
-                            onSuccess: function(transport){
-                                console.log("YAY");
-                                console.log(transport.responseText);
-                                console.log(FBApi.api.get_session());
-                                window.setTimeout("AjaxReq.refresh()", 60000); 
-                            }
-                    });
+            new Ajax.Request( "http://127.0.0.1:5500/fb-games/city-defender/1", { 
+                  method:'get', 
+                  onSuccess: function(transport){
+                  FBApi.api.set_session(FBApi.api._getSessionFromCookies());
+                  window.setTimeout("AjaxReq.refresh()", 60000); 
+                }
+            });
         },
       }
 
@@ -53,12 +49,12 @@
                 
         // require user to login 
         api.requireLogin(function(exception){
-          console.log(api.get_session().session_key)
-          FB.FBDebug.logLevel=5;
-          FB.FBDebug.dump("Current user id is " + api.get_session());
-          FB.FBDebug.dump("Current user id is " + api.get_session().uid);
-          FB.FBDebug.dump("Current user id is " + api.get_session().session_key);
-          FB.FBDebug.dump("Current user id is " + api.get_session().expires);
+//          console.log(api.get_session().session_key)
+//          FB.FBDebug.logLevel=5;
+//          FB.FBDebug.dump("Current user id is " + api.get_session());
+//          FB.FBDebug.dump("Current user id is " + api.get_session().uid);
+//          FB.FBDebug.dump("Current user id is " + api.get_session().session_key);
+//          FB.FBDebug.dump("Current user id is " + api.get_session().expires);
            FBApi.api._refreshSession(function(){
               console.log(FBApi.api.get_session());
             });
@@ -67,8 +63,6 @@
         AjaxReq.refresh();
         
       });
-
-
 
       var SessionHandler = {
         refresh : function(){ 
