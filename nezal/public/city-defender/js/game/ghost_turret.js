@@ -58,6 +58,7 @@ var ghostTurretFeatures = {
 						mutator.action(turret)
 					})
 					Game.turrets.push(turret)
+					Game.stats.towersCreated++
 					Map.grid[turret.gridX][turret.gridY].tower = turret
 					Game.money -= turret.price
 				}
