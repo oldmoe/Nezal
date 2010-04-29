@@ -17,7 +17,7 @@ class ApplicationController < Sinatra::Base
     puts ">>>>>> Cookie :  #{env['rack.request.cookie_hash']}"
     puts ">>>>>> Request Path :  #{env['REQUEST_PATH']}"
         
-    if  env['rack.request.cookie_hash'] && env['rack.request.cookie_hash'][FBConfigs::CONFIG[session[:fb_app_id]]["key"] + "_user"] &&
+    if  env['rack.request.cookie_hash'] && session[:fb_app_id] && env['rack.request.cookie_hash'][FBConfigs::CONFIG[session[:fb_app_id]]["key"] + "_user"] &&
       env['rack.request.cookie_hash'][FBConfigs::CONFIG[session[:fb_app_id]]["key"] + "_expires"]  > session[:fb_session_expires]
       session[:fb_user_id] = env['rack.request.cookie_hash'][FBConfigs::CONFIG[session[:fb_app_id]]["key"] + "_user"] 
       session[:fb_session_key] = env['rack.request.cookie_hash'][FBConfigs::CONFIG[session[:fb_app_id]]["key"] + "_session_key"] 

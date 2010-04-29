@@ -58,7 +58,7 @@ class FBGamesController < ApplicationController
     layout = "#{params[:game_name]}/show".to_sym
     @game_erb = "#{params[:game_name]}/_#{params[:game_name]}".to_sym
     @user_erb = "#{params[:game_name]}/_user".to_sym
-    erb @game_erb , {:layout => layout}    
+    erb layout , {:layout => false}    
         
   end
     
