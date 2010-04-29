@@ -1,5 +1,5 @@
 var Unit = Class.create({
-	_oldRenders : [],
+//	_oldRenders : [],
 	initialize: function(canvas, x, y, extension){
 		this.gridX = x
 		this.gridY = y
@@ -12,6 +12,7 @@ var Unit = Class.create({
 		}
 		this.maxHp = this.hp
 		this.initImages();
+		return this
 	},
 	initImages: function(){
 		//alert('initImages not implemented')

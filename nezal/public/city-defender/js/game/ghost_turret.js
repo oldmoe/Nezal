@@ -22,11 +22,11 @@ var ghostTurretFeatures = {
 		if(tower == null) return;
 		tower.values.maxHp = tower.values.hp
 		Object.extend(self, tower.values)
-		self.images = tower.klass.prototype.images
-		self.initImages = tower.klass.prototype.initImages
+		self.images = tower.category.prototype.images
+		self.initImages = tower.category.prototype.initImages
 		self.initImages()
 		//tower.attributes = Tower.attributes
-		$('towerInfo').innerHTML = Game.templates['towerInfo'].process({values: tower.values, tower : tower.klass.prototype})
+		$('towerInfo').innerHTML = Game.templates['towerInfo'].process({values: tower.values, tower : tower.category.prototype})
 		self.selected = true;
 		$('droppingGround').observe("mouseenter", function(e){
 			//alert('in')
@@ -53,7 +53,7 @@ var ghostTurretFeatures = {
 				if(!self.selected) return
 				self.validate(x, y, tower);
 				if(self.valid){
-					var turret = new tower.klass($('gameForeground'), Math.floor(e.layerX/32), Math.floor(e.layerY/32), tower.values)
+					var turret = new tower.category($('gameForeground'), Math.floor(e.layerX/32), Math.floor(e.layerY/32), tower.values)
 					Game.towerMutators.each(function(mutator){
 						mutator.action(turret)
 					})
