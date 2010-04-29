@@ -1,6 +1,7 @@
 module DataStore
 
   class QueryProxy
+    include Enumerable
     
     ErrorMsg = "Method recieves a Hash or a block as condition"
     
