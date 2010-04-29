@@ -15,8 +15,8 @@ body{
 	width : 760px;
 	height: 550px;
 	bottom: 0px;
-	margin-left:auto;
-	margin-right:auto;
+	/*margin-left:auto;
+	margin-right:auto;*/
 	font-family : verdana;
 }
 
@@ -127,7 +127,7 @@ body{
 	top:486px;
 	left:150px;
 	height:60px;
-	width:700px;
+	width:610px;
 }
 
 #gameElements .upgrades .upgradesBar{
@@ -270,7 +270,7 @@ body{
 	position:absolute;
 	top:98px;
 	left: 672px;
-	width: 150px;
+	width: 88px;
 	height: 42px;
 	color : orange;
 	font-size: 12px;

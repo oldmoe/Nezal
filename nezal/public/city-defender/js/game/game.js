@@ -22,6 +22,7 @@ var GameStart = {
 	paused : false,
 	sound : true,
 	wave : 0,
+	wavesCount : 0,
 	skipFrames : 0,
 	superWeapons : {
 		weak : {max : 5, used : 0, factor: 2} ,
@@ -90,6 +91,8 @@ var Game = {
 		Object.extend(this, JSON.parse(JSON.stringify(GameStart), function(x,y){
 			return typeof y == 'string' ? JSON.parse(y) : y 
 		}));
+		$$('#gameElements .start').first().removeClassName('resumed')
+		$$('#gameElements .start').first().removeClassName('paused')
 		//this.init();
 		this.render();
 		this.renderData();
