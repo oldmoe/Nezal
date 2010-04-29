@@ -104,7 +104,9 @@ Escaped Units : ${Game.escaped}
 				</div>
 				<div class="upgrades">
 					<div class="upgradesBar">
-						<div id="nextUpgrade" class="upgrade next"></div>
+						<div id="nextUpgrade" class="upgrade next">
+							<div id="upgradePrice"></div>						
+						</div>
 						<div id="currentUpgrade" class="upgrade current">
 							<div class="purchased"></div>
 						</div>
@@ -168,6 +170,8 @@ Escaped Units : ${Game.escaped}
 			<div id="static" style="display:none"></div>
 			<div id="result" style="display:none">
 				<pre id="stats"></pre>
+				<div id="playAgain"></div>
+				<div id="exit"></div>				
 			</div>
 			<div id="splashScreen" style="display:none">
 				<div class="loading_bar_bg">

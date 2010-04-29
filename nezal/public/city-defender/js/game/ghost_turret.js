@@ -18,7 +18,7 @@ var ghostTurretFeatures = {
 		var self = GhostTurret
 		var div = this;
 		//this.addClassName('selected')
-		var tower = Config.towers.find(function(tower){return tower.name == div.title})
+		var tower = Game.config.towers.find(function(tower){return tower.name == div.title})
 		if(tower == null) return;
 		tower.values.maxHp = tower.values.hp
 		Object.extend(self, tower.values)
@@ -42,6 +42,7 @@ var ghostTurretFeatures = {
 			}).observe("click", function(e){
 				var x = Math.floor(e.layerX/32)
 				var y = Math.floor(e.layerY/32)
+				/*
 				if(Map.grid[x][y].tower){
 					Game.selectedTurret = Map.grid[x][y].tower
 					self.selected = false
@@ -50,6 +51,7 @@ var ghostTurretFeatures = {
 					$('droppingGround').stopObserving('mousemove').stopObserving('mouseenter').removeClassName('turret')
 					return
 				}
+				*/
 				if(!self.selected) return
 				self.validate(x, y, tower);
 				if(self.valid){

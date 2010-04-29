@@ -2,7 +2,7 @@ var GameStart = {
 	waitingCreeps : 0,
 	wavePending : false,
 	escaped: 0,
-	maxEscaped : 20,
+	maxEscaped : 2,
 	money : 100,
 	delay : 25,
 	turrets : [],
@@ -63,7 +63,7 @@ var Game = {
 	},
 	
 	play : function(){
-		Game.sendWaves(Config)
+		Game.sendWaves(Game.config)
 		this.addClassName('resumed')
 		this.stopObserving('click')
 		this.observe('click', Game.pause)
@@ -93,7 +93,7 @@ var Game = {
 		}));
 		$$('#gameElements .start').first().removeClassName('resumed')
 		$$('#gameElements .start').first().removeClassName('paused')
-		//this.init();
+		Game.config = clone_obj(Config)
 		this.render();
 		this.renderData();
 	},
@@ -121,8 +121,6 @@ var Game = {
 		Game.playing = false;
 		$("result").addClassName('win');
 		new Effect.Appear("result", {delay : 1.0})
-		//new Effect.Fade('canvasContainer', {delay : 1.0})			
-		//new Effect.Fade('gameElements', {delay : 1.0})
 		window.setTimeout(Game.displayStats, 1000)
 	},
 	
@@ -132,8 +130,6 @@ var Game = {
 		Game.playing = false;
 		$("result").addClassName('lose');
 		new Effect.Appear("result", {delay : 1.0})
-		//new Effect.Fade('canvasContainer', {delay : 1.0})			
-		//new Effect.Fade('gameElements', {delay : 1.0})
 		window.setTimeout(Game.displayStats, 1000)
 	},
 	
@@ -239,11 +235,7 @@ var Game = {
 Game.sendWaves = function(config){
 	if(Game.playing) return;
 	Game.playing = true;
-	Game.config = clone_obj(config)
-	//JSON.parse(JSON.stringify(config), function(x,y){
-	//	return typeof y == 'string' ? JSON.parse(y) : y 
-	//});
-	//console.log(Game.config)
+	Game.wavesCount = Game.config.waves.length
 	Game.wavesCount = Game.config.waves.length
 	Game.wave = 0
 	var wave = Game.config.waves.pop()
@@ -390,7 +382,7 @@ $(document).observe('dom:loaded',function(){
 			new Ajax.Request('/city-defender/templates/towers.tpl', {method:'get', onComplete: function(t){
 					Game.templates['towers'] = TrimPath.parseTemplate(t.responseText) 
 					if(!t.responseText){Game.templates['towers'] = TrimPath.parseTemplate($('towers_tpl').value) }
-					$('towers').innerHTML = Game.templates['towers'].process(Config);
+					$('towers').innerHTML = Game.templates['towers'].process(Game.config);
 					$$('.tower').each(function(tower){
 						tower.observe('click', GhostTurret.select)
 					})
@@ -404,6 +396,12 @@ $(document).observe('dom:loaded',function(){
 			$$('#gameElements .start').first().observe('click', Game.play)
 			$$('#gameElements .superWeapons div').each(function(div){ 
 				if(div.className != ''){div.observe('click', function(){Game.fireSuperWeapon(div.className)})}
+			})
+			$('playAgain').observe('click', function(){
+				$$('#gameElements .start').first().stopObserving('click')
+				$$('#gameElements .start').first().observe('click', Game.play)
+				Game.start();
+				$('result').hide();
 			})
 			Map.init(bgctx);
 			Upgrades.selectDefault();

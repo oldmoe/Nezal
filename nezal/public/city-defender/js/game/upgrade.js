@@ -4,19 +4,19 @@ var UpgradeData = {
 	affects : [Turret, DoubleTurret],
 	list: [
 		{ price : 0, classes : ['bullets_1'], effect : {}},
-		{ price : 50, classes: ['bullets_2'], effect : {rate : 1.5}}
+		{ price : 120, classes: ['bullets_2'], effect : {rate : 1.5}}
 	]},
 	rockets : {
 	affects : [RocketLauncher, Patriot],
 	list: [
 		{ price : 0, classes : ['rockets_1'], effect : {}},
-		{ price : 50, classes: ['rockets_2'], effect : {power : 1.5}}	
+		{ price : 120, classes: ['rockets_2'], effect : {power : 1.5}}	
 	]},
 	shields : {
 	affects : [Turret, DoubleTurret, RocketLauncher, Patriot],
 	list: [
 		{ price : 0, classes : ['shields_1'], effect : {}},
-		{ price : 50, classes: ['shields_2'], effect : {maxHp : 1.5, hp : 1.5}}
+		{ price : 120, classes: ['shields_2'], effect : {maxHp : 1.5, hp : 1.5}}
 	]}
 }
 
@@ -43,9 +43,9 @@ var Upgrades = {
 		item.list.shift()
 		Game.money -= item.list[0].price
 		item.affects.each(function(tower){
-			var values = Config.towers.find(function(t){return t.category == tower}).values
+			var values = Game.config.towers.find(function(t){return t.category == tower}).values
 			for(p in item.list[0].effect){
-				tower.prototype[p] = Math.round(tower.prototype[p] * item.list[0].effect[p] * 100)/100
+				//tower.prototype[p] = Math.round(tower.prototype[p] * item.list[0].effect[p] * 100)/100
 				if(values[p]){
 					values[p] = Math.round(values[p] * item.list[0].effect[p] * 100)/100
 					// we need to update existing towers as well
@@ -57,6 +57,7 @@ var Upgrades = {
 				}
 			}
 		})
+		$('towerInfo').innerHTML = ''
 	},
 	
 	render : function(){
@@ -69,8 +70,10 @@ var Upgrades = {
 				}else{
 					$('nextUpgrade').className = "upgrade next "+item.list[1].classes[0]
 				}
+				$('upgradePrice').innerHTML = '$'+item.list[1].price
 			}else{
 				$('nextUpgrade').className = "upgrade next blocked" 
+				$('upgradePrice').innerHTML = ''
 			}
 		}
 	}

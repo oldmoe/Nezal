@@ -84,8 +84,10 @@ var bgImages = [
               'win.png',
               'lose.png',
               'path.png',
-              'start.png',
+              'play_again.png',
+              'exit.png',
               'pause.png',
+              'start.png',
               'resume.png',
               'path.png',
 			  'snow.gif'
