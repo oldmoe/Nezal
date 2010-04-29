@@ -163,21 +163,21 @@ var Config = {
 			{category : Humvee, count : 10, values : {hp:140, speed:4, power:1, rate:0.1, price: 1, range: 2} }
 		] },
 		{ creeps : [
-			{category : TankII, count : 20, values : {hp:120, speed:4, power:1, rate:0.1, price: 1, range: 2} }
+			{category : BlackTank, count : 20, values : {hp:120, speed:4, power:1, rate:0.1, price: 1, range: 2} }
 		] },
 		{ creeps : [
 			{category : TankI, count : 10, values : {hp:105, speed:4, power:1, rate:0.1, price: 1, range: 2} },
 			{category : TankII, count : 10, values : {hp:120, speed:4, power:1, rate:0.1, price: 1, range: 2} }
 		] },
 		{ creeps : [
-			{category : TankI, count : 20, values : {hp:105, speed:4, power:1, rate:0.1, price: 1, range: 2} }
+			{category : TankII, count : 20, values : {hp:105, speed:4, power:1, rate:0.1, price: 1, range: 2} }
 		] },
 		{ creeps : [
 			{category : Tank, count : 10, values : {hp:90, speed:4, power:1, rate:0.1, price: 1, range: 2} },
 			{category : TankI, count : 10, values : {hp:105, speed:4, power:1, rate:0.1, price: 1, range: 2} }
 		] },
 		{ creeps : [
-			{category : TankI, count : 20, values : {hp:90, speed:4, power:1, rate:0.1, price: 1, range: 2} }
+			{category : Tank, count : 20, values : {hp:90, speed:4, power:1, rate:0.1, price: 1, range: 2} }
 		] }
 	]
 }

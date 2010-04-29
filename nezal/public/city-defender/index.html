@@ -1,8 +1,6 @@
 ﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
-	<!--meta equiv="X-UA-Compatible" content="chrome=1"-->
 	<head>
-		<!--meta http-equiv="X-UA-Compatible" content="chrome=1"-->
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<link type="text/css" href="css/game.css" rel="stylesheet" />
 		<script src="js/base/prototype.js"></script>
@@ -11,25 +9,15 @@
 		<script src="js/base/template.js"></script>
 		<script>
 			function clone_obj(obj) {
-				if (typeof obj !== 'object' || obj == null) {
-					return obj;
-				}
-			 
+				if (typeof obj !== 'object' || obj == null)return obj;
 				var c = obj instanceof Array ? [] : {};
-			 
 				for (var i in obj) {
 					var prop = obj[i];
-			 
 					if (typeof prop == 'object') {
 					   if (prop instanceof Array) {
 						   c[i] = [];
-			 
 						   for (var j = 0; j < prop.length; j++) {
-							   if (typeof prop[j] != 'object') {
-								   c[i].push(prop[j]);
-							   } else {
-								   c[i].push(clone_obj(prop[j]));
-							   }
+							   typeof prop[j] != 'object' ? c[i].push(prop[j]) : c[i].push(clone_obj(prop[j]));
 						   }
 					   } else {
 						   c[i] = clone_obj(prop);
@@ -38,18 +26,22 @@
 					   c[i] = prop;
 					}
 				}
-			 
 				return c;
 			}		
 		</script>
 	</head>
 	<body>
+		<div id="preload" style="display:none">
+			<img src="/city-defender/images/background/interface.png" />
+			<img src="/city-defender/images/background/loading_bar_down.png" />
+			<img src="/city-defender/images/background/loading_bar_up.png" />
+		</div>
 		<textarea id='statsTemplate' style="display:none">
-			Score : ${Game.score}
-			Towers Built : ${Game.stats.towersCreated}
-			Towers Lost : ${Game.stats.towersDestroyed}
-			Units Destroyed : ${Game.stats.creepsDestroyed}
-			Escaped Units : ${Game.escaped}
+Score : ${Game.score}
+Towers Built : ${Game.stats.towersCreated}
+Towers Lost : ${Game.stats.towersDestroyed}
+Units Destroyed : ${Game.stats.creepsDestroyed}
+Escaped Units : ${Game.escaped}
 		</textarea>
 		<textarea id='towerInfoTemplate' style="display:none">
 			<div class="diagram ${tower.cssClass}"></div>
@@ -81,19 +73,12 @@
 			</div>
 		</table>
 		</textarea>
-		<br/><br/>
-		<br/><br/>
 		<div id="gameContainer">
-			<!--div id="canvasHeader">
-				<span>Escaped :</span> <span id="escaped">0</span> 
-				<span>Money :</span> <span id="money"></span>
-			</div-->
-			<div id="canvasContainer">
+			<div id="canvasContainer" style="display:none">
 				<canvas id="gameBackground" width="736" height="480"></canvas>
 				<canvas id="gameForeground" width="736" height="480"></canvas>
-				
 			</div>
-			<div id="gameElements">
+			<div id="gameElements" style="display:none">
 				<div id="money">
 					0
 				</div>
@@ -118,11 +103,17 @@
 					<div></div>
 				</div>
 				<div class="upgrades">
-					<div class="upgradesBar"></div>
+					<div class="upgradesBar">
+						<div id="nextUpgrade" class="upgrade next"></div>
+						<div id="currentUpgrade" class="upgrade current">
+							<div class="purchased"></div>
+						</div>
+						<div class="arrow"></div>
+					</div>
 					<div class="upgradeItems">
-							<div class="upgradeItem bullets"></div>
-							<div class="upgradeItem rockets"></div>
-							<div class="upgradeItem shields"></div>
+							<div id="bullets" class="upgradeItem bullets"></div>
+							<div id="rockets" class="upgradeItem rockets"></div>
+							<div id="shields" class="upgradeItem shields"></div>
 							<div class="upgradeItem"></div>
 							<div class="upgradeItem"></div>
 							<div class="upgradeItem"></div>
@@ -138,7 +129,7 @@
 					</p>
 				</div>
 				<div class="controls">
-					<div class="sound on" onclick='Game.toggleSound()'></div>
+					<div class="sound on"></div>
 					<div class="like"></div>
 					<!--div class="subscribe"></div-->
 					<div class="bookmark"></div>
@@ -174,28 +165,31 @@
 					</div>
 				</div>			</div>
 			<canvas id="droppingGround" width="672" height="480"></canvas>
+			<div id="static" style="display:none"></div>
 			<div id="result" style="display:none">
 				<pre id="stats"></pre>
 			</div>
-			<div id="splashScreen">
+			<div id="splashScreen" style="display:none">
 				<div class="loading_bar_bg">
 					<div id="loading_bar"></div>
 				</div>
 			</div>
+			<div id="waitScreen"></div>
 		</div>		
 	</body>
 </html>
 <script src="js/game/game.js"></script>
+<script src="js/game/images.js"></script>
 <script src="js/game/super_weapons.js"></script>
 <script src="js/game/sounds.js"></script>
-<script src="js/game/images.js"></script>
 <script src="js/game/unit.js"></script>
+<script src="js/game/creep.js"></script>
 <script src="js/game/bullets.js"></script>
 <script src="js/game/rockets.js"></script>
 <script src="js/game/ghost_turret.js"></script>
-<script src="js/game/creep.js"></script>
 <script src="js/game/tanks.js"></script>
 <script src="js/game/plane.js"></script>
 <script src="js/game/animation.js"></script>
 <script src="js/game/config.js"></script>
 <script src="js/game/mapeasy1.js"></script>
+<script src="js/game/upgrade.js"></script>

@@ -17,7 +17,7 @@ var Tank = Class.create(Creep,{
 
 var TankI = Class.create(Creep, {
 	images : {
-		base : Game.images['tank_1_2_body.png'],
+		base : Game.images['tank_1_body.png'],
 		cannon : Game.images['tank_1_tower.png'],
 		fire : Game.images['tank_1_tower_in_action.png'],
 	}
@@ -25,8 +25,16 @@ var TankI = Class.create(Creep, {
 
 var TankII = Class.create(Creep, {
 	images : {
-		base : Game.images['tank_1_2_body.png'],
+		base : Game.images['tank_2_body.png'],
 		cannon : Game.images['tank_2_tower.png'],
 		fire : Game.images['tank_2_tower_in_action.png'],
+	}
+})
+
+var BlackTank = Class.create(Creep,{
+	images : {
+		base : Game.images['black_tank_body.png'],
+		cannon : Game.images['black_tank_tower.png'],
+		fire : Game.images['black_tank_tower_in_action.png'],
 	}
 })
