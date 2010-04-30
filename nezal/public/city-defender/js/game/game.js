@@ -2,7 +2,7 @@ var GameStart = {
 	waitingCreeps : 0,
 	wavePending : false,
 	escaped: 0,
-	maxEscaped : 2,
+	maxEscaped : 20,
 	money : 100,
 	delay : 25,
 	turrets : [],
