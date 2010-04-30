@@ -1,4 +1,5 @@
 Game.images = {};
+Game.bgImages = {};
 Game.loadedImages = 0;
 Game.totalImages = 0
 Game.animationFrames = {
@@ -156,7 +157,7 @@ function loadAllImages(){
 	} 
 
 	for ( var  i=0 ; i< bgImages.length ; i++ ){ 
-	  loadImage(Game.backgroundImagesDir + bgImages[i]); 
+	  Game.bgImages[bgImages[i]] = loadImage(Game.backgroundImagesDir + bgImages[i]); 
 	} 
 }                                                    
 

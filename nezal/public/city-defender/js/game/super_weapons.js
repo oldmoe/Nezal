@@ -1,12 +1,12 @@
 Game.fireSuperWeapon = function(weapon){
-	if(!Game.playing || Game[weapon+'disabled'] || Game.superWeapons[weapon].used == Game.superWeapons[weapon].max ) return
-	Game[weapon+'disabled'] = true
+	if(!Game.playing || Game[weapon+'Disabled'] || Game.superWeapons[weapon].used == Game.superWeapons[weapon].max ) return
+	Game[weapon+'Disabled'] = true
 	Game.superWeapons[weapon].used++
 	Game.push(0, Game[weapon])
 	var div = $$('#gameElements .superWeapons div.'+weapon)[0]
 	div.setOpacity(0);
 	if(Game.superWeapons[weapon].used < Game.superWeapons[weapon].max){
-		Game.initTimeout(div, weapon+'disabled', 1000 / Game.delay)
+		Game.initTimeout(div, weapon+'Disabled', 1000 / Game.delay)
 	}
 }
 

@@ -23,6 +23,7 @@ var UpgradeData = {
 var Upgrades = {
 	init : function(){
 		this.data = clone_obj(UpgradeData)
+		this.selectDefault()
 	},
 
 	selectDefault : function(){

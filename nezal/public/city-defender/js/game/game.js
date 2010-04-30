@@ -31,6 +31,11 @@ var GameStart = {
 		heal : {max : 3, used : 0},
 		splash : {max : 3, used : 0},
 	},
+	weakDisabled : false,
+	hyperDisabled : false,
+	healDisabled : false,
+	nukeDisabled : false,
+	splashDisabled : false,
 	stats : {
 		towersCreated : 0,
 		towersDestroyed : 0,
@@ -89,14 +94,13 @@ var Game = {
 	
 	reset : function(){
 		Object.extend(this, clone_obj(GameStart))
-		//JSON.parse(JSON.stringify(GameStart), function(x,y){
-		//	return typeof y == 'string' ? JSON.parse(y) : y 
-		//}));
 		$$('#gameElements .start').first().removeClassName('resumed')
 		$$('#gameElements .start').first().removeClassName('paused')
 		Game.config = clone_obj(Config)
 		Map.init();
-		Upgrades.init()
+		$$('#gameElements .superWeapons div').invoke('setOpacity', 1)
+		Upgrades.init();
+		Upgrades.render();
 		this.render();
 		this.renderData();
 	},
