@@ -63,7 +63,7 @@ var Game = {
 	},
 	
 	play : function(){
-		Game.sendWaves(Config)
+		Game.sendWaves(Game.config)
 		this.addClassName('resumed')
 		this.stopObserving('click')
 		this.observe('click', Game.pause)
@@ -93,7 +93,7 @@ var Game = {
 		}));
 		$$('#gameElements .start').first().removeClassName('resumed')
 		$$('#gameElements .start').first().removeClassName('paused')
-		//this.init();
+		Game.config = clone_obj(Config)
 		this.render();
 		this.renderData();
 	},
@@ -120,9 +120,10 @@ var Game = {
 		this.renderData();
 		Game.playing = false;
 		$("result").addClassName('win');
+		$('static').show();
+		$('droppingGround').addClassName('off')
+		new Effect.SwitchOff('static');
 		new Effect.Appear("result", {delay : 1.0})
-		//new Effect.Fade('canvasContainer', {delay : 1.0})			
-		//new Effect.Fade('gameElements', {delay : 1.0})
 		window.setTimeout(Game.displayStats, 1000)
 	},
 	
@@ -131,9 +132,10 @@ var Game = {
 		this.renderData();
 		Game.playing = false;
 		$("result").addClassName('lose');
+		$('static').show();
+		$('droppingGround').addClassName('off')
+		new Effect.SwitchOff('static');
 		new Effect.Appear("result", {delay : 1.0})
-		//new Effect.Fade('canvasContainer', {delay : 1.0})			
-		//new Effect.Fade('gameElements', {delay : 1.0})
 		window.setTimeout(Game.displayStats, 1000)
 	},
 	
@@ -211,6 +213,7 @@ var Game = {
 		if(Game.selectedTurret){
 			$('towerInfo').innerHTML = Game.templates['towerInfo'].process({unit: Game.selectedTurret})
 		}
+		Upgrades.render();
 	},
 	
 	render : function(){
@@ -238,11 +241,7 @@ var Game = {
 Game.sendWaves = function(config){
 	if(Game.playing) return;
 	Game.playing = true;
-	Game.config = clone_obj(config)
-	//JSON.parse(JSON.stringify(config), function(x,y){
-	//	return typeof y == 'string' ? JSON.parse(y) : y 
-	//});
-	//console.log(Game.config)
+	Game.wavesCount = Game.config.waves.length
 	Game.wavesCount = Game.config.waves.length
 	Game.wave = 0
 	var wave = Game.config.waves.pop()
@@ -282,8 +281,7 @@ Game.sendWave = function(wave){
 	wave.creeps.each(function(creep){
 		for(var i=0; i < creep.count; i++){
 			var entry = Map.entry[Math.round(Math.random()*(Map.entry.length - 1))]
-			console.log(creep)
-			if(creep.klass == Plane){
+			if(creep.category == Plane){
 				creep.theta = theta;
 				Game.issueCreep(canvas, creep, 
 						(theta == 90 || theta == 270) ? Math.round(Math.random()* (Map.width - 1)) : x,
@@ -304,8 +302,8 @@ Game.sendWave = function(wave){
 Game.issueCreep = function(canvas, creep, x , y, delay){
 	Game.push(delay, function(){
 		var store = Game.creeps
-		if(creep.klass == Plane) store = Game.planes
-		var obj = new creep.klass(canvas, x, y,  creep.values)
+		if(creep.category == Plane) store = Game.planes
+		var obj = new creep.category(canvas, x, y,  creep.values)
 		Game.creepMutators.each(function(mutator){
 			mutator.action(obj)
 		})
@@ -340,10 +338,36 @@ Game.timeout = function(div, variable, time){
 
 Game.toggleSound = function(){
 	Game.sound = !Game.sound
+	if(this.hasClassName('on')){
+		this.removeClassName('on')
+		this.addClassName('off')
+	}else{
+		this.removeClassName('off')
+		this.addClassName('on')
+	}
 }
 
 var GhostTurret = null
 // Application entry point
+
+/*
+Game.assignMedia = function(){
+	if(Game.loadedImages != Game.totalImages){
+		Turret.prototype.images = {}
+		DoubleTurret.prototype.images = {}
+		RocketLauncher.prototype.images = {}
+		Rocket.prototype.images = {}
+		Patriot.prototype.images = {}
+		Tank.prototype.images = {}
+		TankI.prototype.images = {}		
+		TankII.prototype.images = {}		
+		BlackTank.prototype.images = {}		
+		Humvee.prototype.images = {}
+	}else{
+		window.setTimeout(Game.assignMedia)
+	}
+}*/
+
 $(document).observe('dom:loaded',function(){
 		$$("canvas").each(function(canvas){
 			canvas.width = Map.width * Map.pitch
@@ -364,18 +388,31 @@ $(document).observe('dom:loaded',function(){
 			new Ajax.Request('/city-defender/templates/towers.tpl', {method:'get', onComplete: function(t){
 					Game.templates['towers'] = TrimPath.parseTemplate(t.responseText) 
 					if(!t.responseText){Game.templates['towers'] = TrimPath.parseTemplate($('towers_tpl').value) }
-					$('towers').innerHTML = Game.templates['towers'].process(Config);
+					$('towers').innerHTML = Game.templates['towers'].process(Game.config);
 					$$('.tower').each(function(tower){
 						tower.observe('click', GhostTurret.select)
 					})
 				}
-			})				
+			})
+			$$('#gameElements .upgrades .upgrade.next').invoke('observe', 'click', Upgrades.upgrade)	
+			$$('#gameElements .upgrades .upgradeItem').invoke('observe', 'click', Upgrades.select)			
+			$$('#gameElements .controls .sound')[0].observe('click', Game.toggleSound)
 			$$('.towers div').invoke('observe','click', GhostTurret.select)
 			//$$('.towers div').invoke('observe','mouseover', GhostTurret.showInfo)
 			$$('#gameElements .start').first().observe('click', Game.play)
 			$$('#gameElements .superWeapons div').each(function(div){ 
 				if(div.className != ''){div.observe('click', function(){Game.fireSuperWeapon(div.className)})}
 			})
+			$('playAgain').observe('click', function(){
+				$('static').show();
+				$('droppingGround').removeClassName('off');
+				new Effect.Fade('static')
+				$$('#gameElements .start').first().stopObserving('click')
+				$$('#gameElements .start').first().observe('click', Game.play)
+				Game.start();
+				$('result').hide();
+			})
 			Map.init(bgctx);
+			Upgrades.selectDefault();
 		}, 200)
 })

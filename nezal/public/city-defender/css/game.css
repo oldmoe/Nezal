@@ -1,7 +1,6 @@
 body{
 	padding : 0px;
 	margin : 0px;
-	background: #000;
 }
 
 #gameContainer{
@@ -47,9 +46,27 @@ body{
 #result #stats{
 	position: absolute;
 	width: 250px;
-	left: 80px;
+	left:210px;
 	top: 334px;
 	height: 120px;
+}
+
+#result #exit{
+	position: absolute;
+	width: 115px;
+	height: 60px;
+	left:60px;
+	top: 374px;
+	background-image: url('../images/background/exit.png');
+}
+
+#result #playAgain{
+	position: absolute;
+	width: 115px;
+	height: 60px;
+	left:560px;
+	top: 374px;
+	background-image: url('../images/background/play_again.png');
 }
 
 #result.win{
@@ -71,11 +88,22 @@ body{
 	background-image: url('../images/background/interface.png');
 }
 
+#waitScreen{
+	width : 760px;
+	height: 550px;
+	position: absolute;
+	top:0px;
+	left:0px;
+	z-index : 101;
+	background: center url('../images/background/ajax-loader.gif') no-repeat;
+}
+
+
 #splashScreen .loading_bar_bg{
 	width : 280px;
 	height: 40px;
 	position: absolute;
-	left:240px;
+	left:230px;
 	top: 430px;
 	background-image: url('../images/background/loading_bar_down.png');
 }
@@ -107,8 +135,8 @@ body{
 
 #gameElements .start{
 	position:absolute;
-	top:479px;
-	left:0px;
+	top:477px;
+	left:2px;
 	width:144px;
 	height:72px;
 	background-image: url('../images/background/start.png');		
@@ -124,25 +152,115 @@ body{
 
 #gameElements .upgrades{
 	position:absolute;
-	top:486px;
-	left:150px;
+	top:483px;
+	left:144px;
+	height:64px;
+	width:613px;
+}
+
+#gameElements .upgrades .upgrade{
+	float:left;
 	height:60px;
-	width:610px;
+	border:2px solid #397A97;
+	width:160px;
+}
+
+#gameElements .upgrades .upgrade.current{
+	/*margin-right:7px;*/
+}
+
+#gameElements .upgrades .upgrade.bullets_1{
+	background-image: url('../images/background/bullets_upgrade_1.png');			
+}
+
+#gameElements .upgrades .upgrade.bullets_2{
+	background-image: url('../images/background/bullets_upgrade_2.png');			
+}
+
+#gameElements .upgrades .upgrade.bullets_2.off{
+	background-image: url('../images/background/bullets_upgrade_2_off.png');			
+}
+
+#gameElements .upgrades .upgrade.rockets_1{
+	background-image: url('../images/background/rockets_upgrade_1.png');			
+}
+
+#gameElements .upgrades .upgrade.rockets_2{
+	background-image: url('../images/background/rockets_upgrade_2.png');			
+}
+
+#gameElements .upgrades .upgrade.rockets_2.off{
+	background-image: url('../images/background/rockets_upgrade_2_off.png');			
+}
+
+#gameElements .upgrades .upgrade.shields_1{
+	background-image: url('../images/background/shields_upgrade_1.png');			
+}
+
+#gameElements .upgrades .upgrade.shields_2{
+	background-image: url('../images/background/shields_upgrade_2.png');			
+}
+
+#gameElements .upgrades .upgrade.shields_2.off{
+	background-image: url('../images/background/shields_upgrade_2_off.png');			
+}
+
+
+
+#gameElements .upgrades .upgrade.current.active .purchased{
+	height:60px;
+	width:160px;
+	background-image: url('../images/background/purchased_stamp.png');
+	opacity: 1;
+}
+
+#gameElements .upgrades .upgrade.next{
+	margin-left: 10px;
+	margin-right:18px;
+	opacity: 0.8;
+}
+
+#gameElements .upgrades .upgrade.next #upgradePrice{
+	font-size:16px;
+	font-family: arial;
+	font-weight: bold;
+	float: right;
+	color: white;
+	padding: 4px;
+	padding-top:40px;
+}
+
+
+#gameElements .upgrades .upgrade.next:hover{
+	opacity: 1;
+}
+
+#gameElements .upgrades .upgrade.next.blocked{
+	margin-left:7px;
+	background-image: url('../images/background/block_upgrade.png');				
+}
+
+
+#gameElements .upgrades .arrow{
+	position:absolute;
+	left: 176px;
+	top: 4px;
+	height:55px;
+	width:14px;
+	background-image: url('../images/background/arrow.png');				
 }
 
 #gameElements .upgrades .upgradesBar{
 	float: left;
-	width:351px;
-	height:60px;
-	background-image: url('../images/background/upgrades_bar.png');		
+	width: 364px;
+	height:64px;
 }
 
 #gameElements .upgrades .upgradeItems{
 	float: left;
-	margin-left: 5px;
+	margin-top: 3px;
 	width:248px;
 	height:60px;
-	/*background-image: url('../images/background/upgrades_bar.png');*/		
 }
 
 #gameElements .upgrades .upgradeItems .upgradeItem{
@@ -152,10 +270,14 @@ body{
 	width:61px;
 	height:29px;
 	background-image: url('../images/background/upgrade_button_inactive.png');
-	opacity:0.75;
+	opacity:0.6;
 }
 
 #gameElements .upgrades .upgradeItems .upgradeItem:hover{
+	opacity:1.0;
+}
+
+#gameElements .upgrades .upgradeItems .upgradeItem.selected{
 	opacity:1.0;
 }
 
@@ -173,11 +295,6 @@ body{
 
 #gameElements .upgrades .upgradeItems .upgradeItem.shields{
 	background-image: url('../images/background/shields_upgrade_button.png');		
-}
-
-
-#gameElements .upgrades .upgradeItems .upgradeItem.selected{
-	background-image: url('../images/background/upgrade_button_selected.png');		
 }
 
 #gameElements .towers{
@@ -244,6 +361,7 @@ body{
 	padding: 0px;
 	margin: 0px;
 	line-height: 9px;
+	font-size : 10px;
 }
 #gameElements .towerInfo td{
 	border:none;
@@ -255,6 +373,7 @@ body{
 	margin: 0px;
 	line-height: 9px;
 	width: 80%;
+	font-size : 10px;
 }
 #gameElements .towerInfo tr:nth-child(odd)    { color : #fc0; }
 
@@ -415,7 +534,11 @@ body{
 	height: 36px;
 	width: 36px;
 	margin-bottom: 4px;
-	opacity : 0.8;
+	opacity : 0.7;
+}
+
+#gameElements .controls div:hover{
+	opacity : 1.0;
 }
 
 #gameElements .controls .sound.on{
@@ -425,7 +548,9 @@ body{
 }
 
 #gameElements .controls .sound.off{
-	
+	width: 35;
+	margin-left: 6px;
+	background-image: url('../images/background/sound_off_button.png');				
 }
 
 #gameElements .controls .like{
@@ -504,6 +629,18 @@ body{
 	position: relative;
 	background-image: url('../images/background/path.png');
 	visibility:hidden;
+}
+
+#gameContainer canvas.off{
+	background : black;
+}
+
+#static{
+	position : absolute;
+	width:640px;
+	height:480px;
+	top:0px;
+	background-image: url('../images/background/snow.gif');
 }
 
 #gameContainer canvas#gameForeground{

@@ -57,8 +57,8 @@ var NukeBoom = Class.create(Animation, {
 })
 
 var CoinsAnimation = Class.create(Animation, {
-	dx : 20,
-	dy : 40,
+	dx : 16,
+	dy : 30,
 	initImages : function(){
 		this.frames = Game.animationFrames.coins
  	} 	

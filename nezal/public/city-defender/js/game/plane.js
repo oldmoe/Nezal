@@ -60,3 +60,11 @@ var Plane = Class.create(Creep, {
 		Game.stats.creepsDestroyed++
 	}
 })
+
+var RedPlane = Class.create(Plane, {
+	images : {
+		base : Game.images['red_air_craft.png'],
+		fire : Game.images['red_air_craft_in_action.png'],
+		shadow : Game.images['air_craft_shade.png']
+	}
+})	
