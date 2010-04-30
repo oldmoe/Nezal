@@ -25,7 +25,7 @@ class FBUser
     game_rank = user.game_ranks.where(){|rank| rank[:id].index(game[:id]) == 0 }.first
         
     if game_rank.nil?
-      game_rank = game.ranks.order(:lower_ep).first
+      game_rank = game.ranks.order({:lower_ep => :ascending}).first
       user.game_ranks << game_rank
       user.save
     end
@@ -41,6 +41,24 @@ class FBUser
    
     user.attributes[:user_info]= user_info
     user
+  end
+  
+  def self.top_scorers(user, game_id, campaign_id)
+    users = []
+    campaigns = UserCampaign.where{ |camp| camp[:id].index(game_id + campaign_id) == 0 }.order({:score => :descending})
+    user_campaign = user.user_campaigns.where{ |camp| camp[:id].index(game_id + campaign_id) == 0 }.first
+    user_order = 0
+    campaigns.each_with_index do |item, index|
+      if item[:id] == user_campaign[:id]
+       user_order = index
+      end
+    end
+    users << { :user => user, :order => user_order+1 }
+    top_scorers = campaigns.limit(5)
+    top_scorers.each_with_index do |rec, index|
+      users << { :user => rec.user, :order => index+1 }
+    end
+    users
   end
   
 end

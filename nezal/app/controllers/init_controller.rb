@@ -23,7 +23,7 @@ class InitController < ApplicationController
           response.set_cookie(FBConfigs::CONFIG[session[:fb_app_id]]["key"] + "_expires" , session[:fb_session_expires])
           response.set_cookie(FBConfigs::CONFIG[session[:fb_app_id]]["key"] + "_ss" , session[:fb_sig_ss])
         end
-        redirect "/fb-games/#{FBConfigs::CONFIG[@app_id]['game_name']}"
+        redirect "/fb-games/#{FBConfigs::CONFIG[@app_id]['game_name']}#{env["REQUEST_URI"]}"
       end
     else
       File.read(File.join('public/html', 'index.html'))
