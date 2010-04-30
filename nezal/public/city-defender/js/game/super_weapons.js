@@ -42,6 +42,8 @@ Game.unWeak = function(){
 Game.splash = function(){
 	var x = [0, Map.width * Map.pitch - 1][Math.round(Math.random())]
 	var y = [0, Map.height * Map.pitch - 1][Math.round(Math.random())]
+	Sounds.play(Sounds.turret.rocketLaunch)
+	Sounds.play(Sounds.turret.rocketLaunch)
 	Game.allCreeps().sort(function(a,b){
 		return b.hp - a.hp
 	}).slice(0,10).each(function(creep){
