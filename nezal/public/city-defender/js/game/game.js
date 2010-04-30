@@ -120,6 +120,9 @@ var Game = {
 		this.renderData();
 		Game.playing = false;
 		$("result").addClassName('win');
+		$('static').show();
+		$('droppingGround').addClassName('off')
+		new Effect.SwitchOff('static');
 		new Effect.Appear("result", {delay : 1.0})
 		window.setTimeout(Game.displayStats, 1000)
 	},
@@ -129,6 +132,9 @@ var Game = {
 		this.renderData();
 		Game.playing = false;
 		$("result").addClassName('lose');
+		$('static').show();
+		$('droppingGround').addClassName('off')
+		new Effect.SwitchOff('static');
 		new Effect.Appear("result", {delay : 1.0})
 		window.setTimeout(Game.displayStats, 1000)
 	},
@@ -398,6 +404,9 @@ $(document).observe('dom:loaded',function(){
 				if(div.className != ''){div.observe('click', function(){Game.fireSuperWeapon(div.className)})}
 			})
 			$('playAgain').observe('click', function(){
+				$('static').show();
+				$('droppingGround').removeClassName('off');
+				new Effect.Fade('static')
 				$$('#gameElements .start').first().stopObserving('click')
 				$$('#gameElements .start').first().observe('click', Game.play)
 				Game.start();

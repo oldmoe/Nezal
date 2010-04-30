@@ -51,6 +51,24 @@ body{
 	height: 120px;
 }
 
+#result #exit{
+	position: absolute;
+	width: 115px;
+	height: 60px;
+	left:60px;
+	top: 374px;
+	background-image: url('../images/background/exit.png');
+}
+
+#result #playAgain{
+	position: absolute;
+	width: 115px;
+	height: 60px;
+	left:560px;
+	top: 374px;
+	background-image: url('../images/background/play_again.png');
+}
+
 #result.win{
 	background-image: url('../images/background/win.png');
 }
@@ -201,6 +219,17 @@ body{
 	margin-right:18px;
 	opacity: 0.8;
 }
+
+#gameElements .upgrades .upgrade.next #upgradePrice{
+	font-size:16px;
+	font-family: arial;
+	font-weight: bold;
+	float: right;
+	color: white;
+	padding: 4px;
+	padding-top:40px;
+}
+
 
 #gameElements .upgrades .upgrade.next:hover{
 	opacity: 1;
@@ -600,6 +629,10 @@ body{
 	position: relative;
 	background-image: url('../images/background/path.png');
 	visibility:hidden;
+}
+
+#gameContainer canvas.off{
+	background : black;
 }
 
 #static{

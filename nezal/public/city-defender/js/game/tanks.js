@@ -38,3 +38,11 @@ var BlackTank = Class.create(Creep,{
 		fire : Game.images['black_tank_tower_in_action.png'],
 	}
 })
+
+var RedTank = Class.create(Creep,{
+	images : {
+		base : Game.images['red_tank_body.png'],
+		cannon : Game.images['red_tank_tower.png'],
+		fire : Game.images['red_tank_tower_in_action.png'],
+	}
+})
