@@ -162,10 +162,10 @@ function loadAllImages(){
 }                                                    
 
 var image = new Image
+var image2 = new Image
+var image3 = new Image
 image.onload = function(){
-	var image2 = new Image
 	image2.onload = function(){
-		var image3 = new Image
 		image3.onload = function(){
 			$('waitScreen').hide();
 			Effect.Appear('splashScreen');

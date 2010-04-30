@@ -69,10 +69,8 @@ var Turret = Class.create(Unit, {
 		target.takeHit(power)
 		if(target.dead){
 			this.kills += 1
-			//console.log(this.kills)
 			if(this.kills == this.rankKills[this.rank] && this.rank < this.maxRank){
 				this.rank += 1;
-				//console.log(this.rank)
 				this.kills = 0;
 			}			
 		}

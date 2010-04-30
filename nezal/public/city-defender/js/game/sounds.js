@@ -15,10 +15,15 @@ var Sounds = {
 		move : []
 	},
 	
+	channels : [],
+	
 	play : function(store){
+		if(Sounds.channels.length == 5) return
 		if(!Game.sound) return
 		if(store.length > 0){
-			store.pop().play()
+			Sounds.channels.push(store.pop())
+			Sounds.channels.last().play()
+			//store.pop().play()
 		}
 	},
 	
@@ -28,9 +33,9 @@ var Sounds = {
 
 var test = new Audio
 if(test.canPlayType('audio/ogg')){
-	Sounds.format = 'ogg'	
+	//Sounds.format = 'ogg'	
 }else if(test.canPlayType('audio/mpeg')){
-	Sounds.format = 'mp3'	
+	//Sounds.format = 'mp3'	
 }
 if(window.location.protocol == 'file:'){
 	Sounds.path = 'sounds/Effects/'
@@ -50,6 +55,10 @@ function createAudioElements(count, store, url, func){
 function createAudioElement(store, url, func){
 	var audio = new Audio(url)
 	//audio.onended = function(){ store.push(audio) }
-	audio.observe("ended", function(){store.push(audio); if(func){func()}});  
+	audio.observe("ended", function(){
+		store.push(audio);
+		Sounds.channels.splice(Sounds.channels.indexOf(audio), 1);
+		if(func){func()}
+	});  
 	store.push(audio);
 }

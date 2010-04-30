@@ -89,7 +89,6 @@ var Rocket = Class.create(Unit, {
 				if(this.targetUnit.dead){
 					if(this.parent && !this.parent.dead){
 						this.parent.kills++
-						console.log(this.parent.rankKills[this.parent.rank])
 						if(this.parent.kills == this.parent.rankKills[this.parent.rank] && this.parent.rank < this.parent.maxRank){
 							this.parent.rank += 1;
 							this.parent.kills = 0;

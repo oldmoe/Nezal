@@ -185,7 +185,6 @@ var Game = {
 		while(event && event[0] <= this.ticks){
 			this.events.pop()[1]()
 			event = this.events[this.events.length - 1]
-			//console.log(this.ticks+':fired')
 		}
 		this.creeps.invoke('move')
 		this.objects.invoke('move')
@@ -239,7 +238,6 @@ var Game = {
 		this.fps = Math.round(1000/(delay))
 		if(delay > this.delay){
 			this.skipFrames = Math.ceil(delay / this.delay)
-			//console.log(this.skipFrames)
 		}
 	}
 	
@@ -309,7 +307,7 @@ Game.sendWave = function(wave){
 Game.issueCreep = function(canvas, creep, x , y, delay){
 	Game.push(delay, function(){
 		var store = Game.creeps
-		if(creep.category == Plane) store = Game.planes
+		if(creep.category == Plane || creep.category == RedPlane) store = Game.planes
 		var obj = new creep.category(canvas, x, y,  creep.values)
 		Game.creepMutators.each(function(mutator){
 			mutator.action(obj)

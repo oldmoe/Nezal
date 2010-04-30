@@ -49,11 +49,13 @@ var Plane = Class.create(Creep, {
 	},
 	
 	die : function(){
+		console.log('dying')
 		Game.animations.push(new CoinsAnimation(this.ctx, this.x, this.y - 40))
 		Game.planes.splice(Game.planes.indexOf(this),1)
 		if(Map.grid[this.gridX] && Map.grid[this.gridX][this.gridY]){
 			var cell = Map.grid[this.gridX][this.gridY];
 			cell.splice(cell.indexOf(this), 1);
+			console.log('splice')
 		}
 		Game.money += this.price;
 		this.dead = true	

@@ -30,7 +30,6 @@ var Animation = Class.create({
 	},
 	
 	render : function(){
-		//console.log(this.currentFrame)
 		this.ctx.drawImage(this.frames[this.currentFrame], this.x-this.dx/2, this.y-this.dy/2)
 	},
 
