@@ -23,7 +23,7 @@ var Sounds = {
 	},
 	
 	format : 'wav',
-	path : '/city-defender/sounds/effects/'	
+	path : '/city-defender/sounds/Effects/'	
 }
 
 var test = new Audio
@@ -33,7 +33,7 @@ if(test.canPlayType('audio/ogg')){
 	Sounds.format = 'mp3'	
 }
 if(window.location.protocol == 'file:'){
-	Sounds.path = 'sounds/effects/'
+	Sounds.path = 'sounds/Effects/'
 }
 
 createAudioElements(5, Sounds.turret.fire, Sounds.path+Sounds.format+"/ShotGunFire."+Sounds.format)

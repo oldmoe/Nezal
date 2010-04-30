@@ -88,12 +88,15 @@ var Game = {
 	},
 	
 	reset : function(){
-		Object.extend(this, JSON.parse(JSON.stringify(GameStart), function(x,y){
-			return typeof y == 'string' ? JSON.parse(y) : y 
-		}));
+		Object.extend(this, clone_obj(GameStart))
+		//JSON.parse(JSON.stringify(GameStart), function(x,y){
+		//	return typeof y == 'string' ? JSON.parse(y) : y 
+		//}));
 		$$('#gameElements .start').first().removeClassName('resumed')
 		$$('#gameElements .start').first().removeClassName('paused')
 		Game.config = clone_obj(Config)
+		Map.init();
+		Upgrades.init()
 		this.render();
 		this.renderData();
 	},
@@ -281,7 +284,7 @@ Game.sendWave = function(wave){
 	wave.creeps.each(function(creep){
 		for(var i=0; i < creep.count; i++){
 			var entry = Map.entry[Math.round(Math.random()*(Map.entry.length - 1))]
-			if(creep.category == Plane){
+			if(creep.category == Plane || creep.category == RedPlane){
 				creep.theta = theta;
 				Game.issueCreep(canvas, creep, 
 						(theta == 90 || theta == 270) ? Math.round(Math.random()* (Map.width - 1)) : x,
