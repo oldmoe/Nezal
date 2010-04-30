@@ -131,7 +131,7 @@ class QueryProxyTest < MiniTest::Unit::TestCase
   
   def test_order
     puts "************** begin : test_order"
-    query = DataStore::QueryProxy.new(TestModel.name).order(:x)
+    query = DataStore::QueryProxy.new(TestModel.name).order({:x => :ascending})
     query.each {|obj| p obj}
     puts "************** end : test_order"
   end
@@ -139,7 +139,7 @@ class QueryProxyTest < MiniTest::Unit::TestCase
   def test_order_cascaded
     pre_test_order
     puts "************** begin : test_order_cascaded"
-    query = DataStore::QueryProxy.new(TestModel.name).order(:x).order(:id)
+    query = DataStore::QueryProxy.new(TestModel.name).order({:x => :descending}).order({:id => :ascending})
     query.each {|obj| p obj}
     puts "************** end : test_order_cascaded"
     post_test_order

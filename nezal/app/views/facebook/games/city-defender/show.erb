@@ -22,22 +22,19 @@
   var AjaxReq = {
     refresh : function() {
         FBApi.api._refreshSession(function(){
-          console.log(FBApi.api.get_session());
-        FBApi.api._setSessionCookies(FBApi.api.get_session());
+          FBApi.api._setSessionCookies(FBApi.api.get_session());
         });
-        new Ajax.Request( "http://127.0.0.1:5500/fb-games/city-defender/1", {
+        new Ajax.Request( "1", {
               method:'get',
               onSuccess: function(transport){
-              FBApi.api.set_session(FBApi.api._getSessionFromCookies());
-              window.setTimeout("AjaxReq.refresh()", 60000);
-            }
+                FBApi.api.set_session(FBApi.api._getSessionFromCookies());
+                window.setTimeout("AjaxReq.refresh()", 300000);
+              }
         });
     },
   }
 
-  console.log("About to get log-in status");
-
-  api_key = '3f08e7205c0eb87bdebeb26638946e1d'
+  api_key = "<%=FBConfigs::CONFIG[session[:fb_app_id]]['key']%>"
   channel_path = "/html/facebook/xd_receiver.html"
   
 

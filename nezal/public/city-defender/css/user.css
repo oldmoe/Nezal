@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "Adlib";
+  src: url("/city-defender/css/fonts/ADLIB.TTF");
+}
+
 .game-init
 {
   height : 560px;
@@ -19,54 +24,77 @@
 #user
 {
   background : url("/city-defender/images/user/user-backk.png") repeat scroll 0 0 transparent;
-  margin : 10px;
+  margin : 10px 0px;
   overflow : auto;
-  padding : 10px;
 }
 
 #user .friend
 {
-  background:url("/city-defender/images/user/user-7.png") repeat scroll 0 0 transparent;
+  background:url("/city-defender/images/user/user.png") repeat scroll 0 0 transparent;
   float:left;
-  height:130px;
+  height:100px;
   margin:5px;
-  width:100px;
+  width:80px;
 }
 
-#user .image 
-{
-  width : 70px;
-  height : 60px;
-  padding : 5 15 15 15;
-  border : none;
-}
 #user .name
 {
-  color:aliceBlue;
+  color : #ffee00;
   text-align : center;
-  font-family : verdana;
+  font-family : Adlib;
   font-size : 13px;
+  height : 15px;
+  text-shadow : 2px 2px 2px #ff9900;
 }
 
-#user .score
+#user .pic 
 {
-  background : url("/city-defender/images/user/score-6.png") no-repeat scroll center bottom transparent;
-  font-family : verdana;
-  font-size : 14px;
-  font-weight : bold;
-  height : 23px;
-  margin-left : 33px;
-  margin-top : 10px;
-  text-align : center;
+  border:1px solid #FF9900;
+  height:48px;
+  margin:0 15px;
+  width:48px;
+}
+
+#user .image
+{
+  border : none;
+  overflow : hidden;
 }
 
 #user .order
 {
-  background:none repeat scroll 0 0 black;
-  color:orange;
-  float:left;
-  font-weight:bold;
-  height:25px;
-  margin-top:0;
-  width:35px;
+  color : #FFEE00;
+  font-family : Adlib;
+  font-size : 13px;
+  font-weight : bold;
+  margin-left : 15px;
+  margin-right : 15px;
+  margin-top : -4px;
+  text-shadow : 2px 2px 2px #cc7700;
 }
+
+#user .order-text
+{
+  display : inline;
+}
+
+#user .rank
+{
+  color : #FFEE00;
+  font-family : Adlib;
+  font-size : 14px;
+  float : right;
+  margin-top : -3px;
+  font-weight : bold;
+}
+
+#user .score
+{
+  color : #FFEE00;
+  font-family : Adlib;
+  font-size : 15px;
+  font-weight : bold;
+  margin : 4px 15px;
+  text-align : center;
+}
+

@@ -56,15 +56,27 @@ module DataStore
       if (orders.empty? && !block_given?)
         raise ArgumentError, ErrorMsg 
       end
-      orders.each do |key|
+      orders.each do | hash |
+        key = hash.first[0]
+        value = hash.first[1]
         index = @state[:ordering].length + 1
-        @state[:ordering] << Proc.new { |obj1, obj2|
-          result = (obj1[key] <=> obj2[key])
-          if result == 0 && @state[:ordering][index]
-            result = @state[:ordering][index].call(obj1, obj2)
-          end
-          result
-        }        
+        if value == :ascending
+          @state[:ordering] << Proc.new { |obj1, obj2|
+            result = (obj1[key] <=> obj2[key])
+            if result == 0 && @state[:ordering][index]
+              result = @state[:ordering][index].call(obj1, obj2)
+            end
+            result
+          }        
+        else
+          @state[:ordering] << Proc.new { |obj1, obj2|
+            result = (obj2[key] <=> obj1[key])
+            if result == 0 && @state[:ordering][index]
+              result = @state[:ordering][index].call(obj1, obj2)
+            end
+            result
+          }        
+        end        
       end
       @state[:ordering] << block if block_given?
       return clone
@@ -100,7 +112,6 @@ module DataStore
         end
         return
       end
-
       begin
         klass = Kernel.const_get(@name)
         cursor = klass.db_handle.cursor(nil, 0)
@@ -132,7 +143,6 @@ module DataStore
         }
       end
     end
-    
   end
   
 end

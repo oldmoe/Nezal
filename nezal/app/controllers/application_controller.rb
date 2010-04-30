@@ -17,6 +17,23 @@ class ApplicationController < Sinatra::Base
     puts ">>>>>> Cookie :  #{env['rack.request.cookie_hash']}"
     puts ">>>>>> Request Path :  #{env['REQUEST_PATH']}"
         
+    uri_params = CGI::parse(env["REQUEST_URI"])
+
+    if uri_params["fb_sig_expires"] && uri_params["fb_sig_expires"][0] && uri_params["fb_sig_expires"][0] < Time.now.to_i.to_s
+      redirect "/"
+    end
+    
+    if uri_params["fb_sig_added"] == ["1"]
+        session[:fb_app_id] = uri_params["fb_sig_app_id"][0]
+        session[:fb_user_id] = uri_params["fb_sig_user"][0]
+        session[:fb_session_key] = uri_params["fb_sig_session_key"][0]
+        session[:fb_session_expires] = uri_params["fb_sig_expires"][0]
+        session[:fb_sig_ss] =  uri_params["fb_sig_ss"][0]
+        puts "...... FB User Id :  #{session[:fb_user_id]}"
+        puts "...... FB Session Key :  #{session[:fb_session_key]}"
+        puts "...... FB Session Expire :  #{session[:fb_session_expires]}"
+    end
+        
     if  env['rack.request.cookie_hash'] && session[:fb_app_id] && env['rack.request.cookie_hash'][FBConfigs::CONFIG[session[:fb_app_id]]["key"] + "_user"] &&
       env['rack.request.cookie_hash'][FBConfigs::CONFIG[session[:fb_app_id]]["key"] + "_expires"]  > session[:fb_session_expires]
       session[:fb_user_id] = env['rack.request.cookie_hash'][FBConfigs::CONFIG[session[:fb_app_id]]["key"] + "_user"] 
@@ -26,10 +43,6 @@ class ApplicationController < Sinatra::Base
       puts ">>>>>> FB Session Key :  #{session[:fb_session_key]}"
       puts ">>>>>> FB Session Expire :  #{session[:fb_session_expires]}"
     end
-
-    if session[:fb_user_id]
-      @user = FBUser.get(session[:fb_user_id])
-    end  
   end
   
 end
