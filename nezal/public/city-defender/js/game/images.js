@@ -75,7 +75,8 @@ var images = [
              ]
 
 var bgImages = [
-		      'block_upgrade.png', 
+			  'l_shape.png', 
+              'block_upgrade.png', 
               'bullets_upgrade_1.png',
               'bullets_upgrade_2.png',
               'bullets_upgrade_2_off.png',
@@ -95,7 +96,27 @@ var bgImages = [
               'start.png',
               'resume.png',
               'path.png',
-			  'snow.gif'
+			  'snow.gif',
+			  'heal_button.png',
+			  'heal_button_off.png',
+			  'splash_button.png',
+			  'splash_button_off.png',
+			  'nuke_button.png',
+			  'nuke_button_off.png',
+			  'hyper_button.png',
+			  'hyper_button_off.png',
+			  'weak_button.png',
+			  'weak_button_off.png',
+			  'tower_1_button.png',
+			  'tower_2_button.png',
+			  'mystry_button.png',
+			  'patriot_button.png',
+			  'rocket_launcher_button.png',
+			  'bullets_upgrade_button.png',
+			  'rockets_upgrade_button.png',
+			  'shields_upgrade_button.png',
+			  'status_bar.png',
+			  'upgrade_button_inactive.png'
              ]
 
 if(window.location.protocol == 'file:'){
