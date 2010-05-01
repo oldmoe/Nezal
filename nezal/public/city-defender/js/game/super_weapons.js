@@ -11,6 +11,7 @@ Game.fireSuperWeapon = function(weapon){
 }
 
 Game.nuke = function(){
+	var i = 0
 	Game.allCreeps().each(function(creep){
 		creep.takeHit(Math.round(creep.hp * 1));
 		Game.animations.push(new NukeBoom($('gameForeground').getContext('2d'), 320, 240))

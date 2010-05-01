@@ -108,6 +108,7 @@ var Game = {
 	displayStats : function(){
 		if(Game.statText){
 			if(Game.statText.length == Game.statTextIndex){
+				Game.statText = ''
 				return
 			}else{
 				var data = $('stats').innerHTML
@@ -155,8 +156,8 @@ var Game = {
 			if(Game.config.waves.length == 0 && Game.creeps.length == 0 && Game.planes.length == 0 && Game.waitingCreeps == 0 ){
 				Game.win();
 				return
-			}else if(Game.creeps.length == 0 && Game.planes.length == 0 && Game.config.waves.length > 0 && !Game.wavePending && Game.playing){
-				Game.push(10, function(){Game.sendWave(Game.config.waves.pop())})
+			}else if(Game.creeps.length == 0 && Game.planes.length == 0 && Game.waitingCreeps == 0 && Game.config.waves.length > 0 && !Game.wavePending && Game.playing){
+				Game.push(50, function(){Game.sendWave(Game.config.waves.pop())})
 				Game.wavePending = true
 			}
 		}	
@@ -298,7 +299,7 @@ Game.sendWave = function(wave){
 			delay += (32 / creep.values.speed) + 10//Math.ceil( 64 / Creep.speed)
 			Game.waitingCreeps++;
 		}
-		Game.push(delay, function(){
+		Game.push(delay + (32 / creep.values.speed), function(){
 			Game.wavePending = false;
 		})
 	})
