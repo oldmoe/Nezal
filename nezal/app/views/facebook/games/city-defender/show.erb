@@ -28,9 +28,9 @@
               method:'get',
               onSuccess: function(transport){
                 FBApi.api.set_session(FBApi.api._getSessionFromCookies());
-                window.setTimeout("AjaxReq.refresh()", 300000);
               }
         });
+        window.setTimeout("AjaxReq.refresh()", 300000);
     },
   }
 
@@ -56,7 +56,7 @@
 // FB.FBDebug.dump("Current user id is " + api.get_session().session_key);
 // FB.FBDebug.dump("Current user id is " + api.get_session().expires);
        FBApi.api._refreshSession(function(){
-          console.log(FBApi.api.get_session());
+//          console.log(FBApi.api.get_session());
         });
     });
     
@@ -71,8 +71,8 @@
                 api._refreshSession( function(response){
                                       console.log(api.get_session().session_key);})
 // FBApi.api
-                  console.log(api.get_session().session_key);
-                  console.log(api.get_session().expires);
+//                  console.log(api.get_session().session_key);
+//                  console.log(api.get_session().expires);
 // console.log(FB.Connect.get_loggedInUser())
                   
                   
