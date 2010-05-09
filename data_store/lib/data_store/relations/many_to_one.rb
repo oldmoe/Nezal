@@ -130,8 +130,8 @@ module DataStore
               _many_to_one_hash[attr_name][:class].attach_notifier( :many_to_one, :on_delete, attr_name, self) 
             end
           rescue Exception => e
-            require 'test/models/' + ActiveSupport::Inflector.singularize(ActiveSupport::Inflector.tableize(_many_to_one_hash[attr_name][:class_name])) + ".rb"
-            retry if (retry_times -= 1) >  0
+            Loader::load(_many_to_one_hash[attr_name][:class_name])
+            retry if (retry_times -= 1) >=  0
           end
           _define_many_to_one_accessors(attr_name)
         end

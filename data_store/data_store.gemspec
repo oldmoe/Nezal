@@ -11,6 +11,7 @@ Gem::Specification.new do |s|
   s.platform = Gem::Platform::RUBY
   s.files    = [ 
 		"data_store.gemspec",
+    "lib/loader.rb",  
     "lib/data_store.rb",
     "lib/data_store/crud.rb",
 		"lib/data_store/storable.rb",

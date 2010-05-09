@@ -9,47 +9,63 @@ module DataStore
       end
       
       def self.find(db_name, key, value=nil)
-        records = []
-        cursor = handler(db_name).cursor(nil, 0)
-        if value
-          result =  cursor.get( key, value, Bdb::DB_GET_BOTH_RANGE )
-          if result == value
+        begin 
+          records = []
+          cursor = handler(db_name).cursor(nil, 0)
+          if value
+            result =  cursor.get( key, value, Bdb::DB_GET_BOTH_RANGE )
+            if result == value
+              cursor.close()
+              return [result]
+            end
+          else
+            result =  cursor.get( key, nil, Bdb::DB_SET_RANGE)
+            while result && result[0] == key
+              records << result[1]
+              result =  cursor.get(nil, nil, Bdb::DB_NEXT)
+            end
             cursor.close()
-            return [result]
+            return records
           end
-        else
-          result =  cursor.get( key, nil, Bdb::DB_SET_RANGE)
-          while result && result[0] == key
-            records << result[1]
-            result =  cursor.get(nil, nil, Bdb::DB_NEXT)
-          end
-          cursor.close()
-          return records
+        rescue Exception => e 
+          puts e.backtrace
+        ensure 
+          cursor.close
         end
       end
       
       def self.create(db_name, key, value)
-        cursor = handler(db_name).cursor(nil, 0)
-        result =  cursor.get( key, value, Bdb::DB_GET_BOTH_RANGE )
-        handler(db_name).put(nil, key, value, 0) unless result && result[1] == value 
-        cursor.close()
+        begin 
+          cursor = handler(db_name).cursor(nil, 0)
+          result =  cursor.get( key, value, Bdb::DB_GET_BOTH_RANGE )
+          handler(db_name).put(nil, key, value, 0) unless result && result[1] == value 
+        rescue Exception => e
+          puts e.backtrace
+        ensure
+          cursor.close()
+        end
       end
       
       def self.delete(db_name, key, value=nil )
-        cursor = handler(db_name).cursor(nil, 0)
-        if value
-          result =  cursor.get( key, value, Bdb::DB_GET_BOTH_RANGE )
-          if result && result[1] == value
-            cursor.del()
+        begin 
+          cursor = handler(db_name).cursor(nil, 0)
+          if value
+            result =  cursor.get( key, value, Bdb::DB_GET_BOTH_RANGE )
+            if result && result[1] == value
+              cursor.del()
+            end
+          else
+            result =  cursor.get( key, nil, Bdb::DB_NEXT)
+            while result && result[0] == key
+              cursor.del()  
+              cursor.get(key, nil, Bdb::DB_NEXT)
+            end
           end
-        else
-          result =  cursor.get( key, nil, Bdb::DB_NEXT)
-          while result && result[0] == key
-            cursor.del()  
-            cursor.get(key, nil, Bdb::DB_NEXT)
-          end
+        rescue Exception => e
+          puts e.backtrace
+        ensure
+          cursor.close()
         end
-        cursor.close()
       end
       
       def self.handler(db_name)

@@ -37,6 +37,7 @@ module DataStore
     end
     
     def attributes= (hash)
+      modified
       @attributes = hash
     end
     

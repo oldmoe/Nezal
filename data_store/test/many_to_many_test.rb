@@ -1,4 +1,4 @@
-require 'lib/data_store'
+Dir.chdir("lib") { require 'data_store' }
 require 'require_all'
 require_all 'test/models/'
 require 'minitest/unit'
