@@ -40,11 +40,16 @@ class FBGamesController < ApplicationController
 
   get '/:game_name' do 
     begin
+#      puts ` db_stat -c -h ~/BerkeleyStore/Nezal/ | grep 'Total number'`
+#      puts params[:game_name]
+      LOGGER.debug "...... Game name : #{params[:game_name]}"
       @game = Game.where(name: params[:game_name]).first()
       @current_camp = @game.current_campaign
-      
+      LOGGER.debug "...... Game : #{@game}, Campaign : #{@current_camp}"      
       @friend_list = {:list => []}
       @friends = getFriendsTopScore(session, @game, @current_camp) 
+      LOGGER.debug "...... Friends : #{@friends}"
+
       @friends.each do | hash |
         @friend_list[:list] << {
           "id" => hash[:user][:id],
@@ -63,15 +68,18 @@ class FBGamesController < ApplicationController
       layout = "#{params[:game_name]}/show".to_sym
       @game_erb = "#{params[:game_name]}/_#{params[:game_name]}".to_sym
       @user_erb = "#{params[:game_name]}/_user".to_sym
+      LOGGER.debug "END OF REQUEST"
       erb layout , {:layout => false}    
     rescue Exception => e
-      puts e
-      puts e.backtrace
+      LOGGER.error e
+      LOGGER.debug "END OF REQUEST WITH EXCEPTION"
     end
   end
     
   get '/:game_name/friends' do 
+    puts ` db_stat -c -h ~/BerkeleyStore/Nezal/`
     @game = Game.where(name: params[:game_name]).first
+
     @current_camp = @game.current_campaign
     begin    
       response = {:list => []}
@@ -135,18 +143,22 @@ class FBGamesController < ApplicationController
   end
   
   
-  def getFriendsTopScore(session, game, campaign)       
+  def getFriendsTopScore(session, game, campaign) 
+    LOGGER.debug "...... Getting User info from FB"      
     # Get User info from FB
     user_info = FacebookUser.getUserInfo( session[:fb_app_id], session[:fb_session_key], [session[:fb_user_id]] )
     # Get User Friends info from FB
+    LOGGER.debug "...... Getting Friends info from FB"      
     friends_ids = FacebookUser.appUserFriends( session[:fb_app_id], session[:fb_session_key], session[:fb_user_id] ) 
     # Load user & friends game info from the DB
+    LOGGER.debug "...... Loading User & Friends game info from DB"      
     user = FBUser.load(session[:fb_user_id], game[:id], campaign, user_info[0])      
     friends = []
     friends_ids.each do |friend|
       friends << FBUser.load(friend["uid"].to_s, game[:id], campaign, friend)
     end
     # Sort the friend list
+    LOGGER.debug "...... Sorting Friends list "      
     friends << user
     friends = friends.sort do |obj1, obj2| 
                                 obj2.user_campaigns.where{ |camp| camp[:id].index(@game[:id] + @current_camp[:id]) == 0 }.first[:score] <=>

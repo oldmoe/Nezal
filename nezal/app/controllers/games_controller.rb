@@ -74,6 +74,27 @@ class GamesController < ApplicationController
     redirect "/games/admin/#{@game[:name]}"
   end
   
+  get '/:game_name' do 
+    begin
+#      puts ` db_stat -c -h ~/BerkeleyStore/Nezal/ | grep 'Total number'`
+#      puts params[:game_name]
+      LOGGER.debug "...... Game name : #{params[:game_name]}"
+      @game = Game.where(name: params[:game_name]).first()
+      @current_camp = @game.current_campaign
+      LOGGER.debug "...... Game : #{@game}, Campaign : #{@current_camp}"      
+
+      layout = "#{params[:game_name]}/show".to_sym
+      @game_erb = "#{params[:game_name]}/_#{params[:game_name]}".to_sym
+      @user_erb = "#{params[:game_name]}/_user".to_sym
+      LOGGER.debug "END OF REQUEST"
+      erb layout , {:layout => false}    
+    rescue Exception => e
+      LOGGER.error e
+      LOGGER.debug "END OF REQUEST WITH EXCEPTION"
+    end
+  end
+
+  
 end
 
 

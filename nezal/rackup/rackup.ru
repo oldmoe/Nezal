@@ -4,6 +4,8 @@ require 'config/bdb.rb'
 require 'require_all'
 require_all 'app/models/'
 require_all 'app/controllers/'
+require 'config/setup.rb'
+require 'config/request_profiler.rb'
 require 'rackup/games/games.rb'
 
 use	Rack::MethodOverride

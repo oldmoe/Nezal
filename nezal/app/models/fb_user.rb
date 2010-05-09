@@ -13,11 +13,8 @@ class FBUser
   
   def self.load(id, game_id, campaign, user_info)
     user = FBUser.get(id)
-    if user
-      puts "User Found : #{user}"
-    else
+    if user.nil?
       user = FBUser.create({:id => id, :coins => 0})
-      puts "User Not Found : Creating one #{user}"
     end    
 
     game = Game.get(game_id)
