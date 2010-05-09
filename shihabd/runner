@@ -1,4 +1,4 @@
-#!/usr/local/ruby-1.9.1/bin/ruby
+#!/usr/bin/env ruby
 
 require 'orchestra/overture'
 
