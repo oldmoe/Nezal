@@ -10,6 +10,7 @@ module Orchestra
       @servers = sockets
       @monitor = channel
       @reactor = NB.reactor
+      NB.initThreads
       @logger = logger
       @name   = "Shihabd #{Process.pid}"
     end
@@ -22,7 +23,7 @@ module Orchestra
         rescue Errno::EWOULDBLOCK, Errno::EAGAIN, Errno::EINTR => e
           return
         rescue Errno::EPIPE => e
-          @logger.log(Logger::Severity::Error, "Channel with master broken .. exiting", @name)
+          @logger.log(Logger::Severity::ERROR, "Channel with master broken .. exiting", @name)
           exit!
         end
       end
@@ -34,7 +35,7 @@ module Orchestra
           NB::Fiber.new{ @reactor.run }.resume 
         }
       rescue Exception => e
-        @logger.log(Logger::Severity::Error, "Exception in run : #{e.backtrace}", nil)
+        @logger.log(Logger::Severity::ERROR, "Exception in run : #{e.backtrace}", nil)
       end
     end
    

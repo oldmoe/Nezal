@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name     = "shihabd"
   s.version  = "0.0.1"
-  s.date     = "2010-1-13"
+  s.date     = "2010-5-9"
   s.summary  = "A pure Ruby reactor library"
   s.email    = "oldmoe@gmail.com"
   s.homepage = "http://github.com/oldmoe/reactor"
@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
     "lib/orchestra/maestro.rb",
     "lib/orchestra/musician.rb",
 		"lib/orchestra/configurator.rb",
-    "lib/orchestra/shehab.rb",
+    "lib/orchestra/shihabd.rb",
     "lib/orchestra/daemonizer.rb",
     "lib/orchestra/runner",
     "lib/orchestra/overture.rb",

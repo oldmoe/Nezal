@@ -1,6 +1,7 @@
 require 'orchestra/musician'
 require 'orchestra/configurator'
 require 'logger'
+require 'daemons'
 
 module Orchestra
 
@@ -29,7 +30,7 @@ module Orchestra
       @reactor = Reactor::Base.new()
       options.each_pair { |key, value| send key, value }
 
-      # Setup logger .. STDERR for none daemonized servers and log_file for daemonized ones
+      # Setup logger .. STDOUT for none daemonized servers and log_file for daemonized ones
       @logger = if @options[:daemonize]
                   puts "creating log in dir #{@options[:log_dir]}"
                   Logger.new( @options[:log_dir] + ::File::SEPARATOR + "#{@options[:name]}" )
@@ -159,8 +160,9 @@ module Orchestra
         # Create a new musician 
         r_channel.close
         logger = if @options[:daemonize]
-                  puts "creating log in dir #{@options[:log_dir]}"
-                  Logger.new(@options[:log_dir] + ::File::SEPARATOR + "#{@options[:name]}.#{Process.pid}.log")
+                  log_file = @options[:log_dir] + ::File::SEPARATOR + "#{@options[:name]}.#{Process.pid}.log"
+                  Daemonize::redirect_io(log_file)
+                  Logger.new(log_file)
                 else 
                   Logger.new(STDOUT)
                 end

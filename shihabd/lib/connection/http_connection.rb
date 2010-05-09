@@ -25,6 +25,9 @@ class NB::HTTPConnection < NB::Connection
 	HTTP_CONNECTION = 'HTTP_CONNECTION'.freeze
 	CONNECTION 			= 'CONNECTION'.freeze
 	REQUEST_PATH 		= 'REQUEST_PATH'.freeze
+	EXPIRE         	= 'Expires'.freeze
+	PNG_FILE        = '.png'.freeze
+	EXPIRY_TIME     = 7*24*60*60
 
   # Every standard HTTP code mapped to the appropriate message.
   HTTP_CODES = Rack::Utils::HTTP_STATUS_CODES.inject({}) do |hash,(code,msg)|
@@ -64,37 +67,44 @@ class NB::HTTPConnection < NB::Connection
 		    handle_http_request if @parser.body_eof?
 			end
 		rescue Exception => e 
-			raise Exception, e.message + @data
+		  puts e
+			raise e + @data
 		end 
 	end
 
-	def handle_http_request
-			@env['rack.input'] = ::StringIO.new(@body)
-			path = @server.wdir + @env[REQUEST_PATH]
-			path += 'index.html' if @env[REQUEST_PATH] == '/'
-			# check if file exists
-			if size = File.size?(path)				
-				if size <= CHUNK_SIZE
-					response = set_headers(200, { CONTENT_LENGTH => size })
-					response << @server.file_cache[path] ||= File.read(path)
-					write(response)
-				else
-					response = set_headers(200, { CONTENT_LENGTH => size })
-					write(response)
-					begin
-						file = File.new(path)					
-						stream(file)
-					rescue Exception => e
-						raise e
-					ensure
-						file.close
-					end
-				end
-			else
-				upstream					
-			end
-			finish	
- 	end
+  def handle_http_request
+    @env['rack.input'] = ::StringIO.new(@body)
+    path = @server.wdir + @env[REQUEST_PATH]
+    path += 'index.html' if @env[REQUEST_PATH] == '/'
+    headers = { }
+    if @env[REQUEST_PATH].index(PNG_FILE) == (@env[REQUEST_PATH].length - 4)
+      expire_time = Time.now + EXPIRY_TIME
+      headers[EXPIRE] = expire_time.strftime("%a, %d %b %Y %H:%M:%S GMT")
+    end
+    # check if file exists
+    if size = File.size?(path)
+      headers[CONTENT_LENGTH]= size
+      if size <= CHUNK_SIZE
+        response = set_headers(200, headers)
+        response << @server.file_cache[path] ||= File.read(path)
+        write(response)
+      else
+        response = set_headers(200, headers)
+        write(response)
+        begin
+          file = File.new(path)					
+          stream(file)
+        rescue Exception => e
+          raise e
+        ensure
+          file.close
+        end
+      end
+    else
+      upstream					
+    end
+    finish	
+  end
 
 	# default impelmentation, others should override this
 	def upstream

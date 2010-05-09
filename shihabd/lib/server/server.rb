@@ -52,18 +52,18 @@ class NB::Server
 					conn.handle_request
 					@connections.delete(conn.object_id) if conn.closed?
 				rescue EOFError, Errno::ECONNRESET, Timeout::Error => e
-				  puts e
+				  puts e.backtrace
 					conn.close unless conn.closed?
 					@connections.delete(conn.object_id)
 				rescue Exception => e
-					puts e
+					puts e.backtrace
 					conn.close unless conn.closed? # close the request now 
 					@connections.delete(conn.object_id)
 				end
 			rescue Errno::EWOULDBLOCK, Errno::EAGAIN, Errno::EINTR 
 				# do nothing
 			rescue Exception => e
-				puts e				
+				puts e.backtrace				
 			end
 		end
 	end

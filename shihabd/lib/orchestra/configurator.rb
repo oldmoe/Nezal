@@ -15,7 +15,7 @@ module Orchestra
   	  # This should contain number of workers to maintain
   	  :workers    =>  1,
   	  # Declare worker for recycle if it remains inactive for longer than timeout
-  	  :timeout    =>  10, 
+  	  :timeout    =>  160, 
   	  :pre_fork   =>  nil,
   	  :post_fork  =>  nil, 
   	  :daemonize  =>  false,
