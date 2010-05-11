@@ -17,6 +17,7 @@ module Orchestra
 
     def run 		
       trap_sigs
+      @logger.log(Logger::Severity::INFO, "Started .. Running with PID : #{Process.pid}", @name)
       @reactor.add_periodical_timer(1) do
         begin
           result = @monitor.syswrite("1")

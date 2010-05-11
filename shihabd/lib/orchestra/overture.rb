@@ -65,8 +65,18 @@ module Orchestra
       parse
       procs = {
         "start" => Proc.new do
-                    Daemonizer.start( @maestro.configs[:pid_file] || Orchestra::Configurator::DEFAULTS[:pid_file]) if @maestro.configs[:daemonize]
-                    @maestro.run
+                    if @maestro.configs[:daemonize]
+                      error = Daemonizer.start( @maestro.configs[:pid_file] || Orchestra::Configurator::DEFAULTS[:pid_file]) {@maestro.run}
+                      if error == -1
+                        puts "Error : Process might be already running ... "
+                      elsif error == -2
+                        puts "Error : Process failed to start ... Please check Shihabd.log for further info"
+                      else
+                        puts "Started Successfully ... "
+                      end
+                    else
+                      @maestro.run 
+                    end
                    end ,
         "stop"  => Proc.new do
                      Daemonizer.stop(@maestro.configs[:pid_file]) 

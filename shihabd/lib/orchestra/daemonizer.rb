@@ -7,32 +7,41 @@ module Orchestra
     
     DEFAULT_PID_FILE = Orchestra::Configurator::DEFAULTS[:pid_file]
     
-    def self.start(pid_file = DEFAULT_PID_FILE)
+    def self.start(pid_file = DEFAULT_PID_FILE, &block)
       running = self.running?(pid_file)
-      pwd = Dir.pwd
-      unless running 
+      if running 
+        error = -1
+      else
         self.cleanup(pid_file)
+        pwd = Dir.pwd
         log = pwd + ::File::SEPARATOR + "Shihabd.log"
-        Daemonize.daemonize( log , Orchestra::Configurator::DEFAULTS[:name])
-        Dir.chdir(pwd)
-        pid = File.open(pid_file, "w")
-        pid.write(Process.pid)
-        pid.close
+        proc = Proc.new do
+                            Dir.chdir(pwd)
+                            pid = File.open(pid_file, "w")
+                            pid.write(Process.pid)
+                            pid.close
+                            block.call 
+                         end
+        Daemonize.call_as_daemon( proc, log , Orchestra::Configurator::DEFAULTS[:name])
+        sleep 5
+        error = self.running?(pid_file) ? 0 : -2
       end
+      error
     end
     
     def self.stop( pid_file )
       pid_file ||= DEFAULT_PID_FILE 
       running = self.running?(pid_file)
       if running
-        puts "Process running #{running} .. killing it"
+        puts "Process running #{running} .. Terminating it"
         Process.kill(:TERM, self.pid(pid_file))
       else 
         puts "Process not running #{running}"
+        return
       end
-      sleep 2
+      sleep 8
       if self.running?(pid_file)
-        sleep 60 
+        sleep 50 
         Process.kill(:KILL, self.pid(pid_file)) 
       end
       self.cleanup(pid_file)
