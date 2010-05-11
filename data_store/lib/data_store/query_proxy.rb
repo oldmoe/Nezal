@@ -11,7 +11,7 @@ module DataStore
     
     def initialize(name)
       @name = name
-      @state = { :limit => nil, :conditions => [], :ordering => [] }
+      @state = { :limit => nil, :conditions => [], :ordering => [], :executed => false }
       @result_set = []
     end
     
@@ -83,10 +83,10 @@ module DataStore
     end
     
     def limit(offset = 0, number)
-      @state[:limit] = offset + number
+      @state[:limit] = { :offset => offset, :limit => number }
       execute
       cloned = clone()
-      cloned.state = { :limit => nil, :conditions => [], :ordering => [] }
+      cloned.state = { :limit => nil, :conditions => [], :ordering => [], :executed => true }
       cloned
     end
     
@@ -96,7 +96,7 @@ module DataStore
     end
     
     def execute
-      if !@result_set.empty?
+      if @state[:executed]
         new_result_set = []
         @result_set.each do |obj|
           required = true
@@ -112,12 +112,13 @@ module DataStore
         end
         return
       end
+      @state[:executed] = true
       begin
         klass = Kernel.const_get(@name)
         cursor = klass.db_handle.cursor(nil, 0)
         result =  cursor.get(nil, nil, Bdb::DB_NEXT)
         while result
-          if @state[:limit] && @result_set.length > @state[:limit]-1
+          if @state[:limit] && @result_set.length >= ( @state[:limit][:offset] + @state[:limit][:limit] )
             break
           end
           if result[0] == @name + "_seq"
@@ -135,13 +136,16 @@ module DataStore
         puts e
       ensure 
         cursor.close
-      end  
+      end
       # Here should be the ordering
       if @state[:ordering].length > 0 
         @result_set = @result_set.sort { |obj1, obj2|   
           @state[:ordering][0].call(obj1, obj2)
         }
       end
+      if @state[:limit]
+        @result_set = @result_set[@state[:limit][:offset]..(@state[:limit][:offset]+@state[:limit][:limit]-1)] || []
+      end   
     end
   end
   

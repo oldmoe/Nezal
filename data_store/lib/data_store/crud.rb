@@ -17,6 +17,10 @@ module DataStore
       obj._unmapped_relations= obj.attributes.delete(:relations) unless obj.nil?
       obj
     end
+    
+    def truncate()
+      db_handle.truncate(nil)
+    end
         
     def db_handle
       @db_handle ||= Database::open(db_name)

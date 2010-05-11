@@ -4,6 +4,7 @@ require 'minitest/unit'
 
 ENV["environment"] = "test"
 DataStore::Database.initialize
+TestModel.db_handle.truncate(nil)
 
 MiniTest::Unit.autorun
 
@@ -151,6 +152,15 @@ class QueryProxyTest < MiniTest::Unit::TestCase
     query = DataStore::QueryProxy.new(TestModel.name).limit(2)
     query.each {|obj| puts obj}
     puts "************** end : test_limit"
+    post_test_each
+  end
+  
+  def test_limit_with_offset
+    pre_test_each
+    puts "************** begin : test_limit_with_offset"
+    query = DataStore::QueryProxy.new(TestModel.name).limit(2, 2)
+    query.each {|obj| p obj}
+    puts "************** end : test_limit_with_offset"
     post_test_each
   end
   
