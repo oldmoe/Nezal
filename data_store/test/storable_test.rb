@@ -69,38 +69,6 @@ class DataStoreTest < MiniTest::Unit::TestCase
     assert_nil TestModel.get(@record[:id])
   end
 
-=begin    
-  # Test Object methods save, destroy, saved?, dirty?
-  def save_record_with_storable_list_attrs
-    @storable_attrs = { x: 1, y: 2 }
-    @list = DataStore::StorableList.new(TestModel.name)
-    3.times { @list << TestModel.new(@storable_attrs.dup) }
-    @attributes = {x: 1, y: 2, list: @list}
-    @record = TestModel.new(@attributes)    
-    @record.save
-  end
-  
-  def post_test_save_record_with_storable_list_attrs
-    delete_record_with_storable_list_attrs
-  end
-  
-  def test_save_record_with_storable_list_attrs
-    save_record_with_storable_list_attrs
-    @result = TestModel.get(@record[:id])
-    assert_instance_of TestModel, @result[:list][0]
-    assert_instance_of String, @result[:list][0][:id]
-    assert_equal @result[:list][0].attributes, @list[0].attributes
-  end
-
-  def pre_test_destroy_record_with_storable_list_attrs
-    save_record_with_storable_list_attrs
-  end
-
-  def test_destroy_record_with_storable_list_attrs
-    @record.destroy
-    assert_nil TestModel.get(@record[:id])
-  end
-=end  
   def post_test_saved? 
     TestModel.delete(@record[:id])
     TestModel.delete(@record2[:id])
@@ -134,7 +102,6 @@ class DataStoreTest < MiniTest::Unit::TestCase
     @record2[:x]= 2
     assert_equal @record2.dirty?, true
   end
-
   
 end
 

@@ -19,9 +19,9 @@ module DataStore
         (@sequence ||= ->(){
           seq = Bdb::DbSequence.new(db_handle, db_name + "_seq", 0)
           seq.initial_val(1)
-          seq.open(nil, Bdb::DB_CREATE)
+          seq.open(Transaction::current, Bdb::DB_CREATE)
           seq
-        }.call()).get(nil, 1, 0).to_s
+        }.call()).get(Transaction::current, 1, 0).to_s
       end
       
     end

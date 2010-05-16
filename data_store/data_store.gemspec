@@ -17,6 +17,7 @@ Gem::Specification.new do |s|
 		"lib/data_store/storable.rb",
 		"lib/data_store/query_api.rb",
 		"lib/data_store/query_proxy.rb",
+    "lib/data_store/transaction.rb",
     "lib/data_store/environment.rb",
     "lib/data_store/helpers.rb",
     "lib/data_store/relations/relation.rb",

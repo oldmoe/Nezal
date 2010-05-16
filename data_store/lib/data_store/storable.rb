@@ -11,25 +11,29 @@ module DataStore
     end  
   
     def save
-      attributes[:id] ||= self.class.generate(self)
-      saved
-      relations = _save_relations
-      storable = attributes.merge({:relations => _unmapped_relations})
-      self.class.db_handle.put(nil, attributes[:id], self.class.dump(storable), 0)
-      self  
+      rec = nil
+      DataStore::Transaction::start do 
+        attributes[:id] ||= self.class.generate(self)
+        saved
+        relations = _save_relations
+        storable = attributes.merge({:relations => _unmapped_relations})
+        self.class.db_handle.put(Transaction::current, attributes[:id], self.class.dump(storable), 0)
+        rec = self  
+      end
+      rec
     end
     
     def _save
       attributes[:id] ||= self.class.generate(self)
       saved
       storable = attributes.merge({:relations => _unmapped_relations})
-      self.class.db_handle.put(nil, attributes[:id], self.class.dump(storable), 0)
+      self.class.db_handle.put(Transaction::current, attributes[:id], self.class.dump(storable), 0)
       self  
     end
     
     def destroy
       self._delete_relations()
-      self.class.db_handle.del(nil, @attributes[:id], 0)
+      self.class.db_handle.del(Transaction::current, @attributes[:id], 0)
     end
     
     def attributes

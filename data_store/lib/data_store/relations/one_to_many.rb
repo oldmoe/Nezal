@@ -92,7 +92,7 @@ module DataStore
             end
           rescue Exception => e
             Loader::load(_one_to_many_hash[attr_name][:class_name])
-            retry if (retry_times -= 1) >  0
+            retry if (retry_times -= 1) >=  0
           end
           _define_one_to_many_accessors(attr_name)
         end

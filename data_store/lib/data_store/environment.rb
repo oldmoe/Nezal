@@ -23,10 +23,13 @@ module DataStore
       @@config = (YAML.load_file(config_file))[env]
       @@env = Bdb::Env.new(0)
       @@env.flags_on= 1
-
       @@env.open(@@config["store_path"] + ::File::SEPARATOR + @@config["env_name"], ENV_FLAGS, 0);
       @@dbs = {}
-      Kernel.at_exit { ::DataStore::Database.close } 
+      Transaction::init()
+      Kernel.at_exit do 
+        ::DataStore::Transaction.cleanup
+        ::DataStore::Database.close 
+      end
     end
     
     def self.close
@@ -38,9 +41,13 @@ module DataStore
       @@dbs[name] ||= ->(){ 
         db = @@env.db
         db.flags= options[:flags] if options[:flags]
-        db.open(nil, name, nil, Bdb::Db::BTREE, Bdb::DB_CREATE, 0) 
+        db.open(nil, name, nil, Bdb::Db::BTREE, Bdb::DB_CREATE | Bdb::DB_AUTO_COMMIT, 0) 
       }.call()
       @@dbs[name]
+    end
+    
+    def self.env
+      @@env
     end
 
   end  

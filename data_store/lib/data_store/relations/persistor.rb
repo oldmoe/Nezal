@@ -11,7 +11,7 @@ module DataStore
       def self.find(db_name, key, value=nil)
         begin 
           records = []
-          cursor = handler(db_name).cursor(nil, 0)
+          cursor = handler(db_name).cursor(DataStore::Transaction::current, 0)
           if value
             result =  cursor.get( key, value, Bdb::DB_GET_BOTH_RANGE )
             if result == value
@@ -36,9 +36,9 @@ module DataStore
       
       def self.create(db_name, key, value)
         begin 
-          cursor = handler(db_name).cursor(nil, 0)
+          cursor = handler(db_name).cursor(DataStore::Transaction::current, 0)
           result =  cursor.get( key, value, Bdb::DB_GET_BOTH_RANGE )
-          handler(db_name).put(nil, key, value, 0) unless result && result[1] == value 
+          handler(db_name).put(DataStore::Transaction::current, key, value, 0) unless result && result[1] == value 
         rescue Exception => e
           puts e.backtrace
         ensure
@@ -48,7 +48,7 @@ module DataStore
       
       def self.delete(db_name, key, value=nil )
         begin 
-          cursor = handler(db_name).cursor(nil, 0)
+          cursor = handler(db_name).cursor(DataStore::Transaction::current, 0)
           if value
             result =  cursor.get( key, value, Bdb::DB_GET_BOTH_RANGE )
             if result && result[1] == value

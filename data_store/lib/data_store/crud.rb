@@ -7,19 +7,24 @@ module DataStore
     end
     
     def delete(id)
-      _delete_relations(id)
-      db_handle.del(nil, id, 0)
+      DataStore::Transaction::start do 
+        _delete_relations(id)
+        db_handle.del(Transaction::current, id, 0)
+      end
     end
     
     def get(id)
-      result = db_handle.get(nil, id, nil, 0)
+      result = db_handle.get(Transaction::current, id, nil, 0)
       obj = result ? self.new( retrieve(restore(result).merge({:id => id})) ).saved : nil
       obj._unmapped_relations= obj.attributes.delete(:relations) unless obj.nil?
       obj
     end
     
     def truncate()
-      db_handle.truncate(nil)
+      DataStore::Transaction::start do 
+        db_handle.truncate(Transaction::current)
+        @sequence  = nil if instance_variable_defined? :@sequence
+      end
     end
         
     def db_handle
