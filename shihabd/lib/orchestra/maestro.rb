@@ -30,6 +30,7 @@ module Orchestra
       # This is an array containing signals received
       @sig_queue = []
       @reactor = Reactor::Base.new()
+      @stopped = false
       options.each_pair { |key, value| send key, value }
       # Setup logger .. STDOUT for none daemonized servers and log_file for daemonized ones
       @logger = if @options[:daemonize]
@@ -65,8 +66,10 @@ module Orchestra
     end
     
     # Clean up before exit
-    def cleanup
+    def cleanup(signal)
       @calibrate_timer.cancel()
+      # send shutdown signals to children
+      @workers.each_key { |worker|  kill_worker(signal, worker) }
       @reactor.add_timer(5) do
         reap_workers
         @workers.each_pair do |pid, worker| 
@@ -87,10 +90,9 @@ module Orchestra
     def set_traps
       [:TERM , :QUIT, :INT].each do |signal|
         @sig_handlers[signal] = Proc.new do 
+          @stopped = true
           @logger.log(Logger::Severity::INFO, "Received termination signal .. shutting down workers then exiting", @options[:name])
-          # send shutdown signals to children
-          @workers.each_key { |worker|  kill_worker(signal, worker) }
-          cleanup
+          cleanup(signal)
         end
       end
       @sig_handlers[:USR1] = Proc.new do 
@@ -114,34 +116,38 @@ module Orchestra
     #   Reap dead workers
     #   Maintain the number of workers
     def calibrate_workers 
-      # Handle received signals
-      @sig_queue.each { |signal| @sig_handlers[signal].call }
-      @sig_queue = []
-      # Check all channels for dead ones
-      @workers.each_pair { |pid, worker|
-        worker[:inactive] += 1
-        if worker[:inactive] > @options[:timeout]
-          running = ( Process.getpgid(pid) rescue false )
-          if running 
-            if worker[:status] == :ALIVE 
-              @logger.log(Logger::Severity::WARN,
-                           "Worker #{worker[:name]} with PID #{pid} timed out .. Terminating the worker process gracefully", @options[:name])
-              kill_worker(:TERM, pid)
-              worker[:status] = :TERMINATING
-            elsif worker[:status] == :TERMINATING && worker[:inactive] > @options[:timeout] + 60
-              @logger.log(Logger::Severity::WARN, 
-                            "Timedout Worker #{worker[:name]} with PID #{pid} did not terminate gracefully .. Killing the worker process", @options[:name])
-              kill_worker(:KILL, pid)
-              worker[:status] = :KILLED
+      if !(stopped?)
+        # Handle received signals
+        @sig_queue.each { |signal| @sig_handlers[signal].call }
+        @sig_queue = []
+        # Check all channels for dead ones
+        @workers.each_pair { |pid, worker|
+          worker[:inactive] += 1
+          if worker[:inactive] > @options[:timeout]
+            running = ( Process.getpgid(pid) rescue false )
+            if running 
+              if worker[:status] == :ALIVE 
+                @logger.log(Logger::Severity::WARN,
+                             "Worker #{worker[:name]} with PID #{pid} timed out .. Terminating the worker process gracefully", @options[:name])
+                kill_worker(:TERM, pid)
+                worker[:status] = :TERMINATING
+              elsif worker[:status] == :TERMINATING && worker[:inactive] > @options[:timeout] + 60
+                @logger.log(Logger::Severity::WARN, 
+                              "Timedout Worker #{worker[:name]} with PID #{pid} did not terminate gracefully .. Killing the worker process", @options[:name])
+                kill_worker(:KILL, pid)
+                worker[:status] = :KILLED
+              end
             end
           end
+        }
+        reap_workers
+        if !(stopped?)
+          # Fork new_workers if needed
+          while @workers.length < @options[:workers]
+            @logger.log(Logger::Severity::WARN, "Missing  workers .. Current workers: #{@workers.length} .. Forking new ones ", @options[:name])
+            new_worker
+          end
         end
-      }
-      reap_workers
-      # Fork new_workers if needed
-      while @workers.length < @options[:workers]
-        @logger.log(Logger::Severity::WARN, "Missing  workers .. Current workers: #{@workers.length} .. Forking new ones ", @options[:name])
-        new_worker
       end
     end
     
@@ -213,6 +219,10 @@ module Orchestra
     
     def kill_worker(signal, worker_pid)
       Process.kill(signal, worker_pid)
+    end
+
+    def stopped?
+      @stopped
     end
 
   end
