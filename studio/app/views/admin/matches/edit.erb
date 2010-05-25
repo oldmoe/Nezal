@@ -1,0 +1,39 @@
+<LABEL for="new_match">Match Info</LABEL>
+<form id="new_match" action="/<%=AdminController::ADMIN_URL%>/matches/<%if @match%><%=@match.id%><%end%>" method="post" enctype="multipart/form-data">
+  <div class="form_row">  
+    <LABEL for="team_a">Team A</LABEL>
+    <select id="team_a" name="team_a">
+      <% @teams.each do | team | %>
+        <option value="<%=team.id%>" <%if @match%><%=(@match.team_a.id==team.id)? 'SELECTED' : false%><%else%>false<%end%>><%=team.name%></option>
+      <% end %>
+    </select>
+  </div>
+  <div class="form_row">  
+    <LABEL for="team_b">Team B</LABEL>
+    <select id="team_b" name="team_b">
+      <% @teams.each do | team | %>
+        <option value="<%=team.id%>" <%if @match%><%=(@match.team_b.id==team.id)? 'SELECTED' : false%><%else%>false<%end%>><%=team.name%></option>
+      <% end %>
+    </select>
+  </div>
+  <div class="form_row">  
+    <LABEL for="location">Location</LABEL>
+    <select id="location" name="location">
+      <% @locations.each do | location | %>
+        <option value="<%=location.id%>" <%if @match%><%=(@match.location.id==location.id)? 'SELECTED' : false%><%else%>false<%end%>><%=location.name%></option>
+      <% end %>
+    </select>
+  </div>
+  <div class="form_row">  
+    <LABEL for="group">Round</LABEL>
+    <select id="group" name="group">
+      <% @groups.each do | group | %>
+        <option value="<%=group.id%>" <%if @match%><%=(@match.group.id==group.id)? 'SELECTED' : false%><%else%>false<%end%>><%=group.name%></option>
+      <% end %>
+    </select>
+  </div>
+  
+  <div class="form_row">
+    <input type="submit" value="Save" class="submit"/>
+  </div>
+</form> 

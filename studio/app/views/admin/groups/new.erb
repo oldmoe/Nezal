@@ -1,0 +1,10 @@
+<LABEL for="new_group">Group Info</LABEL>
+<form id="new_group" action="/<%=AdminController::ADMIN_URL%>/groups" method="post" enctype="multipart/form-data">
+  <div class="form_row">  
+    <LABEL for="name">Name</LABEL>
+    <INPUT type="text" id="name" name='name' value="<%if @team%><%=@team.name%><%end%>"><BR>
+  </div>
+  <div class="form_row">
+    <input type="submit" value="Save" class="submit"/>
+  </div>
+</form> 

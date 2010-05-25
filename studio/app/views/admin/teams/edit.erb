@@ -1,0 +1,26 @@
+<LABEL for="new_team">Team Info</LABEL>
+<form id="new_team" action="/<%=AdminController::ADMIN_URL%>/teams/<%if @team%><%=@team.id%><%end%>" method="post" enctype="multipart/form-data">
+  <div class="form_row">  
+    <LABEL for="name">Name</LABEL>
+    <INPUT type="text" id="name" name='name' value="<%if @team%><%=@team.name%><%end%>"><BR>
+  </div>
+  <div class="form_row">
+    <LABEL for="abrv">Abbreviation</LABEL>
+    <INPUT type="text" id="abrv" name='abrv' value="<%if @team%><%=@team.abrv%><%end%>"><BR>
+  </div>	  
+  <div class="form_row">
+    <LABEL for="name_ar">Ar Name</LABEL>
+    <INPUT type="text" id="name_ar" name='name_ar' value="<%if @team%><%=@team.name_ar%><%end%>"><BR>
+  </div>	  
+  <div class="form_row">
+    <LABEL for="ranking">Ranking</LABEL>
+    <INPUT type="text" id="ranking" name='ranking' value="<%if @team%><%=@team.ranking%><%end%>"><BR>
+  </div>	  
+  <div class="form_row">
+    <LABEL for="info">Info</LABEL>
+	  <textarea name='info' type="info" id="info"><%if @team%><%=@team.info%><%end%></textarea>  
+  </div>	  
+  <div class="form_row">
+    <input type="submit" value="Save" class="submit"/>
+  </div>
+</form> 

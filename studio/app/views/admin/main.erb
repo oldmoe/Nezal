@@ -1,0 +1,96 @@
+<script type='text/javascript'>
+
+  function display(self, divName)
+  {
+    if (self.getAttribute('class') == 'expand')
+    {
+      self.setAttribute('class', 'collapse')
+      $(divName).setAttribute('class', 'show')
+    }else{
+      self.setAttribute('class', 'expand')
+      $(divName).setAttribute('class', 'hide')
+    }
+    
+  }
+
+</script>
+
+<a id="groups-list-control" href="" onclick="display(this, 'groups-list'); return false;" 
+    class="<%if @display[:groups]%>collapse<%else%>expand<%end%>">
+</a>
+<div id="groups" class="column separator">
+  <LABEL for="groups-list" > Groups 
+    <a href="/<%=AdminController::ADMIN_URL%>/groups/new" class="submit_links"> + </a>
+  </LABEL>
+  <div id="groups-list" class="<%if @display[:groups]%>show<%else%>hide<%end%>">
+    <% @groups.each do | group | %>
+      <div class="group">
+        <a href="/<%=AdminController::ADMIN_URL%>/groups/<%=group.id%>" class="data_links"><%=group.name%></a>
+        <form id="delete_group_<%=group.id%>" action="/<%=AdminController::ADMIN_URL%>/groups/<%=group.id%>" method="post" style="display:inline">
+          <input type="hidden" name="_method" value="put"/>
+          <a href="#" onclick="document.getElementById('delete_group_<%=group.id%>').submit(); return false;" class="submit_links"> x </a>
+         </form> 
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<a href="" onclick="display(this, 'teams-list'); return false;"     
+    class="<%if @display[:teams]%>collapse<%else%>expand<%end%>">
+</a>
+<div id="teams"  class="column separator">
+  <LABEL for="teams-list" > Teams 
+    <a href="/<%=AdminController::ADMIN_URL%>/teams/new" class="submit_links">+</a>
+  </LABEL>
+  <div id="teams-list" class="<%if @display[:teams]%>show<%else%>hide<%end%>">
+    <% @teams.each do | team | %>
+      <div class="team">
+        <a href="/<%=AdminController::ADMIN_URL%>/teams/<%=team.id%>" class="data_links"><%=team.name%></a>
+        <form id="delete_team_<%=team.id%>" action="/<%=AdminController::ADMIN_URL%>/teams/<%=team.id%>" method="post" style="display:inline">
+          <input type="hidden" name="_method" value="put"/>
+          <a href="#" onclick="document.getElementById('delete_team_<%=team.id%>').submit(); return false;" class="submit_links"> x </a>
+         </form> 
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<a href="" onclick="display(this, 'locations-list'); return false;"   
+    class="<%if @display[:locations]%>collapse<%else%>expand<%end%>">
+</a>
+<div id="locations"  class="column separator">
+  <LABEL for="locations-list" > Locations 
+    <a href="/<%=AdminController::ADMIN_URL%>/locations/new" class="submit_links">+</a>
+  </LABEL>
+  <div id="locations-list" class="<%if @display[:locations]%>show<%else%>hide<%end%>">
+    <% @locations.each do | location | %>
+      <div class="location">
+        <a href="/<%=AdminController::ADMIN_URL%>/locations/<%=location.id%>" class="data_links"><%=location.name%></a>
+        <form id="delete_location_<%=location.id%>" action="/<%=AdminController::ADMIN_URL%>/locations/<%=location.id%>" method="post" style="display:inline">
+          <input type="hidden" name="_method" value="put"/>
+          <a href="#" onclick="document.getElementById('delete_location_<%=location.id%>').submit(); return false;" class="submit_links"> x </a>
+         </form> 
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<a href="" onclick="display(this, 'matches-list'); return false;"     
+    class="<%if @display[:matches]%>collapse<%else%>expand<%end%>">
+</a>
+<div id="matches" class="column ">
+  <LABEL for="matches-list" > Matches  
+    <a href="/<%=AdminController::ADMIN_URL%>/matches/new" class="submit_links">+</a>
+  </LABEL>
+  <div id="matches-list" class="<%if @display[:matches]%>show<%else%>hide<%end%>">
+    <% @matches.each do | match | %>
+      <div class="match">
+        <a href="/<%=AdminController::ADMIN_URL%>/matches/<%=match.id%>" class="data_links"><%=match.team_a.name%>  vs  <%=match.team_b.name%></a>
+        <form id="delete_match_<%=match.id%>" action="/<%=AdminController::ADMIN_URL%>/matches/<%=match.id%>" method="post" style="display:inline">
+          <input type="hidden" name="_method" value="put"/>
+          <a href="#" onclick="document.getElementById('delete_match_<%=match.id%>').submit(); return false;" class="submit_links"> x </a>
+         </form> 
+      </div>
+    <% end %>
+  </div>
+</div>

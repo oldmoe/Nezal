@@ -1,0 +1,16 @@
+<div id="group" class="column separator">
+  <LABEL for="group-teams">Group <%=@group.name%></LABEL>
+  <div id="group-teams">
+    <% @group.matches.each do | match | %>
+      <div class="team">
+        <a href="/<%=AdminController::ADMIN_URL%>/teams/<%=match.team_a.id%>" class="data_links"><%=match.team_a.name%></a>
+        <span class="submit_links" style="float:left; width: 20%;"> vs   </span>
+        <a href="/<%=AdminController::ADMIN_URL%>/teams/<%=match.team_a.id%>" class="data_links"><%=match.team_b.name%></a>
+        <form id="delete_<%=match.id%>" action="/<%=AdminController::ADMIN_URL%>/matches/<%=match.id%>" method="post" style="display:inline">
+          <input type="hidden" name="_method" value="put"/>
+          <a href="#" onclick="document.getElementById('delete_<%=match.id%>').submit(); return false;" class="submit_links">x</a>
+         </form> 
+      </div>
+    <% end %>
+  </div>
+</div>
