@@ -123,13 +123,17 @@ class AdminController < ApplicationController
   
   # Add new match
   post '/matches' do
+    t = Time.parse(params["month"] + " " + params["day"] + " " + params["hour"] + ":" + params["min"]) 
+    puts t
     Match.create(values = {:team_a_id => params["team_a"], :team_b_id => params["team_b"], :result_a => params["result_a"],
-                                  :result_b => params["result_b"], :location_id => params[:location], :group_id => params[:group] } )
+                                  :result_b => params["result_b"], :location_id => params[:location], :group_id => params[:group] , :start_time => t } )
     redirect "/#{ADMIN_URL}"
   end
 
   # Edit existing match
   post '/matches/:id' do
+    t = Time.parse(params["month"] + " " + params["day"] + " " + params["hour"] + ":" + params["min"]) 
+    puts t
     match = Match.find(:id => params[:id])
     match.team_a_id = params["team_a"]
     match.team_b_id = params["team_b"]
@@ -137,6 +141,7 @@ class AdminController < ApplicationController
     match.location_id = params["location"]
     match.result_a = params["result_a"]
     match.result_b = params["result_b"]
+    match.start_time = t
     match.save
     redirect "/#{ADMIN_URL}"
   end

@@ -122,7 +122,7 @@ form
 }
 .form_row label
 {
-  color : gray;
+  color : #BB9900;
   font-size : 12px;
   font-weight : normal;
   width : 25%;
@@ -139,4 +139,11 @@ form
   margin-right : 4%;
   width : 20%;
 }
+.date_span
+{
+  color:Peru;
+  font-family:comic Sans MS;
+  width : 15%;
+}
+
 

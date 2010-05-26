@@ -32,6 +32,35 @@
       <% end %>
     </select>
   </div>
+  <div class="form_row">  
+    <LABEL for="time">Time of Play</LABEL>
+    <div id="time">
+      <span class="date_span"> month </span>
+      <select id="month" name="month" style="width:14%;">
+        <% Time::RFC2822_MONTH_NAME.each  do |month|%>
+          <option value="<%=month%>" <%if @match%><%=(Time::RFC2822_MONTH_NAME[@match.start_time.month-1]==month)? 'SELECTED' : false%><%else%>false<%end%>><%=month%></option>
+        <%end%>
+      </select>
+      <span class="date_span"> day </span>
+      <select id="day" name="day" style="width:9%;">
+        <% (1..31).each  do |day|%>
+          <option value="<%=day%>" <%if @match%><%=(@match.start_time.day==day)? 'SELECTED' : false%><%else%>false<%end%>><%=day%></option>
+        <%end%>
+      </select>
+      <span class="date_span"> hour </span>
+      <select id="hour" name="hour" style="width:9%;">
+        <% (0..23).each  do |hour|%>
+          <option value="<%=hour%>" <%if @match%><%=(@match.start_time.hour==hour)? 'SELECTED' : false%><%else%>false<%end%>><%=hour%></option>
+        <%end%>
+      </select>
+      <span class="date_span"> min </span>
+      <select id="min" name="min" style="width:9%;">
+        <% (0..59).each  do |min|%>
+          <option value="<%=min%>" <%if @match%><%=(@match.start_time.min==min)? 'SELECTED' : false%><%else%>false<%end%>><%=min%></option>
+        <%end%>
+      </select>
+    </div>
+  </div>
   
   <div class="form_row">
     <input type="submit" value="Save" class="submit"/>

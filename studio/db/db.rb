@@ -35,7 +35,7 @@ DB.create_table? :matches do
   foreign_key :location_id, :null => false
   Integer :result_a
   Integer :result_b
-  Date    :start_time
+  Time    :start_time
 end
 
 require 'app/models/group'

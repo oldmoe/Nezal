@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'erb'
 require 'rack/router'
+require 'date'
 
 require 'db/db.rb'
 require 'config/setup.rb'
