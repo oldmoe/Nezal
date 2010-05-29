@@ -74,7 +74,6 @@ class AdminController < ApplicationController
 
   get '/matches/:id' do 
     @match = Match.find :id => params[:id]
-    p @match.score
     @groups = Group.dataset.all
     @teams = Team.dataset.all
     @locations = Location.dataset.all
@@ -90,7 +89,8 @@ class AdminController < ApplicationController
 
   # Add new team 
   post '/teams' do
-    Team.create(values = {:name => params["name"], :name_ar => params["name_ar"], :abrv => params["abrv"] , :ranking => params["ranking"]} )
+    Team.create(values = {:name => params["name"], :name_ar => params["name_ar"], :abrv => params["abrv"] ,
+                           :ranking => params["ranking"], :info => params["info"]} )
     redirect "/#{ADMIN_URL}"
   end
 
@@ -128,8 +128,7 @@ class AdminController < ApplicationController
   post '/matches' do
     t = Time.parse(params["month"] + " " + params["day"] + " " + params["hour"] + ":" + params["min"]) 
     puts t
-    Match.create(values = {:team_a_id => params["team_a"], :team_b_id => params["team_b"], :result_a => params["result_a"],
-                                  :result_b => params["result_b"], :location_id => params[:location], :group_id => params[:group] , :start_time => t } )
+    Match.create(values = {:team_a_id => params["team_a"], :team_b_id => params["team_b"], :location_id => params[:location], :group_id => params[:group] , :start_time => t } )
     redirect "/#{ADMIN_URL}"
   end
 
@@ -142,19 +141,12 @@ class AdminController < ApplicationController
     match.team_b_id = params["team_b"]
     match.group_id = params["group"]
     match.location_id = params["location"]
-    match.result_a = params["result_a"]
-    match.result_b = params["result_b"]
     match.start_time = t
-    score = match.score || Score.new()
-    score.goals_a= params["goals_a"]
-    score.goals_b= params["goals_b"]
-    score.kicks_a= params["kicks_a"]
-    score.kicks_b= params["kicks_b"]
-    score.save
-    match.score = score
-    puts match.score.inspect
-    score = Score.find(:id => score.id)
-    puts score.inspect
+    match.goals_a= params["goals_a"]
+    match.goals_b= params["goals_b"]
+    match.kicks_a= params["kicks_a"]
+    match.kicks_b= params["kicks_b"]
+    match.save
     redirect "/#{ADMIN_URL}"
   end
 

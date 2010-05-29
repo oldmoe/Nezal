@@ -24,8 +24,6 @@ class ApplicationController < Sinatra::Base
     
     @app_configs = FB_CONFIGS::find('name', env['REQUEST_PATH'][1, env['REQUEST_PATH'].length-2 ])
     
-    
-
 =begin
     if  ( query_params["fb_sig_app_id"] && !(query_params["fb_sig_app_id"].empty?) ) || 
                    ( env['rack.request.cookie_hash'] &&

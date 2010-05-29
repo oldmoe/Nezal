@@ -10,7 +10,6 @@ class Match < Sequel::Model
   many_to_one :team_b, :class => Team
   many_to_one :location
   many_to_one :group
-  one_to_one :score
   
   def active?
     time_difference = start_time.utc - TZInfo::Timezone.get( 'Africa/Johannesburg').utc_to_local(Time.now.utc)

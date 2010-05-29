@@ -64,18 +64,18 @@
   <%if @match%>
     <div class="form_row">  
       <LABEL for="goals_a"> <%=@match.team_a.name%> Goals </LABEL>
-      <INPUT type="text" id="goals_a" name='goals_a' value="<%if @match.score%><%=@match.score.goals_a%><%end%>" style = "width: 29%;">
+      <INPUT type="text" id="goals_a" name='goals_a' value="<%=@match.goals_a%>" style = "width: 29%;">
       <%if @match.accept_kicks?%>
         <span class="date_span"> Kicks </span>
-        <INPUT type="text" id="kicks_a" name='kicks_a' value="<%if @match.score%><%=@match.score.kicks_a%><%end%>"  style = "width: 29%;"><BR>
+        <INPUT type="text" id="kicks_a" name='kicks_a' value="<%=@match.kicks_a%>"  style = "width: 29%;"><BR>
       <%end%>
     </div>
     <div class="form_row">  
       <LABEL for="goals_b"> <%=@match.team_b.name%> Goals </LABEL>
-      <INPUT type="text" id="goals_b" name='goals_b' value="<%if @match.score%><%=@match.score.goals_b%><%end%>" style = "width: 29%;">
+      <INPUT type="text" id="goals_b" name='goals_b' value="<%=@match.goals_b%>" style = "width: 29%;">
       <%if @match.accept_kicks?%>
         <span class="date_span"> Kicks </span>
-        <INPUT type="text" id="kicks_b" name='kicks_b' value="<%if @match.score%><%=@match.score.kicks_b%><%end%>" style = "width: 29%;"><BR>
+        <INPUT type="text" id="kicks_b" name='kicks_b' value="<%=@match.kicks_b%>" style = "width: 29%;"><BR>
       <%end%>
     </div>
     
