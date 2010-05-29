@@ -1,12 +1,13 @@
-"110196392331352" :
-  name : local-test-nezal
-  key : 3f08e7205c0eb87bdebeb26638946e1d
-  secret : 3f4b0e3df4fa2786d206303a884c2fd1
-  game_name : city-defender
-    
-"107418339291733"	: 
-  name : city-defender
-  key : 345228e4699e2112c66ea8855b2ee88c
-  secret : f764f516364dee05b5a23500cebe137e
-  game_name : city-defender
+"103040546410849" :
+  id : "103040546410849"
+  name : local-studio
+  key : e8a1d00a279a8bd432f6682bc56ec2cb
+  secret : a4e942de7a03432b785c6387f7df38a6
+
+"110624738982804" :
+  id : "110624738982804"
+  name : studio-sa
+  key : acbf43d127ac775b96b34b542f4f6f6d
+  secret : 1c87f2b942c0362221d19852e7a3ac3b
+
 

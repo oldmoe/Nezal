@@ -1,3 +1,5 @@
+require 'date'
+
 class AdminController < ApplicationController 
   
   ADMIN_URL = "studio-admin"
@@ -72,6 +74,7 @@ class AdminController < ApplicationController
 
   get '/matches/:id' do 
     @match = Match.find :id => params[:id]
+    p @match.score
     @groups = Group.dataset.all
     @teams = Team.dataset.all
     @locations = Location.dataset.all
@@ -142,7 +145,16 @@ class AdminController < ApplicationController
     match.result_a = params["result_a"]
     match.result_b = params["result_b"]
     match.start_time = t
-    match.save
+    score = match.score || Score.new()
+    score.goals_a= params["goals_a"]
+    score.goals_b= params["goals_b"]
+    score.kicks_a= params["kicks_a"]
+    score.kicks_b= params["kicks_b"]
+    score.save
+    match.score = score
+    puts match.score.inspect
+    score = Score.find(:id => score.id)
+    puts score.inspect
     redirect "/#{ADMIN_URL}"
   end
 
@@ -174,28 +186,5 @@ class AdminController < ApplicationController
     location.delete
     redirect "/#{ADMIN_URL}"
   end
-
-
-=begin
-  # Add campaign to a game 
-  post '/:game_id/campaigns' do
-    @game = Game.get(params[:game_id])
-    @game.game_campaigns << Campaign.new({:name => params["name"], :config_path => params["config_path"]})
-    puts "BEFORE SAVE CAMPAIGN"
-    @game.save
-    puts "AFTER SAVE CAMPAIGN"
-    redirect "/admin/#{@game[:name]}"
-  end
-  
-  # Set current campaign
-  post '/:game_id/current-campaign' do 
-    @game = Game.get(params[:game_id])
-    @game.current_campaign= Campaign.get(params[:current_campaign])
-    puts "BEFORE SAVE CAMPAIGN"
-    @game.save
-    puts "AFTER SAVE CAMPAIGN"
-    redirect "/admin/#{@game[:name]}"
-  end
-=end
   
 end

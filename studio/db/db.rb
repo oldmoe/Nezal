@@ -11,7 +11,6 @@ end
 
 DB.create_table? :teams do
   primary_key :id
-#  foreign_key :group_id, :null => false
   String :name
   Integer :ranking
   String :name_ar
@@ -33,13 +32,33 @@ DB.create_table? :matches do
   foreign_key :team_a_id, :null => false
   foreign_key :team_b_id, :null => false
   foreign_key :location_id, :null => false
-  Integer :result_a
-  Integer :result_b
   Time    :start_time
 end
 
+DB.create_table? :scores do
+  primary_key :id
+  foreign_key :match_id
+  Integer :goals_a
+  Integer :goals_b
+  Integer :kicks_a
+  Integer :kicks_b
+end
+
+
+#DB.drop_table(:predictions)
+DB.create_table? :predictions do
+  foreign_key :user_id, :null => false
+  foreign_key :match_id, :null => false
+  primary_key :id
+end
+
+DB.create_table? :users do
+  column :app_id , :string
+  column  :user_id, :string
+  primary_key [:app_id, :user_id], :auto_increment => false
+end
+
 require 'app/models/group'
-require 'app/models/team'
 ('A'..'H').each do |i| 
   Group.find_or_create(:name => i) 
 end

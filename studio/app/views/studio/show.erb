@@ -1,0 +1,65 @@
+<html>
+
+  <head>
+    <link type="text/css" href="/city-defender/css/user.css" rel="stylesheet" />
+    <script src="/javascripts/prototype.js"></script>
+  </head>
+  
+  <body>
+    <div id="fb-root"></div>
+    <div id="fb-root" style="display:none;"></div>
+    <div id="gameArea">
+      <div id='game'>
+        <%= erb(:intro, :layout => false) %>
+      </div>
+    </div>
+  </body>
+  
+  <script src="http://connect.facebook.net/en_US/all.js"></script>
+  <script>
+
+    api_key = '<%=@app_configs['id']%>';
+    channel_path = "/html/facebook/xd_receiver.html";
+    
+    FB.init({
+        appId  : api_key,
+        status : true, // check login status
+        cookie : true, // enable cookies to allow the server to access the session
+        xfbml  : false  // parse XFBML
+    });
+    FB.getLoginStatus(function(response) {
+      if (response.session) {
+
+      }else{
+        connect();
+      }
+    });
+
+    function connect() {
+      FB.login(function(response) {
+        if (response.session) {
+          if (response.perms) {
+            // user is logged in and granted some permissions.
+            // perms is a comma separated list of granted permissions
+            alert("LOGGED IN")
+            console.log(FB.getSession);
+          } else {
+            alert("LOGGED IN BUT NOT ADDED")
+          }
+        } else {
+          alert("LOGGED OUT")
+        }
+      }, {perms:'read_stream,publish_stream'});
+    }
+               
+    FB.Event.subscribe('auth.sessionChange', function(response) {
+      if (response.session) {
+         console.log("LOGGED IN")
+      } else {
+        // The user has logged out, and the cookie has been cleared
+        console.log("LOGGED OUT")
+      }
+    });
+
+  </script>
+</html>
