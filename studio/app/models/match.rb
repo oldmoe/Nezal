@@ -4,7 +4,7 @@ require  'tzinfo'
 
 class Match < Sequel::Model
 
-  TIME_LIMIT = { :start => 60*60*48, :end => 60*60 }
+  TIME_LIMIT = { :start => 60*60*48, :end => -60*5 }
 
   many_to_one :team_a, :class => Team
   many_to_one :team_b, :class => Team
