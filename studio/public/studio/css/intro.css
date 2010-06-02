@@ -1,0 +1,21 @@
+#preIntro{
+  background : url("/images/background/ajax-loader.gif") no-repeat scroll center ;
+  width : 100%;
+  height : 100%;
+}
+
+#placeHolder{
+  background : url("/images/background/background.png") repeat scroll center ;
+  width : 100%;
+  height : 100%;
+}
+
+.playLink{
+  background : url("/images/background/play.png") no-repeat scroll center center transparent;
+  display : block;
+  height : 80px;
+  left : 325px;
+  position : absolute;
+  top : 235px;
+  width : 110px;
+}
