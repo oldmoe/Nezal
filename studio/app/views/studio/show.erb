@@ -2,7 +2,7 @@
  
   <head>
    <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <link type="text/css" href="/studio/css/layout.css" rel="stylesheet" />
+    <link type="text/css" href="/stylesheets/layout.css" rel="stylesheet" />
     <script src="/javascripts/prototype.js"></script>
   </head>
   
@@ -45,7 +45,7 @@
             appId  : FBConnect.apiKey,
             status : true, // check login status
             cookie : true, // enable cookies to allow the server to access the session
-            xfbml  : false  // parse XFBML
+            xfbml  : true  // parse XFBML
         });
         FB.getLoginStatus(function(response) {
           if (response.session) {
@@ -77,7 +77,8 @@
       },
       publish : function() {
         var loc = window.top.location.toString()
-        FB.ui({
+        FB.ui(
+              {
                 method: 'stream.publish',
                 message: '',
                 attachment: {
@@ -93,7 +94,7 @@
 
                 },
                 action_links: [ {text:'توقع أنت', href: loc } ],
-                user_message_prompt: 'تحدي أصدقائك لتوقع نتيجة المباراة'
+                user_message_prompt: 'تحدي أصدقائك لتوقع نتيجة المباراة',
               },
               function(response) {
                 if (response && response.post_id) {
@@ -101,7 +102,25 @@
                 } else {
                   alert('Post was not published.');
                 }
-              });
+              }
+        );
+      },
+      invite : function(){
+        FB.ui({
+          method:'fbml.dialog',
+        
+          fbml:'<fb:Fbml>   ' +
+                  '<div style="background: url(http://173.192.39.215:5500/images/logo-3.png) repeat scroll 0 0 ; overflow:auto;">' +
+                    '<div style="float:right;">'+
+                      '<fb:request-form action="URL" method="post" invite="true" ' +
+                                        'type="Studio SA 2010" content="Challenge your friends to predict with you' +
+                                        '<fb:req-choice url=\'URL\' label=\'Accept\' />">' +
+                        '<fb:multi-friend-selector showborder="false" actiontext="Invite your friends to play Studio South Africa 2010 with you" cols="3"/>' +         
+                      '</fb:request-form>' +
+                    '</div>'+
+                  '</div>' +
+                '</fb:Fbml> '
+        });
       },
       eventSubscribe : function() {
         FB.Event.subscribe('auth.sessionChange', function(response) {
@@ -117,4 +136,5 @@
 
     window.setTimeout( function(){FBConnect.init()}, 100);
   </script>
+   
 </html>
