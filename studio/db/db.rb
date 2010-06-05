@@ -66,18 +66,12 @@ DB.create_table? :users do
 end
 
 indexes = DB.indexes(:users)
-#DB.drop_index :users,  [:app_id, :first_round_score]
-#DB.drop_index :users,  [:app_id, :round16_score]
-#DB.drop_index :users,  [:app_id, :quarters_score]
-#DB.drop_index :users,  [:app_id, :semis_score]
-#DB.drop_index :users,  [:app_id, :finals_score]
-#DB.drop_index :users,  [:app_id, :global_score]
-DB.add_index :users, [:app_id, :first_round_score, :user_id] unless indexes[:users_app_id_first_round_score_user_id_index] 
-DB.add_index :users, [:app_id, :round16_score, :user_id] unless indexes[:users_app_id_round16_score_user_id_index] 
-DB.add_index :users, [:app_id, :quarters_score, :user_id] unless indexes[:users_app_id_quarters_score_user_id_index] 
-DB.add_index :users, [:app_id, :semis_score, :user_id] unless indexes[:users_app_id_semis_score_user_id_index] 
-DB.add_index :users, [:app_id, :finals_score, :user_id] unless indexes[:users_app_id_finals_score_user_id_index]
-DB.add_index :users, [:app_id, :global_score, :user_id] unless indexes[:users_app_id_global_score_user_id_index]  
+DB.add_index :users, [:app_id, :first_round_score] unless indexes[:users_app_id_first_round_score_index] 
+DB.add_index :users, [:app_id, :round16_score] unless indexes[:users_app_id_round16_score_index] 
+DB.add_index :users, [:app_id, :quarters_score] unless indexes[:users_app_id_quarters_score_index] 
+DB.add_index :users, [:app_id, :semis_score] unless indexes[:users_app_id_semis_score_index] 
+DB.add_index :users, [:app_id, :finals_score] unless indexes[:users_app_id_finals_score_index]
+DB.add_index :users, [:app_id, :global_score] unless indexes[:users_app_id_global_score_index]  
 
 =begin
   require 'app/models/user'
@@ -102,5 +96,4 @@ require 'app/models/group'
 ('A'..'H').each do |i| 
   Group.find_or_create(:name => i) 
 end
-
 
