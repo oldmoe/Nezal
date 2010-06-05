@@ -16,6 +16,7 @@ DB.create_table? :teams do
   String :name_ar
   String :abrv
   String :info
+  String :youtube_url
 end
 
 DB.create_table? :locations do
@@ -37,6 +38,7 @@ DB.create_table? :matches do
   Integer :kicks_a
   Integer :kicks_b
   Time    :start_time
+  String  :youtube_url
 end
 
 #DB.drop_table(:predictions)
