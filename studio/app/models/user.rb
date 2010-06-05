@@ -29,30 +29,33 @@ class User < Sequel::Model
     result = {}
     result[:rank]  = self.class.filter( [ {:app_id => self[:app_id]}, "#{round} >  #{self[round]}" ] ).count
     result[:rank] +=  self.class.filter( [{:app_id => self[:app_id]}, " #{round} = #{self[round]} AND user_id < #{self[:user_id]}"]).count + 1
-    result[:previous] = self.class.filter([{:app_id => self[:app_id]}, "#{round} = #{self[round]} AND user_id < #{self[:user_id]}"]).order(:user_id).limit(limit).all
-    result[:previous] = result[:previous] +  self.class.filter( [{:app_id => self[:app_id]}, "#{round} > #{self[round]}"]).order(round).order(:user_id).limit(limit).all
+    result[:previous] = self.class.filter([{:app_id => self[:app_id]}, "#{round} = #{self[round]} AND user_id < #{self[:user_id]}"]).order(:user_id.desc).limit(limit).all
+    result[:previous] = result[:previous] +  self.class.filter( [{:app_id => self[:app_id]}, "#{round} > #{self[round]}"]).order(round).order(:user_id.desc).limit(limit).all
     result[:previous] = result[:previous][0..limit]
     result[:next] = self.class.filter([{:app_id => self[:app_id]}, "#{round} = #{self[round]} AND user_id > #{self[:user_id]}"]).order(:user_id).limit(limit).all
     result[:next] = result[:next] + self.class.filter( [{:app_id => self[:app_id]},"#{round} < #{self[round]}"]).order(round.desc).order(:user_id).limit(limit).all
     result[:next] = result[:next][0..limit]
     self.class.load_users_info(self[:app_id], result[:previous] + result[:next], session() )
     result[:previous] = result[:previous].reverse
-    result[:next] = result[:next].reverse
+    result[:next] = result[:next]
     result
   end
   
   def among_friends_ranking(round = :global_score , limit = 5)
     result = {}
     result[:rank] = self.class.filter( [ {:app_id => self[:app_id]}, {:user_id => friends()}, "#{round} >  #{self[round]}" ] ).count
-    result[:rank] +=  self.class.filter( [ {:app_id => self[:app_id]}, {:user_id => friends()},
-                                     " #{round} = #{self[round]} AND user_id < #{self[:user_id]}" ]).count + 1
-    result[:previous] = self.class.filter([ {:app_id => self[:app_id]}, {:user_id => friends()},
-                                         "#{round} >  #{self[round]} OR (#{round} = #{self[round]} AND user_id < #{self[:user_id]})" ] ).order(round).order(:user_id).limit(limit).all
-    result[:next] = self.class.filter( [{:app_id => self[:app_id]}, {:user_id => friends()}, 
-                                        "#{round} < #{self[round]} OR (#{round} == #{self[round]} AND user_id > #{self[:user_id]})" ] ).order(round.desc).order(:user_id).limit(limit).all
+    result[:rank]  = self.class.filter( [ {:app_id => self[:app_id]}, {:user_id => friends()},  "#{round} >  #{self[round]}" ] ).count
+    result[:rank] +=  self.class.filter( [{:app_id => self[:app_id]}, {:user_id => friends()}, " #{round} = #{self[round]} AND user_id < #{self[:user_id]}"]).count + 1
+    result[:previous] = self.class.filter([{:app_id => self[:app_id]}, {:user_id => friends()}, "#{round} = #{self[round]} AND user_id < #{self[:user_id]}"]).order(:user_id.desc).limit(limit).all
+    result[:previous] = result[:previous] +  self.class.filter( [{:app_id => self[:app_id]}, {:user_id => friends()}, "#{round} > #{self[round]}"]).order(round).order(:user_id.desc).limit(limit).all
+    result[:previous] = result[:previous][0..limit]
+    result[:next] = self.class.filter([{:app_id => self[:app_id]}, {:user_id => friends()}, "#{round} = #{self[round]} AND user_id > #{self[:user_id]}"]).order(:user_id).limit(limit).all
+    result[:next] = result[:next] + self.class.filter( [{:app_id => self[:app_id]}, {:user_id => friends()}, "#{round} < #{self[round]}"]).order(round.desc).order(:user_id).limit(limit).all
+    result[:next] = result[:next][0..limit]
     self.class.load_users_info(self[:app_id], result[:previous] + result[:next], session() )
     result[:previous] = result[:previous].reverse
-    result[:next] = result[:next].reverse
+    
+    result[:next] = result[:next]
     result
   end
   

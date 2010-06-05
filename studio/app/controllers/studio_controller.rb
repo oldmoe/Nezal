@@ -59,7 +59,7 @@ class StudioController < ApplicationController
     @friends_ranking[:previous].each_index do | user |
       hash = dump_user(@friends_ranking[:previous][user], round) 
       hash["order"] = @friends_ranking[:rank] - list_length + user
-      response[:global_ranking] << hash
+      response[:friends_ranking] << hash
     end
     hash = dump_user(@user, round)
     hash["order"] = @friends_ranking[:rank]
