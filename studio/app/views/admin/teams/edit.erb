@@ -16,6 +16,10 @@
     <LABEL for="ranking">Ranking</LABEL>
     <INPUT type="text" id="ranking" name='ranking' value="<%if @team%><%=@team.ranking%><%end%>"><BR>
   </div>	  
+  <div class="form_row">  
+    <LABEL for="youtube_url">Video</LABEL>
+    <INPUT type="text" id="youtube_url" name='youtube_url' value="<%if @team%><%=@team.youtube_url%><%end%>"><BR>
+  </div>
   <div class="form_row">
     <LABEL for="info">Info</LABEL>
 	  <textarea name='info' type="info" id="info"><%if @team%><%=@team.info%><%end%></textarea>  

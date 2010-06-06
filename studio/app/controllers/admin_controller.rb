@@ -90,7 +90,7 @@ class AdminController < ApplicationController
   # Add new team 
   post '/teams' do
     Team.create(values = {:name => params["name"], :name_ar => params["name_ar"], :abrv => params["abrv"] ,
-                           :ranking => params["ranking"], :info => params["info"]} )
+                           :ranking => params["ranking"], :info => params["info"], :youtube_url => params["youtube_url"] } )
     redirect "/#{ADMIN_URL}"
   end
 
@@ -102,6 +102,7 @@ class AdminController < ApplicationController
     team.abrv = params["abrv"]
     team.info = params["info"]
     team.ranking = params["ranking"].to_i
+    team.youtube_url = params["youtube_url"]
     team.save
     redirect "/#{ADMIN_URL}"
   end
@@ -128,7 +129,8 @@ class AdminController < ApplicationController
   post '/matches' do
     t = Time.parse(params["month"] + " " + params["day"] + " " + params["hour"] + ":" + params["min"]) 
     puts t
-    Match.create(values = {:team_a_id => params["team_a"], :team_b_id => params["team_b"], :location_id => params[:location], :group_id => params[:group] , :start_time => t } )
+    Match.create(values = {:team_a_id => params["team_a"], :team_b_id => params["team_b"],
+                 :location_id => params[:location], :group_id => params[:group] , :start_time => t, :youtube_url => params["youtube_url"] } )
     redirect "/#{ADMIN_URL}"
   end
 
@@ -146,6 +148,7 @@ class AdminController < ApplicationController
     match.goals_b= params["goals_b"]
     match.kicks_a= params["kicks_a"]
     match.kicks_b= params["kicks_b"]
+    match.youtube_url = params["youtube_url"]
     match.save
     redirect "/#{ADMIN_URL}"
   end

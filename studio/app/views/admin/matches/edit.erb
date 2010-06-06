@@ -33,6 +33,10 @@
     </select>
   </div>
   <div class="form_row">  
+    <LABEL for="youtube_url">Video</LABEL>
+    <INPUT type="text" id="youtube_url" name='youtube_url' value="<%if @match%><%=@match.youtube_url%><%end%>"><BR>
+  </div>
+  <div class="form_row">  
     <LABEL for="time">Time of Play</LABEL>
     <div id="time">
       <span class="date_span"> month </span>
