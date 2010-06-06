@@ -9,15 +9,18 @@ var Narrator = Class.create({
 		var self = this
 		this.textArea.innerHTML = ''
 		new Effect.Appear(this.baloon,{duration:0.5, transition:Effect.Transitions.Bounce});
-		reactor.push(10, function(){ self._speak(text) })
+		this.reactor.push(10, function(){ self._speak(text) })
 	},
 	
 	_speak : function(text){
+		text = text.trim()
 		var self = this
-		if(this.textArea.innerHTML == text)return
+		if(this.textArea.innerHTML.trim() == text){
+			return
+		}
 		var done = this.textArea.innerHTML
 		this.textArea.innerHTML = done + text.substr(done.length, 1)
-		reactor.push(1, function(){ self._speak(text) })			
+		this.reactor.push(1, function(){ self._speak(text) })			
 	},
 	
 	unspeak : function(){

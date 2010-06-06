@@ -6,16 +6,21 @@ var Timeline = Class.create({
 	},
 	
 	run : function(){
-		if(this.index == this.events.length) return
-		var self = this
-		if(this.events[this.index].constructor == Array){
-			var event = this.events[this.index]
-			reactor.push(event[1], event[0], function(){self.run()})			
-		}else{
-			var event = this.events[this.index]
-			reactor.push(0, event, function(){self.run()})
+		try{
+			if(this.index == this.events.length) return
+			var self = this
+			if(this.events[this.index].constructor == Array){
+				var event = this.events[this.index]
+				this.reactor.push(event[1], event[0], function(){self.run()})			
+			}else{
+				var event = this.events[this.index]
+				this.reactor.push(0, event, function(){self.run()})
+			}
+			this.index++
+		}catch(e){
+			alert('in timeline')
+			alert(e)
 		}
-		this.index++
 	}
 	
 	

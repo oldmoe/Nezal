@@ -1,4 +1,6 @@
 require 'cgi'
+require 'json'
+require 'lib/sequel_to_json'
 
 class ApplicationController < Sinatra::Base
 
@@ -8,17 +10,15 @@ class ApplicationController < Sinatra::Base
   set :static, true
 
   before do 
-
-    LOGGER.debug ">>>>>> "
     LOGGER.debug "BEGIN OF REQUEST"
     LOGGER.debug ">>>>>> Referer :     #{env['HTTP_REFERER']}"
-
     LOGGER.debug ">>>>>> Request Path : #{env['REQUEST_PATH']}"
+    LOGGER.debug ">>>>>> Request Path : #{env['rack.request.path']}"
     LOGGER.debug ">>>>>> Query String : #{env["QUERY_STRING"]}"
     LOGGER.debug ">>>>>> Cookie : #{env['HTTP_COOKIE']}"
-    
-    @app_configs = FB_CONFIGS::find('name', env['REQUEST_PATH'].split("/")[1])
-    if @app_configs && env['rack.request.cookie_hash'] && (fb_cookie = env['rack.request.cookie_hash']["fbs_#{@app_configs['id']}"])
+    LOGGER.debug ">>>>>> Rack Cookie : #{env['rack.request.cookie_hash']}"
+    @app_configs = FB_CONFIGS::find('name', env['SCRIPT_NAME'].gsub('/',''))
+    if @app_configs && env['rack.request.cookie_hash'] && (fb_cookie = env['rack.request.cookie_hash']["fbs_#{@app_configs['id']}"] || env['rack.request.cookie_hash']["fbs_#{@app_configs['key']}"])
         @cookie = CGI::parse(fb_cookie)
         @fb_uid = @cookie['uid'][0].split('"')[0]
         @fb_session_key = @cookie['session_key'][0]
@@ -29,11 +29,6 @@ class ApplicationController < Sinatra::Base
     else
       puts "No Cookie Found"
     end
-    
-=begin
-      puts "Inside Else"
-      halt erb 'facebook/add_app_intro'.to_sym, {:layout => false}
-=end
   end
   
 end
