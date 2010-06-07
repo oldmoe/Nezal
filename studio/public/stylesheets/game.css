@@ -60,6 +60,16 @@
 	z-index : 1002;
 }
 
+#controls{
+	position: absolute;
+	width : 760px;
+	height: 172px;
+	top:380px;
+	left: 0px;	
+	z-index : 10004;
+}
+
+
 .baloon{
 	/*background: center url('../images/background/baloon_men.png') no-repeat;*/
 	z-index : 10003;
@@ -286,6 +296,224 @@
 	z-index : 10003;
 }
 
-#center_piece.main{
+#center_piece #teamA_flag{
+	position:absolute;
+	width: 90px;
+	height: 60px;
+	left: 530px;
+	top: 116px;
+}
 
+#center_piece #teamB_flag{
+	position:absolute;
+	width: 90px;
+	height: 60px;
+	left: 49px;
+	top: 116px;
+}
+
+
+#center_piece.main{
+	height : 197px;
+	background: center url('../images/background/center_piece.png') no-repeat;
+}
+
+
+#controls #ranks{
+	position : absolute;
+	left :4px;
+	top: 40px;
+	width : 40px;
+	height :43px;	
+	background: url('../images/background/rank_icon.png') no-repeat;
+}
+
+#controls #dashboard{
+	position : absolute;
+	left :705px;
+	top: 50px;
+	width : 40px;
+	height :43px;	
+	background: url('../images/background/dashboard_icon.png') no-repeat;
+}
+
+
+#controls #sound.on{
+	position : absolute;
+	left :6px;
+	top: 85px;
+	width : 40px;
+	height :40px;	
+	z-index : 10002;
+}
+
+#controls #sound.on{
+	background: url('../images/background/sound_on_icon.png') no-repeat;
+}
+
+#controls #sound.off{
+	background: url('../images/background/sound_off_icon.png') no-repeat;
+}
+
+#controls #predictions{
+	visibility: hidden;
+	position :absolute;
+	width:222px;
+	height:50px;
+	top:61px;
+	left:302px;	
+}
+
+#controls #predictions.on{
+	visibility: visible;
+	background: url('../images/background/prediction_place.png') no-repeat;
+}
+
+#controls #predictions.off{
+	visibility: visible;
+	background: url('../images/background/prediction_inactive_place.png') no-repeat;
+}
+
+#controls #penalties{
+	visibility: hidden;
+	position :absolute;
+	width:140px;
+	height:30px;
+	top:100px;
+	left:344px;	
+}
+
+#controls #penalties.on{
+	visibility: visible;
+	background: url('../images/background/penalties.png') no-repeat;
+}
+
+#controls #penalties.off{
+	visibility: visible;
+	background: url('../images/background/penalties_inactive.png') no-repeat;
+}
+
+#controls #predictions .dial{
+	position : absolute;
+	width : 16px;
+	height : 16px;
+	cursor : pointer;
+}
+
+#controls #predictions .dial.left{
+	left: 10px;
+}
+#controls #predictions .dial.right{
+	left: 130px;
+}
+#controls #predictions .dial.up{
+	top: 7px;
+}
+#controls #predictions .dial.down{
+	top: 26px;
+}
+
+#controls #predictions .value{
+	position : absolute;
+	width: 35px;
+	height: 26px;
+	top: 10px;
+	font-family: verdana;
+	font-size: 20px;
+	font-weight:bold;
+	text-align:center;
+	color:white;
+}
+
+#controls #predictions .value.left{
+	left:35px;
+}
+
+#controls #predictions .value.right{
+	left:85px;
+}
+
+#controls #penalties .dial{
+	position : absolute;
+	width : 10px;
+	height : 12px;
+	cursor : pointer;
+}
+
+#controls #penalties .dial.left{
+	left: 4px;
+}
+
+#controls #penalties .dial.right{
+	left: 59px;
+}
+
+#controls #penalties .dial.up{
+	top: 2px;
+}
+
+#controls #penalties .dial.down{
+	top: 15px;
+}
+
+#controls #penalties .value{
+	position : absolute;
+	width:18px;
+	height:18px;
+	top : 6px;
+	font-family: verdana;
+	font-size: 12px;
+	font-weight:bold;
+	text-align:center;
+	color:white;
+}
+
+#controls #penalties .value.right{
+	left: 39px
+}
+
+#controls #penalties .value.left{
+	left: 16px;
+}
+
+#controls #predict{
+	visibility: hidden;
+	position : absolute;
+	left :220px;
+	top: 60px;
+	width : 60px;
+	height :60px;	
+	z-index : 10002;
+}
+
+#controls #predict.on{
+	visibility: visible;
+	background: url('../images/background/submit_button.png') no-repeat;
+}
+
+#controls #predict.off{
+	visibility: visible;
+	background: url('../images/background/match_started_button.png') no-repeat;
+}
+
+#center_piece .teamName{
+	position : absolute;
+	width: 175px;
+	height: 24px;
+	font-family : tahoma;
+	font-size : 18px;
+	color: white;
+	text-shadow : #000 2px 2px;
+	top : 85px;
+	filter: Shadow(Color=#000000, 	
+			Direction=135, 
+			Strength=2);
+}
+
+#center_piece #teamA_name{
+	left : 440px;
+	text-align : right;
+}
+#center_piece #teamB_name{
+	left : 50px;
 }

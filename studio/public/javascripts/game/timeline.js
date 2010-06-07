@@ -18,8 +18,7 @@ var Timeline = Class.create({
 			}
 			this.index++
 		}catch(e){
-			alert('in timeline')
-			alert(e)
+			alert('inside timeline : ' + e)
 		}
 	}
 	

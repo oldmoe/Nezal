@@ -13,14 +13,18 @@ var Narrator = Class.create({
 	},
 	
 	_speak : function(text){
-		text = text.trim()
-		var self = this
-		if(this.textArea.innerHTML.trim() == text){
-			return
+		try{
+			text = text.strip()
+			var self = this
+			var done = new String(this.textArea.innerHTML)
+			if(done.strip() == text){
+				return
+			}
+			this.textArea.innerHTML = done + text.substr(done.length, 1)
+			this.reactor.push(1, function(){ self._speak(text) })			
+		}catch(e){
+			alert("inside _speak : " + e)
 		}
-		var done = this.textArea.innerHTML
-		this.textArea.innerHTML = done + text.substr(done.length, 1)
-		this.reactor.push(1, function(){ self._speak(text) })			
 	},
 	
 	unspeak : function(){
