@@ -44,10 +44,10 @@
         });
         FB.getLoginStatus(function(response) {
           if (response.session) {
-			Display.fetch("/"+FBConnect.url()+"/matches", "game");
+			//Display.fetch("/"+FBConnect.url()+"/matches", "game");
             window.setTimeout( function(){FBConnect.publish()}, 100);
           }else{
-            Display.fetch("/html/studio/placeHolder.html", "game");
+            //Display.fetch("/html/studio/placeHolder.html", "game");
           }
         });
       },
@@ -57,7 +57,7 @@
             if (response.perms) {
               // user is logged in and granted some permissions.
               // perms is a comma separated list of granted permissions
-              Display.fetch("/"+FBConnect.url()+"/matches", "placeHolder");
+              //Display.fetch("/"+FBConnect.url()+"/matches", "placeHolder");
               console.log(FB.getSession);
             } else {
               alert("LOGGED IN BUT NOT ADDED")
@@ -71,7 +71,7 @@
       
       },
       publish : function() {
-        var loc = window.top.location.toString()
+        var loc = window.location.toString()
         FB.ui({
                 method: 'stream.publish',
                 message: '',
@@ -111,3 +111,8 @@
     }
 
     window.setTimeout( function(){FBConnect.init()}, 100);
+	FB_RequireFeatures(["CanvasUtil"], function()
+    {
+	  alert(FB.CanvasClient)
+      FB.CanvasClient.setCanvasHeight("2500px");
+    });
