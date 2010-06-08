@@ -8,6 +8,7 @@ class Prediction < Sequel::Model
 
   def validate
     super
+    errors.add(:match, "match inactive") if ( !match.active? )
     errors.add(:kicks_a, 'Kicks not valid in this match') if (kicks_a && !match.accept_kicks?)
     errors.add(:kicks_b, 'Kicks not valid in this match') if (kicks_b && !match.accept_kicks?)
     errors.add(:kicks_a, "!Prediction not valid. Goals of teams not tied") if (goals_a  == goals_b)

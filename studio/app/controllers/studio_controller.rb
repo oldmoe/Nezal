@@ -86,12 +86,19 @@ class StudioController < ApplicationController
   
   post '/predictions/:match_id' do
     prediction = Prediction.find(:user_id => @user.user_id, :app_id => @user.app_id, :match_id => params[:match_id]) || 
-                                  Prediction.create(:user => @user, :match => params[:match_id])
+                                  Prediction.new(:user => @user, :match_id => params[:match_id])
     prediction.goals_a = params['goals_a']
     prediction.goals_b = params['goals_b']
     prediction.kicks_a = params['kicks_a']
     prediction.kicks_b = params['kicks_b']
-    prediction.save
+    p prediction
+    if prediction.valid?
+       prediction.save
+       p prediction
+    else
+      p prediction.errors
+    end
+     
   end
   
   def dump_user(user, round)

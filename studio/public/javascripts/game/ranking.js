@@ -1,8 +1,6 @@
 var Configs = {
-
   template_path : "/javascripts/templates",  
   html_path : "../../html/studio",
-
 }
 
 var Ranking = {
@@ -26,24 +24,27 @@ var Ranking = {
     ranking: [Configs.template_path + "/ranking.tpl",  0],
   },
 
+  appId : function()
+  {
+    var data = window.location.split("/")[3]
+    return data
+  },
+
   fetchTemplate: function(template){
     new Ajax.Request(Ranking.templates[template][0], {
                                                     method:'get',
 	                                                  onSuccess: function(t){
-	                                                    console.log(TrimPath.parseTemplate(t.responseText))
 		                                            		  Ranking.templates[template][1] = TrimPath.parseTemplate(t.responseText);
 			                                              }
 	  });
   },
   
   fetch : function(element) {
-//    $(Intro.pages[Intro.currentPage]).style['cursor'] = "progress"
-//    element.style['cursor'] = "progress"
     var loading = document.createElement('div');
     loading.addClassName('loading');
     $("ranking").appendChild(loading);
 
-    new Ajax.Request(  "/local-studio/ranking/" + element.id, {method:'get', onSuccess: function(t, json){
+    new Ajax.Request( "/" + Ranking.appId() + "/ranking/" + element.id, {method:'get', onSuccess: function(t, json){
         response = JSON.parse(t.responseText)
 
         var i, k=0;
@@ -83,7 +84,6 @@ var Ranking = {
           }
         }
         j += holders.length
-        console.log(j)
 				$$('#global-rank-container ul').first().update(Ranking.templates.ranking[1].process({users : response["global_ranking"], holders : holders}));
 				
         holders = [];
@@ -114,7 +114,6 @@ var Ranking = {
   },
   
   initialize: function(){
-    console.log("Initializing")
     for(var template in Ranking.templates){
       Ranking.fetchTemplate(template);
 	  }

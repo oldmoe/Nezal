@@ -67,26 +67,49 @@ DB.create_table? :users do
   primary_key [:app_id, :user_id], :auto_increment => false
 end
 
-indexes = DB.indexes(:users)
-DB.add_index :users, [:app_id, :first_round_score] unless indexes[:users_app_id_first_round_score_index] 
-DB.add_index :users, [:app_id, :round16_score] unless indexes[:users_app_id_round16_score_index] 
-DB.add_index :users, [:app_id, :quarters_score] unless indexes[:users_app_id_quarters_score_index] 
-DB.add_index :users, [:app_id, :semis_score] unless indexes[:users_app_id_semis_score_index] 
-DB.add_index :users, [:app_id, :finals_score] unless indexes[:users_app_id_finals_score_index]
-DB.add_index :users, [:app_id, :global_score] unless indexes[:users_app_id_global_score_index]  
+#DB.drop_table :comments
+DB.create_table? :comments do
+  primary_key    :id
+  foreign_key    :match_id
+  foreign_key    [:app_id, :user_id], :users, :name => :user, :null => false
+  String  :app_id
+  String  :user_id
+  String  :message
+  Integer :time, :default => (Time.now.to_f*100).to_i, :index => true
+end
 
+indexes = DB.indexes(:users)
+puts indexes
+DB.add_index :users, [:app_id, :first_round_score, :user_id] unless indexes[:users_app_id_first_round_score_user_id_index] 
+DB.add_index :users, [:app_id, :round16_score, :user_id]  unless indexes[:users_app_id_round16_score_user_id_index] 
+DB.add_index :users, [:app_id, :quarters_score, :user_id] unless indexes[:users_app_id_quarters_score_user_id_index] 
+DB.add_index :users, [:app_id, :semis_score, :user_id]   unless indexes[:users_app_id_semis_score_user_id_index] 
+DB.add_index :users, [:app_id, :finals_score, :user_id]  unless indexes[:users_app_id_finals_score_user_id_index]
+DB.add_index :users, [:app_id, :global_score, :user_id]  unless indexes[:users_app_id_global_score_user_id_index]  
+
+indexes = DB.indexes(:predictions)
+DB.add_index :predictions, [:app_id, :user_id, :match_id] unless indexes[:predictions_app_id_user_id_match_id_index]  
+
+require 'app/models/user'
+require 'app/models/team'
+require 'app/models/match'
+require 'app/models/prediction'
+require 'app/models/group'
+#User.create({:app_id=>"103040546410849", :user_id=>"750199343"})
 =begin
-  require 'app/models/user'
-  require 'app/models/team'
-  require 'app/models/match'
-  require 'app/models/prediction'
-  #User.create({:app_id=>"103040546410849", :user_id=>"750199343"})
-  user = User.first
-  p user
-  match = Match.first
-  Prediction.create({:user => user, :match => match})
-  p  pred = Prediction.first
-  p pred.dataset.all
+user = User.first
+match = Match.first
+Prediction.create({:user => user, :match => match, :goals_a => 1, :goals_b => 2})
+begin
+  p = Prediction.new({:user => user, :match => match, :goals_a => 1, :goals_b => 1, :kicks_a => 1, :kicks_b => 2})
+  puts p.valid?
+  p p.errors
+rescue Exception => e
+  puts e
+  p e
+  puts p.errors 
+end
+p  pred = Prediction.first
 =end
 
 require 'app/models/user'

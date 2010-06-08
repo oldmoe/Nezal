@@ -488,6 +488,7 @@
 
 #controls #predict.on{
 	visibility: visible;
+	cursor:pointer;
 	background: url('../images/background/submit_button.png') no-repeat;
 }
 
