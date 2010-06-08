@@ -18,14 +18,17 @@ class StudioController < ApplicationController
   end
   
   get '/matches' do
-    { :matches => Match.dataset.all , :teams => Team.dataset.all, :locations => Location.dataset.all }.to_json
+    { :round => Group.dataset.all, :matches => Match.dataset.all , :teams => Team.dataset.all, :locations => Location.dataset.all }.to_json
   end
 
   get '/matches/:id' do
-  	match = Match[params[:id]]
-      { :match => match, :teamA => match.team_a, :teamB => match.team_b }.to_json
+    match = Match[params[:id]]
+      { 	
+	    :match => match, :teamA => match.team_a, :teamB => match.team_b, :status => match.status, 
+	    :kicks => match.accept_kicks?, :remaining => match.remaining, :prediction => Prediction.filter(:user_id => @user.id, :match_id => match.id)
+    }.to_json
   end
-
+	
   get '/ranking/:round' do 
     round = params["round"].to_sym
     response = {:global_top_scorers => [], :friends_top_scorers => [], :global_ranking => [], :friends_ranking => [] }

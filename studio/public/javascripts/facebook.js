@@ -75,6 +75,7 @@ var FBConnect = {
     
     publish : function() {
         var loc = window.top.location.toString()
+
         FB.ui({
                 method: 'stream.publish',
                 message: '',
@@ -115,3 +116,4 @@ var FBConnect = {
 }
 
 window.setTimeout( function(){FBConnect.init()}, 100);
+

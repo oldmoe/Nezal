@@ -79,7 +79,7 @@
 #left_baloon{
 	position : absolute;
 	left:10px;
-	top:100px;
+	top:120px;
 	width:160px;
 	height:266px;
 	background: center url('../images/background/baloon_left.png') no-repeat;
@@ -87,18 +87,18 @@
 
 #zareef{
 	position : absolute;
-	left:140px;
-	top:190px;
-	width:116px;
-	height:214px;
-	z-index: 10002;
-	background: center url('../images/background/zareef.png') no-repeat;
+	left:112px;
+	top:220px;
+	width:150px;
+	height:259px;
+	z-index: 1002;
+	background: center url('../images/background/shafee2.png') no-repeat;
 }
 
 #right_baloon{
 	position : absolute;
 	left:590px;
-	top:100px;
+	top:120px;
 	width:160px;
 	height:266px;
 	background: center url('../images/background/baloon_right.png') no-repeat;
@@ -106,12 +106,12 @@
 
 #baheeg{
 	position : absolute;
-	left:465px;
+	left:495px;
 	top:194px;
-	width:180px;
-	height:230px;
-	z-index: 10002;
-	background: center url('../images/background/baheeg.png') no-repeat;
+	width:165px;
+	height:268px;
+	z-index: 1002;
+	background: center url('../images/background/zareef.png') no-repeat;
 }
 
 .baloon .text{

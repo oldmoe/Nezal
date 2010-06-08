@@ -1,0 +1,58 @@
+
+#content{
+	position:absolute;
+	width : 760px;
+	height: 989px;
+}
+
+#content.groups{
+	height: 1555px;
+	background: url('../images/dashboard/group_stage_screen_all.png')  no-repeat;
+}
+
+#content.round16{
+	background: url('../images/dashboard/16_screen_all.png')  no-repeat;
+}
+
+#content.round8{
+	background: url('../images/dashboard/8_screen_all.png')  no-repeat;
+}
+
+#content.semis{
+	background: url('../images/dashboard/semi_final_screen_all.png')  no-repeat;
+}
+
+#content.finals{
+	background: url('../images/dashboard/final_screen_all.png')  no-repeat;
+}
+
+#content.groups #links{
+	position:absolute;
+	left:700px;
+	height:634px;
+	width:30px;
+	top : 154px;
+	background-color: none;
+}
+
+#content.groups #links div{
+	width:30px;
+	height:126px;
+	margin-bottom:3px;
+	cursor:pointer;
+}
+
+#content #links{
+	position:absolute;
+	left:700px;
+	height:7980px;
+	width:33px;
+	top : 150px;
+}
+
+#content #links div{
+	width:30px;
+	height:157px;
+	margin-bottom:4px;
+	cursor:pointer;
+}
