@@ -54,7 +54,6 @@ class User < Sequel::Model
     result[:next] = result[:next][0..limit]
     self.class.load_users_info(self[:app_id], result[:previous] + result[:next], session() )
     result[:previous] = result[:previous].reverse
-    
     result[:next] = result[:next]
     result
   end

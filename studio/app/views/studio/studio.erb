@@ -5,7 +5,7 @@
       <form id="<match_<%=match.id%>" action="/<%=@app_configs['name']%>/predictions/<%=match.id%>" method="post" enctype="multipart/form-data">
         <% prediction = Prediction.find(:user_id => @user.user_id, :app_id => @user.app_id) %>
         <div class="match">
-          <a href="" class="data_links"><%=match.team_a.name%>  vs  <%=match.team_b.name%></a>
+          <a href="match.html?id=<%=match.id%>" class="data_links"><%=match.team_a.name%>  vs  <%=match.team_b.name%></a>
           <%if match.active?%>
             <div class="form_row">  
               <LABEL for="goals_a"> <%=match.team_a.name%> Goals </LABEL>
