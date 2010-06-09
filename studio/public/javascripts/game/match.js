@@ -1,8 +1,13 @@
 ﻿Studio.match = null
 Studio.data = null
 Studio.teams = ['teamA', 'teamB']
+Studio.player = null
+function onYouTubePlayerReady(){
+	Studio.player = document.getElementById("center_screen_content");
+}
 
 $(document).observe('dom:loaded',function(){
+	swfobject.embedSWF("http://www.youtube.com/apiplayer?enablejsapi=1&version=3", "center_screen_content", "250", "250", "9.0.0", null, null, { wmode : 'transparent', allowScriptAccess: "always" });
 	var id = window.location.search.toString().split('?')[1].split('=')[1].split('&')[0]
 	new Ajax.Request('matches/'+id, {method:'get', onComplete : function(req){
 		Studio.data = (req.responseText).evalJSON()
@@ -43,12 +48,12 @@ $(document).observe('dom:loaded',function(){
 			$(team+'_name').innerHTML = Studio.match[team].name_ar
 			var talk = Studio.match[team].info.split('\n')
 			var side = [Studio.right, Studio.left][index]
+			Studio.events.push([function(){Studio.player.loadVideoById(Studio.match[team].youtube_url.split('?v=')[1]);Studio.player.mute();}, 0])
 			talk.each(function(line){
 				Studio.events.push([function(){side.speak(line)}, 25])
 				Studio.events.push([function(){side.unspeak()}, 25])	
 			})
 		})
-			
 		Studio.teams.each(function(team, index){
 			var name = Studio.match[team].name_ar
 			var side = [Studio.right, Studio.left][index]
@@ -86,6 +91,11 @@ $(document).observe('dom:loaded',function(){
 				});
 			})
 		}
+		$('ranks').observe('click', function(){
+			$('rankings').innerHTML = "<iframe src='html/studio/ranking.html'></iframe>"
+			$('rankings').show();
+			//$('game').hide();
+		})
 		Studio.reactor.run(function(){Studio.timeline.run()})
 	}})
 })

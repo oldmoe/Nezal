@@ -117,9 +117,9 @@
 .baloon .text{
 	margin : 15px;
 	font-family : tahoma;
-	font-size:14px;
+	font-size:12px;
 	text-align : justify;
-	font-weight : bold;
+	font-weight : normal;
 }
 
 #right_baloon .text{
@@ -326,6 +326,7 @@
 	width : 40px;
 	height :43px;	
 	background: url('../images/background/rank_icon.png') no-repeat;
+	cursor: pointer;
 }
 
 #controls #dashboard{
@@ -335,6 +336,7 @@
 	width : 40px;
 	height :43px;	
 	background: url('../images/background/dashboard_icon.png') no-repeat;
+	cursor: pointer;
 }
 
 
@@ -516,4 +518,14 @@
 }
 #center_piece #teamB_name{
 	left : 50px;
+}
+
+#rankings {
+	position : absolute;
+	left : 0px;
+	top : 0px;
+	width : 760px;
+	height: 550px;
+	z-index : 100100;
+	text-align:center;
 }
