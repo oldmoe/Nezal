@@ -18,7 +18,7 @@ class StudioController < ApplicationController
   end
   
   get '/matches' do
-    { :round => Group.dataset.all, :matches => Match.dataset.all , :teams => Team.dataset.all, :locations => Location.dataset.all }.to_json
+    { :round => Group.dataset.all ,:matches => Match.dataset.all , :teams => Team.dataset.all, :locations => Location.dataset.all }.to_json
   end
 
   get '/matches/:id' do
