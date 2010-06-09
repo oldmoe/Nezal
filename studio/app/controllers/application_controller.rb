@@ -17,7 +17,7 @@ class ApplicationController < Sinatra::Base
     LOGGER.debug ">>>>>> Query String : #{env["QUERY_STRING"]}"
     LOGGER.debug ">>>>>> Cookie : #{env['HTTP_COOKIE']}"
     LOGGER.debug ">>>>>> Rack Cookie : #{env['rack.request.cookie_hash']}"
-    @app_configs = FB_CONFIGS::find('name', env['SCRIPT_NAME'].gsub('/',''))
+    @app_configs = FB_CONFIGS::find('name', env['SCRIPT_NAME'].split('/')[1])
     if @app_configs && env['rack.request.cookie_hash'] && (fb_cookie = env['rack.request.cookie_hash']["fbs_#{@app_configs['id']}"] || env['rack.request.cookie_hash']["fbs_#{@app_configs['key']}"])
         @cookie = CGI::parse(fb_cookie)
         @fb_uid = @cookie['uid'][0].split('"')[0]

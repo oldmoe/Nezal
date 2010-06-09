@@ -22,11 +22,11 @@ class StudioController < ApplicationController
   end
 
   get '/matches/:id' do
-	match = Match[params[:id]]
-    { 	
-		:match => match, :teamA => match.team_a, :teamB => match.team_b, :status => match.status, 
-		:kicks => match.accept_kicks?, :remaining => match.remaining, :prediction => Prediction.filter(:user_id => @user.id, :match_id => match.id)
-	}.to_json
+    match = Match[params[:id]]
+      { 	
+	    :match => match, :teamA => match.team_a, :teamB => match.team_b, :status => match.status, 
+	    :kicks => match.accept_kicks?, :remaining => match.remaining, :prediction => Prediction.filter(:user_id => @user.id, :match_id => match.id)
+    }.to_json
   end
 	
   get '/ranking/:round' do 
@@ -86,12 +86,19 @@ class StudioController < ApplicationController
   
   post '/predictions/:match_id' do
     prediction = Prediction.find(:user_id => @user.user_id, :app_id => @user.app_id, :match_id => params[:match_id]) || 
-                  Prediction.create(:user => @user, :match => params[:match_id])
+                                  Prediction.new(:user => @user, :match_id => params[:match_id])
     prediction.goals_a = params['goals_a']
     prediction.goals_b = params['goals_b']
     prediction.kicks_a = params['kicks_a']
     prediction.kicks_b = params['kicks_b']
-    prediction.save
+    p prediction
+    if prediction.valid?
+       prediction.save
+       p prediction
+    else
+      p prediction.errors
+    end
+     
   end
   
   def dump_user(user, round)

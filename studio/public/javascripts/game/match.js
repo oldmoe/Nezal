@@ -99,3 +99,30 @@ $(document).observe('dom:loaded',function(){
 		Studio.reactor.run(function(){Studio.timeline.run()})
 	}})
 })
+
+
+var Prediction = {
+
+    appId : function()
+    {
+		    var data = window.location.toString().split("/")[3]
+		    return data
+	  },
+
+    send : function() {
+      	var id = window.location.search.toString().split('?')[1].split('=')[1].split('&')[0]
+        new Ajax.Request( "/" + Prediction.appId() + "/predictions/" + id, 
+                          {
+                              method:'post', 
+                              parameters: { 
+                                "goals_a" : $('goalsB').innerHTML,
+                                "goals_b" : $('goalsA').innerHTML,
+                                "kicks_a" : $('penaltiesA').innerHTML,
+                                "kicks_b" : $('penaltiesB').innerHTML,
+                              },
+                              onSuccess: function(transport, json){
+                                  element.value = null
+                              },
+                          });   
+    },
+}

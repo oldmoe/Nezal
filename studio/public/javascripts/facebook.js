@@ -1,41 +1,45 @@
-﻿	var Display = {
-      fetch: function(url, place){
-        new Ajax.Request(url, {method:'get',
-          onSuccess: function(t){
-            Display.alter(place, t.responseText)
-          },
-          onComplete: function(t){
+﻿var Display = {
+    fetch: function(url, place){
+      new Ajax.Request(url, { method:'get',
+                              onSuccess: function(t){
+                                Display.alter(place, t.responseText)
+                              },
+                              onComplete: function(t){
 
-		      }
-        })
-      },
-      alter: function(divId, newContent)
-      {
-        $(divId).replace(newContent);
-      },
-    }
+                    		      }
+                            });
+    },
+    alter: function(divId, newContent)
+    {
+      $(divId).replace(newContent);
+    },
+}
 
-    var FBConnect = {
-      appIds : {
-		'local-studio' : '103040546410849',
-		'studio-sa' : '110624738982804'
+var FBConnect = {
+
+    appIds : {
+        		'local-studio' : '103040546410849',
+        		'studio-sa' : '110624738982804',
 	  },
-      channelPath : "/html/facebook/xd_receiver.html",
-      url : function(){
-		/*var origDomain = document.domain
-		try{
-			document.domain = 'apps.facebook.com'
-		}catch(e){
-		}
-		alert(window.location)
-		*/
-		var data = window.location
-		data = data.toString().split("/")
-		data = data[data.length-2]
-		//document.domain = origDomain
-		return data
+	  
+    channelPath : "/html/facebook/xd_receiver.html",
+    
+    url : function(){
+		    /*var origDomain = document.domain
+		    try{
+			    document.domain = 'apps.facebook.com'
+		    }catch(e){
+		    }
+		    alert(window.location)
+		    */
+		    var data = window.location
+		    data = data.toString().split("/")
+		    data = data[data.length-2]
+		    //document.domain = origDomain
+		    return data
 	  },
-      init : function() {
+	  
+    init : function() {
         FB.init({
             appId  : FBConnect.appIds[FBConnect.url()],
             status : true, // check login status
@@ -43,35 +47,35 @@
             xfbml  : false  // parse XFBML
         });
         FB.getLoginStatus(function(response) {
-          if (response.session) {
-			//Display.fetch("/"+FBConnect.url()+"/matches", "game");
-            window.setTimeout( function(){FBConnect.publish()}, 100);
-          }else{
-            //Display.fetch("/html/studio/placeHolder.html", "game");
-          }
-        });
-      },
-      connect : function() {
-        FB.login(function(response) {
-          if (response.session) {
-            if (response.perms) {
-              // user is logged in and granted some permissions.
-              // perms is a comma separated list of granted permissions
-              //Display.fetch("/"+FBConnect.url()+"/matches", "placeHolder");
-              console.log(FB.getSession);
-            } else {
-              alert("LOGGED IN BUT NOT ADDED")
+            if (response.session) {
+          		//	Display.fetch("/"+FBConnect.url()+"/matches", "game");
+              window.setTimeout( function(){FBConnect.publish()}, 100);
+            }else{
+              Display.fetch("/html/studio/placeHolder.html", "game");
             }
-          } else {
-            alert("LOGGED OUT")
-          }
-        }, {perms:'read_stream,publish_stream'});
-      },  
-      invite : function() {
+        });
+    },
       
-      },
-      publish : function() {
-        var loc = window.location.toString()
+    connect : function() {
+        FB.login(function(response) {
+            if (response.session) {
+                if (response.perms) {
+                  // user is logged in and granted some permissions.
+                  // perms is a comma separated list of granted permissions
+                  //Display.fetch("/"+FBConnect.url()+"/matches", "placeHolder");
+                  console.log(FB.getSession);
+                } else {
+                  alert("LOGGED IN BUT NOT ADDED")
+                }
+            } else {
+                alert("LOGGED OUT")
+            }
+        }, {perms:'read_stream,publish_stream'});
+    },  
+    
+    publish : function() {
+        var loc = window.top.location.toString()
+
         FB.ui({
                 method: 'stream.publish',
                 message: '',
@@ -97,8 +101,9 @@
                   alert('Post was not published.');
                 }
               });
-      },
-      eventSubscribe : function() {
+    },
+      
+    eventSubscribe : function() {
         FB.Event.subscribe('auth.sessionChange', function(response) {
           if (response.session) {
              console.log("LOGGED IN")
@@ -107,12 +112,8 @@
             console.log("LOGGED OUT")
           }
         });
-      },
-    }
+    },
+}
 
-    window.setTimeout( function(){FBConnect.init()}, 100);
-	FB_RequireFeatures(["CanvasUtil"], function()
-    {
-	  alert(FB.CanvasClient)
-      FB.CanvasClient.setCanvasHeight("2500px");
-    });
+window.setTimeout( function(){FBConnect.init()}, 100);
+

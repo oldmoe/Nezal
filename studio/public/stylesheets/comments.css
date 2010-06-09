@@ -1,0 +1,90 @@
+#sms_marquee
+{
+  margin-top : 20px;
+  font-weight : bold;
+  position : absolute;
+  left : 10px;
+}
+
+#msgs
+{
+  width : 70%;
+  height : 100%;
+  margin-left : 25px;
+  overflow : auto;
+}
+
+.msg
+{
+  background : #ECEFF5;
+  width : 96%;
+  margin-bottom : 5px;
+  font-family : "lucida grande",tahoma,verdana,arial,sans-serif;
+  font-size : 11px;
+  overflow : auto;
+}
+
+.img-div
+{
+  float : left;
+  width : 10%;
+}
+
+.img
+{
+  width : 32px;
+  height : 32px;
+  margin : 5px;
+}
+.msg-div
+{
+  float : left;
+  width : 87%;
+  display : inline;
+  word-wrap : break-word;
+}
+
+.name
+{
+  color : #3B5998;
+  cursor : pointer;
+  text-decoration : none;
+  font-weight : bold;
+}
+
+#comments
+{
+  position : absolute;
+  top : 560px;
+  height : 80px;
+  width : 100%;
+}
+
+#screen
+{
+  width : 87%;
+  float : right;
+  padding : 0px 6px;
+}
+
+textarea {
+  resize: none;
+}
+
+.text-area
+{
+  font-size : 12px;
+  height : 70px;
+  width : 100%;
+  direction : rtl;
+  font-family : arial;
+}
+
+#send_sms
+{
+  background : url("/images/background/send_button.png") no-repeat scroll center  top ;
+  cursor : pointer;
+  height : 80px;
+  width : 80px;
+  float : left;
+}
