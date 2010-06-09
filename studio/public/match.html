@@ -9,6 +9,8 @@
 		<script src="javascripts/transitions.js"></script>
 		<script src="javascripts/sound.js"></script>
 		<script src="javascripts/template.js"></script>
+		<script src="javascripts/swfobject.js"></script>
+		
 	</head>
 	<!--[if IE]>
 		<style>
@@ -18,19 +20,23 @@
 	<![endif]-->
 	<body id="body">
 		<div id="fb-root" style="display:none;"></div>
+		<div id="rankings" style="display:none"></div>
 		<div id="game" style="display:none">
 			<div id="header"></div>
 			<div id="content">
 				<div id="logo"></div>
 				<div id="score" class="overlay"></div>
 				<div id="left_screen" class="skew_left">
-					<div class="tv_content"><!--img width=200 height=200 src='images/flags/mex.png'/--></div>
+					<div id="left_screen_content" class="tv_content"><!--img width=200 height=200 src='images/flags/mex.png'/--></div>
 				</div>
 				<div id="center_screen">
-					<div class="tv_content"><!--img width=250 height=250 src='images/ads/1.jpg'/--></div>
+					<div  class="tv_content">
+						<div id="center_screen_content">			
+						</div>
+					</div>
 				</div>
 				<div id="right_screen" class="skew_right">
-					<div class="tv_content"><!--img width=200 height=200 src='images/flags/rsa.png'/--></div>
+					<div id="right_screen_content" class="tv_content"><!--img width=200 height=200 src='images/flags/rsa.png'/--></div>
 				</div>
 				<div class="baloon" id="left_baloon" style="display:none">
 					<div class="text" dir="rtl"></div>

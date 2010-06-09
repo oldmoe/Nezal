@@ -1,0 +1,77 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<title>South Africa 2010</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<link type="text/css" href="stylesheets/dashboard.css" rel="stylesheet" />
+		<script src="javascripts/prototype.js"></script>
+		<script src="javascripts/effects.js"></script>
+		<script src="javascripts/transitions.js"></script>
+		<script src="javascripts/sound.js"></script>
+		<script src="javascripts/template.js"></script>
+		<script src="javascripts/dist/carousel.packed.js"></script>
+		
+	</head>
+	<body id="body">
+		<div id="templates" style="display:none">
+			<textarea id="table">
+						<table>
+							{for location in locations}
+								<tr>
+									<th>${location[0].date.getDate()}<br/>${Dashboard.months[location[0].date.getMonth()]}</th>
+									{for cell in location}
+										{if !cell.empty }
+										<td title="${Dashboard.getTeamById(cell.team_b_id).name_ar} و ${Dashboard.getTeamById(cell.team_a_id).name_ar}" class="match g${cell.group_id}" onclick="window.location.href = 'match.html?id=${cell.id}'">
+											<div class="panel">
+												<img class='flagA' src='images/flags/${Dashboard.getTeamById(cell.team_a_id).abrv.toLowerCase()}_r.png'/>
+												<img class='flagB' src='images/flags/${Dashboard.getTeamById(cell.team_b_id).abrv.toLowerCase()}_r.png'/>
+											</div>
+										</td>
+										{else}
+										<td>
+										</td>
+										{/if}
+									{/for}
+								</tr>
+							{/for}
+						</table>
+		</textarea>
+		</div>
+		<div id="game">
+			<div id="content" class="groups">
+				<div id="frame"></div>
+				<div id="matchContainer">
+					<div id="groupsTable" class="tableContainer container" style="display:none"></div>
+					<div id="ground16Table" class="tableContainer" style="display:none"></div>
+					<div id="round8Table" class="tableContainer" style="display:none"></div>
+					<div id="semisTable" class="tableContainer" style="display:none"></div>
+					<div id="finalsTable" class="tableContainer" style="display:none"></div>
+				</div>
+				<div class="next_button off"></div>
+				<div class="previous_button"></div>
+				<div id="ranks" title="الترتيب"></div>
+				<div id="sound" class="on" title="تفعيل / غلق الأصوات"></div>
+				<div id="studio" title="إلى الاستوديو"></div>
+				<div id="guide"></div>
+				<div id="links">
+					<div class="groups on"></div>
+					<div class="round16"></div>
+					<div class="round8"></div>
+					<div class="semis"></div>
+					<div class="finals"></div>
+				</div>
+				<div class="groups"></div>
+				<div class="round16"></div>
+				<div class="round8"></div>
+				<div class="semis"></div>
+				<div class="finals"></div>
+			</div>
+		</div>
+	</body>
+	<script src="http://connect.facebook.net/en_US/all.js"></script>
+	<script src="javascripts/facebook.js"></script>
+	<script src="javascripts/game/reactor.js"></script>
+	<script src="javascripts/game/timeline.js"></script>
+	<script src="javascripts/game/dashboard.js"></script>
+	
+</html>
