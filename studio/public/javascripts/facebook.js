@@ -2,7 +2,7 @@
     fetch: function(url, place){
       new Ajax.Request(url, { method:'get',
                               onSuccess: function(t){
-                                Display.alter(place, t.responseText)
+                                Display.alter(place, t.responseText);
                               },
                               onComplete: function(t){
 
@@ -12,7 +12,7 @@
     alter: function(divId, newContent)
     {
       $(divId).replace(newContent);
-    },
+    }
 }
 
 var FBConnect = {
@@ -39,7 +39,7 @@ var FBConnect = {
 		    return data
 	  },
 	  
-    init : function() {
+    init : function( successCallback ) {
         FB.init({
             appId  : FBConnect.appIds[FBConnect.url()],
             status : true, // check login status
@@ -48,8 +48,7 @@ var FBConnect = {
         });
         FB.getLoginStatus(function(response) {
             if (response.session) {
-          		//	Display.fetch("/"+FBConnect.url()+"/matches", "game");
-              window.setTimeout( function(){FBConnect.publish()}, 100);
+              successCallback();
             }else{
               Display.fetch("/html/studio/placeHolder.html", "game");
             }
@@ -74,7 +73,7 @@ var FBConnect = {
     },  
     
     publish : function() {
-        var loc = window.top.location.toString()
+        var loc = window.top.location.toString();
 
         FB.ui({
                 method: 'stream.publish',
@@ -106,14 +105,12 @@ var FBConnect = {
     eventSubscribe : function() {
         FB.Event.subscribe('auth.sessionChange', function(response) {
           if (response.session) {
-             console.log("LOGGED IN")
+             console.log("LOGGED IN");
           } else {
             // The user has logged out, and the cookie has been cleared
-            console.log("LOGGED OUT")
+            console.log("LOGGED OUT");
           }
         });
-    },
+    }
 }
-
-window.setTimeout( function(){FBConnect.init()}, 100);
 

@@ -14,7 +14,7 @@ class Comment < Sequel::Model
     invalid = 0
     if message
       message.split.each do |word| 
-#        invalid+=1 if (DICTIONALY[word])  
+        invalid += 1 if (DICTIONARY[word])  
       end
     end
   end  

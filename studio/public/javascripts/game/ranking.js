@@ -26,7 +26,7 @@ var Ranking = {
 
   appId : function()
   {
-    var data = window.location.split("/")[3]
+    var data = window.location.toString().split("/")[3]
     return data
   },
 
@@ -44,7 +44,7 @@ var Ranking = {
     loading.addClassName('loading');
     $("ranking").appendChild(loading);
 
-    new Ajax.Request( "/" + Ranking.appId() + "/ranking/" + element.id, {method:'get', onSuccess: function(t, json){
+    new Ajax.Request( "/local-studio/"  /*Ranking.appId()*/ + "/ranking/" + element.id, {method:'get', onSuccess: function(t, json){
         response = JSON.parse(t.responseText)
 
         var i, k=0;

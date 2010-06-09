@@ -25,7 +25,8 @@ class StudioController < ApplicationController
     match = Match[params[:id]]
       { 	
 	    :match => match, :teamA => match.team_a, :teamB => match.team_b, :status => match.status, 
-	    :kicks => match.accept_kicks?, :remaining => match.remaining, :prediction => Prediction.filter(:user_id => @user.id, :match_id => match.id)
+	    :kicks => match.accept_kicks?, :remaining => match.remaining, 
+      :prediction => Prediction.filter(:user_id => @user.user_id, :app_id => @user.app_id, :match_id => match.id)
     }.to_json
   end
 	
@@ -91,10 +92,8 @@ class StudioController < ApplicationController
     prediction.goals_b = params['goals_b']
     prediction.kicks_a = params['kicks_a']
     prediction.kicks_b = params['kicks_b']
-    p prediction
     if prediction.valid?
-       prediction.save
-       p prediction
+      p prediction.save
     else
       p prediction.errors
     end

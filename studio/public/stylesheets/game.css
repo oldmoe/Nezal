@@ -518,3 +518,62 @@
 #center_piece #teamB_name{
 	left : 50px;
 }
+
+
+#center_piece #scoreA{
+  height : 40px;
+  left : 260px;
+  position : absolute;
+  top : 80px;
+  width : 40px;
+}
+
+#center_piece #scoreB{
+  height : 40px;
+  width : 40px;
+  position : absolute;
+  top : 80px;
+  left : 372px; 
+}
+
+#center_piece #penaltyA {
+  height : 20px;
+  left : 310px;
+  position : absolute;
+  top : 113px;
+  width : 20px;
+}
+
+#center_piece #penaltyB {
+  position : absolute;
+  height : 20px;
+  left : 342px;
+  top : 113px;
+  width : 20px;
+}
+
+#center_piece .score
+{
+	font-family: verdana;
+	font-size: 20px;
+	font-weight:bold;
+	text-align:center;
+	color:white;
+}
+
+#center_piece .penalty
+{
+	font-family: verdana;
+	font-size: 12px;
+	font-weight:bold;
+	text-align:center;
+	color:white;
+}
+
+#center_piece #countdown
+{
+  height:70px;
+  left:244px;
+  position:absolute;
+  width:184px;
+}

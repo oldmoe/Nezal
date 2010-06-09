@@ -79,7 +79,7 @@ class AdminController < ApplicationController
     @locations = Location.dataset.all
     erb 'matches/edit'.to_sym , {:layout => :layout}
   end
-
+  
 # ADD/EDIT OPERATIONS 
   # Add new group
   post '/groups' do
@@ -133,11 +133,16 @@ class AdminController < ApplicationController
                  :location_id => params[:location], :group_id => params[:group] , :start_time => t, :youtube_url => params["youtube_url"] } )
     redirect "/#{ADMIN_URL}"
   end
+  
+  put '/matches/:id/update' do
+    match = Match.find(:id => params[:id])
+    match.finish()
+    redirect "/#{ADMIN_URL}"
+  end
 
   # Edit existing match
   post '/matches/:id' do
-    t = Time.parse(params["month"] + " " + params["day"] + " " + params["hour"] + ":" + params["min"]) 
-    puts t
+    t = Time.parse(params["month"] + " " + params["day"] + " " + params["hour"] + ":" + params["min"] + " UTC") 
     match = Match.find(:id => params[:id])
     match.team_a_id = params["team_a"]
     match.team_b_id = params["team_b"]

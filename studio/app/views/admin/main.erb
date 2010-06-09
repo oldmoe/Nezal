@@ -89,7 +89,11 @@
         <form id="delete_match_<%=match.id%>" action="/<%=AdminController::ADMIN_URL%>/matches/<%=match.id%>" method="post" style="display:inline">
           <input type="hidden" name="_method" value="put"/>
           <a href="#" onclick="document.getElementById('delete_match_<%=match.id%>').submit(); return false;" class="submit_links"> x </a>
-         </form> 
+        </form> 
+        <form id="update_match_<%=match.id%>" action="/<%=AdminController::ADMIN_URL%>/matches/<%=match.id%>/update" method="post" style="display:inline">
+          <input type="hidden" name="_method" value="put"/>
+          <a href="#" onclick="document.getElementById('update_match_<%=match.id%>').submit(); return false;" class="submit_links"> UPDATE SCORES </a>
+        </form> 
       </div>
     <% end %>
   </div>

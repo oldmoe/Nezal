@@ -7,7 +7,7 @@ var Comments = {
     smsNumber : 10, 
     
     comments : [ [ { "id" : 0, 
-        "message" : "تنويه: نرجو من مستخدمي الموقع الكرام عدم إضافة أي تعليق يمس أو يسيء للأديان أو المعتقدات أو المقدسات. ونرجو عدم استخدام خدمة التعليقات في الترويج لأي إعلانات. كما نرجو ألا يتضمن التعليق السباب أو أي ألفاظ تخدش الحياء والذوق العام تجاه أي شخصيات عامة أو غير عامة "}] ],
+        "message" : "تنويه: نرجو من مستخدمي الموقع الكرام عدم إضافة أي تعليق يسيء للأديان , المعتقدات أو المقدسات. ونرجو عدم استخدام خدمة التعليقات في الترويج لأي إعلانات. كما نرجو ألا يتضمن التعليق السباب أو أي ألفاظ تخدش الحياء والذوق العام  "}] ],
     
     sms : '',
         
@@ -38,56 +38,64 @@ var Comments = {
         sms: [Configs.template_path + "/sms.tpl",  0],
     },
 
-    fetchTemplate: function(template){
+    fetchTemplate: function(template, callback){
         new Ajax.Request(Comments.templates[template][0], 
                           {   method:'get',
                               onSuccess: function(t){
                           		  Comments.templates[template][1] = TrimPath.parseTemplate(t.responseText);
+                          		  callback();
                               },
                           });
     },
     
     fetch : function(element) {
         var comment_id="";
-        var last_comment = $$("#sms_marquee span").first()
+        var last_comment = $$("#sms_marquee span").first();
         if(last_comment)
         { 
-            comment_id = last_comment["id"]
+            comment_id = last_comment["id"];
         }
         new Ajax.Request( "/" + Comments.appId() + "/comments/" + Comments.matchId() + "/" + comment_id, 
                               {   method:'get', 
                                   onSuccess: function(t, json){
-                                      var response = JSON.parse(t.responseText)
-                                      Comments.comments = response["comments"].concat(Comments.comments)
-                                      Comments.sms = Comments.templates.sms[1].process({ msgs : Comments.comments.slice(0,10) })
+                                      var response = JSON.parse(t.responseText);
+                                      Comments.comments = response["comments"].concat(Comments.comments);
+                                      Comments.sms = Comments.templates.sms[1].process({ msgs : Comments.comments});
+                                			if ( ! $$('#sms_marquee marquee').first() )
+                                			{
+                                			    Comments.refresh();
+                  			          		}
+                  			          		window.setTimeout( Comments.fetch, 20000 );
                                   },
                               });
     },
     
     refresh : function() {
   			$('sms_marquee').update(Comments.sms);
-        Comments.fetch();
+  			if(Prototype.Browser.WebKit == true)
+		    {
+		    		time = ( $$('marquee').first().scrollWidth/700 ) * 11.3
+		    		console.log(time)
+		    		window.setTimeout( Comments.refresh, 1000 * time );
+	      }
     },
     
-    send : function(input_name) {
+    send : function(button, input_name) {
         var element = $(input_name)
+        button.style.cursor = "progress";
         new Ajax.Request( "/" + Comments.appId() + "/comments/" + Comments.matchId(), 
                           {
                               method:'post', 
                               parameters: { message : element.value },
                               onSuccess: function(transport, json){
                                   element.value = null
+                                  button.style.cursor = "pointer";
                               },
                           });   
     },
     
     initialize: function(){
-        for(var template in Comments.templates){
-            Comments.fetchTemplate(template);
-  	    }
-  	    window.setTimeout( Comments.fetch, 100)
-    },
+        Comments.fetchTemplate("sms", Comments.fetch);
+    }
 	
 }
-
-Comments.initialize()

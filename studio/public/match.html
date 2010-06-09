@@ -10,7 +10,6 @@
 		<script src="javascripts/transitions.js"></script>
 		<script src="javascripts/sound.js"></script>
 		<script src="javascripts/template.js"></script>
-		<script src="javascripts/game/comments.js"></script>
 	</head>
 	<!--[if IE]>
 		<style>
@@ -48,7 +47,7 @@
 					<div id="ranks" title="الترتيب"></div>
 					<div id="sound" class="on" title="تفعيل / غلق الأصوات"></div>
 					<div id="dashboard" title="جدول المباريات"></div>
-					<div id="predict" onclick="Prediction.send(); return false;"></div>
+					<div id="predict" onclick="Prediction.send(this); return false;"></div>
 					<div id="predictions" >
 						<div class="dial up left"></div>
 						<div class="dial down left"></div>
@@ -67,21 +66,21 @@
 					</div>
 				</div>
 				<div id="center_piece">
+				  <div id="countdown" class="score"> </div>
 					<div id="teamA_name" class="teamName"></div>
 					<div id="teamB_name" class="teamName"></div>
 					<div id="teamA_flag"></div>
 					<div id="teamB_flag"></div>
+
+					<div id ="scoreA" class="score"> </div>					
+					<div id ="scoreB" class="score"> </div>
+					<div id ="penaltyA" class="penalty"> </div>
+					<div id ="penaltyB" class="penalty"> </div>
+
 				</div>
 				<div id="sms_bar">
 				  <div id="sms_marquee">
   		    </div>
-  		    <script>
-  		       var indent = 0;
-  		       function MoveEffect(){
-   		          Comments.refresh();
-             }
-             window.setTimeout( MoveEffect, 1000 );
-  		    </script>
 			    <div id="sms_icon"></div>
 		    </div>
 				
@@ -89,7 +88,7 @@
           <div id="screen">
             <textarea id="message" name="message" class="text-area" rows="7" cols="15"></textarea>
           </div>
-          <div id="send_sms" onclick="Comments.send('message'); return false;"></div>
+          <div id="send_sms" onclick="Comments.send(this, 'message'); return false;"></div>
           <script>
             Event.observe("message", 'keydown', function(event) {
               console.log($("message").value.length);
@@ -115,5 +114,7 @@
 	<script src="javascripts/game/narrator.js"></script>
 	<script src="javascripts/game/sms.js"></script>
 	<script src="javascripts/game/studio.js"></script>
+	<script src="javascripts/game/comments.js"></script>
+	<script src="javascripts/game/prediction.js"></script>
 	<script src="javascripts/game/match.js"></script>
 </html>

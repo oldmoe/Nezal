@@ -9,45 +9,44 @@ class Prediction < Sequel::Model
   def validate
     super
     errors.add(:match, "match inactive") if ( !match.active? )
-    errors.add(:kicks_a, 'Kicks not valid in this match') if (kicks_a && !match.accept_kicks?)
-    errors.add(:kicks_b, 'Kicks not valid in this match') if (kicks_b && !match.accept_kicks?)
-    errors.add(:kicks_a, "!Prediction not valid. Goals of teams not tied") if (goals_a  == goals_b)
-    errors.add(:kicks_b, "!Prediction not valid. Goals of teams not tied") if (goals_a  == goals_b)
+    kicks_a = nil if (!match.accept_kicks?) 
+    kicks_b = nil if (!match.accept_kicks?) 
+    (kicks_a = kicks_b = nil) if (goals_a  !=  goals_b)
+    if match.accept_kicks? && goals_a == goals_b && kicks_a == kicks_b
+      errors.add(:kicks_b, "!Prediction not valid. Goals of teams not tied")
+    end
   end
 
-  def calc_score()  
-    match_goals = match.goals_a - match.goal_b
+  def calc_score(match)  
+    match_goals = match.goals_a - match.goals_b
     match_kicks = match.kicks_a - match.kicks_b if ( match.accept_kicks? && match.kicks_a && match.kicks_b)
 
     goals = goals_a - goals_b 
     kicks = kicks_a - kicks_b if kicks_a && kicks_b
     
-    score = if !(match.accept_kicks? && match.kicks_a && match.kicks_b)
-              if match.goals_a == goals_a && match.goals_b == goals_b
-                3
-              elsif match_goals == goals
-                2
-              elsif match_goals * goals > 0
-                1
-              elsif kicks && kicks * match_goals > 0 
-                1
+    score = if match.goals_a == goals_a && match.goals_b == goals_b
+              3
+            elsif match_goals == goals
+              2
+            elsif match_goals * goals > 0
+              1
+            elsif kicks && kicks * match_goals > 0 
+              1
+            else
+              0
+            end
+            
+   score += if match_kicks
+              if !kicks_a 
+                match_kicks * goals > 0 ? 1 : 0
               else
-                -1
+                match_kicks * kicks > 0 ? 2 : 0
               end
             else
-              if kicks 
-                if match.goals_a == goals_a && match.goals_b == goals_b && match.kicks_a == kicks_a && match.kicks_b == kicks_b
-                  6
-                else match_kicks == kicks 
-                  5
-                end
-              elsif goals * match_kicks > 0
-                1
-              else
-                -1
-              end
-              
+              0
             end
+    user[User::SCORE_FIELDS[match.group.id]] += score
+    user.save
   end
 
 end

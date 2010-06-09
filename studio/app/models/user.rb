@@ -11,6 +11,10 @@ class User < Sequel::Model
 
   USER_FIELDS = [ "uid", "name", "first_name", "last_name", "pic_big", "profile_url" ]
   
+  SCORE_FIELDS = { 1 => :first_round_score, 2 => :first_round_score, 3 => :first_round_score, 4 => :first_round_score, 
+                   5 => :first_round_score, 6 => :first_round_score, 7 => :first_round_score, 8 => :first_round_score,
+                   9 => :round16_score, 10 => :quarters_score, 11 => :semis_score, 12 => :finals_score }
+  
   attr_accessor :session
     
   def global_top_scorers(round = :global_score, limit = 3)
