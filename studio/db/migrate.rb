@@ -21,7 +21,7 @@ p DB.schema( :predictions)
 #DB.add_column(:teams, :youtube_url, :string)
 #DB.add_column(:matches, :youtube_url, :string)
 
-DB.drop_table(:predictions)
-DB.drop_table :comments
-DB.drop_table :users
+#DB.drop_table(:predictions)
+#DB.drop_table :comments
+#DB.drop_table :users
 

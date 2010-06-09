@@ -58,12 +58,12 @@ end
 DB.create_table? :users do
   column  :app_id , :string
   column  :user_id, :string
-  column  :global_score, :integer, :default => 64
-  column  :first_round_score, :integer, :default => 48
-  column  :round16_score, :integer, :default => 8
-  column  :quarters_score, :integer, :default => 4
-  column  :semis_score, :integer, :default => 2
-  column  :finals_score, :integer, :default => 2
+  column  :global_score, :integer, :default => 0
+  column  :first_round_score, :integer, :default => 0
+  column  :round16_score, :integer, :default => 0
+  column  :quarters_score, :integer, :default => 0
+  column  :semis_score, :integer, :default => 0
+  column  :finals_score, :integer, :default => 0
   primary_key [:app_id, :user_id], :auto_increment => false
 end
 
@@ -79,7 +79,6 @@ DB.create_table? :comments do
 end
 
 indexes = DB.indexes(:users)
-puts indexes
 DB.add_index :users, [:app_id, :first_round_score, :user_id] unless indexes[:users_app_id_first_round_score_user_id_index] 
 DB.add_index :users, [:app_id, :round16_score, :user_id]  unless indexes[:users_app_id_round16_score_user_id_index] 
 DB.add_index :users, [:app_id, :quarters_score, :user_id] unless indexes[:users_app_id_quarters_score_user_id_index] 
