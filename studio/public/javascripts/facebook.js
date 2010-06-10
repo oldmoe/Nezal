@@ -73,18 +73,19 @@ var FBConnect = {
     publish : function(match, prediction) {
         var loc = window.top.location.toString();
         var publishName = match.teamA.name_ar + 'vs' +  match.teamB.name_ar + '1-0';
-
+        var desc =   'توقعت نتيجة' +'0-1'+ 'لمياراة'+ match.teamA.name_ar +'و' +  match.teamB.name_ar +'بكأس العالم 2010. توقع و لنري الاقرب لنتيجة المباراة';
+        
         FB.ui({
                 method: 'stream.publish',
                 message: '',
                 attachment: {
-                  name: match.teamA.name_ar + 'vs' + match.teamB.name_ar + 1-0',
+                  name: publishName,
                 	'media': [{ 'type': 'image', 
                 	            'src': 'http://studio.nezal.com/images/logo.png',
                 	            'href': loc }],
 
                   description: (
-                    'توقعت نتيجة' +'0-1'+ 'لمياراة'+ match.teamA.name_ar +'و' +  match.teamB.name_ar +'بكأس العالم 2010. توقع و لنري الاقرب لنتيجة المباراة'
+                      desc
                     ),
                     
 
