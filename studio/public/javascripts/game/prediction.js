@@ -7,6 +7,7 @@ var Prediction = {
 	  },
 
     send : function( button ) {
+		myAudio.play('select')
         button.style.cursor = "progress";
       	var id = window.location.search.toString().split('?')[1].split('=')[1].split('&')[0]
       	var error = false

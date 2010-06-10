@@ -18,8 +18,10 @@ var Narrator = Class.create({
 			var self = this
 			var done = new String(this.textArea.innerHTML)
 			if(done.strip() == text){
+				myAudio.stop('type_writer')
 				return
 			}
+			if(!myAudio.playing('type_writer'))myAudio.play('type_writer')
 			this.textArea.innerHTML = done + text.substr(done.length, 1)
 			this.reactor.push(1, function(){ self._speak(text) })			
 		}catch(e){

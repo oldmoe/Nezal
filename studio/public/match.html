@@ -11,7 +11,7 @@
 		<script src="javascripts/sound.js"></script>
 		<script src="javascripts/template.js"></script>
 		<script src="javascripts/swfobject.js"></script>
-
+		<script src="javascripts/soundmanager2-nodebug-jsmin.js"></script>
 	</head>
 	<!--[if IE]>
 		<style>
@@ -20,19 +20,19 @@
 		</style>
 	<![endif]-->
 	<body id="body">
-<textarea id="data" style="display:none;">أهلاً و مرحباً بكم في استديو التحليل جنوب إفريقيا ٢٠١٠ .
-يعتبر كأس العالم في جنوب إفريقيا النسخة التاسعة عشر منذ انطلاقة البطولة عام ١٩٣٠.
+<textarea id="data" style="display:none;">أهلاً و مرحباً بكم في استوديو التحليل جنوب إفريقيا ٢٠١٠ .
+ يعتبر كأس العالم في جنوب إفريقيا النسخة التاسعة عشر منذ انطلاق البطولة عام ١٩٣٠.
 يشارك في هذه النسخة ٣٢ فريق من مختلف قارات العالم حيث يتنافسون للفوز بأفضل بطولة لكرة القدم.
-المنتخب الإيطالي هو حامل اللقب و يشارك في هذه البطولة للدفاع عن لقبه.
-يمكنكم من خلال هذا الاستديو توقع نتائج مباريات كأس العالم.
+المنتخب الايطالي هو حامل اللقب و يشارك في هذه البطولة للدفاع عن لقبه.
+ يمكنكم من خلال هذا الاستوديو توقع نتائج مباريات كأس العالم.
 كما يمكنكم معرفة معلومات عن جميع الفرق المشاركة في البطولة ومتابعة أهداف البطولة ومعرفة النتائج.
-سوف يمكنكم ايضا معرفة مواعيد المباريات ومتابعة إستديو كل مبارة. 
+سوف يمكنكم ايضا معرفة مواعيد المباريات ومتابعة استديو كل مبارة.
 و لن تقتصر مشاركتكم على المتابعة فقط، بل يمكنكم التعليق ومناقشة أحداث ما قبل وخلال وبعد المبارة.
-تعتمد قواعد اللعبة على التوقع الصحيح لنتائج المبارايات.
-يحصل المشارك على نقطة واحدة في حالة توقع الفريق الفائز و نقطتين في حالة توقع فارق الأهداف الصحيح وثلاث نقات في حالت توقع النتيجة الصحيحة.
-أما في حالة توقع النتيجة خطأ أو عدم إدخال أي توقع سيتم خصم نقطة من اللاعب. 
+ تعتمد قواعد اللعبة على التوقع الصحيح لنتائج المبارايات.
+ يحصل المشارك على نقطة واحدة في حالة توقع الفريق الفائز و نقطتين في حالة توقع فارق الأهداف الصحيح وثلاث نقات في حالت توقع النتيجة الصحيحة.
+أما في حالة توقع النتيجة خطأ أو عدم إدخال أي توقع لن يحصل اللاعب على أي نقطة.
 يمكنكم إدخال توقعاتكم قبل بدء المبارة بيومين و سيتم إيقاف التوقعات بمجرد بدء المبارة.
-و في النهاية نتمنى لكم حظاً طيباً و قضاء وقت ممتع مع إستديو التحليل.
+ و في النهاية نتمنى لكم حظاً طيباً و قضاء وقت ممتع مع استوديو التحليل.
 ابقو معنا.</textarea>
 		<div id="fb-root" style="display:none;"></div>
 		<div id="rankings" style="display:none">
@@ -46,16 +46,20 @@
 				<div id="logo"></div>
 				<div id="score" class="overlay"></div>
 				<div id="left_screen" class="skew_left">
-					<div id="left_screen_content" class="tv_content"><!--img width=200 height=200 src='images/flags/mex.png'/--></div>
+					<div id="left_screen_content" class="tv_content"><!--img width=200 height=200 src='images/flags/mex.png'/-->
+					</div>
 				</div>
 				<div id="center_screen">
 					<div  id="center_screen_content" class="tv_content">
-						<div id="inner_center_screen_content">			
+						<div id="inner_center_screen_content">
 						</div>
 					</div>
 				</div>
 				<div id="right_screen" class="skew_right">
-					<div id="right_screen_content" class="tv_content"><!--img width=200 height=200 src='images/flags/rsa.png'/--></div>
+					<div id="right_screen_content" class="tv_content">
+
+					<!--img width=200 height=200 src='images/flags/rsa.png'/-->
+					</div>
 				</div>
 				<div class="baloon" id="left_baloon" style="display:none">
 					<div class="text" dir="rtl"></div>
@@ -132,6 +136,7 @@
 		<div id="waitScreen"></div>
 		<div id="loadingScreen" style="display:none"></div>
 	</body>
+	<script src="javascripts/game/audio.js"></script>
 	<script src="http://connect.facebook.net/en_US/all.js"></script>
 	<script src="javascripts/facebook.js"></script>
 	<script src="javascripts/game/reactor.js"></script>

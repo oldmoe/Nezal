@@ -15,7 +15,6 @@ function onYouTubePlayerReady(){
 }
 
 var DataLoader = {
-  
     updateTime : function(){
         Studio.match.countdown["remain"] -= 1
         Studio.match.countdown["hour"] = parseInt(Studio.match.countdown["remain"] / (60*60))
@@ -43,8 +42,6 @@ var DataLoader = {
 			if(i > 3){
 				i = 0
 			}
-//			console.log(side)
-			//var side = [Studio.right, Studio.left][i]
 			Studio.events.push([function(){side.speak(line)}, 25])
 			Studio.events.push([function(){side.unspeak()}, 25])
 		})
@@ -56,7 +53,7 @@ var DataLoader = {
 	},
  
     load : function() {
-		new AdManager('left_screen_content', '_small', 16, 15000)
+			new AdManager('left_screen_content', '_small', 16, 15000)
 		new AdManager('right_screen_content', '_small', 16)
 		$('ranks').observe('click', function(){
 			  if($('rankings_frame').src == null || $('rankings_frame').src == ''){
@@ -65,7 +62,6 @@ var DataLoader = {
 			  $('rankings_shade').setOpacity(0.8)
 			  $('rankings').show();
 		})
-		//console.log(window.location.search)
 		if(!window.location.search){
 			return this.index()
 		}
@@ -140,7 +136,8 @@ var DataLoader = {
 			  if(Studio.match.status == 'open'){
 			      $$("#predictions .dial").each(function(button){
 				      button.observe('click', function(event){
-					      var right = $('goalsA');
+						  myAudio.play('arrow_up_down')
+						  var right = $('goalsA');
 					      var left = $('goalsB') 
 					      var target = this.hasClassName('left') ?  left : right 
 					      var multiplier = this.hasClassName('up') ? 1 : -1
@@ -192,6 +189,7 @@ $(document).observe('dom:loaded',function(){
    swfobject.embedSWF("http://www.youtube.com/apiplayer?enablejsapi=1&version=3", "inner_center_screen_content", "250", "250", "9.0.0", null, null, { wmode : 'transparent', allowScriptAccess: "always" });
    FBConnect.init( function() {
 				  DataLoader.load();
+				  myAudio.play('match_studio_crowd')
 				  Studio.reactor.run(function(){Studio.timeline.run()})
 				  Comments.initialize();
 	});

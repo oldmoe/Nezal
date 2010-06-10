@@ -67,6 +67,7 @@
 			Dashboard.scrolling = false
 			$$('.next_button')[0].removeClassName('off')
 			new Effect.Move('groupsTable', {x:0, y: - 397, mode: 'relative', duration: 1.0 , afterFinish : function(){ Dashboard.scrolling = true }})
+			myAudio.play('arrow_up_down')
 			if(Number($('groupsTable').style.top.gsub('px','')) - 397 + $('groupsTable').getHeight() <= 397 ) this.addClassName('off')
 		})
 		$$('.next_button')[0].observe('click', function(){		
@@ -75,6 +76,7 @@
 			Dashboard.scrolling = false
 			$$('.previous_button')[0].removeClassName('off')
 			new Effect.Move('groupsTable', {x:0, y: 397, mode: 'relative', duration: 1.0 , afterFinish : function(){ Dashboard.scrolling = true }})
+			myAudio.play('arrow_up_down')
 			if(Number($('groupsTable').style.top.gsub('px','')) + 397 >= 0 ) this.addClassName('off')
 		})
 	},
