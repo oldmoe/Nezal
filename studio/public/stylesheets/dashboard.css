@@ -285,3 +285,54 @@
 	font-size:20px;
 	background-color:bloack
 }
+
+.panel div.score{
+	position :absolute;
+	width:24px;
+	height:20px;
+	color: #444;
+	font-family:tahoma;
+	left : 70px;
+	text-align:center;
+}
+
+.panel div.score.scoreA{
+	top : 9px;
+}
+
+.panel div.score.scoreB{
+	top : 32px;
+}
+
+.panel div.score.predictionA{
+	top : 9px;
+	left : 30px;
+	color:#228;
+}
+
+.panel div.score.predictionB{
+	top : 30px;
+	left : 30px;
+	color:#228;
+}
+
+.panel div.result{
+	visibility:invisible;
+	position:absolute;
+	width:30px;
+	height:26px;
+	background: url('../images/background/score_lable.png') no-repeat;
+	top:30px;
+	left:0px;
+	font-family:tahoma;
+	font-weight:bold;
+	font-size:16px;
+	color:#5C7F89;
+	padding-top:4px;
+	padding-left:6px;
+	text-align: left;
+}
+
+.panel div.result.on{
+	visibility:visible;
+}

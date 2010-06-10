@@ -78,7 +78,8 @@ var DataLoader = {
 		      Studio.match.kicks = Studio.data['kicks']
 		      Studio.match.prediction = Studio.data['prediction'][0]
 		      if(Studio.match.status == 'closed'){
-			      /* display the count down */
+				  Studio.match.countdown = { "remain" : parseInt(Studio.match.remaining), "hour" : 0, "minute" : 0, "second" : 0 };
+				  window.setTimeout(DataLoader.updateTime,1000);
 		      }else if(Studio.match.status == 'open'){
 			      $('predictions').addClassName('on')
 			      $('predict').addClassName('on')
@@ -168,8 +169,6 @@ var DataLoader = {
 			      })
 		      }
 
-		      Studio.match.countdown = { "remain" : parseInt(Studio.match.remaining), "hour" : 0, "minute" : 0, "second" : 0 };
-			  window.setTimeout(DataLoader.updateTime,1000);
   	      
 		      if( Studio.match.status == 'finished' )
 		      {  

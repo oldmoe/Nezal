@@ -115,7 +115,15 @@
 		return this.data.teams.find(function(team){
 			return team[0].id == id
 		})[0]
-	}
+	},
+	
+	getPredictionByMatchId :function(id){
+		var prediction = this.data.predictions.find(function(p){
+			return p[0].match_id == id
+		})
+		if(prediction) return prediction[0]
+		return null
+	},
 	
 }
 $(document).observe('dom:loaded',function(){
@@ -125,7 +133,9 @@ $(document).observe('dom:loaded',function(){
 			match = match[0]
 			time = match.start_time
 			match.date = new Date(time.split(' ')[0])
-			//match.month = Dashboard.months[]
+			match.teamA = Dashboard.getTeamById(match.team_a_id)
+			match.teamB = Dashboard.getTeamById(match.team_b_id)
+			match.prediction = Dashboard.getPredictionByMatchId(match.id)
 		})
 		$('groupsTable').show()
 		$('groupsTable').innerHTML = TrimPath.processDOMTemplate('table', {locations:Dashboard.matchesToLocations('first_round')})

@@ -21,10 +21,17 @@
 									<th>${location[0].date.getDate()}<br/>${Dashboard.months[location[0].date.getMonth()]}</th>
 									{for cell in location}
 										{if !cell.empty }
-										<td title="${Dashboard.getTeamById(cell.team_b_id).name_ar} و ${Dashboard.getTeamById(cell.team_a_id).name_ar}" class="match g${cell.group_id}" onclick="window.location.href = 'match.html?id=${cell.id}'">
+										<td title="${cell.teamB.name_ar} و ${cell.teamA.name_ar}" class="match g${cell.group_id}" onclick="window.location.href = 'match.html?id=${cell.id}'">
 											<div class="panel">
-												<img class='flagA' src='images/flags/${Dashboard.getTeamById(cell.team_a_id).abrv.toLowerCase()}_r.png'/>
-												<img class='flagB' src='images/flags/${Dashboard.getTeamById(cell.team_b_id).abrv.toLowerCase()}_r.png'/>
+												<img class='flagA' src='images/flags/${cell.teamA.abrv.toLowerCase()}_r.png'/>
+												<img class='flagB' src='images/flags/${cell.teamB.abrv.toLowerCase()}_r.png'/>
+												<div class="score scoreA">{if cell.goals_a}${cell.goals_a}{/if}</div>
+												<div class="score scoreB">{if cell.goals_b}${cell.goals_b}{/if}</div>
+												{if cell.predicition}
+													<div class="score predictionA">${cell.prediciton.goals_a}</div>
+													<div class="score predictionB">${cell.prediciton.goals_b}</div>
+													<div class="result">${cell.prediciton.score}</div>
+												{/if}
 											</div>
 										</td>
 										{else}
