@@ -28,10 +28,12 @@
 												<img class='flagB' src='images/flags/${cell.teamB.abrv.toLowerCase()}_r.png'/>
 												<div class="score scoreA">{if cell.goals_a}${cell.goals_a}{/if}</div>
 												<div class="score scoreB">{if cell.goals_b}${cell.goals_b}{/if}</div>
-												{if cell.predicition}
-													<div class="score predictionA">${cell.prediciton.goals_a}</div>
-													<div class="score predictionB">${cell.prediciton.goals_b}</div>
-													<div class="result">${cell.prediciton.score}</div>
+												{if cell.prediction}
+													<div class="score predictionA">${cell.prediction.goals_a}</div>
+													<div class="score predictionB">${cell.prediction.goals_b}</div>
+													{if cell.prediction.score}
+														<div class="result">${cell.prediction.score}</div>
+													{/if}
 												{/if}
 											</div>
 										</td>

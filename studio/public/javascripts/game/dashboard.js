@@ -120,14 +120,10 @@
 	},
 	
 	getPredictionByMatchId :function(id){
-		try{
-		var prediction = this.data.predictions.find(function(p){
+		var prediction =  this.data.predictions.find(function(p){
 			return p.match_id == id
 		})
-		if(prediction) return prediction[0]
-		return null
-		}catch(e){
-		}
+		return prediction
 	},
 	
 }
@@ -141,6 +137,7 @@ $(document).observe('dom:loaded',function(){
 			match.teamA = Dashboard.getTeamById(match.team_a_id)
 			match.teamB = Dashboard.getTeamById(match.team_b_id)
 			match.prediction = Dashboard.getPredictionByMatchId(match.id)
+			//console.log(match.prediction.toSource())
 		})
 		$('groupsTable').show()
 		$('groupsTable').innerHTML = TrimPath.processDOMTemplate('table', {locations:Dashboard.matchesToLocations('first_round')})

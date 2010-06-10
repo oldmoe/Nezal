@@ -298,21 +298,21 @@
 
 .panel div.score.scoreA{
 	top : 9px;
+	left : 30px;
 }
 
 .panel div.score.scoreB{
-	top : 32px;
+	top : 30px;
+	left : 30px;
 }
 
 .panel div.score.predictionA{
 	top : 9px;
-	left : 30px;
 	color:#228;
 }
 
 .panel div.score.predictionB{
-	top : 30px;
-	left : 30px;
+	top : 32px;
 	color:#228;
 }
 
