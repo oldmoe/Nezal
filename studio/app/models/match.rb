@@ -38,9 +38,9 @@ class Match < Sequel::Model
     offset = 0
     predictions = Prediction.filter({:match_id => self[:id]}).limit(limit).all
     predictions.each { |prediction| prediction.calc_score(self) }
-    while predictions.length >= 50 
+    while predictions.length >= limit 
       offset += limit
-      predictions = Prediction.filter({:match_id => self[:id]}, offset).limit(limit).all
+      predictions = Prediction.filter({:match_id => self[:id]}).limit(limit, offset).all
       predictions.each { |prediction| prediction.calc_score(self) }
     end
   end

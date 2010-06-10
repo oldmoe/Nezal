@@ -15,7 +15,7 @@ function onYouTubePlayerReady(){
 }
 
 var DataLoader = {
-    updateTime : function(){
+ 	updateTime : function(){
         Studio.match.countdown["remain"] -= 1
         Studio.match.countdown["hour"] = parseInt(Studio.match.countdown["remain"] / (60*60))
         Studio.match.countdown["minute"] = parseInt((Studio.match.countdown["remain"] / (60)) % 60)
@@ -53,7 +53,10 @@ var DataLoader = {
 	},
  
     load : function() {
-			new AdManager('left_screen_content', '_small', 16, 15000)
+		$('sound').observe('click', function(){
+			myAudio.toggle(this);
+		})
+		new AdManager('left_screen_content', '_small', 16, 15000)
 		new AdManager('right_screen_content', '_small', 16)
 		$('ranks').observe('click', function(){
 			  if($('rankings_frame').src == null || $('rankings_frame').src == ''){

@@ -2,7 +2,7 @@
   <li>
     <div class="user">
       <div class="name">
-        Add Friend
+        أضف صديق
       </div>
       <div class="pic" style="background :  transparent url('/images/ranking/question.png') center no-repeat">
         <a href="" target="_parent" style="width:100%; height : 100%;">  </a>

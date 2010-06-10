@@ -10,6 +10,7 @@
 		<script src="javascripts/sound.js"></script>
 		<script src="javascripts/template.js"></script>
 		<script src="javascripts/dist/carousel.packed.js"></script>
+		<script src="javascripts/soundmanager2-nodebug-jsmin.js"></script>
 		
 	</head>
 	<body id="body">
@@ -21,16 +22,18 @@
 									<th>${location[0].date.getDate()}<br/>${Dashboard.months[location[0].date.getMonth()]}</th>
 									{for cell in location}
 										{if !cell.empty }
-										<td title="${cell.teamB.name_ar} و ${cell.teamA.name_ar}" class="match g${cell.group_id}" onclick="window.location.href = 'match.html?id=${cell.id}'">
+										<td title="${cell.teamB.name_ar} و ${cell.teamA.name_ar}" class="match g${cell.group_id}" onclick="myAudio.play('select');window.location.href = 'match.html?id=${cell.id}'">
 											<div class="panel">
 												<img class='flagA' src='images/flags/${cell.teamA.abrv.toLowerCase()}_r.png'/>
 												<img class='flagB' src='images/flags/${cell.teamB.abrv.toLowerCase()}_r.png'/>
 												<div class="score scoreA">{if cell.goals_a}${cell.goals_a}{/if}</div>
 												<div class="score scoreB">{if cell.goals_b}${cell.goals_b}{/if}</div>
-												{if cell.predicition}
-													<div class="score predictionA">${cell.prediciton.goals_a}</div>
-													<div class="score predictionB">${cell.prediciton.goals_b}</div>
-													<div class="result">${cell.prediciton.score}</div>
+												{if cell.prediction}
+													<div class="score predictionA">${cell.prediction.goals_a}</div>
+													<div class="score predictionB">${cell.prediction.goals_b}</div>
+													{if cell.prediction.score}
+														<div class="result">${cell.prediction.score}</div>
+													{/if}
 												{/if}
 											</div>
 										</td>
@@ -77,9 +80,13 @@
 				<div class="round8"></div>
 				<div class="semis"></div>
 				<div class="finals"></div>
+				<div id="totalScore"></div>
+				<div id="roundScore"></div>
+				
 			</div>
 		</div>
 	</body>
+	<script src="javascripts/game/audio.js"></script>
 	<script src="http://connect.facebook.net/en_US/all.js"></script>
 	<script src="javascripts/facebook.js"></script>
 	<script src="javascripts/game/reactor.js"></script>

@@ -2,3 +2,30 @@
 	width : 760px;
 	height: 550px;
 }
+
+body { 
+  background : #151515;
+  padding : 0px; 
+  font-family : georgia; 
+  color : #800000; 
+}
+
+body, p, ol, ul, td {
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size:   13px;
+  line-height: 18px;
+
+}
+
+pre {
+  background-color: #eee;
+  padding: 10px;
+  font-size: 11px;
+}
+
+#header, #footer { 
+  height : 50px;
+  background : #333;
+  font-weight: bold;
+}
+

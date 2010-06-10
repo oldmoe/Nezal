@@ -227,7 +227,7 @@
 	background: url('../images/background/rank_icon.png') no-repeat;
 }
 
-#sound.on{
+#sound{
 	position : absolute;
 	left :6px;
 	top: 15px;
@@ -298,21 +298,21 @@
 
 .panel div.score.scoreA{
 	top : 9px;
+	left : 30px;
 }
 
 .panel div.score.scoreB{
-	top : 32px;
+	top : 30px;
+	left : 30px;
 }
 
 .panel div.score.predictionA{
 	top : 9px;
-	left : 30px;
 	color:#228;
 }
 
 .panel div.score.predictionB{
-	top : 30px;
-	left : 30px;
+	top : 32px;
 	color:#228;
 }
 
@@ -335,4 +335,26 @@
 
 .panel div.result.on{
 	visibility:visible;
+}
+
+#totalScore{
+	color: orange;
+	font-family:tahoma;
+	font-size: 18px;
+	position:absolute;
+	left : 620px;
+	width:40px;
+	height:30px;
+	top: 10px;
+}
+
+#roundScore{
+	color: orange;
+	font-family:tahoma;
+	font-size: 18px;
+	position:absolute;
+	left : 620px;
+	width:40px;
+	height:30px;
+	top: 36px;
 }

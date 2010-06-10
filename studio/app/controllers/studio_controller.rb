@@ -7,7 +7,8 @@ class StudioController < ApplicationController
   set :views, ::File.dirname(::File.dirname(__FILE__)) +  '/views/studio'
   
   get '' do 
-    redirect env['SCRIPT_NAME']+'/index.html'
+    redirect 'index.html'
+	#redirect env['SCRIPT_NAME']+'/index.html'
   end
   
   get '/intro' do 
@@ -18,7 +19,12 @@ class StudioController < ApplicationController
   end
   
   get '/matches' do
-    { :round => Group.dataset.all ,:matches => Match.dataset.all , :teams => Team.dataset.all, :locations => Location.dataset.all }.to_json
+    { 
+		:round => Group.dataset.all ,:matches => Match.dataset.all , 
+		:teams => Team.dataset.all, :locations => Location.dataset.all, 
+		:predictions => Prediction.filter(:user_id => @user.user_id, :app_id => @user.app_id) ,
+		:user => @user
+	}.to_json
   end
 
   get '/matches/:id' do
@@ -92,12 +98,10 @@ class StudioController < ApplicationController
     prediction.goals_b = params['goals_b']
     prediction.kicks_a = params['kicks_a']
     prediction.kicks_b = params['kicks_b']
-    if prediction.valid?
-      p prediction.save
-    else
-      p prediction.errors
+    if prediction.acceptable?
+      prediction.save
     end
-     
+    ''
   end
   
   def dump_user(user, round)
