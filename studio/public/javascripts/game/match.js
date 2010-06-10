@@ -80,6 +80,8 @@ var DataLoader = {
 				  Studio.match.countdown = { "remain" : parseInt(Studio.match.remaining), "hour" : 0, "minute" : 0, "second" : 0 };
 				  window.setTimeout(DataLoader.updateTime,1000);
 		      }else if(Studio.match.status == 'open'){
+				  Studio.match.countdown = { "remain" : parseInt(Studio.match.remaining), "hour" : 0, "minute" : 0, "second" : 0 };
+				  window.setTimeout(DataLoader.updateTime,1000);
 			      $('predictions').addClassName('on')
 			      $('predict').addClassName('on')
 			      if(Studio.match.kicks){
@@ -174,14 +176,15 @@ var DataLoader = {
 		        $("scoreA").innerHTML = Studio.match["goals_a"];
 		        $("scoreB").innerHTML = Studio.match["goals_b"];
 		        if ( Studio.match["kicks_a"] )
-  		        $("penaltyA").innerHTML = Studio.match["kicks_a"] ;
+  		        $("penalty").innerHTML = Studio.match["kicks_a"] ;
 		        if ( Studio.match["kicks_b"] )
   		        $("penaltyB").innerHTML = Studio.match["kicks_b"];
 		      }
 		      if( Studio.data["prediction"].length > 0 && Studio.match.status == 'finished' )
 		      {
 		        $("matchScore").style.visibility = "visible"
-		        $("publish").style.visibility = "visible"
+		        $("matchScore").innerHTML = Studio.data["prediction"][0].score
+				$("publish").style.visibility = "visible"
 		      }
 		      
 	      }})
