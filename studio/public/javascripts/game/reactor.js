@@ -31,7 +31,7 @@ var Reactor = Class.create({
 				event = this.events[this.events.length - 1]
 			}
 		}catch(e){
-			alert('inside reactor : '+ e)
+			//alert('inside reactor : '+ e)
 		}
 		this.ticks++
 		setTimeout(function(){self.tick()}, self.delay)

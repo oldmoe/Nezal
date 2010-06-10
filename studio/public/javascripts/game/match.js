@@ -11,7 +11,7 @@ Studio.play = function(movie){
 	}
 }
 function onYouTubePlayerReady(){
-	Studio.player = document.getElementById("center_screen_content");
+	Studio.player = document.getElementById("inner_center_screen_content");
 }
 
 var DataLoader = {
@@ -51,11 +51,13 @@ var DataLoader = {
 		Studio.events.push([function(){Studio.right.speak(lastRight)}, 25])
 		Studio.events.push([function(){Studio.right.unspeak()}, 25])
 		Studio.events.push([function(){Studio.left.speak(lastleft)}, 25])
-		Studio.events.push([function(){Studio.left.unspeak()}, 25])
-		
+		Studio.events.push([function(){Studio.left.unspeak()}, 25])		
+		Studio.events.push([function(){return new AdManager('center_screen_content', '', 16, 20000)}, 25])		
 	},
  
     load : function() {
+		new AdManager('left_screen_content', '_small', 16, 15000)
+		new AdManager('right_screen_content', '_small', 16)
 		$('ranks').observe('click', function(){
 			  if($('rankings_frame').src == null || $('rankings_frame').src == ''){
 				$('rankings_frame').src = 'html/studio/ranking.html'
@@ -133,6 +135,7 @@ var DataLoader = {
 			      Studio.events.push([function(){side.speak(' كل التوفيق لـ'+' '+name)}, 25])
 			      Studio.events.push([function(){side.unspeak()}, 25])	
 		      })
+			  Studio.events.push([function(){return new AdManager('center_screen_content', '', 16, 20000)}, 25])		
 			  if(Studio.match.status == 'open'){
 			      $$("#predictions .dial").each(function(button){
 				      button.observe('click', function(event){
@@ -183,7 +186,7 @@ var DataLoader = {
 }
 
 $(document).observe('dom:loaded',function(){
-   swfobject.embedSWF("http://www.youtube.com/apiplayer?enablejsapi=1&version=3", "center_screen_content", "250", "250", "9.0.0", null, null, { wmode : 'transparent', allowScriptAccess: "always" });
+   swfobject.embedSWF("http://www.youtube.com/apiplayer?enablejsapi=1&version=3", "inner_center_screen_content", "250", "250", "9.0.0", null, null, { wmode : 'transparent', allowScriptAccess: "always" });
    FBConnect.init( function() {
 				  DataLoader.load();
 				  Studio.reactor.run(function(){Studio.timeline.run()})

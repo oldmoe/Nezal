@@ -49,8 +49,8 @@
 					<div id="left_screen_content" class="tv_content"><!--img width=200 height=200 src='images/flags/mex.png'/--></div>
 				</div>
 				<div id="center_screen">
-					<div  class="tv_content">
-						<div id="center_screen_content">			
+					<div  id="center_screen_content" class="tv_content">
+						<div id="inner_center_screen_content">			
 						</div>
 					</div>
 				</div>
@@ -104,27 +104,26 @@
 
 				</div>
 				<div id="sms_bar">
-				  <div id="sms_marquee">
-  		    </div>
-			    <div id="sms_icon"></div>
-		    </div>
+					<div id="sms_marquee"></div>
+					<div id="sms_icon"></div>
+				</div>
 				
-        <div id="comments">
-          <div id="screen">
-            <textarea id="message" name="message" class="text-area" rows="7" cols="15"></textarea>
-          </div>
-          <div id="send_sms" onclick="Comments.send(this, 'message'); return false;"></div>
-          <script>
-            Event.observe("message", 'keydown', function(event) {
-              console.log($("message").value.length);
-              if($("message").value.length > 100)
-              {
-                Event.stop(event);
-                $("message").value = $("message").value.substring(0, 100);
-              }  
-            });
-          </script>
-        </div>
+				<div id="comments">
+				  <div id="screen">
+					<textarea id="message" name="message" class="text-area" rows="7" cols="15"></textarea>
+				  </div>
+				  <div id="send_sms" onclick="Comments.send(this, 'message'); return false;"></div>
+				  <script>
+					Event.observe("message", 'keydown', function(event) {
+					  console.log($("message").value.length);
+					  if($("message").value.length > 100)
+					  {
+						Event.stop(event);
+						$("message").value = $("message").value.substring(0, 100);
+					  }  
+					});
+				  </script>
+				</div>
 
 			</div>
 			<div id="footer"></div>
@@ -141,5 +140,6 @@
 	<script src="javascripts/game/studio.js"></script>
 	<script src="javascripts/game/comments.js"></script>
 	<script src="javascripts/game/prediction.js"></script>
+	<script src="javascripts/game/ads.js"></script>
 	<script src="javascripts/game/match.js"></script>
 </html>

@@ -23,7 +23,7 @@ var Narrator = Class.create({
 			this.textArea.innerHTML = done + text.substr(done.length, 1)
 			this.reactor.push(1, function(){ self._speak(text) })			
 		}catch(e){
-			alert("inside _speak : " + e)
+			//alert("inside _speak : " + e)
 		}
 	},
 	
