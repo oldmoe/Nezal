@@ -92,12 +92,11 @@ class StudioController < ApplicationController
     prediction.goals_b = params['goals_b']
     prediction.kicks_a = params['kicks_a']
     prediction.kicks_b = params['kicks_b']
-    if prediction.valid?
+    if prediction.acceptable?
       p prediction.save
     else
       p prediction.errors
     end
-     
   end
   
   def dump_user(user, round)
