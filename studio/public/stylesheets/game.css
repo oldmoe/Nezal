@@ -672,6 +672,9 @@
   top : 70px;
   left : 245px;  
   visibility : hidden;
+  font-weight:bold;
+  font-family:tahoma;
+  font-size:20px;
 }
 
 #publish
