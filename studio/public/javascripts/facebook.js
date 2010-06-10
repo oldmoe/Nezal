@@ -61,12 +61,11 @@ var FBConnect = {
                 if (response.perms) {
                   // user is logged in and granted some permissions.
                   // perms is a comma separated list of granted permissions
-                  //Display.fetch("/"+FBConnect.url()+"/matches", "placeHolder");
+                  window.location = window.location;
                 } else {
-                  alert("LOGGED IN BUT NOT ADDED")
                 }
             } else {
-                alert("LOGGED OUT")
+                alert("You have to log in to facebook to play the game")
             }
         }, {perms:'read_stream,publish_stream'});
     },  

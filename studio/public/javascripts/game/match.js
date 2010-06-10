@@ -43,7 +43,7 @@ var DataLoader = {
 			if(i > 3){
 				i = 0
 			}
-			console.log(side)
+//			console.log(side)
 			//var side = [Studio.right, Studio.left][i]
 			Studio.events.push([function(){side.speak(line)}, 25])
 			Studio.events.push([function(){side.unspeak()}, 25])
@@ -65,7 +65,7 @@ var DataLoader = {
 			  $('rankings_shade').setOpacity(0.8)
 			  $('rankings').show();
 		})
-		console.log(window.location.search)
+		//console.log(window.location.search)
 		if(!window.location.search){
 			return this.index()
 		}
