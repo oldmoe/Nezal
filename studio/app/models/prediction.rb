@@ -6,7 +6,7 @@ class Prediction < Sequel::Model
   many_to_one :match
   many_to_one :user, :key=>[:app_id, :user_id]
 
-  def validate
+  def acceptable?
     super
     errors.add(:match, "match inactive") if ( !match.active? )
     kicks_a = nil if (!match.accept_kicks?) 
@@ -24,7 +24,7 @@ class Prediction < Sequel::Model
     goals = goals_a - goals_b 
     kicks = kicks_a - kicks_b if kicks_a && kicks_b
     
-    score = if match.goals_a == goals_a && match.goals_b == goals_b
+    score_points = if match.goals_a == goals_a && match.goals_b == goals_b
               3
             elsif match_goals == goals
               2
@@ -36,7 +36,7 @@ class Prediction < Sequel::Model
               0
             end
             
-   score += if match_kicks
+   score_points += if match_kicks
               if !kicks_a 
                 match_kicks * goals > 0 ? 1 : 0
               else
@@ -45,7 +45,10 @@ class Prediction < Sequel::Model
             else
               0
             end
-    user[User::SCORE_FIELDS[match.group.id]] += score
+    self.score= score_points
+    self.save
+    user[User::SCORE_FIELDS[match.group.id]] += score_points
+    user[:global_score] += score_points
     user.save
   end
 

@@ -24,4 +24,4 @@ p DB.schema( :predictions)
 #DB.drop_table(:predictions)
 #DB.drop_table :comments
 #DB.drop_table :users
-
+DB.add_column(:predictions, :score, :integer)

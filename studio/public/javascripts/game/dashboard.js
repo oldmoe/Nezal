@@ -120,24 +120,24 @@
 	},
 	
 	getPredictionByMatchId :function(id){
-		var prediction = this.data.predictions.find(function(p){
-			return p[0].match_id == id
+		var prediction =  this.data.predictions.find(function(p){
+			return p.match_id == id
 		})
-		if(prediction) return prediction[0]
-		return null
+		return prediction
 	},
 	
 }
 $(document).observe('dom:loaded',function(){
 	new Ajax.Request('matches', {method:'get', onComplete : function(req){
 		Dashboard.data = (req.responseText).evalJSON()
-		Dashboard.data.matches.each(function(match){
+		Dashboard.data.matches.each(function(match, index){
 			match = match[0]
 			time = match.start_time
 			match.date = new Date(time.split(' ')[0])
 			match.teamA = Dashboard.getTeamById(match.team_a_id)
 			match.teamB = Dashboard.getTeamById(match.team_b_id)
 			match.prediction = Dashboard.getPredictionByMatchId(match.id)
+			//console.log(match.prediction.toSource())
 		})
 		$('groupsTable').show()
 		$('groupsTable').innerHTML = TrimPath.processDOMTemplate('table', {locations:Dashboard.matchesToLocations('first_round')})

@@ -46,6 +46,7 @@ DB.create_table? :predictions do
   primary_key :id
   foreign_key :match_id, :null => false
   foreign_key [:app_id, :user_id], :users, :name => :user, :null => false
+  Integer :score
   String  :app_id
   String  :user_id
   Integer :goals_a
