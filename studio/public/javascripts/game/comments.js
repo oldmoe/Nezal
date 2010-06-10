@@ -75,7 +75,6 @@ var Comments = {
   			if(Prototype.Browser.WebKit == true)
 		    {
 		    		time = ( $$('marquee').first().scrollWidth/700 ) * 11.3
-		    		console.log(time)
 		    		window.setTimeout( Comments.refresh, 1000 * time );
 	      }
     },

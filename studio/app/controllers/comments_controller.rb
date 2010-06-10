@@ -21,6 +21,7 @@ class CommentsController < ApplicationController
     if comment.valid?
       comment.save
     end
+	''
   end
 
   post '/:match_id' do
@@ -28,6 +29,7 @@ class CommentsController < ApplicationController
     if comment.valid?
       comment.save
     end
+	''
   end
 
 end

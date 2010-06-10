@@ -527,8 +527,40 @@
 	top : 0px;
 	width : 760px;
 	height: 550px;
-	z-index : 100100;
+	z-index : 10010;
 	text-align:center;
+}
+
+#rankings_shade {
+	position : absolute;
+	left : 0px;
+	top : 0px;
+	width : 760px;
+	height: 550px;
+	background-color:black;
+}
+
+#rankings iframe{
+	position :absolute;
+	left:30px;
+	width:670px;
+	height:550px;
+	border:none;
+}
+
+#rankings #close{
+	position:absolute;
+	left:700px;
+	top:30px;
+	width:30px;
+	height:30px;
+	/*background: url('../images/background/close_button.png') no-repeat;*/
+	cursor:pointer;
+	color:white;
+	font-weight:bold;
+	font-family:verdana;
+	font-size:18px;
+	background-color:bloack
 }
 
 #center_piece #scoreA{
@@ -583,8 +615,10 @@
 
 #center_piece #countdown
 {
-  height:70px;
+  height:30px;
   left:244px;
+  top: 20px;
+  color:orange;
   position:absolute;
   width:184px;
 }
