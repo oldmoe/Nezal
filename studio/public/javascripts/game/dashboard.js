@@ -141,7 +141,6 @@ $(document).observe('dom:loaded',function(){
 		})
 		$('groupsTable').show()
 		$('groupsTable').innerHTML = TrimPath.processDOMTemplate('table', {locations:Dashboard.matchesToLocations('first_round')})
-		alert(1)
 		Dashboard.setupScrolling();
 		$('ranks').observe('click', function(){
 			  if($('rankings_frame').src == null || $('rankings_frame').src == ''){

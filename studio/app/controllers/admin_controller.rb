@@ -142,7 +142,7 @@ class AdminController < ApplicationController
 
   # Edit existing match
   post '/matches/:id' do
-    t = Time.parse(params["month"] + " " + params["day"] + " " + params["hour"] + ":" + params["min"] + " UTC") 
+    t = Time.parse(params["month"] + " " + params["day"] + " " + params["hour"] + ":" + params["min"]) 
     match = Match.find(:id => params[:id])
     match.team_a_id = params["team_a"]
     match.team_b_id = params["team_b"]

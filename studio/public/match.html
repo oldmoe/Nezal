@@ -121,7 +121,6 @@
 				  <div id="send_sms" onclick="Comments.send(this, 'message'); return false;"></div>
 				  <script>
 					Event.observe("message", 'keydown', function(event) {
-					  console.log($("message").value.length);
 					  if($("message").value.length > 100)
 					  {
 						Event.stop(event);

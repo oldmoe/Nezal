@@ -184,9 +184,6 @@ var DataLoader = {
 	      }})
     }
 }
-//soundManager.onload = function(){
-//	Audio.load('intro_outro')
-//}
 
 $(document).observe('dom:loaded',function(){
    swfobject.embedSWF("http://www.youtube.com/apiplayer?enablejsapi=1&version=3", "inner_center_screen_content", "250", "250", "9.0.0", null, null, { wmode : 'transparent', allowScriptAccess: "always" });
