@@ -14,6 +14,7 @@ class Prediction < Sequel::Model
     if match.accept_kicks? && goals_a == goals_b && kicks_a == kicks_b
       errors.add(:kicks_b, "!Prediction not valid. Goals of teams not tied")
     end
+	return errors.length == 0
   end
 
   def calc_score(match)  
