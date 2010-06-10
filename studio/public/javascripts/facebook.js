@@ -70,20 +70,20 @@ var FBConnect = {
         }, {perms:'read_stream,publish_stream'});
     },  
     
-    publish : function() {
+    publish : function(match, prediction) {
         var loc = window.top.location.toString();
 
         FB.ui({
                 method: 'stream.publish',
                 message: '',
                 attachment: {
-                  name: 'South Africa vs Mexico 1-0',
+                  name: Studio.match.teamA.name_ar + 'vs' +  Studio.match.teamB.name_ar + 1-0',
                 	'media': [{ 'type': 'image', 
-                	            'src': 'http://studio.nezal.com:5500/images/logo.png',
+                	            'src': 'http://studio.nezal.com/images/logo.png',
                 	            'href': loc }],
 
                   description: (
-                    'توقعت نتيجة 0-1 لمياراة جنوب أفريقياو المكسيك بكأس العالم 2010. توقع و لنري الاقرب لنتيجة المباراة'
+                    'توقعت نتيجة' +'0-1'+ 'لمياراة'+ Studio.match.teamA.name_ar +'و' +  Studio.match.teamB.name_ar +'بكأس العالم 2010. توقع و لنري الاقرب لنتيجة المباراة'
                     ),
                     
 
