@@ -17,6 +17,17 @@
 	z-index : 101;
 	background: center url('../images/background/loading_screen.png') repeat;
 }
+#loadingScreen div{
+	position: absolute;
+	top:383px;
+	left:203px;	
+	height:33px;
+	width:380px;
+}
+#loadingScreen img{
+	height:33px;
+	width:0%;
+}
 
 #game{
 	width : 760px;
@@ -621,4 +632,18 @@
   color:orange;
   position:absolute;
   width:184px;
+}
+
+#center_piece #dashLink{
+  visibility : hidden;
+  height:70px;
+  left:244px;
+  top: 0px;
+  position:absolute;
+  width:184px;
+  cursor:pointer;
+}
+
+#center_piece.main #dashLink{
+	visibility : visible;
 }

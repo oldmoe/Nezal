@@ -38,6 +38,11 @@
 		</textarea>
 		</div>
 		<div id="game">
+			<div id="rankings" style="display:none">
+				<div id="rankings_shade"></div>
+				<iframe id="rankings_frame"></iframe>
+				<div id="close" onclick="$('rankings').hide();">X</div>
+			</div>
 			<div id="content" class="groups">
 				<div id="frame"></div>
 				<div id="matchContainer">
@@ -52,7 +57,7 @@
 				<div id="ranks" title="الترتيب"></div>
 				<div id="sound" class="on" title="تفعيل / غلق الأصوات"></div>
 				<div id="studio" title="إلى الاستوديو"></div>
-				<div id="guide"></div>
+				<a href="match.html"><div id="guide"></div></a>
 				<div id="links">
 					<div class="groups on"></div>
 					<div class="round16"></div>

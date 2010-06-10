@@ -244,3 +244,44 @@
 #sound.off{
 	background: url('../images/background/sound_off_icon.png') no-repeat;
 }
+
+#rankings {
+	position : absolute;
+	left : 0px;
+	top : 0px;
+	width : 760px;
+	height: 560px;
+	z-index : 10010;
+	text-align:center;
+}
+
+#rankings_shade {
+	position : absolute;
+	left : 0px;
+	top : 0px;
+	width : 760px;
+	height: 560px;
+	background-color:black;
+}
+
+#rankings iframe{
+	position :absolute;
+	left:30px;
+	width:670px;
+	height:550px;
+	border:none;
+}
+
+#rankings #close{
+	position:absolute;
+	left:700px;
+	top:30px;
+	width:30px;
+	height:30px;
+	cursor:pointer;
+	color:white;
+	font-weight:bold;
+	font-family:verdana;
+	font-size:20px;
+	background-color:bloack
+}

@@ -24,10 +24,51 @@ var DataLoader = {
         $("countdown").innerHTML = Studio.match.countdown["hour"] + " : " + Studio.match.countdown["minute"] + " : " + Studio.match.countdown["second"]
         window.setTimeout(DataLoader.updateTime, 1000)
     },
-  
+
+	index : function(){		
+		$('center_piece').addClassName('main')
+		Studio.events.push([function(){Studio.play('m6861QSFzFo')}, 0])
+		var data = $('data').innerHTML
+		data = data.split('\n')
+		var lastleft = data.pop()
+		var lastRight = data.pop()
+		var i = 0
+		data.each(function(line, index){
+			if(i < 2){
+				var side = Studio.right
+			}else{
+				var side = Studio.left
+			}
+			i++
+			if(i > 3){
+				i = 0
+			}
+			console.log(side)
+			//var side = [Studio.right, Studio.left][i]
+			Studio.events.push([function(){side.speak(line)}, 25])
+			Studio.events.push([function(){side.unspeak()}, 25])
+		})
+		Studio.events.push([function(){Studio.right.speak(lastRight)}, 25])
+		Studio.events.push([function(){Studio.right.unspeak()}, 25])
+		Studio.events.push([function(){Studio.left.speak(lastleft)}, 25])
+		Studio.events.push([function(){Studio.left.unspeak()}, 25])
+		
+	},
+ 
     load : function() {
+		$('ranks').observe('click', function(){
+			  if($('rankings_frame').src == null || $('rankings_frame').src == ''){
+				$('rankings_frame').src = 'html/studio/ranking.html'
+			  }
+			  $('rankings_shade').setOpacity(0.8)
+			  $('rankings').show();
+		})
+		console.log(window.location.search)
+		if(!window.location.search){
+			return this.index()
+		}
       	var id = window.location.search.toString().split('?')[1].split('=')[1].split('&')[0]
-	      new Ajax.Request('matches/'+id, {method:'get', onComplete : function(req){
+	    new Ajax.Request('matches/'+id, {method:'get', onComplete : function(req){
 		      Studio.data = (req.responseText).evalJSON()
 		      Studio.match = Studio.data['match'][0]
 		      Studio.match.status = Studio.data['status']
@@ -57,7 +98,7 @@ var DataLoader = {
 		      }
 		      if(Studio.match.prediction)
 		      {
-            ["goals_a", "goals_b", "kicks_a", "kicks_b"].each( function(i) {
+				["goals_a", "goals_b", "kicks_a", "kicks_b"].each( function(i) {
                                 if( Studio.match.prediction[i] < 10 ) 
                                 {
                                   Studio.match.prediction[i] = "0" + Studio.match.prediction[i]
@@ -80,7 +121,7 @@ var DataLoader = {
 			      $(team+'_name').innerHTML = Studio.match[team].name_ar
 			      var talk = Studio.match[team].info.split('\n')
 			      var side = [Studio.right, Studio.left][index]
-				  Studio.events.push([function(){console.log('firing');Studio.play(Studio.match[team].youtube_url.split('?v=')[1]);console.log('fired');}, 0])
+				  Studio.events.push([function(){Studio.play(Studio.match[team].youtube_url.split('?v=')[1])}, 0])
 				  talk.each(function(line){
 				      Studio.events.push([function(){side.speak(line)}, 25])
 				      Studio.events.push([function(){side.unspeak()}, 25])	
@@ -123,13 +164,6 @@ var DataLoader = {
 				      });
 			      })
 		      }
-		      $('ranks').observe('click', function(){
-			      if($('rankings_frame').src == null || $('rankings_frame').src == ''){
-					$('rankings_frame').src = 'html/studio/ranking.html'
-				  }
-			      $('rankings_shade').setOpacity(0.8)
-				  $('rankings').show();
-      		})
 
 		      Studio.match.countdown = { "remain" : parseInt(Studio.match.remaining), "hour" : 0, "minute" : 0, "second" : 0 };
 			  window.setTimeout(DataLoader.updateTime,1000);
@@ -143,7 +177,7 @@ var DataLoader = {
 		        if ( Studio.match["kicks_b"] )
   		        $("penaltyB").innerHTML = Studio.match["kicks_b"];
 		      }
-		      Studio.reactor.run(function(){Studio.timeline.run()})
+		      
 	      }})
     }
 }
@@ -152,6 +186,7 @@ $(document).observe('dom:loaded',function(){
    swfobject.embedSWF("http://www.youtube.com/apiplayer?enablejsapi=1&version=3", "center_screen_content", "250", "250", "9.0.0", null, null, { wmode : 'transparent', allowScriptAccess: "always" });
    FBConnect.init( function() {
 				  DataLoader.load();
+				  Studio.reactor.run(function(){Studio.timeline.run()})
 				  Comments.initialize();
 	});
 })

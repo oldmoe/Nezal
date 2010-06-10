@@ -130,6 +130,14 @@ $(document).observe('dom:loaded',function(){
 		$('groupsTable').show()
 		$('groupsTable').innerHTML = TrimPath.processDOMTemplate('table', {locations:Dashboard.matchesToLocations('first_round')})
 		Dashboard.setupScrolling();
+		$('ranks').observe('click', function(){
+			  if($('rankings_frame').src == null || $('rankings_frame').src == ''){
+				$('rankings_frame').src = 'html/studio/ranking.html'
+			  }
+			  $('rankings_shade').setOpacity(0.8)
+			  $('rankings').show();
+      	})
+
 		$$("#content #links div").each(function(div){
 			div.observe('click', function(){
 				//$('content').className = div.className

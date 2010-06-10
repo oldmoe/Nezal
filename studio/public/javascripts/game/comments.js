@@ -86,8 +86,8 @@ var Comments = {
                           {
                               method:'post', 
                               parameters: { message : element.value },
-                              onSuccess: function(transport, json){
-                                  element.value = null
+                              onComplete: function(transport, json){
+                                  element.value = ''
                                   button.style.cursor = "pointer";
                               },
                           });   

@@ -4,11 +4,13 @@
 		<title>South Africa 2010</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<link type="text/css" href="stylesheets/game.css" rel="stylesheet" />
+		<link type="text/css" href="stylesheets/dashboard.css" rel="stylesheet" />
 		<script src="javascripts/prototype.js"></script>
 		<script src="javascripts/effects.js"></script>
 		<script src="javascripts/transitions.js"></script>
 		<script src="javascripts/sound.js"></script>
 		<script src="javascripts/template.js"></script>
+		<script src="javascripts/swfobject.js"></script>
 	</head>
 	<!--[if IE]>
 		<style>
@@ -17,42 +19,9 @@
 		</style>
 	<![endif]-->
 	<body id="body">
-		<div id="fb-root" style="display:none;"></div>
-		<div id="game" style="display:none">
-			<div id="header"></div>
-			<div id="content">
-				<div id="logo"></div>
-				<div id="score" class="overlay"></div>
-				<div id="left_screen" class="skew_left">
-					<div class="tv_content">
-						<!--img width=200 height=200 src='images/flags/mex.png'/-->
-					</div>
-				</div>
-				<div id="center_screen">
-					<div class="tv_content">
-						<!--img width=250 height=250 src='images/ads/1.jpg'/-->
-					</div>
-				</div>
-				<div id="right_screen" class="skew_right">
-					<div class="tv_content">
-						<!--img width=200 height=200 src='images/flags/rsa.png'/-->
-					</div>
-				</div>
-				<div class="baloon" id="left_baloon" style="display:none">
-					<div class="text" dir="rtl"></div>
-				</div>
-				<div class="baloon" id="right_baloon" style="display:none">
-					<div class="text" dir="rtl"></div>
-				</div>
-				<div id="zareef"></div>
-				<div id="baheeg"></div>
-				<div id="counter"></div>
-				<div id="sms_bar"><div id="sms_marquee"></div><div id="sms_icon"></div></div>
-			</div>
-			<div id="footer"></div>
+		<div id="loadingScreen">
+			<div><img id="bar" src='images/background/loading.png'/></div>
 		</div>
-		<div id="waitScreen"></div>
-		<div id="loadingScreen" style="display:none"></div>
 	</body>
 	<script src="http://connect.facebook.net/en_US/all.js"></script>
 	<script src="javascripts/facebook.js"></script>
@@ -61,5 +30,15 @@
 	<script src="javascripts/game/narrator.js"></script>
 	<script src="javascripts/game/sms.js"></script>
 	<script src="javascripts/game/studio.js"></script>
-	<script src="javascripts/game/index.js"></script>
+	<script>
+		function progress(){
+			if($('bar').style.width == '100%' ){
+				window.location.href = 'match.html'
+				return
+			}
+			$('bar').style.width = Number($('bar').style.width.gsub('%','')) + 1 + '%'
+			window.setTimeout(progress, 10)
+		}
+		progress()
+	</script>
 </html>
