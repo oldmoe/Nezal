@@ -10,6 +10,7 @@
 		<script src="javascripts/sound.js"></script>
 		<script src="javascripts/template.js"></script>
 		<script src="javascripts/dist/carousel.packed.js"></script>
+		<script src="javascripts/soundmanager2-nodebug-jsmin.js"></script>
 		
 	</head>
 	<body id="body">
@@ -21,7 +22,7 @@
 									<th>${location[0].date.getDate()}<br/>${Dashboard.months[location[0].date.getMonth()]}</th>
 									{for cell in location}
 										{if !cell.empty }
-										<td title="${cell.teamB.name_ar} و ${cell.teamA.name_ar}" class="match g${cell.group_id}" onclick="window.location.href = 'match.html?id=${cell.id}'">
+										<td title="${cell.teamB.name_ar} و ${cell.teamA.name_ar}" class="match g${cell.group_id}" onclick="myAudio.play('select');window.location.href = 'match.html?id=${cell.id}'">
 											<div class="panel">
 												<img class='flagA' src='images/flags/${cell.teamA.abrv.toLowerCase()}_r.png'/>
 												<img class='flagB' src='images/flags/${cell.teamB.abrv.toLowerCase()}_r.png'/>
@@ -80,6 +81,7 @@
 			</div>
 		</div>
 	</body>
+	<script src="javascripts/game/audio.js"></script>
 	<script src="http://connect.facebook.net/en_US/all.js"></script>
 	<script src="javascripts/facebook.js"></script>
 	<script src="javascripts/game/reactor.js"></script>

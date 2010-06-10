@@ -120,18 +120,21 @@
 	},
 	
 	getPredictionByMatchId :function(id){
+		try{
 		var prediction = this.data.predictions.find(function(p){
-			return p[0].match_id == id
+			return p.match_id == id
 		})
 		if(prediction) return prediction[0]
 		return null
+		}catch(e){
+		}
 	},
 	
 }
 $(document).observe('dom:loaded',function(){
 	new Ajax.Request('matches', {method:'get', onComplete : function(req){
 		Dashboard.data = (req.responseText).evalJSON()
-		Dashboard.data.matches.each(function(match){
+		Dashboard.data.matches.each(function(match, index){
 			match = match[0]
 			time = match.start_time
 			match.date = new Date(time.split(' ')[0])
