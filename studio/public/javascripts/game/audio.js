@@ -50,9 +50,29 @@ var myAudio = {
 		if(this[file]){
 			this[file].stop();
 		}
-	}
+	},
 	
+	mute : function(){
+		soundManager.mute();
+	},
+	
+	unmute : function(){
+		soundManager.unmute();
+	},
+	
+	toggle : function(div){
+		if(div.hasClassName('on')){
+			div.removeClassName('on');
+			div.addClassName('off')
+			this.mute();
+		}else{
+			div.removeClassName('off');
+			div.addClassName('on')
+			this.unmute();
+		}
+	}
 }
+
 soundManager.url = 'swf/';
 soundManager.useHTML5Audio = true;
 soundManager.onload = function(){
