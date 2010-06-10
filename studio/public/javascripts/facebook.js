@@ -62,7 +62,6 @@ var FBConnect = {
                   // user is logged in and granted some permissions.
                   // perms is a comma separated list of granted permissions
                   //Display.fetch("/"+FBConnect.url()+"/matches", "placeHolder");
-                  console.log(FB.getSession);
                 } else {
                   alert("LOGGED IN BUT NOT ADDED")
                 }
@@ -81,7 +80,7 @@ var FBConnect = {
                 attachment: {
                   name: 'South Africa vs Mexico 1-0',
                 	'media': [{ 'type': 'image', 
-                	            'src': 'http://173.192.39.215:5500/images/logo-3.png',
+                	            'src': 'http://studio.nezal.com:5500/images/logo.png',
                 	            'href': loc }],
 
                   description: (
@@ -105,10 +104,7 @@ var FBConnect = {
     eventSubscribe : function() {
         FB.Event.subscribe('auth.sessionChange', function(response) {
           if (response.session) {
-             console.log("LOGGED IN");
           } else {
-            // The user has logged out, and the cookie has been cleared
-            console.log("LOGGED OUT");
           }
         });
     }
