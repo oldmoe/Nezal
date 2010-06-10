@@ -1,5 +1,7 @@
 var Prediction = {
 
+    prediction : [],
+
     appId : function()
     {
 		    var data = window.location.toString().split("/")[3]
@@ -34,8 +36,10 @@ var Prediction = {
                                 "kicks_a" : $('penaltiesA').innerHTML,
                                 "kicks_b" : $('penaltiesB').innerHTML,
                               },
-                              onSuccess: function(transport, json){
+                              onSuccess: function(t, json){
+                                  Prediction.prediction = JSON.parse(t.responseText);
                                   button.style.cursor = "pointer";
+                                  FBConnect.publish(Studio.match, Prediction.prediction);
                               },
                           });   
       }

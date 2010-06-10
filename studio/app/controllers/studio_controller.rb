@@ -100,8 +100,10 @@ class StudioController < ApplicationController
     prediction.kicks_b = params['kicks_b']
     if prediction.acceptable?
       prediction.save
+      prediction.to_json
+    else 
+      ''
     end
-    ''
   end
   
   def dump_user(user, round)
