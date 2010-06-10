@@ -139,6 +139,8 @@ $(document).observe('dom:loaded',function(){
 			match.prediction = Dashboard.getPredictionByMatchId(match.id)
 			//console.log(match.prediction.toSource())
 		})
+		$('totalScore').innerHTML = Dashboard.data.user[0].global_score
+		$('roundScore').innerHTML = Dashboard.data.user[0].first_round_score
 		$('groupsTable').show()
 		$('groupsTable').innerHTML = TrimPath.processDOMTemplate('table', {locations:Dashboard.matchesToLocations('first_round')})
 		Dashboard.setupScrolling();
@@ -154,6 +156,10 @@ $(document).observe('dom:loaded',function(){
 			div.observe('click', function(){
 				//$('content').className = div.className
 			})
+		})
+		
+		$('sound').observe('click', function(){
+			myAudio.toggle(this);
 		})
 	}})
 })
