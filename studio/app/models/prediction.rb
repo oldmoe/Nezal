@@ -7,7 +7,6 @@ class Prediction < Sequel::Model
   many_to_one :user, :key=>[:app_id, :user_id]
 
   def acceptable?
-    super
     errors.add(:match, "match inactive") if ( !match.active? )
     kicks_a = nil if (!match.accept_kicks?) 
     kicks_b = nil if (!match.accept_kicks?) 
