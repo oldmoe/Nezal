@@ -211,6 +211,7 @@
 	overflow: hidden;
 	margin-left:7px;
 	margin-top:7px;
+	background: center url('../images/background/snow.gif') no-repeat;
 }
 
 .tv_content img{

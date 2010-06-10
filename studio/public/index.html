@@ -11,6 +11,7 @@
 		<script src="javascripts/sound.js"></script>
 		<script src="javascripts/template.js"></script>
 		<script src="javascripts/swfobject.js"></script>
+		<script src="javascripts/soundmanager2-nodebug-jsmin.js"></script>
 	</head>
 	<!--[if IE]>
 		<style>
@@ -19,8 +20,8 @@
 		</style>
 	<![endif]-->
 	<body id="body">
-		<div id="loadingScreen">
-			<div><img id="bar" src='images/background/loading.png'/></div>
+		<div id="loadingScreen" style="display:none">
+			<div id="progress"><img id="bar" src='images/background/loading.png'/></div>
 		</div>
 	</body>
 	<script src="http://connect.facebook.net/en_US/all.js"></script>
@@ -28,16 +29,35 @@
 	<script src="javascripts/game/reactor.js"></script>
 	<script src="javascripts/game/timeline.js"></script>
 	<script src="javascripts/game/sms.js"></script>
-	<script src="javascripts/game/studio.js"></script>
 	<script>
+		var image = new Image();
+		var bar = new Image();
+		var sound = null
+		soundManager.url = 'swf/';
+		soundManager.useHTML5Audio = true;
+			soundManager.onload = function(){
+			image.src = 'images/background/loading_screen.png'
+			image.onload = function(){
+				$('loadingScreen').show();
+				bar.src = 'images/background/loading.png'
+				sound = soundManager.createSound({
+				  id: 'score',
+				  url: 'audio/mp3/intro_outro.mp3',
+				  autoLoad: true,
+				  autoPlay: true,
+				  onload : function(){
+					progress()
+				  }
+				})
+			}
+		}
 		function progress(){
 			if($('bar').style.width == '100%' ){
 				window.location.href = 'match.html'
 				return
 			}
 			$('bar').style.width = Number($('bar').style.width.gsub('%','')) + 1 + '%'
-			window.setTimeout(progress, 10)
+			window.setTimeout(progress, 150)
 		}
-		progress()
 	</script>
 </html>
