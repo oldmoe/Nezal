@@ -75,7 +75,7 @@ DB.create_table? :comments do
   String  :app_id
   String  :user_id
   String  :message
-  Integer :time, :default => (Time.now.to_f*100).to_i, :index => true
+  Integer :time, :index => true
 end
 
 indexes = DB.indexes(:users)

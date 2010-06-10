@@ -661,3 +661,26 @@
 #center_piece.main #dashLink{
 	visibility : visible;
 }
+
+#matchScore
+{
+  background : url('../images/background/in_studio_score.png') no-repeat;
+  height : 53px;
+  width : 60px;
+  position : absolute;
+  top : 70px;
+  left : 245px;  
+  visibility : hidden;
+}
+
+#publish
+{
+  background : url('../images/background/fb_publish.png') no-repeat;
+  height : 40px;
+  width : 60px;
+  position : absolute;
+  top : 83px;
+  left : 190px;
+  visibility : hidden;
+  cursor : pointer;
+}

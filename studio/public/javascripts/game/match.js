@@ -169,7 +169,6 @@ var DataLoader = {
 			      })
 		      }
 
-  	      
 		      if( Studio.match.status == 'finished' )
 		      {  
 		        $("scoreA").innerHTML = Studio.match["goals_a"];
@@ -178,6 +177,11 @@ var DataLoader = {
   		        $("penaltyA").innerHTML = Studio.match["kicks_a"] ;
 		        if ( Studio.match["kicks_b"] )
   		        $("penaltyB").innerHTML = Studio.match["kicks_b"];
+		      }
+		      if( Studio.data["prediction"].length > 0 && Studio.match.status == 'finished' )
+		      {
+		        $("matchScore").style.visibility = "visible"
+		        $("publish").style.visibility = "visible"
 		      }
 		      
 	      }})

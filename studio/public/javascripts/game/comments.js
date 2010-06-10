@@ -6,8 +6,10 @@ var Comments = {
 
     smsNumber : 10, 
     
-    comments : [ [ { "id" : 0, 
-        "message" : "تنويه: نرجو من مستخدمي الموقع الكرام عدم إضافة أي تعليق يسيء للأديان , المعتقدات أو المقدسات. ونرجو عدم استخدام خدمة التعليقات في الترويج لأي إعلانات. كما نرجو ألا يتضمن التعليق السباب أو أي ألفاظ تخدش الحياء والذوق العام  "}] ],
+    comments : [ ],
+    
+    warning : [[ { "id" : 0, 
+        "message" : "تنويه: نرجو من مستخدمي الموقع الكرام عدم إضافة أي تعليق يسيء للأديان , المعتقدات أو المقدسات. ونرجو عدم استخدام خدمة التعليقات في الترويج لأي إعلانات. كما نرجو ألا يتضمن التعليق السباب أو أي ألفاظ تخدش الحياء والذوق العام  "}]],
     
     sms : '',
         
@@ -59,8 +61,8 @@ var Comments = {
                               {   method:'get', 
                                   onSuccess: function(t, json){
                                       var response = JSON.parse(t.responseText);
-                                      Comments.comments = response["comments"].concat(Comments.comments);
-                                      Comments.sms = Comments.templates.sms[1].process({ msgs : Comments.comments});
+                                      Comments.comments = response["comments"].concat(Comments.comments).slice(0, 10)
+                                      Comments.sms = Comments.templates.sms[1].process({ msgs : Comments.comments.concat(Comments.warning)});
                                 			if ( ! $$('#sms_marquee marquee').first() )
                                 			{
                                 			    Comments.refresh();
@@ -74,7 +76,7 @@ var Comments = {
   			$('sms_marquee').update(Comments.sms);
   			if(Prototype.Browser.WebKit == true)
 		    {
-		    		time = ( $$('marquee').first().scrollWidth/700 ) * 11.3
+		    		time = ( $$('marquee').first().scrollWidth/700 ) * 11.5 + 5
 		    		window.setTimeout( Comments.refresh, 1000 * time );
 	      }
     },
