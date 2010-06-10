@@ -51,13 +51,17 @@ var Comments = {
     },
     
     fetch : function(element) {
-        var comment_id="";
-        var last_comment = $$("#sms_marquee span").first();
-        if(last_comment)
-        { 
-            comment_id = last_comment["id"];
+        var comment_id="0";
+        if(Comments.comments.first())
+        {
+          comment_id = Comments.comments.first()[0]['id'];
         }
-        new Ajax.Request( "/" + Comments.appId() + "/comments/" + Comments.matchId() + "/" + comment_id, 
+        var matchId = "";
+        if ( Comments.matchId() )
+        {
+          matchId = Comments.matchId() + "/"
+        }
+        new Ajax.Request( "/" + Comments.appId() + "/comments/" + matchId  + comment_id, 
                               {   method:'get', 
                                   onSuccess: function(t, json){
                                       var response = JSON.parse(t.responseText);
@@ -65,26 +69,31 @@ var Comments = {
                                       Comments.sms = Comments.templates.sms[1].process({ msgs : Comments.comments.concat(Comments.warning)});
                                 			if ( ! $$('#sms_marquee marquee').first() )
                                 			{
-                                			    Comments.refresh();
+                                			    window.setTimeout( Comments.refreshUpdate, 1000);
                   			          		}
                   			          		window.setTimeout( Comments.fetch, 20000 );
                                   },
                               });
     },
     
-    refresh : function() {
+    refreshUpdate : function() {
   			$('sms_marquee').update(Comments.sms);
   			if(Prototype.Browser.WebKit == true)
 		    {
 		    		time = ( $$('marquee').first().scrollWidth/700 ) * 11.5 + 5
-		    		window.setTimeout( Comments.refresh, 1000 * time );
+		    		window.setTimeout( Comments.refreshUpdate, 1000 * time );
 	      }
     },
     
     send : function(button, input_name) {
         var element = $(input_name)
         button.style.cursor = "progress";
-        new Ajax.Request( "/" + Comments.appId() + "/comments/" + Comments.matchId(), 
+        var matchId = "";
+        if ( Comments.matchId() )
+        {
+          matchId = Comments.matchId() + "/"
+        }
+        new Ajax.Request( "/" + Comments.appId() + "/comments/" + matchId, 
                           {
                               method:'post', 
                               parameters: { message : element.value },

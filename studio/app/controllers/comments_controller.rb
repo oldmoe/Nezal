@@ -8,8 +8,8 @@ class CommentsController < ApplicationController
     { :comments => Comment.after( @user[:app_id], params[:match_id]) }.to_json
   end
 
-  get  '/:match_id' do
-    { :comments => Comment.after( @user[:app_id], params[:match_id]) }.to_json
+  get  '/:comment_id' do
+    { :comments => Comment.after( @user[:app_id], nil,  params[:comment_id]) }.to_json
   end
 
   get  '/:match_id/:comment_id' do
