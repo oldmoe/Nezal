@@ -137,7 +137,6 @@ $(document).observe('dom:loaded',function(){
 			match.teamA = Dashboard.getTeamById(match.team_a_id)
 			match.teamB = Dashboard.getTeamById(match.team_b_id)
 			match.prediction = Dashboard.getPredictionByMatchId(match.id)
-			//console.log(match.prediction.toSource())
 		})
 		$('totalScore').innerHTML = Dashboard.data.user[0].global_score
 		$('roundScore').innerHTML = Dashboard.data.user[0].first_round_score
