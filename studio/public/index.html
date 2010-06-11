@@ -21,6 +21,7 @@
 	<![endif]-->
 	<body id="body">
 		<div id="loadingScreen" style="display:none">
+			<img class="bg" src="images/background/loading_screen.png" />
 			<div id="progress"><img id="bar" src='images/background/loading.png'/></div>
 		</div>
 	</body>
@@ -28,6 +29,7 @@
 	<script src="javascripts/facebook.js"></script>
 	<script src="javascripts/game/reactor.js"></script>
 	<script src="javascripts/game/timeline.js"></script>
+	<script src="javascripts/game/images.js"></script>
 	<script src="javascripts/game/sms.js"></script>
 	<script>
 		var image = new Image();
@@ -46,10 +48,18 @@
 				  autoLoad: true,
 				  autoPlay: true,
 				  onload : function(){
-					progress()
+					//progress()
 				  }
 				})
 			}
+			ImageLoader.onprogress = function(value){
+				$('bar').style.width = Math.round(value/4) + '%'
+			}
+			ImageLoader.onfinish = function(){
+				progress();
+			}
+			
+			ImageLoader.load();
 		}
 		function progress(){
 			if($('bar').style.width == '100%' ){

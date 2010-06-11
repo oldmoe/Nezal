@@ -11,7 +11,7 @@ var AdManager = Class.create({
 	run : function(){
 		var self = this;
 		var image = new Image
-		image.src = "../images/ads/"+(Math.round(Math.random()*this.count-1)+2)+this.format+".png"
+		image.src = "../images/ads/"+(Math.round(Math.random()*this.count)+2)+this.format+".png"
 		image.onload = function(){
 			self.object.innerHTML = ""
 			self.object.appendChild(image)

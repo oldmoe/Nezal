@@ -4,6 +4,7 @@
 	width : 760px;
 	height: 550px;
 	overflow: hidden;
+	background-color: #9C130E;
 }
 
 #content #links{
@@ -12,7 +13,7 @@
 	height:454px;
 	width:21px;
 	top : 80px;
-	background-color : red;
+	/*background-color : red;*/
 	background: url('../images/background/buttons_gray.png')  no-repeat;
 }
 

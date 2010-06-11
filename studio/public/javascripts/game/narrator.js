@@ -1,7 +1,7 @@
 var Narrator = Class.create({
 	initialize : function(reactor, baloon){
 		this.baloon = $(baloon)
-		this.textArea = this.baloon.childElements()[0]
+		this.textArea = this.baloon.childElements()[1]
 		this.reactor = reactor
 	},
 	
