@@ -102,7 +102,7 @@ var FBConnect = {
           var title = match.teamA.name_ar + ' ضد ' + match.teamB.name_ar + " " +  prediction.goals_a + "-" + prediction.goals_b
           var desc = 'توقعت نتيجة' +
                      prediction.goals_a + "-" + prediction.goals_b +
-                     ' لمياراة '+
+                     ' لمباراة '+
                      match.teamA.name_ar + ' ضد ' + match.teamB.name_ar  +
 ' بكأس العالم 2010. توقع و لنري الاقرب لنتيجة المباراة'
           FB.ui(
