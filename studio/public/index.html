@@ -34,6 +34,8 @@
 	<script>
 		var image = new Image();
 		var bar = new Image();
+		var audioFinished = false
+		var progressFinished = false
 		var sound = null
 		soundManager.url = 'swf/';
 		soundManager.useHTML5Audio = true;
@@ -49,6 +51,14 @@
 				  autoPlay: true,
 				  onload : function(){
 					//progress()
+				  },
+				  onfinish : function(){
+					if(progressFinished){
+						window.location.href = 'match.html'
+						return
+					}else{
+						audioFinished = true;
+					}
 				  }
 				})
 			}
@@ -62,9 +72,14 @@
 			ImageLoader.load();
 		}
 		function progress(){
-			if($('bar').style.width == '100%' ){
-				window.location.href = 'match.html'
-				return
+			if($('bar').style.width == '98%' ){
+				if(audioFinished){
+					window.location.href = 'match.html'
+					return
+				}else{
+					progressFinished = true;
+					return
+				}
 			}
 			$('bar').style.width = Number($('bar').style.width.gsub('%','')) + 1 + '%'
 			window.setTimeout(progress, 150)
