@@ -38,7 +38,7 @@ class User < Sequel::Model
     result[:previous] = result[:previous][0..limit]
     result[:next] = self.class.filter([{:app_id => self[:app_id]}, "#{round} = #{self[round]} AND user_id > #{self[:user_id]}"]).order(:user_id).limit(limit).all
     result[:next] = result[:next] + self.class.filter( [{:app_id => self[:app_id]},"#{round} < #{self[round]}"]).order(round.desc, :user_id).limit(limit).all
-    result[:next] = result[:next][0..limit]
+    result[:next] = result[:next][0..limit-1]
     self.class.load_users_info(self[:app_id], result[:previous] + result[:next], session() )
     result[:previous] = result[:previous].reverse
     result[:next] = result[:next]
@@ -55,7 +55,7 @@ class User < Sequel::Model
     result[:previous] = result[:previous][0..limit]
     result[:next] = self.class.filter([{:app_id => self[:app_id]}, {:user_id => friends()}, "#{round} = #{self[round]} AND user_id > #{self[:user_id]}"]).order(:user_id).limit(limit).all
     result[:next] = result[:next] + self.class.filter( [{:app_id => self[:app_id]}, {:user_id => friends()}, "#{round} < #{self[round]}"]).order(round.desc, :user_id).limit(limit).all
-    result[:next] = result[:next][0..limit]
+    result[:next] = result[:next][0..limit-1]
     self.class.load_users_info(self[:app_id], result[:previous] + result[:next], session() )
     result[:previous] = result[:previous].reverse
     result[:next] = result[:next]
