@@ -15,7 +15,7 @@ class StudioController < ApplicationController
     puts "Inside get /intro"
     @user.test(@fb_session_key)
     @matches = Match.dataset.all
-    erb :studio, { :layout => false}
+    erb :show, { :layout => false}
   end
   
   get '/matches' do
