@@ -88,6 +88,7 @@ var Comments = {
     send : function(button, input_name) {
         if($(button).hasClassName('busy')) return
 		$(button).addClassName('busy')
+		myAudio.play('select')
 		var element = $(input_name)
 		
 		window.setTimeout(function(){
