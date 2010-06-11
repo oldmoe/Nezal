@@ -1,3 +1,10 @@
+IMG.bg{
+	position: absolute;
+	top:0px;
+	left:0px;
+	z-index : -1;
+}
+
 #waitScreen{
 	width : 760px;
 	height: 550px;
@@ -15,7 +22,7 @@
 	top:0px;
 	left:0px;
 	z-index : 101;
-	background: center url('../images/background/loading_screen.png') repeat;
+	/*background: center url('../images/background/loading_screen.png') repeat;*/
 }
 #loadingScreen div{
 	position: absolute;
@@ -24,7 +31,7 @@
 	height:33px;
 	width:380px;
 }
-#loadingScreen img{
+#loadingScreen img#bar{
 	height:33px;
 	width:0%;
 }
@@ -36,7 +43,7 @@
 	top:0px;
 	left:0px;
 	z-index : 101;
-	background: center url('../images/background/background.png') repeat;
+	/*background: center url('../images/background/background.png') repeat;*/
 }
 
 #game .overlay{
@@ -67,7 +74,7 @@
 	height: 172px;
 	top:380px;
 	left: 0px;	
-	background: center url('../images/background/counter.png') no-repeat;
+	/*background: center url('../images/background/counter.png') no-repeat;*/
 	z-index : 1002;
 }
 
@@ -93,7 +100,7 @@
 	top:120px;
 	width:160px;
 	height:266px;
-	background: center url('../images/background/baloon_left.png') no-repeat;
+	/*background: center url('../images/background/baloon_left.png') no-repeat;*/
 }
 
 #zareef{
@@ -103,7 +110,7 @@
 	width:150px;
 	height:259px;
 	z-index: 1002;
-	background: center url('../images/background/shafee2.png') no-repeat;
+	/*background: center url('../images/background/shafee2.png') no-repeat;*/
 }
 
 #right_baloon{
@@ -112,7 +119,7 @@
 	top:120px;
 	width:160px;
 	height:266px;
-	background: center url('../images/background/baloon_right.png') no-repeat;
+	/*background: center url('../images/background/baloon_right.png') no-repeat;*/
 }
 
 #baheeg{
@@ -122,7 +129,7 @@
 	width:165px;
 	height:268px;
 	z-index: 1002;
-	background: center url('../images/background/zareef.png') no-repeat;
+	/*background: center url('../images/background/zareef.png') no-repeat;*/
 }
 
 .baloon .text{
@@ -131,6 +138,7 @@
 	font-size:12px;
 	text-align : justify;
 	font-weight : normal;
+	z-index:1
 }
 
 #right_baloon .text{
@@ -674,7 +682,10 @@
   visibility : hidden;
   font-weight:bold;
   font-family:tahoma;
-  font-size:20px;
+  font-size:28px;
+  padding-top:7px;
+  padding-left:14px;
+  color:#003A7E;	
 }
 
 #publish
