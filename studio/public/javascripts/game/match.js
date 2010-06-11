@@ -185,8 +185,8 @@ var DataLoader = {
 				if(Studio.data["prediction"][0].score != null && Studio.data["prediction"][0].score >= 0 ){
 					$("matchScore").style.visibility = "visible"
 					$("matchScore").innerHTML = Studio.data["prediction"][0].score
+					$("publish").style.visibility = "visible"
 				}
-				$("publish").style.visibility = "visible"
 		      }
 		      
 	      }})
