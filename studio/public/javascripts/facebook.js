@@ -1,25 +1,25 @@
 ﻿var Display = {
     fetch: function(url, place){
-      new Ajax.Request(url, { method:'get',
-                              onSuccess: function(t){
-                                Display.alter(place, t.responseText);
-                              },
-                              onComplete: function(t){
+        new Ajax.Request(url, {   method:'get',
+                                  onSuccess: function(t){
+                                    Display.alter(place, t.responseText);
+                                  },
+                                  onComplete: function(t){
 
-                    		      }
-                            });
+                      		        }
+                              });
     },
     alter: function(divId, newContent)
     {
-      $(divId).replace(newContent);
+        $(divId).replace(newContent);
     }
 }
 
 var FBConnect = {
 
     appIds : {
-        		'local-studio' : '103040546410849',
-        		'studio-sa' : '110624738982804',
+        		'local-studio' : "103040546410849",
+        		'studio-sa' : "110624738982804"
 	  },
 	  
     channelPath : "/html/facebook/xd_receiver.html",
@@ -32,19 +32,23 @@ var FBConnect = {
 		    }
 		    alert(window.location)
 		    */
-		    var data = window.location
-		    data = data.toString().split("/")
-		    data = data[data.length-2]
+		    var data = window.location;
+		    data = data.toString().split("/");
+		    data = data[3];
 		    //document.domain = origDomain
-		    return data
+		    return data;
 	  },
 	  
     init : function( successCallback ) {
+        fbRoot = document.createElement('div');
+        fbRoot.setAttribute("id", "fb-root");
+        document.body.appendChild(fbRoot);
+        
         FB.init({
             appId  : FBConnect.appIds[FBConnect.url()],
             status : true, // check login status
             cookie : true, // enable cookies to allow the server to access the session
-            xfbml  : false  // parse XFBML
+            xfbml  : true  // parse XFBML
         });
         FB.getLoginStatus(function(response) {
             if (response.session) {
@@ -54,7 +58,22 @@ var FBConnect = {
             }
         });
     },
-      
+    invite : function(){
+        var appUrl = "http://apps.facebook.com/" + FBConnect.url();
+        FB.ui({
+          method:'fbml.dialog',
+          width: '550px',
+          fbml:'<fb:Fbml>   ' +
+                      '<fb:request-form action="'+ window.location  + '"' + ' method="get" invite="true" ' +
+                                        'type="Studio SA 2010" content="I am predicting the results of the world cup 2010 on Studio S.A. Predict with me ' +
+                                        '<fb:req-choice url=\'' + appUrl + '\' ' +  'label=\'Play\' />" >' +
+                      '<div style="width : 80%; margin:auto;padding:auto;"> ' +
+                        '<fb:multi-friend-selector showborder="false" actiontext="Invite your friends to play Studio South Africa 2010 with you" cols="3" rows="2"/>' +         
+                      '<div/> ' +
+                      '</fb:request-form>' +
+                '</fb:Fbml> '
+        });
+    },    
     connect : function() {
         FB.login(function(response) {
             if (response.session) {
@@ -65,28 +84,32 @@ var FBConnect = {
                 } else {
                 }
             } else {
-                alert("You have to log in to facebook to play the game")
+                alert("You have to log in to facebook to play the game");
             }
         }, {perms:'read_stream,publish_stream'});
     },  
-    
-    publish : function(match, prediction) {
-        var loc = window.top.location.toString();
-        var publishName = match.teamA.name_ar  + ' ' + 'vs' + ' ' +  match.teamB.name_ar + '1-0 ';
-        var desc =   'توقعت نتيجة المياراة' + match.teamA.name_ar + 'و' +  match.teamB.name_ar +'بكأس العالم 2010. توقع و لنري الاقرب لنتيجة المباراة';
-                
-        FB.ui({
+    eventSubscribe : function() {
+        FB.Event.subscribe('auth.sessionChange', function(response) {
+          if (response.session) {
+          } else {
+          }
+        });
+    },
+    publish : function() {
+        var loc = window.location.toString();
+        FB.ui(
+              {
                 method: 'stream.publish',
                 message: '',
                 attachment: {
-                  name: publishName,
+                  name : 'South Africa vs Mexico 1-0',
                 	'media': [{ 'type': 'image', 
-                	            'src': 'http://studio.nezal.com/images/logo.png',
+                	            'src': 'http://173.192.39.215/images/logo.png',
                 	            'href': loc }],
 
                   description: (
-                      desc
-                    ),
+                    'توقعت نتيجة 0-1 لمياراة جنوب أفريقياو المكسيك بكأس العالم 2010. توقع و لنري الاقرب لنتيجة المباراة'
+                    )
                     
 
                 },
@@ -99,15 +122,9 @@ var FBConnect = {
                 } else {
                   alert('Post was not published.');
                 }
-              });
-    },
-      
-    eventSubscribe : function() {
-        FB.Event.subscribe('auth.sessionChange', function(response) {
-          if (response.session) {
-          } else {
-          }
-        });
+              }
+        );
+
     }
 }
 

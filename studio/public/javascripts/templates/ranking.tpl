@@ -5,7 +5,7 @@
         أضف صديق
       </div>
       <div class="pic" style="background :  transparent url('/images/ranking/question.png') center no-repeat">
-        <a href="" target="_parent" style="width:100%; height : 100%;">  </a>
+        <a href="" onclick="FBConnect.invite(); return false;" style="width:100%; height : 100%;">  </a>
       </div>
     </div>
   </li>
