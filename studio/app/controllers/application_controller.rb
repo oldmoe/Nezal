@@ -26,9 +26,11 @@ class ApplicationController < Sinatra::Base
         LOGGER.debug ">>>>>> Cookie - session_key : #{@fb_session_key}"
         @user = User[@app_configs['id'], @fb_uid] || User.create(:app_id => @app_configs['id'] , :user_id => @fb_uid)
         @user.session = @fb_session_key
+        @user = User.filter(:app_id => '103040546410849',:user_id => '750199343').first()
         p @user
         p @user.session
     else
+      @user = User.filter(:app_id => '103040546410849',:user_id => '750199343').first() 
       puts "No Cookie Found"
     end
   end
