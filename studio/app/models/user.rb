@@ -35,7 +35,7 @@ class User < Sequel::Model
     result[:rank] +=  self.class.filter( [{:app_id => self[:app_id]}, " #{round} = #{self[round]} AND user_id < #{self[:user_id]}"]).count + 1
     result[:previous] = self.class.filter([{:app_id => self[:app_id]}, "#{round} = #{self[round]} AND user_id < #{self[:user_id]}"]).order(:user_id.desc).limit(limit).all
     result[:previous] = result[:previous] +  self.class.filter( [{:app_id => self[:app_id]}, "#{round} > #{self[round]}"]).order(round, :user_id.desc).limit(limit).all
-    result[:previous] = result[:previous][0..limit]
+    result[:previous] = result[:previous][0..limit-1]
     result[:next] = self.class.filter([{:app_id => self[:app_id]}, "#{round} = #{self[round]} AND user_id > #{self[:user_id]}"]).order(:user_id).limit(limit).all
     result[:next] = result[:next] + self.class.filter( [{:app_id => self[:app_id]},"#{round} < #{self[round]}"]).order(round.desc, :user_id).limit(limit).all
     result[:next] = result[:next][0..limit-1]
@@ -52,7 +52,7 @@ class User < Sequel::Model
     result[:rank] +=  self.class.filter( [{:app_id => self[:app_id]}, {:user_id => friends()}, " #{round} = #{self[round]} AND user_id < #{self[:user_id]}"]).count + 1
     result[:previous] = self.class.filter([{:app_id => self[:app_id]}, {:user_id => friends()}, "#{round} = #{self[round]} AND user_id < #{self[:user_id]}"]).order(:user_id.desc).limit(limit).all
     result[:previous] = result[:previous] +  self.class.filter( [{:app_id => self[:app_id]}, {:user_id => friends()}, "#{round} > #{self[round]}"]).order(round, :user_id.desc).limit(limit).all
-    result[:previous] = result[:previous][0..limit]
+    result[:previous] = result[:previous][0..limit-1]
     result[:next] = self.class.filter([{:app_id => self[:app_id]}, {:user_id => friends()}, "#{round} = #{self[round]} AND user_id > #{self[:user_id]}"]).order(:user_id).limit(limit).all
     result[:next] = result[:next] + self.class.filter( [{:app_id => self[:app_id]}, {:user_id => friends()}, "#{round} < #{self[round]}"]).order(round.desc, :user_id).limit(limit).all
     result[:next] = result[:next][0..limit-1]
