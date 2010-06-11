@@ -9,9 +9,10 @@ var Prediction = {
 	  },
 
     send : function( button ) {
+		if($(button).hasClassName('busy'))return
 		myAudio.play('select')
-        button.style.cursor = "progress";
-      	var id = window.location.search.toString().split('?')[1].split('=')[1].split('&')[0]
+        $(button).addClassName('busy')
+		var id = window.location.search.toString().split('?')[1].split('=')[1].split('&')[0]
       	var error = false
       	if (﻿Studio.match.kicks)
       	{
@@ -38,8 +39,8 @@ var Prediction = {
                               },
                               onSuccess: function(t, json){
                                   Prediction.prediction = JSON.parse(t.responseText);
-                                  button.style.cursor = "pointer";
-                                	FBConnect.publish(Studio.match, Prediction.prediction[0]);
+                                  $(button).removeClassName('busy')
+                                FBConnect.publish(Studio.match, Prediction.prediction[0]);
                               },
                           });   
       }

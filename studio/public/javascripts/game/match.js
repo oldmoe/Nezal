@@ -189,7 +189,7 @@ var DataLoader = {
 		        if ( Studio.match["kicks_b"] )
   		        $("penaltyB").innerHTML = Studio.match["kicks_b"];
 		      }
-		      
+
 	      }})
     }
 }

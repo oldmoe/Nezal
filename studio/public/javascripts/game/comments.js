@@ -86,8 +86,14 @@ var Comments = {
     },
     
     send : function(button, input_name) {
-        var element = $(input_name)
-        button.style.cursor = "progress";
+        if($(button).hasClassName('busy')) return
+		$(button).addClassName('busy')
+		myAudio.play('select')
+		var element = $(input_name)
+		
+		window.setTimeout(function(){
+			$(button).removeClassName('busy')
+		}, 30000)
         var matchId = "";
         if ( Comments.matchId() )
         {
@@ -99,7 +105,7 @@ var Comments = {
                               parameters: { message : element.value },
                               onComplete: function(transport, json){
                                   element.value = ''
-                                  button.style.cursor = "pointer";
+                                  
                               },
                           });   
     },
