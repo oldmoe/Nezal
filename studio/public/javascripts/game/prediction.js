@@ -39,7 +39,7 @@ var Prediction = {
                               onSuccess: function(t, json){
                                   Prediction.prediction = JSON.parse(t.responseText);
                                   button.style.cursor = "pointer";
-                                	FBConnect.publish();
+                                	FBConnect.publish(Studio.match, Prediction.prediction[0]);
                               },
                           });   
       }
