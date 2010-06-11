@@ -134,7 +134,7 @@ var FBConnect = {
     },
     publishScore : function(match, prediction) {
         var loc = "http://apps.facebook.com/" + FBConnect.url() + "/";
-        if (prediction && prediction.score)
+        if (prediction && prediction.score>=0)
         {
           var title = match.teamA.name_ar + ' ضد ' + match.teamB.name_ar
           var desc = ' توقعت نتيجة' + match.teamA.name_ar + ' ضد ' + match.teamB.name_ar  + 
