@@ -88,3 +88,8 @@ textarea {
   width : 80px;
   float : left;
 }
+
+#send_sms.busy{
+  background : url("/images/background/small-ajax-loader.gif") no-repeat scroll center  top ;
+  cursor : busy;
+}
