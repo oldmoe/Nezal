@@ -25,7 +25,7 @@
 			m.removeChild(m.childNodes[0])
 			if(m.childNodes[0]) m.removeChild(m.childNodes[0])
 		}		
-	},
+	}
 }
 
 
