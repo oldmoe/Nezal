@@ -55,11 +55,12 @@ var Ranking = {
         }
         for(k=0; k< response["friends_ranking"].length; k++)
         {
-          if(response["friends_ranking"]["me"] == true)
+          if(response["friends_ranking"][k]["me"] == true)
           {
             break;
           }
         }
+        k =  response["friends_ranking"].length - k - 1
         k += holders.length
 				$$('#friends-rank-container ul').first().update(Ranking.templates.ranking[1].process({users : response["friends_ranking"], holders : holders}));
 				
@@ -76,13 +77,14 @@ var Ranking = {
           holders[i] = i
         }
         var j; 
-        for(j=0; j< response["friends_ranking"].length; j++)
+        for(j=0; j< response["global_ranking"].length; j++)
         {
-          if(response["friends_ranking"]["me"] == true)
+          if(response["global_ranking"][j]["me"] == true)
           {
             break;
           }
         }
+        j =  response["global_ranking"].length - j - 1
         j += holders.length
 				$$('#global-rank-container ul').first().update(Ranking.templates.ranking[1].process({users : response["global_ranking"], holders : holders}));
 				
