@@ -96,7 +96,7 @@ var FBConnect = {
         });
     },
     publish : function(match, prediction) {
-        var loc = window.location.toString();
+        var loc = "http://apps.facebook.com/" + FBConnect.url() + "/";
         if (prediction)
         {
           var title = match.teamA.name_ar + ' ضد ' + match.teamB.name_ar + " " +  prediction.goals_a + "-" + prediction.goals_b
@@ -105,11 +105,10 @@ var FBConnect = {
                      ' لمياراة '+
                      match.teamA.name_ar + ' ضد ' + match.teamB.name_ar  +
 ' بكأس العالم 2010. توقع و لنري الاقرب لنتيجة المباراة'
-                     
           FB.ui(
                 {
                   method: 'stream.publish',
-                  display : 'popup',
+                  display: 'popup',
                   message: '',
                   attachment: {
                     name : title,
@@ -132,6 +131,44 @@ var FBConnect = {
                 }
           );
         }
+    },
+    publishScore : function(match, prediction) {
+        var loc = "http://apps.facebook.com/" + FBConnect.url() + "/";
+        if (prediction && prediction.score)
+        {
+          var title = match.teamA.name_ar + ' ضد ' + match.teamB.name_ar
+          var desc = ' توقعت نتيجة' + match.teamA.name_ar + ' ضد ' + match.teamB.name_ar  + 
+        " وحصلت علي  " +  prediction.score + " " + " نقطة "+ 
+' بكأس العالم 2010. هل يمكنك الحصول علي نقاط أكثر؟ '
+
+
+          FB.ui(
+                {
+                  method: 'stream.publish',
+                  display: 'popup',
+                  message: '',
+                  attachment: {
+                    name : title,
+                  	'media': [{ 'type': 'image', 
+                  	            'src': 'http://173.192.39.215/images/background/logo.png',
+                  	            'href': loc }],
+
+                    description: (
+                        desc
+                      )
+                      
+                  },
+                  action_links: [ {text:'توقع أنت', href: loc } ],
+                  user_message_prompt: 'أخبر أصدقائك بنتيجة توقعك و تحداهم للتوقعات القادمة '
+                },
+                function(response) {
+                  if (response && response.post_id) {
+                  } else {
+                  }
+                }
+          );
+        }
     }
+
 }
 

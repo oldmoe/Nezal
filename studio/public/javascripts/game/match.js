@@ -170,6 +170,15 @@ var DataLoader = {
 				      });
 			      })
 		      }
+		      
+		      if( Studio.data["prediction"].length > 0 && Studio.match.status == 'finished' )
+		      {
+      				if(Studio.data["prediction"][0].score != null && Studio.data["prediction"][0].score >= 0 ){
+	        				$("matchScore").style.visibility = "visible"
+	        				$("matchScore").innerHTML = Studio.data["prediction"][0].score
+    							$("publish").style.visibility = "visible"
+        			}
+	        }
 
 		      if( Studio.match.status == 'finished' )
 		      {  
@@ -180,15 +189,7 @@ var DataLoader = {
 		        if ( Studio.match["kicks_b"] )
   		        $("penaltyB").innerHTML = Studio.match["kicks_b"];
 		      }
-		      if( Studio.data["prediction"].length > 0 && Studio.match.status == 'finished' )
-		      {
-				if(Studio.data["prediction"][0].score != null && Studio.data["prediction"][0].score >= 0 ){
-					$("matchScore").style.visibility = "visible"
-					$("matchScore").innerHTML = Studio.data["prediction"][0].score
-					$("publish").style.visibility = "visible"
-				}
-		      }
-		      
+
 	      }})
     }
 }
