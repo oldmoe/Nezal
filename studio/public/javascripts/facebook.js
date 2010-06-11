@@ -95,36 +95,43 @@ var FBConnect = {
           }
         });
     },
-    publish : function() {
+    publish : function(match, prediction) {
         var loc = window.location.toString();
-        FB.ui(
-              {
-                method: 'stream.publish',
-                message: '',
-                attachment: {
-                  name : 'South Africa vs Mexico 1-0',
-                	'media': [{ 'type': 'image', 
-                	            'src': 'http://173.192.39.215/images/logo.png',
-                	            'href': loc }],
+        if (prediction)
+        {
+          var title = match.teamA.name_ar + ' ضد ' + match.teamB.name_ar + " " +  prediction.goals_a + "-" + prediction.goals_b
+          var desc = 'توقعت نتيجة' +
+                     prediction.goals_a + "-" + prediction.goals_b +
+                     ' لمياراة '+
+                     match.teamA.name_ar + ' ضد ' + match.teamB.name_ar  +
+' بكأس العالم 2010. توقع و لنري الاقرب لنتيجة المباراة'
+                     
+          FB.ui(
+                {
+                  method: 'stream.publish',
+                  display : 'popup',
+                  message: '',
+                  attachment: {
+                    name : title,
+                  	'media': [{ 'type': 'image', 
+                  	            'src': 'http://173.192.39.215/images/background/logo.png',
+                  	            'href': loc }],
 
-                  description: (
-                    'توقعت نتيجة 0-1 لمياراة جنوب أفريقياو المكسيك بكأس العالم 2010. توقع و لنري الاقرب لنتيجة المباراة'
-                    )
-                    
-
+                    description: (
+                        desc
+                      )
+                      
+                  },
+                  action_links: [ {text:'توقع أنت', href: loc } ],
+                  user_message_prompt: 'تحدي أصدقائك لتوقع نتيجة المباراة'
                 },
-                action_links: [ {text:'توقع أنت', href: loc } ],
-                user_message_prompt: 'تحدي أصدقائك لتوقع نتيجة المباراة'
-              },
-              function(response) {
-                if (response && response.post_id) {
-                  alert('Post was published.');
-                } else {
-                  alert('Post was not published.');
+                function(response) {
+                  if (response && response.post_id) {
+                  } else {
+                  }
                 }
-              }
-        );
-
+          );
+        }
     }
 }
 
