@@ -57,7 +57,7 @@ var FBConnect = {
           method:'fbml.dialog',
           width: '550px',
           fbml:'<fb:Fbml>   ' +
-                      '<fb:request-form action="'+ window.location  + '"' + ' method="post" invite="true" ' +
+                      '<fb:request-form action="'+ window.location  + '"' + ' method="get" invite="true" ' +
                                         'type="Studio SA 2010" content="I am predicting the results of the world cup 2010 on Studio S.A. Predict with me ' +
                                         '<fb:req-choice url=\'' + appUrl + '\' ' +  'label=\'Play\' />" >' +
                       '<div style="width : 80%; margin:auto;padding:auto;"> ' +
@@ -101,7 +101,7 @@ var FBConnect = {
           FB.ui(
                 {
                   method: 'stream.publish',
-                  display: 'dialog',
+                  display: 'popup',
                   message: '',
                   attachment: {
                     name : title,
@@ -135,7 +135,7 @@ var FBConnect = {
                 ' .كم جمعت؟'
           FB.ui(
                 {
-                  display: 'dialog',
+                  display: 'popup',
                   method: 'stream.publish',
                   message: '',
                   attachment: {
