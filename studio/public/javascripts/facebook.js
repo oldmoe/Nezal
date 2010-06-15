@@ -25,13 +25,6 @@ var FBConnect = {
     channelPath : "/html/facebook/xd_receiver.html",
     
     url : function(){
-		    /*var origDomain = document.domain
-		    try{
-			    document.domain = 'apps.facebook.com'
-		    }catch(e){
-		    }
-		    alert(window.location)
-		    */
 		    var data = window.location;
 		    data = data.toString().split("/");
 		    data = data[3];
@@ -64,7 +57,7 @@ var FBConnect = {
           method:'fbml.dialog',
           width: '550px',
           fbml:'<fb:Fbml>   ' +
-                      '<fb:request-form action="'+ window.location  + '"' + ' method="get" invite="true" ' +
+                      '<fb:request-form action="'+ window.location  + '"' + ' method="post" invite="true" ' +
                                         'type="Studio SA 2010" content="I am predicting the results of the world cup 2010 on Studio S.A. Predict with me ' +
                                         '<fb:req-choice url=\'' + appUrl + '\' ' +  'label=\'Play\' />" >' +
                       '<div style="width : 80%; margin:auto;padding:auto;"> ' +
@@ -104,11 +97,11 @@ var FBConnect = {
                      prediction.goals_a + "-" + prediction.goals_b +
                      ' لمباراة '+
                      match.teamA.name_ar + ' ضد ' + match.teamB.name_ar  +
-' بكأس العالم 2010. توقع و لنري الاقرب لنتيجة المباراة'
+' .هل لديك توقع أفضل؟'
           FB.ui(
                 {
                   method: 'stream.publish',
-                  display: 'popup',
+                  display: 'dialog',
                   message: '',
                   attachment: {
                     name : title,
@@ -136,35 +129,24 @@ var FBConnect = {
         var loc = "http://apps.facebook.com/" + FBConnect.url() + "/";
         if (prediction && prediction.score>=0)
         {
-          var title = match.teamA.name_ar + ' ضد ' + match.teamB.name_ar
-          var desc = ' توقعت نتيجة' + match.teamA.name_ar + ' ضد ' + match.teamB.name_ar  + 
-        " وحصلت علي  " +  prediction.score + " " + " نقطة "+ 
-' بكأس العالم 2010. هل يمكنك الحصول علي نقاط أكثر؟ '
-
-
+          var title = match.teamA.name_ar + ' ضد ' + match.teamB.name_ar;
+          var desc = ' جمعت' +  prediction.score + ' نقطة من مباراة '
+           + match.teamA.name_ar + ' ضد ' + match.teamB.name_ar +
+                ' .كم جمعت؟'
           FB.ui(
                 {
+                  display: 'dialog',
                   method: 'stream.publish',
-                  display: 'popup',
                   message: '',
                   attachment: {
                     name : title,
                   	'media': [{ 'type': 'image', 
                   	            'src': 'http://173.192.39.215/images/background/logo.png',
                   	            'href': loc }],
-
-                    description: (
-                        desc
-                      )
-                      
+                    description: (desc)
                   },
                   action_links: [ {text:'توقع أنت', href: loc } ],
-                  user_message_prompt: 'أخبر أصدقائك بنتيجة توقعك و تحداهم للتوقعات القادمة '
-                },
-                function(response) {
-                  if (response && response.post_id) {
-                  } else {
-                  }
+                  user_message_prompt: 'أخبر أصدقائك بنتيجة توقعك و تحداهم للتوقعات القادمة'
                 }
           );
         }
