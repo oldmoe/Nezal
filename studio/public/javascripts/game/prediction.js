@@ -4,8 +4,8 @@ var Prediction = {
 
     appId : function()
     {
-		    var data = window.location.toString().split("/")[3]
-		    return data
+		    var data = window.location.toString().split("/")[3];
+		    return data;
 	  },
 
     send : function( button ) {
@@ -28,6 +28,12 @@ var Prediction = {
         }
         if(!error)
         {
+          Prediction.prediction = { "goals_a" : parseInt($('goalsA').innerHTML),
+                                    "goals_b" : parseInt($('goalsB').innerHTML), 
+                                    "kicks_a" : $('penaltiesA').innerHTML,
+                                    "kicks_b" : $('penaltiesB').innerHTML
+                                  }
+          FBConnect.publish(Studio.match, Prediction.prediction);
           new Ajax.Request( "/" + Prediction.appId() + "/predictions/" + id, 
                           {
                               method:'post', 
@@ -35,12 +41,11 @@ var Prediction = {
                                 "goals_a" : $('goalsA').innerHTML,
                                 "goals_b" : $('goalsB').innerHTML,
                                 "kicks_a" : $('penaltiesA').innerHTML,
-                                "kicks_b" : $('penaltiesB').innerHTML,
+                                "kicks_b" : $('penaltiesB').innerHTML
                               },
                               onSuccess: function(t, json){
                                   Prediction.prediction = JSON.parse(t.responseText);
                                   $(button).removeClassName('busy')
-                                FBConnect.publish(Studio.match, Prediction.prediction[0]);
                               },
                           });   
       }
