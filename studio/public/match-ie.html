@@ -1,0 +1,142 @@
+<html>
+	<head>
+		<title>South Africa 2010</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<link type="text/css" href="stylesheets/game.css" rel="stylesheet" />
+		<link type="text/css" href="stylesheets/comments.css" rel="stylesheet" />
+		<link type="text/css" href="stylesheets/intro.css" rel="stylesheet" />
+		<script src="javascripts/prototype.js"></script>
+		<script src="javascripts/effects.js"></script>
+		<script src="javascripts/transitions.js"></script>
+		<script src="javascripts/sound.js"></script>
+		<script src="javascripts/template.js"></script>
+		<script src="javascripts/swfobject.js"></script>
+		<script src="javascripts/soundmanager2-nodebug-jsmin.js"></script>
+	</head>
+	<body id="body">
+<textarea id="data" style="display:none;">
+  This is a test
+</textarea>
+		<div id="rankings" style="display:none">
+			<div id="rankings_shade"></div>
+			<iframe id="rankings_frame"></iframe>
+			<div id="close" onclick="$('rankings').hide();">X</div>
+		</div>
+		<div id="game" style="display:none">
+			<img class="bg" src="images/background/background.png" />
+			<div id="header"></div>
+			<div id="content">
+				<div id="logo"></div>
+				<div id="score" class="overlay"></div>
+				<div id="left_screen" class="skew_left">
+					<div id="left_screen_content" class="tv_content"><!--img width=200 height=200 src='images/flags/mex.png'/-->
+					</div>
+				</div>
+				<div id="center_screen">
+					<div  id="center_screen_content" class="tv_content">
+						<div id="inner_center_screen_content">
+						</div>
+					</div>
+				</div>
+				<div id="right_screen" class="skew_right">
+					<div id="right_screen_content" class="tv_content">
+
+					<!--img width=200 height=200 src='images/flags/rsa.png'/-->
+					</div>
+				</div>
+				<div class="baloon" id="left_baloon" style="display:none">
+					<img class="bg" src="images/background/baloon_left.png" />
+					<div class="text" dir="rtl"></div>
+				</div>
+				<div class="baloon" id="right_baloon" style="display:none">
+					<img class="bg" src="images/background/baloon_right.png" />
+					<div class="text" dir="rtl"></div>
+				</div>
+				<div id="zareef">
+					<img class="bg" src="images/background/shafee2.png" />
+				</div>
+				<div id="baheeg">
+					<img class="bg" src="images/background/zareef.png" />
+				</div>
+				<div id="counter">
+					<img class="bg" src="images/background/counter.png" />
+				</div>
+				<div id="controls">
+					<div id="ranks" title="الترتيب"></div>
+					<div id="sound" class="on" title="تفعيل / غلق الأصوات"></div>
+					<a href="dashboard.html"><div id="dashboard" title="جدول المباريات"></div></a>
+					<div id="predict" onclick="Prediction.send(this); return false;"></div>
+					<div id="matchScore"></div>
+					<div id="publish" onclick="FBConnect.publishScore(  Studio.match, Studio.data['prediction'][0]); return false;"></div>
+					<div id="predictions" >
+						<div class="dial up left"></div>
+						<div class="dial down left"></div>
+						<div id ="goalsB" class="value left">00</div>
+						<div id ="goalsA" class="value right">00</div>
+						<div class="dial up right"></div>
+						<div class="dial down right"></div>
+					</div>
+					<div id="penalties">
+						<div class="dial up left"></div>
+						<div class="dial down left"></div>
+						<div id ="penaltiesB" class="value left">00</div>
+						<div id ="penaltiesA" class="value right">00</div>
+						<div class="dial up right"></div>
+						<div class="dial down right"></div>
+					</div>
+				</div>
+				<div id="center_piece">
+					  <div id="countdown" class="score"> </div>
+					  <div id="dashLink" onclick="window.location.href='dashboard.html'"></div>
+					<div id="teamA_name" class="teamName"></div>
+					<div id="teamB_name" class="teamName"></div>
+					<div id="teamA_flag"></div>
+					<div id="teamB_flag"></div>
+
+					<div id ="scoreA" class="score"> </div>					
+					<div id ="scoreB" class="score"> </div>
+					<div id ="penaltyA" class="penalty"> </div>
+					<div id ="penaltyB" class="penalty"> </div>
+
+				</div>
+				<div id="sms_bar">
+					<div id="sms_marquee"></div>
+					<div id="sms_icon"></div>
+				</div>
+				
+				<div id="comments">
+				  <div id="screen">
+					<textarea id="message" name="message" class="text-area" rows="7" cols="15"></textarea>
+				  </div>
+				  <div id="send_sms" onclick="Comments.send(this, 'message'); return false;"></div>
+				  <script>
+					Event.observe("message", 'keydown', function(event) {
+					  if($("message").value.length > 100)
+					  {
+						Event.stop(event);
+						$("message").value = $("message").value.substring(0, 100);
+					  }  
+					});
+				  </script>
+				</div>
+
+			</div>
+			<div id="footer"></div>
+		</div>
+		<div id="waitScreen"></div>
+		<div id="loadingScreen" style="display:none"></div>
+	</body>
+	<script src="javascripts/game/audio.js"></script>
+	<script src="javascripts/game/images.js"></script>
+	<script src="http://connect.facebook.net/en_US/all.js"></script>
+	<script src="javascripts/facebook-ie.js"></script>
+	<script src="javascripts/game/reactor.js"></script>
+	<script src="javascripts/game/timeline.js"></script>
+	<script src="javascripts/game/narrator.js"></script>
+	<script src="javascripts/game/sms.js"></script>
+	<script src="javascripts/game/studio.js"></script>
+	<script src="javascripts/game/comments.js"></script>
+	<script src="javascripts/game/prediction.js"></script>
+	<script src="javascripts/game/ads.js"></script>
+	<script src="javascripts/game/match-ie.js"></script>
+</html>
