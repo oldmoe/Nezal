@@ -11,7 +11,6 @@
 		<script src="javascripts/sound.js"></script>
 		<script src="javascripts/template.js"></script>
 		<script src="javascripts/swfobject.js"></script>
-		<script src="javascripts/soundmanager2-nodebug-jsmin.js"></script>
 	</head>
 	<!--[if IE]>
 		<style>
@@ -25,12 +24,13 @@
 			<div id="progress"><img id="bar" src='images/background/loading.png'/></div>
 		</div>
 	</body>
-	<script src="http://connect.facebook.net/en_US/all.js"></script>
-	<script src="javascripts/facebook.js"></script>
+	<!--script src="http://connect.facebook.net/en_US/all.js"></script>
+	<script src="javascripts/facebook.js"></script-->
 	<script src="javascripts/game/reactor.js"></script>
 	<script src="javascripts/game/timeline.js"></script>
 	<script src="javascripts/game/images.js"></script>
 	<script src="javascripts/game/sms.js"></script>
+	<script src="javascripts/soundmanager2-nodebug-jsmin.js"></script>
 	<script>
 		var image = new Image();
 		var bar = new Image();
@@ -39,7 +39,7 @@
 		var sound = null
 		soundManager.url = 'swf/';
 		soundManager.useHTML5Audio = true;
-		soundManager.onload = function(){
+		soundManager.onready(function(){
 			image.onload = function(){
 				$('loadingScreen').show();
 				bar.src = 'images/background/loading.png'
@@ -70,7 +70,7 @@
 			}
 			
 			ImageLoader.load();
-		}
+		})
 		function progress(){
 			if($('bar').style.width == '99%' ){
 				if(audioFinished){
@@ -85,4 +85,5 @@
 			window.setTimeout(progress, 150)
 		}
 	</script>
+
 </html>
