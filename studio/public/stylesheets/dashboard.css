@@ -359,3 +359,8 @@
 	height:30px;
 	top: 36px;
 }
+
+#rankings_frame{
+	border:none;
+	background:none;
+}
