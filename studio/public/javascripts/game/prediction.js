@@ -9,7 +9,7 @@ var Prediction = {
 	  },
 
     send : function( button ) {
-		if($(button).hasClassName('busy'))return
+		if($(button).hasClassName('busy') || $(button).hasClassName('off'))return
 		myAudio.play('select')
         $(button).addClassName('busy')
 		var id = window.location.search.toString().split('?')[1].split('=')[1].split('&')[0]
@@ -46,7 +46,7 @@ var Prediction = {
                               onSuccess: function(t, json){
                                   Prediction.prediction = JSON.parse(t.responseText);
                                   $(button).removeClassName('busy')
-                              },
+                              }
                           });   
       }
     }

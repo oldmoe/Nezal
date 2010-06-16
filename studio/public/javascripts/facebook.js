@@ -36,7 +36,6 @@ var FBConnect = {
         fbRoot = document.createElement('div');
         fbRoot.setAttribute("id", "fb-root");
         document.body.appendChild(fbRoot);
-        
         FB.init({
             appId  : FBConnect.appIds[FBConnect.url()],
             status : true, // check login status
@@ -44,7 +43,7 @@ var FBConnect = {
             xfbml  : true  // parse XFBML
         });
         FB.getLoginStatus(function(response) {
-            if (response.session) {
+			if (response.session) {
               successCallback();
             }else{
               Display.fetch("/html/studio/placeHolder.html", "game");

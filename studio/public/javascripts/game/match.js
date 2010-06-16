@@ -118,10 +118,10 @@ var DataLoader = {
 		      Studio.teams.each(function(team, index){
 			      Studio.match[team] = Studio.data[team][0]
 			      var image = new Image
-			      image.src = '../images/flags/'+Studio.match[team].abrv.toLowerCase()+'.png'			
 			      image.onload = function(){
 				      $(team+'_flag').appendChild(image)
 			      }
+			      image.src = '../images/flags/'+Studio.match[team].abrv.toLowerCase()+'.png'			
 			      $(team+'_name').innerHTML = Studio.match[team].name_ar
 			      var talk = Studio.match[team].info.split('\n')
 			      var side = [Studio.right, Studio.left][index]
