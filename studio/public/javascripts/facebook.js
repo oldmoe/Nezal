@@ -53,20 +53,29 @@ var FBConnect = {
     },
     invite : function(){
         var appUrl = "http://apps.facebook.com/" + FBConnect.url();
-        FB.ui({
-          method:'fbml.dialog',
-          width: '550px',
-          fbml:'<fb:Fbml>   ' +
-                      '<fb:request-form action="'+ window.location  + '"' + ' method="get" invite="true" ' +
-                                        'type="Studio SA 2010" content="I am predicting the results of the world cup 2010 on Studio S.A. Predict with me ' +
-                                        '<fb:req-choice url=\'' + appUrl + '\' ' +  'label=\'Play\' />" >' +
-                      '<div style="width : 80%; margin:auto;padding:auto;"> ' +
-                        '<fb:multi-friend-selector showborder="false" actiontext="Invite your friends to play Studio South Africa 2010 with you" cols="3" rows="2"/>' +         
-                      '<div/> ' +
-                      '</fb:request-form>' +
-                '</fb:Fbml> '
-        });
-    },    
+        FB.api(
+            {
+              method: 'friends.getAppUsers',
+            },
+            function(response) {
+                var ids = response;
+                console.log(response)
+                FB.ui({
+                    method:'fbml.dialog',
+                    width: '550px',
+                    fbml:'<fb:Fbml>   ' +
+                                '<fb:request-form action="#"' + ' method="GET" invite="true" ' +
+                                                  'type="Studio SA 2010" content="I am predicting the results of the world cup 2010 on Studio S.A. Predict with me ' +
+                                                  '<fb:req-choice url=\'' + appUrl + '\' ' +  'label=\'Play\' />" >' +
+                                '<div style="width : 80%; margin:auto;padding:auto;"> ' +
+                                  '<fb:multi-friend-selector showborder="false"' + 'exclude_ids="' + ids + '"' + 'actiontext="Invite your friends to play Studio South Africa 2010 with you" cols="3" rows="2"/>' +         
+                                '<div/> ' +
+                                '</fb:request-form>' +
+                          '</fb:Fbml> '
+                  });
+            }
+        );
+    },
     connect : function() {
         FB.login(function(response) {
             if (response.session) {

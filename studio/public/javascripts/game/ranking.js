@@ -1,6 +1,6 @@
 var Configs = {
   template_path : "/javascripts/templates",  
-  html_path : "../../html/studio",
+  html_path : "../../html/studio"
 }
 
 var Ranking = {
@@ -11,7 +11,7 @@ var Ranking = {
                    "round16_score" : { "default" : "round16-blue" , "selected" : "round16-orange" } , 
                    "quarters_score" : { "default" : "quarters-blue" , "selected" : "quarters-orange" } ,
                    "semis_score" : { "default" : "semis-blue" , "selected" : "semis-orange" } ,
-                   "finals_score" : { "default" : "finals-blue" , "selected" : "finals-orange" } ,
+                   "finals_score" : { "default" : "finals-blue" , "selected" : "finals-orange" }
                 },
 
   selectedRound : "global_score",
@@ -21,13 +21,13 @@ var Ranking = {
   globalRankCarousel : null,
   
   templates : {
-    ranking: [Configs.template_path + "/ranking.tpl",  0],
+    ranking: [Configs.template_path + "/ranking.tpl",  0]
   },
 
   appId : function()
   {
-    var data = window.location.toString().split("/")[3]
-    return data
+    var data = window.location.toString().split("/")[3];
+    return data;
   },
 
   fetchTemplate: function(template){
@@ -62,6 +62,10 @@ var Ranking = {
         }
         k =  response["friends_ranking"].length - k - 1
         k += holders.length
+        if(k < 10)
+        { 
+          k--;
+        }
 				$$('#friends-rank-container ul').first().update(Ranking.templates.ranking[1].process({users : response["friends_ranking"], holders : holders}));
 				
         holders = []
@@ -86,6 +90,10 @@ var Ranking = {
         }
         j =  response["global_ranking"].length - j - 1
         j += holders.length
+        if(j < 10)
+        { 
+          j--;
+        }
 				$$('#global-rank-container ul').first().update(Ranking.templates.ranking[1].process({users : response["global_ranking"], holders : holders}));
 				
         holders = [];
@@ -119,7 +127,7 @@ var Ranking = {
     for(var template in Ranking.templates){
       Ranking.fetchTemplate(template);
 	  }
-  },
+  }
 	
 }
 
