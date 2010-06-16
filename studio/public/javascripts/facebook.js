@@ -4,13 +4,10 @@
                                   onSuccess: function(t){
                                     Display.alter(place, t.responseText);
                                   },
-                                  onComplete: function(t){
-
-                      		        }
+                                  onComplete: function(t){}
                               });
     },
-    alter: function(divId, newContent)
-    {
+    alter: function(divId, newContent)  {
         $(divId).replace(newContent);
     }
 }
@@ -53,9 +50,7 @@ var FBConnect = {
     invite : function(){
         var appUrl = "http://apps.facebook.com/" + FBConnect.url();
         FB.api(
-            {
-              method: 'friends.getAppUsers'
-            },
+            {  method: 'friends.getAppUsers' },
             function(response) {
                 var ids = response;
                 FB.ui({
@@ -116,9 +111,7 @@ var FBConnect = {
                   	            'src': 'http://173.192.39.215/images/background/logo.png',
                   	            'href': loc }],
 
-                    description: (
-                        desc
-                      )
+                    description: (desc)
                       
                   },
                   action_links: [ {text:'توقع أنت', href: loc } ],
