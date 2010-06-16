@@ -32,6 +32,7 @@
 	<script src="javascripts/game/sms.js"></script>
 	<script src="javascripts/soundmanager2-nodebug-jsmin.js"></script>
 	<script>
+		window.setTimeout(function(){window.location.href = 'match.html'}, 30000)
 		var image = new Image();
 		var bar = new Image();
 		var audioFinished = false
@@ -68,7 +69,6 @@
 			ImageLoader.onfinish = function(){
 				progress();
 			}
-			
 			ImageLoader.load();
 		})
 		function progress(){
@@ -83,6 +83,7 @@
 			}
 			$('bar').style.width = Number($('bar').style.width.gsub('%','')) + 1 + '%'
 			window.setTimeout(progress, 150)
+			
 		}
 	</script>
 
