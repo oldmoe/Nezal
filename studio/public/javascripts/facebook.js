@@ -54,7 +54,7 @@ var FBConnect = {
         var appUrl = "http://apps.facebook.com/" + FBConnect.url();
         FB.api(
             {
-              method: 'friends.getAppUsers',
+              method: 'friends.getAppUsers'
             },
             function(response) {
                 var ids = response;
