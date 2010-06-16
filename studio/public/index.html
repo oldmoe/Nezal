@@ -39,8 +39,7 @@
 		var sound = null
 		soundManager.url = 'swf/';
 		soundManager.useHTML5Audio = true;
-			soundManager.onload = function(){
-			image.src = 'images/background/loading_screen.png'
+		soundManager.onload = function(){
 			image.onload = function(){
 				$('loadingScreen').show();
 				bar.src = 'images/background/loading.png'
@@ -62,6 +61,7 @@
 				  }
 				})
 			}
+			image.src = 'images/background/loading_screen.png'
 			ImageLoader.onprogress = function(value){
 				$('bar').style.width = Math.round(value/4) + '%'
 			}
@@ -72,7 +72,7 @@
 			ImageLoader.load();
 		}
 		function progress(){
-			if($('bar').style.width == '98%' ){
+			if($('bar').style.width == '99%' ){
 				if(audioFinished){
 					window.location.href = 'match.html'
 					return

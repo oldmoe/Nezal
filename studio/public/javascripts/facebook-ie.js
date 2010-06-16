@@ -44,6 +44,7 @@ var FBConnect = {
         fbRoot.setAttribute("id", "fb-root");
         document.body.appendChild(fbRoot);
         Callback.callback = successCallback;
+        alert('will init')
         FB.init({
             appId : FBConnect.appIds[FBConnect.url()],
             apiKey : FBConnect.appIds[FBConnect.url()],
@@ -51,13 +52,14 @@ var FBConnect = {
             cookie : true, // enable cookies to allow the server to access the session
             xfbml  : true  // parse XFBML
         });
-        FB.getLoginStatus(FBConnect.handleSession);
+        alert('did init')
+        FB.getLoginStatus(this.handleSession);
     },
     
-    handleSession : function(response){  
+    handleSession : function(response){
+		alert('session came back')
         if (!response.session)
         {
-            alert("else");
             Display.fetch("/html/studio/placeHolder.html", "game");
             return;
         }
@@ -178,4 +180,3 @@ var FBConnect = {
     }
 
 }
-
