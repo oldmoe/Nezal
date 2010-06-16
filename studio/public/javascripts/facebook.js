@@ -59,7 +59,6 @@ var FBConnect = {
             },
             function(response) {
                 var ids = response;
-                console.log(response)
                 FB.ui({
                     method:'fbml.dialog',
                     width: '550px',
