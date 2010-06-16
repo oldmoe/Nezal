@@ -60,24 +60,32 @@
 	
 	scrolling : true,
 	
+	scrollUp : function(div){
+		if(!Dashboard.scrolling) return
+		if(div.hasClassName('off')) return
+		Dashboard.scrolling = false
+		$$('.next_button')[0].removeClassName('off')
+		new Effect.Move('groupsTable', {x:0, y: - 397, mode: 'relative', duration: 1.0 , afterFinish : function(){ Dashboard.scrolling = true }})
+		myAudio.play('arrow_up_down')
+		if(Number($('groupsTable').style.top.gsub('px','')) - 397 + $('groupsTable').getHeight() <= 397 ) div.addClassName('off')
+	},
+	
+	scrollDown : function(div){
+		if(!Dashboard.scrolling) return
+		if(div.hasClassName('off')) return
+		Dashboard.scrolling = false
+		$$('.previous_button')[0].removeClassName('off')
+		new Effect.Move('groupsTable', {x:0, y: 397, mode: 'relative', duration: 1.0 , afterFinish : function(){ Dashboard.scrolling = true }})
+		myAudio.play('arrow_up_down')
+		if(Number($('groupsTable').style.top.gsub('px','')) + 397 >= 0 ) div.addClassName('off')
+	},
+	
 	setupScrolling : function(){
 		$$('.previous_button')[0].observe('click', function(){
-			if(!Dashboard.scrolling) return
-			if(this.hasClassName('off')) return
-			Dashboard.scrolling = false
-			$$('.next_button')[0].removeClassName('off')
-			new Effect.Move('groupsTable', {x:0, y: - 397, mode: 'relative', duration: 1.0 , afterFinish : function(){ Dashboard.scrolling = true }})
-			myAudio.play('arrow_up_down')
-			if(Number($('groupsTable').style.top.gsub('px','')) - 397 + $('groupsTable').getHeight() <= 397 ) this.addClassName('off')
+			Dashboard.scrollUp(this)
 		})
 		$$('.next_button')[0].observe('click', function(){		
-			if(!Dashboard.scrolling) return
-			if(this.hasClassName('off')) return
-			Dashboard.scrolling = false
-			$$('.previous_button')[0].removeClassName('off')
-			new Effect.Move('groupsTable', {x:0, y: 397, mode: 'relative', duration: 1.0 , afterFinish : function(){ Dashboard.scrolling = true }})
-			myAudio.play('arrow_up_down')
-			if(Number($('groupsTable').style.top.gsub('px','')) + 397 >= 0 ) this.addClassName('off')
+			Dashboard.scrollDown(this)
 		})
 	},
 	
@@ -145,6 +153,7 @@ $(document).observe('dom:loaded',function(){
 		$('groupsTable').show()
 		$('groupsTable').innerHTML = TrimPath.processDOMTemplate('table', {locations:Dashboard.matchesToLocations('first_round')})
 		Dashboard.setupScrolling();
+		Dashboard.scrollUp($$('.previous_button')[0])
 		$('ranks').observe('click', function(){
 			  if($('rankings_frame').src == null || $('rankings_frame').src == ''){
 				$('rankings_frame').src = 'html/studio/ranking.html'
