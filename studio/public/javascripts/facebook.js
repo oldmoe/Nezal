@@ -35,6 +35,7 @@ var FBConnect = {
         document.body.appendChild(fbRoot);
         FB.init({
             appId  : FBConnect.appIds[FBConnect.url()],
+            apiKey  : FBConnect.appIds[FBConnect.url()],
             status : true, // check login status
             cookie : true, // enable cookies to allow the server to access the session
             xfbml  : true  // parse XFBML
