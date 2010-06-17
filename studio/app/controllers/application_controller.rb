@@ -46,7 +46,7 @@ class ApplicationController < Sinatra::Base
   protected
     
   def get_fb_session
-	if fb_cookie = env['rack.request.cookie_hash']["fbs_#{@app_configs['id']}"] || env['rack.request.cookie_hash']["fbs_#{@app_configs['key']}"]
+	if env['rack.request.cookie_hash'] && (fb_cookie = env['rack.request.cookie_hash']["fbs_#{@app_configs['id']}"] || env['rack.request.cookie_hash']["fbs_#{@app_configs['key']}"])
 		cookie = CGI::parse(fb_cookie)
         @fb_uid = cookie['uid'][0].split('"')[0]
         @fb_session_key = cookie['session_key'][0]
