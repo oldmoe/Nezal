@@ -1,5 +1,5 @@
 var Configs = {
-  template_path : "/javascripts/templates",  
+  template_path : "/javascripts/templates"  
 }
 
 var Comments = {
@@ -37,7 +37,7 @@ var Comments = {
     
     templates : {
         comments: [Configs.template_path + "/comments.tpl",  0],
-        sms: [Configs.template_path + "/sms.tpl",  0],
+        sms: [Configs.template_path + "/sms.tpl",  0]
     },
 
     fetchTemplate: function(template, callback){
@@ -46,7 +46,7 @@ var Comments = {
                               onSuccess: function(t){
                           		  Comments.templates[template][1] = TrimPath.parseTemplate(t.responseText);
                           		  callback();
-                              },
+                              }
                           });
     },
     
@@ -72,7 +72,7 @@ var Comments = {
                                 			    window.setTimeout( Comments.refreshUpdate, 1000);
                   			          		}
                   			          		window.setTimeout( Comments.fetch, 20000 );
-                                  },
+                                  }
                               });
     },
     
@@ -106,7 +106,7 @@ var Comments = {
                               onComplete: function(transport, json){
                                   element.value = ''
                                   
-                              },
+                              }
                           });   
     },
     

@@ -2,8 +2,8 @@
 	months : [0,0,0,0,0,'يونيو','يوليو'],
 	rounds : {
 		first_round : {
-			start : new Date('2010-06-11'),
-			end : new Date('2010-06-25'),
+			start : Date.parse('2010-06-11'),
+			end : Date.parse('2010-06-25'),
 			locations : [					
 					[1, 0, 1, 0], 
 					[1, 1, 0, 1], 
@@ -23,8 +23,8 @@
 			]
 		},
 		round_16 : {
-			start : new Date('2010-06-26'),
-			end : new Date('2010-06-29'),
+			start : Date.parse('2010-06-26'),
+			end : Date.parse('2010-06-29'),
 			locations : [
 				[1, 0, 1, 0],
 				[0, 1, 1, 0],
@@ -33,24 +33,24 @@
 			]
 		},
 		quarters : {
-			start : new Date('2010-07-02'),
-			end : new Date('2010-07-03'),
+			start : Date.parse('2010-07-02'),
+			end : Date.parse('2010-07-03'),
 			locations : [
 				[1, 0, 1, 0],
 				[0, 1, 0, 1]
 			]
 		},
 		semis : {
-			start : new Date('2010-07-06'),
-			end : new Date('2010-07-07'),
+			start : Date.parse('2010-07-06'),
+			end : Date.parse('2010-07-07'),
 			locations : [
 				[1, 0, 1, 0],
 				[0, 1, 0, 1]
 			]
 		},
 		finals : {
-			start : new Date('2010-07-10'),
-			end : new Date('2010-07-11'),
+			start : Date.parse('2010-07-10'),
+			end : Date.parse('2010-07-11'),
 			locations : [
 				[1, 0, 1, 0],
 				[0, 1, 0, 1]
@@ -60,24 +60,32 @@
 	
 	scrolling : true,
 	
+	scrollUp : function(div){
+		if(!Dashboard.scrolling) return
+		if(div.hasClassName('off')) return
+		Dashboard.scrolling = false
+		$$('.next_button')[0].removeClassName('off')
+		new Effect.Move('groupsTable', {x:0, y: - 397, mode: 'relative', duration: 1.0 , afterFinish : function(){ Dashboard.scrolling = true }})
+		myAudio.play('arrow_up_down')
+		if(Number($('groupsTable').style.top.gsub('px','')) - 397 + $('groupsTable').getHeight() <= 397 ) div.addClassName('off')
+	},
+	
+	scrollDown : function(div){
+		if(!Dashboard.scrolling) return
+		if(div.hasClassName('off')) return
+		Dashboard.scrolling = false
+		$$('.previous_button')[0].removeClassName('off')
+		new Effect.Move('groupsTable', {x:0, y: 397, mode: 'relative', duration: 1.0 , afterFinish : function(){ Dashboard.scrolling = true }})
+		myAudio.play('arrow_up_down')
+		if(Number($('groupsTable').style.top.gsub('px','')) + 397 >= 0 ) div.addClassName('off')
+	},
+	
 	setupScrolling : function(){
 		$$('.previous_button')[0].observe('click', function(){
-			if(!Dashboard.scrolling) return
-			if(this.hasClassName('off')) return
-			Dashboard.scrolling = false
-			$$('.next_button')[0].removeClassName('off')
-			new Effect.Move('groupsTable', {x:0, y: - 397, mode: 'relative', duration: 1.0 , afterFinish : function(){ Dashboard.scrolling = true }})
-			myAudio.play('arrow_up_down')
-			if(Number($('groupsTable').style.top.gsub('px','')) - 397 + $('groupsTable').getHeight() <= 397 ) this.addClassName('off')
+			Dashboard.scrollUp(this)
 		})
 		$$('.next_button')[0].observe('click', function(){		
-			if(!Dashboard.scrolling) return
-			if(this.hasClassName('off')) return
-			Dashboard.scrolling = false
-			$$('.previous_button')[0].removeClassName('off')
-			new Effect.Move('groupsTable', {x:0, y: 397, mode: 'relative', duration: 1.0 , afterFinish : function(){ Dashboard.scrolling = true }})
-			myAudio.play('arrow_up_down')
-			if(Number($('groupsTable').style.top.gsub('px','')) + 397 >= 0 ) this.addClassName('off')
+			Dashboard.scrollDown(this)
 		})
 	},
 	
@@ -97,16 +105,18 @@
 		var round = this.rounds[round]
 		var self = this
 		round.locations.each(function(location, index){
-			var date = new Date(round.start) 
+			var date = new Date(round.start.toString()) 
 			date.setDate(date.getDate()+index)
 			var matches = self.matchesForDay(date)
 			var matchedLocations = []
 			location.each(function(loc, i){
+				var match = null
 				if(loc == 1){
-					matchedLocations.push(matches.shift())
+					match = matches.shift()
 				}else{
-					matchedLocations.push({date:date, empty:true})
+					match = {date:date, empty:true}
 				}
+				matchedLocations.push(match)
 			})
 			locations.push(matchedLocations)
 		})
@@ -133,7 +143,7 @@ $(document).observe('dom:loaded',function(){
 		Dashboard.data.matches.each(function(match, index){
 			match = match[0]
 			time = match.start_time
-			match.date = new Date(time.split(' ')[0])
+			match.date = Date.parse(time.split(' ')[0])
 			match.teamA = Dashboard.getTeamById(match.team_a_id)
 			match.teamB = Dashboard.getTeamById(match.team_b_id)
 			match.prediction = Dashboard.getPredictionByMatchId(match.id)
@@ -143,6 +153,7 @@ $(document).observe('dom:loaded',function(){
 		$('groupsTable').show()
 		$('groupsTable').innerHTML = TrimPath.processDOMTemplate('table', {locations:Dashboard.matchesToLocations('first_round')})
 		Dashboard.setupScrolling();
+		Dashboard.scrollUp($$('.previous_button')[0])
 		$('ranks').observe('click', function(){
 			  if($('rankings_frame').src == null || $('rankings_frame').src == ''){
 				$('rankings_frame').src = 'html/studio/ranking.html'

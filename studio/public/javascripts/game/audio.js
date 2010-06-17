@@ -74,9 +74,9 @@ var myAudio = {
 }
 
 soundManager.url = 'swf/';
-soundManager.useHTML5Audio = true;
-soundManager.onload = function(){
+//soundManager.useHTML5Audio = true;
+soundManager.onready(function(){
 	studioSounds.each(function(sound){
 		myAudio.load(sound);
 	})
-}
+})

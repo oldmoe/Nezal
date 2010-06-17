@@ -56,7 +56,6 @@ var DataLoader = {
 		$('sound').observe('click', function(){
 			myAudio.toggle(this);
 		})
-		alert("load");
 		new AdManager('left_screen_content', '_small', 14, 15000)
 		new AdManager('right_screen_content', '_small', 14)
 		$('ranks').observe('click', function(){
@@ -66,7 +65,6 @@ var DataLoader = {
 			  $('rankings_shade').setOpacity(0.8)
 			  $('rankings').show();
 		})
-  	alert("load2");
 		if(!window.location.search){
 			return this.index()
 		}
@@ -102,7 +100,6 @@ var DataLoader = {
 				      $('penalties').addClassName('off')
 			      }			
 		      }
-		      		alert("load3");
 		      if(Studio.match.prediction)
 		      {
 				["goals_a", "goals_b", "kicks_a", "kicks_b"].each( function(i) {
@@ -121,10 +118,10 @@ var DataLoader = {
 		      Studio.teams.each(function(team, index){
 			      Studio.match[team] = Studio.data[team][0]
 			      var image = new Image
-			      image.src = '../images/flags/'+Studio.match[team].abrv.toLowerCase()+'.png'			
 			      image.onload = function(){
 				      $(team+'_flag').appendChild(image)
 			      }
+			      image.src = '../images/flags/'+Studio.match[team].abrv.toLowerCase()+'.png'			
 			      $(team+'_name').innerHTML = Studio.match[team].name_ar
 			      var talk = Studio.match[team].info.split('\n')
 			      var side = [Studio.right, Studio.left][index]
@@ -140,7 +137,6 @@ var DataLoader = {
 			      Studio.events.push([function(){side.speak(' كل التوفيق لـ'+' '+name)}, 25])
 			      Studio.events.push([function(){side.unspeak()}, 25])	
 		      })
-		      		      		alert("load3");
 			  Studio.events.push([function(){return new AdManager('center_screen_content', '', 14, 20000)}, 25])		
 			  if(Studio.match.status == 'open'){
 			      $$("#predictions .dial").each(function(button){
@@ -174,16 +170,14 @@ var DataLoader = {
 				      });
 			      })
 		      }
-		      		      		alert("load3");
 		      if( Studio.data["prediction"].length > 0 && Studio.match.status == 'finished' )
 		      {
       				if(Studio.data["prediction"][0].score != null && Studio.data["prediction"][0].score >= 0 ){
 	        				$("matchScore").style.visibility = "visible"
 	        				$("matchScore").innerHTML = Studio.data["prediction"][0].score
-    							$("publish").style.visibility = "visible"
+    						$("publish").style.visibility = "visible"
         			}
 	        }
-		      		alert("load6");
 		      if( Studio.match.status == 'finished' )
 		      {  
 		        $("scoreA").innerHTML = Studio.match["goals_a"];
@@ -195,20 +189,20 @@ var DataLoader = {
 		      }
 
 	      }})
-	      		      		alert("load7");
     }
 }
+
+alert('match.js')
 
 $(document).observe('dom:loaded',function(){
    swfobject.embedSWF("http://www.youtube.com/apiplayer?enablejsapi=1&version=3", "inner_center_screen_content", "250", "250", "9.0.0", null, null, { wmode : 'transparent', allowScriptAccess: "always" });
    FBConnect.init( function() {
-          alert("success")
-				  DataLoader.load();
-				  ImageLoader.onfinish = function(){
-					  myAudio.play('match_studio_crowd')
-					  Studio.reactor.run(function(){Studio.timeline.run()})
-					  Comments.initialize();
-				  }
-				  ImageLoader.load();
+		  DataLoader.load();
+		  ImageLoader.onfinish = function(){
+			  myAudio.play('match_studio_crowd')			  
+			  Studio.reactor.run(function(){Studio.timeline.run()})
+			  Comments.initialize();
+		  }
+		  ImageLoader.load();
 	});
 })

@@ -31,10 +31,11 @@
     <script src="http://ajax.googleapis.com/ajax/libs/prototype/1.6.1.0/prototype.js"></script>
 
     <div id="fb-root"></div>
+	<script src="javascripts/date.js"></script>
     <script src="http://connect.facebook.net/en_US/all.js"></script>
     <script>
-      // initialize the library with the API key
-      FB.init({ apiKey: '103040546410849' });
+	  // initialize the library with the API key
+      FB.init({ apiKey: '103040546410849', cookie:true });
       // fetch the status on load
       FB.getLoginStatus(handleSessionResponse);
       // handle a session response from any of the auth related calls
@@ -45,7 +46,6 @@
           clearDisplay();
           return;
         }
-
         // if we have a session, query for the user's profile picture and name
         FB.api(
           {

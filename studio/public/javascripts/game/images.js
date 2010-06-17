@@ -8,7 +8,6 @@ var ImageLoader = {
 		var self = this;
 		this.list.each(function(name, index){
 			self.images[name] = new Image
-			self.images[name].src = 'images/background/'+name+'.png'
 			self.images[name].onload = function(){
 				self.done++
 				if(self.onprogress){
@@ -20,6 +19,7 @@ var ImageLoader = {
 					}
 				}
 			}
+			self.images[name].src = 'images/background/'+name+'.png'
 		})
 	}
 	

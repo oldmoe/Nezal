@@ -11,7 +11,6 @@
 		<script src="javascripts/sound.js"></script>
 		<script src="javascripts/template.js"></script>
 		<script src="javascripts/swfobject.js"></script>
-		<script src="javascripts/soundmanager2-nodebug-jsmin.js"></script>
 	</head>
 	<!--[if IE]>
 		<style>
@@ -25,22 +24,23 @@
 			<div id="progress"><img id="bar" src='images/background/loading.png'/></div>
 		</div>
 	</body>
-	<script src="http://connect.facebook.net/en_US/all.js"></script>
-	<script src="javascripts/facebook.js"></script>
+	<!--script src="http://connect.facebook.net/en_US/all.js"></script>
+	<script src="javascripts/facebook.js"></script-->
 	<script src="javascripts/game/reactor.js"></script>
 	<script src="javascripts/game/timeline.js"></script>
 	<script src="javascripts/game/images.js"></script>
 	<script src="javascripts/game/sms.js"></script>
+	<script src="javascripts/soundmanager2-nodebug-jsmin.js"></script>
 	<script>
+		window.setTimeout(function(){window.location.href = 'match.html'}, 30000)
 		var image = new Image();
 		var bar = new Image();
 		var audioFinished = false
 		var progressFinished = false
 		var sound = null
 		soundManager.url = 'swf/';
-		soundManager.useHTML5Audio = true;
-			soundManager.onload = function(){
-			image.src = 'images/background/loading_screen.png'
+		//soundManager.useHTML5Audio = true;
+		soundManager.onready(function(){
 			image.onload = function(){
 				$('loadingScreen').show();
 				bar.src = 'images/background/loading.png'
@@ -62,17 +62,17 @@
 				  }
 				})
 			}
+			image.src = 'images/background/loading_screen.png'
 			ImageLoader.onprogress = function(value){
 				$('bar').style.width = Math.round(value/4) + '%'
 			}
 			ImageLoader.onfinish = function(){
 				progress();
 			}
-			
 			ImageLoader.load();
-		}
+		})
 		function progress(){
-			if($('bar').style.width == '98%' ){
+			if($('bar').style.width == '99%' ){
 				if(audioFinished){
 					window.location.href = 'match.html'
 					return
@@ -83,6 +83,8 @@
 			}
 			$('bar').style.width = Number($('bar').style.width.gsub('%','')) + 1 + '%'
 			window.setTimeout(progress, 150)
+			
 		}
 	</script>
+
 </html>

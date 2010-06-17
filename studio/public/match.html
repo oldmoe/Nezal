@@ -5,6 +5,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<link type="text/css" href="stylesheets/game.css" rel="stylesheet" />
 		<link type="text/css" href="stylesheets/comments.css" rel="stylesheet" />
+		<link type="text/css" href="stylesheets/intro.css" rel="stylesheet" />
 		<script src="javascripts/prototype.js"></script>
 		<script src="javascripts/effects.js"></script>
 		<script src="javascripts/transitions.js"></script>
@@ -34,10 +35,9 @@
 يمكنكم إدخال توقعاتكم قبل بدء المبارة بيومين و سيتم إيقاف التوقعات بمجرد بدء المبارة.
  و في النهاية نتمنى لكم حظاً طيباً و قضاء وقت ممتع مع استوديو التحليل.
 ابقو معنا.</textarea>
-		<div id="fb-root" style="display:none;"></div>
 		<div id="rankings" style="display:none">
 			<div id="rankings_shade"></div>
-			<iframe id="rankings_frame"></iframe>
+			<iframe id="rankings_frame" style="border:none;background:none;overflow:hidden"></iframe>
 			<div id="close" onclick="$('rankings').hide();">X</div>
 		</div>
 		<div id="game" style="display:none">
@@ -143,18 +143,18 @@
 		</div>
 		<div id="waitScreen"></div>
 		<div id="loadingScreen" style="display:none"></div>
+		<script src="javascripts/game/audio.js"></script>
+		<script src="javascripts/game/images.js"></script>
+		<script src="javascripts/game/reactor.js"></script>
+		<script src="javascripts/game/timeline.js"></script>
+		<script src="javascripts/game/narrator.js"></script>
+		<script src="javascripts/game/sms.js"></script>
+		<script src="javascripts/game/studio.js"></script>
+		<script src="javascripts/game/comments.js"></script>
+		<script src="javascripts/game/prediction.js"></script>
+		<script src="javascripts/game/ads.js"></script>
+		<script src="http://connect.facebook.net/en_US/all.js"></script>
+		<script src="javascripts/facebook.js"></script>
+		<script src="javascripts/game/match.js"></script>
 	</body>
-	<script src="javascripts/game/audio.js"></script>
-	<script src="javascripts/game/images.js"></script>
-	<script src="http://connect.facebook.net/en_US/all.js"></script>
-	<script src="javascripts/facebook.js"></script>
-	<script src="javascripts/game/reactor.js"></script>
-	<script src="javascripts/game/timeline.js"></script>
-	<script src="javascripts/game/narrator.js"></script>
-	<script src="javascripts/game/sms.js"></script>
-	<script src="javascripts/game/studio.js"></script>
-	<script src="javascripts/game/comments.js"></script>
-	<script src="javascripts/game/prediction.js"></script>
-	<script src="javascripts/game/ads.js"></script>
-	<script src="javascripts/game/match.js"></script>
 </html>

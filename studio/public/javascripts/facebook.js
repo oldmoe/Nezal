@@ -4,13 +4,10 @@
                                   onSuccess: function(t){
                                     Display.alter(place, t.responseText);
                                   },
-                                  onComplete: function(t){
-
-                      		        }
+                                  onComplete: function(t){}
                               });
     },
-    alter: function(divId, newContent)
-    {
+    alter: function(divId, newContent)  {
         $(divId).replace(newContent);
     }
 }
@@ -36,7 +33,6 @@ var FBConnect = {
         fbRoot = document.createElement('div');
         fbRoot.setAttribute("id", "fb-root");
         document.body.appendChild(fbRoot);
-        
         FB.init({
             appId  : FBConnect.appIds[FBConnect.url()],
             status : true, // check login status
@@ -44,7 +40,7 @@ var FBConnect = {
             xfbml  : true  // parse XFBML
         });
         FB.getLoginStatus(function(response) {
-            if (response.session) {
+			if (response.session) {
               successCallback();
             }else{
               Display.fetch("/html/studio/placeHolder.html", "game");
@@ -54,9 +50,7 @@ var FBConnect = {
     invite : function(){
         var appUrl = "http://apps.facebook.com/" + FBConnect.url();
         FB.api(
-            {
-              method: 'friends.getAppUsers',
-            },
+            {  method: 'friends.getAppUsers' },
             function(response) {
                 var ids = response;
                 FB.ui({
@@ -109,7 +103,7 @@ var FBConnect = {
           FB.ui(
                 {
                   method: 'stream.publish',
-                  display: 'popup',
+                  display: 'dialog',
                   message: '',
                   attachment: {
                     name : title,
@@ -117,9 +111,7 @@ var FBConnect = {
                   	            'src': 'http://173.192.39.215/images/background/logo.png',
                   	            'href': loc }],
 
-                    description: (
-                        desc
-                      )
+                    description: (desc)
                       
                   },
                   action_links: [ {text:'توقع أنت', href: loc } ],
