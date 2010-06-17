@@ -57,7 +57,7 @@ var FBConnect = {
                     method:'fbml.dialog',
                     width: '550px',
                     fbml:'<fb:Fbml>   ' +
-                                '<fb:request-form action="#"' + ' method="GET" invite="true" ' +
+                                '<fb:request-form action="' + window.location + '"' + ' method="GET" invite="true" ' +
                                                   'type="Studio SA 2010" content="I am predicting the results of the world cup 2010 on Studio S.A. Predict with me ' +
                                                   '<fb:req-choice url=\'' + appUrl + '\' ' +  'label=\'Play\' />" >' +
                                 '<div style="width : 80%; margin:auto;padding:auto;"> ' +

@@ -25,7 +25,7 @@
                                                                 {else} 
                                                                     '/images/ranking/default.png'
                                                                 {/if} ) center no-repeat">
-          <a href="${user['profile_url']}" target="_parent" style="width:100%; height : 100%;">  </a>
+          <a href="${user['profile_url']}" target="_blank" style="width:100%; height : 100%;">  </a>
         </div>
         <div class="score">
           <div class="order order-text">
