@@ -69,7 +69,7 @@ var DataLoader = {
 			return this.index()
 		}
       	var id = window.location.search.toString().split('?')[1].split('=')[1].split('&')[0]
-	    new Ajax.Request('matches/'+id, {method:'get', onComplete : function(req){
+	    new Ajax.Request('matches/'+id, {method:'get',  onComplete : function(req){
 		      Studio.data = (req.responseText).evalJSON()
 		      Studio.match = Studio.data['match'][0]
 		      Studio.match.status = Studio.data['status']

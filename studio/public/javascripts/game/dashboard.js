@@ -138,38 +138,40 @@
 	
 }
 $(document).observe('dom:loaded',function(){
-	new Ajax.Request('matches', {method:'get', onComplete : function(req){
-		Dashboard.data = (req.responseText).evalJSON()
-		Dashboard.data.matches.each(function(match, index){
-			match = match[0]
-			time = match.start_time
-			match.date = Date.parse(time.split(' ')[0])
-			match.teamA = Dashboard.getTeamById(match.team_a_id)
-			match.teamB = Dashboard.getTeamById(match.team_b_id)
-			match.prediction = Dashboard.getPredictionByMatchId(match.id)
-		})
-		$('totalScore').innerHTML = Dashboard.data.user[0].global_score
-		$('roundScore').innerHTML = Dashboard.data.user[0].first_round_score
-		$('groupsTable').show()
-		$('groupsTable').innerHTML = TrimPath.processDOMTemplate('table', {locations:Dashboard.matchesToLocations('first_round')})
-		Dashboard.setupScrolling();
-		Dashboard.scrollUp($$('.previous_button')[0])
-		$('ranks').observe('click', function(){
-			  if($('rankings_frame').src == null || $('rankings_frame').src == ''){
-				$('rankings_frame').src = 'html/studio/ranking.html'
-			  }
-			  $('rankings_shade').setOpacity(0.8)
-			  $('rankings').show();
-      	})
-
-		$$("#content #links div").each(function(div){
-			div.observe('click', function(){
-				//$('content').className = div.className
+	FBConnect.init( function() {
+		new Ajax.Request('matches', {method:'get', onComplete : function(req){
+			Dashboard.data = (req.responseText).evalJSON()
+			Dashboard.data.matches.each(function(match, index){
+				match = match[0]
+				time = match.start_time
+				match.date = Date.parse(time.split(' ')[0])
+				match.teamA = Dashboard.getTeamById(match.team_a_id)
+				match.teamB = Dashboard.getTeamById(match.team_b_id)
+				match.prediction = Dashboard.getPredictionByMatchId(match.id)
 			})
-		})
-		
-		$('sound').observe('click', function(){
-			myAudio.toggle(this);
-		})
-	}})
+			$('totalScore').innerHTML = Dashboard.data.user[0].global_score
+			$('roundScore').innerHTML = Dashboard.data.user[0].first_round_score
+			$('groupsTable').show()
+			$('groupsTable').innerHTML = TrimPath.processDOMTemplate('table', {locations:Dashboard.matchesToLocations('first_round')})
+			Dashboard.setupScrolling();
+			Dashboard.scrollUp($$('.previous_button')[0])
+			$('ranks').observe('click', function(){
+				  if($('rankings_frame').src == null || $('rankings_frame').src == ''){
+					$('rankings_frame').src = 'html/studio/ranking.html'
+				  }
+				  $('rankings_shade').setOpacity(0.8)
+				  $('rankings').show();
+			})
+
+			$$("#content #links div").each(function(div){
+				div.observe('click', function(){
+					//$('content').className = div.className
+				})
+			})
+			
+			$('sound').observe('click', function(){
+				myAudio.toggle(this);
+			})
+		}})
+	});
 })
