@@ -19,6 +19,13 @@ class ApplicationController < Sinatra::Base
 	end
   end
   
+  
+  after do
+	if params[:uid] || params[:fb_sig_user]
+		headers 'Cache-Control' => "no-cache", 'Pragma' => "no-cache", 'Expires' => "0"
+	end
+  end
+  
   protected
     
   def get_fb_session
