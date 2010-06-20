@@ -60,22 +60,22 @@
 	
 	scrolling : true,
 	
-	scrollUp : function(div){
+	scrollUp : function(div, callback){
 		if(!Dashboard.scrolling) return
 		if(div.hasClassName('off')) return
 		Dashboard.scrolling = false
 		$$('.next_button')[0].removeClassName('off')
-		new Effect.Move('groupsTable', {x:0, y: - 397, mode: 'relative', duration: 1.0 , afterFinish : function(){ Dashboard.scrolling = true }})
+		new Effect.Move('groupsTable', {x:0, y: - 397, mode: 'relative', duration: 1.0 , afterFinish : function(){ Dashboard.scrolling = true; if(callback){callback()} }})
 		myAudio.play('arrow_up_down')
 		if(Number($('groupsTable').style.top.gsub('px','')) - 397 + $('groupsTable').getHeight() <= 397 ) div.addClassName('off')
 	},
 	
-	scrollDown : function(div){
+	scrollDown : function(div, callback){
 		if(!Dashboard.scrolling) return
 		if(div.hasClassName('off')) return
 		Dashboard.scrolling = false
 		$$('.previous_button')[0].removeClassName('off')
-		new Effect.Move('groupsTable', {x:0, y: 397, mode: 'relative', duration: 1.0 , afterFinish : function(){ Dashboard.scrolling = true }})
+		new Effect.Move('groupsTable', {x:0, y: 397, mode: 'relative', duration: 1.0 , afterFinish : function(){ Dashboard.scrolling = true; if(callback){callback()} }})
 		myAudio.play('arrow_up_down')
 		if(Number($('groupsTable').style.top.gsub('px','')) + 397 >= 0 ) div.addClassName('off')
 	},
@@ -154,7 +154,9 @@ $(document).observe('dom:loaded',function(){
 			$('groupsTable').show()
 			$('groupsTable').innerHTML = TrimPath.processDOMTemplate('table', {locations:Dashboard.matchesToLocations('first_round')})
 			Dashboard.setupScrolling();
-			Dashboard.scrollUp($$('.previous_button')[0])
+			Dashboard.scrollUp($$('.previous_button')[0], function(){
+				Dashboard.scrollUp($$('.previous_button')[0])
+			})
 			$('ranks').observe('click', function(){
 				  if($('rankings_frame').src == null || $('rankings_frame').src == ''){
 					$('rankings_frame').src = 'html/studio/ranking.html'
