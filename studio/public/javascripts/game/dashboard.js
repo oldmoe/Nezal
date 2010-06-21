@@ -33,27 +33,33 @@
 			]
 		},
 		quarters : {
-			start : Date.parse('2010-07-02'),
-			end : Date.parse('2010-07-03'),
+			start : Date.parse('2010-07-01'),
+			end : Date.parse('2010-07-04'),
 			locations : [
+				[0, 0, 0, 0],
 				[1, 0, 1, 0],
-				[0, 1, 0, 1]
+				[0, 1, 0, 1],
+				[0, 0, 0, 0]
 			]
 		},
 		semis : {
-			start : Date.parse('2010-07-06'),
-			end : Date.parse('2010-07-07'),
+			start : Date.parse('2010-07-05'),
+			end : Date.parse('2010-07-08'),
 			locations : [
+				[0, 0, 0, 0],
 				[1, 0, 1, 0],
-				[0, 1, 0, 1]
+				[0, 1, 0, 1],
+				[0, 0, 0, 0]
 			]
 		},
 		finals : {
-			start : Date.parse('2010-07-10'),
-			end : Date.parse('2010-07-11'),
+			start : Date.parse('2010-07-9'),
+			end : Date.parse('2010-07-12'),
 			locations : [
+				[0, 0, 0, 0],
 				[1, 0, 1, 0],
-				[0, 1, 0, 1]
+				[0, 1, 0, 1],
+				[0, 0, 0, 0]
 			]
 		}
 	},
@@ -66,7 +72,7 @@
 		Dashboard.scrolling = false
 		var table = $('first_roundTable')
 		$$('.next_button')[0].removeClassName('off')
-		new Effect.Move(table, {x:0, y: - 397, mode: 'relative', duration: 1.0 , afterFinish : function(){ Dashboard.scrolling = true; if(callback){callback()} }})
+		new Effect.Move(table, {x:0, y: - 397, mode: 'relative', duration: 0.5 , afterFinish : function(){ Dashboard.scrolling = true; if(callback){callback()} }})
 		myAudio.play('arrow_up_down')
 		if(Number(table.style.top.gsub('px','')) - 397 + table.getHeight() <= 397 ) div.addClassName('off')
 	},
@@ -77,7 +83,7 @@
 		Dashboard.scrolling = false
 		var table = $('first_roundTable')
 		$$('.previous_button')[0].removeClassName('off')
-		new Effect.Move(table, {x:0, y: 397, mode: 'relative', duration: 1.0 , afterFinish : function(){ Dashboard.scrolling = true; if(callback){callback()} }})
+		new Effect.Move(table, {x:0, y: 397, mode: 'relative', duration: 0.5 , afterFinish : function(){ Dashboard.scrolling = true; if(callback){callback()} }})
 		myAudio.play('arrow_up_down')
 		if(Number(table.style.top.gsub('px','')) + 397 >= 0 ) div.addClassName('off')
 	},
@@ -144,6 +150,26 @@
 		return prediction
 	},
 	
+	selectRound : function(className){
+		$$("#content #links div.on")[0].removeClassName('on')
+		for(round in Dashboard.rounds){
+			if(round != className){
+				$(round+'Table').hide();
+			}
+			$(className+'Table').show();
+			if(className == 'first_round'){
+				Dashboard.setupScrolling();
+				Dashboard.scrollUp($$('.previous_button')[0], function(){
+					Dashboard.scrollUp($$('.previous_button')[0])
+				})
+			}else{
+				Dashboard.removeScrolling();
+			}
+		}
+		$$("#content #links div."+className)[0].addClassName('on')
+		$('roundScore').innerHTML = Dashboard.data.user[0][className +'_score']
+		$('content').className = className		
+	}	
 }
 $(document).observe('dom:loaded',function(){
 	FBConnect.init( function() {
@@ -162,13 +188,25 @@ $(document).observe('dom:loaded',function(){
 			for(round in Dashboard.rounds){
 				$(round+'Table').innerHTML = TrimPath.processDOMTemplate('table', {locations:Dashboard.matchesToLocations(round)})
 			}
-			//$('groupsTable').innerHTML = TrimPath.processDOMTemplate('table', {locations:Dashboard.matchesToLocations('first_round')})
-			
-			$('first_roundTable').show()
-			Dashboard.setupScrolling();
-			Dashboard.scrollUp($$('.previous_button')[0], function(){
-				Dashboard.scrollUp($$('.previous_button')[0])
-			})
+			var today = Date.parse(Dashboard.data.today.split(' ')[0])
+			var lastRound = 'first_round'
+			for(round in Dashboard.rounds){
+				if(Dashboard.rounds[round].start > today){
+					if(Dashboard.rounds[lastRound]['end'] > today){
+						Dashboard.selectRound(lastRound)					
+					}else{
+						Dashboard.selectRound(round)
+					}
+					break
+				}else{
+					if(round == 'finals'){
+						Dashboard.selectRound('finals')
+						break
+					}
+				}
+				lastRound = round
+			}			
+			//Dashboard.selectRound('first_round')
 			$('ranks').observe('click', function(){
 				  if($('rankings_frame').src == null || $('rankings_frame').src == ''){
 					$('rankings_frame').src = 'html/studio/ranking.html'
@@ -180,22 +218,7 @@ $(document).observe('dom:loaded',function(){
 			$$("#content #links div").each(function(div){
 				div.observe('click', function(){
 					if(div.hasClassName('on')) return
-					$$("#content #links div").each(function(d){d.removeClassName('on')})
-					var className = div.className
-					for(round in Dashboard.rounds){
-						if(round != className){
-							$(round+'Table').hide();
-						}
-						$(className+'Table').show();
-						if(className == 'first_round'){
-							Dashboard.setupScrolling();
-						}else{
-							Dashboard.removeScrolling();
-						}
-					}
-					div.addClassName('on')
-					$('roundScore').innerHTML = Dashboard.data.user[0][className +'_score']
-					$('content').className = className
+					Dashboard.selectRound(div.className)
 				})
 			})
 			
