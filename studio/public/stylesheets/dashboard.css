@@ -20,16 +20,20 @@
 #content #links div{
 	width:20px;
 	height:79px;
-	margin-bottom:2px;
+	margin-bottom:5px;
 	cursor:pointer;
 	/*border:1px solid red;*/
+}
+
+#content #links div.semis{
+	margin-bottom:4px;
 }
 
 #content #links div.finals{
 	height:100px;
 }
 
-#content #links div.groups.on{
+#content #links div.first_round.on{
 	background: url('../images/background/32_button.png')  no-repeat;
 }
 
@@ -37,7 +41,7 @@
 	background: url('../images/background/16_button.png')  no-repeat;
 }
 
-#content #links div.round8.on{
+#content #links div.quarters.on{
 	background: url('../images/background/8_button.png')  no-repeat;
 }
 
@@ -65,7 +69,7 @@
 	background-color : #9c130e;
 }
 
-#content #groupsTable.tableContainer{
+#content #first_roundTable.tableContainer{
 	position : absolute;
 	width : 697px;
 	height : 1191px;
@@ -166,7 +170,7 @@
 	background:  url('../images/background/blue_note.png') #9c130e  no-repeat;
 }
 
-#content.groups td.match div.panel{
+#content.first_round td.match div.panel{
 	position : relative;
 	left:10px;
 	width: 155px;
@@ -174,7 +178,7 @@
 	background:  url('../images/background/note_data_group_stage.png')  no-repeat;	
 }
 
-#content.groups td.match div.panel img.flagA{
+#content.first_round td.match div.panel img.flagA{
 	position : absolute;
 	left:111px;	
 	top : 0px;
@@ -182,7 +186,7 @@
 	height: 24px;
 }
 
-#content.groups td.match div.panel img.flagB{
+#content.first_round td.match div.panel img.flagB{
 	position : absolute;
 	left:113px;	
 	top : 31px;
@@ -199,7 +203,7 @@
 	background:  url('../images/background/group_guide.png')  no-repeat;	
 }
 
-#content.groups #guide{
+#content.first_round #guide{
 	visibility: visible;
 }
 
@@ -214,7 +218,7 @@
 	cursor : pointer;
 }
 
-#content.groups #studio{
+#content.first_round #studio{
 	visibility: hidden;
 }
 

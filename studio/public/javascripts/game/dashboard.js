@@ -22,7 +22,7 @@
 					[1, 1, 1, 1]
 			]
 		},
-		round_16 : {
+		round16 : {
 			start : Date.parse('2010-06-26'),
 			end : Date.parse('2010-06-29'),
 			locations : [
@@ -64,29 +64,36 @@
 		if(!Dashboard.scrolling) return
 		if(div.hasClassName('off')) return
 		Dashboard.scrolling = false
+		var table = $('first_roundTable')
 		$$('.next_button')[0].removeClassName('off')
-		new Effect.Move('groupsTable', {x:0, y: - 397, mode: 'relative', duration: 1.0 , afterFinish : function(){ Dashboard.scrolling = true; if(callback){callback()} }})
+		new Effect.Move(table, {x:0, y: - 397, mode: 'relative', duration: 1.0 , afterFinish : function(){ Dashboard.scrolling = true; if(callback){callback()} }})
 		myAudio.play('arrow_up_down')
-		if(Number($('groupsTable').style.top.gsub('px','')) - 397 + $('groupsTable').getHeight() <= 397 ) div.addClassName('off')
+		if(Number(table.style.top.gsub('px','')) - 397 + table.getHeight() <= 397 ) div.addClassName('off')
 	},
 	
 	scrollDown : function(div, callback){
 		if(!Dashboard.scrolling) return
 		if(div.hasClassName('off')) return
 		Dashboard.scrolling = false
+		var table = $('first_roundTable')
 		$$('.previous_button')[0].removeClassName('off')
-		new Effect.Move('groupsTable', {x:0, y: 397, mode: 'relative', duration: 1.0 , afterFinish : function(){ Dashboard.scrolling = true; if(callback){callback()} }})
+		new Effect.Move(table, {x:0, y: 397, mode: 'relative', duration: 1.0 , afterFinish : function(){ Dashboard.scrolling = true; if(callback){callback()} }})
 		myAudio.play('arrow_up_down')
-		if(Number($('groupsTable').style.top.gsub('px','')) + 397 >= 0 ) div.addClassName('off')
+		if(Number(table.style.top.gsub('px','')) + 397 >= 0 ) div.addClassName('off')
 	},
 	
 	setupScrolling : function(){
-		$$('.previous_button')[0].observe('click', function(){
+		$$('.previous_button')[0].show().observe('click', function(){
 			Dashboard.scrollUp(this)
 		})
-		$$('.next_button')[0].observe('click', function(){		
+		$$('.next_button')[0].show().observe('click', function(){		
 			Dashboard.scrollDown(this)
 		})
+	},
+	
+	removeScrolling : function(){
+		$$('.previous_button')[0].hide()
+		$$('.next_button')[0].hide()
 	},
 	
 	matchesForDay : function(date){
@@ -113,6 +120,7 @@
 				var match = null
 				if(loc == 1){
 					match = matches.shift()
+					if(match == null) match = {date:date, empty:true}
 				}else{
 					match = {date:date, empty:true}
 				}
@@ -151,8 +159,12 @@ $(document).observe('dom:loaded',function(){
 			})
 			$('totalScore').innerHTML = Dashboard.data.user[0].global_score
 			$('roundScore').innerHTML = Dashboard.data.user[0].first_round_score
-			$('groupsTable').show()
-			$('groupsTable').innerHTML = TrimPath.processDOMTemplate('table', {locations:Dashboard.matchesToLocations('first_round')})
+			for(round in Dashboard.rounds){
+				$(round+'Table').innerHTML = TrimPath.processDOMTemplate('table', {locations:Dashboard.matchesToLocations(round)})
+			}
+			//$('groupsTable').innerHTML = TrimPath.processDOMTemplate('table', {locations:Dashboard.matchesToLocations('first_round')})
+			
+			$('first_roundTable').show()
 			Dashboard.setupScrolling();
 			Dashboard.scrollUp($$('.previous_button')[0], function(){
 				Dashboard.scrollUp($$('.previous_button')[0])
@@ -167,7 +179,24 @@ $(document).observe('dom:loaded',function(){
 
 			$$("#content #links div").each(function(div){
 				div.observe('click', function(){
-					//$('content').className = div.className
+					if(div.hasClassName('on')) return
+					$$("#content #links div").each(function(d){d.removeClassName('on')})
+					var className = div.className //$w(div.className).reject(function(el){return el=='on'})[0]
+					for(round in Dashboard.rounds){
+						if(round != className){
+							$(round+'Table').hide();
+						}
+						console.log(className)
+						$(className+'Table').show();
+						if(className == 'first_round'){
+							Dashboard.setupScrolling();
+						}else{
+							Dashboard.removeScrolling();
+						}
+					}
+					div.addClassName('on')
+					$('roundScore').innerHTML = Dashboard.data.user[0][className +'_score']
+					$('content').className = className
 				})
 			})
 			

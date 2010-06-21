@@ -40,8 +40,7 @@
 											</div>
 										</td>
 										{else}
-										<td>
-										</td>
+										<td>&nbsp;</td>
 										{/if}
 									{/for}
 								</tr>
@@ -55,12 +54,12 @@
 				<iframe id="rankings_frame" border="none" style="border:none;background:none;overflow:hidden"></iframe>
 				<div id="close" onclick="$('rankings').hide();">X</div>
 			</div>
-			<div id="content" class="groups">
+			<div id="content" class="first_round">
 				<div id="frame"></div>
 				<div id="matchContainer">
-					<div id="groupsTable" class="tableContainer container" style="display:none"></div>
-					<div id="ground16Table" class="tableContainer" style="display:none"></div>
-					<div id="round8Table" class="tableContainer" style="display:none"></div>
+					<div id="first_roundTable" class="tableContainer container" style="display:none"></div>
+					<div id="round16Table" class="tableContainer" style="display:none"></div>
+					<div id="quartersTable" class="tableContainer" style="display:none"></div>
 					<div id="semisTable" class="tableContainer" style="display:none"></div>
 					<div id="finalsTable" class="tableContainer" style="display:none"></div>
 				</div>
@@ -71,15 +70,15 @@
 				<div id="studio" title="إلى الاستوديو"></div>
 				<a href="match.html"><div id="guide"></div></a>
 				<div id="links">
-					<div class="groups on"></div>
+					<div class="first_round on"></div>
 					<div class="round16"></div>
-					<div class="round8"></div>
+					<div class="quarters"></div>
 					<div class="semis"></div>
 					<div class="finals"></div>
 				</div>
-				<div class="groups"></div>
+				<div class="first_round"></div>
 				<div class="round16"></div>
-				<div class="round8"></div>
+				<div class="quarters"></div>
 				<div class="semis"></div>
 				<div class="finals"></div>
 				<div id="totalScore"></div>
