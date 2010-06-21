@@ -181,7 +181,7 @@ $(document).observe('dom:loaded',function(){
 				div.observe('click', function(){
 					if(div.hasClassName('on')) return
 					$$("#content #links div").each(function(d){d.removeClassName('on')})
-					var className = div.className //$w(div.className).reject(function(el){return el=='on'})[0]
+					var className = div.className
 					for(round in Dashboard.rounds){
 						if(round != className){
 							$(round+'Table').hide();

@@ -322,7 +322,6 @@
 }
 
 .panel div.result{
-	visibility:invisible;
 	position:absolute;
 	width:30px;
 	height:26px;
@@ -338,8 +337,8 @@
 	text-align: left;
 }
 
-.panel div.result.on{
-	visibility:visible;
+.panel div.result.none{
+	background: url('../images/background/score_lable.png') no-repeat;
 }
 
 #totalScore{

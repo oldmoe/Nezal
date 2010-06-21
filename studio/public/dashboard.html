@@ -35,6 +35,10 @@
 													<div class="score predictionB">${cell.prediction.goals_b}</div>
 													{if cell.prediction.score != null}
 														<div class="result">${cell.prediction.score}</div>
+													{else}
+														{if cell.goals_a != null}
+															<div class="result none">0</div>
+														{/if}
 													{/if}
 												{/if}
 											</div>
