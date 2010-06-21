@@ -338,7 +338,7 @@
 }
 
 .panel div.result.none{
-	background: url('../images/background/score_lable.png') no-repeat;
+	background: url('../images/background/no_prediction_lable.png') no-repeat;
 }
 
 #totalScore{
