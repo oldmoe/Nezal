@@ -186,7 +186,6 @@ $(document).observe('dom:loaded',function(){
 						if(round != className){
 							$(round+'Table').hide();
 						}
-						console.log(className)
 						$(className+'Table').show();
 						if(className == 'first_round'){
 							Dashboard.setupScrolling();
