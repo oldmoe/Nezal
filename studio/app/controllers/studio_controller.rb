@@ -23,7 +23,8 @@ class StudioController < ApplicationController
 		:round => Group.dataset.all ,:matches => Match.dataset.all , 
 		:teams => Team.dataset.all, :locations => Location.dataset.all, 
 		:predictions => Prediction.filter(:user_id => @user.user_id, :app_id => @user.app_id) ,
-		:user => @user
+		:user => @user,
+		:today => TZInfo::Timezone.get( 'Africa/Johannesburg').utc_to_local(Time.now.utc)
 	}.to_json
   end
 

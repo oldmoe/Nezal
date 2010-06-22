@@ -36,13 +36,16 @@
 													<div class="score predictionB">${cell.prediction.goals_b}</div>
 													{if cell.prediction.score != null}
 														<div class="result">${cell.prediction.score}</div>
+													{else}
+														{if cell.goals_a != null}
+															<div class="result none"></div>
+														{/if}
 													{/if}
 												{/if}
 											</div>
 										</td>
 										{else}
-										<td>
-										</td>
+										<td>&nbsp;</td>
 										{/if}
 									{/for}
 								</tr>
@@ -56,17 +59,15 @@
 				<iframe id="rankings_frame" border="none" style="border:none;background:none;overflow:hidden"></iframe>
 				<div id="close" onclick="$('rankings').hide();">X</div>
 			</div>
-			<div id="content" class="groups">
+			<div id="content" class="first_round">
 				<div id="frame"></div>
 				<div id="matchContainer">
-					<div id="groupsTable" class="tableContainer container" style="display:none"></div>
-					<div id="ground16Table" class="tableContainer" style="display:none"></div>
-					<div id="round8Table" class="tableContainer" style="display:none"></div>
+					<div id="first_roundTable" class="tableContainer container" style="display:none"></div>
+					<div id="round16Table" class="tableContainer" style="display:none"></div>
+					<div id="quartersTable" class="tableContainer" style="display:none"></div>
 					<div id="semisTable" class="tableContainer" style="display:none"></div>
 					<div id="finalsTable" class="tableContainer" style="display:none"></div>
 				</div>
-				<div class="next_button off"></div>
-				<div class="previous_button"></div>
 				<div id="controlpanel">
             <div id="title" class="dashboard" onclick="ControlPanel.toggle(); return false;">
               <div class="close"></div>
@@ -79,18 +80,21 @@
                 <div id="addfriend" onclick="FBConnect.invite();"></div>
             </div>
         </div>
+				<div class="next_button off" style="display:none"></div>
+				<div class="previous_button" style="display:none"></div>
+				<div id="sound" class="on" title="تفعيل / غلق الأصوات"></div>
 				<div id="studio" title="إلى الاستوديو"></div>
 				<a href="match.html"><div id="guide"></div></a>
 				<div id="links">
-					<div class="groups on"></div>
+					<div class="first_round on"></div>
 					<div class="round16"></div>
-					<div class="round8"></div>
+					<div class="quarters"></div>
 					<div class="semis"></div>
 					<div class="finals"></div>
 				</div>
-				<div class="groups"></div>
+				<div class="first_round"></div>
 				<div class="round16"></div>
-				<div class="round8"></div>
+				<div class="quarters"></div>
 				<div class="semis"></div>
 				<div class="finals"></div>
 				<div id="totalScore"></div>
