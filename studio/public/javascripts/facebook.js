@@ -38,8 +38,9 @@ var FBConnect = {
             apiKey  : FBConnect.appIds[FBConnect.url()],
             status : true, // check login status
             cookie : true, // enable cookies to allow the server to access the session
-            xfbml  : true  // parse XFBML
         });
+        //document.getElementsByTagName('fb:fan')[0].writeAttribute('profile_id', FBConnect.appIds[FBConnect.url()]);
+        FB.XFBML.parse();
         FB.getLoginStatus(function(response) {
 			if (response.session) {
 			  FBConnect.session = response.session
@@ -98,6 +99,9 @@ var FBConnect = {
           } else {
           }
         });
+    },
+    bookmark : function(){
+        FB.ui({ method: 'bookmark.add' });
     },
     publish : function(match, prediction) {
         var loc = "http://apps.facebook.com/" + FBConnect.url() + "/";

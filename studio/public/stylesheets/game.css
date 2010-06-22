@@ -65,7 +65,6 @@ IMG.bg{
 }
 
 #score{
-	background: 10px 10px url('../images/background/score.png') no-repeat;	
 }
 
 #counter{
@@ -383,6 +382,15 @@ IMG.bg{
 	z-index : 10002;
 }
 
+#controls #like{
+	position : absolute;
+	left :670px;
+	top: 85px;
+	width : 80px;
+	height :30px;	
+	z-index : 10002;
+}
+
 #controls #sound.on{
 	background: url('../images/background/sound_on_icon.png') no-repeat;
 }
@@ -567,7 +575,7 @@ IMG.bg{
 	top : 0px;
 	width : 760px;
 	height: 550px;
-	z-index : 10010;
+	z-index : 10020;
 	text-align:center;
 }
 

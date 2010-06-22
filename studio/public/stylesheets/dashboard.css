@@ -353,6 +353,15 @@
 	top: 36px;
 }
 
+#content #like{
+	position : absolute;
+	left : 605px;
+	top : 506px;
+	width : 80px;
+	height :30px;	
+	z-index : 10002;
+}
+
 #rankings_frame{
 	border:none;
 	background:none;

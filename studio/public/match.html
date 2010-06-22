@@ -7,6 +7,7 @@
 		<link type="text/css" href="stylesheets/game.css" rel="stylesheet" />
 		<link type="text/css" href="stylesheets/comments.css" rel="stylesheet" />
 		<link type="text/css" href="stylesheets/intro.css" rel="stylesheet" />
+		<link type="text/css" href="stylesheets/controlpanel.css" rel="stylesheet" />
 		<script src="javascripts/prototype.js"></script>
 		<script src="javascripts/effects.js"></script>
 		<script src="javascripts/transitions.js"></script>
@@ -46,7 +47,19 @@
 			<div id="header"></div>
 			<div id="content">
 				<div id="logo"></div>
-				<div id="score" class="overlay"></div>
+				<div id="controlpanel" >
+            <div id="title" class="studio" onclick="ControlPanel.toggle(); return false;">
+              <div class="close"></div>
+            </div>
+            <div id="separator" class="sepStudio"></div>
+            <div id="panel-content"> 
+    					  <div id="schedule" onclick="window.location.href='dashboard.html'"></div>
+                <div id="bookmark" onclick="FBConnect.bookmark();"></div>
+                <div id="ranks"></div>
+                <div id="addfriend" onclick="FBConnect.invite();"></div>
+            </div>
+        </div>
+			  <div id="score" class="overlay"></div>
 				<div id="left_screen" class="skew_left">
 					<div id="left_screen_content" class="tv_content"><!--img width=200 height=200 src='images/flags/mex.png'/-->
 					</div>
@@ -81,15 +94,16 @@
 					<img class="bg" src="images/background/counter.png" />
 				</div>
 				<div id="controls">
-					<div id="ranks" title="الترتيب"></div>
 					<div id="sound" class="on" title="تفعيل / غلق الأصوات"></div>
-					<a href="dashboard.html"><div id="dashboard" title="جدول المباريات"></div></a>
+				  <div id="like">
+              <fb:fan profile_id="103040546410849" stream="0" connections="0" width="100" logobar="false" css="http://studio.nezal.com/stylesheets/facebook-14.css"></fb:fan>
+          </div>
 					<div id="predict" onclick="Prediction.send(this); return false;"></div>
 					<div id="matchScore"></div>
 					<div id="publish" onclick="FBConnect.publishScore(Studio.match, Studio.data['prediction'][0]); return false;"></div>
 					<div id="predictions" >
 						<div class="dial up left"></div>
-						<div class="dial down left"></div>
+						<div class"dial down left"></div>
 						<div id ="goalsB" class="value left">00</div>
 						<div id ="goalsA" class="value right">00</div>
 						<div class="dial up right"></div>
@@ -157,5 +171,6 @@
 		<script src="http://connect.facebook.net/en_US/all.js"></script>
 		<script src="javascripts/facebook.js"></script>
 		<script src="javascripts/game/match.js"></script>
+		<script src="javascripts/controlpanel.js"></script>
 	</body>
 </html>

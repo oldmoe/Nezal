@@ -1,0 +1,109 @@
+#controlpanel
+{
+    position : absolute;
+    top : 0;
+    left : 0;
+}
+
+#separator
+{
+  position:absolute;
+  top : 0px;
+  left : 0px;
+  width : 200px;
+  height : 20px;
+  z-index:10008;
+}
+
+.sepDashboard
+{
+  background:url("../images/controlpanel/sep-dashboard.png") no-repeat scroll 0 0 transparent;
+  border-left:1px solid;
+  border-top:1px solid;
+}
+
+.sepStudio
+{
+  background:url("../images/controlpanel/panel-separator.png") no-repeat scroll 0 0 transparent;
+}
+
+#controlpanel #title,  #controlpanel #title div
+{
+    cursor : pointer;
+    position : absolute;
+    top : 0;
+    left : 0;
+    height : 68px;
+    width : 236px;
+    z-index : 10010;
+}
+
+#controlpanel .studio .open
+{
+    background : url("../images/controlpanel/studio_open.png") no-repeat scroll 0 0 transparent;
+}
+
+#controlpanel .studio .close
+{
+    background : url("../images/controlpanel/studio_close.png") no-repeat scroll 0 0 transparent;
+}
+
+#controlpanel .dashboard .open
+{
+    background : url("../images/controlpanel/dashboard_open.png") no-repeat scroll 0 0 transparent;
+}
+
+#controlpanel .dashboard .close
+{
+    background : url("../images/controlpanel/dashboard_close.png") no-repeat scroll 0 0 transparent;
+}
+
+#controlpanel #panel-content
+{
+    background : url("../images/controlpanel/menu.png") no-repeat scroll 0 0 transparent;
+    position : absolute;
+    top :-190px;
+    left : 33px;
+    width : 170px;
+    height : 220px;
+    padding-top : 5px;
+    z-index : 10005;
+}
+
+#controlpanel .off
+{
+  display : none;
+}
+
+#controlpanel .on
+{
+  display : block;
+}
+
+#controlpanel #panel-content div
+{
+    cursor : pointer;
+    width : 166px;
+    height : 35px;
+    margin : 13px 0px;
+}
+
+#controlpanel #panel-content #schedule
+{
+    background : url("../images/controlpanel/schedule.png") no-repeat scroll center center transparent;
+}
+
+#controlpanel #panel-content #bookmark
+{
+    background : url("../images/controlpanel/bookmark.png") no-repeat scroll center center transparent;
+}
+
+#controlpanel #panel-content #ranks
+{
+    background : url("../images/controlpanel/rank.png") no-repeat scroll center center transparent;
+}
+
+#controlpanel #panel-content #addfriend
+{
+    background : url("../images/controlpanel/add_friend.png") no-repeat scroll center center transparent;
+}
