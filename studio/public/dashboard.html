@@ -5,6 +5,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta http-equiv="X-UA-Compatible" content="chrome=1">
 		<link type="text/css" href="stylesheets/dashboard.css" rel="stylesheet" />
+		<link type="text/css" href="stylesheets/controlpanel.css" rel="stylesheet" />
 		<script src="javascripts/prototype.js"></script>
 		<script src="javascripts/effects.js"></script>
 		<script src="javascripts/transitions.js"></script>
@@ -66,8 +67,18 @@
 				</div>
 				<div class="next_button off"></div>
 				<div class="previous_button"></div>
-				<div id="ranks" title="الترتيب"></div>
-				<div id="sound" class="on" title="تفعيل / غلق الأصوات"></div>
+				<div id="controlpanel">
+            <div id="title" class="dashboard" onclick="ControlPanel.toggle(); return false;">
+              <div class="close"></div>
+            </div>
+            <div id="separator" class="sepDashboard"></div>
+            <div id="panel-content"> 
+    					  <div id="schedule" onclick="window.location.href='dashboard.html'"></div>
+                <div id="bookmark" onclick="FBConnect.bookmark();"></div>
+                <div id="ranks"></div>
+                <div id="addfriend" onclick="FBConnect.invite();"></div>
+            </div>
+        </div>
 				<div id="studio" title="إلى الاستوديو"></div>
 				<a href="match.html"><div id="guide"></div></a>
 				<div id="links">
@@ -84,7 +95,7 @@
 				<div class="finals"></div>
 				<div id="totalScore"></div>
 				<div id="roundScore"></div>
-				
+				<div id="sound" class="on" title="تفعيل / غلق الأصوات"></div>
 			</div>
 		</div>
 	</body>
@@ -94,5 +105,6 @@
 	<script src="javascripts/game/reactor.js"></script>
 	<script src="javascripts/game/timeline.js"></script>
 	<script src="javascripts/game/dashboard.js"></script>
+	<script src="javascripts/controlpanel.js"></script>
 	
 </html>
