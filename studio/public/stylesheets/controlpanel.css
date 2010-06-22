@@ -107,3 +107,9 @@
 {
     background : url("../images/controlpanel/add_friend.png") no-repeat scroll center center transparent;
 }
+
+#controlpanel #panel-content #mainStudio
+{
+    background : url("../images/controlpanel/studio.png") no-repeat scroll center center transparent;
+}
+
