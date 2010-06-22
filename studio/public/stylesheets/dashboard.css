@@ -218,32 +218,22 @@
 	visibility: hidden;
 }
 
-#ranks{
-	position : absolute;
-	left :44px;
-	top: 15px;
-	width : 40px;
-	height :43px;	
-	cursor: pointer;
-	background: url('../images/background/rank_icon.png') no-repeat;
-}
-
 #sound{
 	position : absolute;
-	left :6px;
-	top: 15px;
+	left :70px;
+	top: 509px;
 	width : 40px;
 	height :40px;	
-	z-index : 10002;
+	z-index : 10000;
 	cursor : pointer;
 }
 
 #sound.on{
-	background: url('../images/background/sound_on_icon.png') no-repeat;
+	background: url('../images/background/sound_on_icon_small.png') no-repeat;
 }
 
 #sound.off{
-	background: url('../images/background/sound_off_icon.png') no-repeat;
+	background: url('../images/background/sound_off_icon_small.png') no-repeat;
 }
 
 #rankings {
@@ -252,7 +242,7 @@
 	top : 0px;
 	width : 760px;
 	height: 560px;
-	z-index : 10010;
+	z-index : 10020;
 	text-align:center;
 }
 
