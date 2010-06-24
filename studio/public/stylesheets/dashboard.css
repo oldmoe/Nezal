@@ -170,6 +170,38 @@
 	background:  url('../images/background/blue_note.png') #9c130e  no-repeat;
 }
 
+#content td.match{
+	width: 155px;
+}
+
+#content.first_round td.match{
+}
+
+
+#content td.match div.panel{
+	position : relative;
+	left:10px;
+	width: 155px;
+	height: 55px;
+	background:  url('../images/background/note_data_group_stage.png')  no-repeat;	
+}
+
+#content td.match div.panel img.flagA{
+	position : absolute;
+	left:111px;	
+	top : 0px;
+	width: 24px;
+	height: 24px;
+}
+
+#content td.match div.panel img.flagB{
+	position : absolute;
+	left:113px;	
+	top : 31px;
+	width: 24px;
+	height: 24px;
+}
+
 #content.first_round td.match div.panel{
 	position : relative;
 	left:10px;
@@ -193,6 +225,7 @@
 	width: 24px;
 	height: 24px;
 }
+
 #content #guide{
 	position: absolute;
 	visibility: hidden;
