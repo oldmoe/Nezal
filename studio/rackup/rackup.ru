@@ -4,7 +4,7 @@ require 'rackup/games/games.rb'
 use	Rack::MethodOverride
 use Rack::Static, :urls => [ "/stylesheets", "/javascripts", "/favicon.ico", "/game_images",
                              "/images", "/html/facebook", "/html/studio" ], :root => "public"
-use Rack::ShowExceptions
+# use Rack::ShowExceptions
   
 router = Rack::Router.new(nil) do |r|
   r.map "/studio-admin", :to => AdminController

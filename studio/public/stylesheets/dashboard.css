@@ -196,7 +196,7 @@
 #content #guide{
 	position: absolute;
 	visibility: hidden;
-	left:90px;
+	left:260px;
 	top:1px;
 	width:230px;
 	height:72px;
@@ -210,11 +210,11 @@
 #content #studio{
 	position: absolute;
 	visibility: visible;
-	left:140px;
-	top:8px;
-	width:125px;
-	height:57px;
-	background:  url('../images/background/studio_button.png')  no-repeat;	
+	left:237px;
+	top:4px;
+	width:290px;
+	height:65px;
+	background:  url('../images/background/header.png')  no-repeat;	
 	cursor : pointer;
 }
 
