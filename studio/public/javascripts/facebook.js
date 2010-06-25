@@ -39,7 +39,7 @@ var FBConnect = {
             status : true, // check login status
             cookie : true, // enable cookies to allow the server to access the session
         });
-        //document.getElementsByTagName('fb:fan')[0].writeAttribute('profile_id', FBConnect.appIds[FBConnect.url()]);
+        document.getElementsByTagName('fb:fan')[0].writeAttribute('profile_id', FBConnect.appIds[FBConnect.url()]);
         FB.XFBML.parse();
         FB.getLoginStatus(function(response) {
 			if (response.session) {
