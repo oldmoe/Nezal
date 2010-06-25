@@ -26,8 +26,7 @@ var Prediction = {
             alert("لا يمكن ادخال ضربات جزاء بينما الاهداف غير متساوية");            
           }
         }
-        if(!error)
-        {
+        if(!error) {
           Prediction.prediction = { "goals_a" : parseInt($('goalsA').innerHTML),
                                     "goals_b" : parseInt($('goalsB').innerHTML), 
                                     "kicks_a" : $('penaltiesA').innerHTML,
@@ -48,7 +47,9 @@ var Prediction = {
                                   $(button).removeClassName('busy')
                               }
                           });   
-      }
+      }else{
+		 $(button).removeClassName('busy')
+	  }
     }
     
 }
