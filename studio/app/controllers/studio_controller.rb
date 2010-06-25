@@ -13,7 +13,6 @@ class StudioController < ApplicationController
   
   get '/intro' do 
     puts "Inside get /intro"
-    @user.test(@fb_session_key)
     @matches = Match.dataset.all
     erb :show, { :layout => false}
   end
@@ -48,21 +47,27 @@ class StudioController < ApplicationController
     
     @top_scorers.each_index do | user |
       hash = dump_user(@top_scorers[user], round)
-      hash["order"] = user + 1
-      response[:global_top_scorers] << hash
+      if !(hash.empty?)
+        hash["order"] = user + 1
+        response[:global_top_scorers] << hash
+      end
     end
         
     @friends_top_scorers.each_index do | user |
       hash = dump_user(@friends_top_scorers[user], round)
-      hash["order"] = user + 1
-      response[:friends_top_scorers] << hash
+      if !(hash.empty?)
+        hash["order"] = user + 1
+        response[:friends_top_scorers] << hash
+      end
     end
     
     list_length =  @global_ranking[:previous].length
     @global_ranking[:previous].each_index do | user |
       hash = dump_user(@global_ranking[:previous][user], round)
-      hash["order"] = @global_ranking[:rank] - list_length + user
-      response[:global_ranking] << hash
+      if !(hash.empty?)
+        hash["order"] = @global_ranking[:rank] - list_length + user
+        response[:global_ranking] << hash
+      end
     end
     hash = dump_user(@user, round)
     hash["order"] = @global_ranking[:rank]
@@ -70,15 +75,19 @@ class StudioController < ApplicationController
     list_length =  @global_ranking[:next].length
     @global_ranking[:next].each_index do | user |
       hash = dump_user(@global_ranking[:next][user], round)
-      hash["order"] = @global_ranking[:rank] + user + 1
-      response[:global_ranking] << hash
+      if !(hash.empty?)
+        hash["order"] = @global_ranking[:rank] + user + 1
+        response[:global_ranking] << hash
+      end
     end
 
     list_length =  @friends_ranking[:previous].length    
     @friends_ranking[:previous].each_index do | user |
-      hash = dump_user(@friends_ranking[:previous][user], round) 
-      hash["order"] = @friends_ranking[:rank] - list_length + user
-      response[:friends_ranking] << hash
+      hash = dump_user(@friends_ranking[:previous][user], round)
+      if !(hash.empty?) 
+        hash["order"] = @friends_ranking[:rank] - list_length + user
+        response[:friends_ranking] << hash
+      end
     end
     hash = dump_user(@user, round)
     hash["order"] = @friends_ranking[:rank]
@@ -86,8 +95,10 @@ class StudioController < ApplicationController
     list_length =  @friends_ranking[:next].length
     @friends_ranking[:next].each_index do | user |
       hash = dump_user(@friends_ranking[:next][user], round)
-      hash["order"] = @friends_ranking[:rank] + user + 1
-      response[:friends_ranking] << hash
+      if !(hash.empty?)
+        hash["order"] = @friends_ranking[:rank] + user + 1
+        response[:friends_ranking] << hash
+      end
     end
     response.to_json
   end
@@ -109,16 +120,18 @@ class StudioController < ApplicationController
   
   def dump_user(user, round)
     result = {}
-    result["id"] = user[:user_id]
-    result["name"] = user.user_info(@user.session)['first_name']
-    result["pic"] = user.user_info(@user.session)['pic_big']
-    result["score"] = user[round]
-    result["profile_url"] = user.user_info(@user.session)['profile_url']
-    result["me"] = if user[:user_id] == @user[:user_id]
-                    true 
-                  else
-                    false
-                  end
+    if user.user_info(@user.session) && (!user.user_info(@user.session).empty?)
+      result["id"] = user[:user_id]
+      result["name"] = user.user_info(@user.session)['first_name']
+      result["pic"] = user.user_info(@user.session)['pic_big']
+      result["score"] = user[round]
+      result["profile_url"] = user.user_info(@user.session)['profile_url']
+      result["me"] = if user[:user_id] == @user[:user_id]
+                      true 
+                    else
+                      false
+                    end
+    end
     result
   end
   
