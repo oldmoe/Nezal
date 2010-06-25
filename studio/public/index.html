@@ -36,6 +36,8 @@
 	<script src="javascripts/game/sms.js"></script>
 	<script src="javascripts/soundmanager2-nodebug-jsmin.js"></script>
 	<script>
+		var audioFinished = false
+		var progressFinished = false
 		function progress(){
 			if($('bar').style.width == '99%' ){
 				if(audioFinished){
@@ -55,8 +57,6 @@
 			window.setTimeout(function(){window.location.href = 'match.html'}, 25000)
 			var image = new Image();
 			var bar = new Image();
-			var audioFinished = false
-			var progressFinished = false
 			var sound = null
 			soundManager.url = 'swf/';
 			//soundManager.useHTML5Audio = true;

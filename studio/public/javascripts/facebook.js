@@ -45,7 +45,6 @@ var FBConnect = {
 			          Ajax.Responders.register({
 				          onCreate: function(req) {					
 					        req.url += (req.url.include('?') ? '&' : '?') + Object.toQueryString(FBConnect.session)
-					        console.log(req)
 					        return true
 				          }
 			          });
