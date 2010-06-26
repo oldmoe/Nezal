@@ -103,7 +103,10 @@ var DataLoader = {
 		      if(Studio.match.prediction)
 		      {
 				["goals_a", "goals_b", "kicks_a", "kicks_b"].each( function(i) {
-                                if( Studio.match.prediction[i] < 10 ) 
+				                        if(Studio.match.prediction[i] == null)
+				                        {
+  				                        Studio.match.prediction[i] = '00'
+                                }else if( Studio.match.prediction[i] < 10 ) 
                                 {
                                   Studio.match.prediction[i] = "0" + Studio.match.prediction[i]
                                 }
@@ -139,6 +142,7 @@ var DataLoader = {
 		      })
 			  Studio.events.push([function(){return new AdManager('center_screen_content', '', 14, 20000)}, 25])		
 			  if(Studio.match.status == 'open'){
+			      $('goalsA').innerHTML == $('goalsB').innerHTML ? $('penalties').show() :	$('penalties').hide();	
 			      $$("#predictions .dial").each(function(button){
 				      button.observe('click', function(event){
 						  myAudio.play('arrow_up_down')
@@ -152,7 +156,12 @@ var DataLoader = {
 					      if(newValue > 99) newValue = 99
 					      if(newValue < 10) newValue = "0"+newValue
 					      target.innerHTML = newValue
-					      left.innerHTML == right.innerHTML ? $('penalties').show() :	$('penalties').hide();
+					      left.innerHTML == right.innerHTML ? $('penalties').show() :	$('penalties').hide();					      
+					      if(left.innerHTML != right.innerHTML)
+					      {
+					        $('penaltiesA').innerHTML = '00'
+  				        $('penaltiesB').innerHTML = '00'  
+					      }
 				      });
 			      })
 			      $$("#penalties .dial").each(function(button){
