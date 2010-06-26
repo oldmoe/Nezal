@@ -8,13 +8,18 @@ class Prediction < Sequel::Model
 
   def acceptable?
     errors.add(:match, "match inactive") if ( !match.active? )
-    kicks_a = nil if (!match.accept_kicks?) 
-    kicks_b = nil if (!match.accept_kicks?) 
-    (kicks_a = kicks_b = nil) if (goals_a  !=  goals_b)
-    if match.accept_kicks? && goals_a == goals_b && kicks_a == kicks_b
+    if !match.accept_kicks?   
+      self.kicks_a = nil
+      self.kicks_b = nil
+    end
+    if self.goals_a != self.goals_b
+      self.kicks_a = nil 
+      self.kicks_b = nil
+    end
+    if match.accept_kicks? && self.goals_a == self.goals_b && self.kicks_a == self.kicks_b
       errors.add(:kicks_b, "!Prediction not valid. Goals of teams not tied")
     end
-	return errors.length == 0
+  	return errors.length == 0
   end
 
   def calc_score(match)  

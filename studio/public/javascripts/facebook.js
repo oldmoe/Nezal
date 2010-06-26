@@ -150,7 +150,7 @@ var FBConnect = {
                 ' .كم جمعت؟'
           FB.ui(
                 {
-                  display: 'dialog',
+                  display: 'popup',
                   method: 'stream.publish',
                   message: '',
                   attachment: {
