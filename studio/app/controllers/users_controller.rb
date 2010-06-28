@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   enable :sessions
   
   get '/count' do 
-    { :users  =>  User.dataset.count() }.to_json
+    { "users" => DB[:users].filter(:app_id => @app_configs["id"]).count() }.to_json
   end
 
 end
