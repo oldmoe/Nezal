@@ -10,6 +10,7 @@ router = Rack::Router.new(nil) do |r|
   r.map "/studio-admin", :to => AdminController
   FB_CONFIGS.each do |key, value|  
     r.map "/#{value['name']}/comments",  :to => CommentsController
+    r.map "/#{value['name']}/users",  :to => UsersController
     r.map "/#{value['name']}", :to => StudioController
   end
 end
