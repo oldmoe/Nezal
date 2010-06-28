@@ -209,7 +209,7 @@ $(document).observe('dom:loaded',function(){
 			//Dashboard.selectRound('first_round')
 			$('ranks').observe('click', function(){
 				  if($('rankings_frame').src == null || $('rankings_frame').src == ''){
-					$('rankings_frame').src = 'html/studio/ranking.html'
+					$('rankings_frame').src = 'ranking.html'
 				  }
 				  $('rankings_shade').setOpacity(0.8)
 				  $('rankings').show();

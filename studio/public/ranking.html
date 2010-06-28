@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+	  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+	  <script src="/javascripts/prototype.js" type="text/javascript"></script>
+	  <script src="/javascripts/template.js"></script>
+	  <script src="/javascripts/effects.js" type="text/javascript"></script>
+	  <script src="/javascripts/game/ranking.js" type="text/javascript"></script>
+    <script src="/javascripts/game/carousel.js" type="text/javascript"></script>
+	  <script src="http://connect.facebook.net/en_US/all.js"></script>
+	  <script src="/javascripts/facebook.js" type="text/javascript"></script>
+
+	  <link href="/stylesheets/ranking.css" rel="stylesheet" type="text/css" />
+	  <link href="/stylesheets/ranking-rounds.css" rel="stylesheet" type="text/css" />
+
+	</head>
+
+	<body>
+	  <div id="ranking" class="background">
+
+		<div class="round-selection">
+		  <a href="" id="global_score"        onclick="Ranking.fetch(this); return false;" class="total-blue">  </a>
+		  <a href="" id="first_round_score"   onclick="Ranking.fetch(this); return false;" class="first-round-blue">  </a>
+		  <a href="" id="round16_score"  onclick="Ranking.fetch(this); return false;" class="round16-blue">  </a>
+		  <a href="" id="quarters_score" onclick="Ranking.fetch(this); return false;" class="quarters-blue">  </a>
+		  <a href="" id="semis_score"    onclick="Ranking.fetch(this); return false;" class="semis-blue">  </a> 
+		  <a href="" id="finals_score"   onclick="Ranking.fetch(this); return false;" class="finals-blue">  </a>
+		</div>
+		
+		<div class="rank">
+
+		  <div id="friends-rank">
+			<div id="friends-rank-scroll">
+			  <div class="left"></div> 
+			  <div id="friends-rank-container" class="container">
+				<ul id='friend-rank-ul'>
+				</ul>
+			  </div>
+			  <div class="right"></div> 
+			</div>
+			<div id="friends-top-scorers">
+			  <ul>
+			  </ul>
+			</div>
+		  </div>
+
+		  <div id="global-rank">
+			<div id="global-rank-scroll">
+			  <div class="left"></div>  
+			  <div id="global-rank-container" class="container">
+				<ul id='global-rank-ul'>
+				</ul>
+			  </div>
+			  <div class="right"></div> 
+			</div>
+			<div id="top-scorers">
+			  <ul>
+			  </ul>
+			</div>  
+		  </div>
+		  
+		</div>
+		
+	  </div>
+
+	  <script type="text/javascript">
+		$(document).observe('dom:loaded',function(){
+			FBConnect.init(function(){
+				Ranking.fetch($(Ranking.selectedRound))
+			})
+		})
+	  </script>
+	</body>
+</html>

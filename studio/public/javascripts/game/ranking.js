@@ -1,6 +1,5 @@
 var Configs = {
-  template_path : "/javascripts/templates",  
-  html_path : "../../html/studio"
+  template_path : "/javascripts/templates"
 }
 
 var Ranking = {
@@ -106,10 +105,20 @@ var Ranking = {
 				$(Ranking.selectedRound).setAttribute('class', Ranking.roundsClass[Ranking.selectedRound]["default"]);
 				Ranking.selectedRound = element.id;
 				element.setAttribute('class', Ranking.roundsClass[element.id]["selected"]);
+				if (Ranking.friendRankCarousel)
+				{
+  				  Ranking.friendRankCarousel.destroy();
+  				  Ranking.friendRankCarousel = null;
+			  }
 //	      Ranking.friendRankCarousel = new UI.Carousel("friends-rank-scroll");
         Ranking.friendRankCarousel = new Carousel("friends-rank-scroll");
 	      Ranking.friendRankCarousel.scrollTo(k);
 //	      Ranking.globalRankCarousel = new UI.Carousel("global-rank-scroll");
+        if (Ranking.globalRankCarousel)
+        {
+            Ranking.globalRankCarousel.destroy();
+  				  Ranking.globalRankCarousel = null;
+			  }
         Ranking.globalRankCarousel = new Carousel("global-rank-scroll");
 	      Ranking.globalRankCarousel.scrollTo(j)
 	      loading.remove();

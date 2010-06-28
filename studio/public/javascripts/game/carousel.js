@@ -18,6 +18,8 @@ var Carousel = Class.create( {
         this.id = id;
         this.width = parseInt($$('#' + this.id + ' ul li')[0].getStyle('width'));
         this.ulId = $$('#' + this.id + ' ul')[0].id;
+        this.listSize =  $$('#' + this.ulId + ' li').length;
+        $(this.ulId).style.left = 0;
         this.offset = $(this.id).cumulativeOffset()[0];
         this.right = $$('#' + this.id +  ' .right')[0];
         this.right.carousel = this;
@@ -31,46 +33,44 @@ var Carousel = Class.create( {
                                                     });
     },
     
+    destroy : function(){
+        this.right.stopObserving('click');
+        this.left.stopObserving('click');
+    },
+    
     scrollRight : function(){
-        if (this.currIndex > this.displayCount )
+        var distance = 0
+        if (this.currIndex > 0)
         {
-            var distance = this.scroll * this.width
-            this.currIndex -= this.scroll;
-            new Effect.Move(this.ulId, {x:distance, y: 0, mode: 'relative', duration: 0.3, afterFinish : function(){ }})          
-            this.checkButtons();
-            console.log(this.currIndex)
-        }else if (this.currIndex > 0){
-            var distance = this.currIndex * this.width
-            this.currIndex -= this.currIndex;
-            new Effect.Move(this.ulId, {x:distance, y: 0, mode: 'relative', duration: 0.3, afterFinish : function(){ }})          
-            this.checkButtons();
+            var newIndex = this.currIndex - this.scroll;
+            if (newIndex < 0)
+              newIndex = 0;
+            var step = -1 * (newIndex - this.currIndex) * this.width;
+            this.currIndex = newIndex;
+            new Effect.Move(this.ulId, {x: step, y: 0, mode: 'relative', duration: 0.5, afterFinish : function(){ }})
+            this.checkButtons();              
         }
     },
     
     scrollLeft : function(){
-        if(this.currIndex < ($$('#' + this.ulId + ' li').length - this.displayCount - this.scroll ))
+        if (this.currIndex < this.listSize - this.displayCount )
         {
-          var distance = -1 * this.scroll * this.width;
-          this.currIndex += this.scroll;
-          new Effect.Move(this.ulId, {x:distance, y: 0, mode: 'relative', duration: 0.3, afterFinish : function(){ }})
-          this.checkButtons();
-          console.log(this.currIndex)
-        }else if(this.currIndex < ($$('#' + this.ulId + ' li').length - this.displayCount ))
-        {
-            var step = $$('#' + this.ulId + ' li').length - this.displayCount - this.currIndex;
-            this.currIndex += step
-            var distance = -1 * step * this.width;
-            new Effect.Move(this.ulId, {x:distance, y: 0, mode: 'relative', duration: 0.3, afterFinish : function(){ }});
-            this.checkButtons(); 
+            var newIndex = this.currIndex + this.scroll;
+            if ( newIndex > this.listSize - this.displayCount )
+                newIndex = this.listSize - this.displayCount;
+            var step = -1 * (newIndex - this.currIndex) * this.width;
+            this.currIndex = newIndex;
+            new Effect.Move(this.ulId, {x: step, y: 0, mode: 'relative', duration: 0.5, afterFinish : function(){ }})
+            this.checkButtons();
         }
     },
     
     scrollTo : function(index){
-        if(index > ($$('#' + this.ulId + ' li').length - this.displayCount))
-            index = $$('#' + this.ulId + ' li').length - this.displayCount
+        if(index > (this.listSize - this.displayCount))
+            index = this.listSize - this.displayCount
         var distance = (this.currIndex - index) * this.width;
         this.currIndex = index;
-        new Effect.Move(this.ulId, {x:distance, y: 0, mode: 'relative', duration: 0.3, afterFinish : function(){ }})
+        new Effect.Move(this.ulId, {x:distance, y: 0, mode: 'relative', duration: 0.5, afterFinish : function(){ }})
         this.checkButtons();
     },
     
@@ -83,7 +83,7 @@ var Carousel = Class.create( {
             this.left.addClassName('leftOn');
             this.left.removeClassName('leftOff');
         }
-        if(this.currIndex == ($$('#' + this.ulId + ' li').length - this.displayCount ))
+        if(this.currIndex == (this.listSize - this.displayCount ))
         {
             this.right.addClassName('rightOff');
             this.right.removeClassName('rightOn');
