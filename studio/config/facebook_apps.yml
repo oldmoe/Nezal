@@ -9,5 +9,9 @@
   name : studio-sa
   key : acbf43d127ac775b96b34b542f4f6f6d
   secret : 1c87f2b942c0362221d19852e7a3ac3b
-
-
+  
+"130918743609615" :
+  id : "130918743609615"
+  name : staging-studio
+  key : 5bd53d626e09c9f1295e3a4ae3feb7a7
+  secret : 6c75b25ae6d2ad29e3f249d47aff971b

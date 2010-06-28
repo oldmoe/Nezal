@@ -106,17 +106,11 @@ var Ranking = {
 				$(Ranking.selectedRound).setAttribute('class', Ranking.roundsClass[Ranking.selectedRound]["default"]);
 				Ranking.selectedRound = element.id;
 				element.setAttribute('class', Ranking.roundsClass[element.id]["selected"]);
-				if ( Ranking.friendRankCarousel != null)
-				{
-//				  Ranking.friendRankCarousel.destroy();
-				}
-	      Ranking.friendRankCarousel = new UI.Carousel("friends-rank-scroll");
+//	      Ranking.friendRankCarousel = new UI.Carousel("friends-rank-scroll");
+        Ranking.friendRankCarousel = new Carousel("friends-rank-scroll");
 	      Ranking.friendRankCarousel.scrollTo(k);
-				if ( Ranking.globalRankCarousel !=null)
-				{
-//				  Ranking.globalRankCarousel.destroy();
-				}
-	      Ranking.globalRankCarousel = new UI.Carousel("global-rank-scroll");
+//	      Ranking.globalRankCarousel = new UI.Carousel("global-rank-scroll");
+        Ranking.globalRankCarousel = new Carousel("global-rank-scroll");
 	      Ranking.globalRankCarousel.scrollTo(j)
 	      loading.remove();
 			}

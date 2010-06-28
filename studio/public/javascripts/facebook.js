@@ -16,7 +16,8 @@ var FBConnect = {
 
     appIds : {
         		'local-studio' : "103040546410849",
-        		'studio-sa' : "110624738982804"
+        		'studio-sa' : "110624738982804",
+        		'staging-studio' : "130918743609615"
 	  },
 	  
     channelPath : "/html/facebook/xd_receiver.html",
@@ -37,7 +38,7 @@ var FBConnect = {
             appId  : FBConnect.appIds[FBConnect.url()],
             apiKey  : FBConnect.appIds[FBConnect.url()],
             status : true, // check login status
-            cookie : true, // enable cookies to allow the server to access the session
+            cookie : true // enable cookies to allow the server to access the session
         });
         FB.getLoginStatus(function(response) {
 			      if (response.session) {

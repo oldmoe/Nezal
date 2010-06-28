@@ -145,3 +145,84 @@
   float:left;
 }
 
+/* Horizontal Carousel */
+#friends-rank-scroll, #global-rank-scroll{
+  float:left;
+  width: 343px;
+  height: 150px;
+  margin-bottom: 10px;
+  position: relative;  
+}         
+
+#friends-rank-scroll .container, #global-rank-scroll .container {
+  position: absolute;
+  top: 5px;
+  left: 37px;  
+  width: 273px;
+  height: 146px;
+  overflow:hidden;   
+}            
+
+#friends-rank-scroll .right, #global-rank-scroll .right {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  width: 27px;
+  height: 144px;
+  z-index: 100;
+  cursor:pointer;
+}        
+
+#friends-rank-scroll .left,  #global-rank-scroll .left {
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  width: 27px;
+  height: 144px;
+  z-index: 100;    
+  cursor:pointer;
+}   
+
+#friends-rank-scroll ul, #global-rank-scroll ul {
+  margin: 0;
+  padding:0;
+  width: 100000px;
+  position: relative;
+  top: 0;
+  left: 0;
+  height: 144px;
+}                      
+
+#friends-rank-scroll ul li, #global-rank-scroll ul li {
+  font-family:verdana,arial,sans-serif;
+  font-size:10px;
+}                               
+
+#friends-rank-scroll ul li, #global-rank-scroll ul li {
+  border : 0px solid green;
+  color : #E3EDFA;
+  margin : 0pt;
+  padding : 0px;
+  width : 91px;
+  list-style : none;   
+  float : left;
+}
+
+.leftOn
+{
+  background : url('/images/ranking/left.png') no-repeat left center;
+}
+.leftOff
+{
+  background : url('/images/ranking/left-disabled.png') no-repeat left center;
+  cursor:default;
+}
+.rightOn
+{
+  background : url('/images/ranking/right.png') no-repeat right center;
+}
+.rightOff
+{
+  background : url('/images/ranking/right-disabled.png') no-repeat right center;
+  cursor:default;
+}
