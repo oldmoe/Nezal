@@ -336,6 +336,20 @@
 	left : 30px;
 }
 
+.panel div.score.penaltyA{
+	color:red;
+  font-size:11px;
+  left:15px;
+  top:13px;
+}
+
+.panel div.score.penaltyB{
+  color:red;
+  font-size:11px;
+  left:15px;
+  top:34px;
+}
+
 .panel div.score.predictionA{
 	top : 9px;
 	color:#228;
