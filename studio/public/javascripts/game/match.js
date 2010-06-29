@@ -194,7 +194,7 @@ var DataLoader = {
 		        $("scoreA").innerHTML = Studio.match["goals_a"];
 		        $("scoreB").innerHTML = Studio.match["goals_b"];
 		        if ( Studio.match["kicks_a"] )
-  		        $("penalty").innerHTML = Studio.match["kicks_a"] ;
+  		        $("penaltyA").innerHTML = Studio.match["kicks_a"] ;
 		        if ( Studio.match["kicks_b"] )
   		        $("penaltyB").innerHTML = Studio.match["kicks_b"];
 		      }
