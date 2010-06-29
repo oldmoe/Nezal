@@ -20,7 +20,7 @@ var FBConnect = {
         		'staging-studio' : "130918743609615"
 	  },
 	  
-    channelPath : "/xd_receiver.html",
+    channelPath : "xd_receiver.html",
     
     url : function(){
 		    var data = window.location;
@@ -56,7 +56,7 @@ var FBConnect = {
                 }
                 successCallback();
               }else{
-                Display.fetch("/placeHolder.html", "game");
+                Display.fetch("placeHolder.html", "game");
             }
         });
     },

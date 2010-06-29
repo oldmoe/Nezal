@@ -29,7 +29,7 @@ var FBConnect = {
         		'studio-sa' : "110624738982804"
 	  },
 	  
-    channelPath : "/xd_receiver.html",
+    channelPath : "xd_receiver.html",
     
     url : function(){	   
 		    var data = window.location;
@@ -60,7 +60,7 @@ var FBConnect = {
 		alert('session came back')
         if (!response.session)
         {
-            Display.fetch("/placeHolder.html", "game");
+            Display.fetch("placeHolder.html", "game");
             return;
         }
         Callback.callback();
