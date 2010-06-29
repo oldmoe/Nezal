@@ -9,9 +9,9 @@ class UsersController < ApplicationController
   end
   
   post '/remove' do
-    p params
     user = User[params['fb_sig_app_id'], params['fb_sig_user']]
     user.delete() if ( user && params['fb_sig_uninstall'] )
+    ''
   end
 
   post '/add' do

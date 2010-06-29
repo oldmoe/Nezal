@@ -170,7 +170,6 @@
   width: 27px;
   height: 144px;
   z-index: 100;
-  cursor:pointer;
 }        
 
 #friends-rank-scroll .left,  #global-rank-scroll .left {
@@ -180,7 +179,6 @@
   width: 27px;
   height: 144px;
   z-index: 100;    
-  cursor:pointer;
 }   
 
 #friends-rank-scroll ul, #global-rank-scroll ul {
@@ -211,6 +209,7 @@
 .leftOn
 {
   background : url('/images/ranking/left.png') no-repeat left center;
+  cursor:pointer;
 }
 .leftOff
 {
@@ -220,6 +219,7 @@
 .rightOn
 {
   background : url('/images/ranking/right.png') no-repeat right center;
+  cursor:pointer;
 }
 .rightOff
 {

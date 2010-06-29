@@ -14,6 +14,8 @@ var Carousel = Class.create( {
     
     displayCount : 3,
     
+    enabled : true,
+    
     initialize : function(id){
         this.id = id;
         this.width = parseInt($$('#' + this.id + ' ul li')[0].getStyle('width'));
@@ -25,7 +27,7 @@ var Carousel = Class.create( {
         this.right.carousel = this;
         this.left = $$('#' + this.id +  ' .left')[0];
         this.left.carousel = this;
-        this.right.observe('click', function(event){
+        this.right.observe('click', function(event){    
                                                         Event.element(event).carousel.scrollLeft();
                                                     });
         this.left.observe('click', function(event){
@@ -42,12 +44,15 @@ var Carousel = Class.create( {
         var distance = 0
         if (this.currIndex > 0)
         {
+            if(!this.enabled) return;
+            this.enabled = false;
             var newIndex = this.currIndex - this.scroll;
             if (newIndex < 0)
               newIndex = 0;
             var step = -1 * (newIndex - this.currIndex) * this.width;
             this.currIndex = newIndex;
-            new Effect.Move(this.ulId, {x: step, y: 0, mode: 'relative', duration: 0.5, afterFinish : function(){ }})
+            var carousel = this;
+            new Effect.Move(this.ulId, {x: step, y: 0, mode: 'relative', duration: 0.5, afterFinish : function(){ carousel.enabled = true; } })
             this.checkButtons();              
         }
     },
@@ -55,12 +60,15 @@ var Carousel = Class.create( {
     scrollLeft : function(){
         if (this.currIndex < this.listSize - this.displayCount )
         {
+            if(!this.enabled) return;
+            this.enabled = false;
             var newIndex = this.currIndex + this.scroll;
             if ( newIndex > this.listSize - this.displayCount )
                 newIndex = this.listSize - this.displayCount;
             var step = -1 * (newIndex - this.currIndex) * this.width;
             this.currIndex = newIndex;
-            new Effect.Move(this.ulId, {x: step, y: 0, mode: 'relative', duration: 0.5, afterFinish : function(){ }})
+            var carousel = this;
+            new Effect.Move(this.ulId, {x: step, y: 0, mode: 'relative', duration: 0.5, afterFinish : function(){ carousel.enabled = true; } })
             this.checkButtons();
         }
     },
