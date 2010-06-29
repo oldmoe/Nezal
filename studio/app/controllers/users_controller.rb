@@ -11,8 +11,8 @@ class UsersController < ApplicationController
   post '/remove' do
     user = User[params['fb_sig_app_id'], params['fb_sig_user']]
     if ( user && params['fb_sig_uninstall'] )
-      user.predictions.delete()    
-      user.comments.delete()
+      user.predictions_dataset.destroy
+      user.comments_dataset.destroy
       user.delete() 
     end
     ''
