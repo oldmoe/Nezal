@@ -87,27 +87,34 @@ var Comments = {
     
     send : function(button, input_name) {
         if($(button).hasClassName('busy')) return
-		$(button).addClassName('busy')
-		myAudio.play('select')
-		var element = $(input_name)
-		
-		window.setTimeout(function(){
-			$(button).removeClassName('busy')
-		}, 30000)
-        var matchId = "";
-        if ( Comments.matchId() )
+		    var element = $(input_name)
+        if (element.value)
         {
-          matchId = Comments.matchId() + "/"
-        }
-        new Ajax.Request( "/" + Comments.appId() + "/comments/" + matchId, 
-                          {
-                              method:'post', 
-                              parameters: { message : element.value },
-                              onComplete: function(transport, json){
-                                  element.value = ''
-                                  
-                              }
-                          });   
+            var msg = element.value.replace(/^\s+|\s+$/g,"");
+            if (msg.length > 0 )
+            {
+                $(button).addClassName('busy')
+            		myAudio.play('select')
+
+		            window.setTimeout(function(){
+			            $(button).removeClassName('busy')
+		            }, 30000)
+                var matchId = "";
+                if ( Comments.matchId() )
+                {
+                  matchId = Comments.matchId() + "/"
+                }
+                new Ajax.Request( "/" + Comments.appId() + "/comments/" + matchId, 
+                                  {
+                                      method:'post', 
+                                      parameters: { message : msg },
+                                      onComplete: function(transport, json){
+                                          element.value = ''
+                                          
+                                      }
+                                  });   
+            }
+        }          
     },
     
     initialize: function(){
