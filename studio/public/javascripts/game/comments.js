@@ -75,7 +75,6 @@ var Comments = {
                                               user_ids[i] = Comments.comments[i][0]['user_id'];
                                           }
                                       }
-                                      console.log(user_ids)
                                       FB.api(
                                           {
                                               method: 'users.getInfo',
@@ -89,13 +88,12 @@ var Comments = {
                                                   {
                                                       if(Comments.comments[j][0]['user_id'] == response[i]['uid'])
                                                       {
-                                                          console.log(response[i]['name'])
                                                           Comments.comments[j][0]['name'] = response[i]['name'];
                                                           Comments.comments[j][0]['pic'] = response[i]['pic_square'];  
                                                       }
                                                   }
                                               }
-                                              Comments.sms = Comments.templates.sms[1].process({ msgs : Comments.comments.concat(Comments.warning)});
+                                              Comments.sms = Comments.templates.sms[1].process({ msgs : Comments.warning.concat(Comments.comments)});
                                           }
                                       );
                                 			if ( ! $$('#sms_marquee marquee').first() )
