@@ -30,6 +30,24 @@ var FBConnect = {
 		    return data;
 	  },
 	  
+	  retry : 10,
+	  
+	  callback : null,
+	  
+	  getUser : function() {
+	        FBConnect.retry --;
+          new Ajax.Request( "/" + FBConnect.url() + "/users/user", 
+                                    {   method:'get', 
+                                        onSuccess: function(t, json){
+                                              var response = JSON.parse(t.responseText);
+                                              if (response['user'])
+                                                FBConnect.callback();
+                                              else if (FBConnect.retry >= 0)
+                                                window.setTimeout(FBConnect.getUser, 1000);
+                                        }
+                                    });                               
+	  },
+	  
     init : function( successCallback ) {
         fbRoot = document.createElement('div');
         fbRoot.setAttribute("id", "fb-root");
@@ -40,6 +58,7 @@ var FBConnect = {
             status : true, // check login status
             cookie : true // enable cookies to allow the server to access the session
         });
+        FBConnect.callback = successCallback;
         FB.getLoginStatus(function(response) {
 			      if (response.session) {
 			          FBConnect.session = response.session
@@ -54,7 +73,7 @@ var FBConnect = {
                     document.getElementsByTagName('fb:fan')[0].writeAttribute('profile_id', FBConnect.appIds[FBConnect.url()]);
                     FB.XFBML.parse();
                 }
-                successCallback();
+                FBConnect.getUser();
               }else{
                 Display.fetch("placeHolder.html", "game");
             }
