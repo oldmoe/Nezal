@@ -19,7 +19,7 @@ var Animation = Class.create({
 
 	tick : function(){
 		this.delayIndex++
-		if(this.delayIndex > this.delay){
+		if(this.delayIndex >= this.delay){
 			this.delayIndex = 0
 			this.currentFrame++
 			
@@ -50,9 +50,34 @@ var CreepBoom = Class.create(Animation, {
 var NukeBoom = Class.create(Animation, {
 	dx : 640,
 	dy : 480,
-	initImages : function(){
-		this.frames = Game.animationFrames.nuke
- 	} 	
+
+	initImages : function(){	
+		this.frames = new Array(20)
+		this.image = Game.animationFrames.nuke
+ 	},
+
+	tick : function(){
+		this.delayIndex++
+		if(this.delayIndex >= this.delay){
+			this.delayIndex = 0
+			this.currentFrame++
+			
+		}
+		if(this.currentFrame >= this.frames.length){
+			console.log(this.currentFrame)
+			this.finish();
+		}
+	},	
+	
+	render : function(){
+		console.log(this.currentFrame);		
+		this.ctx.drawImage(this.image, this.dx * this.currentFrame, 0, this.dx, this.dy, this.x-this.dx/2, this.y-this.dy/2, this.dx, this.dy)
+	},
+ 	
+	finish : function(){
+		console.log('done')
+		Game.animations.splice(Game.animations.indexOf(this),1)
+	}
 })
 
 var CoinsAnimation = Class.create(Animation, {

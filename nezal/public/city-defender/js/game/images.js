@@ -4,7 +4,7 @@ Game.loadedImages = 0;
 Game.totalImages = 0
 Game.animationFrames = {
 	coins : new Array(13),
-	nuke : new Array(20),
+	nuke : new Array(1),
 	creepBoom : new Array(17),
 	heal : new Array(17)
 };
@@ -147,9 +147,12 @@ function loadAllImages(){
 			Game.animationFrames[anim].push(loadImage(Game.animationFramesDir+dir+'/'+(i+1)+'.png'))
 		}
 	}
+	
+	Game.animationFrames.nuke = loadImage(Game.animationFramesDir+'nuke_boom.png')
+	
 	loadFrames('heal', 'health_point')
 	loadFrames('creepBoom', 'creep_boom')
-	loadFrames('nuke', 'nuke_boom')
+	//loadFrames('nuke', 'nuke_boom')
 	loadFrames('coins', 'coins')
 
 	for ( var  i=0 ; i< images.length ; i++ ){ 
