@@ -1,0 +1,100 @@
+<script type='text/javascript'>
+
+</script>
+
+<div id="game">
+  <div id="game_name">
+    <%=@game.name%>
+  </div>
+  <div id="game_info">
+    <LABEL for="game_description" > Description </LABEL>
+    <div id="game_description">
+      <%=@game.description%>
+    </div>
+  </div>
+  <div id="game_ranks">
+    <LABEL for="game_ranks">Ranks</LABEL>
+    <% @game.ranks.each do | rank | %>
+      <div >
+        <span>
+          <%=rank.name%>
+        </span>
+        <span>
+          <%=rank.lower_exp%>
+        </span>
+        <span>
+          <%=rank.upper_exp%>
+        </span>
+      </div>
+    <% end %>
+    <div id="game_rank_form">
+      <LABEL for="new_rank">Add New Rank</LABEL>
+      <form id="new_rank" action="/nezal-admin/<%=@game.id%>/ranks" method="post" enctype="multipart/form-data">
+        <div class="form_row">  
+          <LABEL for="rank_name">Name</LABEL>
+          <INPUT type="text" id="rank_name" name='name'><BR>
+        </div>
+        <div class="form_row">  
+          <LABEL for="rank_lower_ep">Min Experience Point</LABEL>
+          <INPUT type="text" id="rank_lower_ep" name='lower_exp'><BR>
+        </div>
+        <div class="form_row">  
+          <LABEL for="rank_upper_ep">Max Experience Point</LABEL>
+          <INPUT type="text" id="rank_lower_ep" name='upper_exp'><BR>
+        </div>
+        <div class="form_row">
+          <input type="submit" value="Add" class="submit"/>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div id="game_campaigns">
+    <LABEL for="game_campaigns">Campaigns</LABEL>
+    <% @game.campaigns.each do | camp | %>
+      <div>
+        <span>
+          <%=camp[:name]%>
+        </span>
+        <span>
+          <%=camp[:config_path]%>
+        </span>
+      </div>
+    <% end %>
+    <div id="game_campaign_form">
+      <LABEL for="new_campaign">Add New Campaign</LABEL>
+      <form id="new_rank" action="/<%=AdminController::ADMIN_URL%>/<%=@game[:id]%>/campaigns" method="post" enctype="multipart/form-data">
+        <div class="form_row">  
+          <LABEL for="campaign_name">Name</LABEL>
+          <INPUT type="text" id="campaign_name" name='name'><BR>
+        </div>
+        <div class="form_row">  
+          <LABEL for="config_path">Config Path</LABEL>
+          <INPUT type="text" id="config_path" name='config_path'><BR>
+        </div>
+        <div class="form_row">
+          <input type="submit" value="Add" class="submit"/>
+        </div>
+      </form>
+    </div>
+    <div id="game_current_campaign_form">
+      <LABEL for="game_campaigns">Current Campaign</LABEL>
+      <form id="set_current_campaign" action="/<%=AdminController::ADMIN_URL%>/<%=@game[:id]%>/current-campaign" method="POST">
+        <div class="form_row">
+          <LABEL for="current_campaign">Current Campaign</LABEL>
+          <select id="current_campaign" name="current_campaign">
+            <% @game.campaigns.each do | campaign | %>
+              <option value="<%=campaign.id%>"  <%=(campaign.id==@game.current_campaign.id)? 'SELECTED' : false%> > <%=campaign.name%> </option>
+            <% end %>
+          </select>
+        </div>
+        <div class="form_row">
+          <input type="submit" value="Change" class="submit"/>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div style="clear:both"></div>
+
+

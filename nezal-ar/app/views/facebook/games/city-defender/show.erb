@@ -1,0 +1,75 @@
+<link type="text/css" href="/city-defender/css/user.css" rel="stylesheet" />
+
+<script src="/javascripts/prototype.js"></script>
+<script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript"></script>
+
+<div id="fb-root" style="display:none;"></div>
+<div id="gameArea">
+  <div id='game'>
+    <%= erb(@game_erb, :layout => false) %>
+  </div>
+  <div id='user'>
+    <%= erb(@user_erb, :layout => false) %>
+  </div>
+</div>
+
+<script>
+
+  var FBApi = {
+    api : null,
+  };
+  
+  var AjaxReq = {
+    refresh : function() {
+        FBApi.api._refreshSession(function(){
+          FBApi.api._setSessionCookies(FBApi.api.get_session());
+        });
+        new Ajax.Request( "<%=@current_camp[:id]%>", {
+              method:'get',
+              onSuccess: function(transport){
+                FBApi.api.set_session(FBApi.api._getSessionFromCookies());
+              }
+        });
+        window.setTimeout("AjaxReq.refresh()", 300000);
+    },
+  }
+
+  api_key = "<%=FBConfigs::CONFIG[session[:fb_app_id]]['key']%>"
+  channel_path = "/html/facebook/xd_receiver.html"
+  
+
+  FB_RequireFeatures(["Connect"], function(){
+    // Create an ApiClient object, passing app's API key and
+    // a site relative URL to xd_receiver.htm
+    FB.Facebook.init(api_key, channel_path);
+
+    api = FB.Facebook.apiClient;
+    
+    FBApi.api = api;
+            
+    // require user to login
+    api.requireLogin(function(exception){
+// console.log(api.get_session().session_key)
+// FB.FBDebug.logLevel=5;
+// FB.FBDebug.dump("Current user id is " + api.get_session());
+// FB.FBDebug.dump("Current user id is " + api.get_session().uid);
+// FB.FBDebug.dump("Current user id is " + api.get_session().session_key);
+// FB.FBDebug.dump("Current user id is " + api.get_session().expires);
+       FBApi.api._refreshSession(function(){
+//          console.log(FBApi.api.get_session());
+        });
+    });
+    
+    AjaxReq.refresh();
+    
+  });
+
+  var SessionHandler = {
+    refresh : function(){
+                api._refreshSession( function(response){
+                                      console.log(api.get_session().session_key);})
+          window.setTimeout("SessionHandler.refresh()", 20000);
+    }
+  }
+
+</script>

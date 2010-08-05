@@ -1,0 +1,41 @@
+#chat{
+  width :95%;
+  height : 350px;
+  border : 1px solid #bbbbbb;
+}
+#chatHistory{
+  width : 90%;
+  height : 200px;
+  overflow-y : auto; 
+  margin : auto;
+  margin-bottom : 10px;
+}
+#chatBox{
+  width : 90%;
+  height : 130px;
+  overflow-y :  auto;
+  margin : auto;
+  display : block;
+  border : 1px solid #cccccc;
+}
+#chat #errorMsg{
+  display: block;
+  color : gray;
+  border-top : 1px solid #cccccc; 
+  text-align : center;
+  font-family : verdana;
+  font-size : 12px;
+}
+.chatMsg {
+  word-wrap : break-word;
+  display : inline;
+  background : none;
+  padding : 0px;
+  font-family : verdana;
+  font-size : 12px;
+
+}
+.chatUser {
+  font-weight : bold;
+}
+

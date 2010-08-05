@@ -1,0 +1,357 @@
+<link type="text/css" href="css/intro.css" rel="stylesheet" />
+<link type="text/css" href="css/ranking.css" rel="stylesheet"/>
+
+<!-- <script src="http://connect.facebook.net/en_US/all.js"></script> -->
+	
+<script src="js/facebook.js" type="text/javascript"></script>
+<script src="js/base/prototype.js" type="text/javascript"></script>
+<script src="js/base/template.js" type="text/javascript"></script>
+<script src="/javascripts/effects.js" type="text/javascript"></script>
+<script src="js/carousel.js" type="text/javascript"></script>
+<script src="js/game/image_loader.js" type="text/javascript"></script>
+<script src="js/game/intro/game_configs.js" type="text/javascript"></script>
+<script src="js/game/creep_config.js" type="text/javascript"></script>
+<script src="js/game/tower_config.js" type="text/javascript"></script>
+<script src="js/game/intro/intro.js" type="text/javascript"></script>
+<script src="js/game/intro/challenge_selector.js" type="text/javascript"></script>
+
+<body>
+
+<div id="game">
+  <div id="intro">
+    
+    <div id="levelSelection" style="display : none;">
+      <img id="levelsBackground" src="images/intro/level-selection.png">
+      </img>
+      <div id="levels">
+        <img id='levelsLinks' src="images/intro/difficulty.png">
+        </img>
+        <div id="easy">
+          <a href="" onclick="GameConfigs.level=1; Intro.next(); return false;">  </a>
+        </div>
+        <div id="medium">
+          <a href="" onclick="GameConfigs.level=2; Intro.next(); return false;">  </a>
+        </div>
+        <div id="hard">
+          <a href="" onclick="GameConfigs.level=3; Intro.next(); return false;">  </a>
+        </div>
+      </div>
+    </div>
+    
+    <div id="cityInfo" style="display : none;">
+    </div>
+
+    <div id="marketPlace" style="display : none; padding : 10px;">
+        <div id="marketTabs">
+            <div id="towersTab" class=" towersOff" onclick="Intro.select(2);">
+                <img src="images/intro/market/towers-on.png"> </img>
+            </div>
+            <div id="weaponsTab" class="weaponsOff"   onclick="Intro.select(3);">
+                <img src="images/intro/market/weapons-off.png"> </img>
+            </div>
+            <div id="upgradesTab" class="upgradesOff" onclick="Intro.select(4);"> 
+                <img src="images/intro/market/upgrades-off.png" > </img>
+            </div>
+            <div id="bar">
+              <img src="images/intro/market/towers-bar.png" style="" > </img>
+            </div>
+        </div>
+        
+        <div id="towers" style="display : none;">
+          <img src="images/intro/market/towers-bg.png"> </img>
+          <div id="floatBg" style="display : none;">
+            <img src="images/intro/market/float-bg.png"></img>
+            <div id="close" onclick="Intro.hideFloatBg();"></div>
+            <div class="content"> 
+                <span class="name">  </span>
+                <span class="desc">  </span>
+            </div>
+          </div>
+          <div id="towerDisplay">
+            <div class="tower">
+              <div>
+                <img src="images/intro/market/q-box.png"></img>
+                <img src="images/intro/market/add.png" class="action"> </img>  
+              </div>
+              <img src="images/intro/market/hidden-lamp.png"></img>   
+            </div>
+            <div class="tower">
+              <div>
+                <img src="images/intro/market/q-box.png"></img>
+                <img src="images/intro/market/add.png" class="action"> </img>  
+              </div>
+              <img src="images/intro/market/hidden-lamp.png"></img>   
+            </div>
+            <div class="tower">
+              <div>
+                <img src="images/intro/market/q-box.png"></img>
+                <img src="images/intro/market/add.png" class="action"> </img>  
+              </div>
+              <img src="images/intro/market/hidden-lamp.png"></img>   
+            </div>
+            <div class="tower">
+              <div>
+                <img src="images/intro/market/q-box.png"></img>
+                <img src="images/intro/market/unlock.png" class="action"> </img> 
+              </div>
+              <img src="images/intro/market/hidden-lamp.png"></img>   
+            </div>
+            <div class="tower">
+              <div>
+                <img src="images/intro/market/q-box.png"></img>
+                <img src="images/intro/market/unlock.png" class="action"> </img> 
+              </div>
+              <img src="images/intro/market/hidden-lamp.png"></img>   
+            </div>
+            <div class="tower">
+              <div>
+                <img src="images/intro/market/q-box.png"></img>
+                <img src="images/intro/market/unlock.png" class="action"> </img> 
+              </div>
+              <img src="images/intro/market/hidden-lamp.png"></img>   
+            </div>
+            <div class="tower">
+              <div>
+                <img src="images/intro/market/q-box.png"></img>
+              </div>
+              <img src="images/intro/market/hidden-lamp.png"></img>   
+            </div>
+            <div class="tower">
+              <div>
+                <img src="images/intro/market/q-box.png"></img>
+              </div>
+              <img src="images/intro/market/hidden-lamp.png"></img>   
+            </div>
+            <div class="tower">
+              <div>
+                <img src="images/intro/market/q-box.png"></img>
+              </div>
+              <img src="images/intro/market/hidden-lamp.png"></img>   
+            </div>
+          </div>
+        </div>
+
+        <div id="weapons" style="display : none;">
+            <img src="images/intro/market/weapons-bg.png"> </img>
+        </div>  
+
+        <div id="upgrades" style="display : none;">
+            <img src="images/intro/market/upgrades-bg.png"> </img>
+        </div>
+        
+        <div id="back" onclick="Intro.previous();"></div>
+        <div id="next" onclick="Intro.next();"></div>
+        <div id="finish" onclick="Intro.finish();"></div>
+    </div>
+
+  </div>
+  
+  <div id="gameStart" style="display:none">
+  		<div id="preload" style="display:none">
+			<img src="images/background/interface.png" />
+			<img src="images/background/loading_bar_down.png" />
+			<img src="images/background/loading_bar_up.png" />
+		</div>
+		<textarea id='statsTemplate' style="display:none">
+Score : ${Game.score}
+Towers Built : ${Game.stats.towersCreated}
+Towers Lost : ${Game.stats.towersDestroyed}
+Units Destroyed : ${Game.stats.creepsDestroyed}
+Escaped Units : ${Game.escaped}
+		</textarea>
+		<textarea id='towerInfoTemplate' style="display:none">
+			<div class="diagram ${tower.cssClass}"></div>
+			<div id="towerData">
+			<h4>${tower.name}</h4>
+			<b>${tower.targets}<br/>${tower.facilities}</b>
+			<table>
+				<tr>
+					<th>Power</th>
+					<td>: ${values.power}</td>
+				</tr>
+				<tr>
+					<th>HP</th>
+					<td>: ${values.hp}</td>
+				</tr>
+				<tr>
+					<th>Rate</th>
+					<td>: ${values.rate}</td>
+				</tr>
+				<tr>
+					<th>Range</th>
+					<td>: ${values.range}</td>
+				</tr>
+				<tr>
+					<th>Price</th>
+					<td>: $${values.price}</td>
+				</tr>
+			</table>
+			</div>
+		</table>
+		</textarea>
+		<div id="gameContainer">
+			<div id="canvasContainer" style="display:none">
+				<canvas id="gameBackground" width="736" height="480"></canvas>
+				<canvas id="gameForeground" width="736" height="480"></canvas>
+			</div>
+			<div id="gameElements" style="display:none">
+				<div id="money">
+					0
+				</div>
+				<div class="status">
+					<div id="score" class="score">0</div>
+					<div id="lives" class="lives">0</div>
+					<div id="waves" class="waves">0/0</div>
+				</div>
+				<div class="fps"></div>
+				<div class="rank"></div>
+				<div class="start"></div>
+				<div class="towers">
+					<div class="tower1" title="Basic"></div>
+					<div class="tower2" title="Double"></div>
+					<div class="rocketLauncher" title="Rocket Launcher"></div>
+					<div class="patriot" title="Patriot Air Defense"></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+				</div>
+				<div class="upgrades">
+					<div class="upgradesBar">
+						<div id="nextUpgrade" class="upgrade next">
+							<div id="upgradePrice"></div>						
+						</div>
+						<div id="currentUpgrade" class="upgrade current">
+							<div class="purchased"></div>
+						</div>
+						<div class="arrow"></div>
+					</div>
+					<div class="upgradeItems">
+							<div id="bullets" class="upgradeItem bullets"></div>
+							<div id="rockets" class="upgradeItem rockets"></div>
+							<div id="shields" class="upgradeItem shields"></div>
+							<div class="upgradeItem"></div>
+							<div class="upgradeItem"></div>
+							<div class="upgradeItem"></div>
+							<div class="upgradeItem"></div>
+							<div class="upgradeItem"></div>
+					</div>
+				</div>
+				<div id="towerInfo" class="towerInfo">
+					<p>
+					<b style="font-size:14px">
+					Click on a tower to view its info
+					</b>
+					</p>
+				</div>
+				<div class="controls">
+					<div class="sound on"></div>
+					<div class="like"></div>
+					<!--div class="subscribe"></div-->
+					<div class="bookmark"></div>
+				</div>
+
+				<div class="superWeapons">
+					<div class="splash">
+						<div id="splash"></div>
+					</div>
+					<div class="heal">
+						<div id="heal"></div>
+					</div>
+					<div class="hyper">
+						<div id="hyper"></div>
+					</div>
+					<div class="weak">
+						<div id="weak"></div>
+					</div>
+					<div class="nuke">
+						<div id="nuke"></div>
+					</div>
+				</div>
+				<div class="superWeaponsOff">
+					<div class="splash">
+					</div>
+					<div class="heal">
+					</div>
+					<div class="hyper">
+					</div>
+					<div class="weak">
+					</div>
+					<div class="nuke">
+					</div>
+				</div>			</div>
+			<canvas id="droppingGround" width="672" height="480"></canvas>
+			<div id="static" style="display:none"></div>
+			<div id="result" style="display:none">
+				<pre id="stats"></pre>
+				<div id="playAgain"></div>
+				<div id="exit"></div>				
+			</div>
+			<div id="splashScreen" style="display:none">
+				<div class="loading_bar_bg">
+					<div id="loading_bar"></div>
+				</div>
+			</div>
+			<div id="waitScreen"></div>
+		</div>		 
+  </div>
+  
+</div>
+
+</body>
+
+<script>
+		$(document).observe('dom:loaded',function(){
+//			FBConnect.init(function(){
+        Intro.initialize()
+//0			})
+		})
+</script>
+
+<link type="text/css" href="css/game.css" rel="stylesheet" />
+<script src="js/base/prototype.js"></script>
+<script src="js/base/effects.js"></script>
+<script src="js/base/sound.js"></script>
+<script src="js/base/template.js"></script>
+<script>
+	function clone_obj(obj) {
+		if (typeof obj !== 'object' || obj == null)return obj;
+		var c = obj instanceof Array ? [] : {};
+		for (var i in obj) {
+			var prop = obj[i];
+			if (typeof prop == 'object') {
+			   if (prop instanceof Array) {
+				   c[i] = [];
+				   for (var j = 0; j < prop.length; j++) {
+					   typeof prop[j] != 'object' ? c[i].push(prop[j]) : c[i].push(clone_obj(prop[j]));
+				   }
+			   } else {
+				   c[i] = clone_obj(prop);
+			   }
+			} else {
+			   c[i] = prop;
+			}
+		}
+		return c;
+	}		
+</script>
+
+<script src="js/game/game.js"></script>
+<script src="js/game/images.js"></script>
+<script src="js/game/super_weapons.js"></script>
+<script src="js/game/sounds.js"></script>
+<script src="js/game/unit.js"></script>
+<script src="js/game/creep.js"></script>
+<script src="js/game/bullets.js"></script>
+<script src="js/game/rockets.js"></script>
+<script src="js/game/ghost_turret.js"></script>
+<script src="js/game/tanks.js"></script>
+<script src="js/game/plane.js"></script>
+<script src="js/game/animation.js"></script>
+<script src="js/game/config.js"></script>
+<script src="js/game/mapeasy1.js"></script>
+<script src="js/game/upgrade.js"></script>
+
+
