@@ -37,7 +37,7 @@ var Plane = Class.create(Creep, {
 		if(this.gridX >= Map.width){
 			// we are out, take us from the game
 			if(this.x >= (Map.width * Map.pitch + Map.pitch / 2)){
-				game.escaped += 1
+				game.scene.escaped += 1
 				this.destroySprites()
 			}			
 		}else if(this.gridX != newGridX){
@@ -56,20 +56,13 @@ var Plane = Class.create(Creep, {
 	
 	
 	die : function(){
-		console.log('will die')
 		this.destroySprites()
-		console.log('dying')
 		if(Map.grid[this.gridX] && Map.grid[this.gridX][this.gridY]){
-			console.log('removing')
 			var cell = Map.grid[this.gridX][this.gridY];
-			console.log(cell)
 			var res = cell.splice(cell.indexOf(this), 1);
-			console.log(res)
-			console.log(this.gridX, this.gridY)
-			console.log(cell)
 		}
-		game.money += this.price;
-		game.stats.creepsDestroyed++
+		game.scene.money += this.price;
+		game.scene.stats.creepsDestroyed++
 	},
 	destroySprites : function(){
 		this.dead = true	
