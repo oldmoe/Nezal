@@ -10,8 +10,9 @@
 <script src="js/carousel.js" type="text/javascript"></script>
 <script src="js/game/image_loader.js" type="text/javascript"></script>
 <script src="js/game/intro/game_configs.js" type="text/javascript"></script>
-<script src="js/game/creep_config.js" type="text/javascript"></script>
-<script src="js/game/tower_config.js" type="text/javascript"></script>
+<script src="js/game/configs/creep_config.js" type="text/javascript"></script>
+<script src="js/game/configs/tower_config.js" type="text/javascript"></script>
+<script src="js/game/configs/super_weapon_config.js" type="text/javascript"></script>
 <script src="js/game/intro/intro.js" type="text/javascript"></script>
 <script src="js/game/intro/challenge_selector.js" type="text/javascript"></script>
 
@@ -21,11 +22,9 @@
   <div id="intro">
     
     <div id="levelSelection" style="display : none;">
-      <img id="levelsBackground" src="images/intro/level-selection.png">
-      </img>
+      <img id="levelsBackground" src="images/intro/level-selection.png"/>
       <div id="levels">
-        <img id='levelsLinks' src="images/intro/difficulty.png">
-        </img>
+        <img id='levelsLinks' src="images/intro/difficulty.png"/>
         <div id="easy">
           <a href="" onclick="GameConfigs.level=1; Intro.next(); return false;">  </a>
         </div>
@@ -37,106 +36,54 @@
         </div>
       </div>
     </div>
+
+    <div id="campaign" style="display : none;">
+      <img src="images/intro/campaign/campaign-bg.png"/>
+      <div class="camp-details">
+        <div class="name">
+          Tunisia
+        </div>
+        <div class="desc">
+          This is the campaign description Say hhhhhhhhhhu uuuuuuuuuiiiiiiiii
+          This is the campaign description Say hhhhhhhhhhuu uuuuuuuuiiiiiiiii
+          This is the campaign description Say hhhhhhhhhh uuuuuuuuuuiiiiiiiii
+          This is the campaign description Say hhhhhhhhhh uuuuuuuuuuiiiiiiiii
+        </div>
+      </div>
+      <img id="camp-map" src="challenges/current/images/camp-map.png"/>
+      <div id="back" onclick="Intro.previous(); return false;"></div>
+      <div id="next" onclick="Intro.next(); return false;"></div>
+    </div>
     
-    <div id="cityInfo" style="display : none;">
+    <div id="mission" style="display : none;">
     </div>
 
-    <div id="marketPlace" style="display : none; padding : 10px;">
+    <div id="marketPlace" style="display : none;">
         <div id="marketTabs">
-            <div id="towersTab" class=" towersOff" onclick="Intro.select(2);">
-                <img src="images/intro/market/towers-on.png"> </img>
+            <div id="towersTab" class=" towersOff" onclick="Intro.select(3);">
+                <img src="images/intro/market/towers-on.png"/>
             </div>
-            <div id="weaponsTab" class="weaponsOff"   onclick="Intro.select(3);">
-                <img src="images/intro/market/weapons-off.png"> </img>
+            <div id="weaponsTab" class="weaponsOff"   onclick="Intro.select(4);">
+                <img src="images/intro/market/weapons-off.png"/>
             </div>
-            <div id="upgradesTab" class="upgradesOff" onclick="Intro.select(4);"> 
-                <img src="images/intro/market/upgrades-off.png" > </img>
+            <div id="upgradesTab" class="upgradesOff" onclick="Intro.select(5);"> 
+                <img src="images/intro/market/upgrades-off.png"/>
             </div>
             <div id="bar">
-              <img src="images/intro/market/towers-bar.png" style="" > </img>
+              <img src="images/intro/market/towers-bar.png" style=""/>
             </div>
         </div>
         
         <div id="towers" style="display : none;">
-          <img src="images/intro/market/towers-bg.png"> </img>
-          <div id="floatBg" style="display : none;">
-            <img src="images/intro/market/float-bg.png"></img>
-            <div id="close" onclick="Intro.hideFloatBg();"></div>
-            <div class="content"> 
-                <span class="name">  </span>
-                <span class="desc">  </span>
-            </div>
-          </div>
-          <div id="towerDisplay">
-            <div class="tower">
-              <div>
-                <img src="images/intro/market/q-box.png"></img>
-                <img src="images/intro/market/add.png" class="action"> </img>  
-              </div>
-              <img src="images/intro/market/hidden-lamp.png"></img>   
-            </div>
-            <div class="tower">
-              <div>
-                <img src="images/intro/market/q-box.png"></img>
-                <img src="images/intro/market/add.png" class="action"> </img>  
-              </div>
-              <img src="images/intro/market/hidden-lamp.png"></img>   
-            </div>
-            <div class="tower">
-              <div>
-                <img src="images/intro/market/q-box.png"></img>
-                <img src="images/intro/market/add.png" class="action"> </img>  
-              </div>
-              <img src="images/intro/market/hidden-lamp.png"></img>   
-            </div>
-            <div class="tower">
-              <div>
-                <img src="images/intro/market/q-box.png"></img>
-                <img src="images/intro/market/unlock.png" class="action"> </img> 
-              </div>
-              <img src="images/intro/market/hidden-lamp.png"></img>   
-            </div>
-            <div class="tower">
-              <div>
-                <img src="images/intro/market/q-box.png"></img>
-                <img src="images/intro/market/unlock.png" class="action"> </img> 
-              </div>
-              <img src="images/intro/market/hidden-lamp.png"></img>   
-            </div>
-            <div class="tower">
-              <div>
-                <img src="images/intro/market/q-box.png"></img>
-                <img src="images/intro/market/unlock.png" class="action"> </img> 
-              </div>
-              <img src="images/intro/market/hidden-lamp.png"></img>   
-            </div>
-            <div class="tower">
-              <div>
-                <img src="images/intro/market/q-box.png"></img>
-              </div>
-              <img src="images/intro/market/hidden-lamp.png"></img>   
-            </div>
-            <div class="tower">
-              <div>
-                <img src="images/intro/market/q-box.png"></img>
-              </div>
-              <img src="images/intro/market/hidden-lamp.png"></img>   
-            </div>
-            <div class="tower">
-              <div>
-                <img src="images/intro/market/q-box.png"></img>
-              </div>
-              <img src="images/intro/market/hidden-lamp.png"></img>   
-            </div>
-          </div>
-        </div>
-
-        <div id="weapons" style="display : none;">
-            <img src="images/intro/market/weapons-bg.png"> </img>
+            <img src="images/intro/market/towers-bg.png"/>
+        </div>  
+        
+        <div id="superWeapons" style="display : none;">
+            <img src="images/intro/market/weapons-bg.png"/>
         </div>  
 
         <div id="upgrades" style="display : none;">
-            <img src="images/intro/market/upgrades-bg.png"> </img>
+            <img src="images/intro/market/upgrades-bg.png"/>
         </div>
         
         <div id="back" onclick="Intro.previous();"></div>
@@ -350,7 +297,6 @@ Escaped Units : ${Game.escaped}
 <script src="js/game/tanks.js"></script>
 <script src="js/game/plane.js"></script>
 <script src="js/game/animation.js"></script>
-<script src="js/game/config.js"></script>
 <script src="js/game/mapeasy1.js"></script>
 <script src="js/game/upgrade.js"></script>
 

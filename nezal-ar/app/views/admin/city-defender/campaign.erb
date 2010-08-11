@@ -1,0 +1,130 @@
+<script type='text/javascript'>
+var CampaignData = {
+    missions : [],
+    templates : {},
+
+    init : function()
+    {
+        CampaignData.templates['missions'] = TrimPath.parseDOMTemplate('displayTemplate');
+        new Ajax.Request( '../metadata' , {
+                          method : 'get',
+                          onSuccess: function(transport) {
+                              console.log(transport.responseText);
+                              data = JSON.parse(transport.responseText);
+                              CampaignData.missions = JSON.parse(data);
+                              $$('#missions #list')[0].innerHTML = CampaignData.templates['missions'].process({list: CampaignData.missions}); 
+                        }
+                      });
+    },
+    addMission : function()
+    {
+        var mission = {
+            "name" : $$("#missions #addMission #name")[0].value,
+            "path" : $$("#missions #addMission #path")[0].value,
+        }
+        if( !(mission["name"]) || !(mission["path"]) )
+        {
+          alert("Name & Path must exist");
+          return;
+        }
+        CampaignData.missions[CampaignData.missions.length] = mission;
+        mission['order'] = CampaignData.missions.length;
+        $$("#missions #addMission #name")[0].value = "";
+        $$("#missions #addMission #path")[0].value = "";
+        $$('#missions #list')[0].innerHTML = CampaignData.templates['missions'].process({list: CampaignData.missions});
+    },
+    deleteElement : function(element)
+    {
+        delete CampaignData.missions[element.getAttribute('order') - 1 ];
+        CampaignData.missions = CampaignData.missions.compact();
+        CampaignData.missions.each(function(element) { element['order'] = CampaignData.missions.indexOf(element) + 1; } )
+        $$('#missions #list')[0].innerHTML = CampaignData.templates['missions'].process({list: CampaignData.missions});
+    },
+    saveData : function()
+    {
+        new Ajax.Request( '../metadata' , {
+                            method : 'put',
+                            parameters : { "data" : JSON.stringify(CampaignData.missions) },
+                            onSuccess: function(transport) {
+                              window.location = window.location;
+                            }
+                        });
+    }
+}
+$(document).observe('dom:loaded',function(){ CampaignData.init();});
+</script>
+
+<div id="game">
+    <div id="camp_data">
+      <LABEL for="camp_name" class="title">Campaign: </LABEL>
+      <div id="camp_name">
+          <%=@camp.name%>
+      </div>
+    </div>
+    <textarea id="displayTemplate" style="display:none;">
+        {for element in list}
+    		  	<div>
+      	  	    <span class="column"> 
+  	    	  	      <LABEL for="name">Name: </LABEL>
+      	  	        ${element['name']} 
+    	  	      </span>
+          	    <span class="column"> 
+                    <LABEL for="path">Path: </LABEL>  
+          	        ${element['path']} 
+      	        </span>
+          	    <span class="column"> 
+                    <LABEL for="path">Order: </LABEL>  
+          	        ${element['order']} 
+      	        </span>
+      	        <span class="delete" >
+                  <a order="${element['order']}" href="#" onclick="CampaignData.deleteElement(this);return false;" class="submit_links"> x </a>
+                </span>
+            </div>
+            <div style="clear:both"></div>
+        {/for}
+    </textarea>
+    <div id="missions">
+        <div class="title">Missions:</div>
+        <div id="list">
+        </div>
+        <div id="addMission" class="title add">
+            <LABEL for="addMission" class="label">Add Mission</LABEL>
+            <div class="form_row">  
+                <LABEL for="name">Name</LABEL>
+                <INPUT type="text" id="name" name='name'><BR>
+            </div>
+            <div class="form_row">  
+                <LABEL for="path">Path</LABEL>
+                <INPUT type="text" id="path" name='path'><BR>
+            </div>
+            <div class="form_row">
+                <input type="submit" value="Add" class="submit" onclick="CampaignData.addMission(); return false;"/>
+            </div>
+        </div>      
+	  </div>
+	  
+    <div style="text-align : right;">
+        <input type="submit" value="AM Done .. Save That" class="submit" onclick="CampaignData.saveData(); return false;"/>
+    </div>
+</div>
+
+<style>
+    #camp_data, #missions
+    {
+        padding : 20px;
+        border-top : solid 1px;
+    }
+    .title
+    {
+        color : #77bbff;
+        font-size : 15px;
+        font-weight : bold;
+        margin-bottom : 10px;
+    }
+    .column
+    {
+        width : 30%;
+        display : block;
+        float : left;
+    }
+</style>
