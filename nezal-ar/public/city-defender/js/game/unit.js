@@ -1,26 +1,17 @@
 var Unit = Class.create({
 //	_oldRenders : [],
-	initialize: function(canvas, x, y, extension){
+	initialize: function(x, y, extension){
 		this.gridX = x
 		this.gridY = y
 		this.x = Map.pitch * (x + 0.5)
 		this.y = Map.pitch * (y + 0.5)
-		this.canvas = canvas
-		this.ctx = this.canvas.getContext('2d')
 		if(extension){
 			Object.extend(this, extension)
 		}
 		this.maxHp = this.hp
-		this.initImages();
 		return this
 	},
-	initImages: function(){
-		//alert('initImages not implemented')
-	},
 	
-	render: function(){
-		alert('render not implemented')
-	},	
 	target: function(){
 		if(this.dead) return
 		if(!this.reloaded){
@@ -53,19 +44,23 @@ var Unit = Class.create({
 	takeHit: function(power){
 		if(this.dead) return
 		this.hp -= power
-		if(this.hp <= 0 ){this.die(); this.dead = true; 
-			Game.animations.push(new CreepBoom(this.ctx, this.x, this.y))
+		if(this.hp <= 0 ){
+			this.dead = true; 
+			this.die(); 
+			var anim = new CreepBoom(this.x, this.y)
+			game.scene.towerHealthLayer.attach(anim)
+			game.scene.objects.push(anim)
 			Sounds.play(Sounds.boom.unit)
 		}
-		if(Game.selectedTurret == this){
-			//$('unitData').innerHTML = Game.templates['unitData'].process({unit: Game.selectedTurret})
+		if(game.selectedTurret == this){
+			$('unitData').innerHTML = game.templates['unitData'].process({unit: game.selectedTurret})
 		}
 		return this;
 	},
 	die: function(){
 		alert('die not implemented')
 	},
-	images: {},
+	//images: {},
 	hp: 100, maxHp: 100, 
 	rate: 0.2, toFire: 0,
 	reloded: true,	fired: false,

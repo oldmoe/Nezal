@@ -1,82 +1,90 @@
-Game.fireSuperWeapon = function(weapon){
-	if(!Game.playing || Game[weapon+'Disabled'] || Game.superWeapons[weapon].used == Game.superWeapons[weapon].max ) return
-	Game[weapon+'Disabled'] = true
-	Game.superWeapons[weapon].used++
-	Game.push(0, Game[weapon])
+game.fireSuperWeapon = function(weapon){
+	if( game.superWeapons[weapon].used == game.superWeapons[weapon].max ) return
+	game[weapon+'Disabled'] = true
+	game.superWeapons[weapon].used++
+	game.scene.push(0, game[weapon])
 	var div = $$('#gameElements .superWeapons div.'+weapon)[0]
 	div.setOpacity(0);
-	if(Game.superWeapons[weapon].used < Game.superWeapons[weapon].max){
-		Game.initTimeout(div, weapon+'Disabled', 1000 / Game.delay)
+	
+	if(game.superWeapons[weapon].used < game.superWeapons[weapon].max){
+		game.scene.push(div, weapon+'Disabled', 1000 / game.delay)
 	}
 }
 
-Game.nuke = function(){
-	var i = 0
-	Game.allCreeps().each(function(creep){
+game.nuke = function(){
+	game.scene.creeps.each(function(creep){
 		creep.takeHit(Math.round(creep.hp * 1));
-		Game.animations.push(new NukeBoom($('gameForeground').getContext('2d'), 320, 240))
 	})
+	var anim = new NukeBoom(320, 240)
+	game.scene.objects.push(anim)
+	game.scene.rocketsLayer.attach(anim)
 }
 
-Game.weak = function(){
-	Game.animations.push(new Weak())
-	Game.push(500, Game.unWeak)
+game.weak = function(){
+	var anim = new Weak()
+	game.scene.objects.push(anim)
+	game.scene.rocketsLayer.attach(anim)
+	game.scene.push(500, game.unWeak)
 	var count = 0
 	var weak = function(){
-		Game.allCreeps().each(function(creep){creep.takeHit(creep.maxHp * 0.1);})
+		game.scene.creeps.each(function(creep){creep.takeHit(creep.maxHp * 0.1);})
 		count++
-		if(count < 10){ Game.push(50, weak) }
+		if(count < 10){ game.scene.push(50, weak) }
 	}
-	Game.push(50, weak)
+	game.scene.push(50, weak)
 }
 
-Game.unWeak = function(){
+game.unWeak = function(){
 	var index = -1
-	Game.animations.each(function(animation, i){
+	game.scene.objects.each(function(animation, i){
 		if(index == -1 && animation.type == 'weak'){
 			index = i
 		}
 	})
-	Game.animations.splice(index, 1)
+	game.scene.objects.splice(index, 1)
 }
 
-Game.splash = function(){
+game.splash = function(){
 	var x = [0, Map.width * Map.pitch - 1][Math.round(Math.random())]
 	var y = [0, Map.height * Map.pitch - 1][Math.round(Math.random())]
 	Sounds.play(Sounds.turret.rocketLaunch)
 	Sounds.play(Sounds.turret.rocketLaunch)
-	Game.allCreeps().sort(function(a,b){
+	game.scene.creeps.sort(function(a,b){
 		return b.hp - a.hp
 	}).slice(0,10).each(function(creep){
-		Game.objects.push(new PatriotRocket(creep.canvas, 0, 0,  {theta: 0, targetUnit : creep, x : x, y : y, power: 2000, speed: 15}))
+		game.scene.objects.push(new PatriotRocket(0, 0,  {theta: 0, targetUnit : creep, x : x, y : y, power: 2000, speed: 15}))
 	})
 }
 
-Game.heal = function(){
-	Game.turrets.each(function(tower){
+game.heal = function(){
+	game.scene.turrets.each(function(tower){
 		tower.hp = tower.maxHp
-		Game.animations.push(new HealAnimation(tower.ctx, tower.x, tower.y - 43))
+		var anim = new HealAnimation(tower.x, tower.y - 43)
+		game.scene.objects.push(anim)
+		game.scene.rocketsLayer.attach(anim)
 	})
 }
 
-Game.hyper = function(){
+game.hyper = function(){
 	var hyper = function(tower){
-		tower.rate *= Game.superWeapons.hyper.factor;
+		tower.rate *= game.superWeapons.hyper.factor;
 	}
-	Game.turrets.each(hyper)
-	Game.push(30000 / Game.delay, Game.unHyper)
-	Game.towerMutators.push({name : 'hyper', action : hyper})
+	game.scene.turrets.each(hyper)
+	game.scene.push(30000 / game.delay, game.unHyper)
+	//game.towerMutators.push({name : 'hyper', action : hyper})
 }
 
-Game.unHyper = function(){
-	Game.turrets.each(function(tower){
-		tower.rate /= Game.superWeapons.hyper.factor;
+game.unHyper = function(){
+	game.scene.turrets.each(function(tower){
+		tower.rate /= game.superWeapons.hyper.factor;
 	});
 	var index = -1
-	Game.towerMutators.each(function(mutator, i){
+	/*
+	game.towerMutators.each(function(mutator, i){
 		if(index == -1 && mutator.name == 'hyper'){
 			index = i
 		}
 	})
-	Game.towerMutators.splice(index, 1)
+	game.towerMutators.splice(index, 1)
+	*/
 }

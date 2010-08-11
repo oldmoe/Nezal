@@ -22,7 +22,7 @@ var UpgradeData = {
 
 var Upgrades = {
 	init : function(){
-		this.data = clone_obj(UpgradeData)
+		this.data = Nezal.clone_obj(UpgradeData)
 		this.selectDefault()
 	},
 
@@ -40,17 +40,17 @@ var Upgrades = {
 	
 	upgrade: function(){
 		var item = Upgrades.data.selectedUpgrade
-		if(!item || Game.money < item.list[1].price) return
+		if(!item || game.money < item.list[1].price) return
 		item.list.shift()
-		Game.money -= item.list[0].price
+		game.money -= item.list[0].price
 		item.affects.each(function(tower){
-			var values = Game.config.towers.find(function(t){return t.category == tower}).values
+			var values = game.config.towers.find(function(t){return t.category == tower}).values
 			for(p in item.list[0].effect){
 				//tower.prototype[p] = Math.round(tower.prototype[p] * item.list[0].effect[p] * 100)/100
 				if(values[p]){
 					values[p] = Math.round(values[p] * item.list[0].effect[p] * 100)/100
 					// we need to update existing towers as well
-					Game.turrets.each(function(t){
+					game.scene.turrets.each(function(t){
 						if(t.constructor == tower){
 							t[p] = Math.round(t[p] * item.list[0].effect[p] * 100)/100
 						}
@@ -66,7 +66,7 @@ var Upgrades = {
 			var item = Upgrades.data.selectedUpgrade
 			$('currentUpgrade').className = "upgrade current active "+item.list[0].classes[0] 
 			if(item.list[1]){
-				if(Game.money < item.list[1].price){
+				if(game.money < item.list[1].price){
 					$('nextUpgrade').className = "upgrade next "+item.list[1].classes[0] + " off"
 				}else{
 					$('nextUpgrade').className = "upgrade next "+item.list[1].classes[0]

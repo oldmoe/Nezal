@@ -30,7 +30,7 @@ var Map = {
 		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 	],
 	entry : [[0,2],[0,3]],
-	init : function(bgctx){
+	init : function(){
 		this.tiles[0].src = 'background/tiles/grass-texture (Custom).jpg'
 		this.tiles[1].src = 'background/tiles/desert-texture (Custom).jpg'
 		for(var i = 0; i < this.width; i++){

@@ -1,7 +1,7 @@
 var ghostTurretFeatures = {			
 	validate : function(x, y, tower){			
 		this.valid = true
-		if(Map.grid[x][y].tower || Map.bgGrid[x][y] == 1 || Game.money < tower.values.price){
+		if(Map.grid[x][y].tower || Map.bgGrid[x][y] == 1 || game.money < tower.values.price){
 			this.valid = false
 		}
 	},
@@ -11,14 +11,11 @@ var ghostTurretFeatures = {
 		}
 	},
 	select : function(){
-		Game.selectedTurret = null
+		game.selectedTurret = null
 		$('droppingGround').stopObserving("mouseenter")
-		//$$('.tower').each(function(t){t.removeClassName('selected')})
-		//$('unitData').innerHTML = ''
 		var self = GhostTurret
 		var div = this;
-		//this.addClassName('selected')
-		var tower = Game.config.towers.find(function(tower){return tower.name == div.title})
+		var tower = game.config.towers.find(function(tower){return tower.name == div.title})
 		if(tower == null) return;
 		tower.values.maxHp = tower.values.hp
 		Object.extend(self, tower.values)
@@ -26,10 +23,9 @@ var ghostTurretFeatures = {
 		self.initImages = tower.category.prototype.initImages
 		self.initImages()
 		//tower.attributes = Tower.attributes
-		$('towerInfo').innerHTML = Game.templates['towerInfo'].process({values: tower.values, tower : tower.category.prototype})
+		//$('towerInfo').innerHTML = Game.templates['towerInfo'].process({values: tower.values, tower : tower.category.prototype})
 		self.selected = true;
 		$('droppingGround').observe("mouseenter", function(e){
-			//alert('in')
 			self.isIn = true
 			self.x = e.layerX
 			self.y = e.layerY					
@@ -55,18 +51,18 @@ var ghostTurretFeatures = {
 				if(!self.selected) return
 				self.validate(x, y, tower);
 				if(self.valid){
-					var turret = new tower.category($('gameForeground'), Math.floor(e.layerX/32), Math.floor(e.layerY/32), tower.values)
-					Game.towerMutators.each(function(mutator){
+					var turret = new tower.category(Math.floor(e.layerX/32), Math.floor(e.layerY/32), tower.values)
+					/*Game.towerMutators.each(function(mutator){
 						mutator.action(turret)
-					})
-					Game.turrets.push(turret)
-					Game.stats.towersCreated++
-					Map.grid[turret.gridX][turret.gridY].tower = turret
-					Game.money -= turret.price
+					})*/
+					game.scene.addTurret(turret)
+					//self.selected = false
+					//game.stats.towersCreated++
+					//game.money -= turret.price
 				}
 			})
 		}).observe("mouseleave", function(e){
-			self.clear();
+			//self.clear();
 			self.isIn = false
 			this.stopObserving("mousemove").stopObserving("click")
 		}).addClassName('turret')
@@ -79,31 +75,31 @@ var ghostTurretFeatures = {
 		//this.ctx.fillRect(0,0, this.canvas.width, this.canvas.height)
 		this.ctx.clearRect(0,0, this.canvas.width, this.canvas.height)
 	},
-	render : function(){
-		this.ctx.save()
-		this.ctx.translate(this.x, this.y)
-		this.ctx.drawImage(this.images.base, -48, -16)		
+	render : function(ctx){
+		ctx.save()
+		ctx.translate(this.x, this.y)
+		ctx.drawImage(this.images.base[0], -48, -16)		
 		if(this.images.cannon){
-			this.ctx.drawImage(this.images.cannon, -48, -16)
+			ctx.drawImage(this.images.cannon[0], -48, -16)
 		}else{
-			this.ctx.drawImage(this.images.pad, -48, -16)
-			this.ctx.drawImage(this.images.rocket, -48, -16)
+			ctx.drawImage(this.images.pad[0], -48, -16)
+			ctx.drawImage(this.images.rocket[0], -48, -16)
 		}		
 		if(this.valid){
-			this.ctx.fillStyle = 'rgba(255,255,255,0.5)'
-			this.ctx.beginPath();
-			this.ctx.arc(0, 0, this.range * Map.pitch, 0, Math.PI*2, false)
-			this.ctx.closePath();
-			this.ctx.fill();
+			ctx.fillStyle = 'rgba(255,255,255,0.5)'
+			ctx.beginPath();
+			ctx.arc(0, 0, this.range * Map.pitch, 0, Math.PI*2, false)
+			ctx.closePath();
+			ctx.fill();
 		}else{
-			this.ctx.fillStyle = 'rgba(255,0,0,0.0)'
-			this.ctx.beginPath();
-			this.ctx.arc(0, 0, 128, 0, Math.PI*2, false)
-			this.ctx.closePath();
-			this.ctx.fill();
-			this.ctx.fillStyle = 'rgba(255,0,0,0.9)'
-			this.ctx.fillRect(-16,-16, 32, 32)
+			ctx.fillStyle = 'rgba(255,0,0,0.0)'
+			ctx.beginPath();
+			ctx.arc(0, 0, 128, 0, Math.PI*2, false)
+			ctx.closePath();
+			ctx.fill();
+			ctx.fillStyle = 'rgba(255,0,0,0.9)'
+			ctx.fillRect(-16,-16, 32, 32)
 		}
-		this.ctx.restore();		
+		ctx.restore();		
 	}
 }			
