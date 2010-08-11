@@ -1,0 +1,3 @@
+class CityDefender < Metadata
+  
+end

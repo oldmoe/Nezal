@@ -11,6 +11,8 @@ class Game < ActiveRecord::Base
       campaign = Campaign.new(:name => 'curr_camp')
       self.campaigns << campaign  
       self.current_campaign = campaign
+    elsif ( self.current_campaign.nil? ) 
+      self.current_campaign = self.campaigns.first()
     end
   end
  

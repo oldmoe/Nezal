@@ -1,0 +1,239 @@
+<script type='text/javascript'>
+var GameData = {
+    towers : { 
+             },
+    weapons : {
+            }, 
+    upgrades : {
+          },
+    templates : {},
+
+    init : function()
+    {
+        GameData.templates['towers'] = TrimPath.parseDOMTemplate('displayTemplate');
+        GameData.templates['weapons'] = TrimPath.parseDOMTemplate('displayTemplate');
+        GameData.templates['upgrades'] = TrimPath.parseDOMTemplate('displayTemplate');
+        new Ajax.Request( '../metadata' , {
+                          method : 'get',
+                          onSuccess: function(transport) {
+                              console.log(transport)
+                              data = JSON.parse(transport.responseText);
+                              GameData.towers = data['towers'];
+                              GameData.weapons = data['weapons'];
+                              GameData.upgrades = data['upgrades'];
+                              $$('#towers #list')[0].innerHTML = GameData.templates['towers'].process({list: GameData.towers, type : 'tower'});
+                              $$('#weapons #list')[0].innerHTML = GameData.templates['weapons'].process({list: GameData.weapons, type : 'weapon'});
+                              $$('#upgrades #list')[0].innerHTML = GameData.templates['upgrades'].process({list: GameData.upgrades, type : 'upgrade'});
+                          }
+                      });
+    },
+    addTower : function()
+    {
+        var tower = {
+            "name" : $$("#towers #addTower #name")[0].value,
+            "cost" : $$("#towers #addTower #cost")[0].value,
+            "exp" : $$("#towers #addTower #exp")[0].value
+        }
+        if( !(tower["name"]) || isNaN(tower["cost"]) || isNaN(tower["exp"]) )
+        {
+          alert("Name must exist & Cost and Experience points must be integers");
+          return;
+        }
+        GameData.towers[tower['name']] = tower;
+        $$("#towers #addTower #name")[0].value = "";
+        $$("#towers #addTower #cost")[0].value = "";
+        $$("#towers #addTower #exp")[0].value = "";
+        $$('#towers #list')[0].innerHTML = GameData.templates['towers'].process({list: GameData.towers, type : 'tower'});
+    },
+    deleteTower : function(element)
+    {
+        delete GameData.towers[element.getAttribute('name')];
+        $$('#towers #list')[0].innerHTML = GameData.templates['towers'].process({list: GameData.towers, type : 'tower'});
+    },
+    addWeapon : function()
+    {
+        var weapon = {
+            "name" : $$("#weapons #addWeapon #name")[0].value,
+            "cost" : $$("#weapons #addWeapon #cost")[0].value,
+            "exp" : $$("#weapons #addWeapon #exp")[0].value
+        }
+        if( !(weapon["name"]) || isNaN(weapon["cost"]) || isNaN(weapon["exp"]))
+        {
+          alert("Name must exist & Cost and Experience points must be integers");
+          return;
+        }
+        GameData.weapons[weapon['name']] = weapon;
+        $$("#weapons #addWeapon #name")[0].value = "";
+        $$("#weapons #addWeapon #cost")[0].value = "";
+        $$("#weapons #addWeapon #exp")[0].value = "";
+        $$("#weapons #list")[0].innerHTML = GameData.templates['weapons'].process({list: GameData.weapons, type : 'weapon'});
+    },
+    deleteWeapon : function(element)
+    {
+        delete GameData.weapons[element.getAttribute('name')];
+        $$("#weapons #list")[0].innerHTML = GameData.templates['weapons'].process({list: GameData.weapons, type : 'weapon'});
+    },
+    addUpgrade : function()
+    {
+        var upgrade = {
+            "name" : $$("#upgrades #addUpgrade #name")[0].value,
+            "cost" : $$("#upgrades #addUpgrade #cost")[0].value,
+            "exp" : $$("#upgrades #addUpgrade #exp")[0].value
+        }
+        if( !(upgrade["name"]) || isNaN(upgrade["cost"]) || isNaN(upgrade["exp"]))
+        {
+          alert("Name must exist & Cost and Experience points must be integers");
+          return;
+        }
+        GameData.upgrades[upgrade['name']] = upgrade;
+        $$("#upgrades #addUpgrade #name")[0].value = "";
+        $$("#upgrades #addUpgrade #cost")[0].value = "";
+        $$("#upgrades #addUpgrade #exp")[0].value = "";
+        $$('#upgrades #list')[0].innerHTML = GameData.templates['upgrades'].process({list: GameData.upgrades, type : 'upgrade'});
+    },
+    deleteUpgrade : function(element)
+    {
+        delete GameData.upgrades[element.getAttribute('name')];
+        $$("#upgrades #list")[0].innerHTML = GameData.templates['upgrades'].process({list: GameData.upgrades, type : 'upgrade'});
+    },
+    deleteElement : function(element)
+    {
+        type = element.getAttribute('type');
+        if(type == 'tower')
+        {
+            GameData.deleteTower(element);
+        }else if(type == 'weapon'){
+            GameData.deleteWeapon(element);
+        }else if(type == 'upgrade'){
+            GameData.deleteUpgrade(element);
+        }
+    }, 
+    saveData : function()
+    {
+        data = { towers : GameData.towers, 
+                  weapons : GameData.weapons,
+                  upgrades : GameData.upgrades }
+        new Ajax.Request( '../metadata' , {
+                                    method : 'put',
+                                    parameters : { "data" : JSON.stringify(data) },
+                                    onSuccess: function(transport) {
+                                      window.location = window.location
+                                    }
+                                });
+                            
+    }
+}
+$(document).observe('dom:loaded',function(){ GameData.init();});
+</script>
+
+<div id="game">
+    <div id="game_name">
+        <%=@game.name%>
+    </div>
+    <textarea id="displayTemplate" style="display:none;">
+        {for element in list}
+    		  	<div>
+      	  	    <span class="column"> 
+  	    	  	      <LABEL for="name">Name: </LABEL>
+      	  	        ${element['name']} 
+    	  	      </span>
+          	    <span class="column"> 
+                    <LABEL for="cost">Cost: </LABEL>  
+          	        ${element['cost']} 
+      	        </span>  
+          	    <span class="column"> 
+                    <LABEL for="exp">Experience Points: </LABEL>  
+          	        ${element['exp']} 
+      	        </span>  
+      	        <span class="delete" >
+                  <a name="${element['name']}" type="${type}" href="#" onclick="GameData.deleteElement(this);return false;" class="submit_links"> x </a>
+                </span>
+            </div>
+            <div style="clear:both"></div>
+        {/for}
+    </textarea>
+    <div id="towers">
+        <div class="title">Towers</div>
+        <div id="list">
+        </div>
+        <div id="addTower" class="title add">
+            <LABEL for="addTower" class="label">Add New Tower</LABEL>
+            <div class="form_row">  
+                <LABEL for="name">Name</LABEL>
+                <INPUT type="text" id="name" name='name'><BR>
+            </div>
+            <div class="form_row">  
+                <LABEL for="cost">Cost</LABEL>
+                <INPUT type="text" id="cost" name='cost'><BR>
+            </div>
+            <div class="form_row">  
+                <LABEL for="exp">Experience Points</LABEL>
+                <INPUT type="text" id="exp" name='exp'><BR>
+            </div>
+            <div class="form_row">
+                <input type="submit" value="Add" class="submit" onclick="GameData.addTower(); return false;"/>
+            </div>
+        </div>      
+	  </div>
+    <div id="weapons">
+        <div class="title">Weapons</div>
+        <div id="list">
+        </div>
+        <div id="addWeapon" class="title add">
+            <LABEL for="addWeapon"  class="label">Add New Weapon</LABEL>
+            <div class="form_row">  
+                <LABEL for="name">Name</LABEL>
+                <INPUT type="text" id="name" name='name'><BR>
+            </div>
+            <div class="form_row">  
+                <LABEL for="cost">Cost</LABEL>
+                <INPUT type="text" id="cost" name='cost'><BR>
+            </div>
+            <div class="form_row">  
+                <LABEL for="exp">Experience Points</LABEL>
+                <INPUT type="text" id="exp" name='exp'><BR>
+            </div>
+            <div class="form_row">
+                <input type="submit" value="Add" class="submit" onclick="GameData.addWeapon(); return false;"/>
+            </div>
+        </div>      
+	  </div>
+    <div id="upgrades">
+        <div class="title">Upgrades</div>
+        <div id="list">
+        </div>
+        <div id="addUpgrade" class="title add">
+            <LABEL for="addUpgrade"  class="label">Add New Upgrade</LABEL>
+            <div class="form_row">  
+                <LABEL for="name">Name</LABEL>
+                <INPUT type="text" id="name" name='name'><BR>
+            </div>
+            <div class="form_row">  
+                <LABEL for="cost">Cost</LABEL>
+                <INPUT type="text" id="cost" name='cost'><BR>
+            </div>
+            <div class="form_row">  
+                <LABEL for="exp">Experience Points</LABEL>
+                <INPUT type="text" id="exp" name='exp'><BR>
+            </div>
+            <div class="form_row">
+                <input type="submit" value="Add" class="submit" onclick="GameData.addUpgrade(); return false;"/>
+            </div>
+        </div>      
+	  </div>
+	  
+    <div style="text-align : right;">
+        <input type="submit" value="AM Done .. Save That" class="submit" onclick="GameData.saveData(); return false;"/>
+    </div>
+
+</div>
+
+<style>
+    #towers, #weapons, #upgrades
+    {
+        padding : 20px;
+        border-top : solid 1px;
+    }
+</style>
+
+

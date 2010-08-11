@@ -16,10 +16,10 @@ var Carousel = Class.create( {
     
     enabled : true,
     
-    images : {  'left' : "images/intro/city/carousel/left.png",
-                'left-disabled' : "images/intro/city/carousel/left-disabled.png",
-                'right' : "images/intro/city/carousel/right.png",
-                'right-disabled' : "images/intro/city/carousel/right-disabled.png" },
+    images : {  'left' : "images/intro/mission/carousel/left.png",
+                'left-disabled' : "images/intro/mission/carousel/left-disabled.png",
+                'right' : "images/intro/mission/carousel/right.png",
+                'right-disabled' : "images/intro/mission/carousel/right-disabled.png" },
     
     initialize : function(id){
         this.id = id;
