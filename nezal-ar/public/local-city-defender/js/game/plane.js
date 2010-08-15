@@ -1,4 +1,5 @@
 var Plane = Class.create(Creep, {
+  name : 'Plane',
 	flying : true,
 	images : {
 		base : Game.images['air_craft.png'],
@@ -62,6 +63,7 @@ var Plane = Class.create(Creep, {
 })
 
 var RedPlane = Class.create(Plane, {
+  name : 'RedPlane',
 	images : {
 		base : Game.images['red_air_craft.png'],
 		fire : Game.images['red_air_craft_in_action.png'],

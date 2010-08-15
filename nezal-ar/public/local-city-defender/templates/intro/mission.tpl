@@ -21,13 +21,13 @@
       ${city.summary}
   </div>
   <div id="cityImage">
-      <img src="challenges/${path}/images/city.png">
+      <img src="${path}/images/city.png">
   </div>
   <div id="fullDesc">
       ${city.description}    
   </div>
   <div id="cityMap">       
-    <img src="challenges/${path}/images/map.png">
+    <img src="${path}/images/map.png">
   </div>
   <div id="accept" onclick="Intro.next();">
     <img src="images/intro/mission/accept.png">

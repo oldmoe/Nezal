@@ -23,6 +23,14 @@ var CreepConfig = {
                   image : 'rocket.png', 
                   skelaton : 'skil.png',
                   desc : "This is the black creep it is soooo destructive" },
+    "TankI" : {  name : "Tank I",
+                  image : 'rocket.png', 
+                  skelaton : 'skil.png',
+                  desc : "This is the black creep it is soooo destructive" },
+    "Tank" : {  name : "Tank",
+                  image : 'rocket.png', 
+                  skelaton : 'skil.png',
+                  desc : "This is the black creep it is soooo destructive" },                  
     "Humvee" : {  name : "Humveee",
                   image : 'cannon2.png', 
                   skelaton : 'skil.png',
@@ -30,6 +38,18 @@ var CreepConfig = {
     "RedPlane" : {  name : "Red Plane",
                     image : 'cannon3.png',
                     skelaton : 'skil.png', 
+                    desc : "This is the Red plane creep it is soooo destructive" },
+    "Plane" : {  name : "Plane",
+                    image : 'cannon3.png',
+                    skelaton : 'skil.png', 
                     desc : "This is the Red plane creep it is soooo destructive" }
 }
+/*
+for(creep in CreepConfig){
+  eval('var '+creep+ '={}')
+}
 
+var Tank = {}
+var TankI = {}
+var Plane = {}
+*/

@@ -79,5 +79,3 @@ var Upgrades = {
 		}
 	}
 }
-
-Upgrades.init()

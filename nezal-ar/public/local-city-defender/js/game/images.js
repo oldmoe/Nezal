@@ -175,4 +175,4 @@ image.onload = function(){
 	image2.src = Game.backgroundImagesDir+'loading_bar_down.png'
 }
 image.src = Game.backgroundImagesDir+'interface.png'
-loadAllImages();	
+

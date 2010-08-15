@@ -1,6 +1,7 @@
 var GameConfigs = {
   level: 0, 
-  campaign : 'current'
+  campaign : 'current',
+  missionName : 'cairo'
 }
 
 

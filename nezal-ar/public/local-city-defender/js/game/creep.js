@@ -145,6 +145,7 @@ var Creep = Class.create(Unit,{
 		this.ctx.save()
 		this.ctx.translate(Math.round(this.x), Math.round(this.y))
 		this.ctx.rotate(Math.PI/180 * this.theta)
+		console.log(this.images.base);
 		this.ctx.drawImage(this.images.base, -48, -16)
 		this.ctx.fillStyle = 'red'
 		this.ctx.fillRect(-22, 10, 3, -20)

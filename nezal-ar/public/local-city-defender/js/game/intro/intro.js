@@ -13,10 +13,12 @@ var Intro = {
               "upgrades"
             ],
     templates : {
-              challenges: [Configs.template_path + "challenges.tpl", 0],
-              mission: [Configs.template_path + "mission.tpl", 0],
-              towers: [Configs.template_path + "towers.tpl", 0],
-              superWeapons: [Configs.template_path + "super_weapons.tpl", 0]
+              challenges : [Configs.template_path + "challenges.tpl", 0],
+              campaign : [Configs.template_path + "campaign.tpl", 0],
+              mission : [Configs.template_path + "mission.tpl", 0],
+              towers : [Configs.template_path + "towers.tpl", 0],
+              superWeapons : [Configs.template_path + "super_weapons.tpl", 0],
+              game : [ "templates/game.tpl", 0 ]
             },
     images : {
         path : "images/intro/" ,
@@ -59,17 +61,39 @@ var Intro = {
     initialize: function(){
         this.currentPage = -1;
         for(var template in Intro.templates){
-          Intro.send(template);
+          Intro.retrieve(template);
 	      }
-        Intro.next();
     },
     
-    send: function(template){
+    retrieve: function(template){
         new Ajax.Request(Intro.templates[template][0], {method:'get',
-	            onComplete: function(t){
-		      		  Intro.templates[template][1] = TrimPath.parseTemplate(t.responseText) 
+	            onSuccess: function(t){
+  		      		  Intro.templates[template][1] = TrimPath.parseTemplate(t.responseText);
+	  	      		  var size = 0;
+	  	      		  var received = 0;
+	  	      		  for(var t in Intro.templates) 
+	  	      		  {
+	    	      		    size += 1;
+	    	      		    if( Intro.templates[t][1])
+    	    	      		      received++;	      		      
+	  	      		  }
+		      		  if (received == size)
+		      		  {
+      		  	      $("gameStart").innerHTML = Intro.templates['game'][1].source;
+      		  	      loadAllImages();
+      		  	      Upgrades.init(); 
+                    Intro.next(); 		    
+                }
 			      }
 	      })
+    },
+
+    campPath : function() {
+        return "challenges/" + GameConfigs.campaign; 
+    },
+    
+    missionPath : function(){
+        return "/" + GameConfigs.missionName;
     },
   
     pages : {
@@ -80,47 +104,72 @@ var Intro = {
         },
         campaign : {
             onSelect : function() {
+                var images = []
                 Intro.images.campaign.each(function(image){ images.push( Intro.images.path + image) });
-                images.push("challenges/"+GameConfigs.campaign+"/images/camp-map.png");   
-                ImageLoader.load(images, Intro.images.path, function(){}, Intro.show);
+                images.push( "../../" + Intro.campPath() + "/images/camp-map.png" );   
+                new Ajax.Request( Intro.campPath() + "/camp.info" ,
+                                    {   method:'get', 
+                                        onComplete: function(t, json){
+                                            ChallengeSelector.campaignInfo = JSON.parse(t.responseText);
+                                            ImageLoader.load(images, Intro.images.path, function(){}, function()
+                                            {
+                                                $('campaign').innerHTML = Intro.templates.campaign[1].process({"camp":ChallengeSelector.campaignInfo}); 
+                                                Intro.show();
+                                            });
+                                        }
+                                      });
             }
         },
         mission : {
             onSelect : function(){
-                new Ajax.Request('challenges/' + GameConfigs.campaign + "/config.js" ,
-                                    {method:'get', 
-                                        onComplete: function(t, json){
-                                          eval(t.responseText);
-                                          window.Config = Config;
-                                        }
-                                      });
-                new Ajax.Request('challenges/' + GameConfigs.campaign + "/mission.info" ,
-                                    {method:'get', 
-                                        onComplete: function(t, json){
-                                            ChallengeSelector.mission = JSON.parse(t.responseText);
-                                            images = []
-                                            Intro.images.mission.each(function(image){ images.push( Intro.images.path + image) });
-                                            images.push("challenges/"+GameConfigs.campaign+"/images/city.png");
-                                            images.push("challenges/"+GameConfigs.campaign+"/images/map.png");   
-                                            for (var creep in CreepConfig)
-                                            {
-                                                images.push( Intro.images.path + "creeps/" + CreepConfig[creep]['image']);
-                                            }
-                                            ImageLoader.load (images, "",
-                                                              function(){},
-                                                              function() {
-                                                                   console.log("hiiiiiii")
-                                                                   $('mission').innerHTML = Intro.templates.mission[1].process({ 
-                                                                                                    "city" : ChallengeSelector.mission,
-                                                                                                    "path" : GameConfigs.campaign,
-                                                                                                    "creepConfig" : CreepConfig }); 
-                                                                   console.log("hiiiiiii")
-                                                                   Intro.creepsCarousel = new Carousel("creeps-scroll");
-                                                                   Intro.creepsCarousel.displayCount = 4;
-                                                                   Intro.show();
-                                                              })
-                            	          }
-                    	              })
+                console.log("mission on select");
+                new Ajax.Request( Intro.campPath() + Intro.missionPath() + "/config.js" ,
+                                {method:'get', 
+                                      onComplete: function(t, json){
+                                          try{
+                                            console.log(eval(t.responseText));
+                                          }catch(e){
+                                            console.log(e)
+                                          }
+                                          window.Config = Config;         
+                                          var creepInfo = [];
+                                          window.Config['waves'].each( function(element) { 
+                                                              for( var i =0; i< element['creeps'].length; i++ )
+                                                              {
+                                                                  creepInfo = creepInfo.concat([element['creeps'][i]['category'].prototype.name]);
+                                                              }
+                                                          })
+                                          ChallengeSelector.missionCreeps = creepInfo.uniq();
+                                          console.log(ChallengeSelector.missionCreeps);
+                                          new Ajax.Request( Intro.campPath() + Intro.missionPath() + "/mission.info" ,
+                                              {method:'get', 
+                                                onComplete: function(t, json){
+                                                    ChallengeSelector.mission = JSON.parse(t.responseText);
+                                                    ChallengeSelector.mission.creeps = ChallengeSelector.missionCreeps;
+                                                    var images = []
+                                                    Intro.images.mission.each(function(image){ images.push( Intro.images.path + image) });
+                                                    images.push( Intro.campPath() + Intro.missionPath() + "/images/city.png");
+                                                    images.push( Intro.campPath() + Intro.missionPath() + "/images/map.png");   
+                                                    for (var creep in CreepConfig)
+                                                    {
+                                                        images.push( Intro.images.path + "creeps/" + CreepConfig[creep]['image']);
+                                                    }
+                                                    ImageLoader.load (images, "",
+                                                                      function(){},
+                                                                      function() {
+                                                                           $('mission').innerHTML = Intro.templates.mission[1].process({ 
+                                                                                                  "city" : ChallengeSelector.mission,
+                                                                                                  "path" : Intro.campPath() + Intro.missionPath(),
+                                                                                                  "creepConfig" : CreepConfig }); 
+                                                                           Intro.creepsCarousel = new Carousel("creeps-scroll");
+                                                                           Intro.creepsCarousel.displayCount = 4;
+                                                                           Intro.show();
+                                                                           console.log("hiiiiiii");
+                                                                      })
+                                    	          }
+                          	                })
+                      	              }
+                	              });
             },
             setFloatBgInfo : function(element){
                   $$("#mission #floatBg div span")[0].innerHTML = CreepConfig[element.getAttribute("creepid")].name;
@@ -143,6 +192,7 @@ var Intro = {
                 /* Get User Data : coins, unlocked towers, super weapons & upgrade
                    Also should contain User last used tower, weapon set 
                    TODO replace this with Ajax  call to get the data */
+
                 data = { "gameData" : {  "towers" : ["Cannon1", "Cannon2", "Rocket", "Cannon3", "Cannon4"],
                                          "weapons" : ["Nuck", "Weak"],
                                          "upgrades" : [] },
@@ -257,7 +307,7 @@ var Intro = {
         }
 	      Intro.currentPage = Intro.nextPageIndex;
         $(Intro.sequence[Intro.currentPage]).style['display'] = "block"; //show();    
-        $("intro").style['curspr'] = 'auto';
+        $("intro").style['cursor'] = 'auto';
     },
     
     showFloatBg : function(element){
@@ -292,8 +342,6 @@ var Intro = {
 	  },
 	  
 	  finish: function(){
-//        $('marketPlace').hide();
-//        $(Intro.sequence[Intro.currentPage]).hide();
         $("intro").hide();
         console.log(Config) 
         gameStart();

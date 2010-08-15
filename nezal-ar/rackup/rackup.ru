@@ -11,6 +11,7 @@ require "#{Dir.pwd}/rackup/games/games.rb"
 
 use	Rack::MethodOverride
 use Rack::Static, :urls => [ "/stylesheets", "/javascripts", "/favicon.ico", "/game_images", "/html/facebook"], :root => "public"
+use Rack::Static, :urls => [ "/city-defender/css", "/city-defender/js", "/city-defender/images", "/city-defender/templates", "/city-defender/index.html"], :root => "public"
 use Rack::ShowExceptions
   
 router = Rack::Router.new(nil) do |r|
