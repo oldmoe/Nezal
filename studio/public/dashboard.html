@@ -30,7 +30,9 @@
 												<img class='flagA' src='images/flags/${cell.teamA.abrv.toLowerCase()}_r.png'/>
 												<img class='flagB' src='images/flags/${cell.teamB.abrv.toLowerCase()}_r.png'/>
 												<div class="score scoreA">{if cell.goals_a != null}${cell.goals_a}{/if}</div>
+												<div class="score penaltyA">{if cell.kicks_a != null}${cell.kicks_a}{/if}</div>
 												<div class="score scoreB">{if cell.goals_b != null}${cell.goals_b}{/if}</div>
+												<div class="score penaltyB">{if cell.kicks_b != null}${cell.kicks_b}{/if}</div>
 												{if cell.prediction}
 													<div class="score predictionA">${cell.prediction.goals_a}</div>
 													<div class="score predictionB">${cell.prediction.goals_b}</div>

@@ -1,26 +1,8 @@
-#sms_marquee
-{
-  margin-top : 20px;
-  font-weight : bold;
-  position : absolute;
-  left : 10px;
-}
-
 #msgs
 {
   width : 70%;
   height : 100%;
   margin-left : 25px;
-  overflow : auto;
-}
-
-.msg
-{
-  background : #ECEFF5;
-  width : 96%;
-  margin-bottom : 5px;
-  font-family : "lucida grande",tahoma,verdana,arial,sans-serif;
-  font-size : 11px;
   overflow : auto;
 }
 
@@ -30,12 +12,20 @@
   width : 10%;
 }
 
-.img
+#sms_bar #sms_marquee .msg
 {
-  width : 32px;
-  height : 32px;
-  margin : 5px;
+  vertical-align:middle; 
 }
+#sms_bar #sms_marquee .title
+{
+  position : relative;
+  top : 10px;
+}
+#sms_bar #sms_marquee img
+{
+  vertical-align : bottom;
+}
+
 .msg-div
 {
   float : left;

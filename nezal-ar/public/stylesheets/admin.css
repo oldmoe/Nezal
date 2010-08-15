@@ -1,0 +1,87 @@
+#game 
+{
+  width : 50%;
+}
+
+#game_name
+{
+  font-size : 18px;
+  font-weight : bold;
+  text-transform : uppercase;
+  font-style : italic;
+  margin-bottom : 20px;
+}
+
+label 
+{
+  color : #FFFF55;
+  font-size : 14px;
+}
+.column
+{
+        width : 30%;
+        display : block;
+        float : left;
+}
+.delete
+{
+    width : 5%;
+    display : block;
+    float : left;
+}
+.title
+{
+    color : #77bbff;
+    font-size : 15px;
+    font-weight : bold;
+    margin-bottom : 10px;
+}
+.add
+{
+    margin-top : 15px;
+}
+
+#game_info, #game_ranks, #game_campaigns
+{
+  padding : 15px;
+  border-top : 1px solid;
+}
+
+#game_rank_form, #game_campaign_form, #new_game, #game_current_campaign_form
+{
+  padding-top : 15px;
+}
+
+#new_rank 
+{
+  padding : 10px 0px;
+}
+
+.form_row
+{
+  padding : 5px 0px;
+  overflow : auto;
+}
+.form_row label
+{
+  color : #FFFF55;
+  font-weight : normal;
+}
+.form_row input, textarea, select
+{
+  float : right;
+  width : 70%;
+}
+.form_row .submit
+{
+  float : right;
+  width : 20%;
+}
+.label
+{
+  color :#77BBFF;
+  font-size : 14px;
+  font-weight : bold;
+  margin-bottom : 5px;
+}
+

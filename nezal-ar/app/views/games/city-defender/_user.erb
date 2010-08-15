@@ -1,0 +1,22 @@
+<% @friend_list[:list].each_index do |index| %>
+  <% if @friend_list[:list][index] %>
+    <div class="friend">
+      <div class="name">
+        <%=@friend_list[:list][index]['name']%>
+      </div>
+      <div class="pic" style="background :  transparent url('<%=@friend_list[:list][index]['pic_url']||'/city-defender/images/user/default.png'%>') center no-repeat">
+        <a href="<%=@friend_list[:list][index]['profile_url']%>" target="_parent">
+        </a>
+      </div>
+      <div class="order">
+        <div class="order-text">
+          <%=index+1%><%if(index%10) == 0%>st <%elsif (index% 10) == 1%>nd <%elsif (index% 10) == 2%>rd <%else%>th <%end%>
+        </div>
+      <img src="/city-defender/images/user/user_rank.png" class="rank"/>
+      </div>
+      <div class="score">
+        <%=@friend_list[:list][index]["campaign"]["score"]%>
+      </div>
+    </div>
+  <% end %>
+<% end %>

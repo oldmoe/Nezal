@@ -1,0 +1,10 @@
+<div class="game-init">
+  <% @game.game_campaigns.limit(4).each() do |camp| %>
+    <div class="campaign">
+      <a href="/fb-games/<%=@game[:name]%>/<%=camp[:id]%>">
+        <%=camp[:name]%>
+      </a>
+    </div>
+  <% end %>
+</div>
+

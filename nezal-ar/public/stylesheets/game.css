@@ -1,0 +1,25 @@
+#new_game{
+  padding : 10px;
+  width : 400px;
+}
+#new_game .form_row{
+  margin : 10px 10px;
+}
+#new_game label{
+  display : block;
+  float : left;
+  width : 100px;
+}
+#new_game .submit
+{
+  float : right;
+}
+.game{
+  padding : 20px;
+}
+.game .image{
+  width : 100px;
+  height : 100px;
+  float : left;
+}
+

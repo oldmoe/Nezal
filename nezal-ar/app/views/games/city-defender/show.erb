@@ -1,0 +1,55 @@
+<link type="text/css" href="/city-defender/css/intro.css" rel="stylesheet" />
+
+<script src="/city-defender/js/base/prototype.js"></script>
+<script src="/city-defender/js/base/template.js"></script>
+<script src="/city-defender/js/game/intro/game_configs.js"></script>
+<script src="/city-defender/js/game/intro/challenge_selector.js"></script>
+
+<div id="intro">
+
+  <div id="challengeSelection">
+      <div id="weekly">
+        <a href="" onclick="ChallengeSelector.select('current'); return false;">  </a>
+      </div>
+      <div id="all">
+        <a href="" onclick="ChallengeSelector.list(this); return false;">  </a>
+      </div>  
+  </div>
+  
+  <div id="levelSelection">
+    <div id="levels">
+      <div id="easy">
+        <a href="" onclick="GameConfigs.level=1; Intro.next(); return false;">  </a>
+      </div>
+      <div id="medium">
+        <a href="" onclick="GameConfigs.level=2; Intro.next(); return false;">  </a>
+      </div>
+      <div id="hard">
+        <a href="" onclick="GameConfigs.level=3; Intro.next(); return false;">  </a>
+      </div>
+    </div>
+  </div>
+
+  <div id="challenges" style="display : none;">
+  </div>
+
+  <div id="cityInfo" style="display : none;">
+  </div>
+
+  <div id="towers" style="display : none;">
+  </div>
+
+  <div id="weapons" style="display : none;">
+  </div>  
+
+  <div id="upgrades" style="display : none;">
+  </div>
+
+  <div id="creepInfo" style="display : none;">
+  </div>
+
+</div>
+
+<script>
+  window.setTimeout( function(){Intro.initialize(); }, 100);
+</script>

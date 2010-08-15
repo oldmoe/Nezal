@@ -11,12 +11,24 @@ class ApplicationController < Sinatra::Base
 
   before do 
     @app_configs = FB_CONFIGS::find('name', env['SCRIPT_NAME'].split('/')[1])
-	if @app_configs && get_fb_session
-       @user = User[@app_configs['id'], @fb_uid] || User.create(:app_id => @app_configs['id'] , :user_id => @fb_uid, :global_score => 0, :first_round_score => 0, :round16_score => 0, :quarters_score => 0, :semis_score => 0, :finals_score => 0)
+  	if @app_configs && get_fb_session
+	    retry_times = 1
+  	  begin
+        @user = User[@app_configs['id'], @fb_uid] 
         @user.session = @fb_session_key
-	else
+=begin
+      rescue Sequel::DatabaseError => e
+        p e
+        DBRescue::reconnect()
+        retry if (retry_times -= 1) >=  0
+=end
+      rescue Exception => e
+        puts e
+        ''
+      end
+	  else
       LOGGER.debug "No Cookie Or Params Found"
-	end
+	  end
   end
   
   

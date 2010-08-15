@@ -8,6 +8,7 @@ class User < Sequel::Model
   unrestrict_primary_key
   set_primary_key [:app_id, :user_id]
   one_to_many :predictions, :key=>[:app_id, :user_id]
+  one_to_many :comments, :key=>[:app_id, :user_id]
 
   USER_FIELDS = [ "uid", "name", "first_name", "last_name", "pic_big", "profile_url" ]
   
