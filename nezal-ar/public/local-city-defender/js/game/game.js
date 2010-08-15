@@ -16,7 +16,6 @@ $(document).observe('dom:loaded',function(){
 			canvas.width = Map.width * Map.pitch
 			canvas.height = Map.height * Map.pitch
 		})
-		ImageLoader.init();
 		window.setTimeout(function(){
 			var bg = $('gameBackground');
 			var bgctx = bg.getContext('2d') 

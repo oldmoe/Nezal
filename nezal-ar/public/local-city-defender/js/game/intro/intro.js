@@ -79,7 +79,8 @@ var Intro = {
 		      		  if (received == size)
 		      		  {
       		  	      $("gameStart").innerHTML = Intro.templates['game'][1].source;
-      		  	      loadAllImages();
+      		  	      //loadAllImages();
+					  initLoadImages()
       		  	      Upgrades.init(); 
                     Intro.next(); 		    
                 }

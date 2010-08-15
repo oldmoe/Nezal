@@ -54,7 +54,9 @@ var Loader = {
 		this.loadedResources++;
 		if(options.onProgress) options.onProgress(Math.round((this.loadedResources/this.currentLength)*100))
 		if(this.loadedResources == this.currentLength){
-			if(options.onFinish) options.onFinish()
+			if(options.onFinish){
+				options.onFinish()
+			}
 			this.loadedResources = 0
 		}	
 	},
@@ -84,15 +86,51 @@ var imageNames = ['humvee_body.png','humvee_tower.png','humvee_tower_in_action.p
 'patriot_launcher.png','patriot_launcher_in_action_right.png','patriot_launcher_in_action_left.png','patriot_rocket.png','rocket_in_action.png',
 'weak.png','rocket_launcher.png','rocket.png']
 
+var bgImages = ['l_shape.png', 'win.png','lose.png','path.png','play_again.png','exit.png','pause.png','start.png','resume.png','path.png',
+'snow.gif','heal_button.png','heal_button_off.png','splash_button.png','splash_button_off.png','nuke_button.png','nuke_button_off.png',
+'hyper_button.png','hyper_button_off.png','weak_button.png','weak_button_off.png','tower_1_button.png','tower_2_button.png',
+'mystry_button.png','patriot_button.png','status_bar.png']
+
+var upgradeImages = ['arrow.png','block_upgrade.png', 'bullets_upgrade_1.png','bullets_upgrade_2.png','bullets_upgrade_2_off.png',
+              'rockets_upgrade_1.png','rockets_upgrade_2.png','rockets_upgrade_2_off.png',
+              'shields_upgrade_1.png','shields_upgrade_2.png','shields_upgrade_2_off.png',
+              'purchased_stamp.png','rocket_launcher_button.png','bullets_upgrade_button.png','rockets_upgrade_button.png',
+			  'shields_upgrade_button.png','upgrade_button_inactive.png'
+			 ]
+
 function imageNumbers(length){
 	var arr = []
 	for(var i=0; i<length;i++){
 		arr[i] = (i+1)+'.png'
 	}
 	return arr
+
 }
-Loader.load([{images : imageNames, store :'game'}, {animations: imageNumbers(16), path: 'images/animations/health_point/', store: 'heal'},
-{animations: imageNumbers(15), path: 'images/animations/creep_boom/', store: 'creepBoom'},
-{animations: imageNumbers(12), path: 'images/animations/coins/', store: 'coins'},
-{animations: imageNumbers(19), path: 'images/animations/nuke_boom/', store: 'nuke'}
-], {onProgress: function(){}, onFinish : function(){} })
+function onFinish(){
+	$('gameElements').style.visibility = 'visible'
+	$('canvasContainer').style.visibility = 'visible'
+	window.setTimeout(function(){
+		Effect.Fade('splashScreen')
+		$('gameElements').show();
+		$('canvasContainer').show();
+		$('static').show();
+		$('waitScreen').hide()
+		Effect.Fade('static',{duration: 2.0})
+	},1000)
+}
+function loadGameImages(){
+	try{
+	Loader.load([{images : imageNames, store :'game'}, {animations: imageNumbers(16), path: 'images/animations/health_point/', store: 'heal'},
+	{animations: imageNumbers(15), path: 'images/animations/creep_boom/', store: 'creepBoom'},
+	{animations: imageNumbers(12), path: 'images/animations/coins/', store: 'coins'},
+	{animations: imageNumbers(19), path: 'images/animations/nuke_boom/', store: 'nuke'},
+	{images: bgImages, path: 'images/background', store: 'background'},
+	{images: upgradeImages, path: 'images/background', store: 'upgrades'}
+	], {onProgress: function(progress){$('loading_bar').style.width = ''+progress+'%';}, onFinish : onFinish })
+	}catch(e){console.log(e)}
+}
+function initLoadImages(){
+	Loader.load([{images: ['interface.png','loading_bar_down.png','loading_bar_up.png'], path: 'images/background', store: 'background'}],
+	{onProgress: function(progress){},onFinish:function(){$('waitScreen').hide();Effect.Appear('splashScreen');loadGameImages();}})
+}
+//init()
