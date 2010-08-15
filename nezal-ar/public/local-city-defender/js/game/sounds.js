@@ -19,7 +19,7 @@ var Sounds = {
 	
 	play : function(store){
 		if(Sounds.channels.length == 5) return
-		if(!Game.sound) return
+		if(!game.scene.sound) return
 		if(store.length > 0){
 			Sounds.channels.push(store.pop())
 			Sounds.channels.last().play()

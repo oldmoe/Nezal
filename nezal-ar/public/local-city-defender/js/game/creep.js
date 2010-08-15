@@ -1,63 +1,78 @@
-var Creep = Class.create(Unit,{
+var Creep = Class.create(Unit, {
 	speeds : [0, 1.08, 2.245, 4.852, 6.023, 7.945, 11.71, 22.625],
 	angles : [0, 3.75, 7.5, 15, 18, 22.5, 30, 45],
-	theta : 0, cannonTheta : 0,
+	cannonTheta : 0,
 	olderTheta : 0, oldestTheta: 0,
 	hp : 100, maxHp : 100,
-	speed : 8, price : 4,
+	speed :4, price : 4,
 	evading : false, direction : 0,
 	rate : 0.2, power: 2.0,
 	cannonDisplacement : [-4, 0],
 	turningPoint : [0, 0],
-	initialize : function($super, canvas, x, y, extension){
-		$super(canvas, x, y,  extension)
-		Map.grid[x][y].push(this);
+	initialize : function($super,x,y,extension){
+		$super(x,y,extension)
+		Map.grid[x][y].push(this)
+		this.createSprites()
 		// find the nearest empty tile
 		if(x == 0){
-			this.theta = 0
+			this.rotation = 0
 			this.top = this.y - Map.entry[0][1] * Map.pitch
 			this.bottom = (Map.entry[1][1] + 1) * Map.pitch- this.y
 		}else if(y == 0){
-			this.theta = 90
+			this.rotation = 90
 			this.top = (Map.entry[1][0] + 1) * Map.pitch - this.x					
 			this.bottom = this.x - Map.entry[0][0] * Map.pitch
-		}else if(x == (Map.width - 1)){
-			
-			this.theta = 180
+		}else if(x == (Map.width - 1)){			
+			this.rotation = 180
 			this.top = Map.entry[1][1] * Map.pitch - this.y					
 			this.bottom = this.y - (Map.entry[0][1]+1) * Map.pitch
 		}else if(y == Map.height - 1){
-			this.theta = 270
+			this.rotation = 270
 			this.top = this.x - Map.entry[0][0] * Map.pitch
 			this.bottom = (Map.entry[1][0] + 1) * Map.pitch - this.x					
-		}		
-//		this.initTraces();
+		}
+		//game.scene.indeces[this] = true		
 	},
-	
+	createSprites: function(){
+		this.sprite = new CompositeUnitSprite(this.images,this.hp,this.maxHp)
+		this.sprite.moveTo(this.x,this.y);
+	},
+	modifySprites: function(){
+		this.sprite.x = this.x
+		this.sprite.y = this.y
+		this.sprite.rotation = this.rotation
+		this.sprite.cannonRotation = this.cannonTheta
+		//this.hp = 100
+		this.sprite.setHp(this.hp)
+		if(this.fired){
+			this.sprite.currentFrame = 1
+			this.fired = false
+		}
+		else this.sprite.currentFrame = 0
+	},
 	topBottomValues : function(){
-		if(this.theta == 0){
+		if(this.rotation == 0){
 			return [Map.value(this.x, this.y - this.top - 1), Map.value(this.x, this.y + this.bottom + 1)]
-		}else if(this.theta == 90){
+		}else if(this.rotation == 90){
 			return [Map.value(this.x + this.top + 1, this.y), Map.value(this.x - this.bottom - 1, this.y)]
-		}else if(this.theta == 180){
+		}else if(this.rotation == 180){
 			return [Map.value(this.x - 1, this.y + this.top + 1), Map.value(this.x-1, this.y - this.bottom - 1)]
-		}else if(this.theta == 270){
+		}else if(this.rotation == 270){
 			return [Map.value(this.x - this.top - 1, this.y-1), Map.value(this.x + this.bottom + 1, this.y-1)]
 		}
 	},
 	shouldNotTurn : function(ref){
-		if(this.theta == 0){
+		if(this.rotation == 0){
 			return this.x < (this.turningPoint[0] + ref - 16)
-		}else if(this.theta == 90){
+		}else if(this.rotation == 90){
 			return this.y < (this.turningPoint[1] + ref - 16)
-		}else if(this.theta == 180){
+		}else if(this.rotation == 180){
 			return this.x > (this.turningPoint[0] - ref + 16)
-		}else if(this.theta == 270){
+		}else if(this.rotation == 270){
 			return this.y > (this.turningPoint[1] - ref + 16)
 		}
 	},
-	
-	move : function(){
+	tick : function(){
 		if(this.dead) return
 		var move = false
 		if(!this.rotating){
@@ -78,7 +93,7 @@ var Creep = Class.create(Unit,{
 					// we need to rotate now, which direction ?
 					this.direction = bottom - top
 					this.rotating = true
-					this.oldTheta = this.theta
+					this.oldTheta = this.rotation
 					this.oldSpeed = this.speed
 					var self = this
 					this.index = this.speeds.collect(function(speed, index){
@@ -91,15 +106,15 @@ var Creep = Class.create(Unit,{
 					this.speed = this.speeds[this.index]
 				}
 			}
-		}else{
-			this.theta += this.direction * this.angles[this.index]
+		}else{		
+			this.rotation+= this.direction * this.angles[this.index]
 			move = false;
-			this.x += this.speed * Math.cos(this.theta * Math.PI / 180 );
-			this.y += this.speed * Math.sin(this.theta * Math.PI / 180 );
-			if(Math.abs(this.theta - this.oldTheta) >= 90){
-				this.theta = this.oldTheta + this.direction * 90 
-				if(this.theta < 0) this.theta += 360;
-				if(this.theta >= 360) this.theta -= 360;
+			this.x += this.speed * Math.cos(this.rotation * Math.PI / 180 );
+			this.y += this.speed * Math.sin(this.rotation * Math.PI / 180 );
+			if(Math.abs(this.rotation - this.oldTheta) >= 90){
+				this.rotation = this.oldTheta + this.direction * 90 
+				if(this.rotation < 0) this.rotation += 360;
+				if(this.rotation >= 360) this.rotation -= 360;
 				this.speed = this.oldSpeed
 				this.rotating = false
 				this.x = Math.round((this.x/4))*4
@@ -109,23 +124,21 @@ var Creep = Class.create(Unit,{
 			}
 		}
 		if(move){
-			if(this.theta == 0){
+			if(this.rotation == 0){
 				this.x += this.speed
-			}else if(this.theta == 90){
+			}else if(this.rotation == 90){
 				this.y += this.speed
-			}else if(this.theta == 180){
+			}else if(this.rotation == 180){
 				this.x -= this.speed
-			}else if(this.theta == 270){
+			}else if(this.rotation == 270){
 				this.y -= this.speed
 			}
 		}
 		var newGridX = Math.floor(this.x / Map.pitch) 
 		var newGridY = Math.floor(this.y / Map.pitch) 
 		if(newGridX >= Map.width || newGridY >= Map.height || newGridX < 0 || newGridY < 0 ){
-			Game.escaped += 1
-			Game.creeps.splice(Game.creeps.indexOf(this), 1)
-			var oldArr = Map.grid[this.gridX][this.gridY]
-			oldArr.splice(oldArr.indexOf(this), 1);
+			game.scene.escaped += 1
+			this.destroySprites()
 		}else if(this.gridX != newGridX || this.gridY != newGridY){
 			var oldArr = Map.grid[this.gridX][this.gridY]
 			oldArr.splice(oldArr.indexOf(this), 1);
@@ -137,32 +150,38 @@ var Creep = Class.create(Unit,{
 				// we are going out, do nothing for now;
 			}
 		}
-		
+		this.target();			//for specifying the target to hit
+		this.modifySprites()
 	},
-	render : function(){
+	target: function(){
 		if(this.dead) return
-		this.target();
-		this.ctx.save()
-		this.ctx.translate(Math.round(this.x), Math.round(this.y))
-		this.ctx.rotate(Math.PI/180 * this.theta)
-		console.log(this.images.base);
-		this.ctx.drawImage(this.images.base, -48, -16)
-		this.ctx.fillStyle = 'red'
-		this.ctx.fillRect(-22, 10, 3, -20)
-		this.ctx.fillStyle = 'green'
-		this.ctx.fillRect(-22, 10, 3, -20 * this.hp / this.maxHp)
-		this.ctx.translate(this.cannonDisplacement[0], this.cannonDisplacement[1])
-		this.ctx.rotate(Math.PI/180 * this.cannonTheta)
-		if(this.fired){
-			this.ctx.drawImage(this.images.fire, -44, -16)
-			this.fired = false
-		}else{
-			this.ctx.drawImage(this.images.cannon, -44, -16)	
+		if(!this.reloaded){
+			this.toFire += this.rate;
+			if(this.toFire >= 1){
+				this.reloaded = true;
+				this.toFire -= 1
+			}
 		}
-		this.ctx.restore();
+		// look at the surrounding grid locations
+		var targets = []
+		for(var i = this.gridX - this.range; i < this.gridX + this.range + 1; i++){
+			for(var j = this.gridY - this.range; j < this.gridY + this.range + 1; j++){
+				if(Map.grid[i] && Map.grid[i][j]){
+					this.getTargetfromCell(Map.grid[i][j], targets)
+				}
+			}
+		}
+		if(targets.length >= 1){
+			this.pickTarget(targets)
+		}else{
+			this.targetUnit = null
+		}
+		return this;
 	},
 	getTargetfromCell: function(cell, targets){
-		if(cell.tower){targets.push(cell.tower)}
+		if(cell.tower){
+			targets.push(cell.tower)
+		}
 	},
 	
 	pickTarget: function(targets){
@@ -174,9 +193,9 @@ var Creep = Class.create(Unit,{
 		var theta = Math.atan(dy/dx) *  180 / Math.PI 
 
 		if(dx < 0){
-			this.cannonTheta =  theta - this.theta 
+			this.cannonTheta =  theta - this.rotation 
 		}else{
-			this.cannonTheta =  theta - this.theta + 180
+			this.cannonTheta =  theta - this.rotation + 180
 		}
 		if(this.reloaded){
 			target.takeHit(this.power)
@@ -185,13 +204,19 @@ var Creep = Class.create(Unit,{
 		}
 	},
 	die : function(){
-		Game.animations.push(new CoinsAnimation(this.ctx, this.x, this.y - 40))
-		Game.score += this.maxHp
-		Game.creeps.splice(Game.creeps.indexOf(this),1)
+		var anim = new CoinsAnimation(this.x, this.y - 40)
+		game.scene.towerHealthLayer.attach(anim)
+		game.scene.objects.push(anim)
+		this.destroySprites()
+		game.scene.money += this.price;
+		game.scene.stats.creepsDestroyed++
+		game.scene.score += this.maxHp
+	},
+	destroySprites : function(){
+	//	delete game.scene.indeces[this]
 		var cell = Map.grid[this.gridX][this.gridY];
 		cell.splice(cell.indexOf(this), 1);
-		Game.money += this.price;
+		this.sprite.destroy()
 		this.dead = true
-		Game.stats.creepsDestroyed++
 	}
-})
+})	

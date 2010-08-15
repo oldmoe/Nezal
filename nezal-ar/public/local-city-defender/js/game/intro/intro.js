@@ -1,7 +1,6 @@
 var Config = null
 
-var Intro = {
-    
+var Intro = {    
     currentPage : -1,
     nextPageIndex : 0,
     sequence : [

@@ -1,16 +1,10 @@
 var Turret = Class.create(Unit, {
-	images : {
-		base : Game.images['tower_base.png'],
-		cannon : Game.images['cannon_1.png'],
-		fire : Game.images['cannon_1_in_action.png'],
-		ranks : [Game.images['rank_1.png'], Game.images['rank_2.png'], Game.images['rank_3.png']]
-	},
 	hp : 100,
 	maxHp : 100,
 	theta :0,
 	cannonTheta : 0,
-	rate : 0.1,
-	power: 3.0,
+	rate : 0.2,
+	power: 4.0,
 	range: 3,
 	price: 15,
 	rank : 0,
@@ -21,15 +15,57 @@ var Turret = Class.create(Unit, {
 	fireSound : Sounds.turret.fire,
 	canHitFlying: true,
 	canHitGround: true,
-	getTargetfromCell: function(cell, targets){
-		cell.each(function(obj){targets.push(obj)})
-	},
-	
 	name : 'C1B',
 	targets : 'Air &<br/>Ground',
 	facilities : 'Fires Bullets',
 	cssClass : 'tower',
+	initialize: function($super,x,y,extension){
+		$super(x,y,extension)
+		this.initImages()
+		this.createSprites()
+		
+	},
+	createSprites : function(){
+		this.baseSprite = new Sprite(this.images.base)
+		this.cannonSprite = new Sprite(this.images.cannon.concat(this.images.fire))
+		this.rankSprite = new Sprite(this.images.ranks)
+		this.healthSprite = new HealthSprite(this.hp,this.maxHp)
+		this.baseSprite.moveTo(this.x,this.y)
+		this.cannonSprite.moveTo(this.x,this.y)
+		this.rankSprite.moveTo(this.x+50, this.y-5)
+		this.healthSprite.moveTo(this.x,this.y)
+	},
+	initImages : function(){
+		this.images = {}
+		this.images.base = [Loader.images.game['tower_base.png']]
+		this.images.cannon = [Loader.images.game['cannon_1.png']]
+		this.images.fire = [Loader.images.game['cannon_1_in_action.png']]
+		this.images.ranks = [null,Loader.images.game['rank_1.png'], Loader.images.game['rank_2.png'], Loader.images.game['rank_3.png']]
+	},
 	
+	getTargetfromCell: function(cell, targets){
+		cell.each(function(obj){targets.push(obj)})
+	},
+	
+	tick: function(){
+		this.target()
+		this.modifySprites()
+	},
+	modifySprites : function(){
+		this.cannonSprite.rotation = Nezal.degToRad(this.cannonTheta)
+		this.changeFireState()
+		this.healthSprite.hp = this.hp
+		this.rankSprite.currentFrame = this.rank
+	},
+	changeFireState: function(){
+		if(this.fired){
+			this.fired = false
+			this.cannonSprite.currentFrame = 1
+		}
+		else{
+			this.cannonSprite.currentFrame = 0
+		}
+	},
 	pickTarget: function(targets){
 		targets.sort(function(a,b){return a.hp - b.hp})
 		if(!this.canHitFlying){
@@ -75,52 +111,20 @@ var Turret = Class.create(Unit, {
 			}			
 		}
 	},
-	
-	
-	
-	render : function(){
-		this.target()
-		this.ctx.save()
-		this.ctx.translate(this.x, this.y)
-		this.ctx.rotate(Math.PI/180 * this.theta)
-		if(this == Game.selectedTurret){
-			this.ctx.fillStyle = 'white'
-			this.ctx.fillRect(-18,-18, 36,36)
-		}
-		this.ctx.drawImage(this.images.base, -48, -16)		
-		this.ctx.fillStyle = 'red'
-		this.ctx.fillRect(-16, -22, 32, 3)
-		this.ctx.fillStyle = 'green'
-		this.ctx.fillRect(-16, -22, 32 * this.hp / this.maxHp, 3 )
-		this.ctx.rotate(Math.PI/180 * this.cannonTheta)
-		this.ctx.drawImage(this.images.cannon, -48, -16)		
-		if(this.fired){
-			this.fired = false
-			this.ctx.drawImage(this.images.fire, -48, -16)		
-		}else{
-			this.ctx.drawImage(this.images.cannon, -48, -16)		
-		}
-		this.ctx.restore();
-		this.renderRank();
-	},
-
-	renderRank : function(){
-		if(this.rank > 0){
-			this.ctx.drawImage(this.images.ranks[this.rank-1], this.x+5, this.y-15)
-		}
-	},
-	
-	clear : function(){
-		this.ctx.clearRect(0,0, this.canvas.width, this.canvas.height)
-	},
-	
 	die: function(){
-		Game.turrets.splice(Game.turrets.indexOf(this),1)
+		this.destroySprites()
 		Map.grid[this.gridX][this.gridY] = [];
-		if(Game.selectedTurret == this){
-			Game.selectedTurret = null;
+		if(game.selectedTurret == this){
+			game.selectedTurret = null;
 		}
-		Game.stats.towersDestroyed++;
+		//game.stats.towersDestroyed++;
+	},
+	destroySprites : function(){
+		this.dead = true
+		this.baseSprite.destroy()
+		this.cannonSprite.destroy()
+		this.healthSprite.destroy()
+		this.rankSprite.destroy()
 	}
 })
 
@@ -128,37 +132,24 @@ var DoubleTurret = Class.create(Turret, {
 	name : 'C2B',
 	cssClass : 'doubleTower',
 	fireSound : Sounds.doubleTurret.fire,
-	images : {
-		base : Game.images['tower_base.png'],
-		cannon : Game.images['cannon_2.png'],
-		fire : [Game.images['cannon_2_in_action_right.png'], Game.images['cannon_2_in_action_left.png']],
-		ranks : [Game.images['rank_1.png'], Game.images['rank_2.png'], Game.images['rank_3.png']]
-	},
 	firing_turn : 0,
-	render : function(){
-		this.target()
-		this.ctx.save()
-		this.ctx.translate(this.x, this.y)
-		this.ctx.rotate(Math.PI/180 * this.theta)
-		if(this == Game.selectedTurret){
-			this.ctx.fillStyle = 'white'
-			this.ctx.fillRect(-18,-18, 36,36)
-		}
-		this.ctx.drawImage(this.images.base, -48, -16)		
-		this.ctx.fillStyle = 'red'
-		this.ctx.fillRect(-16, -22, 32, 3)
-		this.ctx.fillStyle = 'green'
-		this.ctx.fillRect(-16, -22, 32 * this.hp / this.maxHp, 3 )
-		this.ctx.rotate(Math.PI/180 * this.cannonTheta)
+	initialize: function($super,x,y,extension){
+		$super(x,y,extension)
+	},
+	initImages : function($super){
+		$super()
+		this.images.cannon = [Loader.images.game['cannon_2.png']]
+		this.images.fire = [Loader.images.game['cannon_2_in_action_right.png'],Loader.images.game['cannon_2_in_action_left.png']]	
+
+	},
+	changeFireState : function(){
 		if(this.fired){
 			this.fired = false
-			this.ctx.drawImage(this.images.fire[this.firing_turn], -48, -16)	
-			this.firing_turn += 1
-			if(this.firing_turn > 1) this.firing_turn = 0
-		}else{
-			this.ctx.drawImage(this.images.cannon, -48, -16)		
+			this.firing_turn = 1-this.firing_turn
+			this.cannonSprite.currentFrame = this.firing_turn+1
 		}
-		this.ctx.restore();
-		this.renderRank();
+		else{
+			this.cannonSprite.currentFrame = 0
+		}
 	}
 })

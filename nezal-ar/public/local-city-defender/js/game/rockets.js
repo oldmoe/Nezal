@@ -3,72 +3,114 @@ var RocketLauncher = Class.create(Turret, {
 	targets : 'Ground<br/>Only',
 	facilities : 'Fires Rockets',
 	cssClass : 'rocketLauncher',
-	images : {
-		base : Game.images['tower_base.png'],
-		pad : Game.images['rocket_launcher.png'],
-		rocket : Game.images['rocket.png'],
-		ranks : [Game.images['rank_1.png'], Game.images['rank_2.png'], Game.images['rank_3.png']]
-	},
 	reloaded: true,
 	canHitFlying: false,
 	canHitGround: true,
-
-	render : function(){
-		this.target()
-		this.ctx.save()
-		this.ctx.translate(this.x, this.y)
-		this.ctx.rotate(Math.PI/180 * this.theta)
-		if(this == Game.selectedTurret){
-			this.ctx.fillStyle = 'white'
-			this.ctx.fillRect(-18,-18, 36,36)
-		}
-		this.ctx.drawImage(this.images.base, -48, -16)		
-		this.ctx.fillStyle = 'red'
-		this.ctx.fillRect(-16, -22, 32, 3)
-		this.ctx.fillStyle = 'green'
-		this.ctx.fillRect(-16, -22, 32 * this.hp / this.maxHp, 3 )
-		this.ctx.rotate(Math.PI/180 * this.cannonTheta)
-		this.ctx.drawImage(this.images.pad, -48, -16)		
+	initialize : function($super,x,y,extension){
+		this.initImages()
+		console.log('rockPower',this.power)
+		$super(x,y,extension)
+		console.log('rockPower',this.power)
+	},
+	createSprites : function(){
+		this.rocketSprite = new Sprite(this.images.rocket)
+		this.baseSprite = new Sprite(this.images.base)
+		this.cannonSprite = new Sprite(this.images.pad)
+		this.rankSprite = new Sprite(this.images.ranks)
+		this.healthSprite = new HealthSprite(this.hp,this.maxHp)
+		this.baseSprite.moveTo(this.x,this.y)
+		this.cannonSprite.moveTo(this.x,this.y)
+		this.rankSprite.moveTo(this.x+50, this.y-5)
+		this.healthSprite.moveTo(this.x,this.y)
+		this.rocketSprite.moveTo(this.x,this.y)
+	},
+	initImages : function(){
+		this.images ={}
+		this.images.base = [Loader.images.game['tower_base.png']],
+		this.images.pad = [Loader.images.game['rocket_launcher.png']],
+		this.images.rocket = [Loader.images.game['rocket.png']],
+		this.images.ranks = [null,Loader.images.game['rank_1.png'], Loader.images.game['rank_2.png'], Loader.images.game['rank_3.png']]
+	},
+	
+	tick: function($super){
+		$super()
+		this.rocketSprite.rotation = this.cannonSprite.rotation
+	},
+	changeFireState: function(){
 		if(this.reloaded){
-			this.ctx.drawImage(this.images.rocket, -48, -16)		
+			this.rocketSprite.draw = true		
 		}
+		else this.rocketSprite.draw = false		
 		if(this.fired){
 			this.fired = false
 			var power = this.power
 			if(this.rank > 0){
 				power *= this.ranks[this.rank - 1]
-			}			
-			Game.objects.push(new Rocket(this.canvas, this.x, this.y,  {parent : this, theta: this.cannonTheta, targetUnit : this.targetUnit, x : this.x, y : this.y, power: power}))
-		}else{
+			}
+			game.scene.objects.push( new Rocket(this.x, this.y,  {parent : this, theta: this.cannonTheta, targetUnit : this.targetUnit, x : this.x, y : this.y, power: this.power}))
 		}
-		this.ctx.restore();
-		this.renderRank();
+		
 	},
-	
 	fire : function(){
 		Sounds.play(Sounds.turret.rocketLaunch)
 	}
+})
+
+var Patriot = Class.create(Turret, {
+	name : 'R4A',
+	targets : 'Air<br/>Only',
+	facilities : 'Fires Rockets',
+	cssClass : 'patriot',
+	firing_turn : 0,
+	canHitFlying: true,
+	canHitGround: false,
+	initialize : function($super,x,y,extension){
+		this.initImages()
+		$super(x,y,extension)
+	},
+	initImages: function(){
+		this.images = {}
+		this.images.base = [Loader.images.game['tower_base.png']],
+		this.images.cannon = [Loader.images.game['patriot_launcher.png']],
+		this.images.fire = [Loader.images.game['patriot_launcher_in_action_right.png'], Loader.images.game['patriot_launcher_in_action_left.png']],
+		this.images.ranks = [null,Loader.images.game['rank_1.png'], Loader.images.game['rank_2.png'], Loader.images.game['rank_3.png']]
+	},
+	changeFireState: function(){
+		if(this.fired){
+			this.fired = false		
+			this.firing_turn = 1 - this.firing_turn
+			this.cannonSprite.currentFrame = this.firing_turn+1
+			var rocketX = this.x
+			var rocketY = this.y + (this.firing_turn == 0 ? (5) : (-5))
+			var power = this.power
+			if(this.rank > 0){
+				power *= this.ranks[this.rank - 1]
+			}			
+			game.scene.objects.push(new PatriotRocket(this.x, this.y,  {parent : this, theta: this.cannonTheta, targetUnit : this.targetUnit, x : rocketX, y : rocketY, power:this.power}))
+		}else{
+			this.cannonSprite.currentFrame = 0		
+		}
 	
+	},
+	fire : function(target){
+		Sounds.play(Sounds.turret.rocketLaunch)
+	}
 })
 
 var Rocket = Class.create(Unit, {
-	images : {
-		rocket : Game.images['rocket_in_action.png'],
-		shade : Game.images['rocket_shade.png'],
-	},
 	speed : 10,
 	step : 0,
+	power: 20,
 	lastTargetX : 0,
 	lastTargerY : 0,
-	render : function(){
-		this.ctx.save();
-		this.ctx.translate(this.x, this.y);
-		this.ctx.rotate(Math.PI/180 * this.theta);
-		this.ctx.drawImage(this.images.rocket, -48 -(this.step*this.speed), -16);		
-		//this.ctx.drawImage(this.images.shade, -54 -(this.step*this.speed), -22);		
-		this.ctx.restore();
+	initialize : function($super,x,y,extension){
+		$super(x,y,extension)
+		this.rocketSprite = new Sprite([Loader.images.game['rocket_in_action.png']])
+		this.rocketSprite.moveTo(this.x,this.y)
+		game.scene.towerHealthLayer.attach(this.rocketSprite)
+		this.dead = false
 	},	
-	move : function(){
+	tick : function(){
 		if(this.targetUnit){
 			this.lastTargetX  =  this.targetUnit.x
 			this.lastTargetY  =  this.targetUnit.y
@@ -97,77 +139,30 @@ var Rocket = Class.create(Unit, {
 				}
 			}
 			this.die();		
-			//Game.animations.push(new RocketBoom(this.ctx, this.lastTargetX, this.lastTargetY))
 		}
+		this.modifySprites()	
+	},
+	modifySprites : function(){
+		this.rocketSprite.rotation = Nezal.degToRad(this.theta)
+		this.rocketSprite.transitionX = -(this.step*this.speed)
 	},
 	die : function(){
-		Game.objects.splice(Game.objects.indexOf(this), 1);
+		this.rocketSprite.destroy()
+		this.dead = true
 	}
 })
-
-var Patriot = Class.create(Turret, {
-	name : 'R4A',
-	targets : 'Air<br/>Only',
-	facilities : 'Fires Rockets',
-	cssClass : 'patriot',
-	images : {
-		base : Game.images['tower_base.png'],
-		cannon : Game.images['patriot_launcher.png'],
-		fire : [Game.images['patriot_launcher_in_action_right.png'], Game.images['patriot_launcher_in_action_left.png']],
-		ranks : [Game.images['rank_1.png'], Game.images['rank_2.png'], Game.images['rank_3.png']]
-	},
-	firing_turn : 0,
-	canHitFlying: true,
-	canHitGround: false,
-	render : function(){
-		this.target()
-		this.ctx.save()
-		this.ctx.translate(this.x, this.y)
-		this.ctx.rotate(Math.PI/180 * this.theta)
-		if(this == Game.selectedTurret){
-			this.ctx.fillStyle = 'white'
-			this.ctx.fillRect(-18,-18, 36,36)
-		}
-		this.ctx.drawImage(this.images.base, -48, -16)		
-		this.ctx.fillStyle = 'red'
-		this.ctx.fillRect(-16, -22, 32, 3)
-		this.ctx.fillStyle = 'green'
-		this.ctx.fillRect(-16, -22, 32 * this.hp / this.maxHp, 3 )
-		this.ctx.rotate(Math.PI/180 * this.cannonTheta)
-		if(this.fired){
-			this.fired = false
-			this.ctx.drawImage(this.images.fire[this.firing_turn], -48, -16)		
-			this.firing_turn += 1
-			if(this.firing_turn > 1) this.firing_turn = 0			
-			var rocketX = this.x - (30 * Math.cos(this.cannonTheta * Math.PI / 180)) + ( - 5 + (10 * this.firing_turn)) * Math.sin(this.theta * Math.PI / 180)
-			var rocketY = this.y - (30 * Math.sin(this.cannonTheta * Math.PI / 180)) + ( - 5 + (10 * this.firing_turn)) * Math.cos(this.theta * Math.PI / 180)		
-			var power = this.power
-			if(this.rank > 0){
-				power *= this.ranks[this.rank - 1]
-			}			
-			Game.objects.push(new PatriotRocket(this.canvas, 0, 0,  {parent : this, theta: this.cannonTheta, targetUnit : this.targetUnit, x : rocketX, y : rocketY, power: power}))
-		}else{
-			this.ctx.drawImage(this.images.cannon, -48, -16)		
-		}
-		this.ctx.restore();
-		this.renderRank();
-	},
-	fire : function(target){
-		Sounds.play(Sounds.turret.rocketLaunch)
-	}
-})
-
-
 var PatriotRocket = Class.create(Rocket, {
-	images : {
-		rocket : Game.images['patriot_rocket.png'],
+	initialize : function($super,x,y,extension){
+		$super(x,y,extension)
+		this.rocketSprite.images = [Loader.images.game['patriot_rocket.png']]
+		game.scene.basesLayer.attach(this.rocketSprite)	
+		this.rocketSprite.rotation = Nezal.degToRad(this.theta)
+		this.rocketSprite.moveTo(this.x, this.y)
+	},	
+	modifySprites : function(){
+		this.rocketSprite.rotation = Nezal.degToRad(this.theta)
+		this.rocketSprite.transitionX = -(this.step*this.speed)
 	},
 	speed : 10,
-	render : function(){
-		this.ctx.save();
-		this.ctx.translate(this.x, this.y);
-		this.ctx.rotate(Math.PI/180 * this.theta);
-		this.ctx.drawImage(this.images.rocket, -10 -(this.step*this.speed), -5);		
-		this.ctx.restore();
-	}
+	
 })

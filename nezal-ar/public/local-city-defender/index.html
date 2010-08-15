@@ -7,41 +7,22 @@
 		<script src="js/base/effects.js"></script>
 		<script src="js/base/sound.js"></script>
 		<script src="js/base/template.js"></script>
-		<script>
-			function clone_obj(obj) {
-				if (typeof obj !== 'object' || obj == null)return obj;
-				var c = obj instanceof Array ? [] : {};
-				for (var i in obj) {
-					var prop = obj[i];
-					if (typeof prop == 'object') {
-					   if (prop instanceof Array) {
-						   c[i] = [];
-						   for (var j = 0; j < prop.length; j++) {
-							   typeof prop[j] != 'object' ? c[i].push(prop[j]) : c[i].push(clone_obj(prop[j]));
-						   }
-					   } else {
-						   c[i] = clone_obj(prop);
-					   }
-					} else {
-					   c[i] = prop;
-					}
-				}
-				return c;
-			}		
-		</script>
+		<script src="js/base/dragdrop.js"></script>
+		<script src="js/base/excanvas.compiled.js"></script>
+		<script src="js/base/slider.js"></script>
 	</head>
 	<body>
 		<div id="preload" style="display:none">
-			<img src="images/background/interface.png" />
-			<img src="images/background/loading_bar_down.png" />
-			<img src="images/background/loading_bar_up.png" />
+			<img src="/city-defender/images/background/interface.png" />
+			<img src="/city-defender/images/background/loading_bar_down.png" />
+			<img src="/city-defender/images/background/loading_bar_up.png" />
 		</div>
 		<textarea id='statsTemplate' style="display:none">
-Score : ${Game.score}
-Towers Built : ${Game.stats.towersCreated}
-Towers Lost : ${Game.stats.towersDestroyed}
-Units Destroyed : ${Game.stats.creepsDestroyed}
-Escaped Units : ${Game.escaped}
+		Score : ${Game.score}
+		Towers Built : ${Game.stats.towersCreated}
+		Towers Lost : ${Game.stats.towersDestroyed}
+		Units Destroyed : ${Game.stats.creepsDestroyed}
+		Escaped Units : ${Game.escaped}
 		</textarea>
 		<textarea id='towerInfoTemplate' style="display:none">
 			<div class="diagram ${tower.cssClass}"></div>
@@ -73,10 +54,15 @@ Escaped Units : ${Game.escaped}
 			</div>
 		</table>
 		</textarea>
+		<style>#gameContainer{ -moz-transform : scale(1) }</style>
+		<script>window.scale = 1.0</script>
+		<input type="button" value="-" onclick="window.scale -= 0.1; $('gameContainer').style.MozTransform = 'scale('+window.scale+')'"/>
+		<input type="button" value="+" onclick="window.scale += 0.1; $('gameContainer').style.MozTransform = 'scale('+window.scale+')'"/>
 		<div id="gameContainer">
 			<div id="canvasContainer" style="display:none">
+				<img src='images/background/path.png' />
 				<canvas id="gameBackground" width="736" height="480"></canvas>
-				<canvas id="gameForeground" width="736" height="480"></canvas>
+				<canvas id="gameForeground" width="736" height="480" onmousemove = "movement(event)"></canvas>
 			</div>
 			<div id="gameElements" style="display:none">
 				<div id="money">
@@ -182,9 +168,23 @@ Escaped Units : ${Game.escaped}
 		</div>		
 	</body>
 </html>
+
+
+
+<script src="js/nezal/layer.js"></script>
+<script src="js/nezal/nezal.js"></script>
+<script src="js/nezal/reactor.js"></script>
+<script src="js/nezal/scene.js"></script>
+<script src="js/nezal/sprite.js"></script>
+<script src="js/game/sounds.js"></script>
+
+<script src="js/game/healthSprite.js"></script>
+<script src="js/game/compositeUnitSprite.js"></script>
+<script src="js/game/city_defender_scene.js"></script>
+<script src="js/game/mapeasy1.js"></script>
 <script src="js/game/game.js"></script>
 <script src="js/game/images.js"></script>
-<script src="js/game/super_weapons.js"></script>
+<script src="js/game/image_loader.js"></script>
 <script src="js/game/sounds.js"></script>
 <script src="js/game/unit.js"></script>
 <script src="js/game/creep.js"></script>
@@ -195,5 +195,7 @@ Escaped Units : ${Game.escaped}
 <script src="js/game/plane.js"></script>
 <script src="js/game/animation.js"></script>
 <script src="js/game/config.js"></script>
-<script src="js/game/mapeasy1.js"></script>
+<script src="js/game/super_weapon.js"></script>
 <script src="js/game/upgrade.js"></script>
+
+
