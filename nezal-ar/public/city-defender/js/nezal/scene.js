@@ -46,6 +46,7 @@ var Scene = Class.create(_Render, {
 		this.reactor.run()
 		var self = this
 		this.push(1, function(){self._tick()})
+		//this.renderStart()
 		return this
 	},
 	pause : function(){

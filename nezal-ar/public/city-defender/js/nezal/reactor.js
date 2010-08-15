@@ -41,7 +41,13 @@ var Reactor = Class.create({
 				toFire.push(this.events.pop())
 				event = this.events[this.events.length - 1]
 			}
-			toFire.each(function(event){event[1]()})
+			toFire.each(function(event){
+				if(event[2]){
+					event[1].apply(event[2])
+				}else{
+					event[1]()
+				}
+			})
 		}catch(e){
 			//console.log(e)
 			//alert('inside reactor : '+ e)

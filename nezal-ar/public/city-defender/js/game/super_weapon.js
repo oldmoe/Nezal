@@ -134,7 +134,7 @@ var Heal = Class.create(SuperWeapon, {
 var Hyper = Class.create(SuperWeapon, {
 	action : function(){
 		var hyper = function(tower){
-			tower.rate *= game.superWeapons.hyper.factor;
+			tower.rate *= game.scene.superWeapons.hyper.factor;
 		}
 		this.scene.turrets.each(hyper)
 		var self = this
@@ -142,7 +142,7 @@ var Hyper = Class.create(SuperWeapon, {
 	},
 	unHyper : function(){
 		this.scene.turrets.each(function(tower){
-			tower.rate /= game.superWeapons.hyper.factor;
+			tower.rate /= game.scene.superWeapons.hyper.factor;
 		});
 		var index = -1
 	}

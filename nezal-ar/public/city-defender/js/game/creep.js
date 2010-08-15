@@ -137,7 +137,7 @@ var Creep = Class.create(Unit, {
 		var newGridX = Math.floor(this.x / Map.pitch) 
 		var newGridY = Math.floor(this.y / Map.pitch) 
 		if(newGridX >= Map.width || newGridY >= Map.height || newGridX < 0 || newGridY < 0 ){
-			game.escaped += 1
+			game.scene.escaped += 1
 			this.destroySprites()
 		}else if(this.gridX != newGridX || this.gridY != newGridY){
 			var oldArr = Map.grid[this.gridX][this.gridY]
@@ -208,9 +208,9 @@ var Creep = Class.create(Unit, {
 		game.scene.towerHealthLayer.attach(anim)
 		game.scene.objects.push(anim)
 		this.destroySprites()
-		game.money += this.price;
-		game.stats.creepsDestroyed++
-		game.score += this.maxHp
+		game.scene.money += this.price;
+		game.scene.stats.creepsDestroyed++
+		game.scene.score += this.maxHp
 	},
 	destroySprites : function(){
 	//	delete game.scene.indeces[this]
