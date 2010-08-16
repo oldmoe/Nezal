@@ -18,9 +18,6 @@ function city_defender_start(){
 			canvas.height = Map.height * Map.pitch
 		})
 		window.setTimeout(function(){
-			var bg = $('gameBackground');
-			var bgctx = bg.getContext('2d') 
-			bgctx.fillStyle = "rgb(100,250,100)";
 			var fg = $('gameForeground');
 			var top = $('droppingGround')
 			top.getContext('2d')//.globalAlpha = 0.5

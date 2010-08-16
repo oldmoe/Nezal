@@ -14,7 +14,7 @@ var Config = {
 			{category : RedTank, count : 2, values : {hp:4000, speed:4, power:3, rate:0.1, price: 100, range: 2} }
 		] },
 		{ creeps : [
-			{category : RedPlane, count : 20, values : {hp:120, speed:8, power:3, rate:0.1, price: 4, range: 3} }
+			{category : RedPlane, count : 10, values : {hp:20, speed:8, power:3, rate:0.1, price: 4, range: 3} }
 		] },
 		{ creeps : [
 			{category : TankII, count : 2, values : {hp:1500, speed:8, power:2, rate:0.1, price: 3, range: 2} },
