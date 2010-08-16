@@ -78,9 +78,7 @@ var Intro = {
 	  	      		  }
 		      		  if (received == size)
 		      		  {
-						console.log('hello')
 						$("gameStart").innerHTML = Intro.templates['game'][1].source;
-						console.log('hello')
 						initLoadImages() 
 						city_defender_start()
 						Upgrades.init(); 

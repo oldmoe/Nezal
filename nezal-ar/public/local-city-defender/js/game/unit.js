@@ -42,7 +42,6 @@ var Unit = Class.create({
 	pickTarget: function(targets){
 	},
 	takeHit: function(power){
-		console.log(power)
 		if(this.dead) return
 		this.hp -= power
 		if(this.hp <= 0 ){

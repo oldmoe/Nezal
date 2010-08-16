@@ -12,6 +12,7 @@ var Creep = Class.create(Unit, {
 	initialize : function($super,x,y,extension){
 		$super(x,y,extension)
 		Map.grid[x][y].push(this)
+		this.initImages()
 		this.createSprites()
 		// find the nearest empty tile
 		if(x == 0){
@@ -31,7 +32,7 @@ var Creep = Class.create(Unit, {
 			this.top = this.x - Map.entry[0][0] * Map.pitch
 			this.bottom = (Map.entry[1][0] + 1) * Map.pitch - this.x					
 		}
-		this.initImages()
+		
 	},
 	initImages : function(){},
 	createSprites: function(){
