@@ -44,7 +44,13 @@ var Loader = {
 						Loader.loadedResources++
 					  }
 					  objects[names[i]] = Loader[type][store][names[i]]
-					} 
+					}
+					if(Loader.loadedResources == Loader.currentLength){
+			      if(options.onFinish){
+				      options.onFinish()
+			      }
+			      Loader.loadedResources = 0
+		      }	 
 				}
 			})
 		})
@@ -125,8 +131,8 @@ function loadGameImages(){
 		{animations: imageNumbers(15), path: 'images/animations/creep_boom/', store: 'creepBoom'},
 		{animations: imageNumbers(12), path: 'images/animations/coins/', store: 'coins'},
 		{animations: imageNumbers(19), path: 'images/animations/nuke_boom/', store: 'nuke'},
-		{images: bgImages, path: 'images/background', store: 'background'},
-		{images: upgradeImages, path: 'images/background', store: 'upgrades'}
+		{images: bgImages, path: 'images/background/', store: 'background'},
+		{images: upgradeImages, path: 'images/background/', store: 'upgrades'}
 		], {onProgress: function(progress){$('loading_bar').style.width = ''+progress+'%';}, onFinish : onFinish })
 	}catch(e){console.log(e)}
 }

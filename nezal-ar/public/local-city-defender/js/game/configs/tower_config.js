@@ -29,12 +29,3 @@ var TowerConfig = {
                   skelaton : 'skil.png',
                   desc : "This is the black creep it is soooo destructive" }
 }
-
-for(tower in TowerConfig){
-  eval('var '+tower+ '={}')
-}
-
-var Turret = {}
-var DoubleTurret = {}
-var RocketLauncher = {}
-var Patriot = {}

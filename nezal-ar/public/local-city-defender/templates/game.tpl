@@ -4,11 +4,11 @@
 			<img src="/city-defender/images/background/loading_bar_up.png" />
 		</div>
 		<textarea id='statsTemplate' style="display:none">
-		Score : ${Game.score}
-		Towers Built : ${Game.stats.towersCreated}
-		Towers Lost : ${Game.stats.towersDestroyed}
-		Units Destroyed : ${Game.stats.creepsDestroyed}
-		Escaped Units : ${Game.escaped}
+		Score : ${game.scene.score}
+		Towers Built : ${game.scene.stats.towersCreated}
+		Towers Lost : ${game.scene.stats.towersDestroyed}
+		Units Destroyed : ${game.scene.stats.creepsDestroyed}
+		Escaped Units : ${game.scene.escaped}
 		</textarea>
 		<textarea id='towerInfoTemplate' style="display:none">
 			<div class="diagram ${tower.cssClass}"></div>
@@ -47,7 +47,6 @@
 		<div id="gameContainer">
 			<div id="canvasContainer" style="display:none">
 				<img src='images/background/path.png' />
-				<canvas id="gameBackground" width="736" height="480"></canvas>
 				<canvas id="gameForeground" width="736" height="480" onmousemove = "movement(event)"></canvas>
 			</div>
 			<div id="gameElements" style="display:none">
