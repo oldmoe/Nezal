@@ -1,4 +1,4 @@
-require 'yajl'
+#require 'yajl'
 
 class FBGamesController < ApplicationController
   
@@ -9,7 +9,8 @@ class FBGamesController < ApplicationController
   get '/:game_name/challenges' do
     game = Game.find_by_name(@app_configs["name"])
     camps = Campaign.find_all_by_game_id(game.id)
-    Yajl::Encoder.encode(camps)
+    #Yajl::Encoder.encode(camps)
+	camps.to_json
   end
 
   get '/:game_name/:campaign_id' do
