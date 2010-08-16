@@ -31,8 +31,9 @@ var Creep = Class.create(Unit, {
 			this.top = this.x - Map.entry[0][0] * Map.pitch
 			this.bottom = (Map.entry[1][0] + 1) * Map.pitch - this.x					
 		}
-		//game.scene.indeces[this] = true		
+		this.initImages()
 	},
+	initImages : function(){},
 	createSprites: function(){
 		this.sprite = new CompositeUnitSprite(this.images,this.hp,this.maxHp)
 		this.sprite.moveTo(this.x,this.y);

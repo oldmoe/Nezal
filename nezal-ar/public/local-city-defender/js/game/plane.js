@@ -1,16 +1,19 @@
 var Plane = Class.create(Creep, {
 	name : 'Plane',
 	flying : true,
-	images : {
-		base : Loader.images.game['air_craft.png'],
-		fire : Loader.images.game['air_craft_in_action.png'],
-		shadow : Loader.images.game['air_craft_shade.png']
-	},
+
 	initialize : function($super,x,y,extension){
 		console.log('plane initialzed')
 		$super(x,y,extension)
 		this.theta = 0
-	},	
+	},
+	initImages : function(){
+		this.images = {
+		base : Loader.images.game['air_craft.png'],
+		fire : Loader.images.game['air_craft_in_action.png'],
+		shadow : Loader.images.game['air_craft_shade.png']
+		}
+	},
 	createSprites : function(){
 		this.cannonSprite = new Sprite([this.images.base,this.images.fire])
 		this.shadowSprite = new Sprite([this.images.shadow])
@@ -76,11 +79,12 @@ var Plane = Class.create(Creep, {
 })
 
 var RedPlane = Class.create(Plane, {
-
-	images : {
-		base : Loader.images.game['red_air_craft.png'],
-		fire : Loader.images.game['red_air_craft_in_action.png'],
-		shadow : Loader.images.game['air_craft_shade.png']
+   initImages : function(){
+		this.images = {
+			base : Loader.images.game['red_air_craft.png'],
+			fire : Loader.images.game['red_air_craft_in_action.png'],
+			shadow : Loader.images.game['air_craft_shade.png']
+		}
 	}
 
 })	
