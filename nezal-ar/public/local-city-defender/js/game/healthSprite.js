@@ -23,4 +23,3 @@ var HealthSprite = Class.create(Sprite, {
 	},
 	
 })
-

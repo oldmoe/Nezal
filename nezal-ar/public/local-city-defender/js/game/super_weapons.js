@@ -79,12 +79,5 @@ game.unHyper = function(){
 		tower.rate /= game.superWeapons.hyper.factor;
 	});
 	var index = -1
-	/*
-	game.towerMutators.each(function(mutator, i){
-		if(index == -1 && mutator.name == 'hyper'){
-			index = i
-		}
-	})
-	game.towerMutators.splice(index, 1)
-	*/
+
 }

@@ -120,17 +120,19 @@ function onFinish(){
 }
 function loadGameImages(){
 	try{
-	Loader.load([{images : imageNames, store :'game'}, {animations: imageNumbers(16), path: 'images/animations/health_point/', store: 'heal'},
-	{animations: imageNumbers(15), path: 'images/animations/creep_boom/', store: 'creepBoom'},
-	{animations: imageNumbers(12), path: 'images/animations/coins/', store: 'coins'},
-	{animations: imageNumbers(19), path: 'images/animations/nuke_boom/', store: 'nuke'},
-	{images: bgImages, path: 'images/background', store: 'background'},
-	{images: upgradeImages, path: 'images/background', store: 'upgrades'}
-	], {onProgress: function(progress){$('loading_bar').style.width = ''+progress+'%';}, onFinish : onFinish })
+		console.log('load all images called')
+		Loader.load([{images : imageNames, store :'game'}, {animations: imageNumbers(16), path: 'images/animations/health_point/', store: 'heal'},
+		{animations: imageNumbers(15), path: 'images/animations/creep_boom/', store: 'creepBoom'},
+		{animations: imageNumbers(12), path: 'images/animations/coins/', store: 'coins'},
+		{animations: imageNumbers(19), path: 'images/animations/nuke_boom/', store: 'nuke'},
+		{images: bgImages, path: 'images/background', store: 'background'},
+		{images: upgradeImages, path: 'images/background', store: 'upgrades'}
+		], {onProgress: function(progress){$('loading_bar').style.width = ''+progress+'%';}, onFinish : onFinish })
 	}catch(e){console.log(e)}
 }
 function initLoadImages(){
+	console.log('init all images called')
 	Loader.load([{images: ['interface.png','loading_bar_down.png','loading_bar_up.png'], path: 'images/background', store: 'background'}],
 	{onProgress: function(progress){},onFinish:function(){$('waitScreen').hide();Effect.Appear('splashScreen');loadGameImages();}})
 }
-//init()
+//initLoadImages()

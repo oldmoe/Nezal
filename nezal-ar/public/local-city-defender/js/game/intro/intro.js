@@ -78,13 +78,15 @@ var Intro = {
 	  	      		  }
 		      		  if (received == size)
 		      		  {
-      		  	      $("gameStart").innerHTML = Intro.templates['game'][1].source;
-      		  	      //loadAllImages();
-					  initLoadImages()
-      		  	      Upgrades.init(); 
-                    Intro.next(); 		    
-                }
-			      }
+						console.log('hello')
+						$("gameStart").innerHTML = Intro.templates['game'][1].source;
+						console.log('hello')
+						initLoadImages() 
+						city_defender_start()
+						Upgrades.init(); 
+						Intro.next(); 		    
+					}
+			    }
 	      })
     },
 

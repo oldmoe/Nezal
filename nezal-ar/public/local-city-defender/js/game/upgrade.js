@@ -80,4 +80,3 @@ var Upgrades = {
 	}
 }
 
-Upgrades.init()

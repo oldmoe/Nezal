@@ -7,6 +7,7 @@ var Plane = Class.create(Creep, {
 		shadow : Loader.images.game['air_craft_shade.png']
 	},
 	initialize : function($super,x,y,extension){
+		console.log('plane initialzed')
 		$super(x,y,extension)
 		this.theta = 0
 	},	
