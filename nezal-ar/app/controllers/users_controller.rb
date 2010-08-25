@@ -1,4 +1,4 @@
-class FBUsersController < ApplicationController 
+class UsersController < ApplicationController 
   
   enable :sessions
   
@@ -28,6 +28,15 @@ class FBUsersController < ApplicationController
     end
     ''
   end
+  
+  # This should get me the metadata of the user associated with the game 
+  # In other words it should give me the user_game_profile metadata
+  get '/:game_name/metadata' do
+    @game = Game.find_by_name(params[:game_name])
+    klass = self.get_helper_klass()
+    klass.load_game_profile(@game, @user)
+  end
+  
   
 end
 

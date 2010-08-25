@@ -59,24 +59,13 @@ body {
   height : 100px;
   width : 440px;
 }
-#levels div a
-{
-  color : highlight;
-  float : left;
-  font-size : 20px;
-  font-weight : bold;
-  height : 40%;
-  overflow : visible;
-  margin-top : 50px;
-  text-align : center;
-  width : 100%;
-}
 #levels #easy
 {
   width : 31%;
   height : 100%;
   position : absolute;
   top : 0px;
+  cursor : pointer;
 }
 #levels #medium
 {
@@ -85,6 +74,7 @@ body {
   position : absolute;
   top : 0px;
   left : 31%;
+  cursor : pointer;
 }
 #levels #hard
 {
@@ -93,6 +83,7 @@ body {
   position : absolute;
   top : 0px;
   left : 69%;
+  cursor : pointer;
 }
 #campaign #back
 {
@@ -239,6 +230,7 @@ body {
   position:absolute;
   top:420px;
   width:100px;
+  cursor : pointer;
 }
 #mission #reject
 {
@@ -248,6 +240,7 @@ body {
   position:absolute;
   top:420px;
   width:100px;
+  cursor : pointer;
 }
 #mission #creeps
 {
@@ -408,6 +401,42 @@ body {
 {
   left : 488px;
 }
+
+#marketPlace #towers #addedItems
+{
+  height:75px;
+  left:45px;
+  position:absolute;
+  top:390px;
+  width:655px;
+}
+#marketPlace #towers .addedItem
+{
+  float:left;
+  height:75px;
+  overflow:hidden;
+  width:65px;
+  position : relative;
+}
+
+#marketPlace #weapons #addedItems
+{
+  height:68px;
+  left:46px;
+  position:absolute;
+  top:398px;
+  width:653px;
+}
+#marketPlace #weapons .addedItem
+{
+  float:left;
+  height:68px;
+  margin-right:5px;
+  overflow:hidden;
+  position:relative;
+  width:127px;
+}
+
 #marketPlace #towerDisplay, #marketPlace #weaponDisplay, #marketPlace #upgradeDisplay
 {
   height:249px;
@@ -416,7 +445,7 @@ body {
   top:58px;
   width:447px;
 }
-#marketPlace #towerDisplay .tower, #marketPlace #weaponDisplay .weapon, #marketPlace #upgradeDisplay .upgrade
+#marketPlace #towerDisplay .item, #marketPlace #weaponDisplay .item, #marketPlace #upgradeDisplay .item
 {
   height : 87px;
   width : 145px;
@@ -427,7 +456,7 @@ body {
   position : relative;
   overflow : hidden;
 }
-#marketPlace #towerDisplay .tower div, #marketPlace #weaponDisplay .weapon div, #marketPlace #upgradeDisplay .upgrade div
+#marketPlace #towerDisplay .item div, #marketPlace #weaponDisplay .item div, #marketPlace #upgradeDisplay .item div
 {
   height:68px;
   margin-top:5px;
@@ -435,13 +464,13 @@ body {
   position : relative;
   overflow : hidden;
 }
-#marketPlace #towerDisplay .tower div .action, #marketPlace #weaponDisplay .weapon div .action, #marketPlace #upgradeDisplay .upgrade div .action
+#marketPlace .action
 {
   position : absolute;
-  right : 6px;
+  right : 2px;
   bottom : 2px;
 }
-#marketPlace #towerDisplay .tower div .label, #marketPlace #weaponDisplay .weapon div .label, #marketPlace #upgradeDisplay .upgrade div .label
+#marketPlace #towerDisplay .item div .label, #marketPlace #weaponDisplay .item div .label, #marketPlace #upgradeDisplay .item div .label
 {
   position : absolute;
   left : 6px;

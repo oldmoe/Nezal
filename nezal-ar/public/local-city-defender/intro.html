@@ -2,7 +2,10 @@
 <link type="text/css" href="css/ranking.css" rel="stylesheet"/>
 
 <!-- <script src="http://connect.facebook.net/en_US/all.js"></script> -->
-	
+
+<script src="http://connect.facebook.net/en_US/all.js"></script>
+<script src="js/facebook.js"></script>
+
 <script src="js/base/prototype.js"></script>
 <script src="js/base/effects.js"></script>
 <script src="js/base/sound.js"></script>
@@ -30,14 +33,11 @@
       <img id="levelsBackground" src="images/intro/level-selection.png"/>
       <div id="levels">
         <img id='levelsLinks' src="images/intro/difficulty.png"/>
-        <div id="easy">
-          <a href="" onclick="GameConfigs.level=1; Intro.next(); return false;">  </a>
+        <div id="easy" onclick="GameConfigs.level=1; Intro.next(); return false;">
         </div>
-        <div id="medium">
-          <a href="" onclick="GameConfigs.level=2; Intro.next(); return false;">  </a>
+        <div id="medium" onclick="GameConfigs.level=2; Intro.next(); return false;">
         </div>
-        <div id="hard">
-          <a href="" onclick="GameConfigs.level=3; Intro.next(); return false;">  </a>
+        <div id="hard" onclick="GameConfigs.level=3; Intro.next(); return false;">
         </div>
       </div>
     </div>
@@ -68,7 +68,7 @@
             <img src="images/intro/market/towers-bg.png"/>
         </div>  
         
-        <div id="superWeapons" style="display : none;">
+        <div id="weapons" style="display : none;">
             <img src="images/intro/market/weapons-bg.png"/>
         </div>  
 
@@ -114,8 +114,10 @@
 <script src="js/game/super_weapon.js"></script>
 <script src="js/game/upgrade.js"></script>
 
-  <script>		
-  $(document).observe('dom:loaded',function(){ Intro.initialize();});
+<script>		
+  FBConnect.init(function(){
+                      Intro.initialize();
+                  });
 </script>
 <link type="text/css" href="css/game.css" rel="stylesheet" />
 

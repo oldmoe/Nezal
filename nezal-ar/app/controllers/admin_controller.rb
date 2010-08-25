@@ -14,6 +14,12 @@ class AdminController < ApplicationController
   get '/new' do
     erb :new , {:layout => :app}
   end
+  
+  # Add a new Game
+  post '' do
+    @game = Game.create({:name => params["name"], :description => params["description"]})
+    redirect "/#{ADMIN_URL}/#{@game.name}"
+  end
 
   get '/:game_name' do 
     Game.all().each do |game|  
@@ -21,19 +27,8 @@ class AdminController < ApplicationController
         @game = game  
       end
     end
-    puts "!!!!!!!!!!!!!!!!!!"
     @game.campaigns.each { |campaign| puts campaign }
-    puts "!!!!!!!!!!!!!!!!!!"
     erb :show , {:layout => :app}
-  end
-      
-  # Add a new Game
-  post '' do
-    puts "BEFORE SAVE GAME"
-    @game = Game.create({:name => params["name"], :description => params["description"]})
-    p @game
-    puts "AFTER SAVE GAME"
-    redirect "/#{ADMIN_URL}/#{@game.name}"
   end
 
   # Add rank to a game 
@@ -93,16 +88,14 @@ class AdminController < ApplicationController
   # get the game object metadata
   get '/:game_name/metadata' do 
     @game = Game.find_by_name(params[:game_name])
-    helper = ActiveSupport::Inflector.camelize(@app_configs['game_name'].sub("-", "_"))
-    klass = Kernel.const_get(helper)
+    klass = self.get_helper_klass
     klass.load(@game)
   end
   
   # For city defender this should save missions, towers, creeps, super weapons, upgrades
   put '/:game_name/metadata' do 
     @game = Game.find_by_name(params[:game_name])
-    helper = ActiveSupport::Inflector.camelize(@app_configs['game_name'].sub("-", "_"))
-    klass = Kernel.const_get(helper)
+    klass = self.get_helper_klass
     klass.edit(@game, params["data"])
     ''
   end
@@ -115,16 +108,14 @@ class AdminController < ApplicationController
   # get the game object metadata
   get '/:game_name/:camp_id/metadata' do 
     @camp = Campaign.find(params["camp_id"])
-    helper = ActiveSupport::Inflector.camelize(@app_configs['game_name'].sub("-", "_"))
-    klass = Kernel.const_get(helper)
+    klass = self.get_helper_klass
     klass.load_campaign(@camp)
   end
   
   # For city defender this should save missions, towers, creeps, super weapons, upgrades
   put '/:game_name/:camp_id/metadata' do 
     @camp = Campaign.find(params["camp_id"])
-    helper = ActiveSupport::Inflector.camelize(@app_configs['game_name'].sub("-", "_"))
-    klass = Kernel.const_get(helper)
+    klass = self.get_helper_klass
     klass.edit(@camp, params["data"])
     ''
   end
