@@ -19,7 +19,7 @@ class Metadata
   end
   
   def self.encode(data)
-     JSON.generate.encode(data)
+     JSON.generate(data)
   end
   
   def self.decode(data)

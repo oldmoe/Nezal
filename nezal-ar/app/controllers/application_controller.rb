@@ -23,8 +23,8 @@ class ApplicationController < Sinatra::Base
           game_profile = UserGameProfile.find_by_game_id_and_user_id(@game.id, @user.id)
          if !(game_profile)
             game_profile = UserGameProfile.new()
-            game_profile.game = @game
-            game_profile.user = @user
+            game_profile.game= @game
+            game_profile.user= @user
             get_helper_klass.init_game_profile(game_profile)
             game_profile.save()
             p game_profile
