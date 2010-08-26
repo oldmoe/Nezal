@@ -1,9 +1,10 @@
 require 'erb'
 require 'rack/router'
+require 'sinatra'
+require 'yajl/json_gem'
 require 'require_all'
 
 require "#{Dir.pwd}/config/setup.rb"
-
 require_all "#{Dir.pwd}/app/models/"
 require_all "#{Dir.pwd}/app/controllers/"
 
@@ -15,8 +16,8 @@ use Rack::Static, :urls => [ "/city-defender/css", "/city-defender/js", "/city-d
 use Rack::ShowExceptions
   
 router = Rack::Router.new(nil) do |r|
-  r.map "/fb-games/users", :to => FBUsersController
-  r.map "/fb-games", :to => FBGamesController
+  r.map "/fb-games/users", :to => UsersController
+  r.map "/fb-games", :to => GamesController
   r.map "/nezal-admin", :to => AdminController
 end
 

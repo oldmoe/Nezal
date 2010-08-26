@@ -57,14 +57,14 @@ var Loader = {
 		})
 		return objects
 	},
-	onload: function(options){
-		this.loadedResources++;
-		if(options.onProgress) options.onProgress(Math.round((this.loadedResources/this.currentLength)*100))
-		if(this.loadedResources == this.currentLength){
-			if(options.onFinish){
-				options.onFinish()
+	onload: function(){
+		this.loader.loadedResources++;
+		if(this.options.onProgress) this.options.onProgress(Math.round((this.loader.loadedResources/this.loader.currentLength)*100))
+		if(this.loader.loadedResources == this.loader.currentLength){
+			if(this.options.onFinish){
+				this.options.onFinish()
 			}
-			this.loadedResources = 0
+			this.loader.loadedResources = 0
 		}	
 	},
 	
@@ -72,6 +72,9 @@ var Loader = {
 		var image = new Image();
 		var self = this
 		image.onload = function(){self.onload(options);}
+		image.options = options;
+		image.loader = this;
+		image.onload = this.onload;
 		image.src = src
 		return image
 	},

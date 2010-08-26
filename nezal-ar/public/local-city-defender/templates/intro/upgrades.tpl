@@ -7,7 +7,7 @@
       <span class="name">   </span>
       <span class="desc">   </span>
     </div>
-    <img src="images/intro/market/float-bg.png" style="float:right;"></img>
+    <img src=""></img>
   </div>
 </div>
 
@@ -15,28 +15,40 @@
     ${data.userData['coins']}
 </div>
 <div id="upgradeDisplay">
-  {for upgrade in data.gameData.upgrades }
-      <div class="upgrade">
-        <div upgradeid="${upgrade}" onclick="Intro.showFloatBg(this)">
-          <img src="images/intro/upgrades/${upgradeConfig[upgrade]['image']}"></img>
-          {if (data.userData.added.upgrades.indexOf(upgrade) >= 0) } 
-            <img src="images/intro/market/added.png" class="action"> </img> 
-          {elseif (data.userData.upgrades.indexOf(upgrade) >= 0) }
-            <img src="images/intro/market/add.png" class="action" onclick="alert('hi');"> </img> 
+  {for item in data.gameData[type] }
+      <div class="item">
+        <div itemid="${item}">
+          <img itemid="${item}" type="${type}" src="images/intro/${type}/${itemConfig[item]['image']}" onclick="Intro.showFloatBg(this)" ></img>
+          {if ((Intro.gameData[type][item]['unlocked'] == true) || (data.userData[type].indexOf(item) >= 0 ) )}
+              {if (data.userData.added[type].indexOf(item) >= 0) }
+                  <span class="label"> ${itemConfig[item]['model']} </span>
+              {else}
+                  <img  itemid="${item}" type="${type}" src="images/intro/market/add.png" class="action" onclick="Intro.addItem(this);"> </img> 
+                  <span class="label"> ${itemConfig[item]['model']} </span>
+              {/if}
           {else}
-            <img src="images/intro/market/unlock.png" class="action"> </img>
+            <img itemid="${item}" type="${type}" src="images/intro/market/unlock.png" class="action" onclick="Intro.unlockItem(this);"> </img>
             <img src="images/intro/market/locked.png" class="label"> </img>  
           {/if}
         </div>
-        <img src="images/intro/market/shown-lamp.png" class="action"> </img> 
+        <img src="images/intro/market/shown-lamp.png"> </img> 
       </div>
   {/for}
-  {for x in data.gameData.emptyUpgrades}
-      <div class="upgrade">
+  {for x in data.gameData.empty[type]}
+      <div class="item">
         <div>
           <img src="images/intro/market/q-box.png"></img>
         </div>
-        <img src="images/intro/market/hidden-lamp.png" class="action"> </img> 
+        <img src="images/intro/market/hidden-lamp.png"> </img> 
+      </div>
+  {/for}
+</div>
+
+<div id="addedItems">
+  {for item in data.userData.added[type] }
+      <div  class="addedItem" itemid="${item}">
+        <img itemid="${item}" src="images/intro/${type}/${itemConfig[item]['image']}" onclick="Intro.showFloatBg(this)" ></img>
+        <img itemid="${item}" type="${type}" src="images/intro/market/remove.png" class="action" onclick="Intro.removeItem(this);"> </img>
       </div>
   {/for}
 </div>

@@ -9,7 +9,7 @@ var Intro = {
               "campaign",
               "mission",
               "towers",
-              "superWeapons",
+              "weapons",
               "upgrades"
             ],
     templates : {
@@ -17,7 +17,7 @@ var Intro = {
               campaign : [Configs.template_path + "campaign.tpl", 0],
               mission : [Configs.template_path + "mission.tpl", 0],
               towers : [Configs.template_path + "towers.tpl", 0],
-              superWeapons : [Configs.template_path + "super_weapons.tpl", 0],
+              weapons : [Configs.template_path + "super_weapons.tpl", 0],
               upgrades : [Configs.template_path + "upgrades.tpl", 0],
               game : [ "templates/game.tpl", 0 ]
             },
@@ -38,7 +38,8 @@ var Intro = {
                       "mission/carousel/left-disabled.png",
                       "mission/carousel/right.png",
                       "mission/carousel/right-disabled.png",
-                      "mission/float-bg.png"
+                      "mission/float-bg.png",
+                      "mission/confidintial-stamp.png"
                   ],
         towers : [
                     "market/towers-on.png",
@@ -54,9 +55,11 @@ var Intro = {
                     "market/hidden-lamp.png",
                     "market/add.png",
                     "market/added.png",
-                    "market/unlock.png"
+                    "market/unlock.png",
+                    "market/shown-lamp.png",
+                    "market/locked.png"
                 ],
-        superWeapons : [
+        weapons : [
                     "market/towers-on.png",
                     "market/towers-off.png",
                     "market/weapons-on.png",
@@ -70,7 +73,9 @@ var Intro = {
                     "market/hidden-lamp.png",
                     "market/add.png",
                     "market/added.png",
-                    "market/unlock.png"
+                    "market/unlock.png",
+                    "market/shown-lamp.png",
+                    "market/locked.png"
                 ],
         upgrades : [
                     "market/towers-on.png",
@@ -86,14 +91,16 @@ var Intro = {
                     "market/hidden-lamp.png",
                     "market/add.png",
                     "market/added.png",
-                    "market/unlock.png"
+                    "market/unlock.png",
+                    "market/shown-lamp.png",
+                    "market/locked.png"
                 ]
     },
 
     initialize: function(){
         this.currentPage = -1;
         for(var template in Intro.templates){
-          Intro.retrieveTemplates(template);
+            Intro.retrieveTemplates(template);
 	      }
     },
     
@@ -109,15 +116,15 @@ var Intro = {
 	    	      		    if( Intro.templates[t][1])
     	    	      		      received++;	      		      
 	  	      		  }
-		      		  if (received == size)
-		      		  {
-      		  	      Intro.retrieveData( function() { 
-      		  	          $("gameStart").innerHTML = Intro.templates['game'][1].source;
-						            initLoadImages(); 
-						            Upgrades.init(); 
-                        Intro.next();
-                    })
-                }
+		        		  if (received == size)
+		        		  {
+        		  	      Intro.retrieveData( function() {
+        		  	          $("gameStart").innerHTML = Intro.templates['game'][1].source;
+						              initLoadImages(); 
+						              Upgrades.init(); 
+                          Intro.next();
+                      })
+                  }
 			      }
 	      })
     },
@@ -125,10 +132,17 @@ var Intro = {
     retrieveData: function( callback){
         new Ajax.Request( 'metadata', {method:'get',
               onSuccess: function(t){
-                  Intro.gameData = JSON.parse(t.responseText);
-                  callback();
+                  var data = JSON.parse(t.responseText);
+                  Intro.gameData = data;
+                  new Ajax.Request( '../users/local-city-defender/metadata', {method:'get',
+                    onSuccess: function(t){
+                        var data = JSON.parse(t.responseText);
+                        Intro.userData = data;
+                        Intro.userData["coins"] =  107834;
+                        callback();
+                    }});
               }
-          })
+        });
     },
     
     campPath : function() {
@@ -137,6 +151,20 @@ var Intro = {
     
     missionPath : function(){
         return "/" + GameConfigs.missionName;
+    },
+    
+    /* Convert returned hash of objects into an array of it labels 
+     * To be sent to the display part
+     */
+    toLabels : function( hash, labelsHash ) {
+        for( i in hash ) 
+        {
+            labelsHash[i] = [];
+            for( j in hash[i]) 
+            {
+                labelsHash[i].push(hash[i][j]['name']);
+            }
+        }      
     },
   
     pages : {
@@ -148,14 +176,15 @@ var Intro = {
         },
         campaign : {
             onSelect : function() {
-                var images = []
+                var images = [];
+                var images2 = ["/images/camp-map.png"];
                 Intro.images.campaign.each(function(image){ images.push( image) });
-                images.push( "../../" + Intro.campPath() + "/images/camp-map.png" );   
                 new Ajax.Request( Intro.campPath() + "/camp.info" ,
                                     {   method:'get', 
                                         onComplete: function(t, json){
                                             ChallengeSelector.campaignInfo = JSON.parse(t.responseText);
-                                            Loader.load( [{ images: images, path : Intro.images.path , store: 'intro'}],
+                                            Loader.load( [{ images: images, path : Intro.images.path , store: 'intro'},
+                                                          { images: images2, path :  Intro.campPath(), store: 'intro'}],
                                             { onFinish : function() {
                                                 $('campaign').innerHTML = Intro.templates.campaign[1].process({"camp":ChallengeSelector.campaignInfo}); 
                                                 Intro.show();
@@ -170,7 +199,6 @@ var Intro = {
                                 {method:'get', 
                                       onComplete: function(t, json){
                                           try{
-                                            console.log(eval(t.responseText));
                                           }catch(e){
                                             console.log(e)
                                           }
@@ -183,7 +211,6 @@ var Intro = {
                                                               }
                                                           })
                                           ChallengeSelector.missionCreeps = creepInfo.uniq();
-                                          console.log(ChallengeSelector.missionCreeps);
                                           new Ajax.Request( Intro.campPath() + Intro.missionPath() + "/mission.info" ,
                                               {method:'get', 
                                                 onComplete: function(t, json){
@@ -197,10 +224,8 @@ var Intro = {
                                                     {
                                                         images.push( "creeps/" + CreepConfig[creep]['image']);
                                                     }
-                                                    console.log('before load Images');
                                                     Loader.load( [{ images: images, path : Intro.images.path, store: 'intro'}],
                                                                   { onFinish : function() {
-                                                                          console.log('inside on finish');
                                                                            $('mission').innerHTML = Intro.templates.mission[1].process({ 
                                                                                                   "city" : ChallengeSelector.mission,
                                                                                                   "path" : Intro.campPath() + Intro.missionPath(),
@@ -208,7 +233,6 @@ var Intro = {
                                                                            Intro.creepsCarousel = new Carousel("creeps-scroll");
                                                                            Intro.creepsCarousel.displayCount = 4;
                                                                            Intro.show();
-                                                                           console.log("hiiiiiii");
                                                                       } });
                                     	          }
                           	                })
@@ -236,56 +260,43 @@ var Intro = {
                 /* Get User Data : coins, unlocked towers, super weapons & upgrade
                    Also should contain User last used tower, weapon set 
                    TODO replace this with Ajax  call to get the data */
-                var gameData = {}
-                for( i in Intro.gameData ) 
-                {
-                    gameData[i] = [];
-                    for( j in Intro.gameData[i]) 
-                    {
-                        console.log(Intro.gameData[i][j]['name']);
-                        gameData[i].push(Intro.gameData[i][j]['name']);
-                    }
-                }
+                var gameData = [];
+                Intro.toLabels( Intro.gameData, gameData)
                 data = { "gameData" : gameData,
-                         "userData" : { "coins" : 107834, 
-                                        "towers" : ["Cannon1", "Cannon2", "Rocket"],
-                                         "weapons" : ["Nuck"],
-                                         "upgraged" : [],
-                                         "added" : { "towers" : ["Cannon1", "Cannon2"],
-                                                      "weapons" : [],
-                                                      "upgrades" : [] } }
+                         "userData" : Intro.userData
                       };
-                data["gameData"]["emptyTowers"] = $A($R(0, 9-data["gameData"]["towers"].length-1));
-                data["gameData"]["emptyWeapons"] = $A($R(0, 9-data["gameData"]["weapons"].length-1)); 
-                data["gameData"]["emptyUpgrades"] = $A($R(0, 9-data["gameData"]["upgrades"].length-1));
+                data["gameData"]["empty"] = {}
+                data["gameData"]["empty"]["towers"] = $A($R(0, 9-data["gameData"]["towers"].length-1));
+                data["gameData"]["empty"]["weapons"] = $A($R(0, 9-data["gameData"]["weapons"].length-1)); 
+                data["gameData"]["empty"]["upgrades"] = $A($R(0, 9-data["gameData"]["upgrades"].length-1));
                 var images =  [], images2 = [];
                 Intro.images.towers.each(function(image){ images.push(image) });  
                 for (var tower in TowerConfig)
                 {
-                    images2.push( TowerConfig[tower]['image']);city_defender_start()
+                    images2.push( TowerConfig[tower]['image']);
                     images2.push( TowerConfig[tower]['skelaton']);    
                 }    
                 var path2 = Intro.images.path + "towers/";
-                console.log(path2)
                 Loader.load( [{ images: images, path :  Intro.images.path, store: 'intro'},
                               { images: images2, path :  path2, store: 'intro'}],
                               { onFinish : function() {
                                       $('towers').innerHTML = Intro.templates.towers[1].process({ 
+                                                                        "type" : "towers",
                                                                         "data" : data,
-                                                                        "towerConfig" : TowerConfig });
-                                      $('marketPlace').show();
+                                                                        "itemConfig" : TowerConfig });
                                       Intro.show();
+                                      $('marketPlace').show();
                                   }} );
             },
             setFloatBgInfo : function(element){
-                  $$("#marketPlace #floatBg div span")[0].innerHTML = TowerConfig[element.getAttribute("towerid")].model + " " +
-                                                                   TowerConfig[element.getAttribute("towerid")].name;
-                  $$("#marketPlace #floatBg div span")[1].innerHTML = TowerConfig[element.getAttribute("towerid")].desc;
+                  $$("#marketPlace #floatBg div span")[0].innerHTML = TowerConfig[element.getAttribute("itemid")].model + " " +
+                                                                   TowerConfig[element.getAttribute("itemid")].name + " : ";
+                  $$("#marketPlace #floatBg div span")[1].innerHTML = TowerConfig[element.getAttribute("itemid")].desc;
                   $$("#marketPlace #floatBg div img")[0].src = Intro.images.path + "towers/" + 
-                                                                  TowerConfig[element.getAttribute("towerid")].skelaton;    
+                                                                  TowerConfig[element.getAttribute("itemid")].skelaton;    
             }
         },
-        superWeapons : {
+        weapons : {
             onSelect : function(){
                 /* Change the tabs accordingly */
                 path = "images/intro/market/";
@@ -299,44 +310,39 @@ var Intro = {
                 /* Get User Data : coins, unlocked towers, super weapons & upgrade
                    Also should contain User last used tower, weapon set 
                    TODO replace this with Ajax  call to get the data */
-                data = { "gameData" : {  "towers" : ["Cannon1", "Cannon2", "Rocket", "Cannon3", "Cannon4"],
-                                         "weapons" : ["Nuck", "Weak", "Hyper", "Splash"],
-                                         "upgrades" : [] },
-                         "userData" : { "coins" : 1074, 
-                                        "towers" : ["Cannon1", "Cannon2", "Rocket"],
-                                         "weapons" : ["Nuck", "Weak", "Hyper"],
-                                         "upgraged" : [],
-                                         "added" : { "towers" : ["Cannon1", "Cannon2"],
-                                                      "weapons" : ["Weak"],
-                                                      "upgrades" : [] } }
+                var gameData = [];
+                Intro.toLabels( Intro.gameData, gameData)
+                data = { "gameData" : gameData,
+                         "userData" : Intro.userData
                       };
-                data["gameData"]["emptyTowers"] = $A($R(0, 9-data["gameData"]["towers"].length-1));
-                data["gameData"]["emptyWeapons"] = $A($R(0, 9-data["gameData"]["weapons"].length-1)); 
-                data["gameData"]["emptyUpgrades"] = $A($R(0, 9-data["gameData"]["upgrades"].length-1));
+                data["gameData"]["empty"] = {}
+                data["gameData"]["empty"]["towers"] = $A($R(0, 9-data["gameData"]["towers"].length-1));
+                data["gameData"]["empty"]["weapons"] = $A($R(0, 9-data["gameData"]["weapons"].length-1)); 
+                data["gameData"]["empty"]["upgrades"] = $A($R(0, 9-data["gameData"]["upgrades"].length-1));
                 var images =  [], images2 = [];
-                Intro.images.superWeapons.each(function(image){ images.push(image) });  
+                Intro.images.weapons.each(function(image){ images.push(image) });  
                 for (var weapon in SuperWeaponConfig)
                 {
                     images2.push( SuperWeaponConfig[weapon]['image']);
                     images2.push( SuperWeaponConfig[weapon]['skelaton']);    
                 }    
                 Loader.load( [{ images: images, path : Intro.images.path, store: 'intro'},
-                              { images : images2, path : Intro.images.path + "super-weapons/", store : 'intro' }],
+                              { images : images2, path : Intro.images.path + "weapons/", store : 'intro' }],
                               { onFinish : function() {
-                                      $('superWeapons').innerHTML = Intro.templates.superWeapons[1].process({ 
+                                      $('weapons').innerHTML = Intro.templates.weapons[1].process({ 
+                                                                        "type" : "weapons",
                                                                         "data" : data,
-                                                                        "weaponConfig" : SuperWeaponConfig }); 
-                                      $('marketPlace').show();
+                                                                        "itemConfig" : SuperWeaponConfig });
                                       Intro.show();
+                                      $('marketPlace').show();
                               }});
 
             },
             setFloatBgInfo : function(element){
-                  $$("#marketPlace #floatBg div span")[0].innerHTML = SuperWeaponConfig[element.getAttribute("weaponid")].model + " " +
-                                                                   SuperWeaponConfig[element.getAttribute("weaponid")].name;
-                  $$("#marketPlace #floatBg div span")[1].innerHTML = SuperWeaponConfig[element.getAttribute("weaponid")].desc;
-                  $$("#marketPlace #floatBg div img")[0].src = Intro.images.path + "weapons/" + 
-                                                                  SuperWeaponConfig[element.getAttribute("weaponid")].skelaton;    
+                  $$("#marketPlace #weapons #floatBg div span")[0].innerHTML = SuperWeaponConfig[element.getAttribute("itemid")].name  + " : " ;
+                  $$("#marketPlace #weapons #floatBg div span")[1].innerHTML = SuperWeaponConfig[element.getAttribute("itemid")].desc;
+                  $$("#marketPlace #weapons #floatBg div img")[0].src = Intro.images.path + "weapons/" + 
+                                                                  SuperWeaponConfig[element.getAttribute("itemid")].skelaton;    
             }
         },
         upgrades : {
@@ -350,56 +356,95 @@ var Intro = {
                 $$("#marketPlace #weaponsTab img")[0].removeClassName('on');
                 $$("#marketPlace #weaponsTab img")[0].src = path + "weapons-off.png";
                 $$("#marketPlace #bar img")[0].src = path + "upgrades-bar.png";  
-                var gameData = {}
-                for( i in Intro.gameData ) 
-                {
-                    gameData[i] = [];
-                    for( j in Intro.gameData[i]) 
-                    {
-                        console.log(Intro.gameData[i][j]['name']);
-                        gameData[i].push(Intro.gameData[i][j]['name']);
-                    }
-                }
+                var gameData = [];
+                Intro.toLabels( Intro.gameData, gameData)
                 data = { "gameData" : gameData,
-                         "userData" : { "coins" : 107834, 
-                                        "towers" : ["Cannon1", "Cannon2", "Rocket"],
-                                         "weapons" : ["Nuck"],
-                                         "upgraged" : [],
-                                         "added" : { "towers" : ["Cannon1", "Cannon2"],
-                                                      "weapons" : [],
-                                                      "upgrades" : [] } }
+                         "userData" : Intro.userData
                       };
-                data["gameData"]["emptyTowers"] = $A($R(0, 9-data["gameData"]["towers"].length-1));
-                data["gameData"]["emptyWeapons"] = $A($R(0, 9-data["gameData"]["weapons"].length-1)); 
-                data["gameData"]["emptyUpgrades"] = $A($R(0, 9-data["gameData"]["upgrades"].length-1));
-                var images =  [], images2 = [];
+                data["gameData"]["empty"] = {}
+                data["gameData"]["empty"]["towers"] = $A($R(0, 9-data["gameData"]["towers"].length-1));
+                data["gameData"]["empty"]["weapons"] = $A($R(0, 9-data["gameData"]["weapons"].length-1)); 
+                data["gameData"]["empty"]["upgrades"] = $A($R(0, 9-data["gameData"]["upgrades"].length-1));
+                var images =  [];
+                var images2 = [];
                 Intro.images.upgrades.each( function(image){ images.push( image) });  
                 for (var upgrade in UpgradeConfig)
                 {
-                    images.push( UpgradeConfig[upgrade]['image']);
-                    images.push( UpgradeConfig[upgrade]['skelaton']);    
+                    images2.push( UpgradeConfig[upgrade]['image']);
+                    images2.push( UpgradeConfig[upgrade]['skelaton']);    
                 }    
                 Loader.load( [{ images: images, path : Intro.images.path, store: 'intro'},
                               { images: images2, path : Intro.images.path + "upgrades/", store: 'intro'}],
                               { onFinish : function() {
                                       $('upgrades').innerHTML = Intro.templates.upgrades[1].process({ 
+                                                                        "type" : "upgrades",
                                                                         "data" : data,
-                                                                        "upgradeConfig" : UpgradeConfig });
-                                      $('marketPlace').show();
+                                                                        "itemConfig" : UpgradeConfig });
                                       Intro.show();
+                                      $('marketPlace').show();
                                   }} );
             },
             setFloatBgInfo : function(element){
-                  $$("#marketPlace #floatBg div span")[0].innerHTML = TowerConfig[element.getAttribute("towerid")].model + " " +
-                                                                   TowerConfig[element.getAttribute("towerid")].name;
-                  $$("#marketPlace #floatBg div span")[1].innerHTML = TowerConfig[element.getAttribute("towerid")].desc;
-                  $$("#marketPlace #floatBg div img")[0].src = Intro.images.path + "towers/" + 
-                                                                  TowerConfig[element.getAttribute("towerid")].skelaton;  
+                  $$("#marketPlace #upgrades #floatBg div span")[0].innerHTML = UpgradeConfig[element.getAttribute("itemid")].name  + " : ";
+                  $$("#marketPlace #upgrades #floatBg div span")[1].innerHTML = UpgradeConfig[element.getAttribute("itemid")].desc;
+                  $$("#marketPlace #upgrades #floatBg div img")[0].src = Intro.images.path + "upgrades/" + 
+                                                                  UpgradeConfig[element.getAttribute("itemid")].skelaton;
             }
         }
     },
     
+    addItem: function(element){
+        var gameData = [];
+        Intro.toLabels( Intro.gameData, gameData);
+        var type = element.getAttribute('type');
+        Intro.userData.added[type].push(element.getAttribute('itemid'));
+        var itemConfig = TowerConfig;
+        if(type == "weapons")
+            itemConfig = SuperWeaponConfig;
+        else if (type == "upgrades")
+             itemConfig = UpgradeConfig;
+       data = { "gameData" : gameData,
+                "userData" : Intro.userData
+                    };
+        data["gameData"]["empty"] = {}
+        data["gameData"]["empty"]["towers"] = $A($R(0, 9-data["gameData"]["towers"].length-1));
+        data["gameData"]["empty"]["weapons"] = $A($R(0, 9-data["gameData"]["weapons"].length-1)); 
+        data["gameData"]["empty"]["upgrades"] = $A($R(0, 9-data["gameData"]["upgrades"].length-1));
+        $(type).innerHTML = Intro.templates[type][1].process({ 
+                                                                  "type" : type,
+                                                                  "data" : data,
+                                                                  "itemConfig" : itemConfig });
+    },
+    
+    removeItem: function(element){
+        var type = element.getAttribute('type');
+        Intro.userData.added[type].splice( Intro.userData.added[type].indexOf(element.getAttribute('itemid')), 1);
+        var gameData = [];
+        var itemConfig = TowerConfig; 
+        Intro.toLabels( Intro.gameData, gameData);
+        if(type == "weapons")
+            itemConfig = SuperWeaponConfig;
+        else if (type == "upgrades")
+             itemConfig = UpgradeConfig;
+        data = { "gameData" : gameData,
+                 "userData" : Intro.userData
+              };
+        data["gameData"]["empty"] = {}
+        data["gameData"]["empty"]["towers"] = $A($R(0, 9-data["gameData"]["towers"].length-1));
+        data["gameData"]["empty"]["weapons"] = $A($R(0, 9-data["gameData"]["weapons"].length-1)); 
+        data["gameData"]["empty"]["upgrades"] = $A($R(0, 9-data["gameData"]["upgrades"].length-1));
+        $(type).innerHTML = Intro.templates[type][1].process({ 
+                                                                  "type" : type,
+                                                                  "data" : data,
+                                                                  "itemConfig" : itemConfig });        
+    },
+    
+    unlockItem: function(element){
+        var type = element.getAttribute('type');
+    },
+    
     show: function(){
+        $('marketPlace').hide();
 	      if(	Intro.currentPage >= 0) {
           $(Intro.sequence[Intro.currentPage]).hide();
         }
@@ -418,7 +463,6 @@ var Intro = {
     },
 
 	  next: function(current){
-        $('marketPlace').hide();
         Intro.nextPageIndex = Intro.currentPage + 1;
         if(Intro.nextPageIndex == Intro.sequence.length )
             Intro.finish();
@@ -427,13 +471,11 @@ var Intro = {
 	  },
 	  
 	  previous: function(current){
-        $('marketPlace').hide();
         Intro.nextPageIndex = Intro.currentPage - 1;
         Intro.pages[Intro.sequence[Intro.currentPage - 1]].onSelect();
 	  },
 	  
 	  select: function(index){
-        $('marketPlace').hide();
         Intro.nextPageIndex = index;
         $("intro").style['curspr'] = 'progress';
         Intro.pages[Intro.sequence[index]].onSelect();
@@ -441,7 +483,6 @@ var Intro = {
 	  
 	  finish: function(){
         $("intro").hide();
-        console.log(Config) 
         city_defender_start();
 	      $('gameStart').show();
 	  }

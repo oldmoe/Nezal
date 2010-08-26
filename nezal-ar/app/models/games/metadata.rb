@@ -18,4 +18,11 @@ class Metadata
     camp.metadata    
   end
   
+  def self.encode(data)
+     JSON.generate(data)
+  end
+  
+  def self.decode(data)
+    JSON.parse(data)
+  end
 end

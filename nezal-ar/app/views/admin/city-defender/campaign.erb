@@ -2,36 +2,189 @@
 var CampaignData = {
     missions : [],
     templates : {},
+    mapDimensions : { x : 15 , y : 20 },
+    currMission : null,
+    creeps : ['RedTank', 'BlueTank', 'BlackTank', 'Rocket', 'RedRocket', 'BlackRocket'],
 
     init : function()
     {
-        CampaignData.templates['missions'] = TrimPath.parseDOMTemplate('displayTemplate');
+        CampaignData.templates['missions'] = TrimPath.parseDOMTemplate('missionsTemplate');
+        CampaignData.templates['waves'] = TrimPath.parseDOMTemplate('wavesTemplate');
+        CampaignData.templates['wave'] = TrimPath.parseDOMTemplate('waveTemplate');
         new Ajax.Request( '../metadata' , {
                           method : 'get',
                           onSuccess: function(transport) {
-                              console.log(transport.responseText);
                               data = JSON.parse(transport.responseText);
                               CampaignData.missions = JSON.parse(data);
-                              $$('#missions #list')[0].innerHTML = CampaignData.templates['missions'].process({list: CampaignData.missions}); 
+                              new Ajax.Request( '/<%=AdminController::ADMIN_URL%>/<%=@camp.game[:name]%>/metadata', {
+                                  method : 'get',
+                                  onSuccess: function(transport) {
+                                      data = JSON.parse(transport.responseText);
+                                      CampaignData.creeps = $H(data['creeps']).keys();
+                                      $$('#missions #list')[0].innerHTML = CampaignData.templates['missions'].process({list: CampaignData.missions}); 
+                                  }
+                              });
                         }
                       });
-    },
-    addMission : function()
-    {
-        var mission = {
-            "name" : $$("#missions #addMission #name")[0].value,
-            "path" : $$("#missions #addMission #path")[0].value,
+        var x = CampaignData.mapDimensions.x;
+        var y = CampaignData.mapDimensions.y;
+        $('map').setAttribute('style', "width : " + ((x*30) + x*2) + "px;")
+        for(i = 0;  i< x; i++)
+        {
+            for( j=0; j < y ; j++)
+            {
+                box = document.createElement('div');
+                box.setAttribute("class", "box");
+                box.setAttribute('x', i);
+                box.setAttribute('y', j);
+                box.setAttribute('id', i + "-" + j);
+                box.setAttribute('onclick', 'CampaignData.mapOnclick(this);');
+                $('map').appendChild(box);
+            }
         }
-        if( !(mission["name"]) || !(mission["path"]) )
+        CampaignData.currMission = CampaignData.createEmptyMission();
+        CampaignData.selectMission(null);
+    },
+    createEmptyMission : function()
+    {
+        var map = [];
+        var x = CampaignData.mapDimensions.x;
+        var y = CampaignData.mapDimensions.y;
+        for(i = 0;  i< x; i++)
+        {
+            map[i] = []
+            for( j=0; j < y ; j++)
+                map[i].push(0);
+        }
+        var emptyMap = {
+            'name' : '',
+            'path' : '',
+            'waves' : [],
+            'map' : map
+        }
+        return emptyMap;
+    },
+    mapOnclick : function(element)
+    {
+        if(element.hasClassName('on'))
+            element.removeClassName('on');
+        else
+            element.addClassName('on');
+    },
+    selectMission : function(element)
+    {
+        if (element)
+        {
+            for(var i=0; i< CampaignData.missions.length; i++)
+            {
+                if(CampaignData.missions[i].order == element.getAttribute('order'))
+                {
+                    CampaignData.currMission = CampaignData.missions[i];
+                    break;
+                }
+            }
+        }
+        $$("#addMission #name")[0].value = CampaignData.currMission.name;
+        $$("#addMission #path")[0].value = CampaignData.currMission.path;
+        var x = CampaignData.mapDimensions.x;
+        var y = CampaignData.mapDimensions.y;
+        for(i = 0;  i< x; i++)
+        {
+            for( j=0; j < y ; j++)
+            {
+                if (CampaignData.currMission.map[i][j])
+                    $(i+"-"+j).addClassName('on');
+                else
+                    $(i+"-"+j).removeClassName('on');
+            }
+        }
+        $$('#waves #list')[0].innerHTML = CampaignData.templates['waves'].process({list: CampaignData.currMission.waves}); 
+        $$('#waves .wave').each(function(wave){
+            $(wave.getAttribute('order') + 'Details').innerHTML = CampaignData.templates['wave'].process(
+                                  { wave: CampaignData.currMission.waves[wave.getAttribute('order')],
+                                    creeps : CampaignData.creeps,
+                                    wave_id : wave.getAttribute('order') } );
+        });
+    },
+    saveMission : function()
+    {
+        CampaignData.currMission.name = $$("#addMission #name")[0].value;
+        CampaignData.currMission.path = $$("#addMission #path")[0].value;
+        if( !(CampaignData.currMission.name) || !(CampaignData.currMission.path) )
         {
           alert("Name & Path must exist");
           return;
         }
-        CampaignData.missions[CampaignData.missions.length] = mission;
-        mission['order'] = CampaignData.missions.length;
-        $$("#missions #addMission #name")[0].value = "";
-        $$("#missions #addMission #path")[0].value = "";
-        $$('#missions #list')[0].innerHTML = CampaignData.templates['missions'].process({list: CampaignData.missions});
+        var x = CampaignData.mapDimensions.x;
+        var y = CampaignData.mapDimensions.y;
+        for(i = 0;  i< x; i++)
+        {
+            for( j=0; j < y ; j++)
+            {
+                if ($(i+ '-' + j).hasClassName('on'))
+                    CampaignData.currMission.map[i][j] = 1;
+                else
+                    CampaignData.currMission.map[i][j] = 0;
+            }
+        }   
+        if (!CampaignData.currMission.order)
+        {
+          CampaignData.missions[CampaignData.missions.length] = CampaignData.currMission;
+          CampaignData.currMission['order'] = CampaignData.missions.length;
+        }
+        for(var i=0; i<CampaignData.currMission.waves.length; i++)
+           CampaignData.currMission.waves[i] = [];
+        $('waves').select('.waveDetails').each(function(creepElement){
+            var creep = {};
+            creep['category'] = creepElement.getElementsByTagName('select')[0].value;
+            creep['count'] = creepElement.getElementsByTagName('input')[0].value;  
+            CampaignData.currMission.waves[creepElement.getAttribute('wave')].push(creep);
+        });
+        CampaignData.currMission = CampaignData.createEmptyMission();
+        CampaignData.selectMission(null);
+        $$('#missions #list')[0].innerHTML = CampaignData.templates['missions'].process({list: CampaignData.missions}); 
+    },
+    addWave : function()
+    {
+        CampaignData.currMission.waves.push([]);
+        $$('#waves #list')[0].innerHTML = CampaignData.templates['waves'].process({list: CampaignData.currMission.waves}); 
+    },
+    deleteWave : function(element)
+    {
+        CampaignData.currMission.waves.splice(element.getAttribute('order'), 1)
+        $$('#waves #list')[0].innerHTML = CampaignData.templates['waves'].process({list: CampaignData.currMission.waves});   
+    },
+    selectWave : function(element)
+    {
+        $(element.getAttribute('order') + 'Details').innerHTML = CampaignData.templates['wave'].process(
+                                  { wave: CampaignData.currMission.waves[element.getAttribute('order')],
+                                    creeps : CampaignData.creeps,
+                                    wave_id : element.getAttribute('order') } );
+        $(element.getAttribute('order') + 'Details').toggle();
+    },
+    addWaveCreep : function(element)
+    {
+        var creep = {};
+        creep['category'] = $$("#" + element.getAttribute('wave') +  "Details #addWaveCreep select")[0].value;
+        creep['count'] = $$("#" + element.getAttribute('wave') +  "Details #addWaveCreep input")[0].value;
+        if( !(creep['count']) || isNaN(creep['count']) )
+        {
+            alert("Count must be integers");
+            return;
+        }
+        CampaignData.currMission.waves[element.getAttribute('wave')].push(creep);
+        $(element.getAttribute('wave') + 'Details').innerHTML = CampaignData.templates['wave'].process(
+                                  { wave: CampaignData.currMission.waves[element.getAttribute('wave')],
+                                    creeps : CampaignData.creeps,
+                                    wave_id : element.getAttribute('wave') } );
+    },
+    deleteWaveCreep : function(element)
+    {
+        CampaignData.currMission.waves[element.getAttribute('wave')].splice(element.getAttribute('order'), 1)
+        $(element.getAttribute('wave') + 'Details').innerHTML = CampaignData.templates['wave'].process(
+                                  { wave: CampaignData.currMission.waves[element.getAttribute('wave')],
+                                    creeps : CampaignData.creeps,
+                                    wave_id : element.getAttribute('wave') } );
     },
     deleteElement : function(element)
     {
@@ -46,6 +199,8 @@ var CampaignData = {
                             method : 'put',
                             parameters : { "data" : JSON.stringify(CampaignData.missions) },
                             onSuccess: function(transport) {
+                              CampaignData.currMission = CampaignData.createEmptyMission();
+                              CampaignData.selectMission(null);
                               window.location = window.location;
                             }
                         });
@@ -55,76 +210,204 @@ $(document).observe('dom:loaded',function(){ CampaignData.init();});
 </script>
 
 <div id="game">
-    <div id="camp_data">
-      <LABEL for="camp_name" class="title">Campaign: </LABEL>
-      <div id="camp_name">
-          <%=@camp.name%>
-      </div>
+  
+    <div id="backLink"> 
+      <a href="/<%=AdminController::ADMIN_URL%>/<%=@camp.game[:name]%>">
+        Back
+      </a>
     </div>
-    <textarea id="displayTemplate" style="display:none;">
-        {for element in list}
-    		  	<div>
-      	  	    <span class="column"> 
-  	    	  	      <LABEL for="name">Name: </LABEL>
-      	  	        ${element['name']} 
-    	  	      </span>
-          	    <span class="column"> 
-                    <LABEL for="path">Path: </LABEL>  
-          	        ${element['path']} 
-      	        </span>
-          	    <span class="column"> 
-                    <LABEL for="path">Order: </LABEL>  
-          	        ${element['order']} 
-      	        </span>
-      	        <span class="delete" >
-                  <a order="${element['order']}" href="#" onclick="CampaignData.deleteElement(this);return false;" class="submit_links"> x </a>
-                </span>
-            </div>
-            <div style="clear:both"></div>
-        {/for}
-    </textarea>
+
+    <div id="game_name">
+        <%=@camp.game.name%> : 
+        <span id="camp_name" class="title">
+          <%=@camp.name%>
+        </span>
+    </div>
+    
     <div id="missions">
         <div class="title">Missions:</div>
         <div id="list">
         </div>
-        <div id="addMission" class="title add">
-            <LABEL for="addMission" class="label">Add Mission</LABEL>
-            <div class="form_row">  
-                <LABEL for="name">Name</LABEL>
-                <INPUT type="text" id="name" name='name'><BR>
+    </div>
+    
+    <div id="addMission">
+        <LABEL for="addMission" class="label title">Mission</LABEL>
+        <div class="form_row">  
+            <LABEL for="name">Name</LABEL>
+            <INPUT type="text" id="name" name='name'><BR>
+        </div>
+        <div class="form_row">  
+            <LABEL for="path">Path</LABEL>
+            <INPUT type="text" id="path" name='path'><BR>
+        </div>
+        <div class="form_row">  
+            <LABEL for="map">Map</LABEL>
+            <div id="map">
             </div>
-            <div class="form_row">  
-                <LABEL for="path">Path</LABEL>
-                <INPUT type="text" id="path" name='path'><BR>
+        </div>
+        <div class="form_row">  
+            <LABEL for="waves">Waves</LABEL>
+            <div id="waves">
+                <div id="list">
+                </div>
+      	        <a href="#" onclick="CampaignData.addWave(this);return false;">
+      	  	        Add Wave
+  	  	        </a>
             </div>
-            <div class="form_row">
-                <input type="submit" value="Add" class="submit" onclick="CampaignData.addMission(); return false;"/>
-            </div>
-        </div>      
-	  </div>
+        </div>
+        <div class="form_row">
+            <input type="submit" value="save" class="submit" onclick="CampaignData.saveMission(); return false;"/>
+        </div>
+    </div>      
 	  
     <div style="text-align : right;">
         <input type="submit" value="AM Done .. Save That" class="submit" onclick="CampaignData.saveData(); return false;"/>
     </div>
 </div>
 
+<textarea id="missionsTemplate" style="display:none;">
+    {for element in list}
+      	<div>
+      	    <span class="column"> 
+      	        <a href="#" onclick="CampaignData.selectMission(this);return false;" order="${element['order']}">
+    	  	        ${element['name']} 
+  	  	        </a>
+  	        </span>
+      	    <span class="column"> 
+                <LABEL for="path">Order: </LABEL>  
+      	        ${element['order']} 
+  	        </span>
+  	        <span class="delete" >
+              <a order="${element['order']}" href="#" onclick="CampaignData.deleteElement(this);return false;" class="submit_links"> x </a>
+            </span>
+        </div>
+        <div style="clear:both"></div>
+    {/for}
+</textarea>
+
+<textarea id="wavesTemplate" style="display:none;">
+    {for element in list}
+      	<div class="waveTitle">
+      	    <span class="column"> 
+      	        <a href="#" onclick="CampaignData.selectWave(this);return false;" order="${element_index}">
+    	  	        Wave  ${element_index}
+	    	        </a>
+	          </span>
+	          <span class="delete deleteWave" >
+              <a order="${element_index}" href="#" onclick="CampaignData.deleteWave(this);return false;" class="submit_links"> x </a>
+            </span>
+        </div>
+        <div id="${element_index}Details" order="${element_index}" class="wave" style="display:none;">
+        </div>
+        <div style="clear:both"></div>
+    {/for}
+</textarea>
+
+<textarea id="waveTemplate" style="display:none;">
+    {for element in wave}
+    <div style="clear:both"></div>
+  	<div class='waveDetails' wave="${wave_id}">
+  	    <div>
+            <LABEL for="category" class="category">Category</LABEL>
+            <select id="category" name="category">
+                {for creep in creeps }                        
+                <option value="${creep}"  {if creep == element['category']} 'SELECTED' {/if}> ${creep} </option>
+                {/for}
+            </select>
+            <LABEL for="count" class="count">Count</LABEL>
+            <INPUT type="text" id="count" name='count' value="${element['count']}">
+            <span class="delete" >
+                <a order="${element_index}" wave="${wave_id}" href="#" onclick="CampaignData.deleteWaveCreep(this);return false;"> x </a>
+            </span>
+        </div>
+        <div style="clear:both"></div>
+    </div>
+    {/for}
+    <div id="addWaveCreep">
+        <LABEL for="category" class="category">Category</LABEL>
+        <select id="category" name="category">
+            {for creep in creeps }                        
+            <option value="${creep}"> ${creep} </option>
+            {/for}
+        </select>
+        <LABEL for="count" class="count">Count</LABEL>
+        <INPUT type="text" id="count" name='count'>
+        <span class="delete" >
+            <a href="#" onclick="CampaignData.addWaveCreep(this);return false;" order="${element_index}" wave="${wave_id}"> + </a>
+        </span>
+    </div>
+    <div style="clear:both"></div>
+</textarea>
+
 <style>
-    #camp_data, #missions
+    #camp_name
+    {
+        color : DarkOliveGreen;
+    }
+    #camp_data, #missions, #addMission
     {
         padding : 20px;
         border-top : solid 1px;
     }
-    .title
-    {
-        color : #77bbff;
-        font-size : 15px;
-        font-weight : bold;
-        margin-bottom : 10px;
+    #addMission {
+      border-bottom:1px solid;
+      margin-bottom:20px;
     }
     .column
     {
         width : 30%;
         display : block;
         float : left;
+    }
+    .box{
+        width : 30px;
+        height : 22px;
+        background : Darkkhaki;
+        border :1px solid white;
+        float : left;
+    }
+    .on{
+        background : chocolate;
+    }
+    #map, #waves {
+      float : left;
+      width : 65%;
+    }
+    .wave {
+      background : #ffffaa;
+      padding : 10px;
+    }
+    .waveTitle{
+      height : 20px;
+    }
+    .deleteWave{
+      float : right
+    }
+    .waveDetails
+    {
+      margin : 10px;
+    }
+    #addWaveCreep {
+      border:1px dotted;
+      height:30px;
+      padding:10px;
+    }
+    #addWaveCreep .category, .waveDetails .category
+    {
+      width : 15%;
+    }
+    #addWaveCreep .count, .waveDetails .count
+    {
+      width : 10%;
+    }
+    #addWaveCreep select, .waveDetails select
+    {
+      width : 35%;
+      margin-right : 5%;
+    }
+    #addWaveCreep INPUT, .waveDetails INPUT
+    {
+      width : 10%;
+      margin-right : 5%;
     }
 </style>

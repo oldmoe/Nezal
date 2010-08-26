@@ -1,8 +1,13 @@
-<h1> Awesome Games List, Join one right now !!! </h1>
+<div class="main-title">
+   The Awesome Games List 
+   <a href="/<%=AdminController::ADMIN_URL%>/new" style=" margin-left : 20px;">
+    + 
+   </a>
+</div>
 <% @games.each do |game | %>
   <div class="game">
     <div>
-      <a href="/<%=AdminController::ADMIN_URL%>/<%=game.name%>"><%=game.name%></a>
+      <a href="/<%=AdminController::ADMIN_URL%>/<%=game.name%>"><%=game.name%></a> 
       <span>
         <%=game.description%>
       </span>

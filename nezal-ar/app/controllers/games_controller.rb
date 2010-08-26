@@ -1,6 +1,10 @@
+<<<<<<< HEAD:nezal-ar/app/controllers/fb_games_controller.rb
 #require 'yajl'
 
 class FBGamesController < ApplicationController
+=======
+class GamesController < ApplicationController
+>>>>>>> ea7b5ec12e03a4430db7fb3ef2f8dee6ea7cb8bb:nezal-ar/app/controllers/games_controller.rb
   
   enable :sessions
   
@@ -9,8 +13,12 @@ class FBGamesController < ApplicationController
   get '/:game_name/challenges' do
     game = Game.find_by_name(@app_configs["name"])
     camps = Campaign.find_all_by_game_id(game.id)
+<<<<<<< HEAD:nezal-ar/app/controllers/fb_games_controller.rb
     #Yajl::Encoder.encode(camps)
 	camps.to_json
+=======
+    JSON.generate(camps)
+>>>>>>> ea7b5ec12e03a4430db7fb3ef2f8dee6ea7cb8bb:nezal-ar/app/controllers/games_controller.rb
   end
 
   get '/:game_name/friends' do 
@@ -22,7 +30,6 @@ class FBGamesController < ApplicationController
     @game = Game.find_by_name(params[:game_name])
     helper = ActiveSupport::Inflector.camelize(@app_configs['game_name'].sub("-", "_"))
     klass = Kernel.const_get(helper)
-    klass.load(@game)
     klass.load(@game)
   end
   
