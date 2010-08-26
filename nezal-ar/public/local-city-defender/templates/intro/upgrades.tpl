@@ -7,7 +7,7 @@
       <span class="name">   </span>
       <span class="desc">   </span>
     </div>
-    <img src="images/intro/market/float-bg.png" style="float:right;"></img>
+    <img src=""></img>
   </div>
 </div>
 

@@ -9,18 +9,22 @@
 */
 var TowerConfig = {
     "Turret" : { model : 'AT-4',
+                  name : 'Turret', 
                   image : 'Turret.png', 
                   skelaton : 'skil.png',
                     desc : "This is the black creep it is soooo destructive" },
     "DoubleTurret" : {  model : 'G-31',
+                  name : 'Double Turret',
                   image : 'DoubleTurret.png',
                   skelaton : 'skil.png', 
                     desc : "This is the Red plane creep it is soooo destructive" },
     "Patriot" : { model : 'G-32', 
+                  name : 'Patriot',
                   image : 'Patriot.png', 
                   skelaton : 'skil.png',
                   desc : "This is the black creep it is soooo destructive" },
     "RocketLauncher" : { model : 'G-32',
+                  name : 'Rocket Launcher',
                   image : 'RocketLauncher.png', 
                   skelaton : 'skil.png',
                   desc : "This is the black creep it is soooo destructive" }

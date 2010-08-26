@@ -419,7 +419,7 @@ body {
   position : relative;
 }
 
-#marketPlace #weapons #addedItems
+#marketPlace #weapons #addedItems, #marketPlace #upgrades #addedItems
 {
   height:68px;
   left:46px;
@@ -427,7 +427,7 @@ body {
   top:398px;
   width:653px;
 }
-#marketPlace #weapons .addedItem
+#marketPlace #weapons .addedItem, #marketPlace #upgrades .addedItem
 {
   float:left;
   height:68px;
