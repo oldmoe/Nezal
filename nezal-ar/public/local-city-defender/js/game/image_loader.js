@@ -1,4 +1,5 @@
 //loads images and store them in memory for later use
+var rank = 'surgeont'
 var Loader = {
 	loadedResources : 0,
 	resourceTypes : ['images', 'sounds','animations'],
@@ -45,7 +46,7 @@ var Loader = {
 					  }
 					  objects[names[i]] = Loader[type][store][names[i]]
 					}
-					if(Loader.loadedResources == Loader.currentLength){
+			  if(Loader.loadedResources == Loader.currentLength){
 			      if(options.onFinish){
 				      options.onFinish()
 			      }
@@ -69,6 +70,8 @@ var Loader = {
 	
 	load_images : function(src, options){
 		var image = new Image();
+		var self = this
+		image.onload = function(){self.onload(options);}
 		image.options = options;
 		image.loader = this;
 		image.onload = this.onload;
@@ -117,6 +120,9 @@ function imageNumbers(length){
 function onFinish(){
 	$('gameElements').style.visibility = 'visible'
 	$('canvasContainer').style.visibility = 'visible'
+	
+	$('rank').style.backgroundImage  = "url("+'images/user/'+rank+'.png'+")"; 
+	city_defender_start();
 	window.setTimeout(function(){
 		Effect.Fade('splashScreen')
 		$('gameElements').show();
@@ -128,18 +134,20 @@ function onFinish(){
 }
 function loadGameImages(){
 	try{
-		console.log('load all images called')
 		Loader.load([{images : imageNames, store :'game'}, {animations: imageNumbers(16), path: 'images/animations/health_point/', store: 'heal'},
 		{animations: imageNumbers(15), path: 'images/animations/creep_boom/', store: 'creepBoom'},
 		{animations: imageNumbers(12), path: 'images/animations/coins/', store: 'coins'},
 		{animations: imageNumbers(19), path: 'images/animations/nuke_boom/', store: 'nuke'},
+		{animations: imageNumbers(1), path: 'images/animations/arrow/', store: 'arrow'},
+		{animations: imageNumbers(1), path: 'images/animations/vertical_arrow/', store: 'verticalArrow'},
 		{images: bgImages, path: 'images/background/', store: 'background'},
+		{images: [rank+'.png'], path: 'images/user/', store: 'rank'},
 		{images: upgradeImages, path: 'images/background/', store: 'upgrades'}
 		], {onProgress: function(progress){$('loading_bar').style.width = ''+progress+'%';}, onFinish : onFinish })
 	}catch(e){console.log(e)}
 }
 function initLoadImages(){
-	console.log('init all images called')
 	Loader.load([{images: ['interface.png','loading_bar_down.png','loading_bar_up.png'], path: 'images/background/', store: 'background'}],
 	{onProgress: function(progress){},onFinish:function(){$('waitScreen').hide();Effect.Appear('splashScreen');loadGameImages();}})
 }
+//initLoadImages()

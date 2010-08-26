@@ -1,9 +1,8 @@
 var Plane = Class.create(Creep, {
 	name : 'Plane',
 	flying : true,
-
+	speed : 8,
 	initialize : function($super,x,y,extension){
-		console.log('plane initialzed')
 		$super(x,y,extension)
 		this.theta = 0
 	},
@@ -42,7 +41,7 @@ var Plane = Class.create(Creep, {
 		if(this.gridX >= Map.width){
 			// we are out, take us from the game
 			if(this.x >= (Map.width * Map.pitch + Map.pitch / 2)){
-				game.scene.escaped += 1
+				this.scene.escaped += 1
 				this.destroySprites()
 			}			
 		}else if(this.gridX != newGridX){
@@ -66,8 +65,8 @@ var Plane = Class.create(Creep, {
 			var cell = Map.grid[this.gridX][this.gridY];
 			var res = cell.splice(cell.indexOf(this), 1);
 		}
-		game.scene.money += this.price;
-		game.scene.stats.creepsDestroyed++
+		this.scene.money += this.price;
+		this.scene.stats.creepsDestroyed++
 	},
 	destroySprites : function(){
 		this.dead = true	
@@ -79,6 +78,7 @@ var Plane = Class.create(Creep, {
 })
 
 var RedPlane = Class.create(Plane, {
+	speed : 9,
    initImages : function(){
 		this.images = {
 			base : Loader.images.game['red_air_craft.png'],
