@@ -140,6 +140,6 @@ function loadGameImages(){
 }
 function initLoadImages(){
 	console.log('init all images called')
-	Loader.load([{images: ['interface.png','loading_bar_down.png','loading_bar_up.png'], path: 'images/background', store: 'background'}],
+	Loader.load([{images: ['interface.png','loading_bar_down.png','loading_bar_up.png'], path: 'images/background/', store: 'background'}],
 	{onProgress: function(progress){},onFinish:function(){$('waitScreen').hide();Effect.Appear('splashScreen');loadGameImages();}})
 }
