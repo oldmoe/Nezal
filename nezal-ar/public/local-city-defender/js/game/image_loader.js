@@ -1,13 +1,9 @@
 //loads images and store them in memory for later use
 var rank = 'surgeont'
+
 var Loader = Class.create({
-	
 	initialize: function (){
 		this.loadedResources =0
-		Loader.resourceTypes = ['images', 'sounds','animations']
-		Loader.images  = {}
-		Loader.sounds = {}
-		Loader.animations = {}
 	},
 	/*
 	this method loads the images
@@ -20,7 +16,7 @@ var Loader = Class.create({
 		this.currentLength = 0
 		var self = this
 		resources.each(function(resource){
-			self.resourceTypes.each(function(type){
+			Loader.resourceTypes.each(function(type){
 				if(resource[type]){
 					self.currentLength += resource[type].length
 				}
@@ -43,17 +39,17 @@ var Loader = Class.create({
 					  if(!Loader[type][store][names[i]]){	
 						var src = ''
 						src = path + names[i]
-						Loader[type][store][names[i]] = Loader['load_'+type](src, options);
+						Loader[type][store][names[i]] = self['load_'+type](src, options);
 					  }else{
-						Loader.loadedResources++
+						self.loadedResources++
 					  }
 					  objects[names[i]] = Loader[type][store][names[i]]
 					}
-			  if(Loader.loadedResources == Loader.currentLength){
+			  if(self.loadedResources == self.currentLength){
 			      if(options.onFinish){
 				      options.onFinish()
 			      }
-			      Loader.loadedResources = 0
+			      self.loadedResources = 0
 		      }	 
 				}
 			})
@@ -151,4 +147,8 @@ function initLoadImages(loader){
 	loader.load([{images: ['interface.png','loading_bar_down.png','loading_bar_up.png'], path: 'images/background/', store: 'background'}],
 	{onProgress: function(progress){},onFinish:function(){$('waitScreen').hide();Effect.Appear('splashScreen');loadGameImages(loader);}})
 }
+Loader.images ={}
+Loader.sounds = {}
+Loader.animations = {}
+Loader.resourceTypes = ['images', 'sounds','animations']
 //initLoadImages()
