@@ -1,12 +1,13 @@
 //loads images and store them in memory for later use
 var rank = 'surgeont'
 var Loader = Class.create({
-	resourceTypes : ['images', 'sounds','animations'],
-	images : {},
-	sounds : {},
-	animations : {},
+	
 	initialize: function (){
 		this.loadedResources =0
+		Loader.resourceTypes = ['images', 'sounds','animations']
+		Loader.images  = {}
+		Loader.sounds = {}
+		Loader.animations = {}
 	},
 	/*
 	this method loads the images
@@ -32,27 +33,27 @@ var Loader = Class.create({
 		var self = this
 		var objects = []
 		resources.each(function(resource){
-			self.resourceTypes.each(function(type){
+			Loader.resourceTypes.each(function(type){
 				if(resource[type]){
 					var path = resource.path || type+'/game/'
 					var store = resource.store
 					var names = resource[type]
-					if(!self[type][store])self[type][store] = {}
+					if(!Loader[type][store])Loader[type][store] = {}
 					for ( var  i=0 ; i < names.length ; i++ ){
-					  if(!self[type][store][names[i]]){	
+					  if(!Loader[type][store][names[i]]){	
 						var src = ''
 						src = path + names[i]
-						self[type][store][names[i]] = self['load_'+type](src, options);
+						Loader[type][store][names[i]] = Loader['load_'+type](src, options);
 					  }else{
-						self.loadedResources++
+						Loader.loadedResources++
 					  }
-					  objects[names[i]] = self[type][store][names[i]]
+					  objects[names[i]] = Loader[type][store][names[i]]
 					}
-			  if(self.loadedResources == self.currentLength){
+			  if(Loader.loadedResources == Loader.currentLength){
 			      if(options.onFinish){
 				      options.onFinish()
 			      }
-			      self.loadedResources = 0
+			      Loader.loadedResources = 0
 		      }	 
 				}
 			})
