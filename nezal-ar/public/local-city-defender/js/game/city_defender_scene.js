@@ -4,11 +4,16 @@ var CityDefenderScene = Class.create(Scene, {
 	objects : [],
 	towerMutators : [],
 	creepMutators : [],
+	fistCreep : false,
+	startGame : false,
+	firstHit : false,
 	initialize : function($super,config,delay,baseCtx,upperCtx){
 		$super(delay);
 		this.config = config
 		this.baseCtx = baseCtx;
 		this.upperCtx = upperCtx;
+		this.scenario = new Scenario(this)
+		this.scenario.start()
 		this.nuke = new Nuke(this, {count: 2, type:'nuke'})
 		this.heal = new Heal(this, {count: 2, type:'heal'})
 		this.weak = new Weak(this, {count: 2, type:'weak'})
@@ -52,8 +57,12 @@ var CityDefenderScene = Class.create(Scene, {
 	},
 	addCreep : function(creep){
 		if(creep){
+			if(!this.firstCreep){
+				//if(this.turrets[0])this.scenario.notify({name:"startGame", method: true, unit:this.turrets[0]})
+				this.firstCreep = true
+				//this.scenario.notify({name:"firstTank", unit:creep})
+			}
 			this.creepsLayer.attach(creep.sprite)
-			this.creepsLayer.attach(creep.baloonSprite)
 			this.creeps.push(creep)	
 		}
 		return this
