@@ -1,11 +1,10 @@
 //loads images and store them in memory for later use
 var rank = 'surgeont'
-var Loader = {
-	loadedResources : 0,
-	resourceTypes : ['images', 'sounds','animations'],
-	images : {},
-	sounds : {},
-	animations : {},
+
+var Loader = Class.create({
+	initialize: function (){
+		this.loadedResources =0
+	},
 	/*
 	this method loads the images
 		@imageNames 		    array of names of the images for ex: ['tank.png','creep.png']
@@ -17,7 +16,7 @@ var Loader = {
 		this.currentLength = 0
 		var self = this
 		resources.each(function(resource){
-			self.resourceTypes.each(function(type){
+			Loader.resourceTypes.each(function(type){
 				if(resource[type]){
 					self.currentLength += resource[type].length
 				}
@@ -30,7 +29,7 @@ var Loader = {
 		var self = this
 		var objects = []
 		resources.each(function(resource){
-			self.resourceTypes.each(function(type){
+			Loader.resourceTypes.each(function(type){
 				if(resource[type]){
 					var path = resource.path || type+'/game/'
 					var store = resource.store
@@ -40,31 +39,31 @@ var Loader = {
 					  if(!Loader[type][store][names[i]]){	
 						var src = ''
 						src = path + names[i]
-						Loader[type][store][names[i]] = Loader['load_'+type](src, options);
+						Loader[type][store][names[i]] = self['load_'+type](src, options);
 					  }else{
-						Loader.loadedResources++
+						self.loadedResources++
 					  }
 					  objects[names[i]] = Loader[type][store][names[i]]
 					}
-			  if(Loader.loadedResources == Loader.currentLength){
+			  if(self.loadedResources == self.currentLength){
 			      if(options.onFinish){
 				      options.onFinish()
 			      }
-			      Loader.loadedResources = 0
+			      self.loadedResources = 0
 		      }	 
 				}
 			})
 		})
 		return objects
 	},
-	onload: function(){
-		this.loader.loadedResources++;
-		if(this.options.onProgress) this.options.onProgress(Math.round((this.loader.loadedResources/this.loader.currentLength)*100))
-		if(this.loader.loadedResources == this.loader.currentLength){
-			if(this.options.onFinish){
-				this.options.onFinish()
+	onload: function(options){
+		this.loadedResources++;
+		if(options.onProgress) options.onProgress(Math.round((this.loadedResources/this.currentLength)*100))
+		if(this.loadedResources == this.currentLength){
+			if(options.onFinish){
+				options.onFinish()
 			}
-			this.loader.loadedResources = 0
+			this.loadedResources = 0
 		}	
 	},
 	
@@ -72,9 +71,6 @@ var Loader = {
 		var image = new Image();
 		var self = this
 		image.onload = function(){self.onload(options);}
-		image.options = options;
-		image.loader = this;
-		image.onload = this.onload;
 		image.src = src
 		return image
 	},
@@ -88,7 +84,7 @@ var Loader = {
 	load_animations :function(src,options){
 		return this.load_images(src,options)
 	}
-}
+})
 var imageNames = ['humvee_body.png','humvee_tower.png','humvee_tower_in_action.png','tank_body.png','tank_tower.png','tank_tower_in_action.png',
 'tank_1_body.png','tank_1_tower.png','tank_1_tower_in_action.png','tank_2_body.png','tank_2_tower.png','tank_2_tower_in_action.png',
 'black_tank_body.png','black_tank_tower.png','black_tank_tower_in_action.png','red_tank_body.png','red_tank_tower.png','red_tank_tower_in_action.png'
@@ -120,9 +116,8 @@ function imageNumbers(length){
 function onFinish(){
 	$('gameElements').style.visibility = 'visible'
 	$('canvasContainer').style.visibility = 'visible'
-	
+	console.log('finished')
 	$('rank').style.backgroundImage  = "url("+'images/user/'+rank+'.png'+")"; 
-	city_defender_start();
 	window.setTimeout(function(){
 		Effect.Fade('splashScreen')
 		$('gameElements').show();
@@ -132,9 +127,10 @@ function onFinish(){
 		Effect.Fade('static',{duration: 2.0})
 	},1000)
 }
-function loadGameImages(){
+function loadGameImages(loader){
 	try{
-		Loader.load([{images : imageNames, store :'game'}, {animations: imageNumbers(16), path: 'images/animations/health_point/', store: 'heal'},
+	
+		loader.load([{images : imageNames, store :'game'}, {animations: imageNumbers(16), path: 'images/animations/health_point/', store: 'heal'},
 		{animations: imageNumbers(15), path: 'images/animations/creep_boom/', store: 'creepBoom'},
 		{animations: imageNumbers(12), path: 'images/animations/coins/', store: 'coins'},
 		{animations: imageNumbers(19), path: 'images/animations/nuke_boom/', store: 'nuke'},
@@ -144,10 +140,16 @@ function loadGameImages(){
 		{images: [rank+'.png'], path: 'images/user/', store: 'rank'},
 		{images: upgradeImages, path: 'images/background/', store: 'upgrades'}
 		], {onProgress: function(progress){$('loading_bar').style.width = ''+progress+'%';}, onFinish : onFinish })
+		
 	}catch(e){console.log(e)}
 }
-function initLoadImages(){
-	Loader.load([{images: ['interface.png','loading_bar_down.png','loading_bar_up.png'], path: 'images/background/', store: 'background'}],
-	{onProgress: function(progress){},onFinish:function(){$('waitScreen').hide();Effect.Appear('splashScreen');loadGameImages();}})
-}
+function initLoadImages(loader){
+	loader.load([{images: ['interface.png','loading_bar_down.png','loading_bar_up.png'], path: 'images/background/', store: 'background'}],
+	{onProgress: function(progress){},onFinish:function(){$('waitScreen').hide();Effect.Appear('splashScreen');loadGameImages(loader);}})
+} 
+
+Loader.images ={}
+Loader.sounds = {}
+Loader.animations = {}
+Loader.resourceTypes = ['images', 'sounds','animations']
 //initLoadImages()
