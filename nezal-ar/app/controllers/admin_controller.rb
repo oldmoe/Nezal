@@ -108,15 +108,14 @@ class AdminController < ApplicationController
   # get the game object metadata
   get '/:game_name/:camp_id/metadata' do 
     @camp = Campaign.find(params["camp_id"])
-    klass = self.get_helper_klass
-    klass.load_campaign(@camp)
+    @camp.metadata
   end
   
   # For city defender this should save missions, towers, creeps, super weapons, upgrades
   put '/:game_name/:camp_id/metadata' do 
     @camp = Campaign.find(params["camp_id"])
     klass = self.get_helper_klass
-    klass.edit(@camp, params["data"])
+    klass.edit_campaign(@camp, params["data"])
     ''
   end
 end

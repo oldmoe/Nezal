@@ -11,16 +11,13 @@ var Game = Class.create({
 });
 
 var game = new Game()
-$(document).observe('dom:loaded',function(){
+function city_defender_start(){
+		console.log('dom loaded')
 		$$("canvas").each(function(canvas){
 			canvas.width = Map.width * Map.pitch
 			canvas.height = Map.height * Map.pitch
 		})
-		ImageLoader.init();
 		window.setTimeout(function(){
-			var bg = $('gameBackground');
-			var bgctx = bg.getContext('2d') 
-			bgctx.fillStyle = "rgb(100,250,100)";
 			var fg = $('gameForeground');
 			var top = $('droppingGround')
 			top.getContext('2d')//.globalAlpha = 0.5
@@ -33,12 +30,10 @@ $(document).observe('dom:loaded',function(){
 			$$('#gameElements .upgrades .upgrade.next').invoke('observe', 'click', Upgrades.upgrade)	
 			$$('#gameElements .upgrades .upgradeItem').invoke('observe', 'click', Upgrades.select)			
 			$$('.towers div').invoke('observe','click', GhostTurret.select)
-			//$$('.towers div').invoke('observe','mouseover', GhostTurret.showInfo)
 			$$('#gameElements .start').first().observe('click', function(){game.scene.startAttack()})
 			$$('#gameElements .superWeapons div').each(function(div){ 
 				if(div.className != ''){div.observe('click', function(){game.scene.fire(div.className)})}
 			})
 			Upgrades.selectDefault();
 		}, 200)
-		
-})
+}

@@ -1,14 +1,18 @@
 var Plane = Class.create(Creep, {
+	name : 'Plane',
 	flying : true,
-	images : {
-		base : Loader.images.game['air_craft.png'],
-		fire : Loader.images.game['air_craft_in_action.png'],
-		shadow : Loader.images.game['air_craft_shade.png']
-	},
+	speed : 8,
 	initialize : function($super,x,y,extension){
 		$super(x,y,extension)
 		this.theta = 0
-	},	
+	},
+	initImages : function(){
+		this.images = {
+		base : Loader.images.game['air_craft.png'],
+		fire : Loader.images.game['air_craft_in_action.png'],
+		shadow : Loader.images.game['air_craft_shade.png']
+		}
+	},
 	createSprites : function(){
 		this.cannonSprite = new Sprite([this.images.base,this.images.fire])
 		this.shadowSprite = new Sprite([this.images.shadow])
@@ -37,7 +41,7 @@ var Plane = Class.create(Creep, {
 		if(this.gridX >= Map.width){
 			// we are out, take us from the game
 			if(this.x >= (Map.width * Map.pitch + Map.pitch / 2)){
-				game.scene.escaped += 1
+				this.scene.escaped += 1
 				this.destroySprites()
 			}			
 		}else if(this.gridX != newGridX){
@@ -61,8 +65,8 @@ var Plane = Class.create(Creep, {
 			var cell = Map.grid[this.gridX][this.gridY];
 			var res = cell.splice(cell.indexOf(this), 1);
 		}
-		game.scene.money += this.price;
-		game.scene.stats.creepsDestroyed++
+		this.scene.money += this.price;
+		this.scene.stats.creepsDestroyed++
 	},
 	destroySprites : function(){
 		this.dead = true	
@@ -74,11 +78,13 @@ var Plane = Class.create(Creep, {
 })
 
 var RedPlane = Class.create(Plane, {
-
-	images : {
-		base : Loader.images.game['red_air_craft.png'],
-		fire : Loader.images.game['red_air_craft_in_action.png'],
-		shadow : Loader.images.game['air_craft_shade.png']
+	speed : 9,
+   initImages : function(){
+		this.images = {
+			base : Loader.images.game['red_air_craft.png'],
+			fire : Loader.images.game['red_air_craft_in_action.png'],
+			shadow : Loader.images.game['air_craft_shade.png']
+		}
 	}
 
 })	

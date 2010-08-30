@@ -1,7 +1,7 @@
 var ghostTurretFeatures = {			
 	validate : function(x, y, tower){			
 		this.valid = true
-		if(Map.grid[x][y].tower || Map.bgGrid[x][y] == 1 || game.money < tower.values.price){
+		if(Map.grid[x][y].tower || Map.bgGrid[x][y] == 1 || game.scene.money < tower.values.price){
 			this.valid = false
 		}
 	},
@@ -23,7 +23,7 @@ var ghostTurretFeatures = {
 		self.initImages = tower.category.prototype.initImages
 		self.initImages()
 		//tower.attributes = Tower.attributes
-		//$('towerInfo').innerHTML = Game.templates['towerInfo'].process({values: tower.values, tower : tower.category.prototype})
+		$('towerInfo').innerHTML = game.scene.templates['towerInfo'].process({values: tower.values, tower : tower.category.prototype})
 		self.selected = true;
 		$('droppingGround').observe("mouseenter", function(e){
 			self.isIn = true
@@ -56,9 +56,8 @@ var ghostTurretFeatures = {
 						mutator.action(turret)
 					})*/
 					game.scene.addTurret(turret)
-					//self.selected = false
-					//game.stats.towersCreated++
-					//game.money -= turret.price
+					game.scene.stats.towersCreated++
+					game.scene.money -= turret.price
 				}
 			})
 		}).observe("mouseleave", function(e){

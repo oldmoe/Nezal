@@ -14,8 +14,7 @@ var CampaignData = {
         new Ajax.Request( '../metadata' , {
                           method : 'get',
                           onSuccess: function(transport) {
-                              data = JSON.parse(transport.responseText);
-                              CampaignData.missions = JSON.parse(data);
+                              CampaignData.missions = JSON.parse(transport.responseText);
                               new Ajax.Request( '/<%=AdminController::ADMIN_URL%>/<%=@camp.game[:name]%>/metadata', {
                                   method : 'get',
                                   onSuccess: function(transport) {
@@ -197,7 +196,7 @@ var CampaignData = {
     {
         new Ajax.Request( '../metadata' , {
                             method : 'put',
-                            parameters : { "data" : JSON.stringify(CampaignData.missions) },
+                            parameters : { "data" : Object.toJSON(CampaignData.missions) },
                             onSuccess: function(transport) {
                               CampaignData.currMission = CampaignData.createEmptyMission();
                               CampaignData.selectMission(null);

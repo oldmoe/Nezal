@@ -2,6 +2,8 @@ var CityDefenderScene = Class.create(Scene, {
 	creeps : [],
 	turrets : [],
 	objects : [],
+	towerMutators : [],
+	creepMutators : [],
 	initialize : function($super,config,delay,baseCtx,upperCtx){
 		$super(delay);
 		this.config = config
@@ -12,6 +14,10 @@ var CityDefenderScene = Class.create(Scene, {
 		this.weak = new Weak(this, {count: 2, type:'weak'})
 		this.splash = new Splash(this, {count: 2, type:'splash'})
 		this.hyper = new Hyper(this, {count: 2, type:'hyper'})
+		this.templates = {}
+		this.selectedTurret = null
+		this.templates['towerInfo'] = TrimPath.parseTemplate($('towerInfoTemplate').value) 
+		this.templates['stats'] = TrimPath.parseTemplate($('statsTemplate').value) 
 		this.renderData()
 		this.checkStatus()
 	},
@@ -34,7 +40,7 @@ var CityDefenderScene = Class.create(Scene, {
 		return this
 	},
 	addTurret : function(turret){
-		if(!turret)var turret = new Turret(10, 4)	
+		if(!turret)var turret = new Turret(10, 4,this)	
 		this.turrets.push(turret)
 		Map.grid[turret.gridX][turret.gridY].tower = turret
 		this.basesLayer.attach(turret.baseSprite)
@@ -46,7 +52,8 @@ var CityDefenderScene = Class.create(Scene, {
 	},
 	addCreep : function(creep){
 		if(creep){
-			this.creepsLayer.attach(creep.sprite);
+			this.creepsLayer.attach(creep.sprite)
+			this.creepsLayer.attach(creep.baloonSprite)
 			this.creeps.push(creep)	
 		}
 		return this
@@ -56,7 +63,6 @@ var CityDefenderScene = Class.create(Scene, {
 			this.rocketsLayer.attach(plane.shadowSprite);
 			this.rocketsLayer.attach(plane.cannonSprite);
 			this.rocketsLayer.attach(plane.healthSprite);
-		//	this.indeces[plane] = true
 			this.creeps.push(plane)
 		}
 		return this
@@ -89,7 +95,7 @@ var CityDefenderScene = Class.create(Scene, {
 		$('hyper').innerHTML = this.hyper.count
 		$('waves').innerHTML = this.wave +'/'+this.wavesCount;
 		if(this.selectedTurret){
-			$('towerInfo').innerHTML = game.templates['towerInfo'].process({unit: game.selectedTurret})
+			$('towerInfo').innerHTML = this.templates['towerInfo'].process({unit: this.selectedTurret})
 		}
 		Upgrades.render();
 		var self = this
@@ -140,6 +146,7 @@ var CityDefenderScene = Class.create(Scene, {
 		var resumeDev = $$('#gameElements .paused').first()
 		resumeDev.removeClassName('paused')
 		resumeDev.addClassName('resumed')
+		resumeDev.stopObserving('click')
 		var self = this
 		resumeDev.observe('click', function(){self.pause()})
 	},
@@ -147,6 +154,7 @@ var CityDefenderScene = Class.create(Scene, {
 		if(this.statText){
 			if(this.statText.length == this.statTextIndex){
 				this.statText = ''
+				this.reactor.pause()
 				return
 			}else{
 				var data = $('stats').innerHTML
@@ -179,8 +187,10 @@ var CityDefenderScene = Class.create(Scene, {
 	},
 	win: function(){
 		this.running = false
-		this.reactor.pause()
 		$("result").addClassName('win');
+		var img = document.createElement("IMG");
+		img.src = "images/background/win.png";
+		$('result').appendChild(img);
 		$('static').show();
 		$('droppingGround').addClassName('off')
 		new Effect.SwitchOff('static');
@@ -190,8 +200,10 @@ var CityDefenderScene = Class.create(Scene, {
 	},
 	lose : function(){
 		this.running = false
-		this.reactor.pause()
 		$("result").addClassName('lose');
+		var img = document.createElement("IMG");
+		img.src = "images/background/lose.png";
+		$('result').appendChild(img);
 		$('static').show();
 		$('droppingGround').addClassName('off')
 		new Effect.SwitchOff('static');
@@ -238,10 +250,10 @@ var CityDefenderScene = Class.create(Scene, {
 				}else{
 					self.issueCreep(creep,  entry[0], entry[1], delay)
 				}
-				delay += 70*(32 / creep.values.speed) + 10//Math.ceil( 64 / Creep.speed)
+				delay += 70*(32 / creep.category.prototype.speed) + 10//Math.ceil( 64 / Creep.speed)
 				self.waitingCreeps++;
 			}
-			self.push(delay + (32 / creep.values.speed), function(){
+			self.push(delay + (32 / creep.category.prototype.speed), function(){
 			self.wavePending = false;
 			})
 		})
@@ -265,13 +277,16 @@ var CityDefenderScene = Class.create(Scene, {
 		this.push(delay, function()
 		{
 			try{
-				var obj = new creep.category(x, y,  creep.values)
+				var obj = new creep.category(x, y,self,creep.values)
 				if(creep.category == Plane || creep.category == RedPlane){
 					self.addPlane(obj)
 				}
 				else{
 					self.addCreep(obj)
 				}
+				self.creepMutators.each(function(mutator){
+					mutator.action(obj)
+				})
 				self.waitingCreeps--		
 			}catch(e){
 				console.log(e)

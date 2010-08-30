@@ -33,6 +33,8 @@ var FBConnect = {
 	  http://www.facebook.com/connect/uiserver.php?app_id=110196392331352&next=http://apps.facebook.com/local-city-defender/&display=page&locale=en_US&return_session=0&fbconnect=0&canvas=1&legacy_return=1&method=permissions.request
 	  
 	  
+	  http://www.facebook.com/connect/uiserver.php?app_id=113574023556&next=http%3A%2F%2Fapps.facebook.com%2Fdesktopdefender%2F&display=page&locale=en_US&return_session=0&fbconnect=0&canvas=1&legacy_return=1&method=permissions.request
+	  
 	  https://graph.facebook.com/oauth/authorize?client_id=110196392331352&redirect_uri=http://apps.facebook.com/local-city-defender
 	  
 	  http://www.facebook.com/r.php?referrer=112&app_id=110196392331352&app_data=http://apps.facebook.com/local-city-defender/
@@ -92,11 +94,12 @@ var FBConnect = {
                 {
                     redirect_url = "http://www.facebook.com/connect/uiserver.php?app_id=" + 
                                    FBConnect.appIds[FBConnect.url()] +  
-                                   "&return_session=0&fbconnect=0&canvas=1&legacy_return=1&method=permissions.request" +
                                    "&next=http://apps.facebook.com/"+ 
                                    FBConnect.url(); + "/"
+                                   "&display=page&locale=en_US&return_session=0&fbconnect=0&canvas=1&legacy_return=1&method=permissions.request"
+                                   alert(redirect_url)
                 }
-                window.top.location = redirect_url;
+//                window.top.location = redirect_url;
             }
         });
     }

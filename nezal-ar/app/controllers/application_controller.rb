@@ -18,22 +18,24 @@ class ApplicationController < Sinatra::Base
     	  begin
           @user = FbUser.find_or_create_by_fb_id(@fb_uid)
           @user.session = @fb_session_key
-          p @user
           @game = Game.find_by_name(app_name)
-          game_profile = UserGameProfile.find_by_game_id_and_user_id(@game.id, @user.id)
-         if !(game_profile)
-            game_profile = UserGameProfile.new()
-            game_profile.game= @game
-            game_profile.user= @user
-            get_helper_klass.init_game_profile(game_profile)
-            game_profile.save()
-            p game_profile
-            p game_profile.metadata
+          @game_profile = UserGameProfile.find_by_game_id_and_user_id(@game.id, @user.id)
+          if !(@game_profile)
+            puts "game profile not found"
+            @game_profile = UserGameProfile.new()
+            @game_profile.game= @game
+            @game_profile.user= @user
+            get_helper_klass.init_game_profile(@game_profile)
+            puts "going to call save"
+            @game_profile.save!()
           end
         rescue Exception => e
           p e
           ''
         end
+        p "--------------------------------------------------------------------"
+        p @game_profile
+        p "--------------------------------------------------------------------"
 	    else
         LOGGER.debug "No Cookie Or Params Found"
 	    end

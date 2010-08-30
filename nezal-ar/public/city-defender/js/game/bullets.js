@@ -40,7 +40,7 @@ var Turret = Class.create(Unit, {
 		this.images.base = [Loader.images.game['tower_base.png']]
 		this.images.cannon = [Loader.images.game['cannon_1.png']]
 		this.images.fire = [Loader.images.game['cannon_1_in_action.png']]
-		this.images.ranks = [Loader.images.game['rank_1.png'], Loader.images.game['rank_2.png'], Loader.images.game['rank_3.png']]
+		this.images.ranks = [null,Loader.images.game['rank_1.png'], Loader.images.game['rank_2.png'], Loader.images.game['rank_3.png']]
 	},
 	
 	getTargetfromCell: function(cell, targets){
