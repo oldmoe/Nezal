@@ -1,5 +1,4 @@
 var Sprite = Class.create({
-
 	x : 0,
 	y : 0,
 	w : 0,

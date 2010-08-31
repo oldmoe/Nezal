@@ -1,0 +1,122 @@
+<link type="text/css" href="css/intro.css" rel="stylesheet" />
+<link type="text/css" href="css/ranking.css" rel="stylesheet"/>
+
+<!-- <script src="http://connect.facebook.net/en_US/all.js"></script> -->
+	
+<script src="js/base/prototype.js"></script>
+<script src="js/base/effects.js"></script>
+<script src="js/base/sound.js"></script>
+<script src="js/base/template.js"></script>
+<script src="js/base/dragdrop.js"></script>
+<script src="js/base/excanvas.compiled.js"></script>
+<script src="js/base/slider.js"></script>
+<script src="/javascripts/effects.js" type="text/javascript"></script>
+<script src="js/carousel.js" type="text/javascript"></script>
+<script src="js/game/image_loader.js" type="text/javascript"></script>
+<script src="js/game/intro/game_configs.js" type="text/javascript"></script>
+<script src="js/game/configs/creep_config.js" type="text/javascript"></script>
+<script src="js/game/configs/tower_config.js" type="text/javascript"></script>
+<script src="js/game/configs/super_weapon_config.js" type="text/javascript"></script>
+<script src="js/game/configs/upgrade_config.js" type="text/javascript"></script>
+<script src="js/game/intro/intro.js" type="text/javascript"></script>
+<script src="js/game/intro/challenge_selector.js" type="text/javascript"></script>
+
+<body>
+
+<div id="game">
+  <div id="intro">
+    
+    <div id="levelSelection" style="display : none;">
+      <img id="levelsBackground" src="images/intro/level-selection.png"/>
+      <div id="levels">
+        <img id='levelsLinks' src="images/intro/difficulty.png"/>
+        <div id="easy">
+          <a href="" onclick="GameConfigs.level=1; Intro.next(); return false;">  </a>
+        </div>
+        <div id="medium">
+          <a href="" onclick="GameConfigs.level=2; Intro.next(); return false;">  </a>
+        </div>
+        <div id="hard">
+          <a href="" onclick="GameConfigs.level=3; Intro.next(); return false;">  </a>
+        </div>
+      </div>
+    </div>
+
+    <div id="campaign" style="display : none;">
+    </div>
+    
+    <div id="mission" style="display : none;">
+    </div>
+
+    <div id="marketPlace" style="display : none;">
+        <div id="marketTabs">
+            <div id="towersTab" class=" towersOff" onclick="Intro.select(3);">
+                <img src="images/intro/market/towers-on.png"/>
+            </div>
+            <div id="weaponsTab" class="weaponsOff"   onclick="Intro.select(4);">
+                <img src="images/intro/market/weapons-off.png"/>
+            </div>
+            <div id="upgradesTab" class="upgradesOff" onclick="Intro.select(5);"> 
+                <img src="images/intro/market/upgrades-off.png"/>
+            </div>
+            <div id="bar">
+              <img src="images/intro/market/towers-bar.png" style=""/>
+            </div>
+        </div>
+        
+        <div id="towers" style="display : none;">
+            <img src="images/intro/market/towers-bg.png"/>
+        </div>  
+        
+        <div id="superWeapons" style="display : none;">
+            <img src="images/intro/market/weapons-bg.png"/>
+        </div>  
+
+        <div id="upgrades" style="display : none;">
+            <img src="images/intro/market/upgrades-bg.png"/>
+        </div>
+        
+        <div id="back" onclick="Intro.previous();"></div>
+        <div id="next" onclick="Intro.next();"></div>
+        <div id="finish" onclick="Intro.finish();"></div>
+    </div>
+
+  </div>
+  
+  <div id="gameStart" style="display: none;">
+  </div>
+  
+</div>
+
+</body>
+<script src="js/nezal/layer.js"></script>
+<script src="js/nezal/nezal.js"></script>
+<script src="js/nezal/reactor.js"></script>
+<script src="js/nezal/scene.js"></script>
+<script src="js/nezal/sprite.js"></script>
+<script src="js/nezal/baloon.js"></script>
+<script src="js/game/sounds.js"></script>
+
+<script src="js/game/healthSprite.js"></script>
+<script src="js/game/compositeUnitSprite.js"></script>
+<script src="js/game/city_defender_scene.js"></script>
+<script src="js/game/mapeasy1.js"></script>
+<script src="js/game/game.js"></script>
+<script src="js/game/sounds.js"></script>
+<script src="js/game/unit.js"></script>
+<script src="js/game/creep.js"></script>
+<script src="js/game/bullets.js"></script>
+<script src="js/game/rockets.js"></script>
+<script src="js/game/ghost_turret.js"></script>
+<script src="js/game/tanks.js"></script>
+<script src="js/game/plane.js"></script>
+<script src="js/game/animation.js"></script>
+<script src="js/game/super_weapon.js"></script>
+<script src="js/game/upgrade.js"></script>
+<script src="js/game/tutorial.js"></script>
+<script src="js/game/scenario.js"></script>
+  <script>		
+  $(document).observe('dom:loaded',function(){ Intro.initialize();});
+</script>
+<link type="text/css" href="css/game.css" rel="stylesheet" />
+

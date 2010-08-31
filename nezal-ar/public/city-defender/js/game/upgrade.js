@@ -27,8 +27,10 @@ var Upgrades = {
 	},
 
 	selectDefault : function(){
-		$$('#gameElements .upgrades .upgradeItem.bullets')[0].addClassName('selected');
-		Upgrades.data.selectedUpgrade = Upgrades.data['bullets']		
+		if($$('#gameElements .upgrades .upgradeItem.bullets')[0]){
+			$$('#gameElements .upgrades .upgradeItem.bullets')[0].addClassName('selected');
+			Upgrades.data.selectedUpgrade = Upgrades.data['bullets']	
+		}	
 	},
 	
 	select : function(){
@@ -40,13 +42,13 @@ var Upgrades = {
 	
 	upgrade: function(){
 		var item = Upgrades.data.selectedUpgrade
-		if(!item || game.money < item.list[1].price) return
+		if(!item.list[1]) return 
+		if(!item || game.scene.money < item.list[1].price) return
 		item.list.shift()
-		game.money -= item.list[0].price
+		game.scene.money -= item.list[0].price
 		item.affects.each(function(tower){
 			var values = game.config.towers.find(function(t){return t.category == tower}).values
 			for(p in item.list[0].effect){
-				//tower.prototype[p] = Math.round(tower.prototype[p] * item.list[0].effect[p] * 100)/100
 				if(values[p]){
 					values[p] = Math.round(values[p] * item.list[0].effect[p] * 100)/100
 					// we need to update existing towers as well
@@ -66,7 +68,7 @@ var Upgrades = {
 			var item = Upgrades.data.selectedUpgrade
 			$('currentUpgrade').className = "upgrade current active "+item.list[0].classes[0] 
 			if(item.list[1]){
-				if(game.money < item.list[1].price){
+				if(game.scene.money < item.list[1].price){
 					$('nextUpgrade').className = "upgrade next "+item.list[1].classes[0] + " off"
 				}else{
 					$('nextUpgrade').className = "upgrade next "+item.list[1].classes[0]

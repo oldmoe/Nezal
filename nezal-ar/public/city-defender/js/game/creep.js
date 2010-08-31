@@ -9,8 +9,8 @@ var Creep = Class.create(Unit, {
 	rate : 0.2, power: 2.0,
 	cannonDisplacement : [-4, 0],
 	turningPoint : [0, 0],
-	initialize : function($super,x,y,extension){
-		$super(x,y,extension)
+	initialize : function($super,x,y,scene,extension){
+		$super(x,y,scene,extension)
 		Map.grid[x][y].push(this)
 		this.initImages()
 		this.createSprites()
@@ -44,7 +44,7 @@ var Creep = Class.create(Unit, {
 		this.sprite.y = this.y
 		this.sprite.rotation = this.rotation
 		this.sprite.cannonRotation = this.cannonTheta
-		//this.hp = 100
+		if(this.baloon)this.baloon.moveTo(this.x,this.y-70)
 		this.sprite.setHp(this.hp)
 		if(this.fired){
 			this.sprite.currentFrame = 1
@@ -139,7 +139,7 @@ var Creep = Class.create(Unit, {
 		var newGridX = Math.floor(this.x / Map.pitch) 
 		var newGridY = Math.floor(this.y / Map.pitch) 
 		if(newGridX >= Map.width || newGridY >= Map.height || newGridX < 0 || newGridY < 0 ){
-			game.scene.escaped += 1
+			this.scene.escaped += 1
 			this.destroySprites()
 		}else if(this.gridX != newGridX || this.gridY != newGridY){
 			var oldArr = Map.grid[this.gridX][this.gridY]
@@ -207,15 +207,14 @@ var Creep = Class.create(Unit, {
 	},
 	die : function(){
 		var anim = new CoinsAnimation(this.x, this.y - 40)
-		game.scene.towerHealthLayer.attach(anim)
-		game.scene.objects.push(anim)
+		this.scene.towerHealthLayer.attach(anim)
+		this.scene.objects.push(anim)
 		this.destroySprites()
-		game.scene.money += this.price;
-		game.scene.stats.creepsDestroyed++
-		game.scene.score += this.maxHp
+		this.scene.money += this.price;
+		this.scene.stats.creepsDestroyed++
+		this.scene.score += this.maxHp
 	},
 	destroySprites : function(){
-	//	delete game.scene.indeces[this]
 		var cell = Map.grid[this.gridX][this.gridY];
 		cell.splice(cell.indexOf(this), 1);
 		this.sprite.destroy()

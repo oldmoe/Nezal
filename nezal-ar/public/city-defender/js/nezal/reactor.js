@@ -1,13 +1,10 @@
 var Reactor = Class.create({
 	
-	events : [],
-	
-	ticks : 0,
-	
-	running : false,
-
 	initialize : function(delay){
 		this.delay = delay || 50
+		this.events = []
+		this.ticks = 0
+		this.running = false
 	},
 	
 	pause : function(){

@@ -19,8 +19,8 @@ var Turret = Class.create(Unit, {
 	targets : 'Air &<br/>Ground',
 	facilities : 'Fires Bullets',
 	cssClass : 'tower',
-	initialize: function($super,x,y,extension){
-		$super(x,y,extension)
+	initialize: function($super,x,y,scene,extension){
+		$super(x,y,scene,extension)
 		this.initImages()
 		this.createSprites()
 		
@@ -55,7 +55,9 @@ var Turret = Class.create(Unit, {
 		this.cannonSprite.rotation = Nezal.degToRad(this.cannonTheta)
 		this.changeFireState()
 		this.healthSprite.hp = this.hp
+		this.healthSprite.maxHp = this.maxHp
 		this.rankSprite.currentFrame = this.rank
+		if(this.baloon)this.baloon.moveTo(this.x,this.y-70)
 	},
 	changeFireState: function(){
 		if(this.fired){
@@ -114,10 +116,7 @@ var Turret = Class.create(Unit, {
 	die: function(){
 		this.destroySprites()
 		Map.grid[this.gridX][this.gridY] = [];
-		if(game.selectedTurret == this){
-			game.selectedTurret = null;
-		}
-		//game.stats.towersDestroyed++;
+		this.scene.stats.towersDestroyed++;
 	},
 	destroySprites : function(){
 		this.dead = true
@@ -133,8 +132,9 @@ var DoubleTurret = Class.create(Turret, {
 	cssClass : 'doubleTower',
 	fireSound : Sounds.doubleTurret.fire,
 	firing_turn : 0,
-	initialize: function($super,x,y,extension){
-		$super(x,y,extension)
+	price : 50,
+	initialize: function($super,x,y,scene,extension){
+		$super(x,y,scene,extension)
 	},
 	initImages : function($super){
 		$super()

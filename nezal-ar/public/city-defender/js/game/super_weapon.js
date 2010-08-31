@@ -106,7 +106,7 @@ var Splash = Class.create(SuperWeapon, {
 		this.scene.creeps.sort(function(a,b){
 			return b.hp - a.hp
 		}).slice(0,10).each(function(creep){
-			self.scene.objects.push(new PatriotRocket(0, 0,  {theta: 0, targetUnit : creep, x : x, y : y, power: 2000, speed: 15}))
+			self.scene.objects.push(new PatriotRocket(0, 0, self.scene, {theta: 0, targetUnit : creep, x : x, y : y, power: 2000, speed: 15}))
 		})
 	}
 })
@@ -123,7 +123,7 @@ var Nuke = Class.create(SuperWeapon, {
 var Heal = Class.create(SuperWeapon, {
 	action : function(){
 		var self = this
-		this.scene.turrets.each(function(tower){
+		self.scene.turrets.each(function(tower){
 			tower.hp = tower.maxHp
 			var anim = new HealAnimation(tower.x, tower.y - 43)
 			self.scene.objects.push(anim)
@@ -133,17 +133,20 @@ var Heal = Class.create(SuperWeapon, {
 })
 var Hyper = Class.create(SuperWeapon, {
 	action : function(){
+		var self = this
 		var hyper = function(tower){
-			tower.rate *= game.scene.superWeapons.hyper.factor;
+			tower.rate *= self.scene.superWeapons.hyper.factor;
 		}
 		this.scene.turrets.each(hyper)
-		var self = this
 		this.scene.push(30000, function(){self.unHyper();})
+		this.scene.towerMutators.push({name : 'hyper', action : hyper})
 	},
 	unHyper : function(){
-		this.scene.turrets.each(function(tower){
-			tower.rate /= game.scene.superWeapons.hyper.factor;
+		var self = this
+		self.scene.turrets.each(function(tower){
+			tower.rate /= self.scene.superWeapons.hyper.factor;
 		});
 		var index = -1
+		this.scene.towerMutators.splice(index, 1)
 	}
 })

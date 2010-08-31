@@ -75,6 +75,34 @@ var HealAnimation = Class.create(Animation, {
  	} 	
 })
 
+var ArrowAnimation = Class.create(Animation, {
+	dx : 0,
+	dy : 0,
+	increment : 0,
+	initImages : function(){
+		this.frames = Loader.animations.arrow
+ 	},
+	tick : function(){
+		if(this.increment == 60){this.increment = 0;this.x-=60}
+			this.x +=3
+			this.increment+=3
+			this.currentFrame = 1 
+	}
+})
+var VerticalArrowAnimation = Class.create(Animation, {
+	dx : 0,
+	dy : 0,
+	increment : 0,
+	initImages : function(){
+		this.frames = Loader.animations.verticalArrow
+ 	},
+	tick : function(){
+		if(this.increment == 60){this.increment = 0;this.y-=60}
+			this.y +=3
+			this.increment+=3
+			this.currentFrame = 1 
+	}
+})
 
 var WeakAnimation = Class.create(Animation, {
 	type: 'weak',

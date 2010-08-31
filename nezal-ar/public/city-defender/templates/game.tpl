@@ -1,7 +1,4 @@
-<div id="preload" style="display:none">
-			<img src="/city-defender/images/background/interface.png" />
-			<img src="/city-defender/images/background/loading_bar_down.png" />
-			<img src="/city-defender/images/background/loading_bar_up.png" />
+	<div id="preload" style="display:none">
 		</div>
 		<textarea id='statsTemplate' style="display:none">
 		Score : ${game.scene.score}
@@ -40,13 +37,25 @@
 			</div>
 		</table>
 		</textarea>
-		<style>#gameContainer{ -moz-transform : scale(1) }</style>
-		<script>window.scale = 1.0</script>
-		<input type="button" value="-" onclick="window.scale -= 0.1; $('gameContainer').style.MozTransform = 'scale('+window.scale+')'"/>
-		<input type="button" value="+" onclick="window.scale += 0.1; $('gameContainer').style.MozTransform = 'scale('+window.scale+')'"/>
 		<div id="gameContainer">
+			<div id="modalWindow" style="display:none">
+				<div id="character">
+				</div>
+				<div class="content" style="overflow:auto"> 
+				
+				</div>
+				<div id = "ok">
+				<img src="images/tutorial/ok.png"></img>
+				</div>
+			</div>
+			<div id= "popup">
+					<img src='images/background/pop_up.png'/>
+					<div id = "content"></div>
+					<div id = "rankImg"> </div>
+					<div id = "popupClose" onclick = "$('popup').hide()"> </div>
+			</div>
 			<div id="canvasContainer" style="display:none">
-				<img src='images/background/path.png' />
+				<canvas id="gameBackground" width="736" height="480"></canvas>
 				<canvas id="gameForeground" width="736" height="480" onmousemove = "movement(event)"></canvas>
 			</div>
 			<div id="gameElements" style="display:none">
@@ -59,19 +68,12 @@
 					<div id="waves" class="waves">0/0</div>
 				</div>
 				<div class="fps"></div>
-				<div class="rank"></div>
+				<div class="rank" id = "rank"></div>
+				<div class="rankName" id = "rankName">COL</div>
 				<div class="start"></div>
+				<div class = "startText"> </div>
 				<div class="towers">
-					<div class="tower1" title="Basic"></div>
-					<div class="tower2" title="Double"></div>
-					<div class="rocketLauncher" title="Rocket Launcher"></div>
-					<div class="patriot" title="Patriot Air Defense"></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
+				
 				</div>
 				<div class="upgrades">
 					<div class="upgradesBar">
@@ -84,14 +86,6 @@
 						<div class="arrow"></div>
 					</div>
 					<div class="upgradeItems">
-							<div id="bullets" class="upgradeItem bullets"></div>
-							<div id="rockets" class="upgradeItem rockets"></div>
-							<div id="shields" class="upgradeItem shields"></div>
-							<div class="upgradeItem"></div>
-							<div class="upgradeItem"></div>
-							<div class="upgradeItem"></div>
-							<div class="upgradeItem"></div>
-							<div class="upgradeItem"></div>
 					</div>
 				</div>
 				<div id="towerInfo" class="towerInfo">
@@ -109,44 +103,26 @@
 				</div>
 
 				<div class="superWeapons">
-					<div class="splash">
-						<div id="splash"></div>
-					</div>
-					<div class="heal">
-						<div id="heal"></div>
-					</div>
-					<div class="hyper">
-						<div id="hyper"></div>
-					</div>
-					<div class="weak">
-						<div id="weak"></div>
-					</div>
-					<div class="nuke">
-						<div id="nuke"></div>
-					</div>
 				</div>
 				<div class="superWeaponsOff">
-					<div class="splash">
-					</div>
-					<div class="heal">
-					</div>
-					<div class="hyper">
-					</div>
-					<div class="weak">
-					</div>
-					<div class="nuke">
-					</div>
-				</div>			</div>
+				</div>			
+			</div>
 			<canvas id="droppingGround" width="672" height="480"></canvas>
 			<div id="static" style="display:none"></div>
 			<div id="result" style="display:none">
 				<pre id="stats"></pre>
-				<div id="playAgain"></div>
-				<div id="exit"></div>				
+				<div id="playAgain">
+				</div>
+				<div id="exit">
+				</div>				
 			</div>
 			<div id="splashScreen" style="display:none">
+				<img src="images/background/interface.png"></img>
 				<div class="loading_bar_bg">
-					<div id="loading_bar"></div>
+					<img src="images/background/loading_bar_down.png"></img>
+					<div id="loading_bar">
+					<img src="images/background/loading_bar_up.png"></img>s
+					</div>
 				</div>
 			</div>
 			<div id="waitScreen"></div>

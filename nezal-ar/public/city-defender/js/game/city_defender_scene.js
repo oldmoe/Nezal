@@ -4,11 +4,16 @@ var CityDefenderScene = Class.create(Scene, {
 	objects : [],
 	towerMutators : [],
 	creepMutators : [],
+	fistCreep : false,
+	startGame : false,
+	firstHit : false,
 	initialize : function($super,config,delay,baseCtx,upperCtx){
 		$super(delay);
 		this.config = config
 		this.baseCtx = baseCtx;
 		this.upperCtx = upperCtx;
+		this.scenario = new Scenario(this)
+		this.scenario.start()
 		this.nuke = new Nuke(this, {count: 2, type:'nuke'})
 		this.heal = new Heal(this, {count: 2, type:'heal'})
 		this.weak = new Weak(this, {count: 2, type:'weak'})
@@ -18,8 +23,6 @@ var CityDefenderScene = Class.create(Scene, {
 		this.selectedTurret = null
 		this.templates['towerInfo'] = TrimPath.parseTemplate($('towerInfoTemplate').value) 
 		this.templates['stats'] = TrimPath.parseTemplate($('statsTemplate').value) 
-		this.renderData()
-		this.checkStatus()
 	},
 	init : function(){
 		this.skipFrames = 0
@@ -37,6 +40,9 @@ var CityDefenderScene = Class.create(Scene, {
 		this.layers.push(this.towerCannonLayer)
 		this.layers.push(this.towerHealthLayer)
 		this.layers.push(this.rankLayer)
+		this.renderData()
+		this.checkStatus()
+
 		return this
 	},
 	addTurret : function(turret){
@@ -52,8 +58,12 @@ var CityDefenderScene = Class.create(Scene, {
 	},
 	addCreep : function(creep){
 		if(creep){
+			if(!this.firstCreep){
+				if(this.turrets[0])this.scenario.notify({name:"startGame", method: true, unit:this.turrets[0]})
+				this.firstCreep = true
+				this.scenario.notify({name:"firstTank", unit:creep})
+			}
 			this.creepsLayer.attach(creep.sprite)
-			this.creepsLayer.attach(creep.baloonSprite)
 			this.creeps.push(creep)	
 		}
 		return this
@@ -88,11 +98,10 @@ var CityDefenderScene = Class.create(Scene, {
 		$('lives').innerHTML = this.maxEscaped - this.escaped;
 		$('score').innerHTML = this.score;
 		//$$('#gameElements .fps').first().innerHTML = "FPS: "+this.fps;
-		$('splash').innerHTML = this.splash.count
-		$('heal').innerHTML = this.heal.count
-		$('nuke').innerHTML = this.nuke.count
-		$('weak').innerHTML = this.weak.count
-		$('hyper').innerHTML = this.hyper.count
+		var self = this
+		this.config.superWeapons.each(function(weapon){
+			$(weapon).innerHTML = self[weapon].count
+		})
 		$('waves').innerHTML = this.wave +'/'+this.wavesCount;
 		if(this.selectedTurret){
 			$('towerInfo').innerHTML = this.templates['towerInfo'].process({unit: this.selectedTurret})
@@ -135,7 +144,9 @@ var CityDefenderScene = Class.create(Scene, {
 		startDev.observe('click', function(){self.pause()})
 	},
 	renderPause: function(){
+		console.log('pausing')
 		var pauseDev = $$('#gameElements .resumed').first()
+		$$(".startText").first().innerHTML = T.resume
 		pauseDev.removeClassName('resumed')
 		pauseDev.addClassName('paused')
 		pauseDev.stopObserving('click')
@@ -144,6 +155,7 @@ var CityDefenderScene = Class.create(Scene, {
 	},
 	renderResume: function(){
 		var resumeDev = $$('#gameElements .paused').first()
+		$$(".startText").first().innerHTML = T.pause
 		resumeDev.removeClassName('paused')
 		resumeDev.addClassName('resumed')
 		resumeDev.stopObserving('click')
@@ -238,10 +250,11 @@ var CityDefenderScene = Class.create(Scene, {
 		}
 		var self = this
 		wave.creeps.each(function(creep){
+			var creepCat = eval(creep.category)
 			for(var i=0; i < creep.count; i++){
 				self.creepsCount ++
 				var entry = Map.entry[Math.round(Math.random()*(Map.entry.length - 1))]
-				if(creep.category == Plane || creep.category == RedPlane){
+				if(creepCat == Plane || creepCat == RedPlane){
 					creep.theta = theta;
 					self.issueCreep(creep, 
 							(theta == 90 || theta == 270) ? Math.round(Math.random()* (Map.width - 1)) : x,
@@ -250,10 +263,10 @@ var CityDefenderScene = Class.create(Scene, {
 				}else{
 					self.issueCreep(creep,  entry[0], entry[1], delay)
 				}
-				delay += 70*(32 / creep.category.prototype.speed) + 10//Math.ceil( 64 / Creep.speed)
+				delay += 70*(32 / creepCat.prototype.speed) + 10//Math.ceil( 64 / Creep.speed)
 				self.waitingCreeps++;
 			}
-			self.push(delay + (32 / creep.category.prototype.speed), function(){
+			self.push(delay + (32 / creepCat.prototype.speed), function(){
 			self.wavePending = false;
 			})
 		})
@@ -274,11 +287,12 @@ var CityDefenderScene = Class.create(Scene, {
 	},
 	issueCreep : function(creep, x , y, delay){
 		var self = this
+		var creepCat = eval(creep.category)
 		this.push(delay, function()
 		{
 			try{
-				var obj = new creep.category(x, y,self,creep.values)
-				if(creep.category == Plane || creep.category == RedPlane){
+				var obj = new creepCat(x, y,self,creep.values)
+				if(creepCat == Plane || creepCat == RedPlane){
 					self.addPlane(obj)
 				}
 				else{

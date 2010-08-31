@@ -1,6 +1,6 @@
 var Unit = Class.create({
 //	_oldRenders : [],
-	initialize: function(x, y, extension){
+	initialize: function(x, y,scene, extension){
 		this.gridX = x
 		this.gridY = y
 		this.x = Map.pitch * (x + 0.5)
@@ -8,8 +8,16 @@ var Unit = Class.create({
 		if(extension){
 			Object.extend(this, extension)
 		}
+		this.scene = scene
 		this.maxHp = this.hp
 		return this
+	},
+	createBaloon : function(){
+		this.baloon = new Baloon()
+		this.scene.creepsLayer.attach(this.baloon)
+	},
+	destroyBaloon : function(){
+		this.baloon.destroy()
 	},
 	
 	target: function(){
@@ -44,6 +52,10 @@ var Unit = Class.create({
 	takeHit: function(power){
 		if(this.dead) return
 		this.hp -= power
+		if(!this.scene.firstHit){
+			this.scene.firstHit = true
+			this.scene.scenario.notify({name:"firstHit",unit:null})
+		}
 		if(this.hp <= 0 ){
 			this.dead = true; 
 			this.die(); 
