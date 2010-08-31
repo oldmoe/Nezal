@@ -1,9 +1,18 @@
 var GameConfigs = {
   level: 0, 
   campaign : 'current',
-  missionName : 'cairo'
+  missionPath : 'cairo', 
+  waves : [],
+  map : [], 
+  mapEntry : [ [0,2], [0,3] ], 
+  towers : [],
+  superWeapons : [],
+  upgrades : []
 }
-var Configs = {
+
+var Configs = GameConfigs;
+
+var PathConfigs = {
   template_path : "templates/intro/"
 }
 
@@ -20,12 +29,12 @@ var Intro = {
               "upgrades"
             ],
     templates : {
-              challenges : [Configs.template_path + "challenges.tpl", 0],
-              campaign : [Configs.template_path + "campaign.tpl", 0],
-              mission : [Configs.template_path + "mission.tpl", 0],
-              towers : [Configs.template_path + "towers.tpl", 0],
-              weapons : [Configs.template_path + "super_weapons.tpl", 0],
-              upgrades : [Configs.template_path + "upgrades.tpl", 0],
+              challenges : [PathConfigs.template_path + "challenges.tpl", 0],
+              campaign : [PathConfigs.template_path + "campaign.tpl", 0],
+              mission : [PathConfigs.template_path + "mission.tpl", 0],
+              towers : [PathConfigs.template_path + "towers.tpl", 0],
+              weapons : [PathConfigs.template_path + "super_weapons.tpl", 0],
+              upgrades : [PathConfigs.template_path + "upgrades.tpl", 0],
               game : [ "templates/game.tpl", 0 ]
             },
     images : {
@@ -154,7 +163,7 @@ var Intro = {
     },
     
     missionPath : function(){
-        return "/" + GameConfigs.missionName;
+        return "/" + GameConfigs.missionPath;
     },
     
     /* Convert returned hash of objects into an array of it labels 
@@ -467,9 +476,11 @@ var Intro = {
                             parameters: { 'type' : 'game_profile', 'data' : Object.toJSON({ 'type' : type, 'item_id' : itemid, 'event': 'unlock' }) },
                             onSuccess : function(t, json){
                                 var data = JSON.parse(t.responseText);
+                                var addedItems = Intro.userData["metadata"]['added'];
                                 Intro.gameData = JSON.parse(data['game_data']['metadata']);
                                 Intro.userData = data['user_data'];
                                 Intro.userData["metadata"] = JSON.parse(data['user_data']['metadata']);
+                                Intro.userData["metadata"]['added'] = addedItems;
                                 Intro.select(Intro.pages[type]['index']);
                                 Intro.disablePauseScreen();
                             }
@@ -492,6 +503,17 @@ var Intro = {
                       callback();
                   }
               });
+    },
+    
+    setupGameConfigs : function(){
+        var missions = Intro.campaignInfo.camp_data.metadata
+        var mission = missions.find(function(mission){ if ( GameConfigs.missionPath == mission['path'] ) return true; })
+        console.log(mission)
+        GameConfigs.map = Intro.campaignInfo.user_data.metadata.missions[mission['order'] - 1  ]['map'];
+        GameConfigs.waves = Intro.campaignInfo.user_data.metadata.missions[mission['order'] - 1  ]['waves'];
+        GameConfigs.towers = Intro.userData.metadata.added.towers;
+        GameConfigs.superWeapons = Intro.userData.metadata.added.weapons;
+        GameConfigs.upgrades = Intro.userData.metadata.added.upgrades;
     },
     
     enablePauseScreen : function() {
@@ -559,6 +581,7 @@ var Intro = {
 	  },
 	  
 	  finish: function(){
+	      Intro.setupGameConfigs();
         var callback = function() {$("intro").hide();
                                         city_defender_start();
 	                                      $('gameStart').show();

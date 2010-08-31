@@ -4,35 +4,32 @@
 <!-- <script src="http://connect.facebook.net/en_US/all.js"></script> -->
 
 <script src="http://connect.facebook.net/en_US/all.js"></script>
-<script src="js/facebook.js"></script>
+<script src="js/facebook.js" type="text/javascript"></script>
 
-<script src="js/base/prototype.js"></script>
-<script src="js/base/effects.js"></script>
-<script src="js/base/sound.js"></script>
-<script src="js/base/template.js"></script>
-<script src="js/base/dragdrop.js"></script>
-<script src="js/base/excanvas.compiled.js"></script>
-<script src="js/base/slider.js"></script>
-<script src="/javascripts/effects.js" type="text/javascript"></script>
+<script src="js/base/prototype.js" type="text/javascript"></script>
+<script src="js/base/effects.js" type="text/javascript"></script>
+<script src="js/base/sound.js" type="text/javascript"></script>
+<script src="js/base/template.js" type="text/javascript"></script>
+<script src="js/base/dragdrop.js" type="text/javascript"></script>
+<script src="js/base/excanvas.compiled.js" type="text/javascript"></script>
+<script src="js/base/slider.js" type="text/javascript"></script>
 <script src="js/carousel.js" type="text/javascript"></script>
 <script src="js/game/image_loader.js" type="text/javascript"></script>
-<script src="js/game/intro/game_configs.js" type="text/javascript"></script>
 <script src="js/game/configs/creep_config.js" type="text/javascript"></script>
 <script src="js/game/configs/tower_config.js" type="text/javascript"></script>
 <script src="js/game/configs/super_weapon_config.js" type="text/javascript"></script>
 <script src="js/game/configs/upgrade_config.js" type="text/javascript"></script>
-<script src="js/game/intro/intro.js" type="text/javascript"></script>
 <script src="js/game/intro/challenge_selector.js" type="text/javascript"></script>
+<script src="js/game/intro/intro.js" type="text/javascript"></script>
 
 <body>
 
 <div id="game">
-
-  <div id="pause" style="display : none;">
-    <img id="inProgress" src="images/background/ajax-loader.gif"/>
-  </div>
-
   <div id="intro">
+    
+    <div id="pause" style="display : none;">
+      <img id="inProgress" src="images/background/ajax-loader.gif"/>
+    </div>
     
     <div id="levelSelection" style="display : none;">
       <img id="levelsBackground" src="images/intro/level-selection.png"/>
@@ -55,17 +52,17 @@
 
     <div id="marketPlace" style="display : none;">
         <div id="marketTabs">
-            <div id="towersTab" class=" towersOff" onclick="Intro.select(3);">
-                <img src="images/intro/market/towers-on.png"/>
+            <div id="towersTab" class="towersOff" onclick="Intro.select(3);">
+                <img src=""/>
             </div>
             <div id="weaponsTab" class="weaponsOff"   onclick="Intro.select(4);">
-                <img src="images/intro/market/weapons-off.png"/>
+                <img src=""/>
             </div>
             <div id="upgradesTab" class="upgradesOff" onclick="Intro.select(5);"> 
-                <img src="images/intro/market/upgrades-off.png"/>
+                <img src=""/>
             </div>
             <div id="bar">
-              <img src="images/intro/market/towers-bar.png" style=""/>
+              <img src="" style=""/>
             </div>
         </div>
         
@@ -122,7 +119,7 @@
 <script>		
   FBConnect.init(function(){
                       Intro.initialize();
-                  });
+                });
 </script>
 <link type="text/css" href="css/game.css" rel="stylesheet" />
 
