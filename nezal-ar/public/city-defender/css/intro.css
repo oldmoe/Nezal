@@ -275,7 +275,6 @@ body {
 }
 #mission #creepBar
 {
-  background:url("../images/intro/city/loading-background.png") no-repeat scroll 0 0 transparent;
   height:28px;
   left:72px;
   position:absolute;

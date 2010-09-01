@@ -80,18 +80,7 @@ class GamesController < ApplicationController
   end
     
   get '/:game_name' do 
-    puts "not getting the metadata"
-    begin
-      layout = "#{params[:game_name]}/show".to_sym
-      @game_erb = "#{params[:game_name]}/_#{params[:game_name]}".to_sym
-      @user_erb = "#{params[:game_name]}/_user".to_sym
-      LOGGER.debug "END OF REQUEST"
-  #      erb layout , {:layout => false}    
-      ''
-    rescue Exception => e
-      LOGGER.error e
-      LOGGER.debug "END OF REQUEST WITH EXCEPTION"
-    end
+    File.read(File.join( 'public', @app_configs["game_name"], 'index.html'))
   end
     
 end
