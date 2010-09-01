@@ -39,7 +39,7 @@ var GameData = {
             "exp" : $$("#towers #addTower #exp")[0].value,
             "unlocked" : $$("#towers #addTower #unlocked")[0].checked
         }
-        if( !(tower["name"]) || isNaN(tower["cost"]) || isNaN(tower["exp"]) )
+        if( !(tower["name"]) || !(tower["cost"]) || !(tower["exp"]) || isNaN(tower["cost"]) || isNaN(tower["exp"]) )
         {
           alert("Name must exist & Cost and Experience points must be integers");
           return;
@@ -64,7 +64,7 @@ var GameData = {
             "exp" : $$("#weapons #addWeapon #exp")[0].value,
             "unlocked" : $$("#weapons #addWeapon #unlocked")[0].checked
         }
-        if( !(weapon["name"]) || isNaN(weapon["cost"]) || isNaN(weapon["exp"]))
+        if( !(weapon["name"]) || !(weapon["cost"]) || !(weapon["exp"]) || isNaN(weapon["cost"]) || isNaN(weapon["exp"]))
         {
           alert("Name must exist & Cost and Experience points must be integers");
           return;
@@ -89,7 +89,7 @@ var GameData = {
             "exp" : $$("#upgrades #addUpgrade #exp")[0].value,
             "unlocked" : $$("#upgrades #addUpgrade #unlocked")[0].checked
         }
-        if( !(upgrade["name"]) || isNaN(upgrade["cost"]) || isNaN(upgrade["exp"]))
+        if( !(upgrade["name"]) || !(upgrade["cost"]) || !(upgrade["exp"]) || isNaN(upgrade["cost"]) || isNaN(upgrade["exp"]))
         {
           alert("Name must exist & Cost and Experience points must be integers");
           return;

@@ -11,14 +11,14 @@
   </div>
   
   <div id="game_name">
-    <%=@game.name%>
+    <a href="/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/metadata/edit" >
+      <%=@game.name%>
+    </a>
   </div>
   <div id="game_info">
     <LABEL for="game_description" class="label"> Description </LABEL>
     <div id="game_description">
-      <a href="/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/metadata/edit" >
         <%=@game.description%>
-      </a>
     </div>
   </div>
   <div id="game_ranks">
