@@ -10,7 +10,7 @@ var GameConfigs = {
   upgrades : []
 }
 
-var Configs = GameConfigs;
+var Config = GameConfigs;
 
 var PathConfigs = {
   template_path : "templates/intro/"
@@ -215,49 +215,40 @@ var Intro = {
         },
         mission : {
             onSelect : function(){
-                new Ajax.Request( Intro.campPath() + Intro.missionPath() + "/config.js" ,
-                                {method:'get', 
-                                      onComplete: function(t, json){
-                                          try{
-                                          }catch(e){
-                                            console.log(e)
-                                          }
-                                          window.Config = Config;         
-                                          var creepInfo = [];
-                                          window.Config['waves'].each( function(element) { 
-                                                              for( var i =0; i< element['creeps'].length; i++ )
-                                                              {
-                                                                  creepInfo = creepInfo.concat([element['creeps'][i]['category'].prototype.name]);
-                                                              }
-                                                          })
-                                          ChallengeSelector.missionCreeps = creepInfo.uniq();
-                                          new Ajax.Request( Intro.campPath() + Intro.missionPath() + "/mission.info" ,
-                                              {method:'get', 
-                                                onComplete: function(t, json){
-                                                    ChallengeSelector.mission = JSON.parse(t.responseText);
-                                                    ChallengeSelector.mission.creeps = ChallengeSelector.missionCreeps;
-                                                    var images = [];
-                                                    Intro.images.mission.each(function(image){ images.push(image) });
-                                                    images.push( "../../" + Intro.campPath() + Intro.missionPath() + "/images/city.png");
-                                                    images.push( "../../" + Intro.campPath() + Intro.missionPath() + "/images/map.png");   
-                                                    for (var creep in CreepConfig)
-                                                    {
-                                                        images.push( "creeps/" + CreepConfig[creep]['image']);
-                                                    }
-                                                    Intro.loader.load( [{ images: images, path : Intro.images.path, store: 'intro'}],
-                                                                  { onFinish : function() {
-                                                                           $('mission').innerHTML = Intro.templates.mission[1].process({ 
-                                                                                                  "city" : ChallengeSelector.mission,
-                                                                                                  "path" : Intro.campPath() + Intro.missionPath(),
-                                                                                                  "creepConfig" : CreepConfig }); 
-                                                                           Intro.creepsCarousel = new Carousel("creeps-scroll");
-                                                                           Intro.creepsCarousel.displayCount = 4;
-                                                                           Intro.show();
-                                                                      } });
-                                    	          }
-                          	                })
-                      	              }
-                	              });
+                Intro.setupGameConfigs();
+                var creepInfo = [];
+                GameConfigs['waves'].each( function(element) { 
+                                    for( var i =0; i< element.length; i++ )
+                                    {
+                                        creepInfo = creepInfo.concat([element[i]['category']]);
+                                    }
+                                })
+                ChallengeSelector.missionCreeps = creepInfo.uniq();
+                new Ajax.Request( Intro.campPath() + Intro.missionPath() + "/mission.info" ,
+                    {method:'get', 
+                      onComplete: function(t, json){
+                          ChallengeSelector.mission = JSON.parse(t.responseText);
+                          ChallengeSelector.mission.creeps = ChallengeSelector.missionCreeps;
+                          var images = [];
+                          Intro.images.mission.each(function(image){ images.push(image) });
+                          images.push( "../../" + Intro.campPath() + Intro.missionPath() + "/images/city.png");
+                          images.push( "../../" + Intro.campPath() + Intro.missionPath() + "/images/map.png");   
+                          for (var creep in CreepConfig)
+                          {
+                              images.push( "creeps/" + CreepConfig[creep]['image']);
+                          }
+                          Intro.loader.load( [{ images: images, path : Intro.images.path, store: 'intro'}],
+                                        { onFinish : function() {
+                                                 $('mission').innerHTML = Intro.templates.mission[1].process({ 
+                                                                        "city" : ChallengeSelector.mission,
+                                                                        "path" : Intro.campPath() + Intro.missionPath(),
+                                                                        "creepConfig" : CreepConfig }); 
+                                                 Intro.creepsCarousel = new Carousel("creeps-scroll");
+                                                 Intro.creepsCarousel.displayCount = 4;
+                                                 Intro.show();
+                                            } });
+          	          }
+	                });
             },
             setFloatBgInfo : function(element){
                   $$("#mission #floatBg div span")[0].innerHTML = CreepConfig[element.getAttribute("creepid")].name;
