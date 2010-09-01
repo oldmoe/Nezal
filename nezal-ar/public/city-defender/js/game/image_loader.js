@@ -93,10 +93,10 @@ var imageNames = ['humvee_body.png','humvee_tower.png','humvee_tower_in_action.p
 'patriot_launcher.png','patriot_launcher_in_action_right.png','patriot_launcher_in_action_left.png','patriot_rocket.png','rocket_in_action.png',
 'weak.png','rocket_launcher.png','rocket.png']
 
-var bgImages = ['l_shape.png', 'win.png','lose.png','path.png','play_again.png','exit.png','pause.png','start.png','resume.png','path.png',
+var bgImages = ['l_shape.png', 'win.png','lose.png','path.png','play_again.png','exit.png','pause.png','start.png','resume.png',
 'snow.gif','heal_button.png','heal_button_off.png','splash_button.png','splash_button_off.png','nuke_button.png','nuke_button_off.png',
-'hyper_button.png','hyper_button_off.png','weak_button.png','weak_button_off.png',
-'mystry_button.png','status_bar.png']
+'hyper_button.png','hyper_button_off.png','weak_button.png','weak_button_off.png','Turret_button.png','DoubleTurret_button.png','Patriot_button.png',
+'RocketLauncher_button.png','mystry_button.png','status_bar.png']
 
 var upgradeImages = ['arrow.png','block_upgrade.png', 'bullets_upgrade_1.png','bullets_upgrade_2.png','bullets_upgrade_2_off.png',
               'rockets_upgrade_1.png','rockets_upgrade_2.png','rockets_upgrade_2_off.png',
@@ -114,6 +114,7 @@ function imageNumbers(length){
 
 }
 function onFinish(){
+	console.log('finsihed')
 	$('gameElements').style.visibility = 'visible'
 	$('canvasContainer').style.visibility = 'visible'
 	console.log('finished')
@@ -139,7 +140,7 @@ function loadGameImages(loader){
 		{images: bgImages, path: 'images/background/', store: 'background'},
 		{images: [rank+'.png'], path: 'images/user/', store: 'rank'},
 		{images: upgradeImages, path: 'images/background/', store: 'upgrades'}
-		], {onProgress: function(progress){$('loading_bar').style.width = ''+progress+'%';}, onFinish : onFinish })
+		], {onProgress: function(progress){$('loading_bar').style.width = ''+progress+'%';console.log(loader.loadedResources,loader.currentLength)}, onFinish : onFinish })
 		
 	}catch(e){console.log(e)}
 }

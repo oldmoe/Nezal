@@ -1,8 +1,13 @@
 var ghostTurretFeatures = {			
 	validate : function(x, y, tower){			
 		this.valid = true
-		if(Map.grid[x][y].tower || Map.bgGrid[x][y] == 1 || game.scene.money <tower.prototype.price){
-			this.valid = false
+		try{
+			if(Map.grid[x][y].tower || Map.bgGrid[x][y] == 1 || game.scene.money <tower.prototype.price){
+				this.valid = false
+			}
+		}
+		catch(e){
+		  console.log("error in map in ",x,y,e)
 		}
 	},
 	checkMap : function(x, y){

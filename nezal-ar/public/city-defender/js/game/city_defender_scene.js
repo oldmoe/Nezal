@@ -100,6 +100,7 @@ var CityDefenderScene = Class.create(Scene, {
 		//$$('#gameElements .fps').first().innerHTML = "FPS: "+this.fps;
 		var self = this
 		this.config.superWeapons.each(function(weapon){
+			weapon = weapon.toLowerCase()
 			$(weapon).innerHTML = self[weapon].count
 		})
 		$('waves').innerHTML = this.wave +'/'+this.wavesCount;
@@ -139,28 +140,28 @@ var CityDefenderScene = Class.create(Scene, {
 	renderStartAttack: function(){
 		var startDev = $$('#gameElements .start').first()
 		startDev.addClassName('resumed')
+		$$(".startText").first().innerHTML = T.pause
 		startDev.stopObserving('click')
 		var self = this
-		startDev.observe('click', function(){self.pause()})
+		$$(".startText").first().observe('click', function(){self.pause()})
 	},
 	renderPause: function(){
-		console.log('pausing')
 		var pauseDev = $$('#gameElements .resumed').first()
 		$$(".startText").first().innerHTML = T.resume
 		pauseDev.removeClassName('resumed')
 		pauseDev.addClassName('paused')
-		pauseDev.stopObserving('click')
+		$$(".startText").first().stopObserving('click')
 		var self = this
-		pauseDev.observe('click', function(){self.resume()})	
+		$$(".startText").first().observe('click', function(){self.resume()})	
 	},
 	renderResume: function(){
 		var resumeDev = $$('#gameElements .paused').first()
 		$$(".startText").first().innerHTML = T.pause
 		resumeDev.removeClassName('paused')
 		resumeDev.addClassName('resumed')
-		resumeDev.stopObserving('click')
+		$$(".startText").first().stopObserving('click')
 		var self = this
-		resumeDev.observe('click', function(){self.pause()})
+		$$(".startText").first().observe('click', function(){self.pause()})
 	},
 	displayStats : function(){
 		if(this.statText){
@@ -249,7 +250,7 @@ var CityDefenderScene = Class.create(Scene, {
 			y = Map.height - 1
 		}
 		var self = this
-		wave.creeps.each(function(creep){
+		wave.each(function(creep){
 			var creepCat = eval(creep.category)
 			for(var i=0; i < creep.count; i++){
 				self.creepsCount ++

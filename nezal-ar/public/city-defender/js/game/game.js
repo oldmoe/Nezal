@@ -36,6 +36,7 @@ var Game = Class.create({
 			$$(".towers").first().appendChild(div)
 		})
 		Config.superWeapons.each(function(weapon){
+			weapon = weapon.toLowerCase();
 			var div = document.createElement("div");
 			div.setAttribute('class',weapon);
 			$$(".superWeapons").first().appendChild(div)
@@ -53,44 +54,31 @@ var Game = Class.create({
 			div.setAttribute('id',upgrade);
 			$$(".upgradeItems").first().appendChild(div)
 		})
-		var img = document.createElement("IMG");
-		img.src = "images/background/start.png";
-		$$('.start').first().appendChild(img)
-		var img2 = document.createElement("IMG");
-		img2.src = "images/background/l_shape.png"
-		$('gameElements').appendChild(img2)
-		var img3 = document.createElement("IMG");
-		img3.src='images/background/path.png'
-		$('canvasContainer').appendChild(img3)
+
+		$$('.start').first().appendChild(Loader.images.background['start.png'])
+
+		$('gameElements').appendChild(Loader.images.background['l_shape.png'])
+		$('canvasContainer').appendChild(Loader.images.background['path.png'])
 		Config.towers.each(function(turret){ 
-			var img4 = document.createElement("IMG");
-			img4.src='images/background/'+turret+'_button.png'
-			$$('.'+turret).first().appendChild(img4)
+			$$('.'+turret).first().appendChild(Loader.images.background[turret+'_button.png'])
 		})
 	
 		var img8 = document.createElement("IMG");
 		img8.src='images/tutorial/character.png'
 		$('character').appendChild(img8)
 		var img9 = document.createElement("IMG");
-		img9.src='images/background/play_again.png'
-		$('playAgain').appendChild(img9)
-		var img10 = document.createElement("IMG");
-		img10.src='images/background/exit.png'
-		$('exit').appendChild(img10)
+		$('playAgain').appendChild(Loader.images.background['play_again.png'])
+		$('exit').appendChild(Loader.images.background['exit.png'])
 		
 		$$('#gameElements .superWeapons div').each(function(div){ 
 			if(div.className != ''){
-			var img = document.createElement("IMG");
-			img.src = 'images/background/'+div.className+'_button.png'
-			div.appendChild(img)
+			div.appendChild(Loader.images.background[div.className+'_button.png'])
 			}
 		})
 		
 		$$('#gameElements .superWeaponsOff div').each(function(div){ 
 			if(div.className != ''){
-			var img = document.createElement("IMG");
-			img.src = 'images/background/'+div.className+'_button_off.png'
-			div.appendChild(img)
+			div.appendChild(Loader.images.background[div.className+'_button_off.png'])
 			}
 		})
 	

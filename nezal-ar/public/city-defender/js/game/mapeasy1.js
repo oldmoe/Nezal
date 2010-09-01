@@ -31,9 +31,8 @@ var Map = {
 	],
 	entry : [[0,2],[0,3]],
 	init : function(){
-		this.tiles[0].src = 'background/tiles/grass-texture (Custom).jpg'
-		this.tiles[1].src = 'background/tiles/desert-texture (Custom).jpg'
 		for(var i = 0; i < this.width; i++){
+			console.log("i=",i)
 			this.grid[i] = []
 			for(var j = 0; j< this.height; j++){
 				this.grid[i][j] = []
