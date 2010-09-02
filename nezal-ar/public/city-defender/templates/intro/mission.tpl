@@ -7,7 +7,7 @@
       :
       <span class="desc">   </span>
     </div>
-    <div class="skelaton">
+    <div class="skeleton">
       <img src=""></img>
     </div>
   </div>

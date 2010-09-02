@@ -128,16 +128,15 @@ body {
 #campaign .camp-details
 {
   height:200px;
-  left:150px;
+  left:100px;
   position:absolute;
   top:75px;
   width:270px;
 }
 #campaign .name
 {
-  color:#550000;
+  color:#Fac200;
   font-size:18px;
-  text-align:center;
   text-transform:uppercase;
   padding-bottom : 10px;
 }
@@ -154,12 +153,36 @@ body {
   top:50px;
   left:440px;
 }
-
+#campaign #missions
+{
+  left:80px;
+  position:absolute;
+  top:280px;
+}
+#campaign .mission
+{
+  float : left;
+  position : relative;
+}
+#campaign .mission .missionName
+{
+  position:absolute;
+  text-align:center;
+  top:160px;
+  width:100%;
+}
 #
 /* Mission Info Page */
 #mission
 {
 /*  background : url("../images/intro/city/city-info.png") no-repeat scroll 0 0 transparent;*/
+}
+#creeps-scroll ul li img {
+  padding-top: 7px;
+}
+#creeps-scroll ul li img:hover {
+  opacity: 0.7;
+  cursor : pointer;
 }
 #mission #cityName
 {
@@ -302,13 +325,12 @@ body {
 }
 #mission #floatBg .content
 {
-  margin-right : 15px;
-  margin-bottom : 20px;
   position:absolute;
   top:20px;
   left:40px;
   overflow : hidden;
   height : 130px;
+  width : 320px;
 }
 #mission #floatBg .name
 {
@@ -324,16 +346,15 @@ body {
 #mission #floatBg .spans
 {
   width : 70%;
-  margin-right : 3%;
   float : left;
   margin-top : 10px;
 }
-#mission #floatBg .skelaton
+#mission #floatBg .skeleton
 {
-  overflow:hidden;
-  margin-top:5px;
-  width:90px;
-  height:125px;
+  padding-top:35px;
+  width:25%;
+  text-align : center;
+  float : right;
 }
 
 #marketTabs
@@ -430,9 +451,20 @@ body {
   float:left;
   height:75px;
   overflow:hidden;
-  width:65px;
+  width:65.5px;
   position : relative;
 }
+#marketPlace #towers .emptyItem
+{
+  float:left;
+  height:75px;
+  overflow:hidden;
+  width:65.5px;
+  position : relative;
+  text-align : center;
+  padding-top : 17px;
+}
+
 
 #marketPlace #weapons #addedItems, #marketPlace #upgrades #addedItems
 {
@@ -440,16 +472,27 @@ body {
   left:46px;
   position:absolute;
   top:398px;
-  width:653px;
+  width:655px;
 }
 #marketPlace #weapons .addedItem, #marketPlace #upgrades .addedItem
 {
   float:left;
   height:68px;
-  margin-right:5px;
+  margin-right:4px;
   overflow:hidden;
   position:relative;
   width:127px;
+}
+#marketPlace #weapons .emptyItem, #marketPlace #upgrades .emptyItem
+{
+  float:left;
+  height:68px;
+  margin-right:4px;
+  overflow:hidden;
+  position:relative;
+  width:127px;
+  text-align : center;
+  padding-top : 10px;
 }
 
 #marketPlace #towerDisplay, #marketPlace #weaponDisplay, #marketPlace #upgradeDisplay
@@ -473,17 +516,25 @@ body {
 }
 #marketPlace #towerDisplay .item div, #marketPlace #weaponDisplay .item div, #marketPlace #upgradeDisplay .item div
 {
-  height:68px;
-  margin-top:5px;
-  margin-bottom:2px;
+  height:75px;
   position : relative;
   overflow : hidden;
+}
+.clickable div img:hover
+{
+  opacity : 0.7;
+  cursor : pointer;
 }
 #marketPlace .action
 {
   position : absolute;
   right : 2px;
   bottom : 2px;
+  cursor : pointer;  
+}
+#marketPlace .action:hover
+{
+  opacity : 1;
 }
 #marketPlace #towerDisplay .item div .label, #marketPlace #weaponDisplay .item div .label, #marketPlace #upgradeDisplay .item div .label
 {
@@ -514,23 +565,33 @@ body {
 {
   position : absolute;
   top : 10px;
-  right : 10px;
+  right : 15px;
   width : 20px;
   height : 20px;
+  cursor : pointer;
 }
 #marketPlace #floatBg .content
 {
   left:40px;
-  padding-right : 15px;
+  padding-right : 40px;
   position:absolute;
   top:20px;
+  height : 180px;
 }
 #marketPlace #floatBg .content .spans
 {
   float:left;
   padding-right:10px;
   padding-top:30px;
-  width:68%;
+  width:65%;
+  height : 100%;
+}
+#marketPlace #floatBg .content .image
+{
+  padding : 45px 0px;
+  float : left;
+  text-align : center;
+  width : 30%;
 }
 #marketPlace #floatBg .name
 {

@@ -138,7 +138,6 @@ var Intro = {
         		  	      Intro.retrieveData( function() {
         		  	          $("gameStart").innerHTML = Intro.templates['game'][1].source;
 						              initLoadImages(new Loader()); 
-						              Upgrades.init(); 
                           Intro.next();
                       })
                   }
@@ -200,6 +199,12 @@ var Intro = {
                                   {   method:'get', 
                                       onSuccess: function(t, json){
                                           Intro.campaignInfo = JSON.parse(t.responseText);
+                                          Intro.campaignInfo.camp_data.metadata.each( function(mission) { 
+                                                                        if (Intro.campaignInfo.user_data.metadata.missions[mission['order'] - 1])
+                                                                            images2.push( "/" + mission['path'] + "/images/mission_active.png");
+                                                                        else
+                                                                            images2.push( "/" + mission['path'] + "/images/mission_inactive.png");
+                                                                    });
                                           Intro.loader.load( [{ images: images, path : Intro.images.path , store: 'intro'},
                                                       { images: images2, path :  Intro.campPath(), store: 'intro'}],
                                                       { onFinish : function() {                                            
@@ -229,15 +234,17 @@ var Intro = {
                       onComplete: function(t, json){
                           ChallengeSelector.mission = JSON.parse(t.responseText);
                           ChallengeSelector.mission.creeps = ChallengeSelector.missionCreeps;
-                          var images = [];
+                          var images = [], images2 = [];
+                          var path2 = Intro.images.path + "creeps/";
                           Intro.images.mission.each(function(image){ images.push(image) });
                           images.push( "../../" + Intro.campPath() + Intro.missionPath() + "/images/city.png");
                           images.push( "../../" + Intro.campPath() + Intro.missionPath() + "/images/map.png");   
-                          for (var creep in CreepConfig)
-                          {
-                              images.push( "creeps/" + CreepConfig[creep]['image']);
-                          }
-                          Intro.loader.load( [{ images: images, path : Intro.images.path, store: 'intro'}],
+                          ChallengeSelector.mission.creeps.each( function(creep){
+                                                                     images2.push(CreepConfig[creep]['image']);
+                                                                     images2.push(CreepConfig[creep]['skeleton']);  
+                                                                  } );
+                          Intro.loader.load( [{ images: images, path : Intro.images.path, store: 'intro'}, 
+                                              { images2: images, path : path2, store: 'intro'}],
                                         { onFinish : function() {
                                                  $('mission').innerHTML = Intro.templates.mission[1].process({ 
                                                                         "city" : ChallengeSelector.mission,
@@ -253,12 +260,13 @@ var Intro = {
             setFloatBgInfo : function(element){
                   $$("#mission #floatBg div span")[0].innerHTML = CreepConfig[element.getAttribute("creepid")].name;
                   $$("#mission #floatBg div span")[1].innerHTML = CreepConfig[element.getAttribute("creepid")].desc;  
-                  $$("#mission #floatBg .skelaton img")[0].src = Intro.images.path + "creeps/" + 
-                                                                  CreepConfig[element.getAttribute("creepid")].skelaton;    
+                  $$("#mission #floatBg .skeleton img")[0].src = Intro.images.path + "creeps/" + 
+                                                                  CreepConfig[element.getAttribute("creepid")].skeleton;    
             }
         }, 
         towers : {
             index : 3,
+            emptySpots : 10,
             onSelect : function(){
                 /* Change the tabs accordingly */
                 path = "images/intro/market/";
@@ -277,16 +285,17 @@ var Intro = {
                 data = { "gameData" : gameData,
                          "userData" : Intro.userData
                       };
-                data["gameData"]["empty"] = {}
+                data["gameData"]["empty"] = {};
+                data["userData"]["empty"] = {};
                 data["gameData"]["empty"]["towers"] = $A($R(0, 9-data["gameData"]["towers"].length-1));
-                data["gameData"]["empty"]["weapons"] = $A($R(0, 9-data["gameData"]["weapons"].length-1)); 
-                data["gameData"]["empty"]["upgrades"] = $A($R(0, 9-data["gameData"]["upgrades"].length-1));
+                data["userData"]["empty"]["towers"] = $A($R(0, 10-data.userData.metadata.added['towers'].length-1)); 
                 var images =  [], images2 = [];
                 Intro.images.towers.each(function(image){ images.push(image) });  
                 for (var tower in TowerConfig)
                 {
                     images2.push( TowerConfig[tower]['image']);
-                    images2.push( TowerConfig[tower]['skelaton']);    
+                    images2.push( TowerConfig[tower]['smallImage']);
+                    images2.push( TowerConfig[tower]['skeleton']);    
                 }    
                 var path2 = Intro.images.path + "towers/";
                 Intro.loader.load( [{ images: images, path :  Intro.images.path, store: 'intro'},
@@ -305,11 +314,12 @@ var Intro = {
                                                                    TowerConfig[element.getAttribute("itemid")].name + " : ";
                   $$("#marketPlace #floatBg div span")[1].innerHTML = TowerConfig[element.getAttribute("itemid")].desc;
                   $$("#marketPlace #floatBg div img")[0].src = Intro.images.path + "towers/" + 
-                                                                  TowerConfig[element.getAttribute("itemid")].skelaton;    
+                                                                  TowerConfig[element.getAttribute("itemid")].skeleton;    
             }
         },
         weapons : {
             index : 4,
+            emptySpots : 5,
             onSelect : function(){
                 /* Change the tabs accordingly */
                 path = "images/intro/market/";
@@ -328,16 +338,15 @@ var Intro = {
                 data = { "gameData" : gameData,
                          "userData" : Intro.userData
                       };
-                data["gameData"]["empty"] = {}
-                data["gameData"]["empty"]["towers"] = $A($R(0, 9-data["gameData"]["towers"].length-1));
+                data["gameData"]["empty"] = {};
+                data["userData"]["empty"] = {};
                 data["gameData"]["empty"]["weapons"] = $A($R(0, 9-data["gameData"]["weapons"].length-1)); 
-                data["gameData"]["empty"]["upgrades"] = $A($R(0, 9-data["gameData"]["upgrades"].length-1));
+                data["userData"]["empty"]["weapons"] = $A($R(0, 5-data.userData.metadata.added['weapons'].length-1)); 
                 var images =  [], images2 = [];
                 Intro.images.weapons.each(function(image){ images.push(image) });  
                 for (var weapon in SuperWeaponConfig)
                 {
-                    images2.push( SuperWeaponConfig[weapon]['image']);
-                    images2.push( SuperWeaponConfig[weapon]['skelaton']);    
+                    images2.push( SuperWeaponConfig[weapon]['image']);  
                 }    
                 Intro.loader.load( [{ images: images, path : Intro.images.path, store: 'intro'},
                               { images : images2, path : Intro.images.path + "weapons/", store : 'intro' }],
@@ -355,11 +364,12 @@ var Intro = {
                   $$("#marketPlace #weapons #floatBg div span")[0].innerHTML = SuperWeaponConfig[element.getAttribute("itemid")].name  + " : " ;
                   $$("#marketPlace #weapons #floatBg div span")[1].innerHTML = SuperWeaponConfig[element.getAttribute("itemid")].desc;
                   $$("#marketPlace #weapons #floatBg div img")[0].src = Intro.images.path + "weapons/" + 
-                                                                  SuperWeaponConfig[element.getAttribute("itemid")].skelaton;    
+                                                                  SuperWeaponConfig[element.getAttribute("itemid")].skeleton;    
             }
         },
         upgrades : {
             index : 5,
+            emptySpots : 5,
             onSelect : function(){
                 /* Change the tabs accordingly */ 
                 path = "images/intro/market/";
@@ -375,17 +385,16 @@ var Intro = {
                 data = { "gameData" : gameData,
                          "userData" : Intro.userData
                       };
-                data["gameData"]["empty"] = {}
-                data["gameData"]["empty"]["towers"] = $A($R(0, 9-data["gameData"]["towers"].length-1));
-                data["gameData"]["empty"]["weapons"] = $A($R(0, 9-data["gameData"]["weapons"].length-1)); 
+                data["gameData"]["empty"] = {};
+                data["userData"]["empty"] = {};
                 data["gameData"]["empty"]["upgrades"] = $A($R(0, 9-data["gameData"]["upgrades"].length-1));
+                data["userData"]["empty"]["upgrades"] = $A($R(0, 5-data.userData.metadata.added['upgrades'].length-1)); 
                 var images =  [];
                 var images2 = [];
                 Intro.images.upgrades.each( function(image){ images.push( image) });  
                 for (var upgrade in UpgradeConfig)
                 {
                     images2.push( UpgradeConfig[upgrade]['image']);
-                    images2.push( UpgradeConfig[upgrade]['skelaton']);    
                 }    
                 Intro.loader.load( [{ images: images, path : Intro.images.path, store: 'intro'},
                               { images: images2, path : Intro.images.path + "upgrades/", store: 'intro'}],
@@ -402,9 +411,13 @@ var Intro = {
                   $$("#marketPlace #upgrades #floatBg div span")[0].innerHTML = UpgradeConfig[element.getAttribute("itemid")].name  + " : ";
                   $$("#marketPlace #upgrades #floatBg div span")[1].innerHTML = UpgradeConfig[element.getAttribute("itemid")].desc;
                   $$("#marketPlace #upgrades #floatBg div img")[0].src = Intro.images.path + "upgrades/" + 
-                                                                  UpgradeConfig[element.getAttribute("itemid")].skelaton;
+                                                                  UpgradeConfig[element.getAttribute("itemid")].skeleton;
             }
         }
+    },
+    
+    selectMission : function(element){
+      GameConfigs.missionPath = element.getAttribute('path');
     },
     
     addItem: function(element){
@@ -421,10 +434,11 @@ var Intro = {
        data = { "gameData" : gameData,
                 "userData" : Intro.userData
                     };
-        data["gameData"]["empty"] = {}
-        data["gameData"]["empty"]["towers"] = $A($R(0, 9-data["gameData"]["towers"].length-1));
-        data["gameData"]["empty"]["weapons"] = $A($R(0, 9-data["gameData"]["weapons"].length-1)); 
-        data["gameData"]["empty"]["upgrades"] = $A($R(0, 9-data["gameData"]["upgrades"].length-1));
+        var emptySpots = Intro.pages[type].emptySpots;
+        data["gameData"]["empty"] = {};
+        data["userData"]["empty"] = {};
+        data["gameData"]["empty"][type] = $A($R(0, 9-data["gameData"][type].length-1));
+        data["userData"]["empty"][type] = $A($R(0, emptySpots-data.userData.metadata.added[type].length-1)); 
         $(type).innerHTML = Intro.templates[type][1].process({ 
                                                                   "type" : type,
                                                                   "data" : data,
@@ -445,10 +459,11 @@ var Intro = {
         data = { "gameData" : gameData,
                  "userData" : Intro.userData
               };
-        data["gameData"]["empty"] = {}
-        data["gameData"]["empty"]["towers"] = $A($R(0, 9-data["gameData"]["towers"].length-1));
-        data["gameData"]["empty"]["weapons"] = $A($R(0, 9-data["gameData"]["weapons"].length-1)); 
-        data["gameData"]["empty"]["upgrades"] = $A($R(0, 9-data["gameData"]["upgrades"].length-1));
+        var emptySpots = Intro.pages[type].emptySpots;
+        data["gameData"]["empty"] = {};
+        data["userData"]["empty"] = {};
+        data["gameData"]["empty"][type] = $A($R(0, 9-data["gameData"][type].length-1));
+        data["userData"]["empty"][type] = $A($R(0, emptySpots-data.userData.metadata.added[type].length-1)); 
         $(type).innerHTML = Intro.templates[type][1].process({ 
                                                                   "type" : type,
                                                                   "data" : data,
@@ -477,7 +492,7 @@ var Intro = {
                             }
                         });
         }else{
-            
+            alert(" u r either missing coins or experience points");
         }
     },
     
@@ -499,7 +514,6 @@ var Intro = {
     setupGameConfigs : function(){
         var missions = Intro.campaignInfo.camp_data.metadata
         var mission = missions.find(function(mission){ if ( GameConfigs.missionPath == mission['path'] ) return true; })
-        console.log(mission)
         GameConfigs.map = Intro.campaignInfo.user_data.metadata.missions[mission['order'] - 1  ]['map'];
         GameConfigs.waves = Intro.campaignInfo.user_data.metadata.missions[mission['order'] - 1  ]['waves'];
         GameConfigs.towers = Intro.userData.metadata.added.towers;
@@ -573,9 +587,10 @@ var Intro = {
 	  
 	  finish: function(){
 	      Intro.setupGameConfigs();
-        var callback = function() {$("intro").hide();
+        var callback = function() {
                                         city_defender_start();
 	                                      $('gameStart').show();
+	                                      $("intro").hide();
                                   }
         if(Intro.dirty)
             Intro.saveUserSetup( callback );

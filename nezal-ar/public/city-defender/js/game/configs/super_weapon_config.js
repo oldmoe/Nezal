@@ -9,15 +9,23 @@
 */
 var SuperWeaponConfig = {
     "Splash" : { image : 'splash.png', 
-                  skelaton : 'skil.png',
+                 smallImage : 'splash.png',
+                 skeleton : 'splash.png',
                     desc : "This is the black creep it is soooo destructive" },
     "Weak" : { image : 'weak.png', 
-                  skelaton : 'skil.png',
-                  desc : "This is the red tank creep it is soooo destructive" },
+                smallImage : 'weak.png',
+                skeleton : 'weak.png',
+                desc : "This is the red tank creep it is soooo destructive" },
     "Hyper" : { image : 'hyper.png',
-                  skelaton : 'skil.png', 
-                    desc : "This is the Red plane creep it is soooo destructive" },
-    "Nuck" : { image : 'nuck.png', 
-                  skelaton : 'skil.png',
-                  desc : "This is the black creep it is soooo destructive" }
+                smallImage : 'hyper.png',
+                skeleton : 'hyper.png',
+                desc : "This is the Red plane creep it is soooo destructive" },
+    "Nuke" : { image : 'nuke.png', 
+                smallImage : 'nuke.png',
+                skeleton : 'nuke.png',
+                desc : "This is the black creep it is soooo destructive" },
+    "Heal" : { image : 'heal.png', 
+                smallImage : 'heal.png',
+                skeleton : 'heal.png',
+                desc : "This is the black creep it is soooo destructive" }
 }
