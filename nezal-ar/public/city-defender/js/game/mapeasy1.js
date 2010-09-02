@@ -1,6 +1,3 @@
-var bg = new Image();
-bg.src = '../images/background/path.png'
-
 var Map = {
 	pitch : 32,
 	width : 20,
@@ -32,7 +29,6 @@ var Map = {
 	entry : [[0,2],[0,3]],
 	init : function(){
 		for(var i = 0; i < this.width; i++){
-			console.log("i=",i)
 			this.grid[i] = []
 			for(var j = 0; j< this.height; j++){
 				this.grid[i][j] = []

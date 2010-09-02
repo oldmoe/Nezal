@@ -114,10 +114,8 @@ function imageNumbers(length){
 
 }
 function onFinish(){
-	console.log('finsihed')
 	$('gameElements').style.visibility = 'visible'
 	$('canvasContainer').style.visibility = 'visible'
-	console.log('finished')
 	$('rank').style.backgroundImage  = "url("+'images/user/'+rank+'.png'+")"; 
 	window.setTimeout(function(){
 		Effect.Fade('splashScreen')
@@ -140,7 +138,7 @@ function loadGameImages(loader){
 		{images: bgImages, path: 'images/background/', store: 'background'},
 		{images: [rank+'.png'], path: 'images/user/', store: 'rank'},
 		{images: upgradeImages, path: 'images/background/', store: 'upgrades'}
-		], {onProgress: function(progress){$('loading_bar').style.width = ''+progress+'%';console.log(loader.loadedResources,loader.currentLength)}, onFinish : onFinish })
+		], {onProgress: function(progress){$('loading_bar').style.width = ''+progress+'%';}, onFinish : onFinish })
 		
 	}catch(e){console.log(e)}
 }

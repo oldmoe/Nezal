@@ -1,15 +1,24 @@
 var CityDefenderScene = Class.create(Scene, {
-	creeps : [],
-	turrets : [],
-	objects : [],
-	towerMutators : [],
-	creepMutators : [],
 	fistCreep : false,
 	startGame : false,
 	firstHit : false,
 	initialize : function($super,config,delay,baseCtx,upperCtx){
+		this.creeps = []
+		this.turrets = []
+		this.objects = []
+		this.towerMutators = []
+		this.creepMutators = []
+		this.animations = []
+		this.events= []
+		this.creepMutators = []
+		this.towerMutators = []
+		this.stats = {
+			towersCreated : 0,
+			towersDestroyed : 0,
+			creepsDestroyed : 0
+		}
 		$super(delay);
-		this.config = config
+		this.config = Nezal.clone_obj(config)
 		this.baseCtx = baseCtx;
 		this.upperCtx = upperCtx;
 		this.scenario = new Scenario(this)
@@ -40,6 +49,11 @@ var CityDefenderScene = Class.create(Scene, {
 		this.layers.push(this.towerCannonLayer)
 		this.layers.push(this.towerHealthLayer)
 		this.layers.push(this.rankLayer)
+		var self = this
+		this.config.superWeapons.each(function(weapon){
+			weapon = weapon.toLowerCase()
+			var div = $$('#gameElements .superWeapons div.'+weapon)[0].setOpacity(1)
+		})
 		this.renderData()
 		this.checkStatus()
 
@@ -184,11 +198,11 @@ var CityDefenderScene = Class.create(Scene, {
 	},
 	checkStatus: function(){
 		if(this.running && this.escaped >= this.maxEscaped){
-			this.lose();
+			this.lose();this.uploadScore()
 			return
 		}else if(this.config && this.playing){
 			if(this.config.waves.length == 0 && this.creeps.length == 0 && this.waitingCreeps == 0 ){
-				this.win();
+				this.win();this.uploadScore()
 				return
 			}else if(this.creeps.length == 0  &&this.waitingCreeps == 0 && this.config.waves.length > 0 && !this.wavePending && this.running){
 				this.push(50, function(){this.sendWave(this.config.waves.pop())},this)
@@ -201,9 +215,8 @@ var CityDefenderScene = Class.create(Scene, {
 	win: function(){
 		this.running = false
 		$("result").addClassName('win');
-		var img = document.createElement("IMG");
-		img.src = "images/background/win.png";
-		$('result').appendChild(img);
+		$('loseImage').hide()
+		$('winImage').show()
 		$('static').show();
 		$('droppingGround').addClassName('off')
 		new Effect.SwitchOff('static');
@@ -214,9 +227,8 @@ var CityDefenderScene = Class.create(Scene, {
 	lose : function(){
 		this.running = false
 		$("result").addClassName('lose');
-		var img = document.createElement("IMG");
-		img.src = "images/background/lose.png";
-		$('result').appendChild(img);
+		$('winImage').hide()
+		$('loseImage').show()
 		$('static').show();
 		$('droppingGround').addClassName('off')
 		new Effect.SwitchOff('static');
@@ -308,6 +320,9 @@ var CityDefenderScene = Class.create(Scene, {
 			}
 		})
 	},
+	uploadScore : function(){
+		//uploading this.score goes heeeere 
+	},
 	waitingCreeps : 0,
 	wavePending : false,
 	escaped: 0,
@@ -316,27 +331,11 @@ var CityDefenderScene = Class.create(Scene, {
 	maxEscaped : 20,
 	money : 100,
 	delay : 25,
-	animations : [],
-	events : [],
-	creepMutators : [],
-	towerMutators : [],
 	fps : 0,
 	score: 0,
 	selectedTurret : null,
 	wave : 0,
 	sound : true,
 	wavesCount : 0,
-	skipFrames : 0,
-	superWeapons : {
-		weak : {max : 5, used : 0, factor: 2} ,
-		hyper : {max : 5, used : 0, factor: 2} ,
-		nuke : {max : 1, used : 0},
-		heal : {max : 3, used : 0},
-		splash : {max : 3, used : 0},
-	},
-	stats : {
-		towersCreated : 0,
-		towersDestroyed : 0,
-		creepsDestroyed : 0
-	}
+	skipFrames : 0
 })

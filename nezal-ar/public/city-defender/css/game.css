@@ -56,6 +56,7 @@ body{
 	height: 60px;
 	left:42px;
 	top: 409px;
+	z-index:4;
 }
 
 #result #playAgain{
@@ -64,6 +65,7 @@ body{
 	height: 60px;
 	left:537px;
 	top: 409px;
+	z-index:4;
 }
 #splashScreen{
 	width : 760px;
@@ -138,7 +140,7 @@ body{
 
 #gameElements .startText{
 	position:absolute;
-	top:500px;
+	top:485px;
 	left:0px;
 	width:155px;
 	height:80px;
@@ -147,6 +149,8 @@ body{
 	font-size: 30;
 	text-align: center;
 	color: blue;
+	cursor:default;
+	margin-top:2%;
 	-moz-user-select: none;
    -khtml-user-select: none;
     user-select: none;
@@ -788,3 +792,9 @@ canvas.turret{
 	left : 523;
 	top : 10;
 }
+#loseImage
+{
+	position : absolute;
+	left : 0;
+}
+
