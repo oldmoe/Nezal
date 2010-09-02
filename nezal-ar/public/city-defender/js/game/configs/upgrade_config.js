@@ -2,17 +2,17 @@
   This file is dedicated to describe upgrades
 */
 var UpgradeConfig = {
-    "upgrade1" : {name : "Super",
+    "bullets" : {name : "Super",
                   image : 'upgrade1.png', 
                   smallImage : 'upgrade1.png', 
                   skeleton : 'upgrade1.png', 
                   desc : "This is the black creep it is soooo destructive" },
-    "upgrade2" : {    name : "Super Doper",
+    "rockets" : {    name : "Super Doper",
                       image : 'upgrade2.png', 
                       smallImage : 'upgrade2.png', 
                       skeleton : 'upgrade2.png', 
                       desc : "This is the red tank creep it is soooo destructive" },
-    "upgrade3" : {    name : "Super Strong",
+    "shields" : {    name : "Super Strong",
                       image : 'upgrade3.png',
                       smallImage : 'upgrade3.png', 
                       skeleton : 'upgrade3.png', 
