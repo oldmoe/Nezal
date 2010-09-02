@@ -8,48 +8,35 @@
 */
 var CreepConfig = {
     "BlackTank" : { name : "Black Tank",
-                    image : 'cannon1.png', 
-                    skeleton : 'cannon1_skeleton.png',
+                    image : 'black_tank.png', 
+                    skeleton : 'black_tank_skeleton.png',
                     desc : "This is the black creep it is soooo destructive" },
     "RedTank" : { name : "Red Tank",
-                  image : 'cannon2.png', 
-                  skeleton : 'cannon2_skeleton.png',
+                  image : 'red_tank.png', 
+                  skeleton : 'red_tank_skeleton.png',
                   desc : "This is the red tank creep it is soooo destructive" },
-    "RedPlane" : {  name : "Red Plan",
-                    image : 'cannon3.png',
-                    skeleton : 'cannon3_skeleton.png',
-                    desc : "This is the Red plane creep it is soooo destructive" },
-    "TankII" : {  name : "Tank II",
-                  image : 'cannon1.png', 
-                  skeleton : 'cannon1_skeleton.png',
-                  desc : "This is the black creep it is soooo destructive" },
-    "TankI" : {  name : "Tank I",
-                  image : 'cannon3.png', 
-                  skeleton : 'cannon3_skeleton.png',
-                  desc : "This is the black creep it is soooo destructive" },
     "Tank" : {  name : "Tank",
-                  image : 'cannon4.png', 
-                  skeleton : 'cannon4_skeleton.png',
+                  image : 'tank.png', 
+                  skeleton : 'tank_skeleton.png',
                   desc : "This is the black creep it is soooo destructive" },                  
+    "TankI" : {  name : "Tank I",
+                  image : 'tank_i.png', 
+                  skeleton : 'tank_i_skeleton.png',
+                  desc : "This is the black creep it is soooo destructive" },
+    "TankII" : {  name : "Tank II",
+                  image : 'tank_ii.png', 
+                  skeleton : 'tank_ii_skeleton.png',
+                  desc : "This is the black creep it is soooo destructive" },
     "Humvee" : {  name : "Humveee",
                   image : 'cannon2.png', 
                   skeleton : 'cannon2_skeleton.png',
                   desc : "This is the humvee creep it is soooo destructive" },
-    "RedPlane" : {  name : "Red Plane",
-                    image : 'cannon3.png',
-                    skeleton : 'cannon3_skeleton.png',
+    "RedPlane" : {  name : "Red Plan",
+                    image : 'red_plane.png',
+                    skeleton : 'red_plane_skeleton.png',
                     desc : "This is the Red plane creep it is soooo destructive" },
     "Plane" : {  name : "Plane",
-                    image : 'cannon3.png',
-                    skeleton : 'cannon3_skeleton.png',
+                    image : 'plane.png',
+                    skeleton : 'plane_skeleton.png',
                     desc : "This is the Red plane creep it is soooo destructive" }
 }
-/*
-for(creep in CreepConfig){
-  eval('var '+creep+ '={}')
-}
-
-var Tank = {}
-var TankI = {}
-var Plane = {}
-*/
