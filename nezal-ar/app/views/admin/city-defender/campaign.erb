@@ -3,7 +3,13 @@ var CampaignData = {
     missions : [],
     templates : {},
     mapDimensions : { x : 20 , y : 15 },
-    currMission : null,
+    currMission : {
+            'name' : '',
+            'path' : '',
+            'waves' : [],
+            'map' : [],
+            'order' : null
+        },
     creeps : ['RedTank', 'BlueTank', 'BlackTank', 'Rocket', 'RedRocket', 'BlackRocket'],
 
     init : function()
@@ -41,7 +47,7 @@ var CampaignData = {
                 $('map').appendChild(box);
             }
         }
-        CampaignData.currMission = CampaignData.createEmptyMission();
+        CampaignData.createEmptyMission();
         CampaignData.selectMission(null);
     },
     createEmptyMission : function()
@@ -55,13 +61,13 @@ var CampaignData = {
             for( j=0; j < y ; j++)
                 map[i].push(0);
         }
-        var emptyMap = {
+        CampaignData.currMission = {
             'name' : '',
             'path' : '',
             'waves' : [],
-            'map' : map
+            'map' : map,
+            'order' : null
         }
-        return emptyMap;
     },
     mapOnclick : function(element)
     {
@@ -78,7 +84,11 @@ var CampaignData = {
             {
                 if(CampaignData.missions[i].order == element.getAttribute('order'))
                 {
-                    CampaignData.currMission = CampaignData.missions[i];
+                    CampaignData.currMission['name'] = CampaignData.missions[i].name;
+                    CampaignData.currMission['path'] = CampaignData.missions[i].path;
+                    CampaignData.currMission['waves'] = CampaignData.missions[i].waves;
+                    CampaignData.currMission['map'] = CampaignData.missions[i].map;
+                    CampaignData.currMission['order'] = CampaignData.missions[i].order;
                     break;
                 }
             }
@@ -132,14 +142,18 @@ var CampaignData = {
           CampaignData.currMission['order'] = CampaignData.missions.length;
         }
         for(var i=0; i<CampaignData.currMission.waves.length; i++)
-           CampaignData.currMission.waves[i] = [];
+            CampaignData.currMission.waves[i] = [];
         $('waves').select('.waveDetails').each(function(creepElement){
+            console.log(creepElement.getAttribute('wave'))
+            console.log(CampaignData.currMission.waves[creepElement.getAttribute('wave')]);
             var creep = {};
             creep['category'] = creepElement.getElementsByTagName('select')[0].value;
             creep['count'] = creepElement.getElementsByTagName('input')[0].value;  
             CampaignData.currMission.waves[creepElement.getAttribute('wave')].push(creep);
+            console.log(CampaignData.currMission.waves[creepElement.getAttribute('wave')]);
         });
-        CampaignData.currMission = CampaignData.createEmptyMission();
+        console.log(CampaignData.missions[CampaignData.currMission.order])
+        CampaignData.createEmptyMission();
         CampaignData.selectMission(null);
         $$('#missions #list')[0].innerHTML = CampaignData.templates['missions'].process({list: CampaignData.missions}); 
     },
@@ -147,11 +161,23 @@ var CampaignData = {
     {
         CampaignData.currMission.waves.push([]);
         $$('#waves #list')[0].innerHTML = CampaignData.templates['waves'].process({list: CampaignData.currMission.waves}); 
+        $$('#waves .wave').each(function(wave){
+            $(wave.getAttribute('order') + 'Details').innerHTML = CampaignData.templates['wave'].process(
+                                  { wave: CampaignData.currMission.waves[wave.getAttribute('order')],
+                                    creeps : CampaignData.creeps,
+                                    wave_id : wave.getAttribute('order') } );
+        });
     },
     deleteWave : function(element)
     {
         CampaignData.currMission.waves.splice(element.getAttribute('order'), 1)
-        $$('#waves #list')[0].innerHTML = CampaignData.templates['waves'].process({list: CampaignData.currMission.waves});   
+        $$('#waves #list')[0].innerHTML = CampaignData.templates['waves'].process({list: CampaignData.currMission.waves}); 
+        $$('#waves .wave').each(function(wave){
+            $(wave.getAttribute('order') + 'Details').innerHTML = CampaignData.templates['wave'].process(
+                                  { wave: CampaignData.currMission.waves[wave.getAttribute('order')],
+                                    creeps : CampaignData.creeps,
+                                    wave_id : wave.getAttribute('order') } );
+        });
     },
     selectWave : function(element)
     {
@@ -198,7 +224,7 @@ var CampaignData = {
                             method : 'put',
                             parameters : { "data" : Object.toJSON(CampaignData.missions) },
                             onSuccess: function(transport) {
-                              CampaignData.currMission = CampaignData.createEmptyMission();
+                              CampaignData.createEmptyMission();
                               CampaignData.selectMission(null);
                               window.location = window.location;
                             }
