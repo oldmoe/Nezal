@@ -144,15 +144,11 @@ var CampaignData = {
         for(var i=0; i<CampaignData.currMission.waves.length; i++)
             CampaignData.currMission.waves[i] = [];
         $('waves').select('.waveDetails').each(function(creepElement){
-            console.log(creepElement.getAttribute('wave'))
-            console.log(CampaignData.currMission.waves[creepElement.getAttribute('wave')]);
             var creep = {};
             creep['category'] = creepElement.getElementsByTagName('select')[0].value;
             creep['count'] = creepElement.getElementsByTagName('input')[0].value;  
             CampaignData.currMission.waves[creepElement.getAttribute('wave')].push(creep);
-            console.log(CampaignData.currMission.waves[creepElement.getAttribute('wave')]);
         });
-        console.log(CampaignData.missions[CampaignData.currMission.order])
         CampaignData.createEmptyMission();
         CampaignData.selectMission(null);
         $$('#missions #list')[0].innerHTML = CampaignData.templates['missions'].process({list: CampaignData.missions}); 
