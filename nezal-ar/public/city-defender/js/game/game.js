@@ -7,15 +7,14 @@ pause : "pause"
 var Game = Class.create({
 	creepsCount : 0,
 	initialize : function(delay){
-		Map.init();
 	},
 	start : function(){
 		$('popup').hide()
+		Map.init();
 		this.config = Nezal.clone_obj(Config)
 		this.scene = new CityDefenderScene(this.config,50,this.ctx,this.topCtx);
 		GhostTurret = new Turret(0, 0,this.scene, ghostTurretFeatures)
 		$$('.startText').first().innerHTML = T.start
-		this.setGameImages()
 		Intro.userData.newbie = false
 		if(Intro.userData.newbie){
 			$('modalWindow').show()
@@ -30,6 +29,10 @@ var Game = Class.create({
 		this.scene.start();
 	},
 	setGameImages : function(){
+		Loader.images.background['win.png'].setAttribute("id","winImage")
+		$('result').appendChild(Loader.images.background['win.png']);
+				Loader.images.background['lose.png'].setAttribute("id","loseImage")
+		$('result').appendChild(Loader.images.background['lose.png']);
 		Config.towers.each(function(tower){
 			var div = document.createElement("div");
 			div.setAttribute('class',tower);
@@ -94,8 +97,25 @@ var Game = Class.create({
 		$$('#gameElements .superWeapons div').each(function(div){ 
 			if(div.className != ''){div.observe('click', function(){self.scene.fire(div.className)})}
 		})
+		$('playAgain').observe('click', game.reset)
+		$('exit').observe('click', game.exit)
+			
 	},
-	
+	reset : function(){
+		game.scene.reactor.pause()
+		 //$("gameStart").innerHTML = Intro.templates['game'][1].source;
+		new Effect.Fade('static')
+		$$('#gameElements .startText').first().stopObserving('click')
+		$$('#gameElements .start').first().removeClassName('resumed')
+		$$('#gameElements .start').first().removeClassName('paused')
+		$('droppingGround').removeClassName('off')	
+		$('result').hide()
+		game.start()	
+	},
+	exit :function(){
+	    game.reset()
+	    //REDIRECTING TO EXIT GOES HERE
+	},
 	unRegisterHandlers : function(){
 		$$('#gameElements .upgrades .upgrade.next').invoke('stopObserving', 'click')	
 		$$('#gameElements .upgrades .upgradeItem').invoke('stopObserving', 'click')			
@@ -104,7 +124,7 @@ var Game = Class.create({
 		$$('#gameElements .superWeapons div').each(function(div){ 
 			if(div.className != ''){div.stopObserving('click')}
 		})
-	
+
 	},
 	
 });
@@ -125,7 +145,9 @@ function city_defender_start(){
 			game.canvas = fg
 			game.ctx = fg.getContext('2d')
 			game.topCtx = top.getContext('2d')
+			game.setGameImages()
 			game.start();
+		
 		//	game.registerHandlers();
 			Upgrades.selectDefault();
 		}, 200)

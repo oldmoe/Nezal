@@ -4,7 +4,7 @@ var SuperWeapon = Class.create({
 		var options = options || {}
 		this.active = true
 		this.count = options.count || 1
-		this.coolDown = options.coolDown || 15 
+		this.coolDown = options.coolDown || 15
 		this.progressInterval = options.progressInterval || 1
 		this.type = options.type
 	},
@@ -55,6 +55,8 @@ var SuperWeapon = Class.create({
 		var div = $$('#gameElements .superWeapons div.'+this.type)[0]
 		div.setOpacity(div.getOpacity() + 0.05)
 		if(div.getOpacity() == 0.7){
+		var self = this
+		div.observe('click', function(){self.scene.fire(div.className)})
 		div.setOpacity(1)
 		}else{
 			var self = this
@@ -63,6 +65,7 @@ var SuperWeapon = Class.create({
 	},
 	renderDeactivate : function(){
 		var div = $$('#gameElements .superWeapons div.'+this.type)[0]
+		div.stopObserving('click')
 		div.setOpacity(0);
 	},
 	
