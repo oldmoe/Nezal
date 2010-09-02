@@ -268,15 +268,6 @@ var Intro = {
             index : 3,
             emptySpots : 10,
             onSelect : function(){
-                /* Change the tabs accordingly */
-                path = "images/intro/market/";
-                $$("#marketPlace #towersTab img")[0].addClassName('on');
-                $$("#marketPlace #towersTab img")[0].src = path + "towers-on.png";
-                $$("#marketPlace #weaponsTab img")[0].removeClassName('on');
-                $$("#marketPlace #weaponsTab img")[0].src = path + "weapons-off.png";
-                $$("#marketPlace #upgradesTab img")[0].removeClassName('on');
-                $$("#marketPlace #upgradesTab img")[0].src = path + "upgrades-off.png";
-                $$("#marketPlace #bar img")[0].src = path + "towers-bar.png";  
                 /* Get User Data : coins, unlocked towers, super weapons & upgrade
                    Also should contain User last used tower, weapon set 
                    TODO replace this with Ajax  call to get the data */
@@ -305,6 +296,15 @@ var Intro = {
                                                                         "type" : "towers",
                                                                         "data" : data,
                                                                         "itemConfig" : TowerConfig });
+                                      /* Change the tabs accordingly */
+                                      path = "images/intro/market/";
+                                      $$("#marketPlace #towersTab img")[0].addClassName('on');
+                                      $$("#marketPlace #towersTab img")[0].src = path + "towers-on.png";
+                                      $$("#marketPlace #weaponsTab img")[0].removeClassName('on');
+                                      $$("#marketPlace #weaponsTab img")[0].src = path + "weapons-off.png";
+                                      $$("#marketPlace #upgradesTab img")[0].removeClassName('on');
+                                      $$("#marketPlace #upgradesTab img")[0].src = path + "upgrades-off.png";
+                                      $$("#marketPlace #bar img")[0].src = path + "towers-bar.png";  
                                       Intro.show();
                                       $('marketPlace').show();
                                   }} );
@@ -321,15 +321,6 @@ var Intro = {
             index : 4,
             emptySpots : 5,
             onSelect : function(){
-                /* Change the tabs accordingly */
-                path = "images/intro/market/";
-                $$("#marketPlace #weaponsTab img")[0].addClassName('on');
-                $$("#marketPlace #weaponsTab img")[0].src = path + "weapons-on.png";
-                $$("#marketPlace #towersTab img")[0].removeClassName('on');
-                $$("#marketPlace #towersTab img")[0].src = path + "towers-off.png";
-                $$("#marketPlace #upgradesTab img")[0].removeClassName('on');
-                $$("#marketPlace #upgradesTab img")[0].src = path + "upgrades-off.png";  
-                $$("#marketPlace #bar img")[0].src = path + "weapons-bar.png";  
                 /* Get User Data : coins, unlocked towers, super weapons & upgrade
                    Also should contain User last used tower, weapon set 
                    TODO replace this with Ajax  call to get the data */
@@ -355,6 +346,15 @@ var Intro = {
                                                                         "type" : "weapons",
                                                                         "data" : data,
                                                                         "itemConfig" : SuperWeaponConfig });
+                                      /* Change the tabs accordingly */
+                                      path = "images/intro/market/";
+                                      $$("#marketPlace #weaponsTab img")[0].addClassName('on');
+                                      $$("#marketPlace #weaponsTab img")[0].src = path + "weapons-on.png";
+                                      $$("#marketPlace #towersTab img")[0].removeClassName('on');
+                                      $$("#marketPlace #towersTab img")[0].src = path + "towers-off.png";
+                                      $$("#marketPlace #upgradesTab img")[0].removeClassName('on');
+                                      $$("#marketPlace #upgradesTab img")[0].src = path + "upgrades-off.png";  
+                                      $$("#marketPlace #bar img")[0].src = path + "weapons-bar.png";  
                                       Intro.show();
                                       $('marketPlace').show();
                               }});
@@ -371,15 +371,6 @@ var Intro = {
             index : 5,
             emptySpots : 5,
             onSelect : function(){
-                /* Change the tabs accordingly */ 
-                path = "images/intro/market/";
-                $$("#marketPlace #upgradesTab img")[0].addClassName('on');
-                $$("#marketPlace #upgradesTab img")[0].src = path + "upgrades-on.png";  
-                $$("#marketPlace #towersTab img")[0].removeClassName('on');
-                $$("#marketPlace #towersTab img")[0].src = path + "towers-off.png";
-                $$("#marketPlace #weaponsTab img")[0].removeClassName('on');
-                $$("#marketPlace #weaponsTab img")[0].src = path + "weapons-off.png";
-                $$("#marketPlace #bar img")[0].src = path + "upgrades-bar.png";  
                 var gameData = [];
                 Intro.toLabels( Intro.gameData, gameData)
                 data = { "gameData" : gameData,
@@ -403,6 +394,15 @@ var Intro = {
                                                                         "type" : "upgrades",
                                                                         "data" : data,
                                                                         "itemConfig" : UpgradeConfig });
+                                      /* Change the tabs accordingly */ 
+                                      path = "images/intro/market/";
+                                      $$("#marketPlace #upgradesTab img")[0].addClassName('on');
+                                      $$("#marketPlace #upgradesTab img")[0].src = path + "upgrades-on.png";  
+                                      $$("#marketPlace #towersTab img")[0].removeClassName('on');
+                                      $$("#marketPlace #towersTab img")[0].src = path + "towers-off.png";
+                                      $$("#marketPlace #weaponsTab img")[0].removeClassName('on');
+                                      $$("#marketPlace #weaponsTab img")[0].src = path + "weapons-off.png";
+                                      $$("#marketPlace #bar img")[0].src = path + "upgrades-bar.png";  
                                       Intro.show();
                                       $('marketPlace').show();
                                   }} );
