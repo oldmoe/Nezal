@@ -59,9 +59,6 @@
         <img itemid="${item}" type="${type}" src="images/intro/market/remove.png" class="action" onclick="Intro.removeItem(this);"> </img>
       </div>
   {/for}
-  {eval}
-    console.log(data.userData.empty[type])
-  {/eval}
   {for item in data.userData.empty[type] }
       <div  class="emptyItem">
           <img src="images/intro/market/q-mark.png"></img>
