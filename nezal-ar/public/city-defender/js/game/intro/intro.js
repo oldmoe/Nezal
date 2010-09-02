@@ -244,7 +244,7 @@ var Intro = {
                                                                      images2.push(CreepConfig[creep]['skeleton']);  
                                                                   } );
                           Intro.loader.load( [{ images: images, path : Intro.images.path, store: 'intro'}, 
-                                              { images2: images, path : path2, store: 'intro'}],
+                                              { images: images2, path : path2, store: 'intro'}],
                                         { onFinish : function() {
                                                  $('mission').innerHTML = Intro.templates.mission[1].process({ 
                                                                         "city" : ChallengeSelector.mission,
