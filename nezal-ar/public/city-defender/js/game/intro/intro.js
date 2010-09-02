@@ -73,7 +73,9 @@ var Intro = {
                     "market/added.png",
                     "market/unlock.png",
                     "market/shown-lamp.png",
-                    "market/locked.png"
+                    "market/locked.png",
+                    "market/remove.png",
+                    "market/q-mark.png"
                 ],
         weapons : [
                     "market/towers-on.png",
@@ -91,7 +93,9 @@ var Intro = {
                     "market/added.png",
                     "market/unlock.png",
                     "market/shown-lamp.png",
-                    "market/locked.png"
+                    "market/locked.png",
+                    "market/remove.png",
+                    "market/q-mark.png"
                 ],
         upgrades : [
                     "market/towers-on.png",
@@ -109,7 +113,9 @@ var Intro = {
                     "market/added.png",
                     "market/unlock.png",
                     "market/shown-lamp.png",
-                    "market/locked.png"
+                    "market/locked.png",
+                    "market/remove.png",
+                    "market/q-mark.png"
                 ]
     },
 
