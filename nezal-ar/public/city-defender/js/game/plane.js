@@ -1,7 +1,7 @@
 var Plane = Class.create(Creep, {
 	name : 'Plane',
 	flying : true,
-	speed : 8,
+	speed : 6,
 	initialize : function($super,x,y,extension){
 		$super(x,y,extension)
 		this.theta = 0

@@ -82,10 +82,10 @@ var Weak = Class.create(SuperWeapon, {
 	},
 	weak : function(count){
 		var self = this
-		this.scene.creeps.each(function(creep){creep.takeHit(creep.maxHp * 0.1);})
+		this.scene.creeps.each(function(creep){creep.takeHit(creep.hp * 0.1);})
 		count++
 		var self = this
-		if(count < 10){ this.scene.push(500, function(){self.weak(count);}) }
+		if(count < 5){ this.scene.push(1000, function(){self.weak(count);}) }
 	},
 	unWeak : function(){
 		var index = -1
@@ -109,7 +109,7 @@ var Splash = Class.create(SuperWeapon, {
 		this.scene.creeps.sort(function(a,b){
 			return b.hp - a.hp
 		}).slice(0,10).each(function(creep){
-			self.scene.objects.push(new PatriotRocket(0, 0, self.scene, {theta: 0, targetUnit : creep, x : x, y : y, power: 2000, speed: 15}))
+			self.scene.rockets.push(new PatriotRocket(0, 0, self.scene, {theta: 0, targetUnit : creep, x : x, y : y, power: 2000, speed: 15}))
 		})
 	}
 })
@@ -138,7 +138,7 @@ var Hyper = Class.create(SuperWeapon, {
 	action : function(){
 		var self = this
 		var hyper = function(tower){
-			tower.rate *= self.scene.superWeapons.hyper.factor;
+			tower.rate *= 2;
 		}
 		this.scene.turrets.each(hyper)
 		this.scene.push(30000, function(){self.unHyper();})

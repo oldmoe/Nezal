@@ -1,6 +1,6 @@
 var Turret = Class.create(Unit, {
-	hp : 100,
-	maxHp : 100,
+	hp : 400,
+	maxHp : 400,
 	theta :0,
 	cannonTheta : 0,
 	rate : 0.2,

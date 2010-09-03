@@ -9,6 +9,7 @@ var CityDefenderScene = Class.create(Scene, {
 		this.towerMutators = []
 		this.creepMutators = []
 		this.animations = []
+		this.rockets = []
 		this.events= []
 		this.creepMutators = []
 		this.towerMutators = []
@@ -17,7 +18,9 @@ var CityDefenderScene = Class.create(Scene, {
 			towersDestroyed : 0,
 			creepsDestroyed : 0
 		}
+		this.waveNumber = 1
 		$super(delay);
+		//this.startTime = null
 		this.config = Nezal.clone_obj(config)
 		this.baseCtx = baseCtx;
 		this.upperCtx = upperCtx;
@@ -45,9 +48,9 @@ var CityDefenderScene = Class.create(Scene, {
 		this.towerHealthLayer = new Layer(this.upperCtx)
 		this.rankLayer = new Layer(this.upperCtx)
 		this.layers.push(this.basesLayer)
-		this.layers.push(this.rocketsLayer)
 		this.layers.push(this.towerCannonLayer)
 		this.layers.push(this.towerHealthLayer)
+		this.layers.push(this.rocketsLayer)
 		this.layers.push(this.rankLayer)
 		var self = this
 		this.config.superWeapons.each(function(weapon){
@@ -71,6 +74,8 @@ var CityDefenderScene = Class.create(Scene, {
 		return this
 	},
 	addCreep : function(creep){
+		creep.hp = Math.round(creep.hp*Math.pow(this.creepMultiplier[this.config.level-1],this.waveNumber))
+		creep.maxHp = creep.hp
 		if(creep){
 			if(!this.firstCreep){
 				if(this.turrets[0])this.scenario.notify({name:"startGame", method: true, unit:this.turrets[0]})
@@ -83,6 +88,8 @@ var CityDefenderScene = Class.create(Scene, {
 		return this
 	},
 	addPlane : function(plane){
+		plane.hp = Math.round(creep.hp*Math.pow(this.creepMultiplier[this.config.level-1],this.waveNumber))
+		plane.maxHp = plane.hp
 		if(plane){
 			this.rocketsLayer.attach(plane.shadowSprite);
 			this.rocketsLayer.attach(plane.cannonSprite);
@@ -129,6 +136,7 @@ var CityDefenderScene = Class.create(Scene, {
 		this.objects = this.invokeTick(this.objects);
 		this.turrets = this.invokeTick(this.turrets);
 		this.creeps = this.invokeTick(this.creeps);
+		this.rockets = this.invokeTick(this.rockets);
 		return this
 	},
 	invokeTick : function(arr){
@@ -152,11 +160,14 @@ var CityDefenderScene = Class.create(Scene, {
 		this.renderStartAttack()
 	},
 	renderStartAttack: function(){
+		var self = this
+		$$('#gameElements .superWeapons div').each(function(div){ 
+			if(div.className != ''){div.observe('click', function(){self.fire(div.className)})}
+		})
 		var startDev = $$('#gameElements .start').first()
 		startDev.addClassName('resumed')
 		$$(".startText").first().innerHTML = T.pause
 		startDev.stopObserving('click')
-		var self = this
 		$$(".startText").first().observe('click', function(){self.pause()})
 	},
 	renderPause: function(){
@@ -205,7 +216,13 @@ var CityDefenderScene = Class.create(Scene, {
 				this.win();this.uploadScore()
 				return
 			}else if(this.creeps.length == 0  &&this.waitingCreeps == 0 && this.config.waves.length > 0 && !this.wavePending && this.running){
+				this.waveNumber++
+				var score = 10*(this.waveNumber+5-Math.round((new Date()-this.startTime)/1000)) 
+				if(score>0)
+				this.score+=score
+				this.startTime = new Date()
 				this.push(50, function(){this.sendWave(this.config.waves.pop())},this)
+				this.money=Math.round(this.money*this.moneyMultiplier[this.config.level-1])
 				this.wavePending = true
 			}
 		}	
@@ -290,6 +307,7 @@ var CityDefenderScene = Class.create(Scene, {
 		this.wavesCount = this.config.waves.length
 		this.wavesCount = this.config.waves.length
 		this.wave = 0
+		this.startTime = new Date()
 		var wave = config.waves.pop()
 		if(wave){
 			this.sendWave(wave);
@@ -321,7 +339,8 @@ var CityDefenderScene = Class.create(Scene, {
 		})
 	},
 	uploadScore : function(){
-		//uploading this.score goes heeeere 
+		this.score*=this.config.level
+		//upload goes heeeeeeeere
 	},
 	waitingCreeps : 0,
 	wavePending : false,
@@ -333,6 +352,8 @@ var CityDefenderScene = Class.create(Scene, {
 	delay : 25,
 	fps : 0,
 	score: 0,
+	moneyMultiplier: [1.2,1.1,1.05],
+	creepMultiplier: [1.05,1.1,1.2],
 	selectedTurret : null,
 	wave : 0,
 	sound : true,

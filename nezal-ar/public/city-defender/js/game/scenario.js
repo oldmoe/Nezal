@@ -13,7 +13,6 @@ var Scenario = Class.create({
 	/*
 		if(event.name == "firstHit")event.unit = this.currentEvent.unit
 		this.events.push(event)
-		console.log(this.events[0])
 		this.eventNames[event.name] = true
 		*/
 	},
@@ -34,7 +33,6 @@ var Scenario = Class.create({
 			this.eventRunning = true
 			this.currentEvent = this.events.pop()
 			this.currentEvent.unit.createBaloon()
-			console.log('created',this.currentEvent.unit.baloon)
 			if(this.currentEvent.unit)this.currentEvent.unit.baloon.text.innerHTML = this.scenario[this.currentEvent.name]
 			if(this.currentEvent.method)this[this.currentEvent.name]()
 		}
@@ -46,7 +44,7 @@ var Scenario = Class.create({
 
 	formScenario : function(){
 		this.scenario['startGame'] = "Hold!"
-		this.scenario['firstTank'] = "we will crush u niahahah."
+		this.scenario['firstTank'] = "we will crush u niahah."
 		this.scenario['firstHit'] = "FIRRREE!!"
 	},
 	startGame : function(){

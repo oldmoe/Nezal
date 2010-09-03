@@ -60,13 +60,11 @@ var Unit = Class.create({
 			this.dead = true; 
 			this.die(); 
 			var anim = new CreepBoom(this.x, this.y)
-			game.scene.towerHealthLayer.attach(anim)
+			game.scene.rankLayer.attach(anim)
 			game.scene.objects.push(anim)
 			Sounds.play(Sounds.boom.unit)
 		}
-		if(game.selectedTurret == this){
-			$('unitData').innerHTML = game.templates['unitData'].process({unit: game.selectedTurret})
-		}
+
 		return this;
 	},
 	die: function(){

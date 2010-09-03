@@ -38,6 +38,16 @@ var Game = Class.create({
 			div.setAttribute('class',tower);
 			$$(".towers").first().appendChild(div)
 		})
+		for(var i = 0;i<10-Config.towers.length;i++){
+			var div = document.createElement("div");
+			$$(".towers").first().appendChild(div)
+		}		
+		if(Config.superWeapons.indexOf('Splash')!=-1&&Config.superWeapons[0]!="Splash"){
+			var x = Config.superWeapons[0]
+			var y = Config.superWeapons.indexOf("Splash")
+			Config.superWeapons[0] = "Splash"
+			Config.superWeapons[y]=x
+		}
 		Config.superWeapons.each(function(weapon){
 			weapon = weapon.toLowerCase();
 			var div = document.createElement("div");
@@ -50,6 +60,7 @@ var Game = Class.create({
 			div2.setAttribute('class',weapon);
 			$$(".superWeaponsOff").first().appendChild(div2)
 		})
+		
 		Config.upgrades.each(function(upgrade){
 			var div = document.createElement("div");
 			div.addClassName('upgradeItem')
@@ -57,10 +68,15 @@ var Game = Class.create({
 			div.setAttribute('id',upgrade);
 			$$(".upgradeItems").first().appendChild(div)
 		})
-
+		for(var i = 0;i<8-Config.upgrades.length;i++){
+			var div = document.createElement("div");
+			$$(".upgradeItems").first().appendChild(div)
+		}
 		$$('.start').first().appendChild(Loader.images.background['start.png'])
 
 		$('gameElements').appendChild(Loader.images.background['l_shape.png'])
+		var img7 = document.createElement("IMG");
+		img7.src="challenges/current/cairo/images/path.png"
 		$('canvasContainer').appendChild(Loader.images.background['path.png'])
 		Config.towers.each(function(turret){ 
 			$$('.'+turret).first().appendChild(Loader.images.background[turret+'_button.png'])
@@ -94,9 +110,6 @@ var Game = Class.create({
 		$$('#gameElements .upgrades .upgradeItem').invoke('observe', 'click', Upgrades.select)			
 		$$('.towers div').invoke('observe','click', function(){GhostTurret.select(this)})
 		$$('#gameElements .startText').first().observe('click', function(){self.scene.startAttack()})
-		$$('#gameElements .superWeapons div').each(function(div){ 
-			if(div.className != ''){div.observe('click', function(){self.scene.fire(div.className)})}
-		})
 		$('playAgain').observe('click', game.reset)
 		$('exit').observe('click', game.exit)
 			
@@ -110,6 +123,9 @@ var Game = Class.create({
 		$$('#gameElements .start').first().removeClassName('paused')
 		$('droppingGround').removeClassName('off')	
 		$('result').hide()
+		$$('#gameElements .superWeapons div').each(function(div){ 
+			if(div.className != ''){div.stopObserving('click')}
+		})
 		game.start()	
 	},
 	exit :function(){

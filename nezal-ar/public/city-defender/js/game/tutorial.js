@@ -85,9 +85,7 @@ var Tutorial = Class.create({
 			var x = Math.floor(e.layerX/32)
 			var y = Math.floor(e.layerY/32)
 			GhostTurret.validate(x, y);
-			console.log('validating')
 			if(GhostTurret.valid){
-				console.log('valid')
 				GhostTurret.validate = self.validate
 				anim.finish()
 				self.viewMessage(3)

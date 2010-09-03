@@ -128,7 +128,6 @@ function onFinish(){
 }
 function loadGameImages(loader){
 	try{
-	
 		loader.load([{images : imageNames, store :'game'}, {animations: imageNumbers(16), path: 'images/animations/health_point/', store: 'heal'},
 		{animations: imageNumbers(15), path: 'images/animations/creep_boom/', store: 'creepBoom'},
 		{animations: imageNumbers(12), path: 'images/animations/coins/', store: 'coins'},
