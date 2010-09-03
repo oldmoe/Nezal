@@ -2,9 +2,10 @@ var GameConfigs = {
   level: 0, 
   campaign : 'current',
   missionPath : 'cairo', 
+  mapImage : '',
   waves : [],
   map : [], 
-  mapEntry : [ [0,2], [0,3] ], 
+  mapEntry : [], 
   towers : [],
   superWeapons : [],
   upgrades : []
@@ -521,6 +522,8 @@ var Intro = {
         var missions = Intro.campaignInfo.camp_data.metadata
         var mission = missions.find(function(mission){ if ( GameConfigs.missionPath == mission['path'] ) return true; })
         GameConfigs.map = Intro.campaignInfo.user_data.metadata.missions[mission['order'] - 1  ]['map'];
+        GameConfigs.mapEntry = Intro.campaignInfo.user_data.metadata.missions[mission['order'] - 1  ]['mapEntry'];
+        GameConfigs.mapImage = "../../" + Intro.campPath() + Intro.missionPath() + "/images/path.png";
         GameConfigs.waves = Intro.campaignInfo.user_data.metadata.missions[mission['order'] - 1  ]['waves'];
         GameConfigs.towers = Intro.userData.metadata.added.towers;
         GameConfigs.superWeapons = Intro.userData.metadata.added.weapons;

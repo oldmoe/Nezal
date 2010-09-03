@@ -34,7 +34,7 @@ var GameData = {
     addTower : function()
     {
         var tower = {
-            "name" : $$("#towers #addTower #name")[0].value,
+            "name" : $$("#towers #addTower #name")[0].value.split(' ').join(''),
             "cost" : $$("#towers #addTower #cost")[0].value,
             "exp" : $$("#towers #addTower #exp")[0].value,
             "unlocked" : $$("#towers #addTower #unlocked")[0].checked
@@ -44,6 +44,8 @@ var GameData = {
           alert("Name must exist & Cost and Experience points must be integers");
           return;
         }
+        tower.cost = parseInt(tower.cost);
+        tower.exp = parseInt(tower.exp);
         GameData.towers[tower['name']] = tower;
         $$("#towers #addTower #name")[0].value = "";
         $$("#towers #addTower #cost")[0].value = "";
@@ -59,7 +61,7 @@ var GameData = {
     addWeapon : function()
     {
         var weapon = {
-            "name" : $$("#weapons #addWeapon #name")[0].value,
+            "name" : $$("#weapons #addWeapon #name")[0].value.split(' ').join(''),
             "cost" : $$("#weapons #addWeapon #cost")[0].value,
             "exp" : $$("#weapons #addWeapon #exp")[0].value,
             "unlocked" : $$("#weapons #addWeapon #unlocked")[0].checked
@@ -69,6 +71,8 @@ var GameData = {
           alert("Name must exist & Cost and Experience points must be integers");
           return;
         }
+        weapon.cost = parseInt(weapon.cost);
+        weapon.exp = parseInt(weapon.exp);
         GameData.weapons[weapon['name']] = weapon;
         $$("#weapons #addWeapon #name")[0].value = "";
         $$("#weapons #addWeapon #cost")[0].value = "";
@@ -84,7 +88,7 @@ var GameData = {
     addUpgrade : function()
     {
         var upgrade = {
-            "name" : $$("#upgrades #addUpgrade #name")[0].value,
+            "name" : $$("#upgrades #addUpgrade #name")[0].value.split(' ').join(''),
             "cost" : $$("#upgrades #addUpgrade #cost")[0].value,
             "exp" : $$("#upgrades #addUpgrade #exp")[0].value,
             "unlocked" : $$("#upgrades #addUpgrade #unlocked")[0].checked
@@ -94,6 +98,8 @@ var GameData = {
           alert("Name must exist & Cost and Experience points must be integers");
           return;
         }
+        upgrade.cost = parseInt(upgrade.cost);
+        upgrade.exp = parseInt(upgrade.exp);
         GameData.upgrades[upgrade['name']] = upgrade;
         $$("#upgrades #addUpgrade #name")[0].value = "";
         $$("#upgrades #addUpgrade #cost")[0].value = "";

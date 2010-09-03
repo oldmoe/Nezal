@@ -43,6 +43,7 @@ class CityDefender < Metadata
         mission.each_pair { |key, val| metadata[mission['order'] -1 ][key] = val }
         metadata[mission['order'] -1 ]['waves'] = []
         metadata[mission['order'] -1]['map'] = []
+        metadata[mission['order'] -1]['mapEntry'] = [['',''],['','']]
     end
     metadata    
   end
@@ -58,13 +59,14 @@ class CityDefender < Metadata
         if user_camp_data['missions'][mission['order'] - 1]
           user_camp_data['missions'][mission['order'] - 1]['waves'] = mission['waves']
           user_camp_data['missions'][mission['order'] - 1]['map'] = mission['map']
+          user_camp_data['missions'][mission['order'] - 1]['mapEntry'] = mission['mapEntry']
         end
       end
       user_camp_data
   end
   
   def self.edit_user_campaign(user_campaign)
-    game_profile.metadata= self.encode({'missions'=> [ { 'order' => 1, 'score' => 0, 'waves' => [], 'map' => [] } ] })
+
   end
   
 end

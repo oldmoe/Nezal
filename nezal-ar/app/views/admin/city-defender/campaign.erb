@@ -8,9 +8,9 @@ var CampaignData = {
             'path' : '',
             'waves' : [],
             'map' : [],
+            'mapEntry' : [['',''],['','']],
             'order' : null
-        },
-    creeps : ['RedTank', 'BlueTank', 'BlackTank', 'Rocket', 'RedRocket', 'BlackRocket'],
+    },
 
     init : function()
     {
@@ -66,6 +66,7 @@ var CampaignData = {
             'path' : '',
             'waves' : [],
             'map' : map,
+            'mapEntry' : [['',''],['','']],
             'order' : null
         }
     },
@@ -84,17 +85,19 @@ var CampaignData = {
             {
                 if(CampaignData.missions[i].order == element.getAttribute('order'))
                 {
-                    CampaignData.currMission['name'] = CampaignData.missions[i].name;
-                    CampaignData.currMission['path'] = CampaignData.missions[i].path;
-                    CampaignData.currMission['waves'] = CampaignData.missions[i].waves;
-                    CampaignData.currMission['map'] = CampaignData.missions[i].map;
-                    CampaignData.currMission['order'] = CampaignData.missions[i].order;
+                    CampaignData.currMission = CampaignData.missions[i];
                     break;
                 }
             }
         }
         $$("#addMission #name")[0].value = CampaignData.currMission.name;
         $$("#addMission #path")[0].value = CampaignData.currMission.path;
+        if( !CampaignData.currMission.mapEntry)
+          CampaignData.currMission.mapEntry = [['',''],['','']];
+        $$('#mapEntry input')[0].value = CampaignData.currMission.mapEntry[0][0];
+        $$('#mapEntry input')[1].value = CampaignData.currMission.mapEntry[0][1];
+        $$('#mapEntry input')[2].value = CampaignData.currMission.mapEntry[1][0];
+        $$('#mapEntry input')[3].value = CampaignData.currMission.mapEntry[1][1];
         var x = CampaignData.mapDimensions.x;
         var y = CampaignData.mapDimensions.y;
         for(i = 0;  i< x; i++)
@@ -109,10 +112,7 @@ var CampaignData = {
         }
         $$('#waves #list')[0].innerHTML = CampaignData.templates['waves'].process({list: CampaignData.currMission.waves}); 
         $$('#waves .wave').each(function(wave){
-            $(wave.getAttribute('order') + 'Details').innerHTML = CampaignData.templates['wave'].process(
-                                  { wave: CampaignData.currMission.waves[wave.getAttribute('order')],
-                                    creeps : CampaignData.creeps,
-                                    wave_id : wave.getAttribute('order') } );
+            CampaignData.displayWaveCreeps(wave);
         });
     },
     saveMission : function()
@@ -141,6 +141,20 @@ var CampaignData = {
           CampaignData.missions[CampaignData.missions.length] = CampaignData.currMission;
           CampaignData.currMission['order'] = CampaignData.missions.length;
         }
+        for( var i=0; i< $$('#mapEntry input').length; i++)
+        {
+          var mapEntry = $$('#mapEntry input')[i];
+          if( !(mapEntry.value) || isNaN(mapEntry.value) )
+          {
+              alert("Entry points must be entered and must be numbers");
+              return
+          }
+        }
+        CampaignData.currMission.mapEntry = [[], []];
+        CampaignData.currMission.mapEntry[0][0] = parseInt($$('#mapEntry input')[0].value);
+        CampaignData.currMission.mapEntry[0][1] = parseInt($$('#mapEntry input')[1].value);
+        CampaignData.currMission.mapEntry[1][0] = parseInt($$('#mapEntry input')[2].value);
+        CampaignData.currMission.mapEntry[1][1] = parseInt($$('#mapEntry input')[3].value);
         for(var i=0; i<CampaignData.currMission.waves.length; i++)
             CampaignData.currMission.waves[i] = [];
         $('waves').select('.waveDetails').each(function(creepElement){
@@ -152,36 +166,35 @@ var CampaignData = {
         CampaignData.createEmptyMission();
         CampaignData.selectMission(null);
         $$('#missions #list')[0].innerHTML = CampaignData.templates['missions'].process({list: CampaignData.missions}); 
+//        var mission = $$('#missions #list')[0].select('[order="' + CampaignData.currMission.order + '"]')[0];
     },
     addWave : function()
     {
         CampaignData.currMission.waves.push([]);
         $$('#waves #list')[0].innerHTML = CampaignData.templates['waves'].process({list: CampaignData.currMission.waves}); 
         $$('#waves .wave').each(function(wave){
-            $(wave.getAttribute('order') + 'Details').innerHTML = CampaignData.templates['wave'].process(
-                                  { wave: CampaignData.currMission.waves[wave.getAttribute('order')],
-                                    creeps : CampaignData.creeps,
-                                    wave_id : wave.getAttribute('order') } );
+            CampaignData.displayWaveCreeps(wave);            
         });
     },
     deleteWave : function(element)
     {
-        CampaignData.currMission.waves.splice(element.getAttribute('order'), 1)
+        CampaignData.currMission.waves.splice(element.getAttribute('wave'), 1)
         $$('#waves #list')[0].innerHTML = CampaignData.templates['waves'].process({list: CampaignData.currMission.waves}); 
         $$('#waves .wave').each(function(wave){
-            $(wave.getAttribute('order') + 'Details').innerHTML = CampaignData.templates['wave'].process(
-                                  { wave: CampaignData.currMission.waves[wave.getAttribute('order')],
-                                    creeps : CampaignData.creeps,
-                                    wave_id : wave.getAttribute('order') } );
+            CampaignData.displayWaveCreeps(wave);            
         });
     },
     selectWave : function(element)
     {
-        $(element.getAttribute('order') + 'Details').innerHTML = CampaignData.templates['wave'].process(
-                                  { wave: CampaignData.currMission.waves[element.getAttribute('order')],
-                                    creeps : CampaignData.creeps,
-                                    wave_id : element.getAttribute('order') } );
-        $(element.getAttribute('order') + 'Details').toggle();
+        CampaignData.displayWaveCreeps(element);
+        $(element.getAttribute('wave') + 'Details').toggle();
+    },
+    displayWaveCreeps : function(element)
+    {
+        $(element.getAttribute('wave') + 'Details').innerHTML = CampaignData.templates['wave'].process(
+                            { wave: CampaignData.currMission.waves[element.getAttribute('wave')],
+                              creeps : CampaignData.creeps,
+                              wave_id : element.getAttribute('wave') } );
     },
     addWaveCreep : function(element)
     {
@@ -193,19 +206,27 @@ var CampaignData = {
             alert("Count must be integers");
             return;
         }
+        CampaignData.currMission.waves[element.getAttribute('wave')] = [];
+        $$('#' + element.getAttribute('wave') + 'Details .waveDetails').each(function(creepElement){
+            var oldCreep = {};
+            oldCreep['category'] = creepElement.getElementsByTagName('select')[0].value;
+            oldCreep['count'] = creepElement.getElementsByTagName('input')[0].value;  
+            CampaignData.currMission.waves[creepElement.getAttribute('wave')].push(oldCreep);
+        });
         CampaignData.currMission.waves[element.getAttribute('wave')].push(creep);
-        $(element.getAttribute('wave') + 'Details').innerHTML = CampaignData.templates['wave'].process(
-                                  { wave: CampaignData.currMission.waves[element.getAttribute('wave')],
-                                    creeps : CampaignData.creeps,
-                                    wave_id : element.getAttribute('wave') } );
+        CampaignData.displayWaveCreeps(element);
     },
     deleteWaveCreep : function(element)
     {
+        CampaignData.currMission.waves[element.getAttribute('wave')] = [];
+        $$('#' + element.getAttribute('wave') + 'Details .waveDetails').each(function(creepElement){
+            var oldCreep = {};
+            oldCreep['category'] = creepElement.getElementsByTagName('select')[0].value;
+            oldCreep['count'] = creepElement.getElementsByTagName('input')[0].value;  
+            CampaignData.currMission.waves[creepElement.getAttribute('wave')].push(oldCreep);
+        });
         CampaignData.currMission.waves[element.getAttribute('wave')].splice(element.getAttribute('order'), 1)
-        $(element.getAttribute('wave') + 'Details').innerHTML = CampaignData.templates['wave'].process(
-                                  { wave: CampaignData.currMission.waves[element.getAttribute('wave')],
-                                    creeps : CampaignData.creeps,
-                                    wave_id : element.getAttribute('wave') } );
+        CampaignData.displayWaveCreeps(element);
     },
     deleteElement : function(element)
     {
@@ -261,10 +282,23 @@ $(document).observe('dom:loaded',function(){ CampaignData.init();});
             <LABEL for="path">Path</LABEL>
             <INPUT type="text" id="path" name='path'><BR>
         </div>
-        <div class="form_row">  
-            <LABEL for="map">Map</LABEL>
-            <div id="map">
+        <div id="mapEntry" class="form_row">
+            <LABEL for="map">Entry Points: </LABEL>
+            <div id="entryPoint1">
+                <LABEL for="map">Entry Point 1: </LABEL>
+                <INPUT type="text" id="count" name='count' value="">
+                <INPUT type="text" id="count" name='count' value="">
             </div>
+            <div id="entryPoint2">
+                <LABEL for="map">Entry Point 2 : </LABEL>
+                <INPUT type="text" id="count" name='count' value="">
+                <INPUT type="text" id="count" name='count' value="">
+            </div>  
+        </div>
+        <div class="form_row">  
+          <LABEL for="map">Map</LABEL>
+          <div id="map">
+          </div>
         </div>
         <div class="form_row">  
             <LABEL for="waves">Waves</LABEL>
@@ -310,15 +344,15 @@ $(document).observe('dom:loaded',function(){ CampaignData.init();});
     {for element in list}
       	<div class="waveTitle">
       	    <span class="column"> 
-      	        <a href="#" onclick="CampaignData.selectWave(this);return false;" order="${element_index}">
+      	        <a href="#" onclick="CampaignData.selectWave(this);return false;" wave="${element_index}">
     	  	        Wave  ${element_index}
 	    	        </a>
 	          </span>
 	          <span class="delete deleteWave" >
-              <a order="${element_index}" href="#" onclick="CampaignData.deleteWave(this);return false;" class="submit_links"> x </a>
+              <a wave="${element_index}" href="#" onclick="CampaignData.deleteWave(this);return false;" class="submit_links"> x </a>
             </span>
         </div>
-        <div id="${element_index}Details" order="${element_index}" class="wave" style="display:none;">
+        <div id="${element_index}Details" wave="${element_index}" class="wave" style="display:none;">
         </div>
         <div style="clear:both"></div>
     {/for}
@@ -430,5 +464,14 @@ $(document).observe('dom:loaded',function(){ CampaignData.init();});
     {
       width : 10%;
       margin-right : 5%;
+    }
+    #mapEntry  div LABEL
+    {
+      width : 13%;
+    }
+    #mapEntry INPUT
+    {
+      width : 5%;
+      margin-right : 2%;
     }
 </style>
