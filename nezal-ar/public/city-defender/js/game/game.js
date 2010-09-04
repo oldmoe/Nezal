@@ -23,12 +23,10 @@ var Game = Class.create({
 		else{
 			this.registerHandlers();
 		}
-				console.log('5')
 		if(Config.map)Map.bgGrid = Config.map
 		if(Config.mapEntry)Map.entry = Config.mapEntry
 		Upgrades.init(); 
 		this.scene.start();
-		console.log('6')
 	},
 	setGameImages : function(){
 		Loader.images.background['win.png'].setAttribute("id","winImage")
@@ -167,16 +165,11 @@ function city_defender_start(){
 			game.canvas = fg
 			game.ctx = fg.getContext('2d')
 			game.topCtx = top.getContext('2d')
-			console.log('1')
 			game.setGameImages()
-						console.log('2')
 			game.start();
-						console.log('3')
 		//	game.registerHandlers();
 			Upgrades.selectDefault();
-						console.log('4')
 		}, 200)
 }
 function movement(e){
-console.log(e.pageX,e.pageY)
 }
