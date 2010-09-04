@@ -3,7 +3,8 @@ var Sounds = {
 		fire : [],
 		reload : [],
 		rocketPrepare : [],
-		rocketLaunch : []
+		rocketLaunch : [],
+		patriotLaunch :[]
 	},
 	doubleTurret : {
 		fire : []
@@ -27,7 +28,7 @@ var Sounds = {
 		}
 	},
 	
-	format : 'wav',
+	format : 'ogg',
 	path : 'sounds/Effects/'	
 }
 
@@ -41,12 +42,14 @@ if(window.location.protocol == 'file:'){
 	Sounds.path = 'sounds/Effects/'
 }
 
-createAudioElements(5, Sounds.turret.fire, Sounds.path+Sounds.format+"/ShotGunFire."+Sounds.format)
-createAudioElements(5, Sounds.doubleTurret.fire, Sounds.path+Sounds.format+"/ShotGunFire."+Sounds.format)
-createAudioElements(5, Sounds.turret.rocketLaunch, Sounds.path+Sounds.format+"/ROCKETRELEASE."+Sounds.format);
+createAudioElements(5, Sounds.turret.fire, Sounds.path+Sounds.format+"/bullet."+Sounds.format)
+createAudioElements(5, Sounds.doubleTurret.fire, Sounds.path+Sounds.format+"/bullet."+Sounds.format)
+createAudioElements(5, Sounds.turret.rocketLaunch, Sounds.path+Sounds.format+"/rocket."+Sounds.format);
+createAudioElements(5, Sounds.turret.patriotLaunch, Sounds.path+Sounds.format+"/patriot."+Sounds.format);
 createAudioElements(5, Sounds.boom.unit, Sounds.path+Sounds.format+"/explosion."+Sounds.format)
 
 function createAudioElements(count, store, url, func){
+console.log(url)
 	for(var i = 0; i < count; i++){
 		createAudioElement(store, url, func)
 	}
@@ -54,6 +57,7 @@ function createAudioElements(count, store, url, func){
 
 function createAudioElement(store, url, func){
 	var audio = new Audio(url)
+	console.log(url)
 	//audio.onended = function(){ store.push(audio) }
 	audio.observe("ended", function(){
 		store.push(audio);

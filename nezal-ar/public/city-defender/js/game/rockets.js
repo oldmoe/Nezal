@@ -93,7 +93,7 @@ var Patriot = Class.create(Turret, {
 	
 	},
 	fire : function(target){
-		Sounds.play(Sounds.turret.rocketLaunch)
+		Sounds.play(Sounds.turret.patriotLaunch)
 	}
 })
 
