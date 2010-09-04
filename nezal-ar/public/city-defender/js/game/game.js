@@ -129,7 +129,8 @@ var Game = Class.create({
 		game.start()	
 	},
 	exit :function(){
-	    game.reset()
+	    Intro.replay();
+	    game.reset();
 	    //REDIRECTING TO EXIT GOES HERE
 	},
 	unRegisterHandlers : function(){

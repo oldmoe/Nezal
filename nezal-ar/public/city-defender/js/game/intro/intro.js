@@ -188,12 +188,14 @@ var Intro = {
   
     pages : {
         levelSelection : {
+            index : 0,
             onSelect : function() {
                 Intro.loader.load( [ {images : Intro.images.levelSelection, path : Intro.images.path, store: 'intro'} ],
                               { onFinish : Intro.show } );
             }
         },
         campaign : {
+            index : 1,
             onSelect : function() {
                 var images = [];
                 var images2 = ["/images/camp-map.png"];
@@ -226,6 +228,7 @@ var Intro = {
             }
         },
         mission : {
+            index : 2,
             onSelect : function(){
                 Intro.setupGameConfigs();
                 var creepInfo = [];
@@ -494,7 +497,7 @@ var Intro = {
                                 Intro.userData = data['user_data'];
                                 Intro.userData["metadata"] = JSON.parse(data['user_data']['metadata']);
                                 Intro.userData["metadata"]['added'] = addedItems;
-                                Intro.select(Intro.pages[type]['index']);
+                                Intro.select(type);
                                 Intro.disablePauseScreen();
                             }
                         });
@@ -523,7 +526,7 @@ var Intro = {
         var mission = missions.find(function(mission){ if ( GameConfigs.missionPath == mission['path'] ) return true; })
         GameConfigs.map = Intro.campaignInfo.user_data.metadata.missions[mission['order'] - 1  ]['map'];
         GameConfigs.mapEntry = Intro.campaignInfo.user_data.metadata.missions[mission['order'] - 1  ]['mapEntry'];
-        GameConfigs.mapImage = "../../" + Intro.campPath() + Intro.missionPath() + "/images/path.png";
+        GameConfigs.mapImage = Intro.campPath() + Intro.missionPath() + "/images/path.png";
         GameConfigs.waves = Intro.campaignInfo.user_data.metadata.missions[mission['order'] - 1  ]['waves'];
         GameConfigs.towers = Intro.userData.metadata.added.towers;
         GameConfigs.superWeapons = Intro.userData.metadata.added.weapons;
@@ -583,8 +586,9 @@ var Intro = {
             callback();
 	  },
 	  
-	  select: function(index){
+	  select: function(page){
         Intro.enablePauseScreen();
+        var index = Intro.pages[page].index
         Intro.nextPageIndex = index;
         $("intro").style['curspr'] = 'progress';
         var callback = function() { Intro.pages[Intro.sequence[index]].onSelect(); }
@@ -592,6 +596,14 @@ var Intro = {
             Intro.saveUserSetup( callback );
         else
             callback();
+	  },
+	  
+	  replay: function(){
+	      Intro.retrieveData(function(){
+	                                      Intro.select('levelSelection');
+                                        $('gameStart').hide();
+                                        $("intro").show();
+	                                  });
 	  },
 	  
 	  finish: function(){
