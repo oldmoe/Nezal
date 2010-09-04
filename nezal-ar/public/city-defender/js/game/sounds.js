@@ -57,7 +57,6 @@ console.log(url)
 
 function createAudioElement(store, url, func){
 	var audio = new Audio(url)
-	console.log(url)
 	//audio.onended = function(){ store.push(audio) }
 	audio.observe("ended", function(){
 		store.push(audio);
