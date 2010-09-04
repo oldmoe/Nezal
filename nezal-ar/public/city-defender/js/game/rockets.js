@@ -3,12 +3,10 @@ var RocketLauncher = Class.create(Turret, {
 	targets : 'Ground<br/>Only',
 	facilities : 'Fires Rockets',
 	cssClass : 'rocketLauncher',
-	price : 50,
 	reloaded: true,
 	canHitFlying: false,
 	canHitGround: true,
-	power:100,
-	rate : 0.1,
+	hp:800, power:100, rate:0.05, price: 50, range: 2,
 	initialize : function($super,x,y,scene,extension){
 		this.initImages()
 		$super(x,y,scene,extension)
@@ -62,10 +60,10 @@ var Patriot = Class.create(Turret, {
 	targets : 'Air<br/>Only',
 	facilities : 'Fires Rockets',
 	cssClass : 'patriot',
-	price : 60,
 	firing_turn : 0,
 	canHitFlying: true,
 	canHitGround: false,
+	hp:1000, power:20, rate:0.3, price: 60, range: 3,
 	initialize : function($super,x,y,scene,extension){
 		this.initImages()
 		$super(x,y,scene,extension)
@@ -100,7 +98,7 @@ var Patriot = Class.create(Turret, {
 })
 
 var Rocket = Class.create(Unit, {
-	speed : 10,
+	speed : 12,
 	step : 0,
 	power: 20,
 	lastTargetX : 0,

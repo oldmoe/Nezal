@@ -1,7 +1,7 @@
 var Plane = Class.create(Creep, {
 	name : 'Plane',
 	flying : true,
-	speed : 6,
+	hp:60,maxHp:60,speed:6, power:2, rate:0.1, range: 3,
 	initialize : function($super,x,y,extension){
 		$super(x,y,extension)
 		this.theta = 0
@@ -78,7 +78,7 @@ var Plane = Class.create(Creep, {
 })
 
 var RedPlane = Class.create(Plane, {
-	speed : 9,
+	speed : 7,power:4, rate:0.2, range: 3,
    initImages : function(){
 		this.images = {
 			base : Loader.images.game['red_air_craft.png'],

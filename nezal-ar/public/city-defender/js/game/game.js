@@ -86,7 +86,7 @@ var Game = Class.create({
 		})
 	
 		var img8 = document.createElement("IMG");
-		img8.src='images/tutorial/character.png'
+		img8.src=Config.mapImage
 		$('character').appendChild(img8)
 		var img9 = document.createElement("IMG");
 		$('playAgain').appendChild(Loader.images.background['play_again.png'])

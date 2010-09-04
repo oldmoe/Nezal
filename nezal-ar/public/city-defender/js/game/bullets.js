@@ -1,12 +1,6 @@
 var Turret = Class.create(Unit, {
-	hp : 400,
-	maxHp : 400,
 	theta :0,
 	cannonTheta : 0,
-	rate : 0.2,
-	power: 4.0,
-	range: 3,
-	price: 15,
 	rank : 0,
 	maxRank : 3,
 	kills : 0,
@@ -19,6 +13,7 @@ var Turret = Class.create(Unit, {
 	targets : 'Air &<br/>Ground',
 	facilities : 'Fires Bullets',
 	cssClass : 'tower',
+	hp:300,maxHp : 300, power:5, rate:0.4, price: 10, range: 2,
 	initialize: function($super,x,y,scene,extension){
 		$super(x,y,scene,extension)
 		this.initImages()
@@ -132,7 +127,7 @@ var DoubleTurret = Class.create(Turret, {
 	cssClass : 'doubleTower',
 	fireSound : Sounds.doubleTurret.fire,
 	firing_turn : 0,
-	price : 50,
+	hp:600, power:10, rate:0.2, price: 30, range: 2,
 	initialize: function($super,x,y,scene,extension){
 		$super(x,y,scene,extension)
 	},

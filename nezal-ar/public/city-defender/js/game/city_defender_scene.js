@@ -88,7 +88,7 @@ var CityDefenderScene = Class.create(Scene, {
 		return this
 	},
 	addPlane : function(plane){
-		plane.hp = Math.round(creep.hp*Math.pow(this.creepMultiplier[this.config.level-1],this.waveNumber))
+		plane.hp = Math.round(plane.hp*Math.pow(this.creepMultiplier[this.config.level-1],this.waveNumber))
 		plane.maxHp = plane.hp
 		if(plane){
 			this.rocketsLayer.attach(plane.shadowSprite);
