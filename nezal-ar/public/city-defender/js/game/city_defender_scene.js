@@ -177,6 +177,9 @@ var CityDefenderScene = Class.create(Scene, {
 		pauseDev.addClassName('paused')
 		$$(".startText").first().stopObserving('click')
 		var self = this
+		$$('#gameElements .superWeapons div').each(function(div){ 
+			if(div.className != ''){div.stopObserving('click')}
+		})
 		$$(".startText").first().observe('click', function(){self.resume()})	
 	},
 	renderResume: function(){
@@ -186,6 +189,9 @@ var CityDefenderScene = Class.create(Scene, {
 		resumeDev.addClassName('resumed')
 		$$(".startText").first().stopObserving('click')
 		var self = this
+		$$('#gameElements .superWeapons div').each(function(div){ 
+			if(div.className != ''){div.observe('click', function(){self.fire(div.className)})}
+		})
 		$$(".startText").first().observe('click', function(){self.pause()})
 	},
 	displayStats : function(){

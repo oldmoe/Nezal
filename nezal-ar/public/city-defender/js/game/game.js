@@ -23,10 +23,12 @@ var Game = Class.create({
 		else{
 			this.registerHandlers();
 		}
+				console.log('5')
 		if(Config.map)Map.bgGrid = Config.map
 		if(Config.mapEntry)Map.entry = Config.mapEntry
 		Upgrades.init(); 
 		this.scene.start();
+		console.log('6')
 	},
 	setGameImages : function(){
 		Loader.images.background['win.png'].setAttribute("id","winImage")
@@ -35,6 +37,7 @@ var Game = Class.create({
 		$('result').appendChild(Loader.images.background['lose.png']);
 		Config.towers.each(function(tower){
 			var div = document.createElement("div");
+			div.style.cursor = "pointer"
 			div.setAttribute('class',tower);
 			$$(".towers").first().appendChild(div)
 		})
@@ -51,6 +54,7 @@ var Game = Class.create({
 		Config.superWeapons.each(function(weapon){
 			weapon = weapon.toLowerCase();
 			var div = document.createElement("div");
+			div.style.cursor = "pointer"
 			div.setAttribute('class',weapon);
 			$$(".superWeapons").first().appendChild(div)
 			var childDiv = document.createElement("div");
@@ -63,6 +67,7 @@ var Game = Class.create({
 		
 		Config.upgrades.each(function(upgrade){
 			var div = document.createElement("div");
+			div.style.cursor = "pointer"
 			div.addClassName('upgradeItem')
 			div.addClassName(upgrade)
 			div.setAttribute('id',upgrade);
@@ -129,9 +134,9 @@ var Game = Class.create({
 		game.start()	
 	},
 	exit :function(){
-	    Intro.replay();
-	    game.reset();
-	    //REDIRECTING TO EXIT GOES HERE
+    	    $("gameStart").innerHTML = Intro.templates['game'][1].source;
+    	    Intro.replay();	
+	    onFinish()
 	},
 	unRegisterHandlers : function(){
 		$$('#gameElements .upgrades .upgrade.next').invoke('stopObserving', 'click')	
@@ -162,11 +167,14 @@ function city_defender_start(){
 			game.canvas = fg
 			game.ctx = fg.getContext('2d')
 			game.topCtx = top.getContext('2d')
+			console.log('1')
 			game.setGameImages()
+						console.log('2')
 			game.start();
-		
+						console.log('3')
 		//	game.registerHandlers();
 			Upgrades.selectDefault();
+						console.log('4')
 		}, 200)
 }
 function movement(e){

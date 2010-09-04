@@ -51,6 +51,7 @@ body{
 }
 
 #result #exit{
+	cursor : pointer;
 	position: absolute;
 	width: 115px;
 	height: 60px;
@@ -60,6 +61,7 @@ body{
 }
 
 #result #playAgain{
+	cursor : pointer;
 	position: absolute;
 	width: 115px;
 	height: 60px;
@@ -140,7 +142,7 @@ body{
 
 #gameElements .startText{
 	position:absolute;
-	top:485px;
+	top:480px;
 	left:0px;
 	width:155px;
 	height:80px;
@@ -151,9 +153,12 @@ body{
 	color: blue;
 	cursor:default;
 	margin-top:2%;
+	cursor : pointer;
+	vertical-align:center;
 	-moz-user-select: none;
    -khtml-user-select: none;
     user-select: none;
+        
 }
 
 

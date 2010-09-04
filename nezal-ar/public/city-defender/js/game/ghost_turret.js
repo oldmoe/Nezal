@@ -24,13 +24,17 @@ var ghostTurretFeatures = {
 		return tower == div.className
 		})
 		
-		if(tower == null) return;
+		if(tower == null){ 
+			$('droppingGround').style.cursor = "default"
+			return;
+		}
 		var towerCategory = eval(tower)
 		self.images = towerCategory.prototype.images
 		self.initImages = towerCategory.prototype.initImages
 		self.initImages()
 		$('towerInfo').innerHTML = game.scene.templates['towerInfo'].process({values: towerCategory.prototype, tower : towerCategory.prototype})
 		self.selected = true;
+		$('droppingGround').style.cursor = "none"
 		$('droppingGround').observe("mouseenter", function(e){
 			self.isIn = true
 			self.x = e.layerX
