@@ -49,7 +49,6 @@ createAudioElements(5, Sounds.turret.patriotLaunch, Sounds.path+Sounds.format+"/
 createAudioElements(5, Sounds.boom.unit, Sounds.path+Sounds.format+"/explosion."+Sounds.format)
 
 function createAudioElements(count, store, url, func){
-console.log(url)
 	for(var i = 0; i < count; i++){
 		createAudioElement(store, url, func)
 	}
