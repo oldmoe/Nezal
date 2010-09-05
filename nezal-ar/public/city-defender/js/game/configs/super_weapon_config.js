@@ -17,7 +17,7 @@ var SuperWeaponConfig = {
                 image : 'weak.png', 
                 smallImage : 'weak.png',
                 skeleton : 'weak.png',
-                desc : "Reduces all units' health point by 10% per second. Lasts for 5 seconds." },
+                desc : "Reduces all units' health point by 10% per second. Lasts for 10 seconds." },
     "Hyper" : { name : "Hyper",
                 image : 'hyper.png',
                 smallImage : 'hyper.png',
