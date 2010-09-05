@@ -146,9 +146,9 @@
             <img itemid="${data.itemid}" type="${data.type}" src="images/intro/market/add.png" class="action" onclick="Intro.addItem(this);"> </img> 
         {/if}
       {else}
-        {if ((data.cost > data.coins) || ( data.rank[0] < data.exp))}
+        {if ((data.cost > data.coins) && ( data.rank[0] <= data.exp))}
           <img src="images/intro/market/inactive-unlock.png" class="action"> </img>
-          {if (data.cost > data.coins)}
+          {if (data.cost < data.coins)}
             <img src="images/intro/market/inactive-unlock.png"> </img>
           {/if}
         {else}
