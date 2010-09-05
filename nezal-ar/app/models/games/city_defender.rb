@@ -69,7 +69,7 @@ class CityDefender < Metadata
     data = self.decode(data)
     metadata = self.decode(user_campaign.metadata)
     if (data['win'])
-      metadata['missions'][data['mission']] = { 'order' => data['mission'], 'score' => 0 }
+      metadata['missions'][data['mission']] = { 'order' => data['mission'] + 1, 'score' => 0 }
     end
     if metadata['missions'][data['mission'] -1]
       metadata['missions'][data['mission'] -1]['score'] = if metadata['missions'][data['mission'] -1]['score'] > data['score']
