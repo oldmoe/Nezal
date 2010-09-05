@@ -215,11 +215,11 @@ var CityDefenderScene = Class.create(Scene, {
 	},
 	checkStatus: function(){
 		if(this.running && this.escaped >= this.maxEscaped){
-			this.lose();this.uploadScore()
+			this.lose();this.uploadScore(false)
 			return
 		}else if(this.config && this.playing){
 			if(this.config.waves.length == 0 && this.creeps.length == 0 && this.waitingCreeps == 0 ){
-				this.win();this.uploadScore()
+				this.win();this.uploadScore(true)
 				return
 			}else if(this.creeps.length == 0  &&this.waitingCreeps == 0 && this.config.waves.length > 0 && !this.wavePending && this.running){
 				this.waveNumber++
@@ -344,7 +344,7 @@ var CityDefenderScene = Class.create(Scene, {
 			}
 		})
 	},
-	uploadScore : function(){
+	uploadScore : function(win){
 		this.score*=this.config.level
 		//upload goes heeeeeeeere
 	},
