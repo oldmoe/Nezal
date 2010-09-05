@@ -81,7 +81,7 @@ var Intro = {
                     "market/coin.png",
                     "market/remove-big.png",
                     "market/inactive-unlock.png",
-                    "market/rank.png"
+                    "market/money.png"
                 ],
         weapons : [
                     "market/towers-on.png",

@@ -163,6 +163,7 @@ body {
 {
   float : left;
   position : relative;
+  padding : 0px 9px;
 }
 #campaign .mission .missionName
 {
@@ -622,15 +623,38 @@ body {
 {
   height:30px;
   position:absolute;
-  top:175px;
-  width:100%;
+  top:170px;
+  width:89%;
+  color : white;
+}
+#marketPlace #weapons #floatBg  .actions, #marketPlace #upgrades #floatBg  .actions
+{
+  width:85%;
+}
+#marketPlace #floatBg .actions .rank
+{
+  left:20px;
+  position:absolute;
+  top:15px;
+  color:#0f94a3;
+  text-transform : capitalize;
 }
 #marketPlace #floatBg .actions .action
 {
   bottom:0;
   cursor:pointer;
+  float : right;
+  font-size : 11px;
+  line-height : 180%
+}
+#marketPlace #floatBg .actions .addMoney
+{
+  bottom:0;
+  cursor:pointer;
   position:absolute;
-  right:50px;
+  right : 60px;
+  color : white;
+  text-transform : capitalize;
 }
 /*
 #challenges
