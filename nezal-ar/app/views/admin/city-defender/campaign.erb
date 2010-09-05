@@ -2,7 +2,7 @@
 var CampaignData = {
     missions : [],
     templates : {},
-    mapDimensions : { x : 20 , y : 15 },
+    mapDimensions : { x : 15 , y : 20 },
     currMission : {
             'name' : '',
             'path' : '',
@@ -33,7 +33,7 @@ var CampaignData = {
                       });
         var x = CampaignData.mapDimensions.x;
         var y = CampaignData.mapDimensions.y;
-        $('map').setAttribute('style', "width : " + ((y*30) + x*2) + "px;")
+        $('map').setAttribute('style', "width : " + ((y*30) + y*2) + "px;")
         for(i = 0;  i< x; i++)
         {
             for( j=0; j < y ; j++)
