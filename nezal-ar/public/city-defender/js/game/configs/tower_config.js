@@ -8,28 +8,34 @@
       about creeps involved in the mission
 */
 var TowerConfig = {
-    "Turret" : { model : 'AT-4',
-                  name : 'Turret', 
+    "Turret" : {  name : 'Belcher', 
                   image : 'belecher.png', 
                   smallImage : 'belecher_small.png',
                   skeleton : 'belecher_skeleton.png',
-                    desc : "This is the black creep it is soooo destructive" },
-    "DoubleTurret" : {  model : 'G-31',
-                  name : 'Double Turret',
+                    desc : "Belcher, a fast machine gun tower, it has small range nozzle," + 
+                          " and can be used to counter both air and ground units." +
+                          " It uses bullets as its main ammunition and doesn't have any detection mechanism, but it will fire on sight." },
+    "DoubleTurret" : {
+                  name : 'Reaper',
                   image : 'reaper.png', 
                   smallImage : 'reaper_small.png',
                   skeleton : 'reaper_skeleton.png',
-                    desc : "This is the Red plane creep it is soooo destructive" },
-    "Patriot" : { model : 'G-32', 
-                  name : 'Patriot',
+                    desc : "Reaper, an upgraded version of the Belcher machine gun tower," + 
+                           " it has two nozzles which enable it to attack with a higher rate than the Belcher." + 
+                           " It is more effective than the Belcher as it secures more fire power against any hostile activities." },
+    "Patriot" : { name : 'Patriot',
                   image : 'patriot.png', 
                   smallImage : 'patriot_small.png',
                   skeleton : 'patriot_skeleton.png',
-                  desc : "This is the black creep it is soooo destructive" },
-    "RocketLauncher" : { model : 'G-32',
-                  name : 'Rocket Launcher',
+                  desc : "Patriot , a long-range, all-altitude, surface-to-air missile (SAM) launcher." + 
+                         " This air defense system is used to counter advanced aircraft." +
+                         " It uses an advanced aerial interceptor missiles and high performance radar systems to destroy its target." },
+    "RocketLauncher" : {
+                  name : 'Exploder',
                   image : 'exploder.png', 
                   smallImage : 'exploder_small.png',
                   skeleton : 'exploder_skeleton.png',
-                  desc : "This is the black creep it is soooo destructive" }
+                  desc : "Exploder, a tactical surface-to-surface missile (SSM) launcher," +
+                         " Its major use is as a general bombardment weapon to counter heavy land units." +
+                         " It has a radar system for detecting its targets to destroy them." }
 }

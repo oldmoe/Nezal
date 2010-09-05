@@ -14,7 +14,8 @@ var GameConfigs = {
 var Config = GameConfigs;
 
 var PathConfigs = {
-  template_path : "templates/intro/"
+  introTemplate : "templates/intro/intro.tpl",
+  gameTemplate : "templates/game.tpl"
 }
 
 var Intro = {
@@ -30,13 +31,13 @@ var Intro = {
               "upgrades"
             ],
     templates : {
-              challenges : [PathConfigs.template_path + "challenges.tpl", 0],
-              campaign : [PathConfigs.template_path + "campaign.tpl", 0],
-              mission : [PathConfigs.template_path + "mission.tpl", 0],
-              towers : [PathConfigs.template_path + "towers.tpl", 0],
-              weapons : [PathConfigs.template_path + "super_weapons.tpl", 0],
-              upgrades : [PathConfigs.template_path + "upgrades.tpl", 0],
-              game : [ "templates/game.tpl", 0 ]
+              challenges : [ "challengesTemplate", 0],
+              campaign : [ "campaignTemplate", 0],
+              mission : [ "missionTemplate", 0],
+              towers : [ "marketItemsTemplate", 0],
+              weapons : [ "marketItemsTemplate", 0],
+              upgrades : [ "marketItemsTemplate", 0],
+              marketplaceItem : [ "marketItemDetailsTemplate", 0]
             },
     images : {
         path : "images/intro/" ,
@@ -76,7 +77,11 @@ var Intro = {
                     "market/shown-lamp.png",
                     "market/locked.png",
                     "market/remove.png",
-                    "market/q-mark.png"
+                    "market/q-mark.png",
+                    "market/coin.png",
+                    "market/remove-big.png",
+                    "market/inactive-unlock.png",
+                    "market/rank.png"
                 ],
         weapons : [
                     "market/towers-on.png",
@@ -123,33 +128,28 @@ var Intro = {
     initialize: function(){
         this.currentPage = -1;
         this.loader = new Loader();
-        for(var template in Intro.templates){
-            Intro.retrieveTemplates(template);
-	      }
+        Intro.retrieveTemplates();
     },
     
-    retrieveTemplates: function(template){
-        new Ajax.Request(Intro.templates[template][0], {method:'get',
+    retrieveTemplates: function(){
+        new Ajax.Request( PathConfigs.introTemplate, {method:'get',
 	            onSuccess: function(t){
-  		      		  Intro.templates[template][1] = TrimPath.parseTemplate(t.responseText);
-	  	      		  var size = 0;
-	  	      		  var received = 0;
-	  	      		  for(var t in Intro.templates) 
-	  	      		  {
-	    	      		    size += 1;
-	    	      		    if( Intro.templates[t][1])
-    	    	      		      received++;	      		      
-	  	      		  }
-		        		  if (received == size)
-		        		  {
-        		  	      Intro.retrieveData( function() {
-        		  	          $("gameStart").innerHTML = Intro.templates['game'][1].source;
-						              initLoadImages(new Loader()); 
-                          Intro.next();
-                      })
-                  }
+                  $('introTemplates').innerHTML = t.responseText;
+                  for(var template in Intro.templates){
+                		  Intro.templates[template][1] = TrimPath.parseDOMTemplate(Intro.templates[template][0]);
+	                }
+                  new Ajax.Request( PathConfigs.gameTemplate, {method:'get',
+                                          onSuccess: function(t){
+                                      		  	          $("gameStart").innerHTML = t.responseText;
+                                      		  	          Intro.templates['game'] = t.responseText;
+                                          		  	      Intro.retrieveData( function() {
+				                                                    initLoadImages(new Loader()); 
+                                                            Intro.next();
+                                                        })
+                                          } 
+                  });
 			      }
-	      })
+	      });
     },
 
     retrieveData: function( callback){
@@ -159,6 +159,7 @@ var Intro = {
                   Intro.gameData = JSON.parse(data['game_data']['metadata']);
                   Intro.userData = data['user_data'];
                   Intro.userData["metadata"] = JSON.parse(data['user_data']['metadata']);
+                  Intro.ranks = data['ranks'];
                   callback();
               }
         });
@@ -320,11 +321,26 @@ var Intro = {
                                   }} );
             },
             setFloatBgInfo : function(element){
-                  $$("#marketPlace #floatBg div span")[0].innerHTML = TowerConfig[element.getAttribute("itemid")].model + " " +
-                                                                   TowerConfig[element.getAttribute("itemid")].name + " : ";
-                  $$("#marketPlace #floatBg div span")[1].innerHTML = TowerConfig[element.getAttribute("itemid")].desc;
-                  $$("#marketPlace #floatBg div img")[0].src = Intro.images.path + "towers/" + 
-                                                                  TowerConfig[element.getAttribute("itemid")].skeleton;    
+                  var id = element.getAttribute('itemid');
+                  var type = element.getAttribute('type'); 
+                  var item_rank;
+                  for(var rank in Intro.ranks)                 
+                  {
+                      if(Intro.ranks[rank][0]<=Intro.gameData[type][id].exp && Intro.ranks[rank][1]>=Intro.gameData[type][id].exp )
+                      {
+                        item_rank = rank;
+                        break;
+                      }
+                  }
+                  var data  = { 'coins' : Intro.userData.coins,
+                                'exp' : Intro.userData.exp,
+                                'configs' : TowerConfig,
+                                'itemid' : id,
+                                'type': type,
+                                'cost' : Intro.gameData[type][id].cost,
+                                'rank' : [Intro.gameData[type][id].exp, item_rank]
+                              }
+                  $$("#marketPlace #towers #floatBg")[0].innerHTML = Intro.templates['marketplaceItem'][1].process({ "data" : data });    
             }
         },
         weapons : {
@@ -371,10 +387,26 @@ var Intro = {
 
             },
             setFloatBgInfo : function(element){
-                  $$("#marketPlace #weapons #floatBg div span")[0].innerHTML = SuperWeaponConfig[element.getAttribute("itemid")].name  + " : " ;
-                  $$("#marketPlace #weapons #floatBg div span")[1].innerHTML = SuperWeaponConfig[element.getAttribute("itemid")].desc;
-                  $$("#marketPlace #weapons #floatBg div img")[0].src = Intro.images.path + "weapons/" + 
-                                                                  SuperWeaponConfig[element.getAttribute("itemid")].skeleton;    
+                  var id = element.getAttribute('itemid');
+                  var type = element.getAttribute('type'); 
+                  var item_rank;
+                  for(var rank in Intro.ranks)                 
+                  {
+                      if(Intro.ranks[rank][0]<=Intro.gameData[type][id].exp && Intro.ranks[rank][1]>=Intro.gameData[type][id].exp )
+                      {
+                        item_rank = rank;
+                        break;
+                      }
+                  }
+                  var data  = { 'coins' : Intro.userData.coins,
+                                'exp' : Intro.userData.exp,
+                                'configs' : SuperWeaponConfig,
+                                'itemid' : id,
+                                'type': type,
+                                'cost' : Intro.gameData[type][id].cost,
+                                'rank' : [Intro.gameData[type][id].exp, item_rank]
+                              }
+                  $$("#marketPlace #weapons #floatBg")[0].innerHTML = Intro.templates['marketplaceItem'][1].process({ "data" : data });    
             }
         },
         upgrades : {
@@ -418,10 +450,26 @@ var Intro = {
                                   }} );
             },
             setFloatBgInfo : function(element){
-                  $$("#marketPlace #upgrades #floatBg div span")[0].innerHTML = UpgradeConfig[element.getAttribute("itemid")].name  + " : ";
-                  $$("#marketPlace #upgrades #floatBg div span")[1].innerHTML = UpgradeConfig[element.getAttribute("itemid")].desc;
-                  $$("#marketPlace #upgrades #floatBg div img")[0].src = Intro.images.path + "upgrades/" + 
-                                                                  UpgradeConfig[element.getAttribute("itemid")].skeleton;
+                  var id = element.getAttribute('itemid');
+                  var type = element.getAttribute('type'); 
+                  var item_rank;
+                  for(var rank in Intro.ranks)                 
+                  {
+                      if(Intro.ranks[rank][0]<=Intro.gameData[type][id].exp && Intro.ranks[rank][1]>=Intro.gameData[type][id].exp )
+                      {
+                        item_rank = rank;
+                        break;
+                      }
+                  }
+                  var data  = { 'coins' : Intro.userData.coins,
+                                'exp' : Intro.userData.exp,
+                                'configs' : UpgradeConfig,
+                                'itemid' : id,
+                                'type': type,
+                                'cost' : Intro.gameData[type][id].cost,
+                                'rank' : [Intro.gameData[type][id].exp, item_rank]
+                              }
+                  $$("#marketPlace #upgrades #floatBg")[0].innerHTML = Intro.templates['marketplaceItem'][1].process({ "data" : data });    
             }
         }
     },

@@ -19,6 +19,8 @@ class GamesController < ApplicationController
     klass = get_helper_klass()
     game_metadata = klass.load(@game)
     user_metadata = klass.load_game_profile(@game_profile)
+    ranks = {}
+    @game.ranks.each { |rank| ranks[rank.name] = [rank.lower_exp, rank.upper_exp]}
     data = {
       :game_data => { :metadata => game_metadata} , 
       :user_data => { :coins => @user.coins, 
@@ -27,7 +29,8 @@ class GamesController < ApplicationController
                       :newbie => @game_profile.newbie,
                       :locale => @game_profile.locale, 
                       :metadata => user_metadata
-                      }
+                      },
+      :ranks => ranks
     }
     JSON.generate(data)
   end

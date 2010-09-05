@@ -119,7 +119,6 @@ var Game = Class.create({
 	},
 	reset : function(){
 		game.scene.reactor.pause()
-		 //$("gameStart").innerHTML = Intro.templates['game'][1].source;
 		new Effect.Fade('static')
 		$$('#gameElements .startText').first().stopObserving('click')
 		$$('#gameElements .start').first().removeClassName('resumed')
@@ -132,7 +131,7 @@ var Game = Class.create({
 		game.start()	
 	},
 	exit :function(){
-    	    $("gameStart").innerHTML = Intro.templates['game'][1].source;
+    	    $("gameStart").innerHTML = Intro.templates['game'];
     	    Intro.replay();	
 	    onFinish()
 	},

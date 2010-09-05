@@ -495,7 +495,7 @@ body {
   padding-top : 10px;
 }
 
-#marketPlace #towerDisplay, #marketPlace #weaponDisplay, #marketPlace #upgradeDisplay
+#marketPlace #towersDisplay, #marketPlace #weaponsDisplay, #marketPlace #upgradesDisplay
 {
   height:249px;
   left:239px;
@@ -503,7 +503,7 @@ body {
   top:58px;
   width:447px;
 }
-#marketPlace #towerDisplay .item, #marketPlace #weaponDisplay .item, #marketPlace #upgradeDisplay .item
+#marketPlace #towersDisplay .item, #marketPlace #weaponsDisplay .item, #marketPlace #upgradesDisplay .item
 {
   height : 87px;
   width : 145px;
@@ -514,7 +514,7 @@ body {
   position : relative;
   overflow : hidden;
 }
-#marketPlace #towerDisplay .item div, #marketPlace #weaponDisplay .item div, #marketPlace #upgradeDisplay .item div
+#marketPlace #towersDisplay .item div, #marketPlace #weaponsDisplay .item div, #marketPlace #upgradesDisplay .item div
 {
   height:75px;
   position : relative;
@@ -536,7 +536,7 @@ body {
 {
   opacity : 1;
 }
-#marketPlace #towerDisplay .item div .label, #marketPlace #weaponDisplay .item div .label, #marketPlace #upgradeDisplay .item div .label
+#marketPlace #towersDisplay .item div .label, #marketPlace #weaponsDisplay .item div .label, #marketPlace #upgradesDisplay .item div .label
 {
   position : absolute;
   left : 6px;
@@ -572,35 +572,65 @@ body {
 }
 #marketPlace #floatBg .content
 {
-  left:40px;
-  padding-right : 40px;
+  left:20px;
   position:absolute;
   top:20px;
-  height : 180px;
+  height : 150px;
+  width : 465px;
 }
 #marketPlace #floatBg .content .spans
 {
   float:left;
   padding-right:10px;
-  padding-top:30px;
-  width:65%;
+  width:75%;
+  text-align : justify;
   height : 100%;
 }
 #marketPlace #floatBg .content .image
 {
-  padding : 45px 0px;
-  float : left;
+  float : right;
   text-align : center;
+  width : 20%;
+  margin-top : 20px;
+}
+#marketPlace #weapons #floatBg .content .spans, #marketPlace #upgrades #floatBg .content .spans
+{
+  width : 65%;
+}
+#marketPlace #weapons #floatBg .content .image, #marketPlace #upgrades #floatBg .content .image
+{
+  margin-top : 35px;
   width : 30%;
 }
 #marketPlace #floatBg .name
 {
-  font-weight : bold;
+  font-size:20px;
+  font-weight:bold;
+  line-height:150%;
+  text-decoration:underline;
+  text-transform:uppercase;
 }
 #marketPlace #floatBg .desc
 {
+  font-size:15px;
+  font-weight:normal;
+  line-height:130%;
   white-space:normal;
   word-wrap:break-word;
+}
+#marketPlace #floatBg .actions
+{
+  height:30px;
+  position:absolute;
+  top:175px;
+  width:100%;
+}
+#marketPlace #floatBg .actions .action
+{
+  bottom:0;
+  cursor:pointer;
+  position:absolute;
+  right:50px;
 }
 /*
 #challenges
