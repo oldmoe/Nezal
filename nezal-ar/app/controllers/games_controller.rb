@@ -45,6 +45,8 @@ class GamesController < ApplicationController
     # Reload The user after the changes
     game_metadata = klass.load(@game)
     @user = FbUser.where(:fb_id => @user.fb_id).first
+    ranks = {}
+    @game.ranks.each { |rank| ranks[rank.name] = [rank.lower_exp, rank.upper_exp]}
     data = {
       :game_data => { :metadata => game_metadata} , 
       :user_data => { :coins => @user.coins, 
