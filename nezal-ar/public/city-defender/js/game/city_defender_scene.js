@@ -346,7 +346,9 @@ var CityDefenderScene = Class.create(Scene, {
 	},
 	uploadScore : function(win){
 		this.score*=this.config.level
-		//upload goes heeeeeeeere
+		// Upload Score code goes here
+		var callback = function(){}
+    Intro.sendScore(this.score, win, callback);
 	},
 	waitingCreeps : 0,
 	wavePending : false,

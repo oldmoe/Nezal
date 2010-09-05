@@ -73,9 +73,15 @@ var CampaignData = {
     mapOnclick : function(element)
     {
         if(element.hasClassName('on'))
+        {
             element.removeClassName('on');
-        else
+            element.addClassName('doubleOn');
+        }else if (element.hasClassName('doubleOn'))
+        {
+            element.removeClassName('doubleOn');
+        }else{
             element.addClassName('on');
+        }
     },
     selectMission : function(element)
     {
@@ -104,10 +110,14 @@ var CampaignData = {
         {
             for( j=0; j < y ; j++)
             {
-                if (CampaignData.currMission.map[i][j])
+                if (CampaignData.currMission.map[i][j] == 2)
+                    $(i+"-"+j).addClassName('doubleOn');
+                else if (CampaignData.currMission.map[i][j] == 1)
                     $(i+"-"+j).addClassName('on');
-                else
+                else{
                     $(i+"-"+j).removeClassName('on');
+                    $(i+"-"+j).removeClassName('doubleOn');
+                }
             }
         }
         $$('#waves #list')[0].innerHTML = CampaignData.templates['waves'].process({list: CampaignData.currMission.waves}); 
@@ -130,7 +140,9 @@ var CampaignData = {
         {
             for( j=0; j < y ; j++)
             {
-                if ($(i+ '-' + j).hasClassName('on'))
+                if ($(i+ '-' + j).hasClassName('doubleOn'))
+                    CampaignData.currMission.map[i][j] = 2;
+                else if ($(i+ '-' + j).hasClassName('on'))
                     CampaignData.currMission.map[i][j] = 1;
                 else
                     CampaignData.currMission.map[i][j] = 0;
@@ -422,7 +434,10 @@ $(document).observe('dom:loaded',function(){ CampaignData.init();});
         float : left;
     }
     .on{
-        background : chocolate;
+       background : chocolate;
+    }
+    .doubleOn{
+        background : red;
     }
     #map, #waves {
       float : left;

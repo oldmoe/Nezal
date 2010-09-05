@@ -53,20 +53,39 @@ class CityDefender < Metadata
   end
   
   def self.load_user_campaign(user_campaign)
-      camp_data = self.decode(user_campaign.campaign.metadata)
-      user_camp_data = self.decode(user_campaign.metadata)
-      camp_data.each  do | mission|
-        if user_camp_data['missions'][mission['order'] - 1]
-          user_camp_data['missions'][mission['order'] - 1]['waves'] = mission['waves']
-          user_camp_data['missions'][mission['order'] - 1]['map'] = mission['map']
-          user_camp_data['missions'][mission['order'] - 1]['mapEntry'] = mission['mapEntry']
-        end
+    camp_data = self.decode(user_campaign.campaign.metadata)
+    user_camp_data = self.decode(user_campaign.metadata)
+    camp_data.each  do | mission|
+      if user_camp_data['missions'][mission['order'] - 1]
+        user_camp_data['missions'][mission['order'] - 1]['waves'] = mission['waves']
+        user_camp_data['missions'][mission['order'] - 1]['map'] = mission['map']
+        user_camp_data['missions'][mission['order'] - 1]['mapEntry'] = mission['mapEntry']
       end
-      user_camp_data
+    end
+    user_camp_data
   end
   
-  def self.edit_user_campaign(user_campaign)
-
+  def self.edit_user_campaign(user_campaign, data)
+    data = self.decode(data)
+    metadata = self.decode(user_campaign.metadata)
+    if (data['win'])
+      metadata['missions'][data['mission']] = { 'order' => data['mission'], 'score' => 0 }
+    end
+    if metadata['missions'][data['mission'] -1]
+      metadata['missions'][data['mission'] -1]['score'] = if metadata['missions'][data['mission'] -1]['score'] > data['score']
+                                                            metadata['missions'][data['mission'] -1]['score']
+                                                          else
+                                                            data['score']
+                                                          end
+      user_campaign.profile.score += data['score']
+      ranks = user_campaign.profile.game.ranks.where( " lower_exp <= #{user_campaign.profile.score} AND " + 
+                                                                         " ( upper_exp > #{user_campaign.profile.score} OR upper_exp == -1 ) "  )
+      user_campaign.profile.rank = ranks.first
+      user_campaign.metadata = self.encode(metadata)
+      user_campaign.profile.save
+      user_campaign.save
+    end
+   
   end
   
 end

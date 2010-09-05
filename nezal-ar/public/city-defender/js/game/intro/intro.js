@@ -569,9 +569,22 @@ var Intro = {
               });
     },
     
+    sendScore : function(score, win, callback){
+        new Ajax.Request(  GameConfigs.campaign + "/metadata" ,
+              {   method:'post', 
+                  parameters: { 'data' : Object.toJSON({'mission' : GameConfigs.mission.order, 'win' : win, 'score' : score }) },
+                  onSuccess : function(t, json){
+                      var data = JSON.parse(t.responseText);
+                      alert('data');
+                      callback();
+                  }
+              });
+    },
+    
     setupGameConfigs : function(){
         var missions = Intro.campaignInfo.camp_data.metadata
         var mission = missions.find(function(mission){ if ( GameConfigs.missionPath == mission['path'] ) return true; })
+        GameConfigs.mission = mission;
         GameConfigs.map = Intro.campaignInfo.user_data.metadata.missions[mission['order'] - 1  ]['map'];
         GameConfigs.mapEntry = Intro.campaignInfo.user_data.metadata.missions[mission['order'] - 1  ]['mapEntry'];
         GameConfigs.mapImage = Intro.campPath() + Intro.missionPath() + "/images/path.png";
