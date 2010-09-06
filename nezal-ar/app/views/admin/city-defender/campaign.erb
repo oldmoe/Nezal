@@ -111,12 +111,14 @@ var CampaignData = {
             for( j=0; j < y ; j++)
             {
                 if (CampaignData.currMission.map[i][j] == 2)
+                {
                     $(i+"-"+j).addClassName('doubleOn');
                     $(i+"-"+j).removeClassName('on');
-                else if (CampaignData.currMission.map[i][j] == 1)
+                }else if (CampaignData.currMission.map[i][j] == 1)
+                {
                     $(i+"-"+j).addClassName('on');
                     $(i+"-"+j).removeClassName('doubleOn');
-                else{
+                }else{
                     $(i+"-"+j).removeClassName('on');
                     $(i+"-"+j).removeClassName('doubleOn');
                 }
