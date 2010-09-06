@@ -251,6 +251,7 @@ var Intro = {
                           Intro.images.mission.each(function(image){ images.push(image) });
                           images.push( "../../" + Intro.campPath() + Intro.missionPath() + "/images/city.png");
                           images.push( "../../" + Intro.campPath() + Intro.missionPath() + "/images/map.png");   
+                          images.push( "../../" + Intro.campPath() + Intro.missionPath() + "/images/path.png");   
                           ChallengeSelector.mission.creeps.each( function(creep){
                                                                      images2.push(CreepConfig[creep]['image']);
                                                                      images2.push(CreepConfig[creep]['skeleton']);  

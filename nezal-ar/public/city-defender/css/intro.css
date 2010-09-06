@@ -131,7 +131,7 @@ body {
   left:100px;
   position:absolute;
   top:75px;
-  width:270px;
+  width:300px;
 }
 #campaign .name
 {
@@ -143,7 +143,8 @@ body {
 #campaign .desc
 {
   color:wheat;
-  font-size:12px;
+  font-size:14px;
+  line-height:130%;
   text-align:justify;
 }
 
@@ -163,7 +164,7 @@ body {
 {
   float : left;
   position : relative;
-  padding : 0px 9px;
+  margin : 0px 9px;
 }
 #campaign .mission .missionName
 {
