@@ -2,6 +2,11 @@ var CityDefenderScene = Class.create(Scene, {
 	fistCreep : false,
 	startGame : false,
 	firstHit : false,
+	nukeCount : 2,
+	healCount : 2,
+	weakCount : 2,
+	splashCount :2,
+	hyperCount : 2,
 	initialize : function($super,config,delay,baseCtx,upperCtx){
 		this.creeps = []
 		this.turrets = []
@@ -26,11 +31,11 @@ var CityDefenderScene = Class.create(Scene, {
 		this.upperCtx = upperCtx;
 		this.scenario = new Scenario(this)
 		this.scenario.start()
-		this.nuke = new Nuke(this, {count: 2, type:'nuke'})
-		this.heal = new Heal(this, {count: 2, type:'heal'})
-		this.weak = new Weak(this, {count: 2, type:'weak'})
-		this.splash = new Splash(this, {count: 2, type:'splash'})
-		this.hyper = new Hyper(this, {count: 2, type:'hyper'})
+		this.nuke = new Nuke(this, {count: this.nukeCount, type:'nuke'})
+		this.heal = new Heal(this, {count: this.healCount, type:'heal'})
+		this.weak = new Weak(this, {count: this.weakCount, type:'weak'})
+		this.splash = new Splash(this, {count: this.splashCount, type:'splash'})
+		this.hyper = new Hyper(this, {count: this.hyperCount, type:'hyper'})
 		this.templates = {}
 		this.selectedTurret = null
 		this.templates['towerInfo'] = TrimPath.parseTemplate($('towerInfoTemplate').value) 
@@ -168,31 +173,31 @@ var CityDefenderScene = Class.create(Scene, {
 		startDev.addClassName('resumed')
 		$$(".startText").first().innerHTML = T.pause
 		startDev.stopObserving('click')
-		$$(".startText").first().observe('click', function(){self.pause()})
+		$$(".start").first().observe('click', function(){self.pause()})
 	},
 	renderPause: function(){
 		var pauseDev = $$('#gameElements .resumed').first()
 		$$(".startText").first().innerHTML = T.resume
 		pauseDev.removeClassName('resumed')
 		pauseDev.addClassName('paused')
-		$$(".startText").first().stopObserving('click')
+		$$(".start").first().stopObserving('click')
 		var self = this
 		$$('#gameElements .superWeapons div').each(function(div){ 
 			if(div.className != ''){div.stopObserving('click')}
 		})
-		$$(".startText").first().observe('click', function(){self.resume()})	
+		$$(".start").first().observe('click', function(){self.resume()})	
 	},
 	renderResume: function(){
 		var resumeDev = $$('#gameElements .paused').first()
 		$$(".startText").first().innerHTML = T.pause
 		resumeDev.removeClassName('paused')
 		resumeDev.addClassName('resumed')
-		$$(".startText").first().stopObserving('click')
+		$$(".start").first().stopObserving('click')
 		var self = this
 		$$('#gameElements .superWeapons div').each(function(div){ 
 			if(div.className != ''){div.observe('click', function(){self.fire(div.className)})}
 		})
-		$$(".startText").first().observe('click', function(){self.pause()})
+		$$(".start").first().observe('click', function(){self.pause()})
 	},
 	displayStats : function(){
 		if(this.statText){
@@ -359,7 +364,7 @@ var CityDefenderScene = Class.create(Scene, {
 	fps : 0,
 	score: 0,
 	moneyMultiplier: [1.2,1.1,1.05],
-	creepMultiplier: [1.05,1.1,1.2],
+	creepMultiplier: [1.05,1.075,1.1],
 	selectedTurret : null,
 	wave : 0,
 	sound : true,

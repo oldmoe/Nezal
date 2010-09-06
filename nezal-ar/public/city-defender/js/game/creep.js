@@ -46,6 +46,7 @@ var Creep = Class.create(Unit, {
 		this.sprite.cannonRotation = this.cannonTheta
 		if(this.baloon)this.baloon.moveTo(this.x,this.y-70)
 		this.sprite.setHp(this.hp)
+		this.sprite.maxHp = this.maxHp
 		if(this.fired){
 			this.sprite.currentFrame = 1
 			this.fired = false

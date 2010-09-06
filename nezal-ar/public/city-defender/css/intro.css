@@ -632,6 +632,27 @@ body {
   position:absolute;
   right:50px;
 }
+#easyText{
+	position:absolute;
+	top:60;
+	left:50;
+	font-size:20;
+	color:silver;
+}
+#mediumText{
+	position:absolute;
+	top:60;
+	left:45;
+	font-size:20;
+	color:silver;
+}
+#hardText{
+	position:absolute;
+	top:60;
+	left:45;
+	font-size:20;
+	color:silver;
+}
 /*
 #challenges
 {

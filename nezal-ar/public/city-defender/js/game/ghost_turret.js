@@ -1,14 +1,16 @@
 var ghostTurretFeatures = {			
-	validate : function(x, y, tower){			
+	validate : function(){			
 		this.valid = true
 		try{
-			if(x==Map.bgGrid.length-1||Map.grid[x][y].tower || Map.bgGrid[x][y] == 1 || game.scene.money <tower.prototype.price){
+			if(this.xGrid==Map.bgGrid.length-1||Map.grid[this.xGrid][this.yGrid].tower || Map.bgGrid[this.xGrid][this.yGrid] > 0 || 
+			game.scene.money <this.tower.prototype.price){
 				this.valid = false
 			}
 		}
 		catch(e){
 		  console.log("error in map in ",x,y,e)
 		}
+		game.scene.push(1000,this.validate,this)
 	},
 	checkMap : function(x, y){
 		if(!Map.empty(x, y-1) || !Map.empty(x, y) || !Map.empty(x, y + 1)){
@@ -42,14 +44,16 @@ var ghostTurretFeatures = {
 			this.observe("mousemove", function(e){
 				self.x = e.layerX
 				self.y = e.layerY
-				var x = Math.floor(e.layerX/32)
-				var y = Math.floor(e.layerY/32)
-				self.validate(x, y, towerCategory)
+				self.xGrid = Math.floor(e.layerX/32)
+				self.yGrid = Math.floor(e.layerY/32)
+				self.tower = towerCategory
+				self.validate()
 			}).observe("click", function(e){
-				var x = Math.floor(e.layerX/32)
-				var y = Math.floor(e.layerY/32)
+				self.xGrid = Math.floor(e.layerX/32)
+				self.yGrid = Math.floor(e.layerY/32)
+				self.tower = towerCategory
 				if(!self.selected) return
-				self.validate(x, y, towerCategory);
+				self.validate();
 				if(self.valid){
 					var turret = new towerCategory(Math.floor(e.layerX/32), Math.floor(e.layerY/32),game.scene)
 					game.scene.towerMutators.each(function(mutator){

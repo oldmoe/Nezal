@@ -13,7 +13,7 @@ var Turret = Class.create(Unit, {
 	targets : 'Air &<br/>Ground',
 	facilities : 'Fires Bullets',
 	cssClass : 'tower',
-	hp:300,maxHp : 300, power:5, rate:0.2, price: 10, range: 2,
+	hp:400,maxHp : 300, power:10, rate:0.2, price: 15, range: 2,
 	initialize: function($super,x,y,scene,extension){
 		$super(x,y,scene,extension)
 		this.initImages()

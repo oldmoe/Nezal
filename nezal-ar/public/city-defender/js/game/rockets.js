@@ -6,7 +6,7 @@ var RocketLauncher = Class.create(Turret, {
 	reloaded: true,
 	canHitFlying: false,
 	canHitGround: true,
-	hp:800, power:100, rate:0.05, price: 50, range: 2,
+	hp:800, power:100, rate:0.05, price: 45, range: 3,
 	initialize : function($super,x,y,scene,extension){
 		this.initImages()
 		$super(x,y,scene,extension)
@@ -63,7 +63,7 @@ var Patriot = Class.create(Turret, {
 	firing_turn : 0,
 	canHitFlying: true,
 	canHitGround: false,
-	hp:1000, power:20, rate:0.3, price: 60, range: 3,
+	hp:1000, power:30, rate:0.3, price: 60, range: 3,
 	initialize : function($super,x,y,scene,extension){
 		this.initImages()
 		$super(x,y,scene,extension)

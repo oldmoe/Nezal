@@ -48,6 +48,7 @@ body{
 	left:170px;
 	top: 300px;
 	height: 120px;
+	z-index:200
 }
 
 #result #exit{
@@ -142,7 +143,7 @@ body{
 
 #gameElements .startText{
 	position:absolute;
-	top:480px;
+	top:30px;
 	left:0px;
 	width:155px;
 	height:80px;
@@ -150,7 +151,7 @@ body{
 	font-family:AdLib;
 	font-size: 30;
 	text-align: center;
-	color: blue;
+	color: white;
 	cursor:default;
 	margin-top:2%;
 	cursor : pointer;
@@ -402,21 +403,6 @@ body{
 	background-repeat: no-repeat;
 }
 
-#gameElements .diagram.tower{
-	background-image: url('../images/background/tower1 outline.png');
-}
-
-#gameElements .diagram.doubleTower{
-	background-image: url('../images/background/tower4 outline.png');
-}
-
-#gameElements .diagram.rocketLauncher{
-	background-image: url('../images/background/tower3 outline.png');
-}
-
-#gameElements .diagram.patriot{
-	background-image: url('../images/background/tower2 outline.png');
-}
 
 #money{
 	position:absolute;

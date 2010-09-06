@@ -1,5 +1,6 @@
 var Humvee = Class.create(Creep, {
   name : 'Humvee',
+  price : 2,
 	cannonDisplacement : [-1, 1],
 	images : {},
 	initImages : function(){
@@ -14,6 +15,7 @@ var Humvee = Class.create(Creep, {
 var Tank = Class.create(Creep,{
   name : 'Tank',
   images : {},
+  price : 1,
   initImages : function(){
 		this.images = {
 			base : Loader.images.game['tank_body.png'],
@@ -26,6 +28,7 @@ var Tank = Class.create(Creep,{
 var TankI = Class.create(Creep, {
   images : {},
   name : 'TankI',
+   price : 1,
   initImages : function(){
 	this.images = {
 		base : Loader.images.game['tank_1_body.png'],
@@ -38,6 +41,7 @@ var TankI = Class.create(Creep, {
 var TankII = Class.create(Creep, {
   images : {},
   name : 'TankII',
+  price : 2,
   initImages : function(){
 	this.images = {
 		base : Loader.images.game['tank_2_body.png'],
@@ -50,18 +54,20 @@ var TankII = Class.create(Creep, {
 var BlackTank = Class.create(Creep,{
   images : {},
   name : 'BlackTank',
-  initImages : function(){
-	this.images = {
-		base : Loader.images.game['black_tank_body.png'],
-		cannon : Loader.images.game['black_tank_tower.png'],
-		fire : Loader.images.game['black_tank_tower_in_action.png'],
-	}
+  price : 50,
+  	initImages : function(){
+		this.images = {
+			base : Loader.images.game['black_tank_body.png'],
+			cannon : Loader.images.game['black_tank_tower.png'],
+			fire : Loader.images.game['black_tank_tower_in_action.png'],
+		}
 	}
 })
 
 var RedTank = Class.create(Creep,{
   images : {},
   name : 'RedTank',
+  price : 3,
   initImages : function(){
 	this.images = {
 		base : Loader.images.game['red_tank_body.png'],

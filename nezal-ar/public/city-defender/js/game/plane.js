@@ -1,7 +1,7 @@
 var Plane = Class.create(Creep, {
 	name : 'Plane',
 	flying : true,
-	hp:60,maxHp:60,speed:6, power:2, rate:0.1, range: 3,
+	hp:75,maxHp:75,speed:4, power:2, rate:0.1, range: 3,price:2,
 	initialize : function($super,x,y,extension){
 		$super(x,y,extension)
 		this.theta = 0
@@ -27,6 +27,7 @@ var Plane = Class.create(Creep, {
 		this.shadowSprite.moveTo(this.x+30,this.y)
 		this.healthSprite.moveTo(this.x,this.y)
 		this.healthSprite.hp = this.hp
+		this.healthSprite.maxHp = this.maxHp
 		if(this.fired){
 			this.cannonSprite.currentFrame = 1
 			this.fired = false
@@ -78,7 +79,7 @@ var Plane = Class.create(Creep, {
 })
 
 var RedPlane = Class.create(Plane, {
-	speed : 7,power:4, rate:0.2, range: 3,
+	hp:150,maxHp:150,speed : 6,power:4, rate:0.2, range: 3,price:3,
    initImages : function(){
 		this.images = {
 			base : Loader.images.game['red_air_craft.png'],
