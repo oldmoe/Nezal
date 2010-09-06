@@ -8,14 +8,14 @@
       about creeps involved in the mission
 */
 var TowerConfig = {
-    "Turret" : {  name : 'Belcher', 
+    "Belcher" : {  name : 'Belcher', 
                   image : 'belecher.png', 
                   smallImage : 'belecher_small.png',
                   skeleton : 'belecher_skeleton.png',
                     desc : "Belcher, a fast machine gun tower, it has small range nozzle," + 
                           " and can be used to counter both air and ground units." +
                           " It uses bullets as its main ammunition and doesn't have any detection mechanism, but it will fire on sight." },
-    "DoubleTurret" : {
+    "Reaper" : {
                   name : 'Reaper',
                   image : 'reaper.png', 
                   smallImage : 'reaper_small.png',
@@ -30,7 +30,7 @@ var TowerConfig = {
                   desc : "Patriot , a long-range, all-altitude, surface-to-air missile (SAM) launcher." + 
                          " This air defense system is used to counter advanced aircraft." +
                          " It uses an advanced aerial interceptor missiles and high performance radar systems to destroy its target." },
-    "RocketLauncher" : {
+    "Exploder" : {
                   name : 'Exploder',
                   image : 'exploder.png', 
                   smallImage : 'exploder_small.png',

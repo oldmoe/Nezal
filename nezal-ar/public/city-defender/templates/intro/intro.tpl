@@ -124,10 +124,6 @@
         <div class="name">  ${data.configs[data.itemid]['name']} </div>
         <div class="desc">  
           ${data.configs[data.itemid]['desc']} 
-          <img src="images/intro/market/rank.png"></img>
-          <span style="color:{if (data.rank[0] > data.exp)} red; {else} green; {/if}">
-          ${data.rank[1]}
-          </span>
         </div>
       </div>
       <div class="image">
@@ -139,22 +135,33 @@
       </div>
     </div>
     <div class="actions">
-      {if ((Intro.gameData[data.type][data.itemid]['unlocked'] == true) || (Intro.userData.metadata[data.type].indexOf(data.itemid) >= 0 ) )}
-        {if (Intro.userData.metadata.added[data.type].indexOf(data.itemid) >= 0 ) }
-            <img itemid="${data.itemid}" type="${data.type}" src="images/intro/market/remove-big.png" class="action" onclick="Intro.removeItem(this);"></img> 
-        {else}
-            <img itemid="${data.itemid}" type="${data.type}" src="images/intro/market/add.png" class="action" onclick="Intro.addItem(this);"> </img> 
-        {/if}
-      {else}
-        {if ((data.cost > data.coins) || ( data.rank[0] > data.exp))}
-          <img src="images/intro/market/inactive-unlock.png" class="action"> </img>
-          {if (data.cost > data.coins)}
-            <img src="images/intro/market/inactive-unlock.png"> </img>
+      <div class='rank'>
+        Required Rank : 
+        <span {if (data.rank[0] > data.exp)} "style="color:red;" {/if}>
+          ${data.rank[1]}
+        </span>
+      </div>
+      <div>
+          {if ((Intro.gameData[data.type][data.itemid]['unlocked'] == true) || (Intro.userData.metadata[data.type].indexOf(data.itemid) >= 0 ) )}
+            {if (Intro.userData.metadata.added[data.type].indexOf(data.itemid) >= 0 ) }
+                <img itemid="${data.itemid}" type="${data.type}" src="images/intro/market/remove-big.png" class="action" onclick="Intro.removeItem(this);"></img> 
+            {else}
+              <img itemid="${data.itemid}" type="${data.type}" src="images/intro/market/add.png" class="action" onclick="Intro.addItem(this);"> </img> 
+            {/if}
+          {else}
+            {if ((data.cost > data.coins) || ( data.rank[0] > data.exp))}
+              <img src="images/intro/market/inactive-unlock.png" class="action"> </img>
+              <span class="action"> unlock </span>
+              {if (data.cost > data.coins)}
+                <div class="addMoney" >
+                add <img src="images/intro/market/money.png" > </img> money
+                </div>
+              {/if}
+            {else}
+              <img itemid="${data.itemid}" type="${data.type}" src="images/intro/market/unlock.png" class="action" onclick="Intro.unlockItem(this);"> </img>
+            {/if}
           {/if}
-        {else}
-          <img itemid="${data.itemid}" type="${data.type}" src="images/intro/market/unlock.png" class="action" onclick="Intro.unlockItem(this);"> </img>
-        {/if}
-      {/if}
+      </div>
     </div>
 </textarea>
 

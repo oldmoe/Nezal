@@ -81,7 +81,7 @@ var Intro = {
                     "market/coin.png",
                     "market/remove-big.png",
                     "market/inactive-unlock.png",
-                    "market/rank.png"
+                    "market/money.png"
                 ],
         weapons : [
                     "market/towers-on.png",
@@ -571,10 +571,36 @@ var Intro = {
               });
     },
     
+    sendScore : function(score, win, callback){
+        new Ajax.Request(  GameConfigs.campaign + "/metadata" ,
+              {   method:'post', 
+                  parameters: { 'data' : Object.toJSON({'mission' : GameConfigs.mission.order, 'win' : win, 'score' : score }) },
+                  onSuccess : function(t, json){
+                      var data = JSON.parse(t.responseText);
+                      alert('data');
+                      callback();
+                  }
+              });
+    },
+    
     setupGameConfigs : function(){
         var missions = Intro.campaignInfo.camp_data.metadata
         var mission = missions.find(function(mission){ if ( GameConfigs.missionPath == mission['path'] ) return true; })
-        GameConfigs.map = Intro.campaignInfo.user_data.metadata.missions[mission['order'] - 1  ]['map'];
+        GameConfigs.mission = mission;
+        var map = Intro.campaignInfo.user_data.metadata.missions[mission['order'] - 1  ]['map'];
+        var mapFlipped = [];
+        for(var i=0; i< map[0].length; i++)
+        {
+            mapFlipped[i] = [];
+        }
+        for( var i=0; i< map.length; i++)
+        {
+            for(var j = 0 ; j < map[i].length; j++)
+            {
+                mapFlipped[j][i] = map[i][j];
+            }
+        }
+        GameConfigs.map = mapFlipped;
         GameConfigs.mapEntry = Intro.campaignInfo.user_data.metadata.missions[mission['order'] - 1  ]['mapEntry'];
         GameConfigs.mapImage = Intro.campPath() + Intro.missionPath() + "/images/path.png";
         GameConfigs.waves = Intro.campaignInfo.user_data.metadata.missions[mission['order'] - 1  ]['waves'];
