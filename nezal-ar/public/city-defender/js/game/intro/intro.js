@@ -1,6 +1,6 @@
 var GameConfigs = {
   level: 0, 
-  campaign : 'current',
+  campaign : 'tunisia',
   missionPath : 'cairo', 
   mapImage : '',
   waves : [],
