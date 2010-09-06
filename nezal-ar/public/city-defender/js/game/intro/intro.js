@@ -142,7 +142,6 @@ var Intro = {
                                           onSuccess: function(t){
                                       		  	          $("gameStart").innerHTML = t.responseText;
                                       		  	          Intro.templates['game'] = t.responseText;
-								  console.log('game = ',game)
 					  			  //game.setGameImages()
                                           		  	      Intro.retrieveData( function() {
 				                                            initLoadImages(new Loader()); 
