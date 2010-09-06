@@ -56,7 +56,7 @@
 			</div>
 			<div id="canvasContainer" style="display:none">
 				<canvas id="gameBackground" width="736" height="480"></canvas>
-				<canvas id="gameForeground" width="736" height="480" onmousemove = "movement(event)"></canvas>
+				<canvas id="gameForeground" width="736" height="480""></canvas>
 			</div>
 			<div id="gameElements" style="display:none">
 				<div id="money">
@@ -70,8 +70,7 @@
 				<div class="fps"></div>
 				<div class="rank" id = "rank"></div>
 				<div class="rankName" id = "rankName">COL</div>
-				<div class="start"></div>
-				<div class = "startText"> </div>
+				<div class="start">	<div class = "startText"> </div></div>
 				<div class="towers">
 				
 				</div>
@@ -121,7 +120,7 @@
 				<div class="loading_bar_bg">
 					<img src="images/background/loading_bar_down.png"></img>
 					<div id="loading_bar">
-					<img src="images/background/loading_bar_up.png"></img>s
+					<img src="images/background/loading_bar_up.png"></img>
 					</div>
 				</div>
 			</div>

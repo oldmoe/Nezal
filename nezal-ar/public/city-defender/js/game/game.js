@@ -101,7 +101,7 @@ var Game = Class.create({
 		$('gameElements').appendChild(Loader.images.background['l_shape.png'])
 		var img7 = document.createElement("IMG");
 		img7.src=Config.mapImage
-		$('canvasContainer').appendChild(Loader.images.background['path.png'])
+		$('canvasContainer').appendChild(img7)
 		Config.towers.each(function(turret){ 
 			$$('.'+turret).first().appendChild(Loader.images.background[turret+'_button.png'])
 		})
