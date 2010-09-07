@@ -11,24 +11,22 @@ var Baloon = Class.create(Sprite,{
 		var img = document.createElement("IMG");
 		img.src = "images/game/baloon1.png";
 		this.text = document.createElement("div"); 
-		this.text.innerHTML = "TEEET"
 		this.text.style.position = "absolute"
+		this.text.style.fontSize = "13"
 		img.style.position = "relative"
 		this.text.style.top = 5;this.text.style.left = 3
 		img.style.top = 0;img.style.left = 0
 		this.div.appendChild(img)
 		this.div.appendChild(this.text)
 		this.parent.appendChild(this.div);
-		this.div.hide()
 	},
 	render : function(ctx){
-		if(!this.visible){$('baloon').hide(); return}
-		$('baloon').show()
-		$('baloon').style.left = this.x
-		$('baloon').style.top = this.y
+		this.div.style.left = this.x
+		this.div.style.top = this.y
 	},
 	destroy : function ($super){
 		$super()
+		if(this.div)
 		this.parent.removeChild(this.div)
 	}
 })

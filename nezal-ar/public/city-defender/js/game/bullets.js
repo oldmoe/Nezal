@@ -102,6 +102,7 @@ var Turret = Class.create(Unit, {
 		target.takeHit(power)
 		if(target.dead){
 			this.kills += 1
+			this.scene.scenario.notify({name:"towerDestroyedCreep", method: false, unit:this})
 			if(this.kills == this.rankKills[this.rank] && this.rank < this.maxRank){
 				this.rank += 1;
 				this.kills = 0;
@@ -119,6 +120,7 @@ var Turret = Class.create(Unit, {
 		this.cannonSprite.destroy()
 		this.healthSprite.destroy()
 		this.rankSprite.destroy()
+		if(this.baloon)this.baloon.destroy()
 	}
 })
 

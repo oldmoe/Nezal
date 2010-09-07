@@ -202,6 +202,7 @@ var Creep = Class.create(Unit, {
 		}
 		if(this.reloaded){
 			target.takeHit(this.power)
+			if(target.dead)		this.scene.scenario.notify({name:"creepDestroyedTower", method: false, unit:this})
 			this.reloaded = false;
 			this.fired = true;
 		}
@@ -219,6 +220,7 @@ var Creep = Class.create(Unit, {
 		var cell = Map.grid[this.gridX][this.gridY];
 		cell.splice(cell.indexOf(this), 1);
 		this.sprite.destroy()
+		if(this.baloon)this.baloon.destroy()
 		this.dead = true
 	}
 })	

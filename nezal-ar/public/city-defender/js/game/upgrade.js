@@ -10,7 +10,7 @@ var UpgradeData = {
 	affects : [RocketLauncher, Patriot],
 	list: [
 		{ price : 0, classes : ['rockets_1'], effect : {}},
-		{ price : 120, classes: ['rockets_2'], effect : {power : 1.5}}	
+		{ price : 120, classes: ['rockets_2'], effect : {rate : 1.5}}	
 	]},
 	shields : {
 	affects : [Turret, DoubleTurret, RocketLauncher, Patriot],
