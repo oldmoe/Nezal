@@ -79,13 +79,13 @@ var CityDefenderScene = Class.create(Scene, {
 		return this
 	},
 	addCreep : function(creep){
+		this.scenario.notify({name:"creepEntered", method: false, unit:creep})
+		if(this.turrets[0])this.scenario.notify({name:"creepEnteredTower", method: false, unit:this.turrets[0]})
 		creep.hp = Math.round(creep.hp*Math.pow(this.creepMultiplier[this.config.level-1],this.waveNumber))
 		creep.maxHp = creep.hp
 		if(creep){
 			if(!this.firstCreep){
-				if(this.turrets[0])this.scenario.notify({name:"startGame", method: true, unit:this.turrets[0]})
 				this.firstCreep = true
-				this.scenario.notify({name:"firstTank", unit:creep})
 			}
 			this.creepsLayer.attach(creep.sprite)
 			this.creeps.push(creep)	
@@ -296,6 +296,8 @@ var CityDefenderScene = Class.create(Scene, {
 				self.creepsCount ++
 				var entry = Map.entry[Math.round(Math.random()*(Map.entry.length - 1))]
 				if(creepCat == Plane || creepCat == RedPlane){
+					var arr = [0,90,180,270]
+					theta = arr.random()
 					creep.theta = theta;
 					self.issueCreep(creep, 
 							(theta == 90 || theta == 270) ? Math.round(Math.random()* (Map.width - 1)) : x,
@@ -366,7 +368,7 @@ var CityDefenderScene = Class.create(Scene, {
 	fps : 0,
 	score: 0,
 	moneyMultiplier: [1.2,1.1,1.05],
-	creepMultiplier: [1.05,1.075,1.1],
+	creepMultiplier: [1.05,1.1,1.2],
 	selectedTurret : null,
 	wave : 0,
 	sound : true,

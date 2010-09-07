@@ -73,7 +73,9 @@ var SuperWeapon = Class.create({
 
 var Weak = Class.create(SuperWeapon, {
 	action : function(){
+		Sounds.play(Sounds.superWeapons.weak)
 		var anim = new WeakAnimation()
+		this.scene.scenario.notify({name:"superWeaponsNuke", method: false, unit:this.scene.creeps.random()})
 		this.scene.objects.push(anim)
 		this.scene.rocketsLayer.attach(anim)
 		var self = this
@@ -82,10 +84,10 @@ var Weak = Class.create(SuperWeapon, {
 	},
 	weak : function(count){
 		var self = this
-		this.scene.creeps.each(function(creep){creep.takeHit(creep.hp * 0.1);})
+		this.scene.creeps.each(function(creep){creep.takeHit(Math.floor(creep.hp * 0.1));})
 		count++
 		var self = this
-		if(count < 5){ this.scene.push(1000, function(){self.weak(count);}) }
+		if(count < 10){ this.scene.push(1000, function(){self.weak(count);}) }
 	},
 	unWeak : function(){
 		var index = -1
@@ -101,6 +103,7 @@ var Weak = Class.create(SuperWeapon, {
 })
 var Splash = Class.create(SuperWeapon, {
 	action : function(){
+		this.scene.scenario.notify({name:"superWeaponsSplash", method: false, unit:this.scene.creeps.random()})
 		var x = [0, Map.width * Map.pitch - 1][Math.round(Math.random())]
 		var y = [0, Map.height * Map.pitch - 1][Math.round(Math.random())]
 		Sounds.play(Sounds.turret.rocketLaunch)
@@ -115,16 +118,23 @@ var Splash = Class.create(SuperWeapon, {
 })
 var Nuke = Class.create(SuperWeapon, {
 	action : function(){
-		this.scene.creeps.each(function(creep){
-			creep.takeHit(Math.round(creep.hp * 1));
-		})
-		var anim = new NukeBoom(320, 240)
-		this.scene.objects.push(anim)
-		this.scene.rocketsLayer.attach(anim)
+		this.scene.scenario.notify({name:"superWeaponsNuke", method: false, unit:this.scene.creeps.random()})
+		Sounds.play(Sounds.superWeapons.nuke)
+		function startNuke(){
+			this.scene.creeps.each(function(creep){
+				creep.takeHit(Math.round(creep.hp * 1));
+			})
+			var anim = new NukeBoom(320, 240)
+			this.scene.objects.push(anim)
+			this.scene.rocketsLayer.attach(anim)
+		}
+		this.scene.push(1000,startNuke,this)
 	}
 })
 var Heal = Class.create(SuperWeapon, {
 	action : function(){
+		this.scene.scenario.notify({name:"superWeaponsHeal", method: false, unit:this.scene.turrets.random()})
+		Sounds.play(Sounds.superWeapons.heal)
 		var self = this
 		self.scene.turrets.each(function(tower){
 			tower.hp = tower.maxHp
@@ -137,17 +147,19 @@ var Heal = Class.create(SuperWeapon, {
 var Hyper = Class.create(SuperWeapon, {
 	action : function(){
 		var self = this
+		this.scene.scenario.notify({name:"superWeaponsHyper", method: false, unit:this.scene.turrets.random()})
+		Sounds.play(Sounds.superWeapons.hyper)
 		var hyper = function(tower){
 			tower.rate *= 2;
 		}
 		this.scene.turrets.each(hyper)
-		this.scene.push(30000, function(){self.unHyper();})
+		this.scene.push(20000, function(){self.unHyper();})
 		this.scene.towerMutators.push({name : 'hyper', action : hyper})
 	},
 	unHyper : function(){
 		var self = this
 		self.scene.turrets.each(function(tower){
-			tower.rate /= self.scene.superWeapons.hyper.factor;
+			tower.rate /= 2;
 		});
 		var index = -1
 		this.scene.towerMutators.splice(index, 1)

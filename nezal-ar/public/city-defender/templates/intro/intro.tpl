@@ -136,7 +136,9 @@
         </div>
       </div>
       <div class="image">
-        <img src="${Intro.images.path}${data.type}/${data.configs[data.itemid]['skeleton']}"></img>
+        <div class="skeleton">
+          <img src="${Intro.images.path}${data.type}/${data.configs[data.itemid]['skeleton']}"></img>
+        </div>
         <div class="cost">
             <div class="img">
               <img src="images/intro/market/coin.png"></img>

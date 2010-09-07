@@ -629,26 +629,39 @@ body {
   width : 20%;
   margin-top : 20px;
 }
-#marketPlace #floatBg .content .image img
+#marketPlace #floatBg .content .image .skeleton
 {
-  margin-bottom : 10px;
+  height : 100px;
 }
-#marketPlace #floatBg .cost
+#marketPlace #weapons #floatBg .content .image .skeleton
+{
+  margin-top : 10px;
+  height : 80px;
+}
+#marketPlace #upgrades #floatBg .content .image .skeleton
+{
+  height : 70px;
+}
+#marketPlace #floatBg .content .image .cost img
+{
+  float : right;
+}
+#marketPlace #floatBg .image .cost
 {
   width: 100%;
   height : 24px;
 }
-#marketPlace #floatBg .cost .img
+#marketPlace #floatBg .image .cost .img
 {
   width: 30%;
   margin-left : 4%;
   float : left;
 }
-#marketPlace #floatBg .cost .value
+#marketPlace #floatBg .image .cost .value
 {
   float:left;
   font-family:Digital;
-  font-size:25px;
+  font-size:26px;
   margin-top:-6px;
   text-align:center;
   width:60%;
@@ -716,7 +729,7 @@ body {
   text-transform : capitalize;
 }
 #easyText{
-	position:absolute;
+	position:relative;
 	top:60;
 	left:50;
 	font-size:20;
@@ -735,6 +748,16 @@ body {
 	left:45;
 	font-size:20;
 	color:silver;
+}
+#challengesText {
+	position : absolute;
+	z-index : 2;
+	top : 370;
+	left : 240;
+	color : orange;
+	font-size : 25;
+	text-shadow: #000 2px 2px 1px;
+
 }
 /*
 #challenges

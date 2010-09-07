@@ -18,6 +18,7 @@ var Unit = Class.create({
 	},
 	destroyBaloon : function(){
 		this.baloon.destroy()
+		this.baloon = null
 	},
 	
 	target: function(){
