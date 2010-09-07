@@ -2,6 +2,22 @@
   font-family: "Adlib";
   src: url("../css/fonts/ADLIB.TTF");
 }
+@font-face {
+  font-family: "Digital";
+  src: url("../css/fonts/DIGITAL.TTF");
+}
+@font-face {
+  font-family: "Inc";
+  src: url("../css/fonts/INC901BC.TTF");
+}
+@font-face {
+  font-family: "IncB";
+  src: url("../css/fonts/INC901B.TTF");
+}
+@font-face {
+  font-family: "Pakgirl";
+  src: url("../css/fonts/30pakgirl_bold_TBS.ttf");
+}
 
 body {
   font-family : Adlib;
@@ -61,6 +77,13 @@ body {
   height : 100%;
 }
 
+.buttonText
+{
+  font-family : Adlib;
+  text-transform : capitalize;
+  text-align:center;
+}
+
 /* Level Selection CSS */
 #levelSelection
 {
@@ -74,56 +97,58 @@ body {
   left:150px;
   height : 100px;
   width : 440px;
+  color : #e9c373;
+  text-transform : capitalize;
+  font-size : 20px;
+  text-align : center;
 }
 #levels #easy
 {
   width : 31%;
-  height : 100%;
+  height : 40%;
   position : absolute;
-  top : 0px;
+  top : 60%;
   cursor : pointer;
 }
 #levels #medium
 {
   width : 38%;
-  height : 100%;
+  height : 40%;
   position : absolute;
-  top : 0px;
+  top : 60%;
   left : 31%;
   cursor : pointer;
 }
 #levels #hard
 {
   width : 30%;
-  height : 100%;
+  height : 40%;
   position : absolute;
-  top : 0px;
+  top : 60%;
   left : 69%;
   cursor : pointer;
 }
+#levels div:hover
+{
+  color : white;
+}
 #campaign #back
 {
-  -moz-transform:rotate(4deg);
-  -webkit-transform : rotate(4deg);
-  -o-transform : rotate(4deg); 
   cursor:pointer;
-  height:52px;
-  left:210px;
+  height:43px;
+  left:95px;
   position:absolute;
-  top:298px;
-  width:137px;
+  top:482px;
+  width:113px;
 }
-#campaign #next
-{
-  -moz-transform:rotate(-2deg);
-  -webkit-transform : rotate(-2deg);
-  -o-transform : rotate(-2deg); 
-  cursor:pointer;
-  height:52px;
-  left:195px;
+#campaign #back .text
+{ 
+  color:#FAC200;
   position:absolute;
-  top:365px;
-  width:180px;
+  top:15px;
+  left:35px;
+  width:77px;
+  text-align:center;
 }
 #campaign .camp-details
 {
@@ -135,17 +160,18 @@ body {
 }
 #campaign .name
 {
-  color:#Fac200;
-  font-size:18px;
-  text-transform:uppercase;
-  padding-bottom : 10px;
+  color:#FAC200;
+  font-size:27px;
+  padding-bottom:5px;
+  text-transform:capitalize;
 }
 #campaign .desc
 {
-  color:wheat;
+  color:white;
   font-size:14px;
-  line-height:130%;
+  line-height:140%;
   text-align:justify;
+  text-shadow:2px 1px #990000;
 }
 
 #campaign #camp-map 
@@ -189,12 +215,12 @@ body {
 #mission #cityName
 {
   color:#FF4102;
-  font-size:17px;
+  font-weight:bold;
   left:235px;
   position:absolute;
   text-align:center;
   text-transform:uppercase;
-  top:68px;
+  top:65px;
   width:150px;
 }
 #mission #cityDesc
@@ -205,19 +231,20 @@ body {
   line-height:190%;
   position:absolute;
   text-align:center;
-  top:85px;
+  top:90px;
   width:170px;
 }
 #mission #fullDesc
 {
   color:white;
-  font-size:12px;
+  font-size:13px;
   left:405px;
   line-height:150%;
   position:absolute;
+  text-align:justify;
+  text-shadow:-1px -1px #555555;
   top:245px;
   width:280px;
-  text-align : justify;
 }
 #mission #cityImage
 {
@@ -229,31 +256,17 @@ body {
 }
 #mission #cityMap
 {
-  -moz-transform:rotate(-6.5deg);
-  -webkit-transform : rotate(-6.5deg);
-  -o-transform : rotate(-6.5deg);
   height:164px;
-  left:98px;
+  left:90px;
   overflow:hidden;
   position:absolute;
-  top:186px;
+  top:180px;
   width:220px;
 }
 #mission #cityMap img
 {
   width:224px;  
   height:169px;
-}
-#mission #msg
-{
-  -moz-transform:rotate(-6.5deg);
-  -webkit-transform : rotate(-6.5deg);
-  -o-transform : rotate(-6.5deg);
-  font-size:11px;
-  font-weight:bold;
-  left:125px;
-  position:absolute;
-  top:395px;
 }
 #mission #stamp
 {
@@ -265,23 +278,33 @@ body {
 }
 #mission #accept
 {
-/*  background:url("../images/intro/city/accept.png") no-repeat scroll 0 0 transparent;*/
-  height:60px;
+  height:46px;
   left:485px;
   position:absolute;
   top:420px;
-  width:100px;
+  width:90px;
   cursor : pointer;
+}
+#mission #accept .text
+{
+  color:white;
+  position:absolute;
+  top:30%;
+  left:0px;
+  width : 100%;
+  text-align:center;
 }
 #mission #reject
 {
-/*  background:url("../images/intro/city/accept.png") no-repeat scroll 0 0 transparent;*/
-  height:60px;
-  left:590px;
+  color:#FAC200;
+  cursor:pointer;
+  font-size:15px;
+  height:35px;
+  left:580px;
   position:absolute;
-  top:420px;
-  width:100px;
-  cursor : pointer;
+  top:440px;
+  width:95px;
+  text-shadow : 1px 1px #333333;
 }
 #mission #creeps
 {
@@ -293,7 +316,6 @@ body {
 }
 #mission .creep
 {
-  background:url("../images/intro/city/creep-bg-red.png") no-repeat scroll 0 0 transparent;
   float:left;
   height:65px;
   width:101px;
@@ -484,6 +506,7 @@ body {
   overflow:hidden;
   position:relative;
   width:127px;
+  text-align : center;
 }
 #marketPlace #weapons .emptyItem, #marketPlace #upgrades .emptyItem
 {
@@ -505,7 +528,7 @@ body {
   top:58px;
   width:447px;
 }
-#marketPlace #towersDisplay .item, #marketPlace #weaponsDisplay .item, #marketPlace #upgradesDisplay .item
+#marketPlace .item
 {
   height : 87px;
   width : 145px;
@@ -516,16 +539,27 @@ body {
   position : relative;
   overflow : hidden;
 }
-#marketPlace #towersDisplay .item div, #marketPlace #weaponsDisplay .item div, #marketPlace #upgradesDisplay .item div
+#marketPlace .item div
 {
   height:75px;
   position : relative;
   overflow : hidden;
 }
-.clickable div img:hover
+#marketPlace .itemImage
 {
-  opacity : 0.7;
-  cursor : pointer;
+  position : absolute;
+  top : 0px;
+  left : 0px;
+  width : 100%;
+  height : 100%;
+}
+#marketPlace #weapons .itemImage img
+{
+  padding-top : 7px;
+}
+#marketPlace #upgrades .itemImage img
+{
+  padding-top : 12px;
 }
 #marketPlace .action
 {
@@ -538,21 +572,21 @@ body {
 {
   opacity : 1;
 }
-#marketPlace #towersDisplay .item div .label, #marketPlace #weaponsDisplay .item div .label, #marketPlace #upgradesDisplay .item div .label
-{
-  position : absolute;
-  left : 6px;
-  bottom : 2px;
-}
 #marketPlace .coins
 {
-  font-weight:bold;
   left:92px;
   position:absolute;
   text-align:center;
   text-shadow:1px 1px white;
-  top:250px;
+  top:240px;
   width:110px;
+  font-family : Digital;
+  font-size : 24px;
+}
+.clickable div div:hover, .clickable div img:hover
+{
+  opacity : 0.7;
+  cursor : pointer;
 }
 
 #marketPlace #floatBg
@@ -595,11 +629,35 @@ body {
   width : 20%;
   margin-top : 20px;
 }
-#marketPlace #weapons #floatBg .content .spans, #marketPlace #upgrades #floatBg .content .spans
+#marketPlace #floatBg .content .image img
+{
+  margin-bottom : 10px;
+}
+#marketPlace #floatBg .cost
+{
+  width: 100%;
+  height : 24px;
+}
+#marketPlace #floatBg .cost .img
+{
+  width: 30%;
+  margin-left : 4%;
+  float : left;
+}
+#marketPlace #floatBg .cost .value
+{
+  float:left;
+  font-family:Digital;
+  font-size:25px;
+  margin-top:-6px;
+  text-align:center;
+  width:60%;
+}
+#marketPlace #upgrades #floatBg .content .spans
 {
   width : 65%;
 }
-#marketPlace #weapons #floatBg .content .image, #marketPlace #upgrades #floatBg .content .image
+#marketPlace #upgrades #floatBg .content .image
 {
   margin-top : 35px;
   width : 30%;
@@ -628,7 +686,7 @@ body {
   width:89%;
   color : white;
 }
-#marketPlace #weapons #floatBg  .actions, #marketPlace #upgrades #floatBg  .actions
+#marketPlace #upgrades #floatBg  .actions
 {
   width:85%;
 }

@@ -46,12 +46,12 @@ var Intro = {
                             "difficulty.png"
                         ],    
         campaign : [
+                      "back.png",
                       "campaign/campaign-bg.png"
                   ],
         mission : [
                       "mission/mission-bg.png",
                       "mission/accept.png",
-                      "mission/reject.png",
                       "mission/carousel/left.png",
                       "mission/carousel/left-disabled.png",
                       "mission/carousel/right.png",
