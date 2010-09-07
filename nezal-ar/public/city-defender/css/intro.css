@@ -631,9 +631,14 @@ body {
   font-family : Digital;
   font-size : 24px;
 }
-.clickable div:hover, .clickable img:hover
+.clickable div, .clickable img
 {
   opacity : 0.8;
+  cursor : pointer;
+}
+.clickable div:hover, .clickable img:hover
+{
+  opacity : 1;
   cursor : pointer;
 }
 
