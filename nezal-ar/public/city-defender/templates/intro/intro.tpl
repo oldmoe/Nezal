@@ -47,6 +47,12 @@
           {/if}
       {/for}
     </div>
+    <div id="back" onclick="Intro.previous();">
+      <img src="images/intro/back.png"/>
+      <div class="text buttonText">
+        Back
+      </div>
+    </div>
 </textarea>
 
 
@@ -73,7 +79,7 @@
         ${city.summary}
     </div>
     <div id="cityImage">
-        <img src="${path}/images/city.png">
+        <img src="challenges/${GameConfigs.campaign}/images/camp-map.png">
     </div>
     <div id="fullDesc">
         ${city.description}    
@@ -83,9 +89,12 @@
     </div>
     <div id="accept" onclick="Intro.next();">
       <img src="images/intro/mission/accept.png">
+      <div class="text buttonText">
+        Accept
+      </div>
     </div>
     <div id="reject" onclick="Intro.previous();">
-      <img src="images/intro/mission/reject.png">
+      <span style="color : #550000; font-size: 12px;">or</span> go back to campaign
     </div>
     <div id="creeps">
 	      <div id="creeps-scroll">
@@ -127,10 +136,16 @@
         </div>
       </div>
       <div class="image">
-        <img src="${Intro.images.path}${data.type}/${data.configs[data.itemid]['skeleton']}"></img>
-        <div>
-            <img src="images/intro/market/coin.png"></img>
-            ${data.cost}  
+        <div class="skeleton">
+          <img src="${Intro.images.path}${data.type}/${data.configs[data.itemid]['skeleton']}"></img>
+        </div>
+        <div class="cost">
+            <div class="img">
+              <img src="images/intro/market/coin.png"></img>
+            </div>
+            <div class="value">
+              ${data.cost}  
+            </div>
         </div>
       </div>
     </div>
@@ -142,19 +157,13 @@
         </span>
       </div>
       <div>
-          {if ((Intro.gameData[data.type][data.itemid]['unlocked'] == true) || (Intro.userData.metadata[data.type].indexOf(data.itemid) >= 0 ) )}
-            {if (Intro.userData.metadata.added[data.type].indexOf(data.itemid) >= 0 ) }
-                <img itemid="${data.itemid}" type="${data.type}" src="images/intro/market/remove-big.png" class="action" onclick="Intro.removeItem(this);"></img> 
-            {else}
-              <img itemid="${data.itemid}" type="${data.type}" src="images/intro/market/add.png" class="action" onclick="Intro.addItem(this);"> </img> 
-            {/if}
-          {else}
+          {if ((Intro.gameData[data.type][data.itemid]['unlocked'] == false) && (Intro.userData.metadata[data.type].indexOf(data.itemid) < 0 ) )}
             {if ((data.cost > data.coins) || ( data.rank[0] > data.exp))}
               <img src="images/intro/market/inactive-unlock.png" class="action"> </img>
               <span class="action"> unlock </span>
               {if (data.cost > data.coins)}
                 <div class="addMoney" >
-                add <img src="images/intro/market/money.png" > </img> money
+                  <img src="images/intro/market/money.png" > </img>
                 </div>
               {/if}
             {else}
@@ -176,14 +185,13 @@
     <div id="${type}Display">
       {for item in data.gameData[type] }
           <div class="item clickable">
-            <div itemid="${item}" >
-              <img itemid="${item}" type="${type}" src="images/intro/${type}/${itemConfig[item]['image']}" onclick="Intro.showFloatBg(this)" ></img>
+            <div itemid="${item}">
+              <div itemid="${item}" type="${type}" onclick="Intro.showFloatBg(this)" class="itemImage">
+                <img itemid="${item}" type="${type}" src="images/intro/${type}/${itemConfig[item]['image']}" onclick="Intro.showFloatBg(this)"></img>
+              </div>
               {if ((Intro.gameData[type][item]['unlocked'] == true) || (data.userData.metadata[type].indexOf(item) >= 0 ) )}
-                  {if (data.userData.metadata.added[type].indexOf(item) >= 0) }
-                      <span class="label"> ${itemConfig[item]['model']} </span>
-                  {else}
+                  {if (data.userData.metadata.added[type].indexOf(item) < 0) }
                       <img  itemid="${item}" type="${type}" src="images/intro/market/add.png" class="action" onclick="Intro.addItem(this);"> </img> 
-                      <span class="label"> ${itemConfig[item]['model']} </span>
                   {/if}
               {else}
                 <img itemid="${item}" type="${type}" src="images/intro/market/unlock.png" class="action" onclick="Intro.showFloatBg(this);"> </img>

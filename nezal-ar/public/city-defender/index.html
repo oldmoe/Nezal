@@ -32,16 +32,13 @@
       <div id="levels">
         <img id='levelsLinks' src="images/intro/difficulty.png"/>
         <div id="easy" onclick="GameConfigs.level=1; Intro.next(); return false;">
-		<div id = "easyText" onmouseover = "$('easyText').style.color = 'white';"
-			onmouseout = "$('easyText').style.color = 'silver';"> Easy</div>
+          easy
         </div>
         <div id="medium" onclick="GameConfigs.level=2; Intro.next(); return false;">
-		<div id = "mediumText" onmouseover = "$('mediumText').style.color = 'white';"
-			onmouseout = "$('mediumText').style.color = 'silver';"> Medium</div>
+          medium
         </div>
         <div id="hard" onclick="GameConfigs.level=3; Intro.next(); return false;">
-		<div id = "hardText" onmouseover = "$('hardText').style.color = 'white';"
-			onmouseout = "$('hardText').style.color = 'silver';"> Hard</div>
+          hard
         </div>
       </div>
     </div>
@@ -77,9 +74,12 @@
         <div id="upgrades" style="display : none;">
         </div>
         
-        <div id="back" onclick="Intro.previous();"></div>
-        <div id="next" onclick="Intro.next();"></div>
-        <div id="finish" onclick="Intro.finish();"></div>
+        <div id="back" onclick="Intro.previous();">
+        </div>
+        <div id="next" onclick="Intro.next();">
+        </div>
+        <div id="finish" onclick="Intro.finish();">
+        </div>
     </div>
 
   </div>
