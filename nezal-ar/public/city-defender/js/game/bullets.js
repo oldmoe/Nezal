@@ -129,7 +129,7 @@ var DoubleTurret = Class.create(Turret, {
 	cssClass : 'doubleTower',
 	fireSound : Sounds.doubleTurret.fire,
 	firing_turn : 0,
-	hp:600, power:10, rate:0.4, price: 30, range: 2,
+	hp:900, power:15, rate:0.4, price: 25, range: 2,
 	initialize: function($super,x,y,scene,extension){
 		$super(x,y,scene,extension)
 	},
