@@ -124,26 +124,14 @@ var Game = Class.create({
 			div.appendChild(Loader.images.background[div.className+'_button_off.png'])
 			}
 		})
-		/*
-		$$('#gameElements .upgrades .upgrade.bullets_1').first().appendChile(Loader.images.upgrades['bullets_upgrade_1.png'])
-		$$('#gameElements .upgrades .upgrade.bullets_2').first().appendChile(Loader.images.upgrades['bullets_upgrade_2.png'])
-		$$('#gameElements .upgrades .upgrade.bullets_2.off').first().appendChile(Loader.images.upgrades['bullets_upgrade_2_off.png'])
 
-		$$('#gameElements .upgrades .upgrade.rockets_1').first().appendChile(Loader.images.upgrades['rockets_upgrade_1.png'])
-		$$('#gameElements .upgrades .upgrade.rockets_2').first().appendChile(Loader.images.upgrades['rockets_upgrade_2.png'])
-		$$('#gameElements .upgrades .upgrade.rockets_2.off').first().appendChile(Loader.images.upgrades['rockets_upgrade_2_off.png'])
-
-		$$('#gameElements .upgrades .upgrade.shields_1').first().appendChile(Loader.images.upgrades['shields_upgrade_1.png'])
-		$$('#gameElements .upgrades .upgrade.shields_2').first().appendChile(Loader.images.upgrades['shields_upgrade_2.png'])
-		$$('#gameElements .upgrades .upgrade.shields_2.off').first().appendChile(Loader.images.upgrades['shields_upgrade_2_off.png']		)
-		*/
 	},
 	
 	registerHandlers : function(){
 		var self = this
 		$$('#gameElements .upgrades .upgrade.next').invoke('observe', 'click', Upgrades.upgrade)	
 		$$('#gameElements .upgrades .upgradeItem').invoke('observe', 'click', Upgrades.select)			
-		$$('.towers div').invoke('observe','click', function(){GhostTurret.select(this)})
+		$$('.towers div').invoke('observe','click', function(){Sounds.play(Sounds.gameSounds.click);GhostTurret.select(this)})
 		$$('#gameElements .start').first().observe('click', function(){self.scene.startAttack()})
 		$('playAgain').observe('click', game.reset)
 		$('exit').observe('click', game.exit)

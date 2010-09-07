@@ -57,6 +57,7 @@ var ghostTurretFeatures = {
 				if(!self.selected) return
 				self.validate();
 				if(self.valid){
+					Sounds.play(Sounds.gameSounds.correct_tower)
 					var turret = new towerCategory(Math.floor(e.layerX/32), Math.floor(e.layerY/32),game.scene)
 					game.scene.towerMutators.each(function(mutator){
 						mutator.action(turret)
@@ -64,6 +65,9 @@ var ghostTurretFeatures = {
 					game.scene.addTurret(turret)
 					game.scene.stats.towersCreated++
 					game.scene.money -= towerCategory.prototype.price
+				}
+				else{
+						Sounds.play(Sounds.gameSounds.wrong_tower)
 				}
 			})
 		}).observe("mouseleave", function(e){

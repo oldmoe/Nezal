@@ -303,6 +303,7 @@ var CityDefenderScene = Class.create(Scene, {
 				if(creepCat == Plane || creepCat == RedPlane){
 					var arr = [0,90,180,270]
 					theta = arr[0]
+					creep.theta = theta
 					self.issueCreep(creep, 
 							(theta == 90 || theta == 270) ? Math.round(Math.random()* (Map.width - 1)) : x,
 							(theta == 0 || theta == 180) ? (Math.round(Math.random()* (Map.height - 2)) + 1) : y, 
