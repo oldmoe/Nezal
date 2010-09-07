@@ -48,7 +48,7 @@ var TankII = Class.create(Creep, {
   images : {},
   name : 'TankII',
   price : 2,
-	speed : 6,
+	speed : 8,
 	power : 3,
 	hp : 250,maxHp : 250,
   initImages : function(){
