@@ -658,7 +658,7 @@ body {
   text-transform : capitalize;
 }
 #easyText{
-	position:absolute;
+	position:relative;
 	top:60;
 	left:50;
 	font-size:20;
@@ -677,6 +677,16 @@ body {
 	left:45;
 	font-size:20;
 	color:silver;
+}
+#challengesText {
+	position : absolute;
+	z-index : 2;
+	top : 370;
+	left : 240;
+	color : orange;
+	font-size : 25;
+	text-shadow: #000 2px 2px 1px;
+
 }
 /*
 #challenges

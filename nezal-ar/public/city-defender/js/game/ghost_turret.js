@@ -34,6 +34,7 @@ var ghostTurretFeatures = {
 		var towerCategory = eval(tower)
 		self.images = towerCategory.prototype.images
 		self.initImages = towerCategory.prototype.initImages
+		self.range = towerCategory.prototype.range
 		self.initImages()
 		$('towerInfo').innerHTML = game.scene.templates['towerInfo'].process({values: towerCategory.prototype, tower : towerCategory.prototype})
 		self.selected = true;

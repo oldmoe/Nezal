@@ -26,22 +26,22 @@
     <div id="pause" style="display : none;">
       <img id="inProgress" src="images/background/ajax-loader.gif"/>
     </div>
-    
     <div id="levelSelection" style="display : none;">
+					<div id = "challengesText" style = "position : absolute;" > Weekly chanllenges</div>
       <img id="levelsBackground" src="images/intro/level-selection.png"/>
       <div id="levels">
         <img id='levelsLinks' src="images/intro/difficulty.png"/>
         <div id="easy" onclick="GameConfigs.level=1; Intro.next(); return false;">
 		<div id = "easyText" onmouseover = "$('easyText').style.color = 'white';"
-			onmouseout = "$('easyText').style.color = 'silver';"> easy</div>
+			onmouseout = "$('easyText').style.color = 'silver';"> Easy</div>
         </div>
         <div id="medium" onclick="GameConfigs.level=2; Intro.next(); return false;">
 		<div id = "mediumText" onmouseover = "$('mediumText').style.color = 'white';"
-			onmouseout = "$('mediumText').style.color = 'silver';"> medium</div>
+			onmouseout = "$('mediumText').style.color = 'silver';"> Medium</div>
         </div>
         <div id="hard" onclick="GameConfigs.level=3; Intro.next(); return false;">
 		<div id = "hardText" onmouseover = "$('hardText').style.color = 'white';"
-			onmouseout = "$('hardText').style.color = 'silver';"> hard</div>
+			onmouseout = "$('hardText').style.color = 'silver';"> Hard</div>
         </div>
       </div>
     </div>
