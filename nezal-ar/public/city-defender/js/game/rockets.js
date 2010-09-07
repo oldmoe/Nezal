@@ -6,7 +6,7 @@ var RocketLauncher = Class.create(Turret, {
 	reloaded: true,
 	canHitFlying: false,
 	canHitGround: true,
-	hp:1200, power:100, rate:0.05, price: 45, range: 3,
+	hp:1200, power:100, rate:0.05, price: 50, range: 3,
 	initialize : function($super,x,y,scene,extension){
 		this.initImages()
 		$super(x,y,scene,extension)
