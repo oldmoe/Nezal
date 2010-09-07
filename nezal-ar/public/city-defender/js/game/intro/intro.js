@@ -490,14 +490,19 @@ var Intro = {
         var gameData = [];
         Intro.toLabels( Intro.gameData, gameData);
         var type = element.getAttribute('type');
+        var name = type;
         Intro.userData.metadata.added[type].push(element.getAttribute('itemid'));
         var itemConfig = TowerConfig;
         if(type == "weapons")
+        {
             itemConfig = SuperWeaponConfig;
+            name = "super weapons";
+        }
         else if (type == "upgrades")
              itemConfig = UpgradeConfig;
        data = { "gameData" : gameData,
-                "userData" : Intro.userData
+                "userData" : Intro.userData, 
+                "name" : name
                     };
         var emptySpots = Intro.pages[type].emptySpots;
         data["gameData"]["empty"] = {};
@@ -513,17 +518,22 @@ var Intro = {
     removeItem: function(element){
         Intro.dirty = true;
         var type = element.getAttribute('type');
+        var name = type;
         Intro.userData.metadata.added[type].splice( Intro.userData.metadata.added[type].indexOf(element.getAttribute('itemid')), 1);
         var gameData = [];
         var itemConfig = TowerConfig; 
         Intro.toLabels( Intro.gameData, gameData);
         if(type == "weapons")
+        {
             itemConfig = SuperWeaponConfig;
+            name = "super weapons";
+        }
         else if (type == "upgrades")
              itemConfig = UpgradeConfig;
-        data = { "gameData" : gameData,
-                 "userData" : Intro.userData
-              };
+       data = { "gameData" : gameData,
+                "userData" : Intro.userData, 
+                "name" : name
+                    };
         var emptySpots = Intro.pages[type].emptySpots;
         data["gameData"]["empty"] = {};
         data["userData"]["empty"] = {};
