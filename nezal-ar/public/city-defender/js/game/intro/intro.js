@@ -623,11 +623,21 @@ var Intro = {
     },
     
     enablePauseScreen : function() {
+        if(Intro.currentPage >=0)
+        {
+          $(Intro.sequence[Intro.currentPage]).style['opacity'] = 0.7;
+          $('marketTabs').style['opacity'] = 0.7;
+        }
         $('pause').show()
     },
     
     disablePauseScreen : function() {
         $('pause').hide()
+        if(Intro.currentPage >=0)
+        {
+          $(Intro.sequence[Intro.currentPage]).style['opacity'] = 1;  
+          $('marketTabs').style['opacity'] = 1;
+        }
     },
     
     show: function(){

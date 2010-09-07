@@ -59,9 +59,12 @@ body {
 }
 #pause #inProgress
 {
+  left:130px;
+  overflow:hidden;
   position:absolute;
-  left:310px;
-  top:220px;
+  text-align:center;
+  top:200px;
+  width:500px;
 }
 
 #intro
