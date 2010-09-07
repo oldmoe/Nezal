@@ -23,11 +23,16 @@
 <div id="game">
   <div id="intro">
     
-    <div id="pause" style="display : none;">
-      <img id="inProgress" src="images/background/ajax-loader.gif"/>
+    <div id="pause">
+      <div style="width:100%; height:100%; opacity:0.6; background:FloralWhite;"> </div>
+      <div id="inProgress" style="width:500px;">
+        <img  src="images/intro/loading.png" style="width: 100%;"/>
+        <img  src="images/intro/loading-text.png" style="width: 58%; left:20%; position:absolute; top:20px;"/>
+        <img  src="images/intro/loading-bar.gif" style="left:26%; position:absolute;top:80%;width:46%;"/>
+      </div>
     </div>
-    <div id="levelSelection" style="display : none;">
-					<div id = "challengesText" style = "position : absolute;" > Weekly chanllenges</div>
+    <div id="levelSelection" style="display : none; text-align:center;">
+					<div id = "challengesText" style = "position : absolute;" > Weekly chanllenge</div>
       <img id="levelsBackground" src="images/intro/level-selection.png"/>
       <div id="levels">
         <img id='levelsLinks' src="images/intro/difficulty.png"/>
@@ -74,12 +79,6 @@
         <div id="upgrades" style="display : none;">
         </div>
         
-        <div id="back" onclick="Intro.previous();">
-        </div>
-        <div id="next" onclick="Intro.next();">
-        </div>
-        <div id="finish" onclick="Intro.finish();">
-        </div>
     </div>
 
   </div>
