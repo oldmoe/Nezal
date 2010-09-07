@@ -70,22 +70,21 @@ class CityDefender < Metadata
     metadata = self.decode(user_campaign.metadata)
     if (data['win'])
       metadata['missions'][data['mission']] = { 'order' => data['mission'] + 1, 'score' => 0 }
+      if metadata['missions'][data['mission'] -1]
+        metadata['missions'][data['mission'] -1]['score'] = if metadata['missions'][data['mission'] -1]['score'] > data['score']
+                                                              metadata['missions'][data['mission'] -1]['score']
+                                                            else
+                                                              data['score']
+                                                            end
+        user_campaign.profile.score += data['score']
+        ranks = user_campaign.profile.game.ranks.where( " lower_exp <= #{user_campaign.profile.score} AND " + 
+                                                                           " ( upper_exp > #{user_campaign.profile.score} OR upper_exp == -1 ) "  )
+        user_campaign.profile.rank = ranks.first
+        user_campaign.metadata = self.encode(metadata)
+        user_campaign.profile.save
+        user_campaign.save
+      end
     end
-    if metadata['missions'][data['mission'] -1]
-      metadata['missions'][data['mission'] -1]['score'] = if metadata['missions'][data['mission'] -1]['score'] > data['score']
-                                                            metadata['missions'][data['mission'] -1]['score']
-                                                          else
-                                                            data['score']
-                                                          end
-      user_campaign.profile.score += data['score']
-      ranks = user_campaign.profile.game.ranks.where( " lower_exp <= #{user_campaign.profile.score} AND " + 
-                                                                         " ( upper_exp > #{user_campaign.profile.score} OR upper_exp == -1 ) "  )
-      user_campaign.profile.rank = ranks.first
-      user_campaign.metadata = self.encode(metadata)
-      user_campaign.profile.save
-      user_campaign.save
-    end
-   
   end
   
 end

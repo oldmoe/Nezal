@@ -67,7 +67,8 @@ var Intro = {
                     "market/upgrades-on.png",  
                     "market/upgrades-off.png",
                     "market/towers-bar.png",
-                    "market/towers-bg.png",
+                    "market/background.png",
+                    "market/added-towers.png",
                     "market/float-bg.png",
                     "market/q-box.png",
                     "market/hidden-lamp.png",
@@ -79,7 +80,6 @@ var Intro = {
                     "market/remove.png",
                     "market/q-mark.png",
                     "market/coin.png",
-                    "market/remove-big.png",
                     "market/inactive-unlock.png",
                     "market/money.png"
                 ],
@@ -91,7 +91,8 @@ var Intro = {
                     "market/upgrades-on.png",  
                     "market/upgrades-off.png",
                     "market/weapons-bar.png",
-                    "market/weapons-bg.png",
+                    "market/background.png",
+                    "market/added-items.png",
                     "market/float-bg.png",
                     "market/q-box.png",
                     "market/hidden-lamp.png",
@@ -111,7 +112,8 @@ var Intro = {
                     "market/upgrades-on.png",  
                     "market/upgrades-off.png",
                     "market/upgrades-bar.png",
-                    "market/upgrades-bg.png",
+                    "market/background.png",
+                    "market/added-items.png",
                     "market/float-bg.png",
                     "market/q-box.png",
                     "market/hidden-lamp.png",
@@ -287,7 +289,8 @@ var Intro = {
                 var gameData = [];
                 Intro.toLabels( Intro.gameData, gameData)
                 data = { "gameData" : gameData,
-                         "userData" : Intro.userData
+                         "userData" : Intro.userData,
+                         "name" : 'towers'
                       };
                 data["gameData"]["empty"] = {};
                 data["userData"]["empty"] = {};
@@ -355,7 +358,8 @@ var Intro = {
                 var gameData = [];
                 Intro.toLabels( Intro.gameData, gameData)
                 data = { "gameData" : gameData,
-                         "userData" : Intro.userData
+                         "userData" : Intro.userData,
+                         "name" : 'super weapons'
                       };
                 data["gameData"]["empty"] = {};
                 data["userData"]["empty"] = {};
@@ -418,7 +422,8 @@ var Intro = {
                 var gameData = [];
                 Intro.toLabels( Intro.gameData, gameData)
                 data = { "gameData" : gameData,
-                         "userData" : Intro.userData
+                         "userData" : Intro.userData,
+                         "name" : 'upgrades'
                       };
                 data["gameData"]["empty"] = {};
                 data["userData"]["empty"] = {};

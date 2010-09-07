@@ -156,18 +156,17 @@
           ${data.rank[1]}
         </span>
       </div>
-      <div>
+      <div class="action">
           {if ((Intro.gameData[data.type][data.itemid]['unlocked'] == false) && (Intro.userData.metadata[data.type].indexOf(data.itemid) < 0 ) )}
             {if ((data.cost > data.coins) || ( data.rank[0] > data.exp))}
-              <img src="images/intro/market/inactive-unlock.png" class="action"> </img>
-              <span class="action"> unlock </span>
+              <span class="inactive"> unlock </span>
               {if (data.cost > data.coins)}
                 <div class="addMoney" >
                   <img src="images/intro/market/money.png" > </img>
                 </div>
               {/if}
             {else}
-              <img itemid="${data.itemid}" type="${data.type}" src="images/intro/market/unlock.png" class="action" onclick="Intro.unlockItem(this);"> </img>
+              <span class="active" itemid="${data.itemid}" type="${data.type}" src="images/intro/market/unlock.png" class="action" onclick="Intro.unlockItem(this);"> unlock </span>
             {/if}
           {/if}
       </div>
@@ -178,45 +177,57 @@
 <textarea id='marketItemsTemplate' style="display:none">
     <div id="floatBg" style="display : none;">
     </div>
-    <img src="images/intro/market/${type}-bg.png"> </img>  
+    <img src="images/intro/market/background.png"> </img>  
     <div class="coins">
         ${data.userData['coins']}
     </div>
+    <div class="msg">
+        Select ${data['name']} to add them to your next mission army
+    </div>
     <div id="${type}Display">
       {for item in data.gameData[type] }
-          <div class="item clickable">
-            <div itemid="${item}">
-              <div itemid="${item}" type="${type}" onclick="Intro.showFloatBg(this)" class="itemImage">
-                <img itemid="${item}" type="${type}" src="images/intro/${type}/${itemConfig[item]['image']}" onclick="Intro.showFloatBg(this)"></img>
-              </div>
-              {if ((Intro.gameData[type][item]['unlocked'] == true) || (data.userData.metadata[type].indexOf(item) >= 0 ) )}
-                  {if (data.userData.metadata.added[type].indexOf(item) < 0) }
-                      <img  itemid="${item}" type="${type}" src="images/intro/market/add.png" class="action" onclick="Intro.addItem(this);"> </img> 
-                  {/if}
-              {else}
-                <img itemid="${item}" type="${type}" src="images/intro/market/unlock.png" class="action" onclick="Intro.showFloatBg(this);"> </img>
-                <img src="images/intro/market/locked.png" class="label"> </img>  
-              {/if}
-            </div>
-            <img src="images/intro/market/shown-lamp.png"> </img> 
+      <div class="item">
+        <div itemid="${item}" class="clickable">
+          <div itemid="${item}" type="${type}" onclick="Intro.showFloatBg(this)" class="itemImage">
+            <img itemid="${item}" type="${type}" src="images/intro/${type}/${itemConfig[item]['image']}" onclick="Intro.showFloatBg(this)"></img>
           </div>
+          {if ((Intro.gameData[type][item]['unlocked'] == true) || (data.userData.metadata[type].indexOf(item) >= 0 ) )}
+              {if (data.userData.metadata.added[type].indexOf(item) < 0) }
+                  <img  itemid="${item}" type="${type}" src="images/intro/market/add.png" class="action" onclick="Intro.addItem(this);"> </img> 
+              {/if}
+          {else}
+            <img itemid="${item}" type="${type}" src="images/intro/market/unlock.png" class="action" onclick="Intro.showFloatBg(this);"> </img>
+            <img src="images/intro/market/locked.png" class="label"> </img>  
+          {/if}
+        </div>
+        <img src="images/intro/market/shown-lamp.png"> </img> 
+      </div>
       {/for}
       {for x in data.gameData.empty[type]}
-          <div class="item">
-            <div>
-              <img src="images/intro/market/q-box.png"></img>
-            </div>
-            <img src="images/intro/market/hidden-lamp.png"> </img> 
-          </div>
+      <div class="item">
+        <div>
+          <img src="images/intro/market/q-box.png"></img>
+        </div>
+        <img src="images/intro/market/hidden-lamp.png"> </img> 
+      </div>
       {/for}
+    </div>
+    <div class='background'>
+        {if type == 'towers'}
+          <img src="images/intro/market/added-towers.png"> </img>  
+        {else}
+          <img src="images/intro/market/added-items.png"> </img>  
+        {/if}
     </div>
     <div id="addedItems">
       {for item in data.userData.metadata.added[type] }
-          <div  class="addedItem clickable" itemid="${item}">
+          <div  class="addedItem clickable" itemid="${item}" onmouseover="this.select('.action')[0].show();" onmouseout="this.select('.action')[0].hide();">
             <div>
                 <img itemid="${item}" type="${type}" src="images/intro/${type}/${itemConfig[item]['smallImage']}" onclick="Intro.showFloatBg(this)" ></img>
             </div>
-            <img itemid="${item}" type="${type}" src="images/intro/market/remove.png" class="action" onclick="Intro.removeItem(this);"> </img>
+            <div class="action" style="display:none;">
+              <img itemid="${item}" type="${type}" src="images/intro/market/remove.png"  onclick="Intro.removeItem(this);"> </img>
+            </div>
           </div>
       {/for}
       {for item in data.userData.empty[type] }
@@ -224,5 +235,21 @@
               <img src="images/intro/market/q-mark.png"></img>
           </div>
       {/for}
+    </div>
+    
+    <div id="back" onclick="Intro.previous();" class="buttonText">
+      <div id="backText">
+        Back
+      </div>
+    </div>
+    <div id="next" onclick="Intro.next();" class="buttonText">
+      <div id="nextText">
+        Next
+      </div>
+    </div>
+    <div id="finish" onclick="Intro.finish();" class="buttonText">
+      <div id="finishText">
+        Finish
+      </div>
     </div>
 </textarea>

@@ -448,6 +448,7 @@ body {
   width : 120px;
   height : 45px;
   cursor : pointer;
+  color : white;
 }
 #marketPlace #finish
 {
@@ -461,6 +462,30 @@ body {
 {
   left : 488px;
 }
+#marketPlace #finishText
+{
+  position:absolute;
+  top:12px;
+  left:20px;
+  width:77px;
+  text-align:center;
+}
+#marketPlace #nextText
+{
+  position:absolute;
+  top:10px;
+  left:10px;
+  width:77px;
+  text-align:center;
+}
+#marketPlace #backText
+{
+  position:absolute;
+  top:10px;
+  left:35px;
+  width:77px;
+  text-align:center;
+}
 
 #marketPlace #towers #addedItems
 {
@@ -469,6 +494,25 @@ body {
   position:absolute;
   top:390px;
   width:655px;
+}
+#marketPlace .background
+{
+  left:45px;
+  position:absolute;
+  top:390px;
+  width:655px;
+}
+#marketPlace .msg
+{
+  color:#FFEE00;
+  font-size:18px;
+  position:absolute;
+  text-align:center;
+  text-shadow:2px 1px #770000;
+  top:335px;
+  width:100%;
+  word-spacing:5px;
+  
 }
 #marketPlace #towers .addedItem
 {
@@ -523,7 +567,7 @@ body {
 #marketPlace #towersDisplay, #marketPlace #weaponsDisplay, #marketPlace #upgradesDisplay
 {
   height:249px;
-  left:239px;
+  left:240px;
   position:absolute;
   top:58px;
   width:447px;
@@ -531,7 +575,7 @@ body {
 #marketPlace .item
 {
   height : 87px;
-  width : 145px;
+  width : 144px;
   margin : 0px 4px 0px 0px;
   float : left;
   text-align : center;
@@ -568,10 +612,14 @@ body {
   bottom : 2px;
   cursor : pointer;  
 }
-#marketPlace .action:hover
+#marketPlace .addedItem .action
 {
-  opacity : 1;
+  position : absolute;
+  right : 2px;
+  top : 7px;
+  cursor : pointer;  
 }
+
 #marketPlace .coins
 {
   left:92px;
@@ -583,9 +631,9 @@ body {
   font-family : Digital;
   font-size : 24px;
 }
-.clickable div div:hover, .clickable div img:hover
+.clickable div:hover, .clickable img:hover
 {
-  opacity : 0.7;
+  opacity : 0.8;
   cursor : pointer;
 }
 
@@ -696,12 +744,11 @@ body {
   height:30px;
   position:absolute;
   top:170px;
-  width:89%;
-  color : white;
+  width:92%;
 }
 #marketPlace #upgrades #floatBg  .actions
 {
-  width:85%;
+  width:87%;
 }
 #marketPlace #floatBg .actions .rank
 {
@@ -717,38 +764,28 @@ body {
   cursor:pointer;
   float : right;
   font-size : 11px;
-  line-height : 180%
+}
+#marketPlace #floatBg .actions .action .active
+{
+  color:#FF4102;
+  font-size:19px;
+}
+#marketPlace #floatBg .actions .action .inactive
+{
+  color:silver;
+  font-size:19px; 
+  cursor : default; 
 }
 #marketPlace #floatBg .actions .addMoney
 {
   bottom:0;
   cursor:pointer;
   position:absolute;
-  right : 60px;
+  right : 80px;
   color : white;
   text-transform : capitalize;
 }
-#easyText{
-	position:relative;
-	top:60;
-	left:50;
-	font-size:20;
-	color:silver;
-}
-#mediumText{
-	position:absolute;
-	top:60;
-	left:45;
-	font-size:20;
-	color:silver;
-}
-#hardText{
-	position:absolute;
-	top:60;
-	left:45;
-	font-size:20;
-	color:silver;
-}
+
 #challengesText {
 	position : absolute;
 	z-index : 2;
