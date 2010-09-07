@@ -176,6 +176,7 @@ var CityDefenderScene = Class.create(Scene, {
 		$$(".start").first().observe('click', function(){self.pause()})
 	},
 	renderPause: function(){
+		Sounds.play(Sounds.gameSounds.pause)
 		var pauseDev = $$('#gameElements .resumed').first()
 		$$(".startText").first().innerHTML = T.resume
 		pauseDev.removeClassName('resumed')
@@ -188,6 +189,7 @@ var CityDefenderScene = Class.create(Scene, {
 		$$(".start").first().observe('click', function(){self.resume()})	
 	},
 	renderResume: function(){
+		Sounds.play(Sounds.gameSounds.pause)
 		var resumeDev = $$('#gameElements .paused').first()
 		$$(".startText").first().innerHTML = T.pause
 		resumeDev.removeClassName('paused')
@@ -224,6 +226,7 @@ var CityDefenderScene = Class.create(Scene, {
 			return
 		}else if(this.config && this.playing){
 			if(this.config.waves.length == 0 && this.creeps.length == 0 && this.waitingCreeps == 0 ){
+				Sounds.play(Sounds.gameSounds.win)
 				this.win();this.uploadScore(true)
 				return
 			}else if(this.creeps.length == 0  &&this.waitingCreeps == 0 && this.config.waves.length > 0 && !this.wavePending && this.running){
@@ -248,7 +251,7 @@ var CityDefenderScene = Class.create(Scene, {
 		$('static').show();
 		$('droppingGround').addClassName('off')
 		new Effect.SwitchOff('static');
-		new Effect.Appear("result", {delay : 1.0})
+		new Effect.Appear("result", {delay : 2.0})
 		var self = this
 		this.push(1000,function(){self.displayStats()})
 	},
@@ -258,9 +261,11 @@ var CityDefenderScene = Class.create(Scene, {
 		$('winImage').hide()
 		$('loseImage').show()
 		$('static').show();
+		Sounds.play(Sounds.gameSounds.wash)
 		$('droppingGround').addClassName('off')
 		new Effect.SwitchOff('static');
-		new Effect.Appear("result", {delay : 1.0})
+		new Effect.Appear("result", {delay : 2.0})
+		this.push(2000,function(){Sounds.play(Sounds.gameSounds.lose)})
 		var self = this
 		this.push(1000,function(){self.displayStats()})
 	},
@@ -297,8 +302,7 @@ var CityDefenderScene = Class.create(Scene, {
 				var entry = Map.entry[Math.round(Math.random()*(Map.entry.length - 1))]
 				if(creepCat == Plane || creepCat == RedPlane){
 					var arr = [0,90,180,270]
-					theta = arr.random()
-					creep.theta = theta;
+					theta = arr[0]
 					self.issueCreep(creep, 
 							(theta == 90 || theta == 270) ? Math.round(Math.random()* (Map.width - 1)) : x,
 							(theta == 0 || theta == 180) ? (Math.round(Math.random()* (Map.height - 2)) + 1) : y, 
