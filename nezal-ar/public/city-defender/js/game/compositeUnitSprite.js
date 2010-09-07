@@ -39,4 +39,3 @@ var CompositeUnitSprite = Class.create(Sprite, {
 		$super()
 	}
 })
-

@@ -26,7 +26,6 @@ body{
 	position: absolute;
 	top:0px;
 	left:0px;
-	background-image: url('../images/background/l_shape.png');
 }
 
 #result{
@@ -46,38 +45,31 @@ body{
 #result #stats{
 	position: absolute;
 	width: 250px;
-	left:210px;
-	top: 334px;
+	left:170px;
+	top: 300px;
 	height: 120px;
+	z-index:200
 }
 
 #result #exit{
+	cursor : pointer;
 	position: absolute;
 	width: 115px;
 	height: 60px;
-	left:60px;
-	top: 374px;
-	background-image: url('../images/background/exit.png');
+	left:42px;
+	top: 409px;
+	z-index:4;
 }
 
 #result #playAgain{
+	cursor : pointer;
 	position: absolute;
 	width: 115px;
 	height: 60px;
-	left:560px;
-	top: 374px;
-	background-image: url('../images/background/play_again.png');
+	left:537px;
+	top: 409px;
+	z-index:4;
 }
-
-#result.win{
-	background-image: url('../images/background/win.png');
-}
-
-#result.lose{
-	background-image: url('../images/background/lose.png');
-}
-
-
 #splashScreen{
 	width : 760px;
 	height: 550px;
@@ -85,7 +77,6 @@ body{
 	top:0px;
 	left:0px;
 	z-index : 101;
-	background-image: url('../images/background/interface.png');
 }
 
 #waitScreen{
@@ -105,7 +96,6 @@ body{
 	position: absolute;
 	left:230px;
 	top: 430px;
-	background-image: url('../images/background/loading_bar_down.png');
 }
 
 #splashScreen .loading_bar_bg #loading_bar{
@@ -114,7 +104,6 @@ body{
 	left :0px;
 	top: 0px;
 	width: 0%;	
-	background-image: url('../images/background/loading_bar_up.png');
 }
 
 #gameElements .fps{
@@ -126,29 +115,56 @@ body{
 
 #gameElements .rank{
 	position:absolute;
-	top:10px;
-	left:656px;
-	width:87px;
-	height:71px;
-	background-image: url('../images/background/rank.png');	
+	top:40px;
+	left:650px;
+	width:100px;
+	height:60px;
+}
+
+#gameElements .rankName{
+	position:absolute;
+	font-family: AdLib;
+	color: orange;
+	top: 25px;
+	left:650px;
+	width:100px;
+	height:40px;
+	text-align: center;
 }
 
 #gameElements .start{
 	position:absolute;
-	top:477px;
-	left:2px;
-	width:144px;
-	height:72px;
-	background-image: url('../images/background/start.png');		
+	top:468px;
+	left:0px;
+	width:155px;
+	height:82px;
+	z-index:1;
 }
 
-#gameElements .start.paused{
-	background-image: url('../images/background/resume.png');		
+#gameElements .startText{
+	position:absolute;
+	top:30px;
+	left:0px;
+	width:155px;
+	height:80px;
+	z-index:2;
+	font-family:AdLib;
+	font-size: 30;
+	text-align: center;
+	color: white;
+	cursor:default;
+	margin-top:2%;
+	cursor : pointer;
+	text-shadow: #000 2px 2px 1px;
+	vertical-align:center;
+	-moz-user-select: none;
+   -khtml-user-select: none;
+    user-select: none;
+        
 }
 
-#gameElements .start.resumed{
-	background-image: url('../images/background/pause.png');		
-}
+
+
 
 #gameElements .upgrades{
 	position:absolute;
@@ -186,7 +202,7 @@ body{
 }
 
 #gameElements .upgrades .upgrade.rockets_2{
-	background-image: url('../images/background/rockets_upgrade_2.png');			
+	background-image: url('../simages/background/rockets_upgrade_2.png');			
 }
 
 #gameElements .upgrades .upgrade.rockets_2.off{
@@ -313,24 +329,6 @@ body{
 	margin-bottom: 2px;
 	background-image: url('../images/background/mystry_button.png');			
 }
-
-#gameElements .towers div.tower1{
-	background-image: url('../images/background/tower_1_button.png');				
-}
-
-#gameElements .towers div.tower2{
-	background-image: url('../images/background/tower_2_button.png');				
-}
-
-#gameElements .towers div.rocketLauncher{
-	background-image: url('../images/background/rocket_launcher_button.png');				
-}
-
-#gameElements .towers div.patriot{
-	background-image: url('../images/background/patriot_button.png');				
-}
-
-
 #gameElements .towerInfo{
 	position:absolute;
 	top:360px;
@@ -384,6 +382,28 @@ body{
 	font-size : 12px;
 	color: #fc0;
 }
+
+#money{
+	position:absolute;
+	top:98px;
+	left: 672px;
+	width: 88px;
+	height: 42px;
+	color : orange;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+#gameElements .diagram{
+	position:absolute;
+	top:6px;
+	left: 62px;
+	width: 48px;
+	height: 42px;
+	background-position: right;
+	background-repeat: no-repeat;
+}
+
 
 #money{
 	position:absolute;
@@ -474,51 +494,11 @@ body{
 
 #gameElements .superWeapons div.splash{
 	height: 56px;
-	background-image: url('../images/background/splash_button.png');		
 }
 
-#gameElements .superWeapons div.heal{
-	background-image: url('../images/background/heal_button.png');		
-}
-
-
-#gameElements .superWeapons div.hyper{
-	background-image: url('../images/background/hyper_button.png');		
-}
-
-#gameElements .superWeapons div.weak{
-	background-image: url('../images/background/weak_button.png');		
-}
-
-#gameElements .superWeapons div.nuke{
-	background-image: url('../images/background/nuke_button.png');		
-}
 
 #gameElements .superWeaponsOff div.splash{
 	height: 56px;
-	background-image: url('../images/background/splash_button_off.png');		
-}
-
-#gameElements .superWeaponsOff div.heal{
-	background-image: url('../images/background/heal_button_off.png');		
-}
-
-
-#gameElements .superWeaponsOff div.hyper{
-	background-image: url('../images/background/hyper_button_off.png');		
-}
-
-#gameElements .superWeaponsOff div.weak{
-	background-image: url('../images/background/weak_button_off.png');		
-}
-
-#gameElements .superWeaponsOff div.nuke{
-	background-image: url('../images/background/nuke_button_off.png');		
-}
-
-
-#gameElements .superWeaponsOff div.nuke{
-	background-image: url('../images/background/nuke_button_off.png');
 }
 
 #gameElements .controls{
@@ -627,8 +607,8 @@ body{
 	width:736px;
 	height: auto;
 	position: relative;
-	/*background-image: url('../images/background/path.png');*/
 	visibility:hidden;
+	
 }
 
 #gameContainer canvas.off{
@@ -644,6 +624,12 @@ body{
 }
 
 #gameContainer canvas#gameForeground{
+	position :absolute;	
+	top : 0px;
+	left: 0px;
+	
+}
+#gameContainer canvas#gameBackground{
 	position :absolute;	
 	top : 0px;
 	left: 0px;
@@ -726,3 +712,81 @@ canvas.turret{
 #audio {
 	display : none;
 }
+#modalWindow
+{
+  width : 400px;
+  height : 170px;
+  position : absolute;
+  top : 200px;
+  left : 100px;
+  z-index : 200;
+}
+#modalWindow #character
+{
+  width : 400px;
+  height : 170px;
+  position : absolute;
+  top : 0px;
+  left : 0px;
+  z-index : 200;
+}
+#modalWindow .content
+{
+  width : 245px;
+  height : 105px;
+  position : absolute;
+  top : 10px;
+  left : 110px;
+  z-index : 201;
+  font-family: AdLib;
+}
+#modalWindow #ok
+{
+  width : 40px;
+  height : 30px;
+  position : absolute;
+  top : 120px;
+  left : 300px;
+  z-index : 202;
+}
+#popup
+{
+	position : absolute;
+	top : 100;
+	left : 20;
+	width : 585;
+	height : 350;
+	z-index : 300;
+}
+#popup #content
+{
+	position : absolute;
+	top : 20;
+	left : 30;
+	width : 390;
+	height : 270;
+	font-family: AdLib;
+	scrollbar-base-color: red;
+}
+#popup #rankImg
+{
+	position : absolute;
+	top : 20;
+	left : 395;
+	width : 172;
+	height : 148;
+}
+#popup #popupClose
+{
+	position : absolute;
+	width : 30;
+	height : 30;
+	left : 523;
+	top : 10;
+}
+#loseImage
+{
+	position : absolute;
+	left : -6;
+}
+

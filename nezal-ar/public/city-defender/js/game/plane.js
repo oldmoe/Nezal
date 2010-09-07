@@ -1,14 +1,18 @@
 var Plane = Class.create(Creep, {
+	name : 'Plane',
 	flying : true,
-	images : {
-		base : Loader.images.game['air_craft.png'],
-		fire : Loader.images.game['air_craft_in_action.png'],
-		shadow : Loader.images.game['air_craft_shade.png']
-	},
+	hp:150,maxHp:150,speed:4, power:2, rate:0.1, range: 3,price:2,
 	initialize : function($super,x,y,extension){
 		$super(x,y,extension)
 		this.theta = 0
-	},	
+	},
+	initImages : function(){
+		this.images = {
+		base : Loader.images.game['air_craft.png'],
+		fire : Loader.images.game['air_craft_in_action.png'],
+		shadow : Loader.images.game['air_craft_shade.png']
+		}
+	},
 	createSprites : function(){
 		this.cannonSprite = new Sprite([this.images.base,this.images.fire])
 		this.shadowSprite = new Sprite([this.images.shadow])
@@ -23,6 +27,7 @@ var Plane = Class.create(Creep, {
 		this.shadowSprite.moveTo(this.x+30,this.y)
 		this.healthSprite.moveTo(this.x,this.y)
 		this.healthSprite.hp = this.hp
+		this.healthSprite.maxHp = this.maxHp
 		if(this.fired){
 			this.cannonSprite.currentFrame = 1
 			this.fired = false
@@ -37,7 +42,7 @@ var Plane = Class.create(Creep, {
 		if(this.gridX >= Map.width){
 			// we are out, take us from the game
 			if(this.x >= (Map.width * Map.pitch + Map.pitch / 2)){
-				game.scene.escaped += 1
+				this.scene.escaped += 1
 				this.destroySprites()
 			}			
 		}else if(this.gridX != newGridX){
@@ -61,8 +66,8 @@ var Plane = Class.create(Creep, {
 			var cell = Map.grid[this.gridX][this.gridY];
 			var res = cell.splice(cell.indexOf(this), 1);
 		}
-		game.scene.money += this.price;
-		game.scene.stats.creepsDestroyed++
+		this.scene.money += this.price;
+		this.scene.stats.creepsDestroyed++
 	},
 	destroySprites : function(){
 		this.dead = true	
@@ -74,11 +79,13 @@ var Plane = Class.create(Creep, {
 })
 
 var RedPlane = Class.create(Plane, {
-
-	images : {
-		base : Loader.images.game['red_air_craft.png'],
-		fire : Loader.images.game['red_air_craft_in_action.png'],
-		shadow : Loader.images.game['air_craft_shade.png']
+	hp:300,maxHp:300,speed : 6,power:4, rate:0.2, range: 3,price:3,
+   initImages : function(){
+		this.images = {
+			base : Loader.images.game['red_air_craft.png'],
+			fire : Loader.images.game['red_air_craft_in_action.png'],
+			shadow : Loader.images.game['air_craft_shade.png']
+		}
 	}
 
 })	

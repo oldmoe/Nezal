@@ -19,9 +19,6 @@ var _Render = {
 	renderToggleSound : null
 }
 
-//Nezal.applyNotImplemented(_Render, "Scene.")
-
-
 var Scene = Class.create(_Render, {
 	//initializes the delay of the reactor
 	initialize : function(delay){
@@ -55,11 +52,17 @@ var Scene = Class.create(_Render, {
 		this.renderPause()
 		return this
 	},
+	renderPause : function(){
+	
+	},
 	resume : function(){
 		this.running = true
 		this.reactor.resume()
 		this.renderResume()
 		return this
+	},
+	renderResume : function(){
+	
 	},
 	reset : function(){
 		this.running = false
@@ -82,7 +85,6 @@ var Scene = Class.create(_Render, {
 			})
 			this.objects = remainingObjects
 		}catch(x){console.log(x)}
-		this.objects.invoke('tick');
 		return this
 	},
 	//moves objects in the scene 

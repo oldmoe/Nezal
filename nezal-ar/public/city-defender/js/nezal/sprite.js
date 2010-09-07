@@ -1,5 +1,4 @@
 var Sprite = Class.create({
-
 	x : 0,
 	y : 0,
 	w : 0,
@@ -13,8 +12,10 @@ var Sprite = Class.create({
 	initialize : function(images, properties){
 		this.images = images
 		Object.extend(this, properties)
-		if(!this.w) this.w = images[0].width
-		if(!this.h) this.h = images[0].height
+		if(images[0]){
+			if(!this.w) this.w = images[0].width
+			if(!this.h) this.h = images[0].height
+		}
 		this.currentFrame = 0
 		this.draw = true
 	},

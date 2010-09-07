@@ -6,6 +6,8 @@ var GameData = {
             }, 
     upgrades : {
           },
+    creeps : {
+        },
     templates : {},
 
     init : function()
@@ -13,36 +15,42 @@ var GameData = {
         GameData.templates['towers'] = TrimPath.parseDOMTemplate('displayTemplate');
         GameData.templates['weapons'] = TrimPath.parseDOMTemplate('displayTemplate');
         GameData.templates['upgrades'] = TrimPath.parseDOMTemplate('displayTemplate');
+        GameData.templates['creeps'] = TrimPath.parseDOMTemplate('displayCreepTemplate');
         new Ajax.Request( '../metadata' , {
                           method : 'get',
                           onSuccess: function(transport) {
-                              console.log(transport)
                               data = JSON.parse(transport.responseText);
                               GameData.towers = data['towers'];
                               GameData.weapons = data['weapons'];
                               GameData.upgrades = data['upgrades'];
+                              GameData.creeps = data['creeps'];
                               $$('#towers #list')[0].innerHTML = GameData.templates['towers'].process({list: GameData.towers, type : 'tower'});
                               $$('#weapons #list')[0].innerHTML = GameData.templates['weapons'].process({list: GameData.weapons, type : 'weapon'});
                               $$('#upgrades #list')[0].innerHTML = GameData.templates['upgrades'].process({list: GameData.upgrades, type : 'upgrade'});
+                              $$('#creeps #list')[0].innerHTML = GameData.templates['creeps'].process({list: GameData.creeps, type : 'creeps'});
                           }
                       });
     },
     addTower : function()
     {
         var tower = {
-            "name" : $$("#towers #addTower #name")[0].value,
+            "name" : $$("#towers #addTower #name")[0].value.split(' ').join(''),
             "cost" : $$("#towers #addTower #cost")[0].value,
-            "exp" : $$("#towers #addTower #exp")[0].value
+            "exp" : $$("#towers #addTower #exp")[0].value,
+            "unlocked" : $$("#towers #addTower #unlocked")[0].checked
         }
-        if( !(tower["name"]) || isNaN(tower["cost"]) || isNaN(tower["exp"]) )
+        if( !(tower["name"]) || !(tower["cost"]) || !(tower["exp"]) || isNaN(tower["cost"]) || isNaN(tower["exp"]) )
         {
           alert("Name must exist & Cost and Experience points must be integers");
           return;
         }
+        tower.cost = parseInt(tower.cost);
+        tower.exp = parseInt(tower.exp);
         GameData.towers[tower['name']] = tower;
         $$("#towers #addTower #name")[0].value = "";
         $$("#towers #addTower #cost")[0].value = "";
         $$("#towers #addTower #exp")[0].value = "";
+        $$("#towers #addTower #unlocked")[0].checked = false;
         $$('#towers #list')[0].innerHTML = GameData.templates['towers'].process({list: GameData.towers, type : 'tower'});
     },
     deleteTower : function(element)
@@ -53,48 +61,74 @@ var GameData = {
     addWeapon : function()
     {
         var weapon = {
-            "name" : $$("#weapons #addWeapon #name")[0].value,
+            "name" : $$("#weapons #addWeapon #name")[0].value.split(' ').join(''),
             "cost" : $$("#weapons #addWeapon #cost")[0].value,
-            "exp" : $$("#weapons #addWeapon #exp")[0].value
+            "exp" : $$("#weapons #addWeapon #exp")[0].value,
+            "unlocked" : $$("#weapons #addWeapon #unlocked")[0].checked
         }
-        if( !(weapon["name"]) || isNaN(weapon["cost"]) || isNaN(weapon["exp"]))
+        if( !(weapon["name"]) || !(weapon["cost"]) || !(weapon["exp"]) || isNaN(weapon["cost"]) || isNaN(weapon["exp"]))
         {
           alert("Name must exist & Cost and Experience points must be integers");
           return;
         }
+        weapon.cost = parseInt(weapon.cost);
+        weapon.exp = parseInt(weapon.exp);
         GameData.weapons[weapon['name']] = weapon;
         $$("#weapons #addWeapon #name")[0].value = "";
         $$("#weapons #addWeapon #cost")[0].value = "";
         $$("#weapons #addWeapon #exp")[0].value = "";
+        $$("#weapons #addWeapon #unlocked")[0].checked = false;
         $$("#weapons #list")[0].innerHTML = GameData.templates['weapons'].process({list: GameData.weapons, type : 'weapon'});
     },
     deleteWeapon : function(element)
     {
         delete GameData.weapons[element.getAttribute('name')];
-        $$("#weapons #list")[0].innerHTML = GameData.templates['weapons'].process({list: GameData.weapons, type : 'weapon'});
+        $$("#weapons #list")[0].innerHTML = GameData.templates['weapons'].process({list: GameData.weapons, type : 'creep'});
     },
     addUpgrade : function()
     {
         var upgrade = {
-            "name" : $$("#upgrades #addUpgrade #name")[0].value,
+            "name" : $$("#upgrades #addUpgrade #name")[0].value.split(' ').join(''),
             "cost" : $$("#upgrades #addUpgrade #cost")[0].value,
-            "exp" : $$("#upgrades #addUpgrade #exp")[0].value
+            "exp" : $$("#upgrades #addUpgrade #exp")[0].value,
+            "unlocked" : $$("#upgrades #addUpgrade #unlocked")[0].checked
         }
-        if( !(upgrade["name"]) || isNaN(upgrade["cost"]) || isNaN(upgrade["exp"]))
+        if( !(upgrade["name"]) || !(upgrade["cost"]) || !(upgrade["exp"]) || isNaN(upgrade["cost"]) || isNaN(upgrade["exp"]))
         {
           alert("Name must exist & Cost and Experience points must be integers");
           return;
         }
+        upgrade.cost = parseInt(upgrade.cost);
+        upgrade.exp = parseInt(upgrade.exp);
         GameData.upgrades[upgrade['name']] = upgrade;
         $$("#upgrades #addUpgrade #name")[0].value = "";
         $$("#upgrades #addUpgrade #cost")[0].value = "";
         $$("#upgrades #addUpgrade #exp")[0].value = "";
+        $$("#upgrades #addUpgrade #unlocked")[0].checked = false;
         $$('#upgrades #list')[0].innerHTML = GameData.templates['upgrades'].process({list: GameData.upgrades, type : 'upgrade'});
     },
     deleteUpgrade : function(element)
     {
         delete GameData.upgrades[element.getAttribute('name')];
         $$("#upgrades #list")[0].innerHTML = GameData.templates['upgrades'].process({list: GameData.upgrades, type : 'upgrade'});
+    },
+    addCreep : function()
+    {
+        var creep = {
+            "name" : $$("#creeps #addCreep #name")[0].value,
+        }
+        if(!creep["name"])
+        {
+          alert("Name must exist");
+          return;
+        }
+        GameData.creeps[creep['name']] = creep;
+        $$("#creeps #addCreep #name")[0].value = "";
+        $$("#creeps #list")[0].innerHTML = GameData.templates['creeps'].process({list: GameData.creeps, type : 'creep'});
+    },
+    deleteCreep : function(element){
+        delete GameData.creeps[element.getAttribute('name')];
+        $$("#creeps #list")[0].innerHTML = GameData.templates['creeps'].process({list: GameData.creeps, type : 'creep'});
     },
     deleteElement : function(element)
     {
@@ -106,13 +140,16 @@ var GameData = {
             GameData.deleteWeapon(element);
         }else if(type == 'upgrade'){
             GameData.deleteUpgrade(element);
+        }else if(type == 'creep'){ 
+            GameData.deleteCreep(element);
         }
     }, 
     saveData : function()
     {
         data = { towers : GameData.towers, 
                   weapons : GameData.weapons,
-                  upgrades : GameData.upgrades }
+                  upgrades : GameData.upgrades, 
+                  creeps : GameData.creeps }
         new Ajax.Request( '../metadata' , {
                                     method : 'put',
                                     parameters : { "data" : JSON.stringify(data) },
@@ -127,24 +164,49 @@ $(document).observe('dom:loaded',function(){ GameData.init();});
 </script>
 
 <div id="game">
+
+    <div id="backLink"> 
+      <a href="/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>">
+        Back
+      </a>
+    </div>
+
     <div id="game_name">
         <%=@game.name%>
     </div>
     <textarea id="displayTemplate" style="display:none;">
         {for element in list}
     		  	<div>
+      	  	    <span class="column" style="width:26%;"> 
+  	    	  	      <LABEL for="name">Name: </LABEL>
+      	  	        ${element['name']} 
+    	  	      </span>
+          	    <span class="column" style="width:17%;"> 
+                    <LABEL for="cost">Cost: </LABEL>  
+          	        ${element['cost']} 
+      	        </span>  
+          	    <span class="column" style="width:32%;"> 
+                    <LABEL for="exp">Experience Points: </LABEL>  
+          	        ${element['exp']} 
+      	        </span>  
+          	    <span class="column" style="width:18%;"> 
+                    <LABEL for="exp">Unlocked: </LABEL>  
+          	        ${element['unlocked']} 
+      	        </span>  
+      	        <span class="delete" style="width:2%;">
+                  <a name="${element['name']}" type="${type}" href="#" onclick="GameData.deleteElement(this);return false;" class="submit_links"> x </a>
+                </span>
+            </div>
+            <div style="clear:both"></div>
+        {/for}
+    </textarea>
+    <textarea id="displayCreepTemplate" style="display:none;">
+        {for element in list}
+    		  	<div>
       	  	    <span class="column"> 
   	    	  	      <LABEL for="name">Name: </LABEL>
       	  	        ${element['name']} 
     	  	      </span>
-          	    <span class="column"> 
-                    <LABEL for="cost">Cost: </LABEL>  
-          	        ${element['cost']} 
-      	        </span>  
-          	    <span class="column"> 
-                    <LABEL for="exp">Experience Points: </LABEL>  
-          	        ${element['exp']} 
-      	        </span>  
       	        <span class="delete" >
                   <a name="${element['name']}" type="${type}" href="#" onclick="GameData.deleteElement(this);return false;" class="submit_links"> x </a>
                 </span>
@@ -170,6 +232,10 @@ $(document).observe('dom:loaded',function(){ GameData.init();});
                 <LABEL for="exp">Experience Points</LABEL>
                 <INPUT type="text" id="exp" name='exp'><BR>
             </div>
+            <div class="form_row">  
+                <LABEL for="unlocked">Unlocked</LABEL>
+                <INPUT type="checkbox" id="unlocked" name="unlocked" value="1"><BR>
+            </div>
             <div class="form_row">
                 <input type="submit" value="Add" class="submit" onclick="GameData.addTower(); return false;"/>
             </div>
@@ -192,6 +258,10 @@ $(document).observe('dom:loaded',function(){ GameData.init();});
             <div class="form_row">  
                 <LABEL for="exp">Experience Points</LABEL>
                 <INPUT type="text" id="exp" name='exp'><BR>
+            </div>
+            <div class="form_row">  
+                <LABEL for="unlocked">Unlocked</LABEL>
+                <INPUT type="checkbox" id="unlocked" name="unlocked" value="1"><BR>
             </div>
             <div class="form_row">
                 <input type="submit" value="Add" class="submit" onclick="GameData.addWeapon(); return false;"/>
@@ -216,12 +286,30 @@ $(document).observe('dom:loaded',function(){ GameData.init();});
                 <LABEL for="exp">Experience Points</LABEL>
                 <INPUT type="text" id="exp" name='exp'><BR>
             </div>
+            <div class="form_row">  
+                <LABEL for="unlocked">Unlocked</LABEL>
+                <INPUT type="checkbox" id="unlocked" name="unlocked" value="1"><BR>
+            </div>
             <div class="form_row">
                 <input type="submit" value="Add" class="submit" onclick="GameData.addUpgrade(); return false;"/>
             </div>
         </div>      
 	  </div>
-	  
+    <div id="creeps">
+        <div class="title">Creeps</div>
+        <div id="list">
+        </div>
+        <div id="addCreep" class="title add">
+            <LABEL for="addCreep"  class="label">Add New Creep</LABEL>
+            <div class="form_row">  
+                <LABEL for="name">Name</LABEL>
+                <INPUT type="text" id="name" name='name'><BR>
+            </div>
+            <div class="form_row">
+                <input type="submit" value="Add" class="submit" onclick="GameData.addCreep(); return false;"/>
+            </div>
+        </div>      
+	  </div>
     <div style="text-align : right;">
         <input type="submit" value="AM Done .. Save That" class="submit" onclick="GameData.saveData(); return false;"/>
     </div>
@@ -229,7 +317,7 @@ $(document).observe('dom:loaded',function(){ GameData.init();});
 </div>
 
 <style>
-    #towers, #weapons, #upgrades
+    #towers, #weapons, #upgrades, #creeps
     {
         padding : 20px;
         border-top : solid 1px;

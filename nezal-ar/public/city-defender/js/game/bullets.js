@@ -1,12 +1,6 @@
 var Turret = Class.create(Unit, {
-	hp : 100,
-	maxHp : 100,
 	theta :0,
 	cannonTheta : 0,
-	rate : 0.2,
-	power: 4.0,
-	range: 3,
-	price: 15,
 	rank : 0,
 	maxRank : 3,
 	kills : 0,
@@ -19,8 +13,9 @@ var Turret = Class.create(Unit, {
 	targets : 'Air &<br/>Ground',
 	facilities : 'Fires Bullets',
 	cssClass : 'tower',
-	initialize: function($super,x,y,extension){
-		$super(x,y,extension)
+	hp:500,maxHp : 300, power:10, rate:0.2, price: 15, range: 2,
+	initialize: function($super,x,y,scene,extension){
+		$super(x,y,scene,extension)
 		this.initImages()
 		this.createSprites()
 		
@@ -40,7 +35,7 @@ var Turret = Class.create(Unit, {
 		this.images.base = [Loader.images.game['tower_base.png']]
 		this.images.cannon = [Loader.images.game['cannon_1.png']]
 		this.images.fire = [Loader.images.game['cannon_1_in_action.png']]
-		this.images.ranks = [Loader.images.game['rank_1.png'], Loader.images.game['rank_2.png'], Loader.images.game['rank_3.png']]
+		this.images.ranks = [null,Loader.images.game['rank_1.png'], Loader.images.game['rank_2.png'], Loader.images.game['rank_3.png']]
 	},
 	
 	getTargetfromCell: function(cell, targets){
@@ -55,7 +50,9 @@ var Turret = Class.create(Unit, {
 		this.cannonSprite.rotation = Nezal.degToRad(this.cannonTheta)
 		this.changeFireState()
 		this.healthSprite.hp = this.hp
+		this.healthSprite.maxHp = this.maxHp
 		this.rankSprite.currentFrame = this.rank
+		if(this.baloon)this.baloon.moveTo(this.x,this.y-70)
 	},
 	changeFireState: function(){
 		if(this.fired){
@@ -105,6 +102,7 @@ var Turret = Class.create(Unit, {
 		target.takeHit(power)
 		if(target.dead){
 			this.kills += 1
+			this.scene.scenario.notify({name:"towerDestroyedCreep", method: false, unit:this})
 			if(this.kills == this.rankKills[this.rank] && this.rank < this.maxRank){
 				this.rank += 1;
 				this.kills = 0;
@@ -114,10 +112,7 @@ var Turret = Class.create(Unit, {
 	die: function(){
 		this.destroySprites()
 		Map.grid[this.gridX][this.gridY] = [];
-		if(game.selectedTurret == this){
-			game.selectedTurret = null;
-		}
-		//game.stats.towersDestroyed++;
+		this.scene.stats.towersDestroyed++;
 	},
 	destroySprites : function(){
 		this.dead = true
@@ -125,6 +120,7 @@ var Turret = Class.create(Unit, {
 		this.cannonSprite.destroy()
 		this.healthSprite.destroy()
 		this.rankSprite.destroy()
+		if(this.baloon)this.baloon.destroy()
 	}
 })
 
@@ -133,8 +129,9 @@ var DoubleTurret = Class.create(Turret, {
 	cssClass : 'doubleTower',
 	fireSound : Sounds.doubleTurret.fire,
 	firing_turn : 0,
-	initialize: function($super,x,y,extension){
-		$super(x,y,extension)
+	hp:900, power:15, rate:0.4, price: 30, range: 2,
+	initialize: function($super,x,y,scene,extension){
+		$super(x,y,scene,extension)
 	},
 	initImages : function($super){
 		$super()

@@ -4,13 +4,13 @@ class Metadata
     game.metadata = data 
     game.save
   end  
-  
+    
   def self.load(game)
     game.metadata
   end
   
   def self.edit_campaign(camp, data)
-    camp.metadata = data 
+    camp.metadata = data
     camp.save
   end
   
@@ -18,4 +18,11 @@ class Metadata
     camp.metadata    
   end
   
+  def self.encode(data)
+     Yajl.dump(data)
+  end
+  
+  def self.decode(data)
+    Yajl.load(data)
+  end
 end

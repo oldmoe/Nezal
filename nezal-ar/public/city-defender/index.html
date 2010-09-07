@@ -1,177 +1,103 @@
-﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<link type="text/css" href="css/game.css" rel="stylesheet" />
-		<script src="js/base/prototype.js"></script>
-		<script src="js/base/effects.js"></script>
-		<script src="js/base/sound.js"></script>
-		<script src="js/base/template.js"></script>
-		<script src="js/base/dragdrop.js"></script>
-		<script src="js/base/excanvas.compiled.js"></script>
-		<script src="js/base/slider.js"></script>
-	</head>
-	<body>
-		<div id="preload" style="display:none">
-			<img src="/city-defender/images/background/interface.png" />
-			<img src="/city-defender/images/background/loading_bar_down.png" />
-			<img src="/city-defender/images/background/loading_bar_up.png" />
-		</div>
-		<textarea id='statsTemplate' style="display:none">
-		Score : ${Game.score}
-		Towers Built : ${Game.stats.towersCreated}
-		Towers Lost : ${Game.stats.towersDestroyed}
-		Units Destroyed : ${Game.stats.creepsDestroyed}
-		Escaped Units : ${Game.escaped}
-		</textarea>
-		<textarea id='towerInfoTemplate' style="display:none">
-			<div class="diagram ${tower.cssClass}"></div>
-			<div id="towerData">
-			<h4>${tower.name}</h4>
-			<b>${tower.targets}<br/>${tower.facilities}</b>
-			<table>
-				<tr>
-					<th>Power</th>
-					<td>: ${values.power}</td>
-				</tr>
-				<tr>
-					<th>HP</th>
-					<td>: ${values.hp}</td>
-				</tr>
-				<tr>
-					<th>Rate</th>
-					<td>: ${values.rate}</td>
-				</tr>
-				<tr>
-					<th>Range</th>
-					<td>: ${values.range}</td>
-				</tr>
-				<tr>
-					<th>Price</th>
-					<td>: $${values.price}</td>
-				</tr>
-			</table>
-			</div>
-		</table>
-		</textarea>
-		<div id="gameContainer">
-			<div id="canvasContainer" style="display:none">
-				<img src='images/background/path.png' />
-				<canvas id="gameBackground" width="736" height="480"></canvas>
-				<canvas id="gameForeground" width="736" height="480" onmousemove = "movement(event)"></canvas>
-			</div>
-			<div id="gameElements" style="display:none">
-				<div id="money">
-					0
-				</div>
-				<div class="status">
-					<div id="score" class="score">0</div>
-					<div id="lives" class="lives">0</div>
-					<div id="waves" class="waves">0/0</div>
-				</div>
-				<div class="fps"></div>
-				<div class="rank"></div>
-				<div class="start"></div>
-				<div class="towers">
-					<div class="tower1" title="Basic"></div>
-					<div class="tower2" title="Double"></div>
-					<div class="rocketLauncher" title="Rocket Launcher"></div>
-					<div class="patriot" title="Patriot Air Defense"></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-				</div>
-				<div class="upgrades">
-					<div class="upgradesBar">
-						<div id="nextUpgrade" class="upgrade next">
-							<div id="upgradePrice"></div>						
-						</div>
-						<div id="currentUpgrade" class="upgrade current">
-							<div class="purchased"></div>
-						</div>
-						<div class="arrow"></div>
-					</div>
-					<div class="upgradeItems">
-							<div id="bullets" class="upgradeItem bullets"></div>
-							<div id="rockets" class="upgradeItem rockets"></div>
-							<div id="shields" class="upgradeItem shields"></div>
-							<div class="upgradeItem"></div>
-							<div class="upgradeItem"></div>
-							<div class="upgradeItem"></div>
-							<div class="upgradeItem"></div>
-							<div class="upgradeItem"></div>
-					</div>
-				</div>
-				<div id="towerInfo" class="towerInfo">
-					<p>
-					<b style="font-size:14px">
-					Click on a tower to view its info
-					</b>
-					</p>
-				</div>
-				<div class="controls">
-					<div class="sound on"></div>
-					<div class="like"></div>
-					<!--div class="subscribe"></div-->
-					<div class="bookmark"></div>
-				</div>
+<link type="text/css" href="css/intro.css" rel="stylesheet" />
+<link type="text/css" href="css/ranking.css" rel="stylesheet"/>
 
-				<div class="superWeapons">
-					<div class="splash">
-						<div id="splash"></div>
-					</div>
-					<div class="heal">
-						<div id="heal"></div>
-					</div>
-					<div class="hyper">
-						<div id="hyper"></div>
-					</div>
-					<div class="weak">
-						<div id="weak"></div>
-					</div>
-					<div class="nuke">
-						<div id="nuke"></div>
-					</div>
-				</div>
-				<div class="superWeaponsOff">
-					<div class="splash">
-					</div>
-					<div class="heal">
-					</div>
-					<div class="hyper">
-					</div>
-					<div class="weak">
-					</div>
-					<div class="nuke">
-					</div>
-				</div>			</div>
-			<canvas id="droppingGround" width="672" height="480"></canvas>
-			<div id="static" style="display:none"></div>
-			<div id="result" style="display:none">
-				<pre id="stats"></pre>
-				<div id="playAgain"></div>
-				<div id="exit"></div>				
-			</div>
-			<div id="splashScreen" style="display:none">
-				<div class="loading_bar_bg">
-					<div id="loading_bar"></div>
-				</div>
-			</div>
-			<div id="waitScreen"></div>
-		</div>		
-	</body>
-</html>
+<!-- <script src="http://connect.facebook.net/en_US/all.js"></script> -->
 
+<script src="http://connect.facebook.net/en_US/all.js"></script>
+<script src="js/facebook.js" type="text/javascript"></script>
 
+<script src="js/base/prototype.js" type="text/javascript"></script>
+<script src="js/base/effects.js" type="text/javascript"></script>
+<script src="js/base/template.js" type="text/javascript"></script>
+<script src="js/carousel.js" type="text/javascript"></script>
+<script src="js/game/image_loader.js" type="text/javascript"></script>
+<script src="js/game/configs/creep_config.js" type="text/javascript"></script>
+<script src="js/game/configs/tower_config.js" type="text/javascript"></script>
+<script src="js/game/configs/super_weapon_config.js" type="text/javascript"></script>
+<script src="js/game/configs/upgrade_config.js" type="text/javascript"></script>
+<script src="js/game/intro/challenge_selector.js" type="text/javascript"></script>
+<script src="js/game/intro/intro.js" type="text/javascript"></script>
 
+<body>
+
+<div id="game">
+  <div id="intro">
+    
+    <div id="pause">
+      <div style="width:100%; height:100%; opacity:0.6; background:FloralWhite;"> </div>
+      <div id="inProgress" style="width:500px;">
+        <img  src="images/intro/loading.png" style="width: 100%;"/>
+        <img  src="images/intro/loading-text.png" style="width: 58%; left:20%; position:absolute; top:20px;"/>
+        <img  src="images/intro/loading-bar.gif" style="left:26%; position:absolute;top:80%;width:46%;"/>
+      </div>
+    </div>
+    <div id="levelSelection" style="display : none; text-align:center;">
+					<div id = "challengesText" style = "position : absolute;" > Weekly chanllenge</div>
+      <img id="levelsBackground" src="images/intro/level-selection.png"/>
+      <div id="levels">
+        <img id='levelsLinks' src="images/intro/difficulty.png"/>
+        <div id="easy" onclick="GameConfigs.level=1; Intro.next(); return false;">
+          easy
+        </div>
+        <div id="medium" onclick="GameConfigs.level=2; Intro.next(); return false;">
+          medium
+        </div>
+        <div id="hard" onclick="GameConfigs.level=3; Intro.next(); return false;">
+          hard
+        </div>
+      </div>
+    </div>
+
+    <div id="campaign" style="display : none;">
+    </div>
+    
+    <div id="mission" style="display : none;">
+    </div>
+
+    <div id="marketPlace" style="display : none;">
+        <div id="marketTabs">
+            <div id="towersTab" class="towersOff" onclick="Intro.select('towers');">
+                <img src=""/>
+            </div>
+            <div id="weaponsTab" class="weaponsOff"   onclick="Intro.select('weapons');">
+                <img src=""/>
+            </div>
+            <div id="upgradesTab" class="upgradesOff" onclick="Intro.select('upgrades');"> 
+                <img src=""/>
+            </div>
+            <div id="bar">
+              <img src="" style=""/>
+            </div>
+        </div>
+        
+        <div id="towers" style="display : none;">
+        </div>  
+        
+        <div id="weapons" style="display : none;">
+        </div>  
+
+        <div id="upgrades" style="display : none;">
+        </div>
+        
+    </div>
+
+  </div>
+  
+  <div id='introTemplates' style="display : none;">
+  </div>
+  
+  <div id="gameStart" style="display: none;">
+  </div>
+  
+</div>
+
+</body>
 <script src="js/nezal/layer.js"></script>
 <script src="js/nezal/nezal.js"></script>
 <script src="js/nezal/reactor.js"></script>
 <script src="js/nezal/scene.js"></script>
 <script src="js/nezal/sprite.js"></script>
+<script src="js/nezal/baloon.js"></script>
 <script src="js/game/sounds.js"></script>
 
 <script src="js/game/healthSprite.js"></script>
@@ -179,8 +105,6 @@
 <script src="js/game/city_defender_scene.js"></script>
 <script src="js/game/mapeasy1.js"></script>
 <script src="js/game/game.js"></script>
-<script src="js/game/images.js"></script>
-<script src="js/game/image_loader.js"></script>
 <script src="js/game/sounds.js"></script>
 <script src="js/game/unit.js"></script>
 <script src="js/game/creep.js"></script>
@@ -190,8 +114,15 @@
 <script src="js/game/tanks.js"></script>
 <script src="js/game/plane.js"></script>
 <script src="js/game/animation.js"></script>
-<script src="js/game/config.js"></script>
 <script src="js/game/super_weapon.js"></script>
 <script src="js/game/upgrade.js"></script>
+<script src="js/game/tutorial.js"></script>
+<script src="js/game/scenario.js"></script>
 
+<script>		
+  FBConnect.init(function(){
+                      Intro.initialize();
+                });
+</script>
+<link type="text/css" href="css/game.css" rel="stylesheet" />
 

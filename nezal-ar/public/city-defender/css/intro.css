@@ -2,6 +2,22 @@
   font-family: "Adlib";
   src: url("../css/fonts/ADLIB.TTF");
 }
+@font-face {
+  font-family: "Digital";
+  src: url("../css/fonts/DIGITAL.TTF");
+}
+@font-face {
+  font-family: "Inc";
+  src: url("../css/fonts/INC901BC.TTF");
+}
+@font-face {
+  font-family: "IncB";
+  src: url("../css/fonts/INC901B.TTF");
+}
+@font-face {
+  font-family: "Pakgirl";
+  src: url("../css/fonts/30pakgirl_bold_TBS.ttf");
+}
 
 body {
   font-family : Adlib;
@@ -32,16 +48,43 @@ body {
   cursor : pointer;
 }
 
+#pause
+{
+  position:absolute;
+  left:0;
+  top:0;
+  width : 760px;
+  height : 550px;
+  z-index:1000;
+}
+#pause #inProgress
+{
+  left:130px;
+  overflow:hidden;
+  position:absolute;
+  text-align:center;
+  top:200px;
+  width:500px;
+}
+
 #intro
 {
   width : 760px;
   height : 550px;
+  position : absolute;
 }
 
 #intro #levelSelection, #cityInfo, #marketPlace
 {
   width : 100%;
   height : 100%;
+}
+
+.buttonText
+{
+  font-family : Adlib;
+  text-transform : capitalize;
+  text-align:center;
 }
 
 /* Level Selection CSS */
@@ -57,196 +100,290 @@ body {
   left:150px;
   height : 100px;
   width : 440px;
-}
-#levels div a
-{
-  color : highlight;
-  float : left;
+  color : #e9c373;
+  text-transform : capitalize;
   font-size : 20px;
-  font-weight : bold;
-  height : 40%;
-  overflow : visible;
-  margin-top : 50px;
   text-align : center;
-  width : 100%;
 }
 #levels #easy
 {
   width : 31%;
-  height : 100%;
+  height : 40%;
   position : absolute;
-  top : 0px;
+  top : 60%;
+  cursor : pointer;
 }
 #levels #medium
 {
   width : 38%;
-  height : 100%;
+  height : 40%;
   position : absolute;
-  top : 0px;
+  top : 60%;
   left : 31%;
+  cursor : pointer;
 }
 #levels #hard
 {
   width : 30%;
-  height : 100%;
+  height : 40%;
   position : absolute;
-  top : 0px;
+  top : 60%;
   left : 69%;
+  cursor : pointer;
+}
+#levels div:hover
+{
+  color : white;
+}
+#campaign #back
+{
+  cursor:pointer;
+  height:43px;
+  left:95px;
+  position:absolute;
+  top:482px;
+  width:113px;
+}
+#campaign #back .text
+{ 
+  color:#FAC200;
+  position:absolute;
+  top:15px;
+  left:35px;
+  width:77px;
+  text-align:center;
+}
+#campaign .camp-details
+{
+  height:200px;
+  left:100px;
+  position:absolute;
+  top:75px;
+  width:300px;
+}
+#campaign .name
+{
+  color:#FAC200;
+  font-size:27px;
+  padding-bottom:5px;
+  text-transform:capitalize;
+}
+#campaign .desc
+{
+  color:white;
+  font-size:14px;
+  line-height:140%;
+  text-align:justify;
+  text-shadow:2px 1px #990000;
 }
 
+#campaign #camp-map 
+{
+  position:absolute;
+  top:50px;
+  left:440px;
+}
+#campaign #missions
+{
+  left:80px;
+  position:absolute;
+  top:280px;
+}
+#campaign .mission
+{
+  float : left;
+  position : relative;
+  margin : 0px 9px;
+}
+#campaign .mission .missionName
+{
+  position:absolute;
+  text-align:center;
+  top:160px;
+  width:100%;
+}
+#
 /* Mission Info Page */
-#cityInfo
+#mission
 {
 /*  background : url("../images/intro/city/city-info.png") no-repeat scroll 0 0 transparent;*/
 }
-#cityInfo #cityName
+#creeps-scroll ul li img {
+  padding-top: 7px;
+}
+#creeps-scroll ul li img:hover {
+  opacity: 0.7;
+  cursor : pointer;
+}
+#mission #cityName
 {
   color:#FF4102;
-  font-size:17px;
-  left:280px;
+  font-weight:bold;
+  left:235px;
   position:absolute;
   text-align:center;
   text-transform:uppercase;
-  top:78px;
-  width:100px;
+  top:65px;
+  width:150px;
 }
-#cityInfo #cityDesc
+#mission #cityDesc
 {
   color:#550000;
   font-size:13px;
-  left:240px;
+  left:225px;
   line-height:190%;
   position:absolute;
   text-align:center;
-  top:100px;
-  width:185px;
+  top:90px;
+  width:170px;
 }
-#cityInfo #fullDesc
+#mission #fullDesc
 {
   color:white;
-  font-size:12px;
-  left:420px;
-  line-height:170%;
+  font-size:13px;
+  left:405px;
+  line-height:150%;
   position:absolute;
-  top:270px;
+  text-align:justify;
+  text-shadow:-1px -1px #555555;
+  top:245px;
   width:280px;
-  text-align : justify;
 }
-#cityInfo #cityImage
+#mission #cityImage
 {
   height:200px;
   left:450px;
   position:absolute;
-  top:60px;
+  top:45px;
   width:250px;
 }
-#cityInfo #cityMap
+#mission #cityMap
 {
-  -moz-transform:rotate(-6.5deg);
-  left:116px;
+  height:164px;
+  left:90px;
+  overflow:hidden;
   position:absolute;
-  top:206px;
-
+  top:180px;
+  width:220px;
 }
-#cityInfo #cityMap img
+#mission #cityMap img
 {
   width:224px;  
   height:169px;
 }
-#cityInfo #msg
+#mission #stamp
 {
-  -moz-transform:rotate(-6.5deg);
-  font-size:11px;
-  font-weight:bold;
-  left:125px;
-  position:absolute;
-  top:395px;
-}
-#cityInfo #stamp
-{
-/*  background:url("../images/intro/city/stamp.png") no-repeat scroll 0 0 transparent;*/
   height:116px;
-  left:260px;
+  left:245px;
   position:absolute;
-  top:318px;
+  top:295px;
   width:160px;
 }
-#cityInfo #accept
+#mission #accept
 {
-/*  background:url("../images/intro/city/accept.png") no-repeat scroll 0 0 transparent;*/
-  height:60px;
+  height:46px;
   left:485px;
   position:absolute;
-  top:435px;
-  width:100px;
+  top:420px;
+  width:90px;
+  cursor : pointer;
 }
-#cityInfo #floatBg
+#mission #accept .text
 {
-  width : 400px;
-  height : 170px;
-  position : absolute;
-  top : 270px;
-  left : 59px;
-  z-index : 200;
-  color : #FAC200;
-}
-#cityInfo #floatBg #close
-{
-  position : absolute;
-  top : 10px;
-  right : 10px;
-  width : 20px;
-  height : 20px;
-}
-#cityInfo #floatBg .content
-{
-  left:40px;
-  padding-right:40px;
+  color:white;
   position:absolute;
-  top:40px;
+  top:30%;
+  left:0px;
+  width : 100%;
+  text-align:center;
 }
-#cityInfo #floatBg .name
+#mission #reject
 {
-  font-weight:bold;
-}
-#cityInfo #floatBg .desc
-{
-  white-space:normal;
-  word-wrap:break-word;
-}
-#cityInfo #reject
-{
-/*  background:url("../images/intro/city/accept.png") no-repeat scroll 0 0 transparent;*/
-  height:60px;
-  left:590px;
+  color:#FAC200;
+  cursor:pointer;
+  font-size:15px;
+  height:35px;
+  left:580px;
   position:absolute;
-  top:435px;
-  width:100px;
+  top:440px;
+  width:95px;
+  text-shadow : 1px 1px #333333;
 }
-#cityInfo #creeps
+#mission #creeps
 {
-  height:65px;
-  left:40px;
+  height:72px;
+  left:30px;
   position:absolute;
-  top:431px;
-  width:438px;
+  top:408px;
+  width:430px;
 }
-#cityInfo .creep
+#mission .creep
 {
-  background:url("../images/intro/city/creep-bg-red.png") no-repeat scroll 0 0 transparent;
   float:left;
   height:65px;
   width:101px;
 }
-#cityInfo #creepBar
+#mission #creepBar
 {
-  background:url("../images/intro/city/loading-background.png") no-repeat scroll 0 0 transparent;
   height:28px;
   left:72px;
   position:absolute;
   top:502px;
   width:390px;
 }
+#mission #floatBg
+{
+  width : 400px;
+  height : 170px;
+  position : absolute;
+  top : 245px;
+  left : 45px;
+  z-index : 200;
+  color : #FAC200;
+}
+#mission #floatBg #close
+{
+  position : absolute;
+  top : 10px;
+  right : 10px;
+  width : 20px;
+  height : 20px;
+  cursor : pointer;
+}
+#mission #floatBg .content
+{
+  position:absolute;
+  top:20px;
+  left:40px;
+  overflow : hidden;
+  height : 130px;
+  width : 320px;
+}
+#mission #floatBg .name
+{
+  font-size:19px;
+}
+#mission #floatBg .desc
+{
+  white-space:normal;
+  word-wrap:break-word;
+  font-size : 12px;
+  line-height : 150%;
+}
+#mission #floatBg .spans
+{
+  width : 70%;
+  float : left;
+  margin-top : 10px;
+}
+#mission #floatBg .skeleton
+{
+  padding-top:35px;
+  width:25%;
+  text-align : center;
+  float : right;
+}
+
 #marketTabs
 {
   height: 48px;
@@ -310,35 +447,138 @@ body {
 #marketPlace #next, #marketPlace #back, #marketPlace #finish
 {
   position : absolute;
-  top : 505px;
+  top : 495px;
   width : 120px;
   height : 45px;
   cursor : pointer;
+  color : white;
 }
 #marketPlace #finish
 {
-  left : 40px;
+  left : 23px;
 }
 #marketPlace #next
 {
-  left : 637px;
+  left : 620px;
 }
 #marketPlace #back
 {
-  left : 505px;
+  left : 488px;
 }
-#marketPlace #towerDisplay
+#marketPlace #finishText
 {
-  height : 249px;
-  left : 256px;
-  position : absolute;
-  top : 74px;
-  width : 447px;
+  position:absolute;
+  top:12px;
+  left:20px;
+  width:77px;
+  text-align:center;
 }
-#marketPlace #towerDisplay .tower
+#marketPlace #nextText
+{
+  position:absolute;
+  top:10px;
+  left:10px;
+  width:77px;
+  text-align:center;
+}
+#marketPlace #backText
+{
+  position:absolute;
+  top:10px;
+  left:35px;
+  width:77px;
+  text-align:center;
+}
+
+#marketPlace #towers #addedItems
+{
+  height:75px;
+  left:45px;
+  position:absolute;
+  top:390px;
+  width:655px;
+}
+#marketPlace .background
+{
+  left:45px;
+  position:absolute;
+  top:390px;
+  width:655px;
+}
+#marketPlace .msg
+{
+  color:#FFEE00;
+  font-size:18px;
+  position:absolute;
+  text-align:center;
+  text-shadow:2px 1px #770000;
+  top:335px;
+  width:100%;
+  word-spacing:5px;
+  
+}
+#marketPlace #towers .addedItem
+{
+  float:left;
+  height:75px;
+  overflow:hidden;
+  width:65.5px;
+  position : relative;
+}
+#marketPlace #towers .emptyItem
+{
+  float:left;
+  height:75px;
+  overflow:hidden;
+  width:65.5px;
+  position : relative;
+  text-align : center;
+  padding-top : 17px;
+}
+
+
+#marketPlace #weapons #addedItems, #marketPlace #upgrades #addedItems
+{
+  height:68px;
+  left:46px;
+  position:absolute;
+  top:398px;
+  width:655px;
+}
+#marketPlace #weapons .addedItem, #marketPlace #upgrades .addedItem
+{
+  float:left;
+  height:68px;
+  margin-right:4px;
+  overflow:hidden;
+  position:relative;
+  width:127px;
+  text-align : center;
+}
+#marketPlace #weapons .emptyItem, #marketPlace #upgrades .emptyItem
+{
+  float:left;
+  height:68px;
+  margin-right:4px;
+  overflow:hidden;
+  position:relative;
+  width:127px;
+  text-align : center;
+  padding-top : 10px;
+}
+
+#marketPlace #towersDisplay, #marketPlace #weaponsDisplay, #marketPlace #upgradesDisplay
+{
+  height:249px;
+  left:240px;
+  position:absolute;
+  top:58px;
+  width:447px;
+}
+#marketPlace .item
 {
   height : 87px;
-  width : 145px;
+  width : 144px;
   margin : 0px 4px 0px 0px;
   float : left;
   text-align : center;
@@ -346,35 +586,63 @@ body {
   position : relative;
   overflow : hidden;
 }
-#marketPlace #towerDisplay .tower div
+#marketPlace .item div
 {
-  height:68px;
-  margin-top:5px;
-  margin-bottom:2px;
+  height:75px;
   position : relative;
   overflow : hidden;
 }
-#marketPlace #towerDisplay .tower div .action
+#marketPlace .itemImage
 {
   position : absolute;
-  right : 6px;
-  bottom : 2px;
+  top : 0px;
+  left : 0px;
+  width : 100%;
+  height : 100%;
 }
-#marketPlace #towerDisplay .tower div .label
+#marketPlace #weapons .itemImage img
+{
+  padding-top : 7px;
+}
+#marketPlace #upgrades .itemImage img
+{
+  padding-top : 12px;
+}
+#marketPlace .action
 {
   position : absolute;
-  left : 6px;
+  right : 2px;
   bottom : 2px;
+  cursor : pointer;  
 }
+#marketPlace .addedItem .action
+{
+  position : absolute;
+  right : 2px;
+  top : 7px;
+  cursor : pointer;  
+}
+
 #marketPlace .coins
 {
-  font-weight:bold;
-  left:110px;
+  left:92px;
   position:absolute;
   text-align:center;
-  text-shadow:2px 1px white;
-  top:260px;
+  text-shadow:1px 1px white;
+  top:240px;
   width:110px;
+  font-family : Digital;
+  font-size : 24px;
+}
+.clickable div, .clickable img
+{
+  opacity : 0.9;
+  cursor : pointer;
+}
+.clickable div:hover, .clickable img:hover
+{
+  opacity : 1;
+  cursor : pointer;
 }
 
 #marketPlace #floatBg
@@ -389,32 +657,152 @@ body {
 {
   position : absolute;
   top : 10px;
-  right : 10px;
+  right : 15px;
   width : 20px;
   height : 20px;
+  cursor : pointer;
 }
 #marketPlace #floatBg .content
 {
-  left:40px;
-  padding-right : 15px;
+  left:20px;
   position:absolute;
   top:20px;
+  height : 150px;
+  width : 465px;
 }
 #marketPlace #floatBg .content .spans
 {
   float:left;
   padding-right:10px;
-  padding-top:30px;
-  width:68%;
+  width:75%;
+  text-align : justify;
+  height : 100%;
+}
+#marketPlace #floatBg .content .image
+{
+  float : right;
+  text-align : center;
+  width : 20%;
+  margin-top : 20px;
+}
+#marketPlace #floatBg .content .image .skeleton
+{
+  height : 100px;
+}
+#marketPlace #weapons #floatBg .content .image .skeleton
+{
+  margin-top : 10px;
+  height : 80px;
+}
+#marketPlace #upgrades #floatBg .content .image .skeleton
+{
+  height : 70px;
+}
+#marketPlace #floatBg .content .image .cost img
+{
+  float : right;
+}
+#marketPlace #floatBg .image .cost
+{
+  width: 100%;
+  height : 24px;
+}
+#marketPlace #floatBg .image .cost .img
+{
+  width: 30%;
+  margin-left : 4%;
+  float : left;
+}
+#marketPlace #floatBg .image .cost .value
+{
+  float:left;
+  font-family:Digital;
+  font-size:26px;
+  margin-top:-6px;
+  text-align:center;
+  width:60%;
+}
+#marketPlace #upgrades #floatBg .content .spans
+{
+  width : 65%;
+}
+#marketPlace #upgrades #floatBg .content .image
+{
+  margin-top : 35px;
+  width : 30%;
 }
 #marketPlace #floatBg .name
 {
-  font-weight : bold;
+  font-size:20px;
+  font-weight:bold;
+  line-height:150%;
+  text-decoration:underline;
+  text-transform:uppercase;
 }
 #marketPlace #floatBg .desc
 {
+  font-size:15px;
+  font-weight:normal;
+  line-height:130%;
   white-space:normal;
   word-wrap:break-word;
+}
+#marketPlace #floatBg .actions
+{
+  height:30px;
+  position:absolute;
+  top:170px;
+  width:92%;
+}
+#marketPlace #upgrades #floatBg  .actions
+{
+  width:87%;
+}
+#marketPlace #floatBg .actions .rank
+{
+  left:20px;
+  position:absolute;
+  top:15px;
+  color:#0f94a3;
+  text-transform : capitalize;
+}
+#marketPlace #floatBg .actions .action
+{
+  bottom:0;
+  cursor:pointer;
+  float : right;
+  font-size : 11px;
+}
+#marketPlace #floatBg .actions .action .active
+{
+  color:#FF4102;
+  font-size:19px;
+}
+#marketPlace #floatBg .actions .action .inactive
+{
+  color:silver;
+  font-size:19px; 
+  cursor : default; 
+}
+#marketPlace #floatBg .actions .addMoney
+{
+  bottom:0;
+  cursor:pointer;
+  position:absolute;
+  right : 80px;
+  color : white;
+  text-transform : capitalize;
+}
+
+#challengesText {
+	position : absolute;
+	z-index : 2;
+	top : 370;
+	left : 240;
+	color : orange;
+	font-size : 25;
+	text-shadow: #000 2px 2px 1px;
+
 }
 /*
 #challenges

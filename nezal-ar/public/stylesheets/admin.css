@@ -1,9 +1,14 @@
 #game 
 {
-  width : 50%;
+  width : 70%;
 }
 
-#game_name
+#game #backLink
+{
+  float : right; 
+}
+
+#game_name, .main-title
 {
   font-size : 18px;
   font-weight : bold;
@@ -14,7 +19,7 @@
 
 label 
 {
-  color : #FFFF55;
+  color : DarkOliveGreen;
   font-size : 14px;
 }
 .column
@@ -31,14 +36,14 @@ label
 }
 .title
 {
-    color : #77bbff;
+    color : chocolate;
     font-size : 15px;
     font-weight : bold;
     margin-bottom : 10px;
 }
 .add
-{
-    margin-top : 15px;
+{ 
+  margin-top : 20px;
 }
 
 #game_info, #game_ranks, #game_campaigns
@@ -64,13 +69,15 @@ label
 }
 .form_row label
 {
-  color : #FFFF55;
+  color : DarkOliveGreen;
   font-weight : normal;
+  float : left;
+  width : 30%;
 }
 .form_row input, textarea, select
 {
-  float : right;
-  width : 70%;
+  float : left;
+  width : 65%;
 }
 .form_row .submit
 {
@@ -79,9 +86,10 @@ label
 }
 .label
 {
-  color :#77BBFF;
+  color :Chocolate;
   font-size : 14px;
   font-weight : bold;
   margin-bottom : 5px;
+  display : block;
 }
 
