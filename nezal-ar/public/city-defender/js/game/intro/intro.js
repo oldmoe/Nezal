@@ -80,7 +80,6 @@ var Intro = {
                     "market/remove.png",
                     "market/q-mark.png",
                     "market/coin.png",
-                    "market/inactive-unlock.png",
                     "market/money.png"
                 ],
         weapons : [
@@ -146,7 +145,7 @@ var Intro = {
                                       		  	          Intro.templates['game'] = t.responseText;
 					  			  //game.setGameImages()
                                           		  	      Intro.retrieveData( function() {
-				                                            initLoadImages(new Loader()); 
+                        				                                            initLoadImages(new Loader()); 
                                                                             Intro.next();
                                                         })
                                           } 
@@ -315,12 +314,11 @@ var Intro = {
                                       /* Change the tabs accordingly */
                                       path = "images/intro/market/";
                                       $$("#marketPlace #towersTab img")[0].addClassName('on');
-                                      $$("#marketPlace #towersTab img")[0].src = path + "towers-on.png";
+                                      $$("#marketPlace #towersTab img")[0].src = path + "tab-on.png";
                                       $$("#marketPlace #weaponsTab img")[0].removeClassName('on');
-                                      $$("#marketPlace #weaponsTab img")[0].src = path + "weapons-off.png";
+                                      $$("#marketPlace #weaponsTab img")[0].src = path + "tab-off.png";
                                       $$("#marketPlace #upgradesTab img")[0].removeClassName('on');
-                                      $$("#marketPlace #upgradesTab img")[0].src = path + "upgrades-off.png";
-                                      $$("#marketPlace #bar img")[0].src = path + "towers-bar.png";  
+                                      $$("#marketPlace #upgradesTab img")[0].src = path + "tab-off.png";
                                       Intro.show();
                                       $('marketPlace').show();
                                   }} );
@@ -381,12 +379,11 @@ var Intro = {
                                       /* Change the tabs accordingly */
                                       path = "images/intro/market/";
                                       $$("#marketPlace #weaponsTab img")[0].addClassName('on');
-                                      $$("#marketPlace #weaponsTab img")[0].src = path + "weapons-on.png";
+                                      $$("#marketPlace #weaponsTab img")[0].src = path + "tab-on.png";
                                       $$("#marketPlace #towersTab img")[0].removeClassName('on');
-                                      $$("#marketPlace #towersTab img")[0].src = path + "towers-off.png";
+                                      $$("#marketPlace #towersTab img")[0].src = path + "tab-off.png";
                                       $$("#marketPlace #upgradesTab img")[0].removeClassName('on');
-                                      $$("#marketPlace #upgradesTab img")[0].src = path + "upgrades-off.png";  
-                                      $$("#marketPlace #bar img")[0].src = path + "weapons-bar.png";  
+                                      $$("#marketPlace #upgradesTab img")[0].src = path + "tab-off.png";   
                                       Intro.show();
                                       $('marketPlace').show();
                               }});
@@ -446,12 +443,11 @@ var Intro = {
                                       /* Change the tabs accordingly */ 
                                       path = "images/intro/market/";
                                       $$("#marketPlace #upgradesTab img")[0].addClassName('on');
-                                      $$("#marketPlace #upgradesTab img")[0].src = path + "upgrades-on.png";  
+                                      $$("#marketPlace #upgradesTab img")[0].src = path + "tab-on.png";  
                                       $$("#marketPlace #towersTab img")[0].removeClassName('on');
-                                      $$("#marketPlace #towersTab img")[0].src = path + "towers-off.png";
+                                      $$("#marketPlace #towersTab img")[0].src = path + "tab-off.png";
                                       $$("#marketPlace #weaponsTab img")[0].removeClassName('on');
-                                      $$("#marketPlace #weaponsTab img")[0].src = path + "weapons-off.png";
-                                      $$("#marketPlace #bar img")[0].src = path + "upgrades-bar.png";  
+                                      $$("#marketPlace #weaponsTab img")[0].src = path + "tab-off.png";
                                       Intro.show();
                                       $('marketPlace').show();
                                   }} );
