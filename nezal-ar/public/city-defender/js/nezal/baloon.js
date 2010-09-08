@@ -8,7 +8,7 @@ var Baloon = Class.create(Sprite,{
 	    var divIdName = 'baloon';
 	    this.div.setAttribute('id',divIdName);
 		this.div.style.position = 'absolute';
-		var img = Loader.images.game["baloon1.png"];
+		var img = Loader.images.game["baloon1.png"].clone();
 		this.text = document.createElement("div"); 
 		this.text.style.position = "absolute"
 		this.text.style.fontSize = "13"
