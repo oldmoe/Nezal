@@ -25,7 +25,7 @@ var Sounds = {
 	channels : [],
 
 	play : function(store){
-		if(Sounds.channels.length == 10) return
+		if(Sounds.channels.length == 8) return
 		//if(!game.scene.sound) return
 		if(store.length > 0){
 			Sounds.channels.push(store.pop())
