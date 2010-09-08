@@ -309,6 +309,10 @@ body {
   width:95px;
   text-shadow : 1px 1px #333333;
 }
+#mission #reject:hover
+{
+  text-decoration : underline;
+}
 #mission #creeps
 {
   height:72px;
@@ -397,6 +401,16 @@ body {
   height : 45px;
   overflow : hidden;
   cursor : pointer;
+}
+#marketPlace  #marketTabs .text
+{
+  color:white;
+  font-family:PakGirl;
+  font-size:22px;
+  left:0;
+  position:absolute;
+  text-align:center;
+  top:11px;
 }
 #marketTabs .towersOn
 {

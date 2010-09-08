@@ -60,13 +60,8 @@ var Intro = {
                       "mission/confidintial-stamp.png"
                   ],
         towers : [
-                    "market/towers-on.png",
-                    "market/towers-off.png",
-                    "market/weapons-on.png",
-                    "market/weapons-off.png",
-                    "market/upgrades-on.png",  
-                    "market/upgrades-off.png",
-                    "market/towers-bar.png",
+                    "market/tab-on.png",
+                    "market/tab-off.png",
                     "market/background.png",
                     "market/added-towers.png",
                     "market/float-bg.png",
@@ -83,13 +78,8 @@ var Intro = {
                     "market/money.png"
                 ],
         weapons : [
-                    "market/towers-on.png",
-                    "market/towers-off.png",
-                    "market/weapons-on.png",
-                    "market/weapons-off.png",
-                    "market/upgrades-on.png",  
-                    "market/upgrades-off.png",
-                    "market/weapons-bar.png",
+                    "market/tab-on.png",
+                    "market/tab-off.png",
                     "market/background.png",
                     "market/added-items.png",
                     "market/float-bg.png",
@@ -104,13 +94,8 @@ var Intro = {
                     "market/q-mark.png"
                 ],
         upgrades : [
-                    "market/towers-on.png",
-                    "market/towers-off.png",
-                    "market/weapons-on.png",
-                    "market/weapons-off.png",
-                    "market/upgrades-on.png",  
-                    "market/upgrades-off.png",
-                    "market/upgrades-bar.png",
+                    "market/tab-on.png",
+                    "market/tab-off.png",
                     "market/background.png",
                     "market/added-items.png",
                     "market/float-bg.png",
@@ -616,6 +601,8 @@ var Intro = {
         GameConfigs.towers = Intro.userData.metadata.added.towers;
         GameConfigs.superWeapons = Intro.userData.metadata.added.weapons;
         GameConfigs.upgrades = Intro.userData.metadata.added.upgrades;
+        GameConfigs.rank = Intro.userData.rank;
+        GameConfigs.exp = Intro.userData.exp;
     },
     
     enablePauseScreen : function() {
@@ -685,8 +672,10 @@ var Intro = {
 	  
 	  replay: function(){
 	      Intro.retrieveData(function(){
-	                                      Intro.select('levelSelection');
+	                                      
+	                                      Intro.select('campaign');
                                         $('gameStart').hide();
+                                        $('marketPlace').hide();
                                         $("intro").show();
 	                                  });
 	  },
