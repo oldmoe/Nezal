@@ -42,6 +42,12 @@ var Intro = {
     images : {
         path : "images/intro/" ,
         
+        ranks : [ 'ranks/1stLt.png','ranks/1stSgt.png','ranks/2ndLt.png','ranks/BGen.png','ranks/Capt.png',
+                  'ranks/Col.png','ranks/Cpl.png','ranks/Gen.png','ranks/GySgt.png','ranks/LCpl.png',
+                  'ranks/LtCol.png','ranks/LtGen.png','ranks/MajGen.png','ranks/Maj.png','ranks/MGySgt.png',
+                  'ranks/MSgt.png','ranks/PVT.png','ranks/SgtMaj.png','ranks/Sgt.png','ranks/SSgt.png'
+        ],
+        
         inProgress : [
                         'loading.png',
                         'loading-text.png',
@@ -122,11 +128,41 @@ var Intro = {
         this.currentPage = -1;
         this.loader = new Loader();
         var callback = function(){
-          Intro.enablePauseScreen();
-          Intro.retrieveTemplates();
+            Intro.enablePauseScreen();
+            var images =  [];
+            var images2 =  []; 
+            ['ranks', 'towers', 'weapons', 'upgrades'].each(function(item){
+                                                    Intro.images[item].each(function(image){ 
+                                                        if ( images.indexOf(image) < 0 )
+                                                        {
+                                                            images.push(image);
+                                                        }
+                                                    });
+                                          });  
+
+            for (var tower in TowerConfig)
+            {
+                images2.push( "towers/" + TowerConfig[tower]['image']);
+                images2.push( "towers/" + TowerConfig[tower]['smallImage']);
+                images2.push( "towers/" + TowerConfig[tower]['skeleton']);    
+            }    
+            for (var weapon in SuperWeaponConfig)
+            {
+                images2.push( "weapons/" + SuperWeaponConfig[weapon]['image']);  
+            }    
+            for (var upgrade in UpgradeConfig)
+            {
+                images2.push( "upgrades/" +UpgradeConfig[upgrade]['image']);
+            }    
+            Intro.loader.load( [{ images: images, path : Intro.images.path, store: 'intro'},
+                                { images : images2, path : Intro.images.path, store : 'intro' }],
+                                { onFinish : function() {
+                                                Intro.retrieveTemplates();                    
+                                              }});
+        
         }
-        Intro.loader.load( [ {images : Intro.images.inProgress, path : Intro.images.path, store: 'intro'} ],
-                              { onFinish : callback });
+        Intro.loader.load([{ images : Intro.images.inProgress, path : Intro.images.path, store: 'intro'}],
+                             { onFinish : callback } ); 
     },
     
     retrieveTemplates: function(){
@@ -292,33 +328,20 @@ var Intro = {
                 data["userData"]["empty"] = {};
                 data["gameData"]["empty"]["towers"] = $A($R(0, 9-data["gameData"]["towers"].length-1));
                 data["userData"]["empty"]["towers"] = $A($R(0, 10-data.userData.metadata.added['towers'].length-1)); 
-                var images =  [], images2 = [];
-                Intro.images.towers.each(function(image){ images.push(image) });  
-                for (var tower in TowerConfig)
-                {
-                    images2.push( TowerConfig[tower]['image']);
-                    images2.push( TowerConfig[tower]['smallImage']);
-                    images2.push( TowerConfig[tower]['skeleton']);    
-                }    
-                var path2 = Intro.images.path + "towers/";
-                Intro.loader.load( [{ images: images, path :  Intro.images.path, store: 'intro'},
-                              { images: images2, path :  path2, store: 'intro'}],
-                              { onFinish : function() {
-                                      $('towers').innerHTML = Intro.templates.towers[1].process({ 
-                                                                        "type" : "towers",
-                                                                        "data" : data,
-                                                                        "itemConfig" : TowerConfig });
-                                      /* Change the tabs accordingly */
-                                      path = "images/intro/market/";
-                                      $$("#marketPlace #towersTab img")[0].addClassName('on');
-                                      $$("#marketPlace #towersTab img")[0].src = path + "tab-on.png";
-                                      $$("#marketPlace #weaponsTab img")[0].removeClassName('on');
-                                      $$("#marketPlace #weaponsTab img")[0].src = path + "tab-off.png";
-                                      $$("#marketPlace #upgradesTab img")[0].removeClassName('on');
-                                      $$("#marketPlace #upgradesTab img")[0].src = path + "tab-off.png";
-                                      Intro.show();
-                                      $('marketPlace').show();
-                                  }} );
+                $('towers').innerHTML = Intro.templates.towers[1].process({ 
+                                                  "type" : "towers",
+                                                  "data" : data,
+                                                  "itemConfig" : TowerConfig });
+                /* Change the tabs accordingly */
+                path = "images/intro/market/";
+                $$("#marketPlace #towersTab img")[0].addClassName('on');
+                $$("#marketPlace #towersTab img")[0].src = path + "tab-on.png";
+                $$("#marketPlace #weaponsTab img")[0].removeClassName('on');
+                $$("#marketPlace #weaponsTab img")[0].src = path + "tab-off.png";
+                $$("#marketPlace #upgradesTab img")[0].removeClassName('on');
+                $$("#marketPlace #upgradesTab img")[0].src = path + "tab-off.png";
+                Intro.show();
+                $('marketPlace').show();
             },
             setFloatBgInfo : function(element){
                   var id = element.getAttribute('itemid');
@@ -340,10 +363,7 @@ var Intro = {
                                 'cost' : Intro.gameData[type][id].cost,
                                 'rank' : [Intro.gameData[type][id].exp, item_rank]
                               }
-                  Intro.loader.load( [{ images: [item_rank+".png"], path :  Intro.images.path + 'ranks/', store: 'intro'}],
-                        { onFinish : function() {
-                              $$("#marketPlace #towers #floatBg")[0].innerHTML = Intro.templates['marketplaceItem'][1].process({ "data" : data });    
-                        }});    
+                  $$("#marketPlace #towers #floatBg")[0].innerHTML = Intro.templates['marketplaceItem'][1].process({ "data" : data });    
             }
         },
         weapons : {
@@ -363,31 +383,20 @@ var Intro = {
                 data["userData"]["empty"] = {};
                 data["gameData"]["empty"]["weapons"] = $A($R(0, 9-data["gameData"]["weapons"].length-1)); 
                 data["userData"]["empty"]["weapons"] = $A($R(0, 5-data.userData.metadata.added['weapons'].length-1)); 
-                var images =  [], images2 = [];
-                Intro.images.weapons.each(function(image){ images.push(image) });  
-                for (var weapon in SuperWeaponConfig)
-                {
-                    images2.push( SuperWeaponConfig[weapon]['image']);  
-                }    
-                Intro.loader.load( [{ images: images, path : Intro.images.path, store: 'intro'},
-                              { images : images2, path : Intro.images.path + "weapons/", store : 'intro' }],
-                              { onFinish : function() {
-                                      $('weapons').innerHTML = Intro.templates.weapons[1].process({ 
-                                                                        "type" : "weapons",
-                                                                        "data" : data,
-                                                                        "itemConfig" : SuperWeaponConfig });
-                                      /* Change the tabs accordingly */
-                                      path = "images/intro/market/";
-                                      $$("#marketPlace #weaponsTab img")[0].addClassName('on');
-                                      $$("#marketPlace #weaponsTab img")[0].src = path + "tab-on.png";
-                                      $$("#marketPlace #towersTab img")[0].removeClassName('on');
-                                      $$("#marketPlace #towersTab img")[0].src = path + "tab-off.png";
-                                      $$("#marketPlace #upgradesTab img")[0].removeClassName('on');
-                                      $$("#marketPlace #upgradesTab img")[0].src = path + "tab-off.png";   
-                                      Intro.show();
-                                      $('marketPlace').show();
-                              }});
-
+                $('weapons').innerHTML = Intro.templates.weapons[1].process({ 
+                                                  "type" : "weapons",
+                                                  "data" : data,
+                                                  "itemConfig" : SuperWeaponConfig });
+                /* Change the tabs accordingly */
+                path = "images/intro/market/";
+                $$("#marketPlace #weaponsTab img")[0].addClassName('on');
+                $$("#marketPlace #weaponsTab img")[0].src = path + "tab-on.png";
+                $$("#marketPlace #towersTab img")[0].removeClassName('on');
+                $$("#marketPlace #towersTab img")[0].src = path + "tab-off.png";
+                $$("#marketPlace #upgradesTab img")[0].removeClassName('on');
+                $$("#marketPlace #upgradesTab img")[0].src = path + "tab-off.png";   
+                Intro.show();
+                $('marketPlace').show();
             },
             setFloatBgInfo : function(element){
                   var id = element.getAttribute('itemid');
@@ -409,10 +418,7 @@ var Intro = {
                                 'cost' : Intro.gameData[type][id].cost,
                                 'rank' : [Intro.gameData[type][id].exp, item_rank]
                               }
-                  Intro.loader.load( [{ images: [item_rank+".png"], path :  Intro.images.path + 'ranks/', store: 'intro'}],
-                        { onFinish : function() {
-                              $$("#marketPlace #weapons #floatBg")[0].innerHTML = Intro.templates['marketplaceItem'][1].process({ "data" : data });    
-                        }});    
+                  $$("#marketPlace #weapons #floatBg")[0].innerHTML = Intro.templates['marketplaceItem'][1].process({ "data" : data });     
             }
         },
         upgrades : {
@@ -429,31 +435,20 @@ var Intro = {
                 data["userData"]["empty"] = {};
                 data["gameData"]["empty"]["upgrades"] = $A($R(0, 9-data["gameData"]["upgrades"].length-1));
                 data["userData"]["empty"]["upgrades"] = $A($R(0, 5-data.userData.metadata.added['upgrades'].length-1)); 
-                var images =  [];
-                var images2 = [];
-                Intro.images.upgrades.each( function(image){ images.push( image) });  
-                for (var upgrade in UpgradeConfig)
-                {
-                    images2.push( UpgradeConfig[upgrade]['image']);
-                }    
-                Intro.loader.load( [{ images: images, path : Intro.images.path, store: 'intro'},
-                              { images: images2, path : Intro.images.path + "upgrades/", store: 'intro'}],
-                              { onFinish : function() {
-                                      $('upgrades').innerHTML = Intro.templates.upgrades[1].process({ 
-                                                                        "type" : "upgrades",
-                                                                        "data" : data,
-                                                                        "itemConfig" : UpgradeConfig });
-                                      /* Change the tabs accordingly */ 
-                                      path = "images/intro/market/";
-                                      $$("#marketPlace #upgradesTab img")[0].addClassName('on');
-                                      $$("#marketPlace #upgradesTab img")[0].src = path + "tab-on.png";  
-                                      $$("#marketPlace #towersTab img")[0].removeClassName('on');
-                                      $$("#marketPlace #towersTab img")[0].src = path + "tab-off.png";
-                                      $$("#marketPlace #weaponsTab img")[0].removeClassName('on');
-                                      $$("#marketPlace #weaponsTab img")[0].src = path + "tab-off.png";
-                                      Intro.show();
-                                      $('marketPlace').show();
-                                  }} );
+                $('upgrades').innerHTML = Intro.templates.upgrades[1].process({ 
+                                                  "type" : "upgrades",
+                                                  "data" : data,
+                                                  "itemConfig" : UpgradeConfig });
+                /* Change the tabs accordingly */ 
+                path = "images/intro/market/";
+                $$("#marketPlace #upgradesTab img")[0].addClassName('on');
+                $$("#marketPlace #upgradesTab img")[0].src = path + "tab-on.png";  
+                $$("#marketPlace #towersTab img")[0].removeClassName('on');
+                $$("#marketPlace #towersTab img")[0].src = path + "tab-off.png";
+                $$("#marketPlace #weaponsTab img")[0].removeClassName('on');
+                $$("#marketPlace #weaponsTab img")[0].src = path + "tab-off.png";
+                Intro.show();
+                $('marketPlace').show();
             },
             setFloatBgInfo : function(element){
                   var id = element.getAttribute('itemid');
@@ -475,10 +470,7 @@ var Intro = {
                                 'cost' : Intro.gameData[type][id].cost,
                                 'rank' : [Intro.gameData[type][id].exp, item_rank]
                               }
-                  Intro.loader.load( [{ images: [item_rank+".png"], path :  Intro.images.path + 'ranks/', store: 'intro'}],
-                        { onFinish : function() {
-                              $$("#marketPlace #upgrades #floatBg")[0].innerHTML = Intro.templates['marketplaceItem'][1].process({ "data" : data });    
-                        }});    
+                  $$("#marketPlace #upgrades #floatBg")[0].innerHTML = Intro.templates['marketplaceItem'][1].process({ "data" : data });    
             }
         }
     },
