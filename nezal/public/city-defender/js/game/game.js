@@ -4,7 +4,7 @@ var GameStart = {
 	escaped: 0,
 	maxEscaped : 20,
 	money : 100,
-	delay : 25,
+	delay : 50,
 	turrets : [],
 	creeps : [],
 	objects : [],
@@ -27,7 +27,7 @@ var GameStart = {
 	superWeapons : {
 		weak : {max : 5, used : 0, factor: 2} ,
 		hyper : {max : 5, used : 0, factor: 2} ,
-		nuke : {max : 1, used : 0},
+		nuke : {max : 3, used : 0},
 		heal : {max : 3, used : 0},
 		splash : {max : 3, used : 0},
 	},
@@ -239,6 +239,7 @@ var Game = {
 		this.fps = Math.round(1000/(delay))
 		if(delay > this.delay){
 			this.skipFrames = Math.ceil(delay / this.delay)
+			if(this.skipFrames > 3) this.skipFrames = 3
 		}
 	}
 	
