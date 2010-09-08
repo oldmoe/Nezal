@@ -68,8 +68,12 @@
 					<div id="waves" class="waves">0/0</div>
 				</div>
 				<div class="fps"></div>
-				<div class="rank" id = "rank"></div>
-				<div class="rankName" id = "rankName">COL</div>
+				
+			  <div class="rank" id="rank">
+			    <img src=""/>
+			  </div>
+			  <div class="rankName" id = "rankName">${Config.rank}</div>
+				
 				<div class="start">	<div class = "startText"> </div></div>
 				<div class="towers">
 				
