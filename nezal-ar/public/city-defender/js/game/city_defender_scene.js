@@ -7,6 +7,7 @@ var CityDefenderScene = Class.create(Scene, {
 	weakCount : 2,
 	splashCount :2,
 	hyperCount : 2,
+	promoted : true,
 	initialize : function($super,config,delay,baseCtx,upperCtx){
 		this.creeps = []
 		this.turrets = []
@@ -223,13 +224,13 @@ var CityDefenderScene = Class.create(Scene, {
 	checkStatus: function(){
 		if(this.running && this.escaped >= this.maxEscaped){
 			this.score*=this.config.level
-			this.lose();this.uploadScore(false)
+			this.uploadScore(false,this.lose)
 			return
 		}else if(this.config && this.playing){
 			if(this.config.waves.length == 0 && this.creeps.length == 0 && this.waitingCreeps == 0 ){
 				Sounds.play(Sounds.gameSounds.win)
 				this.score*=this.config.level
-				this.win();this.uploadScore(true)
+				this.uploadScore(true,this.win)
 				return
 			}else if(this.creeps.length == 0  &&this.waitingCreeps == 0 && this.config.waves.length > 0 && !this.wavePending && this.running){
 				this.waveNumber++
@@ -358,9 +359,9 @@ var CityDefenderScene = Class.create(Scene, {
 			}
 		})
 	},
-	uploadScore : function(win){
+	uploadScore : function(win,callback){
 		// Upload Score code goes here
-		var callback = function(){}
+		
     Intro.sendScore(this.score, win, callback);
 	},
 	waitingCreeps : 0,
