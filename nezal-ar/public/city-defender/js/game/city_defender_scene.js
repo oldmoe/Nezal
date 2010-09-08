@@ -123,7 +123,7 @@ var CityDefenderScene = Class.create(Scene, {
 	},
 	renderData : function(){
 		$('money').innerHTML = this.money;
-		$('lives').innerHTML = this.maxEscaped - this.escaped;
+		$('lives').innerHTML = Math.max(this.maxEscaped - this.escaped,0);
 		$('score').innerHTML = this.score;
 		//$$('#gameElements .fps').first().innerHTML = "FPS: "+this.fps;
 		var self = this
@@ -249,21 +249,30 @@ var CityDefenderScene = Class.create(Scene, {
 	},
 	end : function(state){
 		var self = game.scene
-		self.push(1000,function(){
+		self.push(2000,function(){
 		game.scene.running = false
 		$("result").addClassName(state);
 		if(state == "win"){
 			$('loseImage').hide()
 			$('winImage').show()
+			console.log(game.scene.rank)
+			console.log(Config.rank)
 			if(game.scene.rank != Config.rank){
-			  $('popup').show()
-			  $$('#popup #congratsContent').first().innerHTML = "Congratulations"
-			  $$('#popup #promotedContent').first().innerHTML = "you have been promoted you are now a "+Config.rank
+						game.scene.push(5000,function(){Sounds.play(Sounds.gameSounds.rank_promotion)
+				    			 $('popup').show()
+								  $$('#popup #congratsContent').first().innerHTML = "Congratulations"
+			  					$$('#popup #promotedContent').first().innerHTML = "you have been promoted you are now a "+Config.rank
+									game.scene.rank = Config.rank
+									var img = document.createElement("IMG");
+									img.src = "images/intro/ranks/" + Config.rank + ".png";
+									$$('#popup #rankImg').first().appendChild(img)
+									$$('#rank img')[0].src = "images/intro/ranks/" + Config.rank + ".png";
+						})
   		}
 		}
 		else{
-			$('loseImage').hide()
-			$('winImage').show()
+			$('winImage').hide()
+			$('loseImage').show()
 		}
 		new Effect.Appear("static")
 		Sounds.play(Sounds.gameSounds.wash)

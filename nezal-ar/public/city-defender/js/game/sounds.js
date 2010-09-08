@@ -79,7 +79,7 @@ function createAudioElement(store, url, func){
 	if(!store)store = []
 	Event.observe(audio, 'ended', function(){
 		//console.log('ending')		
-		audio.load()
+		if(Sounds.format == 'mp3')audio.load()
 		store.push(audio);
 		Sounds.channels.splice(Sounds.channels.indexOf(audio), 1);
 		if(func){func()}

@@ -5,6 +5,7 @@ var Baloon = Class.create(Sprite,{
 	initialize : function(num){
 		this.parent = $('gameElements');
 	    this.div = document.createElement('div');
+			this.div.setOpacity(0.7)
 	    var divIdName = 'baloon';
 	    this.div.setAttribute('id',divIdName);
 		this.div.style.position = 'absolute';
