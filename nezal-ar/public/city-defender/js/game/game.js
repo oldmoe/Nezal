@@ -125,6 +125,10 @@ var Game = Class.create({
 			}
 		})
 
+    //Here we make the rank 
+    $$('#rank img')[0].src = "images/intro/ranks/" + Config.rank + ".png";
+    $$('.rankName')[0].innerHTML = Config.rank;
+
 	},
 	
 	registerHandlers : function(){

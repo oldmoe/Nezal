@@ -130,6 +130,7 @@ body{
 	width:100px;
 	height:40px;
 	text-align: center;
+  text-transform : uppercase;
 }
 
 #gameElements .start{
