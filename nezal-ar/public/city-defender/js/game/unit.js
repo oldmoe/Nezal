@@ -12,8 +12,8 @@ var Unit = Class.create({
 		this.maxHp = this.hp
 		return this
 	},
-	createBaloon : function(){
-		this.baloon = new Baloon()
+	createBaloon : function(num){
+		this.baloon = new Baloon(num)
 		this.scene.creepsLayer.attach(this.baloon)
 	},
 	destroyBaloon : function(){

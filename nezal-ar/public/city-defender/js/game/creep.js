@@ -1,4 +1,5 @@
 var Creep = Class.create(Unit, {
+	type : "creep",
 	speeds : [0, 1.08, 2.245, 4.852, 6.023, 7.945, 11.71, 22.625],
 	angles : [0, 3.75, 7.5, 15, 18, 22.5, 30, 45],
 	cannonTheta : 0,

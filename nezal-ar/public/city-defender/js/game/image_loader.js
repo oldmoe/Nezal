@@ -91,7 +91,7 @@ var imageNames = ['humvee_body.png','humvee_tower.png','humvee_tower_in_action.p
 ,'red_air_craft.png','red_air_craft_in_action.png','air_craft_shade.png','air_craft.png','air_craft_in_action.png','tower_base.png','cannon_1.png'
 ,'cannon_1_in_action.png','rank_1.png','rank_2.png', 'rank_3.png', 'cannon_2.png','cannon_2_in_action_right.png','cannon_2_in_action_left.png',
 'patriot_launcher.png','patriot_launcher_in_action_right.png','patriot_launcher_in_action_left.png','patriot_rocket.png','rocket_in_action.png',
-'weak.png','rocket_launcher.png','rocket.png','baloon1.png']
+'weak.png','rocket_launcher.png','rocket.png','baloon1.png','baloon2.png']
 
 var bgImages = ['l_shape.png', 'win.png','lose.png','path.png','play_again.png','exit.png','pause.png','start.png','resume.png',
 'snow.gif','heal_button.png','heal_button_off.png','splash_button.png','splash_button_off.png','nuke_button.png','nuke_button_off.png',
