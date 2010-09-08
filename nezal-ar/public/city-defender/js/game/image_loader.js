@@ -123,7 +123,6 @@ function imageNumbers(length){
 function onFinish(){
 	$('gameElements').style.visibility = 'visible'
 	$('canvasContainer').style.visibility = 'visible'
-	$('rank').style.backgroundImage  = "url("+'images/user/'+rank+'.png'+")"; 
 	window.setTimeout(function(){
 		Effect.Fade('splashScreen')
 		$('gameElements').show();
@@ -142,7 +141,6 @@ function loadGameImages(loader){
 		{animations: imageNumbers(1), path: 'images/animations/arrow/', store: 'arrow'},
 		{animations: imageNumbers(1), path: 'images/animations/vertical_arrow/', store: 'verticalArrow'},
 		{images: bgImages, path: 'images/background/', store: 'background'},
-		{images: [rank+'.png'], path: 'images/user/', store: 'rank'},
 		{images: upgradeImages, path: 'images/background/', store: 'upgrades'}
 //		{sounds : sounds, path:  'sounds/sfx/'+Sounds,format , store: 'sounds'},
 		], {onProgress: function(progress){$('loading_bar').style.width = ''+progress+'%';}, onFinish : onFinish })
