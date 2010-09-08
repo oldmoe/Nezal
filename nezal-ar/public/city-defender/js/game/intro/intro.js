@@ -41,6 +41,13 @@ var Intro = {
             },
     images : {
         path : "images/intro/" ,
+        
+        inProgress : [
+                        'loading.png',
+                        'loading-text.png',
+                        'loading-bar.gif'
+                    ],
+        
         levelSelection : [
                             "level-selection.png",
                             "difficulty.png"
@@ -114,7 +121,12 @@ var Intro = {
     initialize: function(){
         this.currentPage = -1;
         this.loader = new Loader();
-        Intro.retrieveTemplates();
+        var callback = function(){
+          Intro.enablePauseScreen();
+          Intro.retrieveTemplates();
+        }
+        Intro.loader.load( [ {images : Intro.images.inProgress, path : Intro.images.path, store: 'intro'} ],
+                              { onFinish : callback });
     },
     
     retrieveTemplates: function(){
