@@ -26,7 +26,7 @@ var Sounds = {
 
 	play : function(store){
 		if(Sounds.channels.length == 10) return
-		if(!game.scene.sound) return
+		//if(!game.scene.sound) return
 		if(store.length > 0){
 			Sounds.channels.push(store.pop())
 			Sounds.channels.last().play()
@@ -55,6 +55,7 @@ var soundNames = ['accept','pause' ,'wash','add_item', 'plane',
 createSounds()
 function createSounds(){
 	createAudioElements(5, Sounds.turret.fire, Sounds.path()+Sounds.format+"/bullet."+Sounds.format)
+	console.log(Sounds.turret.fire)
 	createAudioElements(5, Sounds.doubleTurret.fire, Sounds.path()+Sounds.format+"/bullet."+Sounds.format)
 	createAudioElements(5, Sounds.turret.rocketLaunch, Sounds.path()+Sounds.format+"/rocket."+Sounds.format);
 	createAudioElements(5, Sounds.turret.patriotLaunch, Sounds.path()+Sounds.format+"/patriot."+Sounds.format);
@@ -78,6 +79,7 @@ function createAudioElement(store, url, func){
 	var audio = new Audio(url)	
 	if(!store)store = []
 	audio.observe("ended", function(){
+		audio.load()
 		store.push(audio);
 		Sounds.channels.splice(Sounds.channels.indexOf(audio), 1);
 		if(func){func()}
