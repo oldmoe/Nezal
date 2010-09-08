@@ -255,8 +255,6 @@ var CityDefenderScene = Class.create(Scene, {
 		if(state == "win"){
 			$('loseImage').hide()
 			$('winImage').show()
-			console.log(game.scene.rank)
-			console.log(Config.rank)
 			if(game.scene.rank != Config.rank){
 						game.scene.push(5000,function(){Sounds.play(Sounds.gameSounds.rank_promotion)
 				    			 $('popup').show()
