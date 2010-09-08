@@ -50,7 +50,8 @@
 			</div>
 			<div id= "popup">
 					<img src='images/background/pop_up.png'/>
-					<div id = "content"></div>
+					<div id = "congratsContent"></div>
+					<div id = "promotedContent"></div>
 					<div id = "rankImg"> </div>
 					<div id = "popupClose" onclick = "$('popup').hide()"> </div>
 			</div>
