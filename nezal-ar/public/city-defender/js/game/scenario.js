@@ -11,7 +11,7 @@ var Scenario = Class.create({
 	},
 	notify : function(event){
 		var x = Math.random()
-		if(x<0.1&&event.unit){
+		if(x<0.5&&event.unit){
 			event['tick']=0
 			event['created'] = false
 			event['finished'] = false
@@ -34,7 +34,9 @@ var Scenario = Class.create({
 						event.finished = true
 					}
 					else if(event.unit&&!event.unit.dead){
-						event.unit.createBaloon()
+						var baloonNum = 2
+						if(event.unit.parent == "creep") baloonNum = 1
+						event.unit.createBaloon(baloonNum)
 						event.created = true
 						event.unit.baloon.text.innerHTML = this.scenario[event.name].random()
 						if(event.method)this[event.name]()

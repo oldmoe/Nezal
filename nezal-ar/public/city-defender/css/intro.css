@@ -309,6 +309,10 @@ body {
   width:95px;
   text-shadow : 1px 1px #333333;
 }
+#mission #reject:hover
+{
+  text-decoration : underline;
+}
 #mission #creeps
 {
   height:72px;
@@ -398,6 +402,16 @@ body {
   overflow : hidden;
   cursor : pointer;
 }
+#marketPlace  #marketTabs .text
+{
+  color:white;
+  font-family:PakGirl;
+  font-size:22px;
+  left:0;
+  position:absolute;
+  text-align:center;
+  top:11px;
+}
 #marketTabs .towersOn
 {
 }
@@ -409,40 +423,21 @@ body {
 {
   left : 496px;
 }
-#marketTabs .towersOff
+#marketTabs .towersTab
 {
 }
-#marketTabs .weaponsOff
+#marketTabs .weaponsTab
 {
   left : 248px;
 }
-#marketTabs .upgradesOff
+#marketTabs .upgradesTab
 {
   left : 496px;
 }
-#towersTab .on
+#marketPlace #towers, #marketPlace #weapons, #marketPlace #upgrades
 {
   position : absolute;
-  left : 0px;
-  z-index : 10;
-}
-#weaponsTab .on
-{
-  position : absolute;
-  left : -248px;
-  z-index : 10;
-}
-#upgradesTab .on
-{
-  position : absolute;
-  left : -496px;
-  z-index : 10;
-}
-#marketPlace #bar
-{
-  position : absolute;
-  top : 35px;
-  overflow : visible;
+  top : 12px;
 }
 #marketPlace #next, #marketPlace #back, #marketPlace #finish
 {
@@ -555,6 +550,16 @@ body {
   width:127px;
   text-align : center;
 }
+#marketPlace #weapons .addedItem .addedItemImg
+{
+  margin-top : 5px;
+  overflow : hidden;
+}
+#marketPlace #upgrades  .addedItem .addedItemImg
+{
+  margin-top : 10px;
+  overflow : hidden;
+}
 #marketPlace #weapons .emptyItem, #marketPlace #upgrades .emptyItem
 {
   float:left;
@@ -589,7 +594,6 @@ body {
 #marketPlace .item div
 {
   height:75px;
-  position : relative;
   overflow : hidden;
 }
 #marketPlace .itemImage
@@ -608,12 +612,30 @@ body {
 {
   padding-top : 12px;
 }
+#marketPlace .itemImage .label
+{
+  position : absolute;
+  bottom : 2px;
+  left : 2px;
+}
 #marketPlace .action
 {
   position : absolute;
   right : 2px;
-  bottom : 2px;
+  bottom : 15px;
   cursor : pointer;  
+}
+#marketPlace .action .text
+{
+  color:white;
+  font-size:11px;
+  height:100%;
+  left:0;
+  line-height:180%;
+  position:absolute;
+  text-align:center;
+  top:0;
+  width:100%;
 }
 #marketPlace .addedItem .action
 {
@@ -622,7 +644,10 @@ body {
   top : 7px;
   cursor : pointer;  
 }
-
+#marketPlace #weapons .addedItem .action, #marketPlace #upgrades .addedItem .action
+{
+  top : 5px;
+}
 #marketPlace .coins
 {
   left:92px;
@@ -634,12 +659,22 @@ body {
   font-family : Digital;
   font-size : 24px;
 }
-.clickable div, .clickable img
+.item .clickable div, #addedItems .clickable div
 {
-  opacity : 0.9;
+  opacity : 0.85;
   cursor : pointer;
 }
-.clickable div:hover, .clickable img:hover
+.item .clickable div:hover, #addedItems .clickable div:hover
+{
+  opacity : 1;
+  cursor : pointer;
+}
+div.clickableButton
+{
+  opacity : 0.85;
+  cursor : pointer;
+}
+div.clickableButton:hover
 {
   opacity : 1;
   cursor : pointer;
@@ -762,9 +797,19 @@ body {
 {
   left:20px;
   position:absolute;
-  top:15px;
-  color:#0f94a3;
   text-transform : capitalize;
+}
+#marketPlace #floatBg .actions .rank span
+{
+  position:absolute;
+  top:12px;
+  width:135px;
+}
+#marketPlace #floatBg .actions .rank img
+{
+  height:35px;
+  left:140px;
+  position:absolute;
 }
 #marketPlace #floatBg .actions .action
 {

@@ -76,7 +76,7 @@ class CityDefender < Metadata
                                                             else
                                                               data['score']
                                                             end
-        user_campaign.profile.score += data['score']
+        user_campaign.profile.score += ( data['score'] / 1000)
         ranks = user_campaign.profile.game.ranks.where( " lower_exp <= #{user_campaign.profile.score} AND " + 
                                                                            " ( upper_exp > #{user_campaign.profile.score} OR upper_exp == -1 ) "  )
         user_campaign.profile.rank = ranks.first
