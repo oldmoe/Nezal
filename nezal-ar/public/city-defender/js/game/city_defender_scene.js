@@ -222,11 +222,13 @@ var CityDefenderScene = Class.create(Scene, {
 	},
 	checkStatus: function(){
 		if(this.running && this.escaped >= this.maxEscaped){
+			this.score*=this.config.level
 			this.lose();this.uploadScore(false)
 			return
 		}else if(this.config && this.playing){
 			if(this.config.waves.length == 0 && this.creeps.length == 0 && this.waitingCreeps == 0 ){
 				Sounds.play(Sounds.gameSounds.win)
+				this.score*=this.config.level
 				this.win();this.uploadScore(true)
 				return
 			}else if(this.creeps.length == 0  &&this.waitingCreeps == 0 && this.config.waves.length > 0 && !this.wavePending && this.running){
@@ -248,12 +250,12 @@ var CityDefenderScene = Class.create(Scene, {
 		$("result").addClassName('win');
 		$('loseImage').hide()
 		$('winImage').show()
-		$('static').show();
+		new Effect.Appear("static")
 		$('droppingGround').addClassName('off')
-		new Effect.SwitchOff('static');
-		new Effect.Appear("result", {delay : 2.0})
+		new Effect.SwitchOff('static',{delay : 2.0});
+		new Effect.Appear("result", {delay : 3.0})
 		var self = this
-		this.push(1000,function(){self.displayStats()})
+		this.push(2000,function(){self.displayStats()})
 	},
 	lose : function(){
 		this.running = false
@@ -264,7 +266,7 @@ var CityDefenderScene = Class.create(Scene, {
 		Sounds.play(Sounds.gameSounds.wash)
 		$('droppingGround').addClassName('off')
 		new Effect.SwitchOff('static');
-		new Effect.Appear("result", {delay : 2.0})
+		new Effect.Appear("result", {delay : 5.0})
 		this.push(2000,function(){Sounds.play(Sounds.gameSounds.lose)})
 		var self = this
 		this.push(1000,function(){self.displayStats()})
@@ -357,7 +359,6 @@ var CityDefenderScene = Class.create(Scene, {
 		})
 	},
 	uploadScore : function(win){
-		this.score*=this.config.level
 		// Upload Score code goes here
 		var callback = function(){}
     Intro.sendScore(this.score, win, callback);
@@ -373,7 +374,7 @@ var CityDefenderScene = Class.create(Scene, {
 	fps : 0,
 	score: 0,
 	moneyMultiplier: [1.2,1.1,1.05],
-	creepMultiplier: [1.05,1.1,1.2],
+	creepMultiplier: [1.04,1.07,1.1],
 	selectedTurret : null,
 	wave : 0,
 	sound : true,

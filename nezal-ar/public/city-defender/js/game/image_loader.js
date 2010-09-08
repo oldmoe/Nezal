@@ -77,7 +77,7 @@ var Loader = Class.create({
 	
 	load_sounds : function(src, options){
 		var audio = new Audio();
-		audio.onload = this.onload(options);
+		audio.onload = function(){self.onload(options);}
 		audio.src = src
 		return audio
 	},
@@ -91,7 +91,7 @@ var imageNames = ['humvee_body.png','humvee_tower.png','humvee_tower_in_action.p
 ,'red_air_craft.png','red_air_craft_in_action.png','air_craft_shade.png','air_craft.png','air_craft_in_action.png','tower_base.png','cannon_1.png'
 ,'cannon_1_in_action.png','rank_1.png','rank_2.png', 'rank_3.png', 'cannon_2.png','cannon_2_in_action_right.png','cannon_2_in_action_left.png',
 'patriot_launcher.png','patriot_launcher_in_action_right.png','patriot_launcher_in_action_left.png','patriot_rocket.png','rocket_in_action.png',
-'weak.png','rocket_launcher.png','rocket.png']
+'weak.png','rocket_launcher.png','rocket.png','baloon1.png']
 
 var bgImages = ['l_shape.png', 'win.png','lose.png','path.png','play_again.png','exit.png','pause.png','start.png','resume.png',
 'snow.gif','heal_button.png','heal_button_off.png','splash_button.png','splash_button_off.png','nuke_button.png','nuke_button_off.png',
@@ -104,7 +104,14 @@ var upgradeImages = ['arrow.png','block_upgrade.png', 'bullets_upgrade_1.png','b
               'purchased_stamp.png','bullets_upgrade_button.png','rockets_upgrade_button.png',
 			  'shields_upgrade_button.png','upgrade_button_inactive.png'
 			 ]
-
+/*
+var sounds = ['accept'+Sounds.format ,        'explosion'+Sounds.format,  'pause'+Sounds.format ,      'wash'+Sounds.format,
+'add-item'+Sounds.format      ,  'heal'+Sounds.format    ,   'plane'+Sounds.format     					,      'weak'+Sounds.format,
+'add-money'+Sounds.format     ,  'hyper'+Sounds.format   ,   'rank-promotion'+Sounds.format , 				'win'+Sounds.format ,
+'bullet'+Sounds.format        ,  'lose'+Sounds.format    ,   'reject'+Sounds.format  ,        'wrong-tower'+Sounds.format   ,
+'click'+Sounds.format         ,  'nuke'+Sounds.format    ,    'rocket'+Sounds.format,
+'correct-tower'+Sounds.format ,  'patriot'+Sounds.format ,   'select'+Sounds.format]
+*/
 function imageNumbers(length){
 	var arr = []
 	for(var i=0; i<length;i++){
@@ -137,6 +144,7 @@ function loadGameImages(loader){
 		{images: bgImages, path: 'images/background/', store: 'background'},
 		{images: [rank+'.png'], path: 'images/user/', store: 'rank'},
 		{images: upgradeImages, path: 'images/background/', store: 'upgrades'}
+//		{sounds : sounds, path:  'sounds/sfx/'+Sounds,format , store: 'sounds'},
 		], {onProgress: function(progress){$('loading_bar').style.width = ''+progress+'%';}, onFinish : onFinish })
 		
 	}catch(e){}

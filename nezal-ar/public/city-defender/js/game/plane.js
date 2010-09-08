@@ -79,7 +79,7 @@ var Plane = Class.create(Creep, {
 })
 
 var RedPlane = Class.create(Plane, {
-	hp:300,maxHp:300,speed : 6,power:4, rate:0.2, range: 3,price:3,
+	hp:200,maxHp:200,speed : 6,power:4, rate:0.2, range: 3,price:3,
    initImages : function(){
 		this.images = {
 			base : Loader.images.game['red_air_craft.png'],

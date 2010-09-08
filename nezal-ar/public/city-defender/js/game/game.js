@@ -139,6 +139,8 @@ var Game = Class.create({
 	},
 	reset : function(){
 		game.scene.reactor.pause()
+		Upgrades.init()
+		Upgrades.selectDefault();
 		new Effect.Fade('static')
 		$$('#gameElements .start').first().stopObserving('click')
 		$$('#gameElements .start').first().removeClassName('resumed')
