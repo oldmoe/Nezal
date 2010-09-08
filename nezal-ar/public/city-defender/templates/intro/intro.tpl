@@ -85,7 +85,7 @@
         ${city.description}    
     </div>
     <div id="cityMap">       
-      <img src="${path}/images/map.png">
+      <img src="${path}/images/path.png" style="width:222px;">
     </div>
     <div id="accept" onclick="Intro.next();" class="clickableButton">
       <img src="images/intro/mission/accept.png" >

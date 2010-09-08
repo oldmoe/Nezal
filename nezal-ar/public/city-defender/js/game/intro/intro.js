@@ -131,7 +131,8 @@ var Intro = {
             Intro.enablePauseScreen();
             var images =  [];
             var images2 =  []; 
-            ['ranks', 'towers', 'weapons', 'upgrades'].each(function(item){
+            ['ranks', 'towers', 'weapons',
+             'upgrades', 'mission', 'campaign'].each(function(item){
                                                     Intro.images[item].each(function(image){ 
                                                         if ( images.indexOf(image) < 0 )
                                                         {
@@ -154,6 +155,11 @@ var Intro = {
             {
                 images2.push( "upgrades/" +UpgradeConfig[upgrade]['image']);
             }    
+            for (var creep in CreepConfig)
+            {
+                 images2.push("creeps/" + CreepConfig[creep]['image']);
+                 images2.push("creeps/" + CreepConfig[creep]['skeleton']);  
+            }
             Intro.loader.load( [{ images: images, path : Intro.images.path, store: 'intro'},
                                 { images : images2, path : Intro.images.path, store : 'intro' }],
                                 { onFinish : function() {
@@ -233,9 +239,7 @@ var Intro = {
         campaign : {
             index : 1,
             onSelect : function() {
-                var images = [];
                 var images2 = ["/images/camp-map.png"];
-                Intro.images.campaign.each(function(image){ images.push( image) });
                 new Ajax.Request( Intro.campPath() + "/camp.info" ,
                             { method:'get', 
                               onSuccess: function(t, json){
@@ -250,8 +254,7 @@ var Intro = {
                                                                         else
                                                                             images2.push( "/" + mission['path'] + "/images/mission_inactive.png");
                                                                     });
-                                          Intro.loader.load( [{ images: images, path : Intro.images.path , store: 'intro'},
-                                                      { images: images2, path :  Intro.campPath(), store: 'intro'}],
+                                          Intro.loader.load( [{ images: images2, path :  Intro.campPath(), store: 'intro'}],
                                                       { onFinish : function() {                                            
                                                             $('campaign').innerHTML = 
                                                                     Intro.templates.campaign[1].process({"camp":ChallengeSelector.campaignInfo}); 
@@ -280,18 +283,9 @@ var Intro = {
                       onComplete: function(t, json){
                           ChallengeSelector.mission = JSON.parse(t.responseText);
                           ChallengeSelector.mission.creeps = ChallengeSelector.missionCreeps;
-                          var images = [], images2 = [];
-                          var path2 = Intro.images.path + "creeps/";
-                          Intro.images.mission.each(function(image){ images.push(image) });
-                          images.push( "../../" + Intro.campPath() + Intro.missionPath() + "/images/city.png");
-                          images.push( "../../" + Intro.campPath() + Intro.missionPath() + "/images/map.png");   
+                          var images = [];
                           images.push( "../../" + Intro.campPath() + Intro.missionPath() + "/images/path.png");   
-                          ChallengeSelector.mission.creeps.each( function(creep){
-                                                                     images2.push(CreepConfig[creep]['image']);
-                                                                     images2.push(CreepConfig[creep]['skeleton']);  
-                                                                  } );
-                          Intro.loader.load( [{ images: images, path : Intro.images.path, store: 'intro'}, 
-                                              { images: images2, path : path2, store: 'intro'}],
+                          Intro.loader.load( [{ images: images, path : Intro.images.path, store: 'intro'}],
                                         { onFinish : function() {
                                                  $('mission').innerHTML = Intro.templates.mission[1].process({ 
                                                                         "city" : ChallengeSelector.mission,
