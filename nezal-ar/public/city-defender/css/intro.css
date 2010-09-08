@@ -550,6 +550,16 @@ body {
   width:127px;
   text-align : center;
 }
+#marketPlace #weapons .addedItem .addedItemImg
+{
+  margin-top : 5px;
+  overflow : hidden;
+}
+#marketPlace #upgrades  .addedItem .addedItemImg
+{
+  margin-top : 10px;
+  overflow : hidden;
+}
 #marketPlace #weapons .emptyItem, #marketPlace #upgrades .emptyItem
 {
   float:left;
@@ -633,6 +643,10 @@ body {
   right : 2px;
   top : 7px;
   cursor : pointer;  
+}
+#marketPlace #weapons .addedItem .action, #marketPlace #upgrades .addedItem .action
+{
+  top : 5px;
 }
 #marketPlace .coins
 {

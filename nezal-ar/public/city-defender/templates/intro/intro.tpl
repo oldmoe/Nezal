@@ -234,7 +234,7 @@
     <div id="addedItems">
       {for item in data.userData.metadata.added[type] }
           <div  class="addedItem clickable" itemid="${item}" onmouseover="this.select('.action')[0].show();" onmouseout="this.select('.action')[0].hide();">
-            <div>
+            <div class="addedItemImg">
                 <img itemid="${item}" type="${type}" src="images/intro/${type}/${itemConfig[item]['smallImage']}" onclick="Intro.showFloatBg(this)" ></img>
             </div>
             <div class="action" style="display:none;">
