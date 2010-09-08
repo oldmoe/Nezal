@@ -50,7 +50,7 @@ else if(test.canPlayType('audio/ogg')){
 }
 
 var soundNames = ['accept','pause' ,'wash','add_item', 'plane',
-'add_money', 'rank_promotion','win', 'lose'   ,   'reject','wrong_tower','click','correct_tower' , 'select']
+'add_money', 'rank_promotion','win', 'lose'   ,   'reject','wrong_tower','click','correct_tower' ]
 
 createSounds()
 function createSounds(){
