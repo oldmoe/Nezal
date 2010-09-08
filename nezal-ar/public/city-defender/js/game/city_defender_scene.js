@@ -361,8 +361,13 @@ var CityDefenderScene = Class.create(Scene, {
 	},
 	uploadScore : function(win,callback){
 		// Upload Score code goes here
-		
-    Intro.sendScore(this.score, win, callback);
+		onSuccess = function() {
+	      //Here we make the rank 
+        $$('#rank img')[0].src = "images/intro/ranks/" + Config.rank + ".png";
+        $$('.rankName')[0].innerHTML = Config.rank;
+        callback();
+		}
+    Intro.sendScore(this.score, win, onSuccess);
 	},
 	waitingCreeps : 0,
 	wavePending : false,

@@ -579,6 +579,8 @@ var Intro = {
                   parameters: { 'data' : Object.toJSON({'mission' : GameConfigs.mission.order, 'win' : win, 'score' : score }) },
                   onSuccess : function(t, json){
                       var data = JSON.parse(t.responseText);
+                      GameConfigs.rank = data.rank;
+                      GameConfigs.exp = data.exp;
                       callback();
                   }
               });
