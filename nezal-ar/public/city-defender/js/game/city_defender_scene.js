@@ -361,11 +361,16 @@ var CityDefenderScene = Class.create(Scene, {
 	},
 	uploadScore : function(win,callback){
 		// Upload Score code goes here
+    var currRank = Config.rank;
 		onSuccess = function() {
 	      //Here we make the rank 
         $$('#rank img')[0].src = "images/intro/ranks/" + Config.rank + ".png";
         $$('.rankName')[0].innerHTML = Config.rank;
         callback();
+    		if( currRank != Config.rank){
+			    $('popup').show()
+			    $$('#popup #content').first().innerHTML = "CONGRATULATIONS<br/> you have been promoted from "+currRank +"and now you are a "+ Config.rank;
+		    }
 		}
     Intro.sendScore(this.score, win, onSuccess);
 	},
