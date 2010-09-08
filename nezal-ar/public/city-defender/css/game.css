@@ -759,15 +759,28 @@ canvas.turret{
 	height : 350;
 	z-index : 300;
 }
-#popup #content
+#popup #congratsContent
 {
 	position : absolute;
 	top : 20;
 	left : 30;
 	width : 390;
-	height : 270;
+	height : 50;
+	color : orange;
+	font-size : 30;
+	text-shadow: #000 2px 2px 1px;
+}
+#popup #promotedContent
+{
+	position : absolute;
+	top : 90;
+	left : 30;
+	width : 390;
+	height : 100;
 	font-family: AdLib;
-	scrollbar-base-color: red;
+	font-size : 20;
+	color : white;
+	text-align: center;
 }
 #popup #rankImg
 {

@@ -43,6 +43,7 @@ var CityDefenderScene = Class.create(Scene, {
 		this.templates['stats'] = TrimPath.parseTemplate($('statsTemplate').value) 
 	},
 	init : function(){
+		this.rank = Config.rank
 		this.skipFrames = 0
 		this.creepsLayer = new Layer(this.upperCtx);
 		this.creepsLayer.clear = true
@@ -222,15 +223,15 @@ var CityDefenderScene = Class.create(Scene, {
 		this.push(50,function(){self.displayStats()})
 	},
 	checkStatus: function(){
+		var self = game.scene
 		if(this.running && this.escaped >= this.maxEscaped){
 			this.score*=this.config.level
-			this.uploadScore(false,this.lose)
+			this.uploadScore(false,function(){self.end("lose")})
 			return
 		}else if(this.config && this.playing){
 			if(this.config.waves.length == 0 && this.creeps.length == 0 && this.waitingCreeps == 0 ){
-				Sounds.play(Sounds.gameSounds.win)
 				this.score*=this.config.level
-				this.uploadScore(true,this.win)
+				this.uploadScore(true,function(){self.end("win")})
 				return
 			}else if(this.creeps.length == 0  &&this.waitingCreeps == 0 && this.config.waves.length > 0 && !this.wavePending && this.running){
 				this.waveNumber++
@@ -246,32 +247,34 @@ var CityDefenderScene = Class.create(Scene, {
 		var self = this
 		this.push(50,function(){self.checkStatus()})
 	},
-	win: function(){
-		this.running = false
-		$("result").addClassName('win');
-		$('loseImage').hide()
-		$('winImage').show()
+	end : function(state){
+		if(game.scene.rank != Config.rank){
+			$('popup').show()
+			$$('#popup #congratsContent').first().innerHTML = "Congratulations"
+			$$('#popup #promotedContent').first().innerHTML = "you have been promoted you are now a "+Config.rank
+		}
+		var self = game.scene
+		self.push(1000,function(){
+		game.scene.running = false
+		$("result").addClassName(state);
+		if(state == "win"){
+			$('loseImage').hide()
+			$('winImage').show()
+		}
+		else{
+			$('loseImage').hide()
+			$('winImage').show()
+		}
 		new Effect.Appear("static")
-		$('droppingGround').addClassName('off')
-		new Effect.SwitchOff('static',{delay : 2.0});
-		new Effect.Appear("result", {delay : 3.0})
-		var self = this
-		this.push(2000,function(){self.displayStats()})
-	},
-	lose : function(){
-		this.running = false
-		$("result").addClassName('lose');
-		$('winImage').hide()
-		$('loseImage').show()
-		$('static').show();
 		Sounds.play(Sounds.gameSounds.wash)
 		$('droppingGround').addClassName('off')
 		new Effect.SwitchOff('static');
-		new Effect.Appear("result", {delay : 5.0})
-		this.push(2000,function(){Sounds.play(Sounds.gameSounds.lose)})
-		var self = this
-		this.push(1000,function(){self.displayStats()})
+		new Effect.Appear("result", {delay : 3.0})
+		game.scene.push(3000,function(){Sounds.play(Sounds.gameSounds[state])})
+		game.scene.push(3000,function(){self.displayStats()})
+		})
 	},
+
 	sendWave : function(wave){
 		this.wave++
 		var slots = []
@@ -361,12 +364,6 @@ var CityDefenderScene = Class.create(Scene, {
 	},
 	uploadScore : function(win,callback){
 		// Upload Score code goes here
-		if(this.promoted){
-			$('popup').show()
-			var oldRank = 'aaa'
-			var newRank = 'bbb'
-			$$('#popup #content').first().innerHTML = "CONGRATULATIONS<br/> you have been promoted from "+oldRank +"and now you are a "+ newRank
-		}
     Intro.sendScore(this.score, win, callback);
 	},
 	waitingCreeps : 0,

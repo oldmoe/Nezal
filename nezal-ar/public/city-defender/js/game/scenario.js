@@ -11,7 +11,7 @@ var Scenario = Class.create({
 	},
 	notify : function(event){
 		var x = Math.random()
-		if(x<0.5&&event.unit){
+		if(x<0.1&&event.unit){
 			event['tick']=0
 			event['created'] = false
 			event['finished'] = false
