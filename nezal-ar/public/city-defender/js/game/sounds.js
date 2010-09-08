@@ -55,7 +55,6 @@ var soundNames = ['accept','pause' ,'wash','add_item', 'plane',
 createSounds()
 function createSounds(){
 	createAudioElements(5, Sounds.turret.fire, Sounds.path()+Sounds.format+"/bullet."+Sounds.format)
-	console.log(Sounds.turret.fire)
 	createAudioElements(5, Sounds.doubleTurret.fire, Sounds.path()+Sounds.format+"/bullet."+Sounds.format)
 	createAudioElements(5, Sounds.turret.rocketLaunch, Sounds.path()+Sounds.format+"/rocket."+Sounds.format);
 	createAudioElements(5, Sounds.turret.patriotLaunch, Sounds.path()+Sounds.format+"/patriot."+Sounds.format);
