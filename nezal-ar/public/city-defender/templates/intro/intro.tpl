@@ -96,6 +96,9 @@
     <div id="reject" onclick="Intro.previous();" class="clickableButton">
       <span style="color : #550000; font-size: 12px;">or</span> go back to campaign
     </div>
+    <div class="creepsHeadline">
+      Intelligence suggests that the enemy is sending these forces :
+    </div>
     <div id="creeps">
 	      <div id="creeps-scroll">
 	          <div class="left">

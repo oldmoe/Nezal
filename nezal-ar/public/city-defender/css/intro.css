@@ -345,6 +345,16 @@ body {
   z-index : 200;
   color : #FAC200;
 }
+#mission .creepsHeadline
+{
+  color:#550000;
+  font-size:13px;
+  height:72px;
+  left:40px;
+  position:absolute;
+  top:390px;
+  width:430px;
+}
 #mission #floatBg #close
 {
   position : absolute;
