@@ -797,9 +797,19 @@ div.clickableButton:hover
 {
   left:20px;
   position:absolute;
-  top:15px;
-  color:#0f94a3;
   text-transform : capitalize;
+}
+#marketPlace #floatBg .actions .rank span
+{
+  position:absolute;
+  top:12px;
+  width:135px;
+}
+#marketPlace #floatBg .actions .rank img
+{
+  height:35px;
+  left:140px;
+  position:absolute;
 }
 #marketPlace #floatBg .actions .action
 {

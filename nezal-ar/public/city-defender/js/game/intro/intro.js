@@ -340,7 +340,10 @@ var Intro = {
                                 'cost' : Intro.gameData[type][id].cost,
                                 'rank' : [Intro.gameData[type][id].exp, item_rank]
                               }
-                  $$("#marketPlace #towers #floatBg")[0].innerHTML = Intro.templates['marketplaceItem'][1].process({ "data" : data });    
+                  Intro.loader.load( [{ images: [item_rank+".png"], path :  Intro.images.path + 'ranks/', store: 'intro'}],
+                        { onFinish : function() {
+                              $$("#marketPlace #towers #floatBg")[0].innerHTML = Intro.templates['marketplaceItem'][1].process({ "data" : data });    
+                        }});    
             }
         },
         weapons : {
@@ -406,7 +409,10 @@ var Intro = {
                                 'cost' : Intro.gameData[type][id].cost,
                                 'rank' : [Intro.gameData[type][id].exp, item_rank]
                               }
-                  $$("#marketPlace #weapons #floatBg")[0].innerHTML = Intro.templates['marketplaceItem'][1].process({ "data" : data });    
+                  Intro.loader.load( [{ images: [item_rank+".png"], path :  Intro.images.path + 'ranks/', store: 'intro'}],
+                        { onFinish : function() {
+                              $$("#marketPlace #weapons #floatBg")[0].innerHTML = Intro.templates['marketplaceItem'][1].process({ "data" : data });    
+                        }});    
             }
         },
         upgrades : {
@@ -469,7 +475,10 @@ var Intro = {
                                 'cost' : Intro.gameData[type][id].cost,
                                 'rank' : [Intro.gameData[type][id].exp, item_rank]
                               }
-                  $$("#marketPlace #upgrades #floatBg")[0].innerHTML = Intro.templates['marketplaceItem'][1].process({ "data" : data });    
+                  Intro.loader.load( [{ images: [item_rank+".png"], path :  Intro.images.path + 'ranks/', store: 'intro'}],
+                        { onFinish : function() {
+                              $$("#marketPlace #upgrades #floatBg")[0].innerHTML = Intro.templates['marketplaceItem'][1].process({ "data" : data });    
+                        }});    
             }
         }
     },

@@ -151,10 +151,10 @@
     </div>
     <div class="actions">
       <div class='rank'>
-        Required Rank : 
         <span {if (data.rank[0] > data.exp)} "style="color:red;" {/if}>
-          ${data.rank[1]}
+          Required Rank : 
         </span>
+        <img src="images/intro/ranks/${data.rank[1]}.png"> </img>
       </div>
       <div class="action  clickableButton">
           {if ((Intro.gameData[data.type][data.itemid]['unlocked'] == false) && (Intro.userData.metadata[data.type].indexOf(data.itemid) < 0 ) )}
