@@ -427,18 +427,6 @@ body{
 	background-repeat: no-repeat;
 }
 
-
-#money{
-	position:absolute;
-	top:98px;
-	left: 672px;
-	width: 88px;
-	height: 42px;
-	color : orange;
-	font-size: 12px;
-	font-weight: bold;
-}
-
 #gameElements .diagram{
 	position:absolute;
 	top:6px;

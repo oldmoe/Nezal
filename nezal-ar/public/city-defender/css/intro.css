@@ -306,7 +306,7 @@ body {
   left:580px;
   position:absolute;
   top:440px;
-  width:95px;
+  width:100px;
   text-shadow : 1px 1px #333333;
 }
 #mission #reject:hover
@@ -353,7 +353,7 @@ body {
   left:40px;
   position:absolute;
   top:390px;
-  width:430px;
+  width:480px;
   z-index : 100;
 }
 #mission #floatBg #close
