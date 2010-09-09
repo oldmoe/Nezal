@@ -415,6 +415,7 @@ body{
   text-shadow:-1px 1px black;
   top:93px;
   width:79px;
+  position:absolute;
 }
 
 #gameElements .diagram{
