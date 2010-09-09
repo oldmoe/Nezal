@@ -269,6 +269,7 @@ var CityDefenderScene = Class.create(Scene, {
 										game.scene.push(3000,function(){Sounds.play(Sounds.gameSounds[state])})
 										game.scene.push(3000,function(){self.displayStats()})
 									}
+								if(game.scene.rank!=Config.rank){
 									Sounds.play(Sounds.gameSounds.rank_promotion)
 								 $('pauseWindow').style.zIndex = 302
 								 $('pauseWindow').show()	
@@ -282,7 +283,9 @@ var CityDefenderScene = Class.create(Scene, {
 									$$('#rank img')[0].src = "images/intro/ranks/" + Config.rank + ".png";
 									$('popupClose').observe('click',win)
 									$('popupOk').observe('click',win)
-  		
+								}else{
+									win()
+								}
 		}
 		else{
 			$('winDiv').hide()
