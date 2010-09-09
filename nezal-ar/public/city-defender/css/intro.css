@@ -242,7 +242,7 @@ body {
   color:white;
   font-size:13px;
   left:405px;
-  line-height:150%;
+  line-height:140%;
   position:absolute;
   text-align:justify;
   text-shadow:-1px -1px #555555;
@@ -349,11 +349,12 @@ body {
 {
   color:#550000;
   font-size:13px;
-  height:72px;
+  height:15px;
   left:40px;
   position:absolute;
   top:390px;
   width:430px;
+  z-index : 100;
 }
 #mission #floatBg #close
 {

@@ -253,32 +253,42 @@ var CityDefenderScene = Class.create(Scene, {
 		game.scene.running = false
 		$("result").addClassName(state);
 		if(state == "win"){
-			$('loseImage').hide()
-			$('winImage').show()
-			if(game.scene.rank != Config.rank){
-						game.scene.push(5000,function(){Sounds.play(Sounds.gameSounds.rank_promotion)
-				    			 $('popup').show()
+								function win(){	
+										$('loseDiv').hide()
+										$('winDiv').show()
+										new Effect.Appear("static")
+										Sounds.play(Sounds.gameSounds.wash)
+										$('droppingGround').addClassName('off')
+										new Effect.SwitchOff('static');
+										new Effect.Appear("result", {delay : 3.0})
+										game.scene.push(3000,function(){Sounds.play(Sounds.gameSounds[state])})
+										game.scene.push(3000,function(){self.displayStats()})
+									}
+									Sounds.play(Sounds.gameSounds.rank_promotion)
+			    			 $('popup').show()
 								  $$('#popup #congratsContent').first().innerHTML = "Congratulations"
-			  					$$('#popup #promotedContent').first().innerHTML = "you have been promoted you are now a "+Config.rank
+			  					$$('#popup #promotedContent').first().innerHTML = "Tou have been promoted, you are now a "+Config.rank
 									game.scene.rank = Config.rank
 									var img = document.createElement("IMG");
 									img.src = "images/intro/ranks/" + Config.rank + ".png";
 									$$('#popup #rankImg').first().appendChild(img)
 									$$('#rank img')[0].src = "images/intro/ranks/" + Config.rank + ".png";
-						})
-  		}
+									$('popupClose').observe('click',win)
+									$('popupOk').observe('click',win)
+  		
 		}
 		else{
-			$('winImage').hide()
-			$('loseImage').show()
+			$('winDiv').hide()
+			$('loseDiv').show()
+			new Effect.Appear("static")
+			Sounds.play(Sounds.gameSounds.wash)
+			$('droppingGround').addClassName('off')
+			new Effect.SwitchOff('static');
+			new Effect.Appear("result", {delay : 3.0})
+			game.scene.push(3000,function(){Sounds.play(Sounds.gameSounds[state])})
+			game.scene.push(3000,function(){self.displayStats()})
 		}
-		new Effect.Appear("static")
-		Sounds.play(Sounds.gameSounds.wash)
-		$('droppingGround').addClassName('off')
-		new Effect.SwitchOff('static');
-		new Effect.Appear("result", {delay : 3.0})
-		game.scene.push(3000,function(){Sounds.play(Sounds.gameSounds[state])})
-		game.scene.push(3000,function(){self.displayStats()})
+
 		})
 	},
 

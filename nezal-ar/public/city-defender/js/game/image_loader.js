@@ -93,7 +93,7 @@ var imageNames = ['humvee_body.png','humvee_tower.png','humvee_tower_in_action.p
 'patriot_launcher.png','patriot_launcher_in_action_right.png','patriot_launcher_in_action_left.png','patriot_rocket.png','rocket_in_action.png',
 'weak.png','rocket_launcher.png','rocket.png','baloon1.png','baloon2.png']
 
-var bgImages = ['l_shape.png', 'win.png','lose.png','path.png','play_again.png','exit.png','pause.png','start.png','resume.png',
+var bgImages = ['l_shape.png', 'win.png','lose.png', 'you_win.png', 'you_lose.png', 'path.png','play_again.png','exit.png','pause.png','start.png','resume.png',
 'snow.gif','heal_button.png','heal_button_off.png','splash_button.png','splash_button_off.png','nuke_button.png','nuke_button_off.png',
 'hyper_button.png','hyper_button_off.png','weak_button.png','weak_button_off.png','Turret_button.png','DoubleTurret_button.png','Patriot_button.png',
 'RocketLauncher_button.png','mystry_button.png','status_bar.png']
