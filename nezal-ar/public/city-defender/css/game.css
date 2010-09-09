@@ -405,14 +405,16 @@ body{
 }
 
 #money{
-	position:absolute;
-	top:98px;
-	left: 672px;
-	width: 88px;
-	height: 42px;
-	color : orange;
-	font-size: 12px;
-	font-weight: bold;
+  color:white;
+  font-family:Digital;
+  font-size:15px;
+  font-weight:bold;
+  height:20px;
+  left:672px;
+  text-align:center;
+  text-shadow:-1px 1px black;
+  top:93px;
+  width:79px;
 }
 
 #gameElements .diagram{
@@ -774,7 +776,7 @@ canvas.turret{
 {
 	position : absolute;
 	top : 100;
-	left : 20;
+	left : 90;
 	width : 585;
 	height : 350;
 	z-index : 300;
@@ -805,8 +807,8 @@ canvas.turret{
 #popup #rankImg
 {
 	position : absolute;
-	top : 20;
-	left : 395;
+	top : 40;
+	left : 430;
 	width : 172;
 	height : 148;
 }

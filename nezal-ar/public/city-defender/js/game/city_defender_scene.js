@@ -123,7 +123,7 @@ var CityDefenderScene = Class.create(Scene, {
 	},
 	renderData : function(){
 		$('money').innerHTML = this.money;
-		$('lives').innerHTML = this.maxEscaped - this.escaped;
+		$('lives').innerHTML = Math.max(this.maxEscaped - this.escaped,0);
 		$('score').innerHTML = this.score;
 		//$$('#gameElements .fps').first().innerHTML = "FPS: "+this.fps;
 		var self = this
@@ -249,12 +249,24 @@ var CityDefenderScene = Class.create(Scene, {
 	},
 	end : function(state){
 		var self = game.scene
-		self.push(1000,function(){
+		self.push(2000,function(){
 		game.scene.running = false
 		$("result").addClassName(state);
 		if(state == "win"){
 			$('loseDiv').hide()
 			$('winDiv').show()
+			if(game.scene.rank != Config.rank){
+						game.scene.push(5000,function(){Sounds.play(Sounds.gameSounds.rank_promotion)
+                  $('popup').show()
+								  $$('#popup #congratsContent').first().innerHTML = "Congratulations"
+			  					$$('#popup #promotedContent').first().innerHTML = "you have been promoted you are now a "+Config.rank
+									game.scene.rank = Config.rank
+									var img = document.createElement("IMG");
+									img.src = "images/intro/ranks/" + Config.rank + ".png";
+									$$('#popup #rankImg').first().appendChild(img)
+									$$('#rank img')[0].src = "images/intro/ranks/" + Config.rank + ".png";
+						})
+  		}
 		}
 		else{
 			$('winDiv').hide()
@@ -268,11 +280,6 @@ var CityDefenderScene = Class.create(Scene, {
 		game.scene.push(3000,function(){Sounds.play(Sounds.gameSounds[state])})
 		game.scene.push(3000,function(){self.displayStats()})
 		})
-		if(game.scene.rank != Config.rank){
-			  $('popup').show()
-			  $$('#popup #congratsContent').first().innerHTML = "Congratulations"
-			  $$('#popup #promotedContent').first().innerHTML = "you have been promoted you are now a "+Config.rank
-		}
 	},
 
 	sendWave : function(wave){
