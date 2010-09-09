@@ -253,17 +253,12 @@ var CityDefenderScene = Class.create(Scene, {
 		game.scene.running = false
 		$("result").addClassName(state);
 		if(state == "win"){
-			$('loseImage').hide()
-			$('winImage').show()
-			if(game.scene.rank != Config.rank){
-			  $('popup').show()
-			  $$('#popup #congratsContent').first().innerHTML = "Congratulations"
-			  $$('#popup #promotedContent').first().innerHTML = "you have been promoted you are now a "+Config.rank
-  		}
+			$('loseDiv').hide()
+			$('winDiv').show()
 		}
 		else{
-			$('loseImage').hide()
-			$('winImage').show()
+			$('winDiv').hide()
+			$('loseDiv').show()
 		}
 		new Effect.Appear("static")
 		Sounds.play(Sounds.gameSounds.wash)
@@ -273,6 +268,11 @@ var CityDefenderScene = Class.create(Scene, {
 		game.scene.push(3000,function(){Sounds.play(Sounds.gameSounds[state])})
 		game.scene.push(3000,function(){self.displayStats()})
 		})
+		if(game.scene.rank != Config.rank){
+			  $('popup').show()
+			  $$('#popup #congratsContent').first().innerHTML = "Congratulations"
+			  $$('#popup #promotedContent').first().innerHTML = "you have been promoted you are now a "+Config.rank
+		}
 	},
 
 	sendWave : function(wave){

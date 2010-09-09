@@ -34,9 +34,10 @@ var Game = Class.create({
 	},
 	setGameImages : function(){
 		Loader.images.background['win.png'].setAttribute("id","winImage")
-		$('result').appendChild(Loader.images.background['win.png']);
-				Loader.images.background['lose.png'].setAttribute("id","loseImage")
-		$('result').appendChild(Loader.images.background['lose.png']);
+		$$('#result #winImage')[0].src = Loader.images.background['win.png'].src;
+		$$('#result #loseImage')[0].src = Loader.images.background['lose.png'].src;
+		$$('#result #youWin')[0].src = Loader.images.background['you_win.png'].src ;
+		$$('#result #youLose')[0].src = Loader.images.background['you_lose.png'].src ;
 		var ind = Config.towers.indexOf("Belcher")
 		if(ind!=-1)Config.towers[ind] = "Turret"
 		var ind = Config.towers.indexOf("Reaper")

@@ -114,6 +114,14 @@
 			<canvas id="droppingGround" width="672" height="480"></canvas>
 			<div id="static" style="display:none"></div>
 			<div id="result" style="display:none">
+			  <div class="statusDiv" id="winDiv">
+			    <img src="" id="winImage"/>
+  			  <img id="youWin" src="" class="statusImage">
+			  </div>
+			  <div class="statusDiv" id="loseDiv">
+			    <img src="" id="loseImage" />
+  			  <img id="youLose" src="" class="statusImage">
+			  </div>
 				<pre id="stats"></pre>
 				<div id="playAgain">
 				</div>

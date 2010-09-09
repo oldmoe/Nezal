@@ -41,11 +41,32 @@ body{
 	vertical-align:middle;
 	z-index : 101;
 }
-
+#result .statusDiv
+{
+  text-align : center;
+}
+#result #youLose
+{
+  position : absolute;
+  left : 105px;
+  top : 215px;
+  z-index : 100;
+}
+#result #youWin
+{
+  position : absolute;
+  left : 105px;
+  top : 195px;
+  z-index : 100;
+}
+#result #winImage
+{
+  margin-left : 10px;
+}
 #result #stats{
 	position: absolute;
 	width: 250px;
-	left:170px;
+	left:185px;
 	top: 300px;
 	height: 120px;
 	z-index:200
@@ -56,18 +77,17 @@ body{
 	position: absolute;
 	width: 115px;
 	height: 60px;
-	left:42px;
-	top: 409px;
+	left:63px;
+	top: 410px;
 	z-index:4;
 }
-
 #result #playAgain{
 	cursor : pointer;
 	position: absolute;
 	width: 115px;
 	height: 60px;
-	left:537px;
-	top: 409px;
+	left:558px;
+	top: 410px;
 	z-index:4;
 }
 #splashScreen{
@@ -797,10 +817,5 @@ canvas.turret{
 	height : 30;
 	left : 523;
 	top : 10;
-}
-#loseImage
-{
-	position : absolute;
-	left : -6;
 }
 
