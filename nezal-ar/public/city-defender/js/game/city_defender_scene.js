@@ -178,6 +178,7 @@ var CityDefenderScene = Class.create(Scene, {
 		$$(".start").first().observe('click', function(){self.pause()})
 	},
 	renderPause: function(){
+		$('pauseWindow').show()	
 		Sounds.play(Sounds.gameSounds.pause)
 		var pauseDev = $$('#gameElements .resumed').first()
 		$$(".startText").first().innerHTML = T.resume
@@ -191,6 +192,7 @@ var CityDefenderScene = Class.create(Scene, {
 		$$(".start").first().observe('click', function(){self.resume()})	
 	},
 	renderResume: function(){
+		$('pauseWindow').hide()
 		Sounds.play(Sounds.gameSounds.pause)
 		var resumeDev = $$('#gameElements .paused').first()
 		$$(".startText").first().innerHTML = T.pause
@@ -254,6 +256,9 @@ var CityDefenderScene = Class.create(Scene, {
 		$("result").addClassName(state);
 		if(state == "win"){
 								function win(){	
+										 $('pauseWindow').style.zIndex = 299
+										 $('pauseWindow').hide()	
+	  			    			 $('popup').hide()
 										$('loseDiv').hide()
 										$('winDiv').show()
 										new Effect.Appear("static")
@@ -265,6 +270,8 @@ var CityDefenderScene = Class.create(Scene, {
 										game.scene.push(3000,function(){self.displayStats()})
 									}
 									Sounds.play(Sounds.gameSounds.rank_promotion)
+								 $('pauseWindow').style.zIndex = 302
+								 $('pauseWindow').show()	
 			    			 $('popup').show()
 								  $$('#popup #congratsContent').first().innerHTML = "Congratulations"
 			  					$$('#popup #promotedContent').first().innerHTML = "Tou have been promoted, you are now a "+Config.rank
