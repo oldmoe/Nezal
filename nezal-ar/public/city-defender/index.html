@@ -38,13 +38,13 @@
       <img id="levelsBackground" src="images/intro/level-selection.png"/>
       <div id="levels">
         <img id='levelsLinks' src="images/intro/difficulty.png"/>
-        <div id="easy" onclick="GameConfigs.level=1; Intro.next(); return false;">
+        <div id="easy" onclick="GameConfigs.level=1; Intro.next(); return false;" class="clickSound">
           easy
         </div>
-        <div id="medium" onclick="GameConfigs.level=2; Intro.next(); return false;">
+        <div id="medium" onclick="GameConfigs.level=2; Intro.next(); return false;" class="clickSound">
           medium
         </div>
-        <div id="hard" onclick="GameConfigs.level=3; Intro.next(); return false;">
+        <div id="hard" onclick="GameConfigs.level=3; Intro.next(); return false;" class="clickSound">
           hard
         </div>
       </div>
@@ -58,19 +58,19 @@
 
     <div id="marketPlace" style="display : none;">
         <div id="marketTabs">
-            <div id="towersTab" class="towersTab" onclick="Intro.select('towers');">
+            <div id="towersTab" class="towersTab clickSound" onclick="Intro.select('towers');">
                 <img src=""/>
                 <div class="text">
                   Super Towers
                 </div>
             </div>
-            <div id="weaponsTab" class="weaponsTab"   onclick="Intro.select('weapons');">
+            <div id="weaponsTab" class="weaponsTab clickSound"   onclick="Intro.select('weapons');">
                 <img src=""/>
                 <div class="text">
                   Super Weapons
                 </div>
             </div>
-            <div id="upgradesTab" class="upgradesTab" onclick="Intro.select('upgrades');"> 
+            <div id="upgradesTab" class="upgradesTab clickSound" onclick="Intro.select('upgrades');"> 
                 <img src=""/>
                 <div class="text">
                   Tower Upgrades

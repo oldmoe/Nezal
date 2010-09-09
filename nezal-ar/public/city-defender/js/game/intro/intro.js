@@ -163,8 +163,8 @@ var Intro = {
             Intro.loader.load( [{ images: images, path : Intro.images.path, store: 'intro'},
                                 { images : images2, path : Intro.images.path, store : 'intro' }],
                                 { onFinish : function() {
-                                                Intro.retrieveTemplates();                    
-                                              }});
+                                      Intro.retrieveTemplates();
+                                }});
         
         }
         Intro.loader.load([{ images : Intro.images.inProgress, path : Intro.images.path, store: 'intro'}],
@@ -182,7 +182,6 @@ var Intro = {
                                           onSuccess: function(t){
                                       		  	          $("gameStart").innerHTML = t.responseText;
                                       		  	          Intro.templates['game'] = t.responseText;
-					  			  //game.setGameImages()
                                           		  	      Intro.retrieveData( function() {
                         				                                            initLoadImages(new Loader()); 
                                                                             Intro.next();
@@ -357,7 +356,10 @@ var Intro = {
                                 'cost' : Intro.gameData[type][id].cost,
                                 'rank' : [Intro.gameData[type][id].exp, item_rank]
                               }
-                  $$("#marketPlace #towers #floatBg")[0].innerHTML = Intro.templates['marketplaceItem'][1].process({ "data" : data });    
+                  $$("#marketPlace #towers #floatBg")[0].innerHTML = Intro.templates['marketplaceItem'][1].process({ "data" : data });
+                  $$('#marketPlace #towers #floatBg .clickSound').each(function(element){
+                          element.observe('click', function(){Sounds.play(Sounds.gameSounds.click)})
+                  })
             }
         },
         weapons : {
@@ -413,6 +415,9 @@ var Intro = {
                                 'rank' : [Intro.gameData[type][id].exp, item_rank]
                               }
                   $$("#marketPlace #weapons #floatBg")[0].innerHTML = Intro.templates['marketplaceItem'][1].process({ "data" : data });     
+                  $$('#marketPlace #weapons #floatBg .clickSound').each(function(element){
+                          element.observe('click', function(){Sounds.play(Sounds.gameSounds.click)})
+                  })
             }
         },
         upgrades : {
@@ -465,6 +470,9 @@ var Intro = {
                                 'rank' : [Intro.gameData[type][id].exp, item_rank]
                               }
                   $$("#marketPlace #upgrades #floatBg")[0].innerHTML = Intro.templates['marketplaceItem'][1].process({ "data" : data });    
+                  $$('#marketPlace #upgrades #floatBg .clickSound').each(function(element){
+                          element.observe('click', function(){Sounds.play(Sounds.gameSounds.click)})
+                  })
             }
         }
     },
@@ -501,6 +509,9 @@ var Intro = {
                                                                   "type" : type,
                                                                   "data" : data,
                                                                   "itemConfig" : itemConfig });
+        $$('.clickSound').each(function(element){
+          element.observe('click', function(element){Sounds.play(Sounds.gameSounds.click)})
+        })
     },
     
     removeItem: function(element){
@@ -530,7 +541,10 @@ var Intro = {
         $(type).innerHTML = Intro.templates[type][1].process({ 
                                                                   "type" : type,
                                                                   "data" : data,
-                                                                  "itemConfig" : itemConfig });        
+                                                                  "itemConfig" : itemConfig });   
+        $$('.clickSound').each(function(element){
+          element.observe('click', function(element){Sounds.play(Sounds.gameSounds.click)})
+        })     
     },
     
     unlockItem: function(element){
@@ -623,6 +637,9 @@ var Intro = {
     },
     
     show: function(){
+        $$('.clickSound').each(function(element){
+          element.observe('click', function(element){Sounds.play(Sounds.gameSounds.click)})
+        })
         Intro.disablePauseScreen();
         $('marketPlace').hide();
 	      if(	Intro.currentPage >= 0) {

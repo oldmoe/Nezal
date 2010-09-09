@@ -31,7 +31,7 @@
             <div class="mission clickableButton">
               <div>
                 <img id="${mission['path']}" path="${mission['path']}" src="challenges/${GameConfigs.campaign}/${mission['path']}/images/mission_active.png" 
-                          onclick="Intro.selectMission(this); Intro.next();"/>
+                          onclick="Intro.selectMission(this); Intro.next();" class="clickSound"/>
               </div>
               <div class="missionName">
                 ${mission['name']}
@@ -47,7 +47,7 @@
           {/if}
       {/for}
     </div>
-    <div id="back" onclick="Intro.previous();" class="clickableButton">
+    <div id="back" onclick="Intro.previous();" class="clickableButton clickSound">
       <img src="images/intro/back.png"/>
       <div class="text buttonText">
         Back
@@ -59,7 +59,7 @@
 <textarea id='missionTemplate' style="display:none">
     <div id="floatBg" style="display : none;">
       <img src="images/intro/mission/float-bg.png"></img>
-      <div id="close" onclick="Intro.hideFloatBg();"></div>
+      <div id="close" onclick="Intro.hideFloatBg();" class="clickSound"></div>
       <div class="content"> 
         <div class="spans">
           <span class="name">   </span>
@@ -87,13 +87,13 @@
     <div id="cityMap">       
       <img src="${path}/images/path.png" style="width:222px;">
     </div>
-    <div id="accept" onclick="Intro.next();" class="clickableButton">
+    <div id="accept" onclick="Intro.next();" class="clickableButton clickSound">
       <img src="images/intro/mission/accept.png" >
       <div class="text buttonText">
         Accept
       </div>
     </div>
-    <div id="reject" onclick="Intro.previous();" class="clickableButton">
+    <div id="reject" onclick="Intro.previous();" class="clickableButton clickSound">
       <span style="color : #550000; font-size: 12px;">or</span> go back to campaign
     </div>
     <div class="creepsHeadline">
@@ -108,7 +108,7 @@
 	          <div id="creeps-container" class="container">
 		          <ul id='creeps-ul'>
     		        {for creep in city.creeps }
-    		          <li creepid="${creep}" onclick="Intro.showFloatBg(this)">
+    		          <li creepid="${creep}" onclick="Intro.showFloatBg(this)" class="clickSound">
     		            <img src="images/intro/creeps/${creepConfig[creep]['image']}" > </img>
     		          </li>
 		            {/for}
@@ -130,7 +130,7 @@
 
 <textarea id='marketItemDetailsTemplate' style="display:none">
     <img src="images/intro/market/float-bg.png"></img>
-    <div id="close" onclick="Intro.hideFloatBg();"></div>
+    <div id="close" onclick="Intro.hideFloatBg();" class="clickSound"></div>
     <div class="content"> 
       <div class="spans">
         <div class="name">  ${data.configs[data.itemid]['name']} </div>
@@ -169,7 +169,7 @@
                 </div>
               {/if}
             {else}
-              <span class="active" itemid="${data.itemid}" type="${data.type}" class="action" onclick="Intro.unlockItem(this);"> unlock </span>
+              <span class="active action clickSound" itemid="${data.itemid}" type="${data.type}" onclick="Intro.unlockItem(this);"> unlock </span>
             {/if}
           {/if}
       </div>
@@ -191,7 +191,7 @@
       {for item in data.gameData[type] }
       <div class="item">
         <div itemid="${item}" class="clickable">
-          <div itemid="${item}" type="${type}" onclick="Intro.showFloatBg(this)" class="itemImage">
+          <div itemid="${item}" type="${type}" onclick="Intro.showFloatBg(this)" class="itemImage clickSound">
             <img src="images/intro/${type}/${itemConfig[item]['image']}"></img>
             {if ((Intro.gameData[type][item]['unlocked'] == false) && (data.userData.metadata[type].indexOf(item) < 0 ) )}
               <img src="images/intro/market/locked.png" class="label"> </img>   
@@ -199,7 +199,7 @@
           </div>
           {if ((Intro.gameData[type][item]['unlocked'] == true) || (data.userData.metadata[type].indexOf(item) >= 0 ) )}
             {if (data.userData.metadata.added[type].indexOf(item) < 0) }
-              <div class="action" itemid="${item}" type="${type}"  onclick="Intro.addItem(this);" style="height:20px;" >
+              <div class="action clickSound" itemid="${item}" type="${type}"  onclick="Intro.addItem(this);" style="height:20px;" >
                 <img   src="images/intro/market/add.png" > </img> 
                 <div class="text buttonText">
                   Add
@@ -207,7 +207,7 @@
               </div>
             {/if}
           {else}
-            <div class="action" itemid="${item}" type="${type}"  onclick="Intro.showFloatBg(this);" style="height:20px;" >
+            <div class="action clickSound" itemid="${item}" type="${type}"  onclick="Intro.showFloatBg(this);" style="height:20px;" >
               <img src="images/intro/market/unlock.png"> </img>
               <div class="text buttonText">
                 unlock
@@ -238,10 +238,10 @@
       {for item in data.userData.metadata.added[type] }
           <div  class="addedItem clickable" itemid="${item}" onmouseover="this.select('.action')[0].show();" onmouseout="this.select('.action')[0].hide();">
             <div class="addedItemImg">
-                <img itemid="${item}" type="${type}" src="images/intro/${type}/${itemConfig[item]['smallImage']}" onclick="Intro.showFloatBg(this)" ></img>
+                <img itemid="${item}" type="${type}" src="images/intro/${type}/${itemConfig[item]['smallImage']}" onclick="Intro.showFloatBg(this)" class="clickSound"></img>
             </div>
             <div class="action" style="display:none;">
-              <img itemid="${item}" type="${type}" src="images/intro/market/remove.png"  onclick="Intro.removeItem(this);"> </img>
+              <img itemid="${item}" type="${type}" src="images/intro/market/remove.png"  onclick="Intro.removeItem(this);" class="clickSound"> </img>
             </div>
           </div>
       {/for}
@@ -252,17 +252,17 @@
       {/for}
     </div>
     
-    <div id="back" onclick="Intro.previous();" class="buttonText clickableButton" >
+    <div id="back" onclick="Intro.previous();" class="buttonText clickableButton clickSound" >
       <div id="backText">
         Back
       </div>
     </div>
-    <div id="next" onclick="Intro.next();" class="buttonText clickableButton">
+    <div id="next" onclick="Intro.next();" class="buttonText clickableButton clickSound">
       <div id="nextText">
         Next
       </div>
     </div>
-    <div id="finish" onclick="Intro.finish();" class="buttonText clickableButton">
+    <div id="finish" onclick="Intro.finish();" class="buttonText clickableButton clickSound">
       <div id="finishText">
         Finish
       </div>
