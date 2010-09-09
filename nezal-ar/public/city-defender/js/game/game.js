@@ -82,7 +82,12 @@ var Game = Class.create({
 			
 			
 		})
-		
+		$('pauseWindow').style.zIndex = 299;
+		$('pauseWindow').style.width =760;
+		$('pauseWindow').style.height = 550; 
+		$('pauseWindow').style.position = "absolute"
+		$('pauseWindow').style.backgroundColor = "black";
+		$('pauseWindow').style.opacity =0.5;
 		Config.upgrades.each(function(upgrade){
 			upgrade = upgrade.toLowerCase()
 			var div = document.createElement("div");

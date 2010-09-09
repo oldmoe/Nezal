@@ -178,6 +178,7 @@ var CityDefenderScene = Class.create(Scene, {
 		$$(".start").first().observe('click', function(){self.pause()})
 	},
 	renderPause: function(){
+		$('pauseWindow').show()	
 		Sounds.play(Sounds.gameSounds.pause)
 		var pauseDev = $$('#gameElements .resumed').first()
 		$$(".startText").first().innerHTML = T.resume
@@ -191,6 +192,7 @@ var CityDefenderScene = Class.create(Scene, {
 		$$(".start").first().observe('click', function(){self.resume()})	
 	},
 	renderResume: function(){
+		$('pauseWindow').hide()
 		Sounds.play(Sounds.gameSounds.pause)
 		var resumeDev = $$('#gameElements .paused').first()
 		$$(".startText").first().innerHTML = T.pause
@@ -253,32 +255,47 @@ var CityDefenderScene = Class.create(Scene, {
 		game.scene.running = false
 		$("result").addClassName(state);
 		if(state == "win"){
-			$('loseDiv').hide()
-			$('winDiv').show()
-			if(game.scene.rank != Config.rank){
-						game.scene.push(5000,function(){Sounds.play(Sounds.gameSounds.rank_promotion)
-                  $('popup').show()
+								function win(){	
+										 $('pauseWindow').style.zIndex = 299
+										 $('pauseWindow').hide()	
+	  			    			 $('popup').hide()
+										$('loseDiv').hide()
+										$('winDiv').show()
+										new Effect.Appear("static")
+										Sounds.play(Sounds.gameSounds.wash)
+										$('droppingGround').addClassName('off')
+										new Effect.SwitchOff('static');
+										new Effect.Appear("result", {delay : 3.0})
+										game.scene.push(3000,function(){Sounds.play(Sounds.gameSounds[state])})
+										game.scene.push(3000,function(){self.displayStats()})
+									}
+									Sounds.play(Sounds.gameSounds.rank_promotion)
+								 $('pauseWindow').style.zIndex = 302
+								 $('pauseWindow').show()	
+			    			 $('popup').show()
 								  $$('#popup #congratsContent').first().innerHTML = "Congratulations"
-			  					$$('#popup #promotedContent').first().innerHTML = "you have been promoted you are now a "+Config.rank
+			  					$$('#popup #promotedContent').first().innerHTML = "You have been promoted, you are now a "+Config.rank
 									game.scene.rank = Config.rank
 									var img = document.createElement("IMG");
 									img.src = "images/intro/ranks/" + Config.rank + ".png";
 									$$('#popup #rankImg').first().appendChild(img)
 									$$('#rank img')[0].src = "images/intro/ranks/" + Config.rank + ".png";
-						})
-  		}
+									$('popupClose').observe('click',win)
+									$('popupOk').observe('click',win)
+  		
 		}
 		else{
 			$('winDiv').hide()
 			$('loseDiv').show()
+			new Effect.Appear("static")
+			Sounds.play(Sounds.gameSounds.wash)
+			$('droppingGround').addClassName('off')
+			new Effect.SwitchOff('static');
+			new Effect.Appear("result", {delay : 3.0})
+			game.scene.push(3000,function(){Sounds.play(Sounds.gameSounds[state])})
+			game.scene.push(3000,function(){self.displayStats()})
 		}
-		new Effect.Appear("static")
-		Sounds.play(Sounds.gameSounds.wash)
-		$('droppingGround').addClassName('off')
-		new Effect.SwitchOff('static');
-		new Effect.Appear("result", {delay : 3.0})
-		game.scene.push(3000,function(){Sounds.play(Sounds.gameSounds[state])})
-		game.scene.push(3000,function(){self.displayStats()})
+
 		})
 	},
 

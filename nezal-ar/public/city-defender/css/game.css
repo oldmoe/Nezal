@@ -159,7 +159,7 @@ body{
 	left:0px;
 	width:155px;
 	height:82px;
-	z-index:1;
+	z-index:300;
 }
 
 #gameElements .startText{
@@ -181,7 +181,7 @@ body{
 	-moz-user-select: none;
    -khtml-user-select: none;
     user-select: none;
-        
+	z-index:301;        
 }
 
 
@@ -779,7 +779,8 @@ canvas.turret{
 	left : 90;
 	width : 585;
 	height : 350;
-	z-index : 300;
+	z-index : 303;
+	opacity : 1;
 }
 #popup #congratsContent
 {
@@ -820,4 +821,30 @@ canvas.turret{
 	left : 523;
 	top : 10;
 }
+#popup #popupOk
+{
+	position : absolute;
+	width : 30;
+	height : 30;
+	left : 440;
+	top : 250;
+	cursor:pointer;
+}
+#popup #popupOk .text
+{
+  color:white;
+  position:absolute;
+  top:15px;
+  left:25px;
+  width : 100%;
+  text-align:center;
+}
+#pauseeWindow
+{
+position:"absolute";
+	width: 760;
+	height:550;
+	z-index:300;
+}
+
 
