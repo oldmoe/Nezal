@@ -48,12 +48,17 @@
 				<img src="images/tutorial/ok.png"></img>
 				</div>
 			</div>
-			<div id= "popup">
+			<div id= "pauseWindow" style="display:none">	</div>
+			<div id= "popup" style="display:none">
 					<img src='images/background/pop_up.png'/>
 					<div id = "congratsContent"></div>
 					<div id = "promotedContent"></div>
 					<div id = "rankImg"> </div>
 					<div id = "popupClose" onclick = "$('popup').hide()"> </div>
+					<div id="popupOk" class="clickableButton" ">
+						<img src="images/intro/mission/accept.png"/>
+						<div class="text"> Ok </div>
+					</div>
 			</div>
 			<div id="canvasContainer" style="display:none">
 				<canvas id="gameBackground" width="736" height="480"></canvas>

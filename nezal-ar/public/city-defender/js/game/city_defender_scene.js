@@ -274,7 +274,7 @@ var CityDefenderScene = Class.create(Scene, {
 								 $('pauseWindow').show()	
 			    			 $('popup').show()
 								  $$('#popup #congratsContent').first().innerHTML = "Congratulations"
-			  					$$('#popup #promotedContent').first().innerHTML = "Tou have been promoted, you are now a "+Config.rank
+			  					$$('#popup #promotedContent').first().innerHTML = "You have been promoted, you are now a "+Config.rank
 									game.scene.rank = Config.rank
 									var img = document.createElement("IMG");
 									img.src = "images/intro/ranks/" + Config.rank + ".png";
