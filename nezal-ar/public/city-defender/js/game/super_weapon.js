@@ -73,7 +73,7 @@ var SuperWeapon = Class.create({
 
 var Weak = Class.create(SuperWeapon, {
 	action : function(){
-		Sounds.play(Sounds.superWeapons.weak)
+		Sounds.play(Sounds.superWeapons.weak,true)
 		var anim = new WeakAnimation()
 		this.scene.scenario.notify({name:"superWeaponsNuke", method: false, unit:this.scene.creeps.random()})
 		this.scene.objects.push(anim)
@@ -106,8 +106,8 @@ var Splash = Class.create(SuperWeapon, {
 		this.scene.scenario.notify({name:"superWeaponsSplash", method: false, unit:this.scene.creeps.random()})
 		var x = [0, Map.width * Map.pitch - 1][Math.round(Math.random())]
 		var y = [0, Map.height * Map.pitch - 1][Math.round(Math.random())]
-		Sounds.play(Sounds.turret.rocketLaunch)
-		Sounds.play(Sounds.turret.rocketLaunch)
+		Sounds.play(Sounds.turret.rocketLaunch,true)
+		Sounds.play(Sounds.turret.rocketLaunch,true)
 		var self = this
 		this.scene.creeps.sort(function(a,b){
 			return b.hp - a.hp
@@ -119,7 +119,7 @@ var Splash = Class.create(SuperWeapon, {
 var Nuke = Class.create(SuperWeapon, {
 	action : function(){
 		this.scene.scenario.notify({name:"superWeaponsNuke", method: false, unit:this.scene.creeps.random()})
-		Sounds.play(Sounds.superWeapons.nuke)
+		Sounds.play(Sounds.superWeapons.nuke,true)
 		function startNuke(){
 			this.scene.creeps.each(function(creep){
 				creep.takeHit(Math.round(creep.hp * 1));
@@ -134,7 +134,7 @@ var Nuke = Class.create(SuperWeapon, {
 var Heal = Class.create(SuperWeapon, {
 	action : function(){
 		this.scene.scenario.notify({name:"superWeaponsHeal", method: false, unit:this.scene.turrets.random()})
-		Sounds.play(Sounds.superWeapons.heal)
+		Sounds.play(Sounds.superWeapons.heal,true)
 		var self = this
 		self.scene.turrets.each(function(tower){
 			tower.hp = tower.maxHp
@@ -148,7 +148,7 @@ var Hyper = Class.create(SuperWeapon, {
 	action : function(){
 		var self = this
 		this.scene.scenario.notify({name:"superWeaponsHyper", method: false, unit:this.scene.turrets.random()})
-		Sounds.play(Sounds.superWeapons.hyper)
+		Sounds.play(Sounds.superWeapons.hyper,true)
 		var hyper = function(tower){
 			tower.rate *= 2;
 		}

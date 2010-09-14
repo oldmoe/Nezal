@@ -1,9 +1,9 @@
 //loads images and store them in memory for later use
-var rank = 'surgeont'
 
 var Loader = Class.create({
 	initialize: function (){
 		this.loadedResources =0
+		this.chunk = 25
 	},
 	/*
 	this method loads the images
@@ -25,48 +25,95 @@ var Loader = Class.create({
 	},	
 
 	load : function(resources, options){
-		this.setLength(resources)
+		this.resources = resources
+		this.options = options
+		if(this.loadedResources==0)this.setLength(resources)
 		var self = this
 		var objects = []
-		resources.each(function(resource){
+		var toLoad = []
+		var l =0
+		var remainedResources = []
+		this.resources.each(function(resource){
+			Loader.resourceTypes.each(function(type){
+				if(resource[type]){
+					var names = resource[type]
+					if(l>self.chunk)	remainedResources.push(resource)
+					if(names.length+l<self.chunk){
+						l+=names.length
+						toLoad.push(Nezal.clone_obj(resource))
+						resource[type]= []
+					}
+					else{
+						var n = Nezal.clone_obj(resource)
+						n[type] =	resource[type].splice(0,self.chunk-l)
+						toLoad.push(n)
+						l=self.chunk
+						remainedResources.push(resource)
+					}
+				}
+			})
+		})
+		this.resources = remainedResources
+
+		toLoad.each(function(resource){
 			Loader.resourceTypes.each(function(type){
 				if(resource[type]){
 					var path = resource.path || type+'/game/'
 					var store = resource.store
 					var names = resource[type]
-					if(!Loader[type][store])Loader[type][store] = {}
-					for ( var  i=0 ; i < names.length ; i++ ){
-					  if(!Loader[type][store][names[i]]){	
-						var src = ''
-						src = path + names[i]
-						Loader[type][store][names[i]] = self['load_'+type](src, options);
-					  }else{
-						self.loadedResources++
-					  }
-					  objects[names[i]] = Loader[type][store][names[i]]
-					}
-			  if(self.loadedResources == self.currentLength){
-			      if(options.onFinish){
-				      options.onFinish()
-			      }
-			      self.loadedResources = 0
-		      }	 
+					self.loadResources(path,store,names,type)
 				}
 			})
 		})
-		return objects
+	},
+
+	loadResource : function(){
+		var self = this
+		var resource = this.resources[0]
+			Loader.resourceTypes.each(function(type){
+				if(resource[type]){
+					var path = resource.path || type+'/game/'
+					var store = resource.store
+					var names = resource[type]
+					if(names.length==1)self.resources.splice(0,1)
+					self.loadResources(path,store,names.splice(0,1),type)
+				}
+			})
+	},
+	loadResources : function(path,store,names,type){
+		var self = this
+		if(!Loader[type][store])Loader[type][store] = {}
+		for ( var  i=0 ; i < names.length ; i++ ){
+		  if(!Loader[type][store][names[i]]){	
+			var src = ''
+			src = path + names[i]
+			Loader[type][store][names[i]] = self['load_'+type](src, this.options);
+		  }else{
+			self.loadedResources++
+		  }
+		  //objects[names[i]] = Loader[type][store][names[i]]
+		}
+			if(self.loadedResources == self.currentLength){
+				self.loadedResources = 0
+				if(options.onFinish){
+					options.onFinish()
+				}
+			}	
 	},
 	onload: function(options){
 		this.loadedResources++;
 		if(options.onProgress) options.onProgress(Math.round((this.loadedResources/this.currentLength)*100))
 		if(this.loadedResources == this.currentLength){
+			this.loadedResources = 0
 			if(options.onFinish){
 				options.onFinish()
 			}
-			this.loadedResources = 0
 		}	
+		else if(this.resources.length>0){
+			this.loadResource()
+		}
 	},
-	
+
 	load_images : function(src, options){
 		var image = new Image();
 		var self = this

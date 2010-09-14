@@ -17,8 +17,6 @@ var CityDefenderScene = Class.create(Scene, {
 		this.animations = []
 		this.rockets = []
 		this.events= []
-		this.creepMutators = []
-		this.towerMutators = []
 		this.stats = {
 			towersCreated : 0,
 			towersDestroyed : 0,
@@ -70,6 +68,9 @@ var CityDefenderScene = Class.create(Scene, {
 		return this
 	},
 	addTurret : function(turret){
+		this.towerMutators.each(function(mutator){
+				mutator.action(turret)
+		})
 		if(!turret)var turret = new Turret(10, 4,this)	
 		this.turrets.push(turret)
 		Map.grid[turret.gridX][turret.gridY].tower = turret
