@@ -18,7 +18,7 @@
 <script src="js/game/intro/intro.js" type="text/javascript"></script>
 
 <body>
-<iframe id ="iframe" src="HTMLResources/animations.html" style="display : none;"> 
+<iframe id ="iframe" src="" style="display : none;"> 
 </iframe>
 <div id ="images" ></div>
 <div id="game">
@@ -133,6 +133,7 @@
   FBConnect.init(function(){
                       Intro.initialize();
                 });
+	$('iframe').src = "html_resources/animations.html"
 	function register(win,store){
 		var images = win.document.getElementsByTagName('img')
 		Loader.notify(win, images,store)			

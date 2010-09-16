@@ -130,7 +130,6 @@ var Game = Class.create({
 		$$('#gameElements .upgrades .upgradeItem').invoke('observe', 'click', Upgrades.select)			
 		$$('.towers div').invoke('observe','click', function(){
 			Sounds.play(Sounds.gameSounds.click);GhostTurret.select(this)
-			self.scene.selectedTower = null
 		})
 		$$('#gameElements .start').first().observe('click', function(){self.scene.startAttack()})
 		$('playAgain').observe('click', game.reset)

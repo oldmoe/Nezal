@@ -24,17 +24,6 @@ var Loader = {
 			var self = this
 			this.loadResource(toLoad,0)
 				
-			/*
-			toLoad.each(function(resource){
-		    new Ajax.Request( 'HTMLResources/'+resource, {method:'get',
-                      onSuccess: function(t){
-												console.log('here']
-												self.div.innerHTML = t.responseText
-												console.log(self.div.getElementByID('ok.png'))
-                      } 
-        });
-			})
-			*/
 	},
 	notify : function(win, images){
 		var div = win.document.getElementById('resources')
@@ -49,7 +38,7 @@ var Loader = {
 		}
 		if(this.index < this.toLoad.length-1){
 			this.index++
-			window.setTimeout(function(){$('iframe').src = "HTMLResources/"+Loader.toLoad[Loader.index]}, 500)
+			window.setTimeout(function(){$('iframe').src = "html_resources/"+Loader.toLoad[Loader.index]}, 500)
 		}
 		else{
 			Intro.show()
@@ -64,7 +53,7 @@ Loader.animations = {}
 Loader.resourceTypes = ['images', 'sounds','animations']
 Loader.index = 1
 Loader.toLoad = ["animations.html","challenges.html", "intro.html", "user.html", "background.html",  "game.html"]
-	
+
 
 
 //initLoadImages()

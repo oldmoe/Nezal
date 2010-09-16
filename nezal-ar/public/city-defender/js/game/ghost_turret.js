@@ -26,23 +26,18 @@ var ghostTurretFeatures = {
  			if(game.scene.selectedTower.rangeSprite){
 				game.scene.selectedTower.rangeSprite.visible = false
 			}
-			game.scene.selectedTower = null
 		}
 
-		var tower = game.config.towers.find(function(tower){
-		return tower == div.className
-		})
+		var tower = game.config.towers.find(function(tower){return tower == div.className})
 		
-		if(tower == null){ 
-			$('droppingGround').style.cursor = "default"
-			return;
-		}
+		if(tower == null){ 	return; }
 		var towerCategory = eval(tower)
+		game.scene.selectedTower = towerCategory.prototype
+		console.log(game.scene.selectedTower)
 		self.images = towerCategory.prototype.images
 		self.initImages = towerCategory.prototype.initImages
 		self.range = towerCategory.prototype.range
 		self.initImages()
-		$('towerInfo').innerHTML = game.scene.templates['towerInfo'].process({values: towerCategory.prototype, tower : towerCategory.prototype})
 		self.selected = true;
 		//$('droppingGround').style.cursor = "none"
 		$('droppingGround').observe("mouseenter", function(e){
@@ -78,7 +73,6 @@ var ghostTurretFeatures = {
 			 			if(game.scene.selectedTower.rangeSprite){
 							game.scene.selectedTower.rangeSprite.visible = false
 						}
-						game.scene.selectedTower = null
 					}
 					game.scene.selectedTower = Map.grid[self.xGrid][self.yGrid].tower
 					game.scene.selectedTower.rangeSprite.visible = true
@@ -92,6 +86,7 @@ var ghostTurretFeatures = {
 			self.isIn = false
 			this.stopObserving("mousemove").stopObserving("click")
 		}).addClassName('turret')
+		console.log(game.scene.selectedTower)
 
 	},
 	

@@ -8,24 +8,28 @@
 		Escaped Units : ${game.scene.escaped}
 		</textarea>
 		<textarea id='towerInfoTemplate' style="display:none">
-			<div class="diagram ${tower.cssClass}"></div>
+			<div class="diagram ${tower.cssClass}">
+				{if tower.rank > 0}
+					<img src="${Loader.images.game['rank_'+tower.rank+'.png'].src}" />				
+				{/if}			
+			</div>
 			<div id="towerData">
-			<h4>$${values.price}</h4>
+			<h4>Sell | $${tower.price}</h4>
 			<b>${tower.targets}<br/>${tower.facilities}</b>
 			<table>
 				<tr>
-					<td><div class='meter' style="width:${Math.round(65 * values.power / 300)}px;backgroundColor:blue">Power</div>
+					<td><div class='meter' style="width:${Math.round(65 * tower.power / 300)}px;backgroundColor:blue">Power</div>
 					<div class='meterExtension'></div>
 </td>
 				</tr>
 				<tr>
-					<td><div class='meter' style="width:${Math.round(65 * values.hp / 2500)}px;backgroundColor:blue">Shields</div></td>
+					<td><div class='meter' style="width:${Math.round(65 * tower.hp / 2500)}px;backgroundColor:blue">Shields</div></td>
 				</tr>
 				<tr>
-					<td><div class='meter' style="width:${Math.round(65 * values.rate / 1)}px;backgroundColor:blue">Rate</div></td>
+					<td><div class='meter' style="width:${Math.round(65 * tower.rate / 1)}px;backgroundColor:blue">Rate</div></td>
 				</tr>
 				<tr>
-					<td><div class='meter' style="width:${Math.round(65 * values.range / 6)}px;backgroundColor:blue">Range</div></td>
+					<td><div class='meter' style="width:${Math.round(65 * tower.range / 6)}px;backgroundColor:blue">Range</div></td>
 				</tr>
 			</table>
 			</div>

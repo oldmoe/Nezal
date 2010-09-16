@@ -45,9 +45,6 @@ var RocketLauncher = Class.create(Turret, {
 		if(this.fired){
 			this.fired = false
 			var power = this.power
-			if(this.rank > 0){
-				power *= this.ranks[this.rank - 1]
-			}
 			this.scene.rockets.push( new Rocket(this.x, this.y,this.scene,{parent : this, theta: this.cannonTheta, targetUnit : this.targetUnit, x : this.x, y : this.y, power: this.power}))
 		}
 		
@@ -85,9 +82,6 @@ var Patriot = Class.create(Turret, {
 			var rocketX = this.x
 			var rocketY = this.y + (this.firing_turn == 0 ? (5) : (-5))
 			var power = this.power
-			if(this.rank > 0){
-				power *= this.ranks[this.rank - 1]
-			}			
 			this.scene.rockets.push(new PatriotRocket(this.x, this.y,this.scene, {parent : this, theta: this.cannonTheta, targetUnit : this.targetUnit, x : rocketX, y : rocketY, power:this.power}))
 		}else{
 			this.cannonSprite.currentFrame = 0		

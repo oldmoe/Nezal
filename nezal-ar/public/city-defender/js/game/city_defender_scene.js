@@ -37,7 +37,6 @@ var CityDefenderScene = Class.create(Scene, {
 		this.splash = new Splash(this, {count: this.splashCount, type:'splash'})
 		this.hyper = new Hyper(this, {count: this.hyperCount, type:'hyper'})
 		this.templates = {}
-		this.selectedTurret = null
 		this.templates['towerInfo'] = TrimPath.parseTemplate($('towerInfoTemplate').value) 
 		this.templates['stats'] = TrimPath.parseTemplate($('statsTemplate').value) 
 	},
@@ -135,12 +134,11 @@ var CityDefenderScene = Class.create(Scene, {
 			$(weapon).innerHTML = self[weapon].count
 		})
 		$('waves').innerHTML = this.wave +'/'+this.wavesCount;
-		if(this.selectedTurret){
-			$('towerInfo').innerHTML = this.templates['towerInfo'].process({unit: this.selectedTurret})
+		if(this.selectedTower){
+			$('towerInfo').innerHTML = this.templates['towerInfo'].process({tower: this.selectedTower})
 		}
-		Upgrades.render();
 		var self = this
-		this.push(500,function(){self.renderData()})
+		this.push(500, function(){self.renderData()})
 	},
 	tick : function(){
 		this.objects = this.invokeTick(this.objects);
@@ -415,7 +413,6 @@ var CityDefenderScene = Class.create(Scene, {
 	score: 0,
 	moneyMultiplier: [1.2,1.1,1.05],
 	creepMultiplier: [1.05,1.1,1.15],
-	selectedTurret : null,
 	wave : 0,
 	sound : true,
 	wavesCount : 0,

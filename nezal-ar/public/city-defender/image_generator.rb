@@ -35,21 +35,21 @@ def generateResources
 	resourcesDirs.each do |resourceDir|
 		unless ['.', '..'].include? resourceDir
 			if File.directory? "images/#{resourceDir}"
-				wrap("HTMLResources/#{resourceDir}.html") do |images|
+				wrap("html_resources/#{resourceDir}.html") do |images|
 					generateImageHTMLFile("images/#{resourceDir}",images,resourceDir)
 				end				
 			end
 		end
 	end
 
-	wrap("HTMLResources/challenges.html") do |challenges|
+	wrap("html_resources/challenges.html") do |challenges|
 		generateImageHTMLFile "challenges",challenges,"challenges"
 	end	
 
-	wrap("HTMLResources/mp3.html") do |file|
+	wrap("html_resources/mp3.html") do |file|
 		generateSoundHTMLFile "sounds/sfx/mp3", file,"mpeg"
 	end	
-	wrap("HTMLResources/ogg.html") do |file|
+	wrap("html_resources/ogg.html") do |file|
 		generateSoundHTMLFile "sounds/sfx/ogg", file,"ogg"
 	end	
 end
