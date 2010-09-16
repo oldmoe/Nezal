@@ -31,6 +31,7 @@ def generateSoundHTMLFile resourceDir,fileToWrite,type
 end
 
 def generateResources 
+	Dir.mkdir 'html_resources' if !(File.directory? 'html_resources')
 	resourcesDirs = Dir.entries('images')
 	resourcesDirs.each do |resourceDir|
 		unless ['.', '..'].include? resourceDir
