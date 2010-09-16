@@ -46,7 +46,7 @@ var CreepBoom = Class.create(Animation, {
 	dx : 32,
 	dy : 32,
 	initImages : function(){
-		this.frames = Loader.animations.creepBoom
+		this.frames = Loader.animations.creep_boom
  	} 
 })
 
@@ -71,7 +71,7 @@ var HealAnimation = Class.create(Animation, {
 	dx : 22,
 	dy : 44,
 	initImages : function(){
-		this.frames = Loader.animations.heal
+		this.frames = Loader.animations.health_point
  	} 	
 })
 
@@ -94,7 +94,7 @@ var VerticalArrowAnimation = Class.create(Animation, {
 	dy : 0,
 	increment : 0,
 	initImages : function(){
-		this.frames = Loader.animations.verticalArrow
+		this.frames = Loader.animations.vertical_arrow
  	},
 	tick : function(){
 		if(this.increment == 60){this.increment = 0;this.y-=60}

@@ -48,7 +48,7 @@ var Sprite = Class.create({
 		if(this.rotation != 0){
 			ctx.rotate(this.rotation)
 		}
-		if(this.draw&&this.images[this.currentFrame])ctx.drawImage(this.images[this.currentFrame], -48+this.transitionX,-16+this.transitionY)
+		if(this.draw&&this.images[this.currentFrame])ctx.drawImage(this.images[this.currentFrame],-48+this.transitionX,-16+this.transitionY)
 		ctx.restore()
 	},
 	

@@ -12,6 +12,7 @@ var RocketLauncher = Class.create(Turret, {
 		$super(x,y,scene,extension)
 	},
 	createSprites : function(){
+		this.rangeSprite = new RangeSprite(this.range)
 		this.rocketSprite = new Sprite(this.images.rocket)
 		this.baseSprite = new Sprite(this.images.base)
 		this.cannonSprite = new Sprite(this.images.pad)
@@ -22,6 +23,7 @@ var RocketLauncher = Class.create(Turret, {
 		this.rankSprite.moveTo(this.x+50, this.y-5)
 		this.healthSprite.moveTo(this.x,this.y)
 		this.rocketSprite.moveTo(this.x,this.y)
+		this.rangeSprite.moveTo(this.x,this.y)
 	},
 	initImages : function(){
 		this.images ={}
@@ -130,11 +132,7 @@ var Rocket = Class.create(Unit, {
 				this.targetUnit.takeHit(this.power);
 				if(this.targetUnit.dead){
 					if(this.parent && !this.parent.dead){
-						this.parent.kills++
-						if(this.parent.kills == this.parent.rankKills[this.parent.rank] && this.parent.rank < this.parent.maxRank){
-							this.parent.rank += 1;
-							this.parent.kills = 0;
-						}			
+						this.scene.scenario.notify({name:"towerDestroyedCreep", method: false, unit:this.parent})
 					}
 				}
 			}

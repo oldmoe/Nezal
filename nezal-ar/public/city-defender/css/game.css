@@ -173,7 +173,6 @@ body{
 	font-size: 30;
 	text-align: center;
 	color: white;
-	cursor:default;
 	margin-top:2%;
 	cursor : pointer;
 	text-shadow: #000 2px 2px 1px;
@@ -351,25 +350,28 @@ body{
 	background-image: url('../images/background/mystry_button.png');			
 }
 #gameElements .towerInfo{
-	position:absolute;
-	top:360px;
-	left:641px;
-	width: 104px;
-	height: 112px;
-	background-image: url('../images/background/tower_info.png');		
-	font-family : verdana;
-	font-size : 10px;
-	padding: 4px;
-	padding-left: 8px;
+	-moz-border-radius:5px 5px 5px 5px;
+	-webkit-border-radius:5px 5px 5px 5px;
+	-o-border-radius:5px 5px 5px 5px;
+	border-radius:5px 5px 5px 5px;
+	background-color:black;
+	border:2px solid gray;
 	color:white;
+	font-family:verdana;
+	font-size:10px;
+	height:180px;
+	left:642px;
+	padding:4px 4px 4px 8px;
+	position:absolute;
+	top:354px;
+	width:98px;
 }
 
-#gameElements .towerInfo table{
-	padding:0px;
-	margin: 0px;
-	margin-top: 0px;
-	width:104px;
-	border:none;
+#gameElements .towerInfo table {
+	border:medium none;
+	margin:12px 0 0;
+	padding:0;
+	width:65px;
 }
 
 #gameElements .towerInfo th{
@@ -382,18 +384,35 @@ body{
 	line-height: 9px;
 	font-size : 10px;
 }
-#gameElements .towerInfo td{
-	border:none;
-	/*color: #fc0;*/
+#gameElements .towerInfo td {
+	border:1px solid gray;
+	color:white;
+	font-family:Helvetica;
+	font-size:12px;
 	font-weight:bold;
-	text-align :left;
-	padding: 0px;
-	padding-left:4px;
-	margin: 0px;
-	line-height: 9px;
-	width: 80%;
-	font-size : 10px;
+	line-height:12px;
+	margin:0;
+	text-align:left;
+	width:90px;
 }
+
+#gameElements .towerInfo td .meter{
+	background-color:blue;
+	padding-left:2px;
+	float:left;
+}
+
+#gameElements .towerInfo td .meterExtension{
+	background-color:red;
+	padding-left:2px;
+	float:left;
+	width:0px;
+}
+
+#gameElements .towerInfo:hover td .meterExtension{
+	width:10px;
+}
+
 #gameElements .towerInfo tr:nth-child(odd)    { color : #fc0; }
 
 #gameElements .towerInfo h4{
@@ -703,7 +722,7 @@ body{
 }
 
 canvas.turret{
-	cursor : none
+	/*cursor : none*/
 }
 
 #unitData {

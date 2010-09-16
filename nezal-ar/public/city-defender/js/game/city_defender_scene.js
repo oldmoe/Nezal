@@ -17,6 +17,7 @@ var CityDefenderScene = Class.create(Scene, {
 		this.animations = []
 		this.rockets = []
 		this.events= []
+		this.selectedTower = null
 		this.stats = {
 			towersCreated : 0,
 			towersDestroyed : 0,
@@ -71,9 +72,9 @@ var CityDefenderScene = Class.create(Scene, {
 		this.towerMutators.each(function(mutator){
 				mutator.action(turret)
 		})
-		if(!turret)var turret = new Turret(10, 4,this)	
 		this.turrets.push(turret)
 		Map.grid[turret.gridX][turret.gridY].tower = turret
+		this.basesLayer.attach(turret.rangeSprite)
 		this.basesLayer.attach(turret.baseSprite)
 		this.towerCannonLayer.attach(turret.cannonSprite)
 		this.towerHealthLayer.attach(turret.healthSprite)
@@ -82,6 +83,7 @@ var CityDefenderScene = Class.create(Scene, {
 		return this
 	},
 	addCreep : function(creep){
+		creep.price+=creep.price*0.5*this.waveNumber
 		this.scenario.notify({name:"creepEntered", method: false, unit:creep})
 		if(this.turrets[0])this.scenario.notify({name:"creepEnteredTower", method: false, unit:this.turrets[0]})
 		creep.hp = Math.round(creep.hp*Math.pow(this.creepMultiplier[this.config.level-1],this.waveNumber))

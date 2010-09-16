@@ -213,7 +213,7 @@ var Creep = Class.create(Unit, {
 		this.scene.towerHealthLayer.attach(anim)
 		this.scene.objects.push(anim)
 		this.destroySprites()
-		this.scene.money += this.price;
+		this.scene.money += Math.floor(this.price);
 		this.scene.stats.creepsDestroyed++
 		this.scene.score += this.maxHp
 	},

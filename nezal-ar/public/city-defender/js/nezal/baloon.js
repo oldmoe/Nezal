@@ -9,7 +9,7 @@ var Baloon = Class.create(Sprite,{
 	    var divIdName = 'baloon';
 	    this.div.setAttribute('id',divIdName);
 		this.div.style.position = 'absolute';
-		var img = Loader.images.game["baloon"+num+".png"].clone();
+		var img = Element.clone(Loader.images.game["baloon"+num+".png"]);
 		this.text = document.createElement("div"); 
 		this.text.style.position = "absolute"
 		this.text.style.fontSize = "11"
@@ -27,6 +27,7 @@ var Baloon = Class.create(Sprite,{
 		this.div.style.left = this.x
 		this.div.style.top = this.y
 	},
+
 	destroy : function ($super){
 		$super()
 		if(this.div)

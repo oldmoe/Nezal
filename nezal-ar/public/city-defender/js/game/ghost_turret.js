@@ -22,7 +22,13 @@ var ghostTurretFeatures = {
 	select : function(div){
 		$('droppingGround').stopObserving("mouseenter")
 		var self = GhostTurret
-		
+		if(game.scene.selectedTower){
+ 			if(game.scene.selectedTower.rangeSprite){
+				game.scene.selectedTower.rangeSprite.visible = false
+			}
+			game.scene.selectedTower = null
+		}
+
 		var tower = game.config.towers.find(function(tower){
 		return tower == div.className
 		})
@@ -38,7 +44,7 @@ var ghostTurretFeatures = {
 		self.initImages()
 		$('towerInfo').innerHTML = game.scene.templates['towerInfo'].process({values: towerCategory.prototype, tower : towerCategory.prototype})
 		self.selected = true;
-		$('droppingGround').style.cursor = "none"
+		//$('droppingGround').style.cursor = "none"
 		$('droppingGround').observe("mouseenter", function(e){
 			self.isIn = true
 			self.x = e.layerX
@@ -54,9 +60,9 @@ var ghostTurretFeatures = {
 				self.xGrid = Math.floor(e.layerX/32)
 				self.yGrid = Math.floor(e.layerY/32)
 				self.tower = towerCategory
-				if(!self.selected) return
 				self.validate();
-				if(self.valid){
+				if(self.valid&&self.selected){
+					self.selected = true
 					Sounds.play(Sounds.gameSounds.correct_tower)
 					var turret = new towerCategory(Math.floor(e.layerX/32), Math.floor(e.layerY/32),game.scene)
 					game.scene.towerMutators.each(function(mutator){
@@ -65,6 +71,18 @@ var ghostTurretFeatures = {
 					game.scene.addTurret(turret)
 					game.scene.stats.towersCreated++
 					game.scene.money -= towerCategory.prototype.price
+				}
+				else if (Map.grid[self.xGrid][self.yGrid].tower){
+					self.selected = false
+					if(game.scene.selectedTower){
+			 			if(game.scene.selectedTower.rangeSprite){
+							game.scene.selectedTower.rangeSprite.visible = false
+						}
+						game.scene.selectedTower = null
+					}
+					game.scene.selectedTower = Map.grid[self.xGrid][self.yGrid].tower
+					game.scene.selectedTower.rangeSprite.visible = true
+					this.removeClassName('turret')
 				}
 				else{
 						Sounds.play(Sounds.gameSounds.wrong_tower)

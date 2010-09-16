@@ -10,7 +10,6 @@
 <script src="js/base/effects.js" type="text/javascript"></script>
 <script src="js/base/template.js" type="text/javascript"></script>
 <script src="js/carousel.js" type="text/javascript"></script>
-<script src="js/game/image_loader.js" type="text/javascript"></script>
 <script src="js/game/configs/creep_config.js" type="text/javascript"></script>
 <script src="js/game/configs/tower_config.js" type="text/javascript"></script>
 <script src="js/game/configs/super_weapon_config.js" type="text/javascript"></script>
@@ -19,7 +18,9 @@
 <script src="js/game/intro/intro.js" type="text/javascript"></script>
 
 <body>
-
+<iframe id ="iframe" src="HTMLResources/animations.html" style="display : none;"> 
+</iframe>
+<div id ="images" ></div>
 <div id="game">
   <div id="intro">
     
@@ -100,6 +101,7 @@
 </div>
 
 </body>
+
 <script src="js/nezal/layer.js"></script>
 <script src="js/nezal/nezal.js"></script>
 <script src="js/nezal/reactor.js"></script>
@@ -107,13 +109,12 @@
 <script src="js/nezal/sprite.js"></script>
 <script src="js/nezal/baloon.js"></script>
 <script src="js/game/sounds.js"></script>
-
+<script src="js/game/loader.js"></script>
 <script src="js/game/healthSprite.js"></script>
 <script src="js/game/compositeUnitSprite.js"></script>
 <script src="js/game/city_defender_scene.js"></script>
 <script src="js/game/mapeasy1.js"></script>
 <script src="js/game/game.js"></script>
-<script src="js/game/sounds.js"></script>
 <script src="js/game/unit.js"></script>
 <script src="js/game/creep.js"></script>
 <script src="js/game/bullets.js"></script>
@@ -126,11 +127,16 @@
 <script src="js/game/upgrade.js"></script>
 <script src="js/game/tutorial.js"></script>
 <script src="js/game/scenario.js"></script>
+<script src="js/game/range_sprite.js"></script>
 
 <script>		
   FBConnect.init(function(){
                       Intro.initialize();
                 });
+	function register(win,store){
+		var images = win.document.getElementsByTagName('img')
+		Loader.notify(win, images,store)			
+	}
 </script>
 <link type="text/css" href="css/game.css" rel="stylesheet" />
 

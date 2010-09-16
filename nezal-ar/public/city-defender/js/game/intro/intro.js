@@ -126,7 +126,7 @@ var Intro = {
 
     initialize: function(){
         this.currentPage = -1;
-        this.loader = new Loader();
+        this.loader = Loader
         var callback = function(){
             Intro.enablePauseScreen();
             var images =  [];
@@ -160,15 +160,17 @@ var Intro = {
                  images2.push("creeps/" + CreepConfig[creep]['image']);
                  images2.push("creeps/" + CreepConfig[creep]['skeleton']);  
             }
-            Intro.loader.load( [{ images: images, path : Intro.images.path, store: 'intro'},
-                                { images : images2, path : Intro.images.path, store : 'intro' }],
-                                { onFinish : function() {
+//            Intro.loader.load( [{ images: images, path : Intro.images.path, store: 'intro'},
+  //                              { images : images2, path : Intro.images.path, store : 'intro' }],
+    //                            { onFinish : function() {
                                       Intro.retrieveTemplates();
-                                }});
+      //                          }});
         
         }
-        Intro.loader.load([{ images : Intro.images.inProgress, path : Intro.images.path, store: 'intro'}],
-                             { onFinish : callback } ); 
+        //Intro.loader.load([{ images : Intro.images.inProgress, path : Intro.images.path, store: 'intro'}],
+                            // { onFinish : callback } ); 
+					
+				callback()
     },
     
     retrieveTemplates: function(){
@@ -183,7 +185,7 @@ var Intro = {
                                       		  	          $("gameStart").innerHTML = t.responseText;
                                       		  	          Intro.templates['game'] = t.responseText;
                                           		  	      Intro.retrieveData( function() {
-                        				                                            initLoadImages(new Loader()); 
+                        				                                         //   initLoadImages(new Loader()); 
                                                                             Intro.next();
                                                         })
                                           } 
@@ -231,8 +233,9 @@ var Intro = {
         levelSelection : {
             index : 0,
             onSelect : function() {
-                Intro.loader.load( [ {images : Intro.images.levelSelection, path : Intro.images.path, store: 'intro'} ],
-                              { onFinish : Intro.show } );
+//                Intro.loader.load( [ {images : Intro.images.levelSelection, path : Intro.images.path, store: 'intro'} ],
+  //                            { onFinish :  } );
+								//Intro.show()
             }
         },
         campaign : {
@@ -253,12 +256,12 @@ var Intro = {
                                                                         else
                                                                             images2.push( "/" + mission['path'] + "/images/mission_inactive.png");
                                                                     });
-                                          Intro.loader.load( [{ images: images2, path :  Intro.campPath(), store: 'intro'}],
-                                                      { onFinish : function() {                                            
+               //                           Intro.loader.load( [{ images: images2, path :  Intro.campPath(), store: 'intro'}],
+                 //                                     { onFinish : function() {                                            
                                                             $('campaign').innerHTML = 
                                                                     Intro.templates.campaign[1].process({"camp":ChallengeSelector.campaignInfo}); 
                                                             Intro.show();
-                                                    } }); // End of load
+                   //                                 } }); // End of load
                                     }
                                   });
                               }
@@ -284,8 +287,8 @@ var Intro = {
                           ChallengeSelector.mission.creeps = ChallengeSelector.missionCreeps;
                           var images = [];
                           images.push( "../../" + Intro.campPath() + Intro.missionPath() + "/images/path.png");   
-                          Intro.loader.load( [{ images: images, path : Intro.images.path, store: 'intro'}],
-                                        { onFinish : function() {
+                       //   Intro.loader.load( [{ images: images, path : Intro.images.path, store: 'intro'}],
+                         //               { onFinish : function() {
                                                  $('mission').innerHTML = Intro.templates.mission[1].process({ 
                                                                         "city" : ChallengeSelector.mission,
                                                                         "path" : Intro.campPath() + Intro.missionPath(),
@@ -293,7 +296,7 @@ var Intro = {
                                                  Intro.creepsCarousel = new Carousel("creeps-scroll");
                                                  Intro.creepsCarousel.displayCount = 4;
                                                  Intro.show();
-                                            } });
+                                   //         } });
           	          }
 	                });
             },
@@ -665,13 +668,15 @@ var Intro = {
         var callback = function() {
                                     if(Intro.nextPageIndex == Intro.sequence.length )
                                         Intro.finish();
-                                    else
+                                    else{
                                         Intro.pages[Intro.sequence[Intro.currentPage + 1]].onSelect();
+																				}
                                 }
         if(Intro.dirty)
             Intro.saveUserSetup( callback );
-        else
+        else{
             callback();
+				}
 	  },
 	  
 	  previous: function(current){
@@ -717,6 +722,7 @@ var Intro = {
             Intro.saveUserSetup( callback );
         else
             callback();
+				onFinish()
 	  }
 	
 }

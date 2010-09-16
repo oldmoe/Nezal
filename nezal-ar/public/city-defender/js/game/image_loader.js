@@ -167,18 +167,7 @@ function imageNumbers(length){
 	return arr
 
 }
-function onFinish(){
-	$('gameElements').style.visibility = 'visible'
-	$('canvasContainer').style.visibility = 'visible'
-	window.setTimeout(function(){
-		Effect.Fade('splashScreen')
-		$('gameElements').show();
-		$('canvasContainer').show();
-		$('static').show();
-		$('waitScreen').hide()
-		Effect.Fade('static',{duration: 2.0})
-	},1000)
-}
+
 function loadGameImages(loader){
 	try{
 		loader.load([{images : imageNames, store :'game'}, {animations: imageNumbers(16), path: 'images/animations/health_point/', store: 'heal'},

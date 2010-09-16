@@ -10,28 +10,22 @@
 		<textarea id='towerInfoTemplate' style="display:none">
 			<div class="diagram ${tower.cssClass}"></div>
 			<div id="towerData">
-			<h4>${tower.name}</h4>
+			<h4>$${values.price}</h4>
 			<b>${tower.targets}<br/>${tower.facilities}</b>
 			<table>
 				<tr>
-					<th>Power</th>
-					<td>: ${values.power}</td>
+					<td><div class='meter' style="width:${Math.round(65 * values.power / 300)}px;backgroundColor:blue">Power</div>
+					<div class='meterExtension'></div>
+</td>
 				</tr>
 				<tr>
-					<th>HP</th>
-					<td>: ${values.hp}</td>
+					<td><div class='meter' style="width:${Math.round(65 * values.hp / 2500)}px;backgroundColor:blue">Shields</div></td>
 				</tr>
 				<tr>
-					<th>Rate</th>
-					<td>: ${values.rate}</td>
+					<td><div class='meter' style="width:${Math.round(65 * values.rate / 1)}px;backgroundColor:blue">Rate</div></td>
 				</tr>
 				<tr>
-					<th>Range</th>
-					<td>: ${values.range}</td>
-				</tr>
-				<tr>
-					<th>Price</th>
-					<td>: $${values.price}</td>
+					<td><div class='meter' style="width:${Math.round(65 * values.range / 6)}px;backgroundColor:blue">Range</div></td>
 				</tr>
 			</table>
 			</div>
@@ -83,19 +77,6 @@
 				<div class="start">	<div class = "startText"> </div></div>
 				<div class="towers">
 				
-				</div>
-				<div class="upgrades">
-					<div class="upgradesBar">
-						<div id="nextUpgrade" class="upgrade next">
-							<div id="upgradePrice"></div>						
-						</div>
-						<div id="currentUpgrade" class="upgrade current">
-							<div class="purchased"></div>
-						</div>
-						<div class="arrow"></div>
-					</div>
-					<div class="upgradeItems">
-					</div>
 				</div>
 				<div id="towerInfo" class="towerInfo">
 					<p>
