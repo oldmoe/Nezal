@@ -283,8 +283,8 @@ var Intro = {
                           ChallengeSelector.mission = JSON.parse(t.responseText);
                           ChallengeSelector.mission.creeps = ChallengeSelector.missionCreeps;
                           var images = [];
-                          images.push( "../../" + Intro.campPath() + Intro.missionPath() + "/images/path.png");   
-                          Intro.loader.load( [{ images: images, path : Intro.images.path, store: 'intro'}],
+                          images.push( "/images/path.png");   
+                          Intro.loader.load( [{ images: images, path : Intro.campPath() + Intro.missionPath(), store: 'intro'}],
                                         { onFinish : function() {
                                                  $('mission').innerHTML = Intro.templates.mission[1].process({ 
                                                                         "city" : ChallengeSelector.mission,
