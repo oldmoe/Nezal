@@ -9,3 +9,4 @@ var Config = {
 	waves : [[{category : "Tank",count : "10"}],[{category : "Tank",count : "10"}],[{category : "Plane",count : "10"}],[{category : "Tank",count : "10"}]],
 	rank : "PVT"
 }
+

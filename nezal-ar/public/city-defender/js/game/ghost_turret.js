@@ -41,24 +41,33 @@ var ghostTurretFeatures = {
 		//$('droppingGround').style.cursor = "none"
 		$('droppingGround').observe("mouseenter", function(e){
 			self.isIn = true
-			self.x = e.layerX
-			self.y = e.layerY					
+			var x=0,y=0
+			if(e.layerX){x = e.layerX;y = e.layerY}					//other than opera
+			else{x=e.x;y=e.y}
+			self.x = x
+			self.y = y
 			this.observe("mousemove", function(e){
-				self.x = e.layerX
-				self.y = e.layerY
-				self.xGrid = Math.floor(e.layerX/32)
-				self.yGrid = Math.floor(e.layerY/32)
+				var x=0,y=0
+				if(e.layerX){x = e.layerX;y = e.layerY}					//other than opera
+				else{x=e.x;y=e.y}										//opera
+				self.x = x
+				self.y = y
+				self.xGrid = Math.floor(x/32)
+				self.yGrid = Math.floor(y/32)
 				self.tower = towerCategory
 				self.validate()
 			}).observe("click", function(e){
-				self.xGrid = Math.floor(e.layerX/32)
-				self.yGrid = Math.floor(e.layerY/32)
+				var x=0,y=0
+				if(e.layerX){x = e.layerX;y = e.layerY}					//other than opera
+				else{x=e.x;y=e.y}										//opera
+				self.xGrid = Math.floor(x/32)
+				self.yGrid = Math.floor(y/32)
 				self.tower = towerCategory
 				self.validate();
 				if(self.valid&&self.selected){
 					self.selected = true
 					Sounds.play(Sounds.gameSounds.correct_tower)
-					var turret = new towerCategory(Math.floor(e.layerX/32), Math.floor(e.layerY/32),game.scene)
+					var turret = new towerCategory(Math.floor(x/32), Math.floor(y/32),game.scene)
 					game.scene.towerMutators.each(function(mutator){
 						mutator.action(turret)
 					})

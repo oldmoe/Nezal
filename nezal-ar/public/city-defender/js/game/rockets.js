@@ -136,6 +136,8 @@ var Rocket = Class.create(Unit, {
 				this.targetUnit.takeHit(this.power);
 				if(this.targetUnit.dead){
 					if(this.parent && !this.parent.dead){
+						var moneyAnim = new MoneyAnimation(this.targetUnit.x-10,this.targetUnit.y-5,Math.round(this.targetUnit.price))
+						this.scene.objects.push(moneyAnim)
 						this.scene.scenario.notify({name:"towerDestroyedCreep", method: false, unit:this.parent})
 					}
 				}

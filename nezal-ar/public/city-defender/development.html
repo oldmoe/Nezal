@@ -109,7 +109,7 @@
 <script src="js/game/sounds.js"></script>
 <script src="js/game/loader.js"></script>
 <script src="js/game/healthSprite.js"></script>
-<script src="js/game/compositeUnitSprite.js"></script>
+<script src="js/game/composite_unit_sprite.js"></script>
 <script src="js/game/city_defender_scene.js"></script>
 <script src="js/game/mapeasy1.js"></script>
 <script src="js/game/game.js"></script>
@@ -129,7 +129,6 @@
 <script src="js/game/config.js"></script>
 <script>		
 
-	$('iframe').src = "html_resources/animations.html"
 	function register(win){
 		var resources = win.document.getElementsByTagName('img')
 		if(resources.length == 0){
@@ -137,11 +136,12 @@
 		}
 		Loader.notify(win, resources)			
 	}
-  new Ajax.Request(  "templates/game.tpl", {method:'get',
-                                    onSuccess: function(t){
-                                		  	          $("gameStart").innerHTML = t.responseText;
-																									$("gameStart").show()                      
-                                    } 
+		$('iframe').src = "html_resources/animations.html"
+		new Ajax.Request(  "templates/game.tpl", {method:'get',
+			onSuccess: function(t){
+				$("gameStart").innerHTML = t.responseText;
+				$("gameStart").show()                      
+			} 
   });
 	development = "true"
 </script>

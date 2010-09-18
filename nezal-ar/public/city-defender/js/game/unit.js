@@ -53,10 +53,6 @@ var Unit = Class.create({
 	takeHit: function(power){
 		if(this.dead) return
 		this.hp -= power
-		if(!this.scene.firstHit){
-			this.scene.firstHit = true
-			this.scene.scenario.notify({name:"firstHit",unit:null})
-		}
 		if(this.hp <= 0 ){
 			var anim = new CreepBoom(this.x, this.y)
 			game.scene.rankLayer.attach(anim)

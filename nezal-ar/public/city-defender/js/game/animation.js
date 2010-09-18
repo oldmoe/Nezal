@@ -115,3 +115,34 @@ var WeakAnimation = Class.create(Animation, {
 		})
 	},
 })
+var MoneyAnimation = Class.create(Animation, {
+	increment : 0,
+	initialize: function($super,x,y,money){
+		this.money = money
+		$super(x,y)
+	},
+
+	initImages : function(){
+		this.parent = $('gameElements');
+	    this.div = document.createElement('div');
+		this.div.innerHTML = "+"+this.money
+	    var divIdName = 'moneyAnimation';
+	    this.div.setAttribute('id',divIdName);
+		this.div.style.position = "absolute"
+		this.div.style.top = this.y
+		this.div.style.left = this.x
+		this.parent.appendChild(this.div);
+		
+	},
+	tick : function(){
+		if(this.increment == 30)this.finish()
+			this.increment +=3
+			this.y-=3
+			this.div.style.top = this.y
+	},
+	finish : function($super){
+		$super()
+		this.parent.removeChild(this.div)
+	}
+
+})
