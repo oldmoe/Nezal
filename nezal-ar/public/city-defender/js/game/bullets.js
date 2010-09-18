@@ -3,32 +3,51 @@ var Turret = Class.create(Unit, {
 	cannonTheta : 0,
 	rank : 0,
 	maxRank : 3,
-	kills : 0,
-	ranks : [1.1, 1.3, 1.7],
-	rankKills : [4, 8, 16],
 	fireSound : Sounds.turret.fire,
 	canHitFlying: true,
 	canHitGround: true,
-	name : 'C1B',
+	name : 'Belcher',
 	targets : 'Air &<br/>Ground',
 	facilities : 'Fires Bullets',
 	cssClass : 'tower',
-	hp:500,maxHp : 500, power:10, rate:0.2, price: 15, range: 2,
+	hp:500, maxHp : 500, power:10, rate:0.2, price: 15, range: 2,
+	upgradeValues : ['maxHp', 'power', 'rate', 'range'],
+	upgrades : [{maxHp: 1100, power:18, price: 3},
+							{maxHp: 1300, power:22, price: 8,range: 3},
+							{maxHp: 1600, power:26, rate: 0.3, price: 21,range: 4}],
 	initialize: function($super,x,y,scene,extension){
 		$super(x,y,scene,extension)
 		this.initImages()
 		this.createSprites()
-		
 	},
+	
+	upgrade : function(){
+		if(this.rank == this.maxRank) return		
+		var upgrade = this.upgrades[this.rank] // this is the next rank (base 1 array)
+		if(this.scene.money < upgrade.price) return false
+		this.rank += 1
+		var self = this
+		var oldHp = this.maxHp
+		this.upgradeValues.each(function(v){if(upgrade[v])self[v] = upgrade[v]})
+		this.price += upgrade.price
+		this.hp *= this.maxHp / oldHp 
+		this.scene.money -= upgrade.price
+		return this
+	},
+
 	createSprites : function(){
+		this.rangeSprite = new RangeSprite(this.range)
 		this.baseSprite = new Sprite(this.images.base)
 		this.cannonSprite = new Sprite(this.images.cannon.concat(this.images.fire))
 		this.rankSprite = new Sprite(this.images.ranks)
 		this.healthSprite = new HealthSprite(this.hp,this.maxHp)
 		this.baseSprite.moveTo(this.x,this.y)
+		this.baseSprite.moveTo(this.x,this.y)
 		this.cannonSprite.moveTo(this.x,this.y)
 		this.rankSprite.moveTo(this.x+50, this.y-5)
 		this.healthSprite.moveTo(this.x,this.y)
+		this.rangeSprite.moveTo(this.x,this.y)
+		
 	},
 	initImages : function(){
 		this.images = {}
@@ -53,6 +72,7 @@ var Turret = Class.create(Unit, {
 		this.healthSprite.maxHp = this.maxHp
 		this.rankSprite.currentFrame = this.rank
 		if(this.baloon)this.baloon.moveTo(this.x,this.y-70)
+		this.rangeSprite.range = this.range
 	},
 	changeFireState: function(){
 		if(this.fired){
@@ -96,17 +116,11 @@ var Turret = Class.create(Unit, {
 	fire : function(target){
 		Sounds.play(this.fireSound)
 		var power = this.power
-		if(this.rank > 0){
-			power *= this.ranks[this.rank - 1]
-		}
 		target.takeHit(power)
 		if(target.dead){
-			this.kills += 1
+			var moneyAnim = new MoneyAnimation(target.x-10,target.y-5,Math.round(target.price))
+			this.scene.objects.push(moneyAnim)
 			this.scene.scenario.notify({name:"towerDestroyedCreep", method: false, unit:this})
-			if(this.kills == this.rankKills[this.rank] && this.rank < this.maxRank){
-				this.rank += 1;
-				this.kills = 0;
-			}			
 		}
 	},
 	die: function(){
@@ -120,16 +134,21 @@ var Turret = Class.create(Unit, {
 		this.cannonSprite.destroy()
 		this.healthSprite.destroy()
 		this.rankSprite.destroy()
+		if(this.scene.selectedTower.gridX == this.gridX && this.scene.selectedTower.gridY == this.gridY)this.scene.selectedTower = null
 		if(this.baloon)this.baloon.destroy()
+		this.rangeSprite.destroy()
 	}
 })
 
 var DoubleTurret = Class.create(Turret, {
-	name : 'C2B',
+	name : 'Reaper',
 	cssClass : 'doubleTower',
-	fireSound : Sounds.doubleTurret.fire,
+	fireSound : Sounds.turret.fire,
 	firing_turn : 0,
 	hp:900, power:15, rate:0.4, price: 30, range: 2,
+	upgrades : [{maxHp: 1550, power:18, price: 5},
+							{maxHp: 1875, power:22, price: 10,rate :0.5},
+							{maxHp: 1600, power:26, rate: 0.6, price: 30,range: 3}],
 	initialize: function($super,x,y,scene,extension){
 		$super(x,y,scene,extension)
 	},

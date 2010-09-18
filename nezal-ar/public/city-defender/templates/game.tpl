@@ -8,34 +8,52 @@
 		Escaped Units : ${game.scene.escaped}
 		</textarea>
 		<textarea id='towerInfoTemplate' style="display:none">
-			<div class="diagram ${tower.cssClass}"></div>
+			{if tower!=null}
+			<div class="diagram ${tower.cssClass}">
+				{if tower.rank > 0}
+					<img src="${Loader.images.game['rank_'+tower.rank+'.png'].src}" />				
+				{/if}			
+			</div>
 			<div id="towerData">
-			<h4>${tower.name}</h4>
-			<b>${tower.targets}<br/>${tower.facilities}</b>
+			<h4>{if tower.healthSprite !=null }
+					<div id = "sellTower" onclick = "game.scene.sellSelectedTower()">sell |$${Math.round(tower.price*0.75*tower.hp/tower.maxHp)}</div>
+					{else}
+						$${tower.price}
+					{/if}
+			</h4>
+			<b>${tower.name}</b>
 			<table>
 				<tr>
-					<th>Power</th>
-					<td>: ${values.power}</td>
+					<td><div class='meter' id = 'powerMeter' style="width:${Math.round(65 * tower.power / 420)}px;backgroundColor:blue">Power</div>
+					<div class='meterExtension'></div>
+				</td>
 				</tr>
 				<tr>
-					<th>HP</th>
-					<td>: ${values.hp}</td>
+					<td><div class='meter' id = 'shieldsMeter' style="width:${Math.round(65 * tower.hp / 3000)}px;backgroundColor:blue">Shields</div></td>
 				</tr>
 				<tr>
-					<th>Rate</th>
-					<td>: ${values.rate}</td>
+					<td><div class='meter' id = 'rateMeter' style="width:${Math.round(65 * tower.rate / 1)}px;backgroundColor:blue">Rate</div></td>
 				</tr>
 				<tr>
-					<th>Range</th>
-					<td>: ${values.range}</td>
-				</tr>
-				<tr>
-					<th>Price</th>
-					<td>: $${values.price}</td>
+					<td><div class='meter' id = 'rangeMeter' style="width:${Math.round(65 * tower.range / 6)}px;backgroundColor:blue">Range</div></td>
 				</tr>
 			</table>
+				{if tower.healthSprite !=null }
+					{if tower.rank < tower.maxRank}
+					<div id = "upgradeTower" onclick = "game.scene.upgradeSelectedTower()">upgrade to 
+						<img src="${Loader.images.game['rank_'+(tower.rank+1)+'.png'].src}" /></br>	 $${tower.upgrades[tower.rank].price}			
+					</div>
+					{else}
+					<div id = "upgradeTower">
+						locked
+					</div>
+					{/if}
+				{/if}
 			</div>
 		</table>
+		{else}
+				select tower to view tower info
+		{/if}
 		</textarea>
 		<div id="gameContainer">
 			<div id="modalWindow" style="display:none">
@@ -83,19 +101,6 @@
 				<div class="start">	<div class = "startText"> </div></div>
 				<div class="towers">
 				
-				</div>
-				<div class="upgrades">
-					<div class="upgradesBar">
-						<div id="nextUpgrade" class="upgrade next">
-							<div id="upgradePrice"></div>						
-						</div>
-						<div id="currentUpgrade" class="upgrade current">
-							<div class="purchased"></div>
-						</div>
-						<div class="arrow"></div>
-					</div>
-					<div class="upgradeItems">
-					</div>
 				</div>
 				<div id="towerInfo" class="towerInfo">
 					<p>

@@ -17,8 +17,7 @@ var CityDefenderScene = Class.create(Scene, {
 		this.animations = []
 		this.rockets = []
 		this.events= []
-		this.creepMutators = []
-		this.towerMutators = []
+		this.selectedTower = null
 		this.stats = {
 			towersCreated : 0,
 			towersDestroyed : 0,
@@ -38,7 +37,6 @@ var CityDefenderScene = Class.create(Scene, {
 		this.splash = new Splash(this, {count: this.splashCount, type:'splash'})
 		this.hyper = new Hyper(this, {count: this.hyperCount, type:'hyper'})
 		this.templates = {}
-		this.selectedTurret = null
 		this.templates['towerInfo'] = TrimPath.parseTemplate($('towerInfoTemplate').value) 
 		this.templates['stats'] = TrimPath.parseTemplate($('statsTemplate').value) 
 	},
@@ -49,16 +47,19 @@ var CityDefenderScene = Class.create(Scene, {
 		this.creepsLayer.clear = true
 		this.layers.push(this.creepsLayer);
 		this.basesLayer = new Layer(this.baseCtx)
-		this.basesLayer.clear = true
+		this.rangesLayer = new Layer(this.baseCtx)
+		this.rangesLayer.clear = true
 		this.towerCannonLayer = new Layer(this.upperCtx)
 		this.rocketsLayer = new Layer(this.upperCtx)
 		this.towerHealthLayer = new Layer(this.upperCtx)
 		this.rankLayer = new Layer(this.upperCtx)
+		this.layers.push(this.rangesLayer)
 		this.layers.push(this.basesLayer)
 		this.layers.push(this.towerCannonLayer)
 		this.layers.push(this.towerHealthLayer)
 		this.layers.push(this.rocketsLayer)
 		this.layers.push(this.rankLayer)
+	
 		var self = this
 		this.config.superWeapons.each(function(weapon){
 			weapon = weapon.toLowerCase()
@@ -70,9 +71,12 @@ var CityDefenderScene = Class.create(Scene, {
 		return this
 	},
 	addTurret : function(turret){
-		if(!turret)var turret = new Turret(10, 4,this)	
+		this.towerMutators.each(function(mutator){
+				mutator.action(turret)
+		})
 		this.turrets.push(turret)
 		Map.grid[turret.gridX][turret.gridY].tower = turret
+		this.rangesLayer.attach(turret.rangeSprite)
 		this.basesLayer.attach(turret.baseSprite)
 		this.towerCannonLayer.attach(turret.cannonSprite)
 		this.towerHealthLayer.attach(turret.healthSprite)
@@ -81,6 +85,7 @@ var CityDefenderScene = Class.create(Scene, {
 		return this
 	},
 	addCreep : function(creep){
+		creep.price+=creep.price*0.5*this.waveNumber
 		this.scenario.notify({name:"creepEntered", method: false, unit:creep})
 		if(this.turrets[0])this.scenario.notify({name:"creepEnteredTower", method: false, unit:this.turrets[0]})
 		creep.hp = Math.round(creep.hp*Math.pow(this.creepMultiplier[this.config.level-1],this.waveNumber))
@@ -132,12 +137,13 @@ var CityDefenderScene = Class.create(Scene, {
 			$(weapon).innerHTML = self[weapon].count
 		})
 		$('waves').innerHTML = this.wave +'/'+this.wavesCount;
-		if(this.selectedTurret){
-			$('towerInfo').innerHTML = this.templates['towerInfo'].process({unit: this.selectedTurret})
-		}
-		Upgrades.render();
+			$('towerInfo').show()
+			$('towerInfo').innerHTML = this.templates['towerInfo'].process({tower: this.selectedTower})
+			if(this.selectedTower && this.selectedTower.healthSprite){
+				$('upgradeTower').observe('mouseenter',function(){self.updateMeters(self.selectedTower)}).observe('mouseover',function(){self.updateMeters(self.selectedTower)})
+			}
 		var self = this
-		this.push(500,function(){self.renderData()})
+		this.push(500, function(){self.renderData()})
 	},
 	tick : function(){
 		this.objects = this.invokeTick(this.objects);
@@ -241,8 +247,10 @@ var CityDefenderScene = Class.create(Scene, {
 				if(score>0)
 				this.score+=score
 				this.startTime = new Date()
-				this.push(50, function(){this.sendWave(this.config.waves.pop())},this)
+				this.push(2000, function(){this.sendWave(this.config.waves.pop())},this)
+				var oldMoney = this.money
 				this.money=Math.round(this.money*this.moneyMultiplier[this.config.level-1])
+				if((this.money-oldMoney)>0) this.objects.push(new MoneyAnimation(695,100,this.money-oldMoney))
 				this.wavePending = true
 			}
 		}	
@@ -255,37 +263,37 @@ var CityDefenderScene = Class.create(Scene, {
 		game.scene.running = false
 		$("result").addClassName(state);
 		if(state == "win"){
-								function win(){	
-										 $('pauseWindow').style.zIndex = 299
-										 $('pauseWindow').hide()	
-	  			    			 $('popup').hide()
-										$('loseDiv').hide()
-										$('winDiv').show()
-										new Effect.Appear("static")
-										Sounds.play(Sounds.gameSounds.wash)
-										$('droppingGround').addClassName('off')
-										new Effect.SwitchOff('static');
-										new Effect.Appear("result", {delay : 3.0})
-										game.scene.push(3000,function(){Sounds.play(Sounds.gameSounds[state])})
-										game.scene.push(3000,function(){self.displayStats()})
-									}
-								if(game.scene.rank!=Config.rank){
-									Sounds.play(Sounds.gameSounds.rank_promotion)
-								 $('pauseWindow').style.zIndex = 302
-								 $('pauseWindow').show()	
-			    			 $('popup').show()
-								  $$('#popup #congratsContent').first().innerHTML = "Congratulations"
-			  					$$('#popup #promotedContent').first().innerHTML = "You have been promoted, you are now a "+Config.rank
-									game.scene.rank = Config.rank
-									var img = document.createElement("IMG");
-									img.src = "images/intro/ranks/" + Config.rank + ".png";
-									$$('#popup #rankImg').first().appendChild(img)
-									$$('#rank img')[0].src = "images/intro/ranks/" + Config.rank + ".png";
-									$('popupClose').observe('click',win)
-									$('popupOk').observe('click',win)
-								}else{
-									win()
-								}
+				function win(){	
+						 $('pauseWindow').style.zIndex = 299
+						 $('pauseWindow').hide()	
+				 $('popup').hide()
+						$('loseDiv').hide()
+						$('winDiv').show()
+						new Effect.Appear("static")
+						Sounds.play(Sounds.gameSounds.wash)
+						$('droppingGround').addClassName('off')
+						new Effect.SwitchOff('static');
+						new Effect.Appear("result", {delay : 3.0})
+						game.scene.push(3000,function(){Sounds.play(Sounds.gameSounds[state])})
+						game.scene.push(3000,function(){self.displayStats()})
+					}
+				if(game.scene.rank!=Config.rank){
+					Sounds.play(Sounds.gameSounds.rank_promotion)
+				 $('pauseWindow').style.zIndex = 302
+				 $('pauseWindow').show()	
+			 $('popup').show()
+				  $$('#popup #congratsContent').first().innerHTML = "Congratulations"
+				$$('#popup #promotedContent').first().innerHTML = "You have been promoted, you are now a "+Config.rank
+					game.scene.rank = Config.rank
+					var img = document.createElement("IMG");
+					img.src = "images/intro/ranks/" + Config.rank + ".png";
+					$$('#popup #rankImg').first().appendChild(img)
+					$$('#rank img')[0].src = "images/intro/ranks/" + Config.rank + ".png";
+					$('popupClose').observe('click',win)
+					$('popupOk').observe('click',win)
+				}else{
+					win()
+				}
 		}
 		else{
 			$('winDiv').hide()
@@ -391,14 +399,39 @@ var CityDefenderScene = Class.create(Scene, {
 	},
 	uploadScore : function(win,callback){
 		// Upload Score code goes here
-    var currRank = Config.rank;
-		onSuccess = function() {
-	      //Here we make the rank 
-        $$('#rank img')[0].src = "images/intro/ranks/" + Config.rank + ".png";
-        $$('.rankName')[0].innerHTML = Config.rank;
-        callback();
-    }
-    Intro.sendScore(this.score, win, onSuccess);
+		if(development)callback()
+		else{
+		  var currRank = Config.rank;
+			onSuccess = function() {
+			    //Here we make the rank 
+		      $$('#rank img')[0].src = "images/intro/ranks/" + Config.rank + ".png";
+		      $$('.rankName')[0].innerHTML = Config.rank;
+		      callback();
+		  }
+		  Intro.sendScore(this.score, win, onSuccess);
+		}
+	},
+	sellSelectedTower: function(){
+		this.money +=Math.round(this.selectedTower.price*0.75*this.selectedTower.hp/this.selectedTower.maxHp)
+		Map.grid[this.selectedTower.gridX][this.selectedTower.gridY].tower = null
+		this.selectedTower.destroySprites()
+		this.selectedTower = null
+	},
+	upgradeSelectedTower: function(){
+			
+		this.selectedTower.upgrade()
+	},
+	updateMeters : function(tower){
+		if(tower.upgrades[tower.rank]){
+			if(tower.upgrades[tower.rank].power)
+			$('powerMeter').style.borderRight = (tower.upgrades[tower.rank].power-tower.power)*65/450+"px solid red"
+			if(tower.upgrades[tower.rank].rate)
+			$('rateMeter').style.borderRight = (tower.upgrades[tower.rank].rate-tower.rate)*65/1+"px solid red"
+			if(tower.upgrades[tower.rank].range)
+			$('rangeMeter').style.borderRight = (tower.upgrades[tower.rank].range-tower.range)*65/6+"px solid red"
+			if(tower.upgrades[tower.rank].maxHp)
+			$('shieldsMeter').style.borderRight = (tower.upgrades[tower.rank].maxHp-tower.maxHp)*65/3100+"px solid red"
+		}
 	},
 	waitingCreeps : 0,
 	wavePending : false,
@@ -412,7 +445,6 @@ var CityDefenderScene = Class.create(Scene, {
 	score: 0,
 	moneyMultiplier: [1.2,1.1,1.05],
 	creepMultiplier: [1.05,1.1,1.15],
-	selectedTurret : null,
 	wave : 0,
 	sound : true,
 	wavesCount : 0,

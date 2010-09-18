@@ -20,14 +20,14 @@ var Game = Class.create({
 		})
 		GhostTurret = new Turret(0, 0,this.scene, ghostTurretFeatures)
 		$$('.startText').first().innerHTML = T.start
-		Intro.userData.newbie = false
-		if(Intro.userData.newbie){
-			$('modalWindow').show()
-			this.tutorial = new Tutorial(this.scene,this.tutorialCtx)
-		}
-		else{
+		//Intro.userData.newbie = false
+		//if(Intro.userData.newbie){
+		//	$('modalWindow').show()
+		//	this.tutorial = new Tutorial(this.scene,this.tutorialCtx)
+		//}
+		//else{
 			this.registerHandlers();
-		}
+		//}
 		if(Config.map)Map.bgGrid = Config.map
 		if(Config.mapEntry)Map.entry = Config.mapEntry
 		this.scene.start();
@@ -88,20 +88,7 @@ var Game = Class.create({
 		$('pauseWindow').style.position = "absolute"
 		$('pauseWindow').style.backgroundColor = "black";
 		$('pauseWindow').style.opacity =0.5;
-		Config.upgrades.each(function(upgrade){
-			upgrade = upgrade.toLowerCase()
-			var div = document.createElement("div");
-			div.style.cursor = "pointer"
-			div.addClassName('upgradeItem')
-			div.addClassName(upgrade)
-			div.setAttribute('id',upgrade);
-			$$(".upgradeItems").first().appendChild(div)
-		})
-		for(var i = 0;i<8-Config.upgrades.length;i++){
-			var div = document.createElement("div");
-			div.addClassName('upgradeItem')
-			$$(".upgradeItems").first().appendChild(div)
-		}
+
 		$$('.start').first().appendChild(Loader.images.background['start.png'])
 
 		$('gameElements').appendChild(Loader.images.background['l_shape.png'])
@@ -109,7 +96,8 @@ var Game = Class.create({
 		img7.src=Config.mapImage
 		$('canvasContainer').appendChild(img7)
 		Config.towers.each(function(turret){ 
-			$$('.'+turret).first().appendChild(Loader.images.background[turret+'_button.png'])
+			$$('.'+turret).first().appendChild(Loader.images.background[turret.toLowerCase()+'_button.png'])
+			
 		})
 	
 		var img8 = document.createElement("IMG");
@@ -141,7 +129,12 @@ var Game = Class.create({
 		var self = this
 		$$('#gameElements .upgrades .upgrade.next').invoke('observe', 'click', Upgrades.upgrade)	
 		$$('#gameElements .upgrades .upgradeItem').invoke('observe', 'click', Upgrades.select)			
-		$$('.towers div').invoke('observe','click', function(){Sounds.play(Sounds.gameSounds.click);GhostTurret.select(this)})
+		$$('.towers div').invoke('observe','click', function(){
+			Sounds.play(Sounds.gameSounds.click);GhostTurret.select(this)
+		})
+		//$('sellTower').observe('click',function(){
+		//	self.scene.sellSelectedTower()
+		//})		
 		$$('#gameElements .start').first().observe('click', function(){self.scene.startAttack()})
 		$('playAgain').observe('click', game.reset)
 		$('exit').observe('click', game.exit)
@@ -203,5 +196,15 @@ function city_defender_start(){
 		Upgrades.selectDefault();
 		
 }
-function movement(e){
+function onFinish(){
+	$('gameElements').style.visibility = 'visible'
+	$('canvasContainer').style.visibility = 'visible'
+	window.setTimeout(function(){
+		Effect.Fade('splashScreen')
+		$('gameElements').show();
+		$('canvasContainer').show();
+		$('static').show();
+		$('waitScreen').hide()
+		Effect.Fade('static',{duration: 2.0})
+	},1000)
 }

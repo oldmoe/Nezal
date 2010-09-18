@@ -62,6 +62,10 @@ var Plane = Class.create(Creep, {
 	
 	die : function(){
 		this.destroySprites()
+		var anim = new CoinsAnimation(this.x, this.y - 40)
+		this.scene.towerHealthLayer.attach(anim)
+		this.scene.objects.push(anim)
+
 		if(Map.grid[this.gridX] && Map.grid[this.gridX][this.gridY]){
 			var cell = Map.grid[this.gridX][this.gridY];
 			var res = cell.splice(cell.indexOf(this), 1);

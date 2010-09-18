@@ -24,16 +24,40 @@ var Sounds = {
 	gameSounds : {},
 	channels : [],
 
-	play : function(store){
-		if(Sounds.channels.length == 8) return
+	play : function(store, direct){
 		//if(!game.scene.sound) return
+		Sounds.checkFinishedAudio()
+		if(Sounds.channels.length == 8) return
+		if(direct){
+			store[0].load()
+			store[0].play()
+			return		
+		}
 		if(store.length > 0){
-			Sounds.channels.push(store.pop())
-			Sounds.channels.last().play()
-			//store.pop().play()
+			var audio = store.pop() 
+			Sounds.channels.push({audio : audio , store : store})
+			audio.play()
 		}
 	},
-	
+
+	registerAudioCleaner : function(reactor){
+		Sounds.reactor = reactor
+		reactor.push(1, Sounds.checkFinishedAudio)
+	},
+
+	checkFinishedAudio : function(){
+		var notFinished = []
+		Sounds.channels.each(function(channel){
+			if(channel.audio.ended){
+				channel.audio.load()
+				channel.store.push(channel.audio)
+			}else{
+				notFinished.push(channel)
+			} 
+		})
+		Sounds.channels = notFinished
+	},		
+
 	path : function(){
 		return 'sounds/sfx/'
 	},
@@ -52,38 +76,33 @@ else if(test.canPlayType('audio/ogg')){
 var soundNames = ['accept','pause' ,'wash','add_item', 'plane',
 'add_money', 'rank_promotion','win', 'lose'   ,   'reject','wrong_tower','click','correct_tower' ]
 
-createSounds()
 function createSounds(){
-	createAudioElements(5, Sounds.turret.fire, Sounds.path()+Sounds.format+"/bullet."+Sounds.format)
-	createAudioElements(5, Sounds.doubleTurret.fire, Sounds.path()+Sounds.format+"/bullet."+Sounds.format)
-	createAudioElements(5, Sounds.turret.rocketLaunch, Sounds.path()+Sounds.format+"/rocket."+Sounds.format);
-	createAudioElements(5, Sounds.turret.patriotLaunch, Sounds.path()+Sounds.format+"/patriot."+Sounds.format);
-	createAudioElements(5, Sounds.boom.unit, Sounds.path()+Sounds.format+"/explosion."+Sounds.format)
-	createAudioElements(1, Sounds.superWeapons.heal, Sounds.path()+Sounds.format+"/heal."+Sounds.format)
-	createAudioElements(1, Sounds.superWeapons.hyper, Sounds.path()+Sounds.format+"/hyper."+Sounds.format)
-	createAudioElements(1, Sounds.superWeapons.nuke, Sounds.path()+Sounds.format+"/nuke."+Sounds.format)
-	createAudioElements(1, Sounds.superWeapons.weak, Sounds.path()+Sounds.format+"/weak."+Sounds.format)	
+	createAudioElements(5, Sounds.turret.fire,"bullet")
+	createAudioElements(5, Sounds.turret.rocketLaunch, "rocket");
+	createAudioElements(5, Sounds.turret.patriotLaunch, "patriot");
+	createAudioElements(5, Sounds.boom.unit, "explosion")
+	createAudioElements(1, Sounds.superWeapons.heal, "heal")
+	createAudioElements(1, Sounds.superWeapons.hyper,"hyper")
+	createAudioElements(1, Sounds.superWeapons.nuke,"nuke")
+	createAudioElements(1, Sounds.superWeapons.weak,"weak")	
 	for(var i = 0; i < soundNames.size(); i++){
 		Sounds.gameSounds[soundNames[i]] = []
-		createAudioElements(1, Sounds.gameSounds[soundNames[i]], Sounds.path()+Sounds.format+"/"+soundNames[i]+"."+Sounds.format)
-	}
-}
-function createAudioElements(count, store, url, func){
-	for(var i = 0; i < count; i++){
-		createAudioElement(store, url, func)
+		createAudioElements(1, Sounds.gameSounds[soundNames[i]],soundNames[i])
 	}
 }
 
-function createAudioElement(store, url, func){
-	var audio = new Audio(url)	
+function createAudioElements(count, store, url){
+	var audio = createAudioElement(store, url)
+	for(var i =0; i< count - 1; i++){
+		store.push(audio.clone())
+	}
+}
+
+function createAudioElement(store, url){
+	var audio =new Audio 
+	audio.src = Loader.sounds.game[url+"."+Loader.soundsFormat].src
+	//audio.load()	
 	if(!store)store = []
-	Event.observe(audio, 'ended', function(){
-		//console.log('ending')		
-		if(Sounds.format == 'mp3')audio.load()
-		store.push(audio);
-		Sounds.channels.splice(Sounds.channels.indexOf(audio), 1);
-		if(func){func()}
-		//console.log('ended')		
-	});
 	store.push(audio);
+	return audio
 }

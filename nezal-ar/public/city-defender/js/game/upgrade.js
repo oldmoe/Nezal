@@ -47,7 +47,7 @@ var Upgrades = {
 		item.list.shift()
 		game.scene.money -= item.list[0].price
 		item.affects.each(function(tower){
-			var values = game.config.towers.find(function(t){return t.category == tower}).values
+			var values = eval(game.config.towers.find(function(t){return eval(t) == tower})).prototype
 			for(p in item.list[0].effect){
 				if(values[p]){
 					values[p] = Math.round(values[p] * item.list[0].effect[p] * 100)/100

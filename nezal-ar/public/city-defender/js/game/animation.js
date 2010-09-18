@@ -10,6 +10,7 @@ var Animation = Class.create({
 	fps : 0,
 	score: 0,
 	initialize: function(x , y){
+		this.visible = true
 		this.frames = []
 		this.x = x;
 		this.y = y;
@@ -30,7 +31,6 @@ var Animation = Class.create({
 	},
 	
 	render : function(ctx){
-		//console.log(this.currentFrame)
 		if(this.frames[this.currentFrame+'.png'])
 		ctx.drawImage(this.frames[this.currentFrame+'.png'], this.x-this.dx/2, this.y-this.dy/2)
 	},
@@ -46,7 +46,7 @@ var CreepBoom = Class.create(Animation, {
 	dx : 32,
 	dy : 32,
 	initImages : function(){
-		this.frames = Loader.animations.creepBoom
+		this.frames = Loader.animations.creep_boom
  	} 
 })
 
@@ -54,7 +54,7 @@ var NukeBoom = Class.create(Animation, {
 	dx : 640,
 	dy : 480,
 	initImages : function(){
-		this.frames = Loader.animations.nuke
+		this.frames = Loader.animations.nuke_boom
  	}
 })
 
@@ -71,7 +71,7 @@ var HealAnimation = Class.create(Animation, {
 	dx : 22,
 	dy : 44,
 	initImages : function(){
-		this.frames = Loader.animations.heal
+		this.frames = Loader.animations.health_point
  	} 	
 })
 
@@ -94,7 +94,7 @@ var VerticalArrowAnimation = Class.create(Animation, {
 	dy : 0,
 	increment : 0,
 	initImages : function(){
-		this.frames = Loader.animations.verticalArrow
+		this.frames = Loader.animations.vertical_arrow
  	},
 	tick : function(){
 		if(this.increment == 60){this.increment = 0;this.y-=60}
@@ -114,4 +114,35 @@ var WeakAnimation = Class.create(Animation, {
 			ctx.drawImage(Loader.images.game['weak.png'], creep.x - 16, creep.y - 16)
 		})
 	},
+})
+var MoneyAnimation = Class.create(Animation, {
+	increment : 0,
+	initialize: function($super,x,y,money){
+		this.money = money
+		$super(x,y)
+	},
+
+	initImages : function(){
+		this.parent = $('gameElements');
+	    this.div = document.createElement('div');
+		this.div.innerHTML = "+"+this.money
+	    var divIdName = 'moneyAnimation';
+	    this.div.setAttribute('id',divIdName);
+		this.div.style.position = "absolute"
+		this.div.style.top = this.y
+		this.div.style.left = this.x
+		this.parent.appendChild(this.div);
+		
+	},
+	tick : function(){
+		if(this.increment == 30)this.finish()
+			this.increment +=3
+			this.y-=3
+			this.div.style.top = this.y
+	},
+	finish : function($super){
+		$super()
+		this.parent.removeChild(this.div)
+	}
+
 })
