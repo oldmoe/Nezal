@@ -6,7 +6,7 @@ var Turret = Class.create(Unit, {
 	fireSound : Sounds.turret.fire,
 	canHitFlying: true,
 	canHitGround: true,
-	name : 'C1B',
+	name : 'Belcher',
 	targets : 'Air &<br/>Ground',
 	facilities : 'Fires Bullets',
 	cssClass : 'tower',
@@ -132,17 +132,21 @@ var Turret = Class.create(Unit, {
 		this.cannonSprite.destroy()
 		this.healthSprite.destroy()
 		this.rankSprite.destroy()
+		if(this.scene.selectedTower.gridX == this.gridX && this.scene.selectedTower.gridY == this.gridY)this.scene.selectedTower = null
 		if(this.baloon)this.baloon.destroy()
 		this.rangeSprite.destroy()
 	}
 })
 
 var DoubleTurret = Class.create(Turret, {
-	name : 'C2B',
+	name : 'Reaper',
 	cssClass : 'doubleTower',
 	fireSound : Sounds.turret.fire,
 	firing_turn : 0,
 	hp:900, power:15, rate:0.4, price: 30, range: 2,
+	upgrades : [{maxHp: 1550, power:18, price: 5},
+							{maxHp: 1875, power:22, price: 10,rate :0.5},
+							{maxHp: 1600, power:26, rate: 0.6, price: 30,range: 3}],
 	initialize: function($super,x,y,scene,extension){
 		$super(x,y,scene,extension)
 	},

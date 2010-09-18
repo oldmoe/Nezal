@@ -184,155 +184,6 @@ body{
 }
 
 
-
-
-#gameElements .upgrades{
-	position:absolute;
-	top:483px;
-	left:144px;
-	height:64px;
-	width:613px;
-}
-
-#gameElements .upgrades .upgrade{
-	float:left;
-	height:60px;
-	border:2px solid #397A97;
-	width:160px;
-}
-
-#gameElements .upgrades .upgrade.current{
-	/*margin-right:7px;*/
-}
-
-#gameElements .upgrades .upgrade.bullets_1{
-	background-image: url('../images/background/bullets_upgrade_1.png');			
-}
-
-#gameElements .upgrades .upgrade.bullets_2{
-	background-image: url('../images/background/bullets_upgrade_2.png');			
-}
-
-#gameElements .upgrades .upgrade.bullets_2.off{
-	background-image: url('../images/background/bullets_upgrade_2_off.png');			
-}
-
-#gameElements .upgrades .upgrade.rockets_1{
-	background-image: url('../images/background/rockets_upgrade_1.png');			
-}
-
-#gameElements .upgrades .upgrade.rockets_2{
-	background-image: url('../simages/background/rockets_upgrade_2.png');			
-}
-
-#gameElements .upgrades .upgrade.rockets_2.off{
-	background-image: url('../images/background/rockets_upgrade_2_off.png');			
-}
-
-#gameElements .upgrades .upgrade.shields_1{
-	background-image: url('../images/background/shields_upgrade_1.png');			
-}
-
-#gameElements .upgrades .upgrade.shields_2{
-	background-image: url('../images/background/shields_upgrade_2.png');			
-}
-
-#gameElements .upgrades .upgrade.shields_2.off{
-	background-image: url('../images/background/shields_upgrade_2_off.png');			
-}
-
-
-
-#gameElements .upgrades .upgrade.current.active .purchased{
-	height:60px;
-	width:160px;
-	background-image: url('../images/background/purchased_stamp.png');
-	opacity: 1;
-}
-
-#gameElements .upgrades .upgrade.next{
-	margin-left: 10px;
-	margin-right:18px;
-	opacity: 0.8;
-}
-
-#gameElements .upgrades .upgrade.next #upgradePrice{
-	font-size:16px;
-	font-family: arial;
-	font-weight: bold;
-	float: right;
-	color: white;
-	padding: 4px;
-	padding-top:40px;
-}
-
-
-#gameElements .upgrades .upgrade.next:hover{
-	opacity: 1;
-}
-
-#gameElements .upgrades .upgrade.next.blocked{
-	margin-left:7px;
-	background-image: url('../images/background/block_upgrade.png');				
-}
-
-
-#gameElements .upgrades .arrow{
-	position:absolute;
-	left: 176px;
-	top: 4px;
-	height:55px;
-	width:14px;
-	background-image: url('../images/background/arrow.png');				
-}
-
-#gameElements .upgrades .upgradesBar{
-	float: left;
-	width: 364px;
-	height:64px;
-}
-
-#gameElements .upgrades .upgradeItems{
-	float: left;
-	margin-top: 3px;
-	width:248px;
-	height:60px;
-}
-
-#gameElements .upgrades .upgradeItems .upgradeItem{
-	float:left;
-	margin-left: 1px;
-	margin-bottom: 1px;
-	width:61px;
-	height:29px;
-	background-image: url('../images/background/upgrade_button_inactive.png');
-	opacity:0.6;
-}
-
-#gameElements .upgrades .upgradeItems .upgradeItem:hover{
-	opacity:1.0;
-}
-
-#gameElements .upgrades .upgradeItems .upgradeItem.selected{
-	opacity:1.0;
-}
-
-#gameElements .upgrades .upgradeItems .upgradeItem.active{
-	background-image: url('../images/background/upgrade_button_active.png');		
-}
-
-#gameElements .upgrades .upgradeItems .upgradeItem.bullets{
-	background-image: url('../images/background/bullets_upgrade_button.png');		
-}
-
-#gameElements .upgrades .upgradeItems .upgradeItem.rockets{
-	background-image: url('../images/background/rockets_upgrade_button.png');		
-}
-
-#gameElements .upgrades .upgradeItems .upgradeItem.shields{
-	background-image: url('../images/background/shields_upgrade_button.png');		
-}
-
 #gameElements .towers{
 	position : absolute;
 	top : 128px;
@@ -366,7 +217,46 @@ body{
 	top:354px;
 	width:98px;
 }
+#gameElements #upgradeTower:hover{
+	background-color:grey;	
+}
+#gameElements #sellTower:hover{
+	background-color:grey;	
+}
+#gameElements #sellTower{
+ width : 50;
+	-moz-border-radius:5px 5px 5px 5px;
+	-webkit-border-radius:5px 5px 5px 5px;
+	-o-border-radius:5px 5px 5px 5px;
+	border-radius:5px 5px 5px 5px;
+	background-color:black;
+	border:2px solid gray;
+	color:white;
+	cursor: pointer;
+	font-family:verdana;
+	font-size:10px;
+	font-color:orange;
+	padding : 5px;
+	text-align : center;
+}
 
+
+#gameElements #upgradeTower{
+ width : 70;
+	-moz-border-radius:5px 5px 5px 5px;
+	-webkit-border-radius:5px 5px 5px 5px;
+	-o-border-radius:5px 5px 5px 5px;
+	border-radius:5px 5px 5px 5px;
+	background-color:black;
+	border:2px solid gray;
+	color:white;
+	cursor: pointer;
+	font-family:verdana;
+	font-size:10px;
+	font-color:orange;
+	padding : 5px;
+	text-align : center;
+}
 #gameElements .towerInfo table {
 	border:medium none;
 	margin:12px 0 0;

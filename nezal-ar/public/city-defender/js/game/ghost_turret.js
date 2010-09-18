@@ -33,7 +33,6 @@ var ghostTurretFeatures = {
 		if(tower == null){ 	return; }
 		var towerCategory = eval(tower)
 		game.scene.selectedTower = towerCategory.prototype
-		console.log(game.scene.selectedTower)
 		self.images = towerCategory.prototype.images
 		self.initImages = towerCategory.prototype.initImages
 		self.range = towerCategory.prototype.range
@@ -86,8 +85,6 @@ var ghostTurretFeatures = {
 			self.isIn = false
 			this.stopObserving("mousemove").stopObserving("click")
 		}).addClassName('turret')
-		console.log(game.scene.selectedTower)
-
 	},
 	
 	showInfo : function(){

@@ -1,12 +1,15 @@
 var RocketLauncher = Class.create(Turret, {
-	name : 'R1G',
+	name : 'Exploder',
 	targets : 'Ground<br/>Only',
 	facilities : 'Fires Rockets',
 	cssClass : 'rocketLauncher',
 	reloaded: true,
 	canHitFlying: false,
 	canHitGround: true,
-	hp:1200, power:100, rate:0.05, price: 50, range: 3,maxHp : 1200,
+	hp:1700, power:150, rate:0.05, price: 40, range: 3,maxHp : 1200,
+	upgrades : [{maxHp: 2100, power:200, price: 13},
+							{maxHp: 2500, power:300, price: 17},
+							{maxHp: 3000, power:410, range:4, price: 45}],
 	initialize : function($super,x,y,scene,extension){
 		this.initImages()
 		$super(x,y,scene,extension)
@@ -51,11 +54,15 @@ var RocketLauncher = Class.create(Turret, {
 	},
 	fire : function(){
 		Sounds.play(Sounds.turret.rocketLaunch)
+	},
+	destroySprites : function($super){
+		$super()
+		this.rocketSprite.destroy()
 	}
 })
 
 var Patriot = Class.create(Turret, {
-	name : 'R4A',
+	name : 'Patriot',
 	targets : 'Air<br/>Only',
 	facilities : 'Fires Rockets',
 	cssClass : 'patriot',
@@ -63,6 +70,9 @@ var Patriot = Class.create(Turret, {
 	canHitFlying: true,
 	canHitGround: false,
 	hp:1200, power:40, rate:0.3, price: 60, range: 4,maxHp: 1200,
+	upgrades : [{maxHp: 1450, power:50, price: 12},
+							{maxHp: 1730, power:60, price: 30,range:5},
+							{maxHp: 2075, power:70, rate: 0.4, price: 55}],
 	initialize : function($super,x,y,scene,extension){
 		this.initImages()
 		$super(x,y,scene,extension)

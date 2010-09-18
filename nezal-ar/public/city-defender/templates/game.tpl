@@ -8,32 +8,52 @@
 		Escaped Units : ${game.scene.escaped}
 		</textarea>
 		<textarea id='towerInfoTemplate' style="display:none">
+			{if tower!=null}
 			<div class="diagram ${tower.cssClass}">
 				{if tower.rank > 0}
 					<img src="${Loader.images.game['rank_'+tower.rank+'.png'].src}" />				
 				{/if}			
 			</div>
 			<div id="towerData">
-			<h4>Sell | $${tower.price}</h4>
-			<b>${tower.targets}<br/>${tower.facilities}</b>
+			<h4>{if tower.healthSprite !=null }
+					<div id = "sellTower" onclick = "game.scene.sellSelectedTower()">sell |$${Math.round(tower.price*0.75*tower.hp/tower.maxHp)}</div>
+					{else}
+						$${tower.price}
+					{/if}
+			</h4>
+			<b>${tower.name}</b>
 			<table>
 				<tr>
-					<td><div class='meter' style="width:${Math.round(65 * tower.power / 300)}px;backgroundColor:blue">Power</div>
+					<td><div class='meter' id = 'powerMeter' style="width:${Math.round(65 * tower.power / 420)}px;backgroundColor:blue">Power</div>
 					<div class='meterExtension'></div>
-</td>
+				</td>
 				</tr>
 				<tr>
-					<td><div class='meter' style="width:${Math.round(65 * tower.hp / 2500)}px;backgroundColor:blue">Shields</div></td>
+					<td><div class='meter' id = 'shieldsMeter' style="width:${Math.round(65 * tower.hp / 3000)}px;backgroundColor:blue">Shields</div></td>
 				</tr>
 				<tr>
-					<td><div class='meter' style="width:${Math.round(65 * tower.rate / 1)}px;backgroundColor:blue">Rate</div></td>
+					<td><div class='meter' id = 'rateMeter' style="width:${Math.round(65 * tower.rate / 1)}px;backgroundColor:blue">Rate</div></td>
 				</tr>
 				<tr>
-					<td><div class='meter' style="width:${Math.round(65 * tower.range / 6)}px;backgroundColor:blue">Range</div></td>
+					<td><div class='meter' id = 'rangeMeter' style="width:${Math.round(65 * tower.range / 6)}px;backgroundColor:blue">Range</div></td>
 				</tr>
 			</table>
+				{if tower.healthSprite !=null }
+					{if tower.rank < tower.maxRank}
+					<div id = "upgradeTower" onclick = "game.scene.upgradeSelectedTower()">upgrade to 
+						<img src="${Loader.images.game['rank_'+(tower.rank+1)+'.png'].src}" /></br>	 $${tower.upgrades[tower.rank].price}			
+					</div>
+					{else}
+					<div id = "upgradeTower">
+						locked
+					</div>
+					{/if}
+				{/if}
 			</div>
 		</table>
+		{else}
+				select tower to view tower info
+		{/if}
 		</textarea>
 		<div id="gameContainer">
 			<div id="modalWindow" style="display:none">

@@ -47,16 +47,19 @@ var CityDefenderScene = Class.create(Scene, {
 		this.creepsLayer.clear = true
 		this.layers.push(this.creepsLayer);
 		this.basesLayer = new Layer(this.baseCtx)
-		this.basesLayer.clear = true
+		this.rangesLayer = new Layer(this.baseCtx)
+		this.rangesLayer.clear = true
 		this.towerCannonLayer = new Layer(this.upperCtx)
 		this.rocketsLayer = new Layer(this.upperCtx)
 		this.towerHealthLayer = new Layer(this.upperCtx)
 		this.rankLayer = new Layer(this.upperCtx)
+		this.layers.push(this.rangesLayer)
 		this.layers.push(this.basesLayer)
 		this.layers.push(this.towerCannonLayer)
 		this.layers.push(this.towerHealthLayer)
 		this.layers.push(this.rocketsLayer)
 		this.layers.push(this.rankLayer)
+	
 		var self = this
 		this.config.superWeapons.each(function(weapon){
 			weapon = weapon.toLowerCase()
@@ -73,7 +76,7 @@ var CityDefenderScene = Class.create(Scene, {
 		})
 		this.turrets.push(turret)
 		Map.grid[turret.gridX][turret.gridY].tower = turret
-		this.basesLayer.attach(turret.rangeSprite)
+		this.rangesLayer.attach(turret.rangeSprite)
 		this.basesLayer.attach(turret.baseSprite)
 		this.towerCannonLayer.attach(turret.cannonSprite)
 		this.towerHealthLayer.attach(turret.healthSprite)
@@ -134,9 +137,11 @@ var CityDefenderScene = Class.create(Scene, {
 			$(weapon).innerHTML = self[weapon].count
 		})
 		$('waves').innerHTML = this.wave +'/'+this.wavesCount;
-		if(this.selectedTower){
+			$('towerInfo').show()
 			$('towerInfo').innerHTML = this.templates['towerInfo'].process({tower: this.selectedTower})
-		}
+			if(this.selectedTower && this.selectedTower.healthSprite){
+				$('upgradeTower').observe('mouseenter',function(){self.updateMeters(self.selectedTower)}).observe('mouseover',function(){self.updateMeters(self.selectedTower)})
+			}
 		var self = this
 		this.push(500, function(){self.renderData()})
 	},
@@ -392,14 +397,39 @@ var CityDefenderScene = Class.create(Scene, {
 	},
 	uploadScore : function(win,callback){
 		// Upload Score code goes here
-    var currRank = Config.rank;
-		onSuccess = function() {
-	      //Here we make the rank 
-        $$('#rank img')[0].src = "images/intro/ranks/" + Config.rank + ".png";
-        $$('.rankName')[0].innerHTML = Config.rank;
-        callback();
-    }
-    Intro.sendScore(this.score, win, onSuccess);
+		if(development)callback()
+		else{
+		  var currRank = Config.rank;
+			onSuccess = function() {
+			    //Here we make the rank 
+		      $$('#rank img')[0].src = "images/intro/ranks/" + Config.rank + ".png";
+		      $$('.rankName')[0].innerHTML = Config.rank;
+		      callback();
+		  }
+		  Intro.sendScore(this.score, win, onSuccess);
+		}
+	},
+	sellSelectedTower: function(){
+		this.money +=Math.round(this.selectedTower.price*0.75*this.selectedTower.hp/this.selectedTower.maxHp)
+		Map.grid[this.selectedTower.gridX][this.selectedTower.gridY].tower = null
+		this.selectedTower.destroySprites()
+		this.selectedTower = null
+	},
+	upgradeSelectedTower: function(){
+			
+		this.selectedTower.upgrade()
+	},
+	updateMeters : function(tower){
+		if(tower.upgrades[tower.rank]){
+			if(tower.upgrades[tower.rank].power)
+			$('powerMeter').style.borderRight = (tower.upgrades[tower.rank].power-tower.power)*65/450+"px solid red"
+			if(tower.upgrades[tower.rank].rate)
+			$('rateMeter').style.borderRight = (tower.upgrades[tower.rank].rate-tower.rate)*65/1+"px solid red"
+			if(tower.upgrades[tower.rank].range)
+			$('rangeMeter').style.borderRight = (tower.upgrades[tower.rank].range-tower.range)*65/6+"px solid red"
+			if(tower.upgrades[tower.rank].maxHp)
+			$('shieldsMeter').style.borderRight = (tower.upgrades[tower.rank].maxHp-tower.maxHp)*65/3100+"px solid red"
+		}
 	},
 	waitingCreeps : 0,
 	wavePending : false,

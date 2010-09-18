@@ -24,7 +24,7 @@ def generateSoundHTMLFile resourceDir,fileToWrite,type
 					file = File.open("#{resourceDir}/#{filename}", 'rb')
 					data = Base64.strict_encode64(file.read)
 					file.close
-					fileToWrite.puts "<audio id='#{filename}' src='data:audio/#{type};base64,#{data}'/>"
+					fileToWrite.puts "<audio id='sounds/game/#{filename}' src='data:audio/#{type};base64,#{data}'/>"
 					end
 			end			
 		end

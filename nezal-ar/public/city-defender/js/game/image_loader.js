@@ -191,4 +191,5 @@ Loader.images ={}
 Loader.sounds = {}
 Loader.animations = {}
 Loader.resourceTypes = ['images', 'sounds','animations']
+initLoadImages(new Loader())
 //initLoadImages()

@@ -20,14 +20,14 @@ var Game = Class.create({
 		})
 		GhostTurret = new Turret(0, 0,this.scene, ghostTurretFeatures)
 		$$('.startText').first().innerHTML = T.start
-		Intro.userData.newbie = false
-		if(Intro.userData.newbie){
-			$('modalWindow').show()
-			this.tutorial = new Tutorial(this.scene,this.tutorialCtx)
-		}
-		else{
+		//Intro.userData.newbie = false
+		//if(Intro.userData.newbie){
+		//	$('modalWindow').show()
+		//	this.tutorial = new Tutorial(this.scene,this.tutorialCtx)
+		//}
+		//else{
 			this.registerHandlers();
-		}
+		//}
 		if(Config.map)Map.bgGrid = Config.map
 		if(Config.mapEntry)Map.entry = Config.mapEntry
 		this.scene.start();
@@ -131,6 +131,9 @@ var Game = Class.create({
 		$$('.towers div').invoke('observe','click', function(){
 			Sounds.play(Sounds.gameSounds.click);GhostTurret.select(this)
 		})
+		//$('sellTower').observe('click',function(){
+		//	self.scene.sellSelectedTower()
+		//})		
 		$$('#gameElements .start').first().observe('click', function(){self.scene.startAttack()})
 		$('playAgain').observe('click', game.reset)
 		$('exit').observe('click', game.exit)

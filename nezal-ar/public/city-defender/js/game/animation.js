@@ -10,6 +10,7 @@ var Animation = Class.create({
 	fps : 0,
 	score: 0,
 	initialize: function(x , y){
+		this.visible = true
 		this.frames = []
 		this.x = x;
 		this.y = y;
@@ -30,7 +31,6 @@ var Animation = Class.create({
 	},
 	
 	render : function(ctx){
-		//console.log(this.currentFrame)
 		if(this.frames[this.currentFrame+'.png'])
 		ctx.drawImage(this.frames[this.currentFrame+'.png'], this.x-this.dx/2, this.y-this.dy/2)
 	},
@@ -54,7 +54,7 @@ var NukeBoom = Class.create(Animation, {
 	dx : 640,
 	dy : 480,
 	initImages : function(){
-		this.frames = Loader.animations.nuke
+		this.frames = Loader.animations.nuke_boom
  	}
 })
 

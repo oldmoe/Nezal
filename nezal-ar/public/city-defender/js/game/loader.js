@@ -3,56 +3,50 @@
 
 var Loader = {
 	initialize: function (){
+		var test = new Audio
+		if(test.canPlayType('audio/mpeg')){
+			this.soundsFormat = 'mp3'	
+		}
+		else if(test.canPlayType('audio/ogg')){
+			this.soundsFormat = 'ogg'	
+		}							
 		this.toLoad = ["animations.html","challenges.html", "intro.html", this.soundsFormat+".html", "user.html", "background.html",  "game.html"]
 	},
-	/*
-	this method loads the images
-		@imageNames 		    array of names of the images for ex: ['tank.png','creep.png']
-		path 					the path that contains the images for ex: c:/images/
-		onProgress			  	a callback that takes a parameter "progress" and it's called each time an image is loaded
-		onFinish				a callback that is called after all images are loaded
-	*/
-	load : function(){
-			var test = new Audio
-			if(test.canPlayType('audio/mpeg')){
-				this.soundsFormat = 'mp3'	
-			}
-			else if(test.canPlayType('audio/ogg')){
-				this.soundsFormat = 'ogg'	
-			}							
-			this.div = document.createElement('div');
-			var self = this
-			this.loadResource(toLoad,0)
-				
-	},
-	notify : function(win, images){
+
+	notify : function(win, resources){
 		var div = win.document.getElementById('resources')
-		while(images.length>0){
-			var image = images[0]
-			image = div.removeChild(image)
-			var id = image.id
+		var i =0
+		while(resources.length>i){
+			var resource = resources[i]
+			if(this.index==3)i++
+			else resource = div.removeChild(resource)
+			var id = resource.id
 			var parts = id.split('/')
 			if(!Loader[parts[0]][parts[1]])Loader[parts[0]][parts[1]] = {}
-		//	console.log(parts[0],parts[1],parts[2])
-			Loader[parts[0]][parts[1]][parts[2]] = image; 
+			Loader[parts[0]][parts[1]][parts[2]] = resource; 
 		}
+		if(this.index == 3) createSounds()
 		if(this.index < this.toLoad.length-1){
 			this.index++
 			window.setTimeout(function(){$('iframe').src = "html_resources/"+Loader.toLoad[Loader.index]}, 500)
 		}
 		else{
-			Intro.show()
+			if(development){
+				city_defender_start()
+				onFinish()
+			}
+			else Intro.show()
 		}
 	}	
 
 }
 //new ResourceLoader().load()
+Loader.initialize()
 Loader.images ={}
 Loader.sounds = {}
 Loader.animations = {}
 Loader.resourceTypes = ['images', 'sounds','animations']
 Loader.index = 1
-Loader.toLoad = ["animations.html","challenges.html", "intro.html", "user.html", "background.html",  "game.html"]
 
 
 

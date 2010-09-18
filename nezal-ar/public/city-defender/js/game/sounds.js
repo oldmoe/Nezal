@@ -76,19 +76,18 @@ else if(test.canPlayType('audio/ogg')){
 var soundNames = ['accept','pause' ,'wash','add_item', 'plane',
 'add_money', 'rank_promotion','win', 'lose'   ,   'reject','wrong_tower','click','correct_tower' ]
 
-createSounds()
 function createSounds(){
-	createAudioElements(5, Sounds.turret.fire, Sounds.path()+Sounds.format+"/bullet."+Sounds.format)
-	createAudioElements(5, Sounds.turret.rocketLaunch, Sounds.path()+Sounds.format+"/rocket."+Sounds.format);
-	createAudioElements(5, Sounds.turret.patriotLaunch, Sounds.path()+Sounds.format+"/patriot."+Sounds.format);
-	createAudioElements(5, Sounds.boom.unit, Sounds.path()+Sounds.format+"/explosion."+Sounds.format)
-	createAudioElements(1, Sounds.superWeapons.heal, Sounds.path()+Sounds.format+"/heal."+Sounds.format)
-	createAudioElements(1, Sounds.superWeapons.hyper, Sounds.path()+Sounds.format+"/hyper."+Sounds.format)
-	createAudioElements(1, Sounds.superWeapons.nuke, Sounds.path()+Sounds.format+"/nuke."+Sounds.format)
-	createAudioElements(1, Sounds.superWeapons.weak, Sounds.path()+Sounds.format+"/weak."+Sounds.format)	
+	createAudioElements(5, Sounds.turret.fire,"bullet")
+	createAudioElements(5, Sounds.turret.rocketLaunch, "rocket");
+	createAudioElements(5, Sounds.turret.patriotLaunch, "patriot");
+	createAudioElements(5, Sounds.boom.unit, "explosion")
+	createAudioElements(1, Sounds.superWeapons.heal, "heal")
+	createAudioElements(1, Sounds.superWeapons.hyper,"hyper")
+	createAudioElements(1, Sounds.superWeapons.nuke,"nuke")
+	createAudioElements(1, Sounds.superWeapons.weak,"weak")	
 	for(var i = 0; i < soundNames.size(); i++){
 		Sounds.gameSounds[soundNames[i]] = []
-		createAudioElements(1, Sounds.gameSounds[soundNames[i]], Sounds.path()+Sounds.format+"/"+soundNames[i]+"."+Sounds.format)
+		createAudioElements(1, Sounds.gameSounds[soundNames[i]],soundNames[i])
 	}
 }
 
@@ -100,8 +99,9 @@ function createAudioElements(count, store, url){
 }
 
 function createAudioElement(store, url){
-	var audio = new Audio(url)
-	audio.load()	
+	var audio =new Audio 
+	audio.src = Loader.sounds.game[url+"."+Loader.soundsFormat].src
+	//audio.load()	
 	if(!store)store = []
 	store.push(audio);
 	return audio

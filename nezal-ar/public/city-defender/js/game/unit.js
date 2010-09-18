@@ -58,11 +58,11 @@ var Unit = Class.create({
 			this.scene.scenario.notify({name:"firstHit",unit:null})
 		}
 		if(this.hp <= 0 ){
-			this.dead = true; 
-			this.die(); 
 			var anim = new CreepBoom(this.x, this.y)
 			game.scene.rankLayer.attach(anim)
 			game.scene.objects.push(anim)
+			this.dead = true; 
+			this.die(); 
 			Sounds.play(Sounds.boom.unit)
 		}
 
