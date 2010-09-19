@@ -23,7 +23,6 @@ var Loader = {
 			else resource = div.removeChild(resource)
 			var id = resource.id
 			var parts = id.split('#')
-			if(this.index>this.toLoad.length-1)console.log(parts[0],parts[1],parts[2])
 			if(!Loader[parts[0]][parts[1]])Loader[parts[0]][parts[1]] = {}
 			Loader[parts[0]][parts[1]][parts[2]] = resource; 
 		}
