@@ -61,6 +61,12 @@ class GamesController < ApplicationController
     JSON.generate(data)
   end
   
+  # Change User to be nolonger a newbie
+  post '/:game_name/newbie' do
+    @game_profile.newbie = false;
+    @game_profile.save
+  end
+  
   # get the game object metadata
   get '/:game_name/:camp_path/metadata' do 
     klass = get_helper_klass()

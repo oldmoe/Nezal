@@ -1,17 +1,3 @@
-﻿var Display = {
-    fetch: function(url, place){
-        new Ajax.Request(url, {   method:'get',
-                                  onSuccess: function(t){
-                                    Display.alter(place, t.responseText);
-                                  },
-                                  onComplete: function(t){}
-                              });
-    },
-    alter: function(divId, newContent)  {
-        $(divId).replace(newContent);
-    }
-}
-
 var FBConnect = {
 
     appIds : {
@@ -45,6 +31,8 @@ var FBConnect = {
 	  retry : 10,
 	  
 	  callback : null,
+	  
+	  user : null,
 	  
 	  getUser : function() {
         FBConnect.retry --;
@@ -95,13 +83,45 @@ var FBConnect = {
                     redirect_url = "http://www.facebook.com/connect/uiserver.php?app_id=" + 
                                    FBConnect.appIds[FBConnect.url()] +  
                                    "&next=http://apps.facebook.com/"+ 
-                                   FBConnect.url() + "/" + 
-                                   "&display=page&locale=en_US&return_session=0&fbconnect=0&canvas=1&legacy_return=1&method=permissions.request";
+                                   FBConnect.url() + "/" +
+                                 "&display=page&locale=en_US&return_session=0&" +
+                                 "fbconnect=0&canvas=1&legacy_return=1&method=permissions.request";
                 }
                 window.top.location = redirect_url;
             }
         });
-    }
+    },
+    
+	  getUserInfo : function(callback) {
+	      if(!FBConnect.user)
+	      {
+            FB.api( '/me', function(response)
+                            {
+                                FBConnect.user = response;
+                                callback();                                      
+                            });
+        }else {
+          callback();
+        }
+	  },
+    
+    bookmark : function(){
+        FB.ui({ method: 'bookmark.add' });
+    },
+    
+    publish : function(attachment, usePrompt, actionLink) {
+        var loc = "http://apps.facebook.com/" + FBConnect.url() + "/";
+        FB.ui(
+              {
+                method: 'stream.publish',
+                display: 'dialog',
+                message: '',
+                attachment: attachment,
+                action_links: actionLink,
+                user_message_prompt: usePrompt
+              }
+        );
+    },
 
 }
 

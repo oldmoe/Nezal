@@ -239,7 +239,10 @@ var CityDefenderScene = Class.create(Scene, {
 		}else if(this.config && this.playing){
 			if(this.config.waves.length == 0 && this.creeps.length == 0 && this.waitingCreeps == 0 ){
 				this.score*=this.config.level
-				this.uploadScore(true,function(){self.end("win")})
+				this.uploadScore(true,function(){
+				                        self.end("win");
+                              })
+                    		                                           
 				return
 			}else if(this.creeps.length == 0  &&this.waitingCreeps == 0 && this.config.waves.length > 0 && !this.wavePending && this.running){
 				this.waveNumber++
@@ -276,6 +279,10 @@ var CityDefenderScene = Class.create(Scene, {
 						new Effect.Appear("result", {delay : 3.0})
 						game.scene.push(3000,function(){Sounds.play(Sounds.gameSounds[state])})
 						game.scene.push(3000,function(){self.displayStats()})
+						game.scene.push(4000,function(){
+						                              FBDefender.publishMissionCompletion({name : GameConfigs.missionPath,
+                  		                                                         score : game.scene.score});
+                                           });
 					}
 				if(game.scene.rank!=Config.rank){
 					Sounds.play(Sounds.gameSounds.rank_promotion)
@@ -291,6 +298,7 @@ var CityDefenderScene = Class.create(Scene, {
 					$$('#rank img')[0].src = "images/intro/ranks/" + Config.rank + ".png";
 					$('popupClose').observe('click',win)
 					$('popupOk').observe('click',win)
+					FBDefender.publishRankPromotion({name : Config.rank, image : "fb-" + Config.rank + '.png'});
 				}else{
 					win()
 				}

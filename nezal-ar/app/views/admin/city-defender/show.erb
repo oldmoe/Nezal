@@ -83,7 +83,7 @@ var GameData = {
     deleteWeapon : function(element)
     {
         delete GameData.weapons[element.getAttribute('name')];
-        $$("#weapons #list")[0].innerHTML = GameData.templates['weapons'].process({list: GameData.weapons, type : 'creep'});
+        $$("#weapons #list")[0].innerHTML = GameData.templates['weapons'].process({list: GameData.weapons, type : 'weapon'});
     },
     addUpgrade : function()
     {
