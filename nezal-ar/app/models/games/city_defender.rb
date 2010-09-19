@@ -3,7 +3,7 @@ require 'json'
 class CityDefender < Metadata
   
   def self.init_game_profile(game_profile)
-    game_profile.metadata= self.encode({'towers'=>[],'weapons'=>[],'upgrades'=>[],'added'=>{'towers'=>[],'weapons'=>[],'upgrades'=> []} })
+    game_profile.metadata= self.encode({'towers'=>[],'weapons'=>[],'upgrades'=>[],'added'=>{'towers'=>[],'weapons'=>[],'upgrades'=> []}, 'weapons_package'=> {} })
   end
   
   def self.load_game_profile(game_profile)
@@ -13,24 +13,48 @@ class CityDefender < Metadata
   def self.edit_game_profile(game_profile, data)
     data = self.decode(data)
     if data['event'] == 'unlock'
-        puts "Event unlock"
         game_data = self.decode(game_profile.game.metadata)
         game_profile_data = self.decode(game_profile.metadata)
-        if game_data[data['type']][data['item_id']]['cost'].to_i <= game_profile.user.coins &&
-               game_data[data['type']][data['item_id']]['exp'].to_i <= game_profile.score 
-            puts "Condition Met"
+        if (game_data[data['type']][data['item_id']]['cost'].to_i <= game_profile.user.coins &&
+               game_data[data['type']][data['item_id']]['exp'].to_i <= game_profile.score )
             game_profile.user.coins = game_profile.user.coins - game_data[data['type']][data['item_id']]['cost'].to_i
             game_profile_data[data['type']].push(data['item_id'])
+            if(data['type']=='weapons')
+                game_profile_data['weapons_package'][data['item_id']] =
+                                     game_data[data['type']][data['item_id']]['package']
+            end
             game_profile.user.save
             game_profile.metadata = self.encode(game_profile_data)
             game_profile.save
         end
     elsif data['event'] == 'user_setup'
-        puts "Event Set up"
         game_data = self.decode(game_profile.metadata)
         game_data['added'] = data['setup']
         game_profile.metadata = self.encode(game_data)
         game_profile.save
+    elsif data['event'] == 'user_weapons'
+        game_profile_data = self.decode(game_profile.metadata)
+        game_profile_data['weapons_package'] ||= {}
+        items = data['items']
+        changed = false
+        items.each_pair do |key, value|
+           puts key
+           puts value
+           if value > 0 && game_profile_data['weapons_package'][key]
+                changed = true
+                game_profile_data['weapons_package'][key] = 
+                        game_profile_data['weapons_package'][key] - value
+                if game_profile_data['weapons_package'][key] == 0 
+                    game_profile_data['weapons_package'].delete(key)
+                    game_profile_data['weapons'].delete(key)
+                    game_profile_data['added']['weapons'].delete(key)
+                end
+            end
+        end
+        if changed
+            game_profile.metadata = self.encode(game_profile_data)
+            game_profile.save
+        end
     end
     game_profile.metadata || "{}"
   end

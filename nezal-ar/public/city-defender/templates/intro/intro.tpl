@@ -160,7 +160,7 @@
         <img src="images/intro/ranks/${data.rank[1]}.png"> </img>
       </div>
       <div class="action  clickableButton">
-          {if ((Intro.gameData[data.type][data.itemid]['unlocked'] == false) && (Intro.userData.metadata[data.type].indexOf(data.itemid) < 0 ) )}
+          {if ((!Intro.gameData[data.type][data.itemid]['unlocked']) && (Intro.userData.metadata[data.type].indexOf(data.itemid) < 0 ) )}
             {if ((data.cost > data.coins) || ( data.rank[0] > data.exp))}
               <span class="inactive"> unlock </span>
               {if (data.cost > data.coins)}
@@ -193,9 +193,6 @@
         <div itemid="${item}" class="clickable">
           <div itemid="${item}" type="${type}" onclick="Intro.showFloatBg(this)" class="itemImage clickSound">
             <img src="images/intro/${type}/${itemConfig[item]['image']}"></img>
-            {if ((Intro.gameData[type][item]['unlocked'] == false) && (data.userData.metadata[type].indexOf(item) < 0 ) )}
-              <img src="images/intro/market/locked.png" class="label"> </img>   
-            {/if}
           </div>
           {if ((Intro.gameData[type][item]['unlocked'] == true) || (data.userData.metadata[type].indexOf(item) >= 0 ) )}
             {if (data.userData.metadata.added[type].indexOf(item) < 0) }
@@ -207,6 +204,7 @@
               </div>
             {/if}
           {else}
+            <img src="images/intro/market/locked.png" class="label"> </img>   
             <div class="action clickSound" itemid="${item}" type="${type}"  onclick="Intro.showFloatBg(this);" style="height:20px;" >
               <img src="images/intro/market/unlock.png"> </img>
               <div class="text buttonText">

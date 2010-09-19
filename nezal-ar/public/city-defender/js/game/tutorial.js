@@ -133,6 +133,7 @@ var Tutorial = Class.create({
 	step5 : function(anim){
 		anim.finish()
 		Upgrades.upgrade()
+		Intro.newbieNoMore();
 		$$('#gameElements .upgrades .upgrade.next').invoke('stopObserving', 'click')	
 		$$('#gameElements .upgrades .upgradeItem').invoke('stopObserving', 'click')			
 
