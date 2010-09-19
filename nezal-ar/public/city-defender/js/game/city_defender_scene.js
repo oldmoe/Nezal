@@ -30,8 +30,8 @@ var CityDefenderScene = Class.create(Scene, {
 		this.usedWeapons = {}
 		var self = this;
 		this.config.superWeapons.each( function(weapon){
-		                                    self.usedWeapons[weapon.capitalize()] = 0;
-		                              });
+			self.usedWeapons[weapon.capitalize()] = 0;
+		});
 		this.baseCtx = baseCtx;
 		this.upperCtx = upperCtx;
 		this.scenario = new Scenario(this)

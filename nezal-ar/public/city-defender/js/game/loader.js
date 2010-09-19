@@ -25,6 +25,7 @@ var Loader = {
 			console.log(parts[0],parts[1])
 			if(!Loader[parts[0]][parts[1]])Loader[parts[0]][parts[1]] = {}
 			Loader[parts[0]][parts[1]][parts[2]] = resource; 
+			console.log(parts[2])
 		}
 		if(this.index == 3) createSounds()
 		if(this.index < this.toLoad.length-1){
