@@ -9,7 +9,8 @@ def generateImageHTMLFile resourceDir,fileToWrite,id
 					file.close
 					image_id = "images#"+id +"#"+filename
 					image_id = "#{resourceDir[7,resourceDir.length].gsub!('/', '#')}##{filename}" if(resourceDir.include? "animations")
-					image_id = "images##{(resourceDir[7,resourceDir.length]+"/"+filename).sub!('/', '#')}" if(resourceDir.include? "intro")
+					image_id = "images##{(resourceDir[7,resourceDir.length]+"/"+filename).sub!('/', '#')}" if (resourceDir.include? "intro")
+					image_id = "#{(resourceDir+"/"+filename).sub!('/', '#').sub!('/', '#')}" if(resourceDir.include? "challenges")
 					fileToWrite.puts "<img id='#{image_id}' src='data:image/png;base64,#{data}'/>"
 				elsif File.directory? "#{resourceDir}/#{filename}"
 						generateImageHTMLFile "#{resourceDir}/#{filename}",fileToWrite,id
@@ -25,7 +26,7 @@ def generateSoundHTMLFile resourceDir,fileToWrite,type
 					file = File.open("#{resourceDir}/#{filename}", 'rb')
 					data = Base64.strict_encode64(file.read)
 					file.close
-					fileToWrite.puts "<audio id='sounds/game/#{filename}' src='data:audio/#{type};base64,#{data}'/>"
+					fileToWrite.puts "<audio id='sounds#game##{filename}' src='data:audio/#{type};base64,#{data}'/>"
 					end
 			end			
 		end
@@ -44,9 +45,15 @@ def generateResources
 		end
 	end
 
-	wrap("html_resources/challenges.html") do |challenges|
-		generateImageHTMLFile "challenges",challenges,"challenges"
-	end	
+	
+	Dir.entries("challenges").each do |challenge|
+		unless ['.', '..'].include? challenge
+			wrap("html_resources/#{challenge}.html") do |challenges|
+				generateImageHTMLFile "challenges/"+challenge,challenges,"challenges"
+			end
+		end
+	end
+	
 
 	wrap("html_resources/mp3.html") do |file|
 		generateSoundHTMLFile "sounds/sfx/mp3", file,"mpeg"
