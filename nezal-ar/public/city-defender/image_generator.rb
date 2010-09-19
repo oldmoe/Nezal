@@ -7,8 +7,9 @@ def generateImageHTMLFile resourceDir,fileToWrite,id
 					file = File.open("#{resourceDir}/#{filename}", 'rb')
 					data = Base64.strict_encode64(file.read)
 					file.close
-					image_id = "images/"+id +"/"+filename
-					image_id = "#{resourceDir[7,resourceDir.length]}/#{filename}" if(resourceDir.include? "animations")
+					image_id = "images#"+id +"#"+filename
+					image_id = "#{resourceDir[7,resourceDir.length].gsub!('/', '#')}##{filename}" if(resourceDir.include? "animations")
+					image_id = "images##{(resourceDir[7,resourceDir.length]+"/"+filename).sub!('/', '#')}" if(resourceDir.include? "intro")
 					fileToWrite.puts "<img id='#{image_id}' src='data:image/png;base64,#{data}'/>"
 				elsif File.directory? "#{resourceDir}/#{filename}"
 						generateImageHTMLFile "#{resourceDir}/#{filename}",fileToWrite,id
