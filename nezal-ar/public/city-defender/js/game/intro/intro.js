@@ -8,7 +8,8 @@ var GameConfigs = {
   mapEntry : [], 
   towers : [],
   superWeapons : [],
-  upgrades : []
+  upgrades : [],
+  weaponsPackage :{}
 }
 
 var Config = GameConfigs;
@@ -300,9 +301,9 @@ var Intro = {
                               }
                   $$("#marketPlace #towers #floatBg")[0].innerHTML = 
                                                   Intro.templates['marketplaceItem'][1].process({ "data" : data });
-/*                  $$('#marketPlace #towers #floatBg .clickSound').each(function(element){
+                  $$('#marketPlace #towers #floatBg .clickSound').each(function(element){
                           element.observe('click', function(){Sounds.play(Sounds.gameSounds.click)})
-                  })*/
+                  })
             }
         },
         weapons : {
@@ -360,9 +361,9 @@ var Intro = {
                             }
                 $$("#marketPlace #weapons #floatBg")[0].innerHTML = 
                                 Intro.templates['marketplaceItem'][1].process({ "data" : data });     
-/*                $$('#marketPlace #weapons #floatBg .clickSound').each(function(element){
+                $$('#marketPlace #weapons #floatBg .clickSound').each(function(element){
                         element.observe('click', function(){Sounds.play(Sounds.gameSounds.click)})
-                  })*/
+                })
             }
         },
         upgrades : {
@@ -417,9 +418,9 @@ var Intro = {
                             }
                 $$("#marketPlace #upgrades #floatBg")[0].innerHTML =
                                          Intro.templates['marketplaceItem'][1].process({ "data" : data });    
-/*                $$('#marketPlace #upgrades #floatBg .clickSound').each(function(element){
+                $$('#marketPlace #upgrades #floatBg .clickSound').each(function(element){
                         element.observe('click', function(){Sounds.play(Sounds.gameSounds.click)})
-                })*/
+                })
             }
         }
     },
@@ -456,9 +457,9 @@ var Intro = {
                                                                   "type" : type,
                                                                   "data" : data,
                                                                   "itemConfig" : itemConfig });
-/*        $$('.clickSound').each(function(element){
+        $$('.clickSound').each(function(element){
           element.observe('click', function(element){Sounds.play(Sounds.gameSounds.click)})
-        })*/
+        })
     },
     
     removeItem: function(element){
@@ -569,16 +570,22 @@ var Intro = {
         });
     },
     
-    sendScore : function(score, win, callback){
+    sendScore : function(score, weapons, win, callback){
+        if(!weapons)
+            weapons = {}
         new Ajax.Request(  GameConfigs.campaign + "/metadata" ,
               {   method:'post', 
                   parameters: { 'data' : Object.toJSON({'mission' : GameConfigs.mission.order,
                                                         'win' : win,
+                                                        'items' : weapons,
+                                                        'event' : 'user_weapons',
                                                        'score' : score }) },
                   onSuccess : function(t, json){
                       var data = JSON.parse(t.responseText);
-                      GameConfigs.rank = data.rank;
-                      GameConfigs.exp = data.exp;
+                      Intro.userData["metadata"] = JSON.parse(data['user_data']['metadata']);
+                      Intro.userData.rank = data['user_data'].rank;
+                      Intro.userData.exp = data['user_data'].exp;                      
+                      Intro.setupGameConfigs();
                       callback();
                   }
               });
@@ -617,6 +624,7 @@ var Intro = {
         GameConfigs.towers = Intro.userData.metadata.added.towers;
         GameConfigs.superWeapons = Intro.userData.metadata.added.weapons;
         GameConfigs.upgrades = Intro.userData.metadata.added.upgrades;
+        GameConfigs.weaponsPackage = Intro.userData.metadata.weapons_package;
         GameConfigs.rank = Intro.userData.rank;
         GameConfigs.exp = Intro.userData.exp;
     },
@@ -630,9 +638,9 @@ var Intro = {
     },
     
     show: function(){
-/*        $$('.clickSound').each(function(element){
+        $$('.clickSound').each(function(element){
           element.observe('click', function(element){Sounds.play(Sounds.gameSounds.click)})
-        })*/
+        })
         Intro.disablePauseScreen();
         $('marketPlace').hide();
 	      if(	Intro.currentPage >= 0) {
