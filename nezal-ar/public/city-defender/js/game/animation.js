@@ -120,6 +120,7 @@ var MoneyAnimation = Class.create(Animation, {
 	initialize: function($super,x,y,money){
 		this.money = money
 		$super(x,y)
+		this.frames = Loader.animations.coins
 	},
 
 	initImages : function(){
@@ -131,6 +132,7 @@ var MoneyAnimation = Class.create(Animation, {
 		this.div.style.position = "absolute"
 		this.div.style.top = this.y
 		this.div.style.left = this.x
+		this.image = Loader.animations.coins[this.currentFrame+'.png']
 		this.parent.appendChild(this.div);
 		
 	},

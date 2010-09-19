@@ -264,9 +264,9 @@ var CityDefenderScene = Class.create(Scene, {
 		$("result").addClassName(state);
 		if(state == "win"){
 				function win(){	
-						 $('pauseWindow').style.zIndex = 299
-						 $('pauseWindow').hide()	
-				 $('popup').hide()
+						$('pauseWindow').style.zIndex = 299
+						$('pauseWindow').hide()	
+						$('popup').hide()
 						$('loseDiv').hide()
 						$('winDiv').show()
 						new Effect.Appear("static")

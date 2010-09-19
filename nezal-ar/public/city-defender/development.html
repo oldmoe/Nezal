@@ -136,7 +136,9 @@
 		}
 		Loader.notify(win, resources)			
 	}
+		$(document).observe('dom:loaded',function(){
 		$('iframe').src = "html_resources/animations.html"
+		})
 		new Ajax.Request(  "templates/game.tpl", {method:'get',
 			onSuccess: function(t){
 				$("gameStart").innerHTML = t.responseText;

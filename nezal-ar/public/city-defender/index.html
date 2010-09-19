@@ -134,7 +134,9 @@
   FBConnect.init(function(){
                       Intro.initialize();
                 });
-	$('iframe').src = "html_resources/animations.html"
+	$(document).observe('dom:loaded',function(){
+		$('iframe').src = "html_resources/animations.html"
+	})
 	function register(win){
 		var resources = win.document.getElementsByTagName('img')
 		if(resources.length == 0){
