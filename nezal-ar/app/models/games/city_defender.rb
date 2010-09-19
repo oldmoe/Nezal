@@ -89,8 +89,8 @@ class CityDefender < Metadata
     user_camp_data
   end
   
-  def self.edit_user_campaign(user_campaign, data)
-    data = self.decode(data)
+  def self.edit_user_campaign(user_campaign, data_encoded)
+    data = self.decode(data_encoded)
     metadata = self.decode(user_campaign.metadata)
     if (data['win'])
       metadata['missions'][data['mission']] = { 'order' => data['mission'] + 1, 'score' => 0 }
@@ -109,6 +109,7 @@ class CityDefender < Metadata
         user_campaign.save
       end
     end
+    self.edit_game_profile(user_campaign.profile, data_encoded)
   end
   
 end

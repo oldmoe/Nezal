@@ -93,11 +93,13 @@ class GamesController < ApplicationController
     camp = Campaign.where(:path => params['camp_path'], :game_id => @game.id).first
     camp_metadata = klass.load_campaign(camp)
     user_camp = UserCampaign.where('campaign_id'=> camp.id, 'fb_user' => @user.fb_id).first
-    klass.edit_user_campaign(user_camp, params['data'])
+    user_metadata = klass.edit_user_campaign(user_camp, params['data'])
     user_camp = UserCampaign.where('campaign_id'=> camp.id, 'fb_user' => @user.fb_id).first
     data = {
-      :rank => user_camp.profile.rank.name,
-      :exp => user_camp.profile.score
+      :user_data => { :metadata => user_metadata,
+                      :rank => user_camp.profile.rank.name,
+                      :exp => user_camp.profile.score
+                   }
     }
     JSON.generate(data)
   end

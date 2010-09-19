@@ -27,15 +27,20 @@ var CityDefenderScene = Class.create(Scene, {
 		$super(delay);
 		//this.startTime = null
 		this.config = Nezal.clone_obj(config)
+		this.usedWeapons = {}
+		var self = this;
+		this.config.superWeapons.each( function(weapon){
+		                                    self.usedWeapons[weapon.capitalize()] = 0;
+		                              });
 		this.baseCtx = baseCtx;
 		this.upperCtx = upperCtx;
 		this.scenario = new Scenario(this)
 		this.scenario.start()
-		this.nuke = new Nuke(this, {count: this.nukeCount, type:'nuke'})
-		this.heal = new Heal(this, {count: this.healCount, type:'heal'})
-		this.weak = new Weak(this, {count: this.weakCount, type:'weak'})
-		this.splash = new Splash(this, {count: this.splashCount, type:'splash'})
-		this.hyper = new Hyper(this, {count: this.hyperCount, type:'hyper'})
+		this.nuke = new Nuke(this, {count: this.config.weaponsPackage.Nuke, type:'nuke'})
+		this.heal = new Heal(this, {count: this.config.weaponsPackage.Heal, type:'heal'})
+		this.weak = new Weak(this, {count: this.config.weaponsPackage.Weak, type:'weak'})
+		this.splash = new Splash(this, {count: this.config.weaponsPackage.Splash, type:'splash'})
+		this.hyper = new Hyper(this, {count: this.config.weaponsPackage.Hyper, type:'hyper'})
 		this.templates = {}
 		this.templates['towerInfo'] = TrimPath.parseTemplate($('towerInfoTemplate').value) 
 		this.templates['stats'] = TrimPath.parseTemplate($('statsTemplate').value) 
@@ -166,6 +171,7 @@ var CityDefenderScene = Class.create(Scene, {
 	fire : function(name){
 		try{
 			this[name].fire()
+			this.usedWeapons[name.capitalize()] ++;
 		}catch(e){
 		}	
 	},
@@ -417,7 +423,7 @@ var CityDefenderScene = Class.create(Scene, {
 		      $$('.rankName')[0].innerHTML = Config.rank;
 		      callback();
 		  }
-		  Intro.sendScore(this.score, win, onSuccess);
+		  Intro.sendScore(this.score, this.usedWeapons, win, onSuccess);
 		}
 	},
 	sellSelectedTower: function(){
