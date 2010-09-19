@@ -231,7 +231,7 @@ body {
   color:#550000;
   font-size:13px;
   left:225px;
-  line-height:170%;
+  line-height:17l0%;
   position:absolute;
   text-align:center;
   top:90px;
@@ -623,10 +623,10 @@ body {
 {
   padding-top : 12px;
 }
-#marketPlace .itemImage .label
+#marketPlace .item .label
 {
   position : absolute;
-  bottom : 2px;
+  bottom : 14px;
   left : 2px;
 }
 #marketPlace .action

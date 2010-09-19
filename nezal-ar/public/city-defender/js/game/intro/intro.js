@@ -553,6 +553,22 @@ var Intro = {
             });
     },
     
+    saveUserSuperWeapons : function(callback){
+        new Ajax.Request( 'metadata',
+            {   method:'post', 
+                parameters: { 'type' : 'game_profile', 'data' : Object.toJSON({'items' : {'Heal' : 2},
+                                                                               'event': 'user_weapons' }) },
+                onSuccess : function(t, json){
+                    var data = JSON.parse(t.responseText);
+                    Intro.gameData = JSON.parse(data['game_data']['metadata']);
+                    Intro.userData = data['user_data'];
+                    Intro.userData["metadata"] = JSON.parse(data['user_data']['metadata']);
+                    Intro.dirty = false;
+                    callback();
+                }
+        });
+    },
+    
     sendScore : function(score, win, callback){
         new Ajax.Request(  GameConfigs.campaign + "/metadata" ,
               {   method:'post', 
