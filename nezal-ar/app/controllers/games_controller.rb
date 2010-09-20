@@ -10,10 +10,6 @@ class GamesController < ApplicationController
     JSON.generate(camps)
   end
 
-  get '/:game_name/friends' do 
-    puts ` db_stat -c -h ~/BerkeleyStore/Nezal/`
-  end
-  
   # get the game object metadata
   get '/:game_name/metadata' do 
     klass = get_helper_klass()
@@ -38,33 +34,19 @@ class GamesController < ApplicationController
   # get the game object metadata
   post '/:game_name/metadata' do 
     klass = get_helper_klass()
-    if(params['type'] == 'game_profile')
-      user_metadata = klass.edit_game_profile(@game_profile, params['data'])
-    end
+    user_metadata = klass.edit_game_profile(@game_profile, params['data'])
     user_metadata = klass.load_game_profile(@game_profile)
-    # Reload The user after the changes
-    game_metadata = klass.load(@game)
     @user = FbUser.where(:fb_id => @user.fb_id).first
-    ranks = {}
-    @game.ranks.each { |rank| ranks[rank.name] = [rank.lower_exp, rank.upper_exp]}
     data = {
-      :game_data => { :metadata => game_metadata} , 
       :user_data => { :coins => @user.coins, 
                       :rank => @game_profile.rank.name,
                       :exp => @game_profile.score, 
                       :newbie => @game_profile.newbie,
                       :locale => @game_profile.locale, 
                       :metadata => user_metadata
-                      },
-      :ranks => ranks
+                      }
     }
     JSON.generate(data)
-  end
-  
-  # Change User to be nolonger a newbie
-  post '/:game_name/newbie' do
-    @game_profile.newbie = false;
-    @game_profile.save
   end
   
   # get the game object metadata
@@ -86,17 +68,16 @@ class GamesController < ApplicationController
     }
     JSON.generate(data)
   end
-  
+    
   # get the game object metadata
   post '/:game_name/:camp_path/metadata' do 
     klass = get_helper_klass()
     camp = Campaign.where(:path => params['camp_path'], :game_id => @game.id).first
-    camp_metadata = klass.load_campaign(camp)
     user_camp = UserCampaign.where('campaign_id'=> camp.id, 'fb_user' => @user.fb_id).first
-    user_metadata = klass.edit_user_campaign(user_camp, params['data'])
+    klass.edit_user_campaign(user_camp, params['data'])
     user_camp = UserCampaign.where('campaign_id'=> camp.id, 'fb_user' => @user.fb_id).first
     data = {
-      :user_data => { :metadata => user_metadata,
+      :user_data => { :metadata => user_camp.profile.metadata,
                       :rank => user_camp.profile.rank.name,
                       :exp => user_camp.profile.score
                    }
@@ -104,8 +85,10 @@ class GamesController < ApplicationController
     JSON.generate(data)
   end
   
-  get '/:game_name/:campaign_id' do
-    
+  # Change User to be nolonger a newbie
+  post '/:game_name/users/newbie' do
+    @game_profile.newbie = false;
+    @game_profile.save
   end
     
   get '/:game_name' do 

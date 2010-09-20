@@ -278,8 +278,8 @@ var Intro = {
         mission : {
             index : 2,
             onSelect : function(){
-                Intro.setupGameConfigs();
                 var creepInfo = [];
+                Intro.setupGameConfigs();
                 GameConfigs['waves'].each( function(element) { 
                                     for( var i =0; i< element.length; i++ )
                                     {
@@ -505,6 +505,8 @@ var Intro = {
                                                                   "type" : type,
                                                                   "data" : data,
                                                                   "itemConfig" : itemConfig });
+        $$('#'+type+' #marketTabs')[0].innerHTML = 
+                        Intro.templates.marketplaceTabs[1].process({'type' : type});     
         $$('.clickSound').each(function(element){
           element.observe('click', function(element){Sounds.play(Sounds.gameSounds.click)})
         })
@@ -538,7 +540,9 @@ var Intro = {
         $(type).innerHTML = Intro.templates[type][1].process({ 
                                                                   "type" : type,
                                                                   "data" : data,
-                                                                  "itemConfig" : itemConfig });   
+                                                                  "itemConfig" : itemConfig }); 
+        $$('#'+type+' #marketTabs')[0].innerHTML = 
+                        Intro.templates.marketplaceTabs[1].process({'type' : type});       
         $$('.clickSound').each(function(element){
           element.observe('click', function(element){Sounds.play(Sounds.gameSounds.click)})
         })     
@@ -553,13 +557,12 @@ var Intro = {
             Intro.enablePauseScreen();
             new Ajax.Request( 'metadata',
                     {   method:'post', 
-                        parameters: { 'type' : 'game_profile', 'data' : Object.toJSON({ 'type' :type,
-                                                                                      'item_id' : itemid,
-                                                                                      'event': 'unlock' }) },
+                        parameters: { 'data' : Object.toJSON({ 'type' :type,
+                                                                'item_id' : itemid,
+                                                                'event': 'unlock' }) },
                         onSuccess : function(t, json){
                             var data = JSON.parse(t.responseText);
                             var addedItems = Intro.userData["metadata"]['added'];
-                            Intro.gameData = JSON.parse(data['game_data']['metadata']);
                             Intro.userData = data['user_data'];
                             Intro.userData["metadata"] = JSON.parse(data['user_data']['metadata']);
                             Intro.userData["metadata"]['added'] = addedItems;
@@ -587,14 +590,13 @@ var Intro = {
         }
     },
     
-    saveUserSetup : function(callback) {
+    saveMarketPreferences : function(callback) {
         new Ajax.Request( 'metadata',
             {   method:'post', 
-                parameters: { 'type' : 'game_profile', 'data' : Object.toJSON({'setup' : Intro.userData.metadata.added,
-                                                                               'event': 'user_setup' }) },
+                parameters: {'data':Object.toJSON({ 'preferences': Intro.userData.metadata.added,
+                             'event': 'market_preferences' }) },
                 onSuccess : function(t, json){
                     var data = JSON.parse(t.responseText);
-                    Intro.gameData = JSON.parse(data['game_data']['metadata']);
                     Intro.userData = data['user_data'];
                     Intro.userData["metadata"] = JSON.parse(data['user_data']['metadata']);
                     Intro.dirty = false;
@@ -603,31 +605,16 @@ var Intro = {
             });
     },
     
-    saveUserSuperWeapons : function(callback){
-        new Ajax.Request( 'metadata',
-            {   method:'post', 
-                parameters: { 'type' : 'game_profile', 'data' : Object.toJSON({'items' : {'Heal' : 2},
-                                                                               'event': 'user_weapons' }) },
-                onSuccess : function(t, json){
-                    var data = JSON.parse(t.responseText);
-                    Intro.gameData = JSON.parse(data['game_data']['metadata']);
-                    Intro.userData = data['user_data'];
-                    Intro.userData["metadata"] = JSON.parse(data['user_data']['metadata']);
-                    Intro.dirty = false;
-                    callback();
-                }
-        });
-    },
-    
     sendScore : function(score, weapons, win, callback){
         if(!weapons)
             weapons = {}
+        console.log(weapons)
         new Ajax.Request(  GameConfigs.campaign + "/metadata" ,
               {   method:'post', 
                   parameters: { 'data' : Object.toJSON({'mission' : GameConfigs.mission.order,
                                                         'win' : win,
                                                         'items' : weapons,
-                                                        'event' : 'user_weapons',
+                                                        'event' : 'consumed_weapons',
                                                        'score' : score }) },
                   onSuccess : function(t, json){
                       var data = JSON.parse(t.responseText);
@@ -641,7 +628,7 @@ var Intro = {
     },
     
     newbieNoMore : function(){
-        new Ajax.Request(  'newbie' ,
+        new Ajax.Request(  'users/newbie' ,
               {   method:'post', 
                   onSuccess : function(t, json){
                       Intro.userData.newbie = false;
@@ -668,7 +655,7 @@ var Intro = {
         }
         GameConfigs.map = mapFlipped;
         GameConfigs.mapEntry = Intro.campaignInfo.user_data.metadata.missions[mission['order'] - 1  ]['mapEntry'];
-        GameConfigs.mapImage = Intro.campPath() + Intro.missionPath() + "/images/path.png";
+        GameConfigs.mapImage = 'challenges/' + GameConfigs.campaign + '/images' + Intro.missionPath() + '/path.png';
         GameConfigs.waves = Intro.campaignInfo.user_data.metadata.missions[mission['order'] - 1  ]['waves'];
         GameConfigs.towers = Intro.userData.metadata.added.towers;
         GameConfigs.superWeapons = Intro.userData.metadata.added.weapons;
@@ -727,7 +714,7 @@ var Intro = {
 																				}
                                 }
         if(Intro.dirty)
-            Intro.saveUserSetup( callback );
+            Intro.saveMarketPreferences( callback );
         else{
             callback();
 				}
@@ -738,7 +725,7 @@ var Intro = {
         Intro.nextPageIndex = Intro.currentPage - 1;
         var callback = function() { Intro.pages[Intro.sequence[Intro.currentPage - 1]].onSelect(); } 
         if(Intro.dirty)
-            Intro.saveUserSetup( callback );
+            Intro.saveMarketPreferences( callback );
         else
             callback();
 	  },
@@ -750,7 +737,7 @@ var Intro = {
         $("intro").style['curspr'] = 'progress';
         var callback = function() { Intro.pages[Intro.sequence[index]].onSelect(); }
         if(Intro.dirty)
-            Intro.saveUserSetup( callback );
+            Intro.saveMarketPreferences( callback );
         else
             callback();
 	  },
@@ -773,7 +760,7 @@ var Intro = {
 	                                      $("intro").hide();
                                   }
         if(Intro.dirty)
-            Intro.saveUserSetup( callback );
+            Intro.saveMarketPreferences( callback );
         else
             callback();
 				onFinish()

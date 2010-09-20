@@ -144,7 +144,7 @@
     <div id="creepBar">
     </div>
     <div id="stamp">
-      <img src="${Loader.images.intro['mission/confidintial-stamp.png'].src}"> </img>
+      <img src="${Loader.images.intro[GameConfigs.language]['confidintial-stamp.png'].src}"> </img>
     </div>
 </textarea>
 
