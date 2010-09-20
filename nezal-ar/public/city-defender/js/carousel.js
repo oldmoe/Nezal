@@ -16,13 +16,14 @@ var Carousel = Class.create( {
     
     enabled : true,
     
-    images : {  'left' : "images/intro/mission/carousel/left.png",
-                'left-disabled' : "images/intro/mission/carousel/left-disabled.png",
-                'right' : "images/intro/mission/carousel/right.png",
-                'right-disabled' : "images/intro/mission/carousel/right-disabled.png" },
+    images : {  'left' : "",
+                'left-disabled' : "",
+                'right' : "",
+                'right-disabled' : "" },
     
-    initialize : function(id){
+    initialize : function(id, images){
         this.id = id;
+        this.images = images;
         this.width = parseInt($$('#' + this.id + ' ul li')[0].getStyle('width')) + 
                         parseInt($$('#' + this.id + ' ul li')[0].getStyle('padding-left')) + 
                         parseInt($$('#' + this.id + ' ul li')[0].getStyle('padding-right')) +

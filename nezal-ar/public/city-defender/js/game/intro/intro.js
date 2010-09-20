@@ -9,8 +9,61 @@ var GameConfigs = {
   towers : [],
   superWeapons : [],
   upgrades : [],
-  weaponsPackage :{}
+  weaponsPackage :{},
+  language : 'english'
 }
+
+var ResourceLoader = Class.create( {
+
+    resources:  null,
+    
+    loadedCount : 0,
+    
+    addResource: function(resource)
+    {
+        if(!this.resources)
+        {
+            this.resources = new Hash();
+        }
+        if(!this.resources.get(resource))
+        {
+            this.resources.set(resource, null);
+        }
+    },
+
+    load: function(callback, errorCallback)
+    {
+        var self=this;
+        this.resources.each(
+            function(resource){
+                if(!resource[1])
+                {
+                    new Ajax.Request( resource[0], {method:'get',
+                                                      onSuccess: function(t){
+                                                          self.resources.set(resource[0], t.responseText);
+                                                          self.loadedCount ++;
+                                                          if(self.loadedCount == self.resources.keys().length)
+                                                          {
+                                                              self.loadedCount = 0;
+                                                              callback();
+                                                          }
+                                                      },
+                                                      onFailure: function(){
+                                                          if(errorCallback)
+                                                            errorCallback();
+                                                      }
+                                      });
+                }else{
+                    self.loadedCount ++;
+                    if(self.loadedCount == self.resources.keys().length)
+                    {
+                        self.loadedCount = 0;
+                        callback();
+                    }
+                }
+          });
+    }
+})
 
 var Config = GameConfigs;
 
@@ -23,6 +76,8 @@ var Intro = {
     dirty : false ,
     currentPage : -1,
     nextPageIndex : 0,
+    campLoader : new ResourceLoader(),
+    missionLoader : new ResourceLoader(),
     sequence : [
               "levelSelection",
               "campaign",
@@ -33,12 +88,14 @@ var Intro = {
             ],
     templates : {
               challenges : [ "challengesTemplate", 0],
+              levelSelection : [ "levelSelectionTemplate", 0],
               campaign : [ "campaignTemplate", 0],
               mission : [ "missionTemplate", 0],
               towers : [ "marketItemsTemplate", 0],
               weapons : [ "marketItemsTemplate", 0],
               upgrades : [ "marketItemsTemplate", 0],
-              marketplaceItem : [ "marketItemDetailsTemplate", 0]
+              marketplaceItem : [ "marketItemDetailsTemplate", 0],
+              marketplaceTabs : [ "marketplaceTabsTemplate", 0]
             },
     images : {
         path : "images/intro/" ,
@@ -50,9 +107,9 @@ var Intro = {
         ],
         
         inProgress : [
-                        'loading.png',
-                        'loading-text.png',
-                        'loading-bar.gif'
+                        'images/progress/loading.png',
+                        'images/progress/loading-text.png',
+                        'images/progress/loading-bar.gif'
                     ],
         
         levelSelection : [
@@ -127,8 +184,12 @@ var Intro = {
 
     initialize: function(){
         this.currentPage = -1;
-        Intro.enablePauseScreen();
         Intro.retrieveTemplates();
+    },
+    
+    start: function(){  
+        if(Intro.doneLoading && Loader.doneLoading)
+            Intro.next();          
     },
     
     retrieveTemplates: function(){
@@ -142,9 +203,12 @@ var Intro = {
                                         onSuccess: function(t){
                                     		  	          $("gameStart").innerHTML = t.responseText;
                                     		  	          Intro.templates['game'] = t.responseText;
-                                        		  	      Intro.retrieveData( function() {
-                                                          Intro.next();
-                                                      })
+                    		  	                          Loader.loadPage(GameConfigs.campaign, function(){
+                                            		  	      Intro.retrieveData( function() {
+                                            		  	          Intro.doneLoading = true;
+                                                              Intro.start();
+                                                          })
+                                                      });
                                         } 
                 });
 			      }
@@ -165,7 +229,7 @@ var Intro = {
     },
     
     campPath : function() {
-        return "challenges/" + GameConfigs.campaign; 
+        return "challenges/" + GameConfigs.campaign + "/" + GameConfigs.language ; 
     },
     
     missionPath : function(){
@@ -190,26 +254,25 @@ var Intro = {
         levelSelection : {
             index : 0,
             onSelect : function() {
+                $('levelSelection').innerHTML = Intro.templates.levelSelection[1].process(); 
+                Intro.show();
             }
         },
         campaign : {
             index : 1,
             onSelect : function() {
-                new Ajax.Request( Intro.campPath() + "/camp.info" ,
-                    { method:'get', 
-                      onSuccess: function(t, json){
-                          ChallengeSelector.campaignInfo = JSON.parse(t.responseText);
-                          new Ajax.Request( GameConfigs.campaign + "/metadata" ,      
-                          {   method:'get', 
-                              onSuccess: function(t, json){
-                                  Intro.campaignInfo = JSON.parse(t.responseText);
-                                  $('campaign').innerHTML = 
-                                          Intro.templates.campaign[1].process({"camp":ChallengeSelector.campaignInfo}); 
-                                  Intro.show();
-                              }
-                          });
-                      }
-                    });
+                var loader = Intro.campLoader;
+                var campInfoPath = Intro.campPath() + "/camp.info";
+                var campMetadata = GameConfigs.campaign + "/metadata";                
+                loader.addResource(campInfoPath);
+                loader.addResource(campMetadata);
+                loader.load(function(){
+                                ChallengeSelector.campaignInfo = JSON.parse(loader.resources.get(campInfoPath));
+                                Intro.campaignInfo = JSON.parse(loader.resources.get(campMetadata));
+                                $('campaign').innerHTML = 
+                                      Intro.templates.campaign[1].process({"camp":ChallengeSelector.campaignInfo}); 
+                                Intro.show();
+                            });
             }
         },
         mission : {
@@ -224,26 +287,32 @@ var Intro = {
                                     }
                                 })
                 ChallengeSelector.missionCreeps = creepInfo.uniq();
-                new Ajax.Request( Intro.campPath() + Intro.missionPath() + "/mission.info" ,
-                    {method:'get', 
-                      onSuccess: function(t, json){
-                          ChallengeSelector.mission = JSON.parse(t.responseText);
+                var loader = Intro.missionLoader;
+                var missionPath = Intro.campPath() + Intro.missionPath() + "/mission.info";
+                loader.addResource(missionPath)
+                loader.load( function(){
+                          ChallengeSelector.mission = JSON.parse(loader.resources.get(missionPath));
                           ChallengeSelector.mission.creeps = ChallengeSelector.missionCreeps;
                           $('mission').innerHTML = Intro.templates.mission[1].process({ 
                                               "city" : ChallengeSelector.mission,
-                                              "path" : Intro.campPath() + Intro.missionPath(),
+                                              "path" : Intro.missionPath(),
                                               "creepConfig" : CreepConfig }); 
-                          Intro.creepsCarousel = new Carousel("creeps-scroll");
+                          var images = {
+                                      'left' : Loader.images.intro['mission/carousel/left.png'].src,
+                                      'left-disabled' : Loader.images.intro['mission/carousel/left-disabled.png'].src,
+                                      'right' : Loader.images.intro['mission/carousel/right.png'].src,
+                                      'right-disabled' : Loader.images.intro['mission/carousel/right-disabled.png'].src
+                          };
+                          Intro.creepsCarousel = new Carousel("creeps-scroll", images);
                           Intro.creepsCarousel.displayCount = 4;
                           Intro.show();
-        	            }
-                });
+        	            });
             },
             setFloatBgInfo : function(element){
                   $$("#mission #floatBg div span")[0].innerHTML = CreepConfig[element.getAttribute("creepid")].name;
                   $$("#mission #floatBg div span")[1].innerHTML = CreepConfig[element.getAttribute("creepid")].desc;  
-                  $$("#mission #floatBg .skeleton img")[0].src = Intro.images.path + "creeps/" + 
-                                                            CreepConfig[element.getAttribute("creepid")].skeleton;    
+                  $$("#mission #floatBg .skeleton img")[0].src = Loader.images.intro[ "creeps/" + 
+                                                  CreepConfig[element.getAttribute("creepid")].skeleton].src;    
             }
         }, 
         towers : {
@@ -267,16 +336,9 @@ var Intro = {
                                                   "type" : "towers",
                                                   "data" : data,
                                                   "itemConfig" : TowerConfig });
-                /* Change the tabs accordingly */
-                path = "images/intro/market/";
-                $$("#marketPlace #towersTab img")[0].addClassName('on');
-                $$("#marketPlace #towersTab img")[0].src = path + "tab-on.png";
-                $$("#marketPlace #weaponsTab img")[0].removeClassName('on');
-                $$("#marketPlace #weaponsTab img")[0].src = path + "tab-off.png";
-                $$("#marketPlace #upgradesTab img")[0].removeClassName('on');
-                $$("#marketPlace #upgradesTab img")[0].src = path + "tab-off.png";
+                $$('#towers #marketTabs')[0].innerHTML =
+                         Intro.templates.marketplaceTabs[1].process({'type' : 'towers'});
                 Intro.show();
-                $('marketPlace').show();
             },
             setFloatBgInfo : function(element){
                   var id = element.getAttribute('itemid');
@@ -327,16 +389,9 @@ var Intro = {
                                                   "type" : "weapons",
                                                   "data" : data,
                                                   "itemConfig" : SuperWeaponConfig });
-                /* Change the tabs accordingly */
-                path = "images/intro/market/";
-                $$("#marketPlace #weaponsTab img")[0].addClassName('on');
-                $$("#marketPlace #weaponsTab img")[0].src = path + "tab-on.png";
-                $$("#marketPlace #towersTab img")[0].removeClassName('on');
-                $$("#marketPlace #towersTab img")[0].src = path + "tab-off.png";
-                $$("#marketPlace #upgradesTab img")[0].removeClassName('on');
-                $$("#marketPlace #upgradesTab img")[0].src = path + "tab-off.png";   
+                $$('#weapons #marketTabs')[0].innerHTML = 
+                        Intro.templates.marketplaceTabs[1].process({'type' : 'weapons'});     
                 Intro.show();
-                $('marketPlace').show();
             },
             setFloatBgInfo : function(element){
                 var id = element.getAttribute('itemid');
@@ -384,16 +439,9 @@ var Intro = {
                                                   "type" : "upgrades",
                                                   "data" : data,
                                                   "itemConfig" : UpgradeConfig });
-                /* Change the tabs accordingly */ 
-                path = "images/intro/market/";
-                $$("#marketPlace #upgradesTab img")[0].addClassName('on');
-                $$("#marketPlace #upgradesTab img")[0].src = path + "tab-on.png";  
-                $$("#marketPlace #towersTab img")[0].removeClassName('on');
-                $$("#marketPlace #towersTab img")[0].src = path + "tab-off.png";
-                $$("#marketPlace #weaponsTab img")[0].removeClassName('on');
-                $$("#marketPlace #weaponsTab img")[0].src = path + "tab-off.png";
+                $$('#upgrades #marketTabs')[0].innerHTML = 
+                                Intro.templates.marketplaceTabs[1].process({'type': 'upgrades'});
                 Intro.show();
-                $('marketPlace').show();
             },
             setFloatBgInfo : function(element){
                 var id = element.getAttribute('itemid');
@@ -466,7 +514,8 @@ var Intro = {
         Intro.dirty = true;
         var type = element.getAttribute('type');
         var name = type;
-        Intro.userData.metadata.added[type].splice( Intro.userData.metadata.added[type].indexOf(element.getAttribute('itemid')), 1);
+        Intro.userData.metadata.added[type].splice( 
+                          Intro.userData.metadata.added[type].indexOf(element.getAttribute('itemid')), 1);
         var gameData = [];
         var itemConfig = TowerConfig; 
         Intro.toLabels( Intro.gameData, gameData);
@@ -629,28 +678,6 @@ var Intro = {
         GameConfigs.exp = Intro.userData.exp;
     },
     
-    enablePauseScreen : function() {
-        $('pause').show()
-    },
-    
-    disablePauseScreen : function() {
-        $('pause').hide()
-    },
-    
-    show: function(){
-        $$('.clickSound').each(function(element){
-          element.observe('click', function(element){Sounds.play(Sounds.gameSounds.click)})
-        })
-        Intro.disablePauseScreen();
-        $('marketPlace').hide();
-	      if(	Intro.currentPage >= 0) {
-          $(Intro.sequence[Intro.currentPage]).hide();
-        }
-	      Intro.currentPage = Intro.nextPageIndex;
-        $(Intro.sequence[Intro.currentPage]).style['display'] = "block"; //show();    
-        $("intro").style['cursor'] = 'auto';
-    },
-    
     showFloatBg : function(element){
         Intro.pages[Intro.sequence[Intro.currentPage]].setFloatBgInfo(element);
         $$("#" + Intro.sequence[Intro.currentPage]  + " #" + "floatBg")[0].show();
@@ -658,6 +685,35 @@ var Intro = {
     
     hideFloatBg : function(){
         $$("#" + Intro.sequence[Intro.currentPage]  + " #" + "floatBg")[0].hide();
+    },
+
+    enablePauseScreen : function() {
+        $('pause').show()
+    },
+    
+    disablePauseScreen : function() {
+        $('pause').hide()
+    },
+
+    show: function(){
+        $$('.clickSound').each(function(element){
+          element.observe('click', function(element){Sounds.play(Sounds.gameSounds.click)})
+        })
+        window.setTimeout(Intro.display, 200);
+    },
+    
+    display : function(){
+        Intro.disablePauseScreen();
+        $('marketPlace').hide();
+        if(	Intro.currentPage >= 0) {
+          $(Intro.sequence[Intro.currentPage]).hide();
+        }
+        Intro.currentPage = Intro.nextPageIndex;
+        $(Intro.sequence[Intro.currentPage]).style['display'] = "block"; //show();    
+        if([Intro.pages['towers'].index, Intro.pages['weapons'].index,
+             Intro.pages['upgrades'].index].indexOf(Intro.currentPage) >= 0)
+            $('marketPlace').show();
+        $("intro").style['cursor'] = 'auto';
     },
 
 	  next: function(current){
