@@ -200,16 +200,16 @@ var Intro = {
               		  Intro.templates[template][1] = TrimPath.parseDOMTemplate(Intro.templates[template][0]);
                 }
                 new Ajax.Request( PathConfigs.gameTemplate, {method:'get',
-                                        onSuccess: function(t){
-                                    		  	          $("gameStart").innerHTML = t.responseText;
-                                    		  	          Intro.templates['game'] = t.responseText;
-                    		  	                          Loader.loadPage(GameConfigs.campaign, function(){
-                                            		  	      Intro.retrieveData( function() {
-                                            		  	          Intro.doneLoading = true;
-                                                              Intro.start();
-                                                          })
-                                                      });
-                                        } 
+                            onSuccess: function(t){
+                        		  	          $("gameStart").innerHTML = t.responseText;
+                        		  	          Intro.templates['game'] = t.responseText;
+        		  	                          Loader.loadPage(GameConfigs.campaign, function(){
+                                		  	      Intro.retrieveData( function() {
+                                		  	          Intro.doneLoading = true;
+                                                  Intro.start();
+                                              })
+                                          });
+                            } 
                 });
 			      }
 	      });
@@ -608,7 +608,6 @@ var Intro = {
     sendScore : function(score, weapons, win, callback){
         if(!weapons)
             weapons = {}
-        console.log(weapons)
         new Ajax.Request(  GameConfigs.campaign + "/metadata" ,
               {   method:'post', 
                   parameters: { 'data' : Object.toJSON({'mission' : GameConfigs.mission.order,

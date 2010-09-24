@@ -70,8 +70,9 @@ var Plane = Class.create(Creep, {
 			var cell = Map.grid[this.gridX][this.gridY];
 			var res = cell.splice(cell.indexOf(this), 1);
 		}
-		this.scene.money += this.price;
+		this.scene.money += Math.floor(this.price);
 		this.scene.stats.creepsDestroyed++
+		this.scene.score += this.maxHp
 	},
 	destroySprites : function(){
 		this.dead = true	

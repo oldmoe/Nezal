@@ -25,9 +25,11 @@ var Sounds = {
 	channels : [],
 
 	play : function(store, direct){
+		store[0].play()
+		return 
 		//if(!game.scene.sound) return
 		Sounds.checkFinishedAudio()
-		if(Sounds.channels.length == 8) return
+		if(Sounds.channels.length == 5) return
 		if(direct){
 			store[0].load()
 			store[0].play()
@@ -38,11 +40,6 @@ var Sounds = {
 			Sounds.channels.push({audio : audio , store : store})
 			audio.play()
 		}
-	},
-
-	registerAudioCleaner : function(reactor){
-		Sounds.reactor = reactor
-		reactor.push(1, Sounds.checkFinishedAudio)
 	},
 
 	checkFinishedAudio : function(){
@@ -74,13 +71,13 @@ else if(test.canPlayType('audio/ogg')){
 }
 
 var soundNames = ['accept','pause' ,'wash','add_item', 'plane',
-'add_money', 'rank_promotion','win', 'lose'   ,   'reject','wrong_tower','click','correct_tower' ]
+'add_money', 'rank_promotion','win', 'lose', 'reject','wrong_tower','click','correct_tower' ]
 
 function createSounds(){
-	createAudioElements(5, Sounds.turret.fire,"bullet")
-	createAudioElements(5, Sounds.turret.rocketLaunch, "rocket");
-	createAudioElements(5, Sounds.turret.patriotLaunch, "patriot");
-	createAudioElements(5, Sounds.boom.unit, "explosion")
+	createAudioElements(2, Sounds.turret.fire,"bullet")
+	createAudioElements(2, Sounds.turret.rocketLaunch, "rocket");
+	createAudioElements(2, Sounds.turret.patriotLaunch, "patriot");
+	createAudioElements(2, Sounds.boom.unit, "explosion")
 	createAudioElements(1, Sounds.superWeapons.heal, "heal")
 	createAudioElements(1, Sounds.superWeapons.hyper,"hyper")
 	createAudioElements(1, Sounds.superWeapons.nuke,"nuke")
@@ -90,19 +87,43 @@ function createSounds(){
 		createAudioElements(1, Sounds.gameSounds[soundNames[i]],soundNames[i])
 	}
 }
-
+/*
 function createAudioElements(count, store, url){
 	var audio = createAudioElement(store, url)
 	for(var i =0; i< count - 1; i++){
-		store.push(audio.clone())
+		var audioClone = new Audio
+		audioClone.src = audio.src
+		store.push(audioClone)
 	}
 }
 
 function createAudioElement(store, url){
-	var audio =new Audio 
+	var audio = new Audio 
 	audio.src = Loader.sounds.game[url+"."+Loader.soundsFormat].src
 	//audio.load()	
 	if(!store)store = []
 	store.push(audio);
 	return audio
 }
+*/
+
+function createAudioElements(count, store, url){
+	var sound = soundManager.createSound({
+	  id: url,
+	  url: 'sounds/sfx/mp3/'+url+'.mp3',
+	  autoLoad: true,
+	  autoPlay: false,
+	  volume: 50
+	});
+	if(!store)store = []
+	store.push(sound)
+}
+
+soundManager.onready(function() {
+  if (soundManager.supported()) {
+    // SM2 is ready to go!
+    createSounds()
+  } else {
+    alert('el7a2oooooony!!! ana ba2eeet a\'7raaaaas')
+  }
+});

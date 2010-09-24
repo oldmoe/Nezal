@@ -65,7 +65,7 @@ class GamesController < ApplicationController
     data = {
       :camp_data => { :metadata => camp_metadata} , 
       :user_data => { :metadata => user_camp_metadata }
-    }
+    }	
     JSON.generate(data)
   end
     
@@ -94,5 +94,29 @@ class GamesController < ApplicationController
   get '/:game_name' do 
     File.read(File.join( 'public', @app_configs["game_name"], 'index.html'))
   end
-    
+
+	
+  post '/:game_name/:camp_name/:userid/friendsranks' do 
+		response = {:top => []}
+		camp = Campaign.where(:path => params['camp_name'], :game_id => @game.id).first
+		result = @user.ranking camp.id,params['friends']
+		response[:close] = result[:previous].collect{|uc| {:id => uc[:fb_user], :score => uc[:score] } } + [{:id => result[:user_camp][:fb_user], :score => result[:user_camp][:score], :rank => result[:rank]}]+ result[:next].collect{|uc| {:id => uc[:fb_user], :score => uc[:score] } }
+		top_scorers = FbUser.top_scorers camp.id,params['friends']
+		top_scorers.each_with_index do |item,index|
+			response[:top].push( {'id'=> top_scorers[index]['fb_user'],'score'=> top_scorers[index]['score']})			
+		end
+		return  JSON.generate(response)
+  end 
+
+	post '/:game_name/:camp_name/:userid/worldranks' do 
+		response = {:top => []}
+		camp = Campaign.where(:path => params['camp_name'], :game_id => @game.id).first
+		result = @user.ranking camp.id
+		response[:close] = result[:previous].collect{|uc| {:id => uc[:fb_user], :score => uc[:score] } } + [{:id => result[:user_camp][:fb_user], :score => result[:user_camp][:score], :rank => result[:rank]}]+ result[:next].collect{|uc| {:id => uc[:fb_user], :score => uc[:score] } }
+		top_scorers = FbUser.top_scorers camp.id
+		top_scorers.each_with_index do |item,index|
+			response[:top].push( {'id'=> top_scorers[index]['fb_user'],'score'=> top_scorers[index]['score']})			
+		end
+	  JSON.generate(response)
+  end 
 end

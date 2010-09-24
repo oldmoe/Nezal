@@ -23,11 +23,10 @@ var Tutorial = Class.create({
 		}
 		this.scene.push(50,scroll)
 		this.ok.observe('click',function(){
-		next = true
-		self.placeTower()
-		self.viewMessage(1)
-		self.ok.stopObserving('click')
-		/*
+			next = true
+			self.placeTower()
+			self.viewMessage(1)
+			self.ok.stopObserving('click')
 			self.viewMessage(1);
 			self.ok.stopObserving('click')
 			self.ok.observe('click',function(){
@@ -48,7 +47,6 @@ var Tutorial = Class.create({
 					})				
 				})
 			})
-			*/
 		})
 	},
 	viewMessage: function(num){
@@ -58,9 +56,10 @@ var Tutorial = Class.create({
 	
 	placeTower: function(){
 		this.validate = GhostTurret.validate
-		GhostTurret.validate =function(x, y, tower){			
+		GhostTurret.validate =function(){			
 			GhostTurret.valid = true
-			if((x!=4||y!=4)){
+			console.log(this.xGrid,this.yGrid)
+			if((this.xGrid!=4||this.yGrid!=4)){
 				GhostTurret.valid = false
 			}
 		}
