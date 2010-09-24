@@ -7,7 +7,7 @@ class FbUser < ActiveRecord::Base
   attr_accessor :session
 
   # Get Global Top Scorers 
-  def self.top_scorers(camp_id, user_ids = [], limit = 5)
+  def self.top_scorers(camp_id, user_ids = [], limit = 3)
     conditions =  " campaign_id = #{camp_id} "
     if user_ids && !(user_ids.empty?)
      conditions+= " AND fb_user IN (#{user_ids})"
