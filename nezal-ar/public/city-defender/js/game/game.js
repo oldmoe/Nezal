@@ -7,8 +7,10 @@ pause : "pause"
 var Game = Class.create({
 	initialize : function(delay){
 	},
+	
 	start : function(){
 		Map.init();
+		this.prepareConfig()
 		this.config = Nezal.clone_obj(Config)
 		this.config.waves.reverse()
 		this.scene = new CityDefenderScene(this.config,50,this.ctx,this.topCtx);
@@ -33,18 +35,27 @@ var Game = Class.create({
 		if(Config.mapEntry)Map.entry = Config.mapEntry
 		this.scene.start();
 	},
-	setGameImages : function(){
-		Loader.images.background['win.png'].setAttribute("id","winImage")
-		$$('#result #winImage')[0].src = Loader.images.background['win.png'].src;
-		$$('#result #loseImage')[0].src = Loader.images.background['lose.png'].src;
-		$$('#result #youWin')[0].src = Loader.images.background['you_win.png'].src ;
-		$$('#result #youLose')[0].src = Loader.images.background['you_lose.png'].src ;
+	prepareConfig : function(){
 		var ind = Config.towers.indexOf("Belcher")
 		if(ind!=-1)Config.towers[ind] = "Turret"
 		var ind = Config.towers.indexOf("Reaper")
 		if(ind!=-1)Config.towers[ind] = "DoubleTurret"
 		var ind = Config.towers.indexOf("Exploder")
 		if(ind!=-1)Config.towers[ind] = "RocketLauncher"
+		if(Config.superWeapons.indexOf('Splash')!=-1&&Config.superWeapons[0]!="Splash"){
+			var x = Config.superWeapons[0]
+			var y = Config.superWeapons.indexOf("Splash")
+			Config.superWeapons[0] = "Splash"
+			Config.superWeapons[y]=x
+		}
+	},
+	setGameImages : function(){
+		Loader.images.background['win.png'].setAttribute("id","winImage")
+		$$('#result #winImage')[0].src = Loader.images.background['win.png'].src;
+		$$('#result #loseImage')[0].src = Loader.images.background['lose.png'].src;
+		$$('#result #youWin')[0].src = Loader.images.background['you_win.png'].src ;
+		$$('#result #youLose')[0].src = Loader.images.background['you_lose.png'].src ;
+		game.prepareConfig()
 		Config.towers.each(function(tower){
 			var div = document.createElement("div");
 			div.style.cursor = "pointer"
@@ -56,12 +67,7 @@ var Game = Class.create({
 			var div = document.createElement("div");
 			$$(".towers").first().appendChild(div)
 		}		
-		if(Config.superWeapons.indexOf('Splash')!=-1&&Config.superWeapons[0]!="Splash"){
-			var x = Config.superWeapons[0]
-			var y = Config.superWeapons.indexOf("Splash")
-			Config.superWeapons[0] = "Splash"
-			Config.superWeapons[y]=x
-		}
+		
 		var arr = ['Splash','Heal','Hyper','Weak','Nuke']
 		arr.each(function(weapon){
 				var wCapital = weapon
@@ -78,11 +84,6 @@ var Game = Class.create({
 				$$(".superWeaponsOff").first().appendChild(div2)
 			
 		})		
-		Config.superWeapons.each(function(weapon){
-			weapon = weapon.toLowerCase();
-			
-			
-		})
 		$('pauseWindow').style.zIndex = 299;
 		$('pauseWindow').style.width =760;
 		$('pauseWindow').style.height = 550; 
@@ -124,9 +125,7 @@ var Game = Class.create({
 	},
 	
 	registerHandlers : function(){
-		var self = this
-		$$('#gameElements .upgrades .upgrade.next').invoke('observe', 'click', Upgrades.upgrade)	
-		$$('#gameElements .upgrades .upgradeItem').invoke('observe', 'click', Upgrades.select)			
+		var self = this	
 		$$('.towers div').invoke('observe','click', function(){
 			Sounds.play(Sounds.gameSounds.click);GhostTurret.select(this)
 		})
@@ -140,12 +139,11 @@ var Game = Class.create({
 	},
 	reset : function(){
 		game.scene.reactor.pause()
-		Upgrades.init()
-		Upgrades.selectDefault();
 		new Effect.Fade('static')
 		$$('#gameElements .start').first().stopObserving('click')
 		$$('#gameElements .start').first().removeClassName('resumed')
 		$$('#gameElements .start').first().removeClassName('paused')
+		game.unRegisterHandlers()
 		$('droppingGround').removeClassName('off')	
 		$('result').hide()
 		$$('#gameElements .superWeapons div').each(function(div){ 
@@ -160,9 +158,7 @@ var Game = Class.create({
     	    Intro.replay();	
 			    onFinish()
 	},
-	unRegisterHandlers : function(){
-		$$('#gameElements .upgrades .upgrade.next').invoke('stopObserving', 'click')	
-		$$('#gameElements .upgrades .upgradeItem').invoke('stopObserving', 'click')			
+	unRegisterHandlers : function(){	
 		$$('.towers div').invoke('stopObserving','click')
 		$$('#gameElements .start').first().stopObserving('click')
 		$$('#gameElements .superWeapons div').each(function(div){ 
