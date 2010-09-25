@@ -284,7 +284,7 @@ var Intro = {
                                       'left' : Loader.images.intro['market/carousel/left.png'].src,
                                       'left-disabled' : Loader.images.intro['market/carousel/left-disabled.png'].src,
                                       'right' : Loader.images.intro['market/carousel/right.png'].src,
-                                      'right-disabled' : Loader.images.intro['market/carousel/right-disabled.png'].src,
+                                      'right-disabled' : Loader.images.intro['market/carousel/right-disabled.png'].src
                           };
                 Intro.weaponsCarousel = new Carousel("weapons-scroll", images, 5);
                 Intro.towersCarousel = new Carousel("towers-scroll", images, 5);
@@ -391,7 +391,7 @@ var Intro = {
                                                        'score' : score }) },
                   onSuccess : function(t, json){
                       var data = JSON.parse(t.responseText);
-                      Intro.campaignInfo.user_data.metadata = JSON.parse(data['camp_data']['metadata']);
+                      Intro.campaignInfo.user_data.metadata = JSON.parse(data['user_data']['metadata']);
                       Intro.userData.rank = data['user_data'].rank;
                       Intro.userData.exp = data['user_data'].exp;                      
                       Intro.setupGameConfigs();

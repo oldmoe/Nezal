@@ -77,8 +77,8 @@ class GamesController < ApplicationController
     klass.edit_user_campaign(user_camp, params['data'])
     user_camp = UserCampaign.where('campaign_id'=> camp.id, 'fb_user' => @user.fb_id).first
     data = {
-      :camp_data => user_camp.metadata,
       :user_data => { 
+                      :metadata => user_camp.metadata,
                       :rank => user_camp.profile.rank.name,
                       :exp => user_camp.profile.score
                    }
