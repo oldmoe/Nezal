@@ -13,7 +13,7 @@ var Loader = {
 		else if(test.canPlayType('audio/ogg')){
 			this.soundsFormat = 'ogg'	
 		}							
-		this.toLoad = ["animations.html", "intro.html", this.soundsFormat+".html", "user.html", "background.html",  "game.html", "english.html"]
+		this.toLoad = ["animations.html", "intro.html", this.soundsFormat+".html", "user.html", "background.html",  "game.html", "english.html", "arabic.html"]
 		this.soundIndex = this.toLoad.indexOf(this.soundsFormat+".html")
 	},
 
