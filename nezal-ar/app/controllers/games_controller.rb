@@ -77,7 +77,8 @@ class GamesController < ApplicationController
     klass.edit_user_campaign(user_camp, params['data'])
     user_camp = UserCampaign.where('campaign_id'=> camp.id, 'fb_user' => @user.fb_id).first
     data = {
-      :user_data => { :metadata => user_camp.profile.metadata,
+      :camp_data => user_camp.metadata,
+      :user_data => { 
                       :rank => user_camp.profile.rank.name,
                       :exp => user_camp.profile.score
                    }
@@ -89,6 +90,13 @@ class GamesController < ApplicationController
   post '/:game_name/users/newbie' do
     @game_profile.newbie = false;
     @game_profile.save
+  end
+    
+  # Change User to be nolonger a newbie
+  post '/:game_name/users/locale' do
+    @game_profile.locale = params['locale'];
+    @game_profile.save
+    @game_profile.locale
   end
     
   get '/:game_name' do 

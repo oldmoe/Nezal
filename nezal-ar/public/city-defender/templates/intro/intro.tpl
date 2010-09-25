@@ -15,26 +15,61 @@
 
 
 <textarea id='levelSelectionTemplate' style="display:none">
-		<div id = "challengesText" style = "position : absolute;" > ${Text.intro.levelSelection.title} </div>
-    <img id="levelsBackground" src="${Loader.images.intro['level-selection.png'].src}"/>
-    <img id="gameName" src="${Loader.images[GameConfigs.language]['game-name.png'].src}" class="gameName"/>
+		<div id = "msg"> ${Text.intro.levelSelection.msg} </div>
+		<div id = "challengesText"> ${Text.intro.levelSelection.title} </div>
+    <div id="background">
+      <img id="paper" src="${Loader.images.intro['paper.png'].src}"/>
+      <img id="introText" src="${Loader.images.intro['text.png'].src}"/>
+      <img id="logo" src="${Loader.images.intro['logo.png'].src}"/>
+      <img id="title" src="${Loader.images.intro['title.png'].src}"/>
+      <img id="blank" src="${Loader.images.intro['blank.png'].src}"/>
+      <img id="titleAr" src="${Loader.images.intro['title-ar.png'].src}"/>
+    </div>
+    <div id="language">
+      {for lang in Language.langsNames}
+        {if (lang[0]==Language.userLanguage)}
+          <div  id="selectedLang">
+            <img id="selected" src="${Loader.images.intro['language.png'].src}"/>
+            <div style="position : relative; top : -40px" >
+              ${lang[1]}  
+            </div>
+          </div>
+        {/if}
+      {/for}
+      {for lang in Language.langsNames}
+        {if !(lang[0]==Language.userLanguage)}
+          <div style="height : 25px;" language="${lang[0]}"
+                onclick="Intro.selectLanguage(this)">
+            ${lang[1]}
+          </div>
+        {/if}
+      {/for}
+    </div>
     <div id="levels">
-        <img id='levelsLinks' src="${Loader.images.intro['difficulty.png'].src}"/>
-        <div id="easy" onclick="GameConfigs.level=1; Intro.next(); return false;" class="clickSound">
+        <span id="easy" onclick="GameConfigs.level=1; Intro.next(); return false;" class="clickSound">
           ${Text.intro.levelSelection.easy}
-        </div>
-        <div id="medium" onclick="GameConfigs.level=2; Intro.next(); return false;" class="clickSound">
+          <span style="font-size:14px;text-transform:lowercase;"> 1 </span>
+          <span style="font-size:14px;text-transform:lowercase;"> ${Text.intro.levelSelection.score} </span>
+        </span>
+        <span id="medium" onclick="GameConfigs.level=2; Intro.next(); return false;" class="clickSound">
           ${Text.intro.levelSelection.medium}
-        </div>
-        <div id="hard" onclick="GameConfigs.level=3; Intro.next(); return false;" class="clickSound">
+          <span style="font-size:14px;text-transform:lowercase;"> 2 </span>
+          <span style="font-size:14px;text-transform:lowercase;"> ${Text.intro.levelSelection.score} </span>
+        </span>
+        <span id="hard" onclick="GameConfigs.level=3; Intro.next(); return false;" class="clickSound">
           ${Text.intro.levelSelection.hard}
-        </div>
+          <span style="font-size:14px;text-transform:lowercase;"> 3 </span>
+          <span style="font-size:14px;text-transform:lowercase;"> ${Text.intro.levelSelection.score} </span>
+        </span>
     </div>
 </textarea>
 
 
 <textarea id='campaignTemplate' style="display:none">
-    <img id="campaign-bg" src="${Loader.images.intro['campaign/campaign-bg.png'].src}"/>
+    <div id="background">
+      <img src="${Loader.images.intro['background.png'].src}"/>
+      <img id="paper" src="${Loader.images.intro['paper.png'].src}"/>
+    </div>
     <div class="camp-details">
       <div class="name">
         ${camp['name']}
@@ -53,7 +88,7 @@
                    src="${Loader.challenges[GameConfigs.campaign]['images/'+mission.path+'/mission_active.png'].src}"/>
               </div>
               <div class="missionName">
-                ${mission['name']}
+                ${Intro.campaignInfo.missions[mission.path]['name']}
               </div>
             </div>
           {else}
@@ -61,7 +96,7 @@
               <img id="${mission['path']}" 
                  src="${Loader.challenges[GameConfigs.campaign]['images/'+mission.path+'/mission_inactive.png'].src}"/>
               <div class="missionName">
-                ${mission['name']}
+                ${Intro.campaignInfo.missions[mission.path]['name']}
               </div>
             </div>
           {/if}
@@ -70,7 +105,7 @@
     <div id="back" onclick="Intro.previous();" class="clickableButton clickSound">
       <img src="${Loader.images.intro['back.png'].src}"/>
       <div class="text buttonText">
-        Back
+          ${Text.intro.campaign.back}
       </div>
     </div>
 </textarea>
@@ -78,7 +113,7 @@
 
 <textarea id='missionTemplate' style="display:none">
     <div id="floatBg" style="display : none;">
-      <img src="${Loader.images.intro['mission/float-bg.png'].src}"></img>
+      <img src="${Loader.images.intro['float-bg.png'].src}" style="width:400px;"></img>
       <div id="close" onclick="Intro.hideFloatBg();" class="clickSound"></div>
       <div class="content"> 
         <div class="spans">
@@ -91,7 +126,14 @@
         </div>
       </div>
     </div>
-    <img id="missionBackground" src="${Loader.images.intro['mission/mission-bg.png'].src}"></img>
+    <div id="background">
+      <img src="${Loader.images.intro['background.png'].src}"/>
+      <img id="paper" src="${Loader.images.intro['paper.png'].src}"/>
+      <img id="character" src="${Loader.images.intro['mission/character.png'].src}"/>
+      <img id="buble" src="${Loader.images.intro['mission/buble.png'].src}"/>
+      <img id="mapBackground" src="${Loader.images.intro['mission/map.png'].src}"/>
+      <img id="creepBackground" src="${Loader.images.intro['mission/creep.png'].src}"/>
+    </div>
     <div id="cityName">
         ${city.name}
     </div>
@@ -111,14 +153,14 @@
     <div id="accept" onclick="Intro.next();" class="clickableButton clickSound">
       <img src="${Loader.images.intro['mission/accept.png'].src}" >
       <div class="text buttonText">
-        Accept
+        ${Text.intro.mission.accept}
       </div>
     </div>
     <div id="reject" onclick="Intro.previous();" class="clickableButton clickSound">
-      <span style="color : #550000; font-size: 12px;">or</span> go back to campaign
+      <span style="color : #550000; font-size: 12px;">${Text.intro.mission.or}</span> ${Text.intro.mission.goBack}
     </div>
     <div class="creepsHeadline">
-      Intelligence suggests that the enemy is sending these forces :
+      ${Text.intro.mission.msg}
     </div>
     <div id="creeps">
 	      <div id="creeps-scroll">
@@ -144,13 +186,13 @@
     <div id="creepBar">
     </div>
     <div id="stamp">
-      <img src="${Loader.images.intro[GameConfigs.language]['confidintial-stamp.png'].src}"> </img>
+      <img src="${Loader.images[GameConfigs.language]['confidintial-stamp.png'].src}"> </img>
     </div>
 </textarea>
 
 
 <textarea id='marketItemDetailsTemplate' style="display:none">
-    <img src="images/intro/market/float-bg.png"></img>
+    <img src="${Loader.images.intro['float-bg.png'].src}"></img>
     <div id="close" onclick="Intro.hideFloatBg();" class="clickSound"></div>
     <div class="content"> 
       <div class="spans">
@@ -161,11 +203,11 @@
       </div>
       <div class="image">
         <div class="skeleton">
-          <img src="${Intro.images.path}${data.type}/${data.configs[data.itemid]['skeleton']}"></img>
+          <img src="${Loader.images.intro[data.type+'/'+data.configs[data.itemid]['skeleton']].src}"></img>
         </div>
         <div class="cost">
             <div class="img">
-              <img src="images/intro/market/coin.png"></img>
+              <img src="${Loader.images.intro['market/coin.png'].src}"></img>
             </div>
             <div class="value">
               ${data.cost}  
@@ -178,148 +220,140 @@
         <span {if (data.rank[0] > data.exp)} "style="color:red;" {/if}>
           Required Rank : 
         </span>
-        <img src="images/intro/ranks/${data.rank[1]}.png"> </img>
+        <img src="${Loader.images.intro['ranks/'+data.rank[1]+'.png'].src}"> </img>
       </div>
       <div class="action  clickableButton">
-          {if ((!Intro.gameData[data.type][data.itemid]['unlocked']) && (Intro.userData.metadata[data.type].indexOf(data.itemid) < 0 ) )}
+          {if (!Intro.userData.metadata[data.type][data.itemid])}
             {if ((data.cost > data.coins) || ( data.rank[0] > data.exp))}
               <span class="inactive"> unlock </span>
               {if (data.cost > data.coins)}
                 <div class="addMoney" >
-                  <img src="images/intro/market/money.png" > </img>
+                  <img src="${Loader.images.intro['market/money.png'].src}" > </img>
                 </div>
               {/if}
             {else}
-              <span class="active action clickSound" itemid="${data.itemid}" type="${data.type}" onclick="Intro.unlockItem(this);"> unlock </span>
+              <span class="active action clickSound" itemid="${data.itemid}" 
+                    type="${data.type}" onclick="Intro.unlockItem(this);"> unlock </span>
             {/if}
           {/if}
       </div>
     </div>
 </textarea>
-
-
-<textarea id='marketplaceTabsTemplate' style="display:none">
-    <div id="towersTab" class="towersTab clickSound" onclick="Intro.select('towers');">
-        <img {if (type=='towers') }
-                    src="${Loader.images.intro['market/tab-on.png'].src}" class="on"
-             {else}
-                    src="${Loader.images.intro['market/tab-off.png'].src}" class=""
-             {/if}/>
-        <div class="text">
-          Super Towers
-        </div>
-    </div>
-    <div id="weaponsTab" class="weaponsTab clickSound"   onclick="Intro.select('weapons');">
-        <img {if (type=='weapons') }
-                    src="${Loader.images.intro['market/tab-on.png'].src}" class="on"
-             {else}
-                    src="${Loader.images.intro['market/tab-off.png'].src}" class=""
-             {/if}/>
-        <div class="text">
-          Super Weapons
-        </div>
-    </div>
-    <div id="upgradesTab" class="upgradesTab clickSound"   onclick="Intro.select('upgrades');">
-        <img {if (type=='upgrades') }
-                 src="${Loader.images.intro['market/tab-on.png'].src}" class="on"
-             {else}
-                  src="${Loader.images.intro['market/tab-off.png'].src}" class="""
-             {/if}/>
-        <div class="text">
-          Super Upgrades
-        </div>
-    </div>
-</textarea>
-
 
 <textarea id='marketItemsTemplate' style="display:none">
-    <div id="marketTabs">
-    </div>
     <div id="floatBg" style="display : none;">
     </div>
-    <img src="images/intro/market/background.png"> </img>  
-    <div class="coins">
-        ${data.userData['coins']}
+    <div id="background">
+      <img src="${Loader.images.intro['background.png'].src}"/>
+      <img id="paper" src="${Loader.images.intro['paper.png'].src}"/>
     </div>
-    <div class="msg">
-        Select ${data['name']} to add them to your next mission army
-    </div>
-    <div id="${type}Display">
-      {for item in data.gameData[type] }
-      <div class="item">
-        <div itemid="${item}" class="clickable">
-          <div itemid="${item}" type="${type}" onclick="Intro.showFloatBg(this)" class="itemImage clickSound">
-            <img src="images/intro/${type}/${itemConfig[item]['image']}"></img>
+    <div id="upperPart">
+        <img src="${Loader.images.intro['market/upper.png'].src}"/>
+        <div class="rank">
+          <img class="rankImg" src="${Loader.images.intro['ranks/'+Intro.userData.rank +'.png'].src}"/>
+          <div class="rankText">
+            ${data.userData['rank']}
           </div>
-          {if ((Intro.gameData[type][item]['unlocked'] == true) || (data.userData.metadata[type].indexOf(item) >= 0 ) )}
-            {if (data.userData.metadata.added[type].indexOf(item) < 0) }
-              <div class="action clickSound" itemid="${item}" type="${type}"  onclick="Intro.addItem(this);" style="height:20px;" >
-                <img   src="images/intro/market/add.png" > </img> 
-                <div class="text buttonText">
-                  Add
-                </div>
-              </div>
-            {/if}
-          {else}
-            <img src="images/intro/market/locked.png" class="label"> </img>   
-            <div class="action clickSound" itemid="${item}" type="${type}"  onclick="Intro.showFloatBg(this);" style="height:20px;" >
-              <img src="images/intro/market/unlock.png"> </img>
-              <div class="text buttonText">
-                unlock
-              </div>
-            </div>
-          {/if}
         </div>
-        <img src="images/intro/market/shown-lamp.png"> </img> 
-      </div>
-      {/for}
-      {for x in data.gameData.empty[type]}
-      <div class="item">
-        <div>
-          <img src="images/intro/market/q-box.png"></img>
+        <img class="titleImg" src="${Loader.images.intro['title.png'].src}"/>
+        <div class="coins">
+          ${data.userData['coins']}
         </div>
-        <img src="images/intro/market/hidden-lamp.png"> </img> 
+        <div class="addMoney">
+          <span class="addText">
+            ${Text.intro.marketPlace.add}
+          </span>
+          <span class="moneyText">
+            ${Text.intro.marketPlace.money}
+          </span>
+        </div>
+    </div>
+    <div id="weapons">
+      <img  src="${Loader.images.intro['market/scroller.png'].src}"/>
+      <div class="msg">
+          ${Text.intro.marketPlace.addWeapon}
       </div>
-      {/for}
+      <div id="weaponsDisplay">
+      </div>
     </div>
-    <div class='background'>
-        {if type == 'towers'}
-          <img src="images/intro/market/added-towers.png"> </img>  
-        {else}
-          <img src="images/intro/market/added-items.png"> </img>  
-        {/if}
-    </div>
-    <div id="addedItems">
-      {for item in data.userData.metadata.added[type] }
-          <div  class="addedItem clickable" itemid="${item}" onmouseover="this.select('.action')[0].show();" onmouseout="this.select('.action')[0].hide();">
-            <div class="addedItemImg">
-                <img itemid="${item}" type="${type}" src="images/intro/${type}/${itemConfig[item]['smallImage']}" onclick="Intro.showFloatBg(this)" class="clickSound"></img>
-            </div>
-            <div class="action" style="display:none;">
-              <img itemid="${item}" type="${type}" src="images/intro/market/remove.png"  onclick="Intro.removeItem(this);" class="clickSound"> </img>
-            </div>
-          </div>
-      {/for}
-      {for item in data.userData.empty[type] }
-          <div  class="emptyItem">
-              <img src="images/intro/market/q-mark.png"></img>
-          </div>
-      {/for}
+    
+    <div id="towers">
+      <img  src="${Loader.images.intro['market/scroller.png'].src}"/>
+      <div class="msg">
+          ${Text.intro.marketPlace.addTower}
+      </div>
+      <div id="towersDisplay">
+      </div>
     </div>
     
     <div id="back" onclick="Intro.previous();" class="buttonText clickableButton clickSound" >
       <div id="backText">
-        Back
+        ${Text.intro.marketPlace.back}
       </div>
+      <img  src="${Loader.images.intro['back.png'].src}"/>
     </div>
-    <div id="next" onclick="Intro.next();" class="buttonText clickableButton clickSound">
-      <div id="nextText">
-        Next
+    <div id="ready" onclick="Intro.next();" class="buttonText clickableButton clickSound">
+      <div id="readyText">
+        ${Text.intro.marketPlace.ready}
       </div>
+      <img  src="${Loader.images.intro['ready.png'].src}"/>
     </div>
-    <div id="finish" onclick="Intro.finish();" class="buttonText clickableButton clickSound">
-      <div id="finishText">
-        Finish
-      </div>
+</textarea>
+
+<textarea id='marketScrollerTemplate' style="display:none">
+    <div id="${type}-scroll">
+        <div class="left"><img src=""/></div> 
+        <div id="${type}-container" class="container">
+          <ul id="${type}-ul">
+		        {for item in data.gameData[type] }
+		          <li itemid="${item}" class="clickSound" 
+	                onmouseover="this.select('#info')[0].show();"
+	                onmouseout="this.select('#info')[0].hide();">
+		            <img class="coinImage" 
+		                  src="${Loader.images.intro['market/coin.png'].src}"> </img>
+                <div class="itemPrice">${Intro.gameData[type][item].cost}</div>
+		            <img class="itemImage" 
+		                  src="${Loader.images.intro[type+'/'+itemConfig[item]['image']].src}"> </img>
+                {if (!Intro.userData.metadata[type][item])}
+  		            <img class="lockImage"  
+		                    src="${Loader.images.intro['market/lock.png'].src}"> </img>
+                {/if}
+                <div id="info" style="display : none;">
+                  {if (!Intro.userData.metadata[type][item])}
+                    <div>
+                      <div class="unlockText" type="${type}" itemid="${item}"
+                            onclick="Intro.showFloatBg(this)">
+                          ${Text.intro.marketPlace.unlock}
+                      </div>
+      		            <img class="unlockImage"  
+  		                      src="${Loader.images.intro['market/unlock.png'].src}"/>
+                    </div>
+                  {else}
+                    {if (Intro.userData.metadata[type][item]['upgrades'] < 
+                         Intro.gameData[type][item]['upgrades'].length )}
+                      <div>
+                        <div class="unlockText clickableButton">
+                          ${Text.intro.marketPlace.upgrade}
+                        </div>
+        		            <img class="unlockImage"  
+        		                  src="${Loader.images.intro['market/unlock.png'].src}"/>
+                      </div>
+                    {/if}
+                  {/if}
+  		            <img class="infoImage"  
+		                  src="${Loader.images.intro['market/info.png'].src}"
+		                  type="${type}" itemid="${item}" onclick="Intro.showFloatBg(this)"/>
+                </div>
+		          </li>
+            {/for}
+		        {for item in data.gameData.empty[type] }  
+  		        <li>
+		            <img class="qBoxImage" 
+		                  src="${Loader.images.intro['market/q-box.png'].src}"> </img>
+		          </li>
+		        {/for}
+          </ul>
+        </div>
+        <div class="right"><img src=""/></div> 
     </div>
 </textarea>

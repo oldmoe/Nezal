@@ -37,7 +37,6 @@ class UsersController < ApplicationController
     klass.load_game_profile(@game, @user)
   end
   
-  
 end
 
 

@@ -3,8 +3,20 @@ require 'json'
 class CityDefender < Metadata
   
   def self.init_game_profile(game_profile)
-    game_profile.metadata= self.encode({'towers'=>[],'weapons'=>[],'upgrades'=>[],
-                                        'added'=>{'towers'=>[],'weapons'=>[],'upgrades'=>[]}, 'weapons_package'=>{}})
+    game_data = self.decode(game_profile.game.metadata)
+    towers = {}
+    weapons = {}
+    game_data['towers'].each_pair do |key, val|
+      if val['unlocked'] == true
+        towers[key] = {'upgrades' => 0}
+      end
+    end
+    game_data['weapons'].each_pair do |key, val|
+      if val['unlocked'] == true
+        weapons[key] = {'upgrades' => 0}
+      end
+    end
+    game_profile.metadata= self.encode({'towers'=>towers,'weapons'=>weapons})
   end
   
   def self.load_game_profile(game_profile)
@@ -15,6 +27,8 @@ class CityDefender < Metadata
     data = self.decode(data)
     if data['event'] == 'unlock'
       self.unlock(game_profile, data)
+    elsif data['event'] == 'upgrade'
+      self.upgrade(game_profile, data)
     elsif data['event'] == 'market_preferences'
       self.save_market_preferences(game_profile, data)
     elsif data['event'] == 'consumed_weapons'
@@ -57,15 +71,19 @@ class CityDefender < Metadata
     data = self.decode(data_encoded)
     metadata = self.decode(user_campaign.metadata)
     if (data['win'])
+      old_score = 0
       metadata['missions'][data['mission']] = { 'order' => data['mission'] + 1, 'score' => 0 }
       if metadata['missions'][data['mission'] -1]
         metadata['missions'][data['mission'] -1]['score'] = 
                                                     if metadata['missions'][data['mission'] -1]['score'] > data['score']
                                                       metadata['missions'][data['mission'] -1]['score']
                                                     else
+                                                      old_score = metadata['missions'][data['mission'] -1]['score']
                                                       data['score']
                                                     end
         user_campaign.profile.score += ( data['score'] / 1000)
+        user_campaign.score -= old_score 
+        user_campaign.score += data['score']
         ranks = user_campaign.profile.game.ranks.where( " lower_exp <= #{user_campaign.profile.score} AND " + 
                                                 " ( upper_exp > #{user_campaign.profile.score} OR upper_exp == -1 ) "  )
         user_campaign.profile.rank = ranks.first
@@ -83,17 +101,28 @@ class CityDefender < Metadata
     if (game_data[data['type']][data['item_id']]['cost'].to_i <= game_profile.user.coins &&
           game_data[data['type']][data['item_id']]['exp'].to_i <= game_profile.score )
       game_profile.user.coins -= game_data[data['type']][data['item_id']]['cost'].to_i
-      if !(profile_data[data['type']].include?data['item_id'])
-        profile_data[data['type']].push(data['item_id'])
-      end
-      if(data['type']=='weapons')
-          profile_data['weapons_package'][data['item_id']] ||= 0
-          profile_data['weapons_package'][data['item_id']] += 
-                               game_data[data['type']][data['item_id']]['package']
+      if !(profile_data[data['type']][data['item_id']])
+        profile_data[data['type']][data['item_id']] = {'upgrades' => 0}
       end
       game_profile.user.save
       game_profile.metadata = self.encode(profile_data)
       game_profile.save
+    end
+  end
+  
+  def self.upgrade(game_profile, data)
+    game_data = self.decode(game_profile.game.metadata)
+    profile_data = self.decode(game_profile.metadata)
+    upgrade = profile_data[data['type']][data['item_id']]['upgrades']
+    if(game_data[data['type']][data['item_id']]['upgrades'][upgrade])
+      if (game_data[data['type']][data['item_id']]['upgrades'][upgrade]['cost'].to_i <= game_profile.user.coins &&
+            game_data[data['type']][data['item_id']]['upgrades'][upgrade]['exp'].to_i <= game_profile.score )
+        game_profile.user.coins -= game_data[data['type']][data['item_id']]['upgrades'][upgrade]['cost'].to_i
+        profile_data[data['type']][data['item_id']]['upgrades'] += 1
+        game_profile.user.save
+        game_profile.metadata = self.encode(profile_data)
+        game_profile.save
+      end
     end
   end
   

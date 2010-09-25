@@ -59,12 +59,35 @@ body {
 }
 #pause #inProgress
 {
-  left:130px;
-  overflow:hidden;
+  height:100%;
+  left:0;
   position:absolute;
-  text-align:center;
-  top:200px;
-  width:500px;
+  top:60px;
+  width:100%;
+}
+#inProgress #logo
+{
+ left:175px;
+  position:absolute;
+  top:24px;
+}
+#inProgress #title
+{
+  left:300px;
+  position:absolute;
+  top:142px;
+}
+#inProgress #titleAr
+{
+  left:314px;
+  position:absolute;
+  top:245px;
+}
+#inProgress #blank
+{
+  left:247px;
+  position:absolute;
+  top:234px;
 }
 
 #intro
@@ -93,54 +116,135 @@ body {
   text-transform : capitalize;
   text-align:center;
 }
-
-/* Level Selection CSS */
-#levelSelection
+#levelSelection #paper
 {
-/*  background : url("../images/intro/level-selection.png") no-repeat scroll 0 0 transparent;*/
-  display : none; 
+}
+#levelSelection #introText
+{
+  left:60px;
+  position:absolute;
+  top:30px;
+}
+#levelSelection #logo
+{
+ left:175px;
+  position:absolute;
+  top:24px;
+}
+#levelSelection #title
+{
+  left:300px;
+  position:absolute;
+  top:142px;
+}
+#levelSelection #titleAr
+{
+  left:314px;
+  position:absolute;
+  top:245px;
+}
+#levelSelection #blank
+{
+  left:247px;
+  position:absolute;
+  top:234px;
+}
+#levelSelection #selectedLang
+{
+  color:white;
+  font-size:14px;
+  height:42px;
+  left:-15px;
+  position:relative;
+  text-align:center;
+  width:105px;
+  color:sienna;
+  font-size:16px;
+}
+#levelSelection #language
+{
+  -moz-border-radius:10px 10px 10px 10px;
+  -webkit-border-radius: 10px 10px 10px 10px;
+  -khtml-border-radius: 10px 10px 10px 10px;
+  background:none repeat scroll 0 0 black;
+  color:white;
+  font-size:14px;
+  height:92px;
+  left:590px;
+  opacity:0.6;
+  position:absolute;
+  text-align:center;
+  top:50px;
+  width:75px;
+  cursor : pointer;
+}
+#levelSelection #msg
+{
+  color:wheat;
+  font-size:20px;
+  left:150px;
+  position:absolute;
+  text-align:center;
+  text-transform:capitalize;
+  top:310px;
+  width:500px;
+}
+#levelSelection #challengesText
+{
+  color:#FAC200;
+  font-size:25px;
+  left:245px;
+  position:absolute;
+  text-shadow:-1px 2px 1px #000000;
+  top:345px;
+  width:300px;
 }
 #levels
 {
-  position : absolute;
-  top : 350px;
-  left:150px;
-  height : 100px;
-  width : 440px;
-  color : #e9c373;
-  text-transform : capitalize;
-  font-size : 20px;
-  text-align : center;
+  color:wheat;
+  font-size:24px;
+  height:40px;
+  left:100px;
+  position:absolute;
+  text-align:center;
+  text-transform:capitalize;
+  top:375px;
+  width:560px;
 }
 #levels #easy
 {
-  width : 31%;
   height : 40%;
-  position : absolute;
-  top : 60%;
   cursor : pointer;
+  display:inline-block;
 }
 #levels #medium
 {
   width : 38%;
   height : 40%;
-  position : absolute;
-  top : 60%;
-  left : 31%;
   cursor : pointer;
+  display:inline-block;
 }
 #levels #hard
 {
-  width : 30%;
   height : 40%;
-  position : absolute;
-  top : 60%;
-  left : 69%;
   cursor : pointer;
+  display:inline-block;
 }
-#levels div:hover
+#levels span:hover
 {
   color : white;
+}
+#campaign #background
+{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+#campaign #paper
+{
+  position: absolute;
+  top: 12px;
+  left: 0px;
 }
 #campaign #back
 {
@@ -155,7 +259,7 @@ body {
 { 
   color:#FAC200;
   position:absolute;
-  top:15px;
+  top:12px;
   left:35px;
   width:77px;
   text-align:center;
@@ -214,6 +318,42 @@ body {
 #mission
 {
 /*  background : url("../images/intro/city/city-info.png") no-repeat scroll 0 0 transparent;*/
+}
+#mission #background
+{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+#mission #paper
+{
+  position: absolute;
+  top: 12px;
+  left: 0px;
+}
+#mission #mapBackground
+{
+  left:81px;
+  position:absolute;
+  top:173px;
+}
+#mission #buble
+{
+  left:166px;
+  position:absolute;
+  top:40px;
+}
+#mission #character
+{
+  left:70px;
+  position:absolute;
+  top:35px;
+}
+#mission #creepBackground
+{
+  left:50px;
+  position:absolute;
+  top:407px;
 }
 #creeps-scroll ul li img {
   padding-top: 7px;
@@ -327,6 +467,7 @@ body {
   position:absolute;
   top:408px;
   width:430px;
+  direction:ltr;
 }
 #mission .creep
 {
@@ -360,7 +501,7 @@ body {
   left:40px;
   position:absolute;
   top:390px;
-  width:480px;
+  width:400px;
   z-index : 100;
 }
 #mission #floatBg #close
@@ -406,236 +547,214 @@ body {
   float : right;
 }
 
-#marketTabs
+#marketPlace #background
 {
-  height: 48px;
   position: absolute;
-  top : -12px;
+  top: 0px;
+  left: 0px;
 }
-#marketTabs div
+#marketPlace #paper
 {
-  position : absolute;
-  width : 248;
-  z-index : 100;
-  height : 45px;
-  overflow : hidden;
-  cursor : pointer;
+  position: absolute;
+  top: 10px;
+  left: 0px;
 }
-#marketPlace  #marketTabs .text
+#marketPlace #upperPart
 {
-  color:white;
-  font-family:PakGirl;
-  font-size:22px;
-  left:0;
+  left:73px;
+  position:absolute;
+  top:35px;
+  width:606px;
+}
+#marketPlace #upperPart .rank
+{
+  color:#FAC200;
+  height:65px;
+  left:35px;
   position:absolute;
   text-align:center;
-  top:11px;
+  top:30px;
+  width:135px;
 }
-#marketTabs .towersOn
+#marketPlace #upperPart .rankImg
 {
+  height : 35px;
 }
-#marketTabs .upgradesOn
+#marketPlace .rankText
 {
-  left : 248px;
+  margin-top : 10px;
 }
-#marketTabs .weaponsOn
+
+#marketPlace #upperPart .titleImg
 {
-  left : 496px;
+  left:212px;
+  position:absolute;
+  top:12px;
 }
-#marketTabs .towersTab
+#marketPlace #upperPart .coins
 {
+  font-family:Digital;
+  font-size:21px;
+  left:480px;
+  position:absolute;
+  text-align:center;
+  top:35px;
+  width:75px;
 }
-#marketTabs .weaponsTab
+#marketPlace #upperPart .addMoney
 {
-  left : 248px;
+  color:#FAC200;
+  font-family:Adlib;
+  font-size:15px;
+  left:423px;
+  position:absolute;
+  text-align:center;
+  top:76px;
+  width:155px;
 }
-#marketTabs .upgradesTab
+#marketPlace #upperPart .addText
 {
-  left : 496px;
+  display:inline-block;
+  text-align:center;
+  width:46%;
 }
-#marketPlace #towers, #marketPlace #weapons, #marketPlace #upgrades
+#marketPlace #upperPart .moneyText
+{
+  display:inline-block;
+  width:50%;
+}
+#marketPlace #weapons
+{
+  font-size:14px;
+  left:4px;
+  position:absolute;
+  top:160px;
+  text-align : center;
+  direction : ltr;
+}
+#marketPlace #towers
+{
+  font-size:14px;
+  left:4px;
+  position:absolute;
+  top:320px;
+  text-align : center;
+  direction : ltr;
+}
+#marketPlace #weaponsDisplay, #marketPlace #towersDisplay
+{
+  height:100px;
+  left:70px;
+  position:absolute;
+  top:25px;
+  width:595px;
+}
+#marketPlace .itemImage
+{
+  position:relative;
+}
+#marketPlace .coinImage
+{
+  padding-left : 5px;
+  float : left;
+}
+#marketPlace .itemPrice
+{
+  color:#FAC200;
+  font-family:Adlib;
+  font-size:18px;
+  text-align:center;
+  padding-top:4px;
+  float : left;
+  width:60px;
+}
+#marketPlace .qBoxImage
+{
+  padding-top : 14px;
+}
+#marketPlace #towers .lockImage
+{
+  position:relative;
+  top:-25px;
+}
+#marketPlace #weapons .lockImage
+{
+  position:relative;
+  top:-30px;
+}
+#marketPlace #info
+{
+  position:absolute;
+  top:65px;
+  width:104px;
+}
+#marketPlace .infoImage
+{
+  left:37px;
+  position:relative;
+  top:-38px;
+  cursor : pointer;
+}
+#marketPlace .unlockImage
+{
+  left:-14px;
+  position:relative;
+  top:-14px;
+}
+#marketPlace .unlockText
+{
+  color:white;
+  cursor:pointer;
+  font-family:Adlib;
+  font-size:14px;
+  left:4px;
+  position:relative;
+  text-align:center;
+  top:7px;
+  width:70px;
+  z-index:100;
+}
+#marketPlace #ready, #marketPlace #back
 {
   position : absolute;
-  top : 12px;
-}
-#marketPlace #next, #marketPlace #back, #marketPlace #finish
-{
-  position : absolute;
-  top : 495px;
+  top : 482px;
   width : 120px;
   height : 45px;
   cursor : pointer;
-  color : white;
+  color : #FAC200;
 }
-#marketPlace #finish
+#marketPlace #ready
 {
-  left : 23px;
-}
-#marketPlace #next
-{
-  left : 620px;
+  left : 595px;
 }
 #marketPlace #back
 {
-  left : 488px;
+  left : 27px;
 }
-#marketPlace #finishText
+#marketPlace #readyText
 {
   position:absolute;
-  top:12px;
-  left:20px;
-  width:77px;
-  text-align:center;
-}
-#marketPlace #nextText
-{
-  position:absolute;
-  top:10px;
-  left:10px;
+  top:14px;
+  left:5px;
   width:77px;
   text-align:center;
 }
 #marketPlace #backText
 {
   position:absolute;
-  top:10px;
+  top:12px;
   left:35px;
   width:77px;
   text-align:center;
 }
-
-#marketPlace #towers #addedItems
-{
-  height:75px;
-  left:45px;
-  position:absolute;
-  top:390px;
-  width:655px;
-}
-#marketPlace .background
-{
-  left:45px;
-  position:absolute;
-  top:390px;
-  width:655px;
-}
 #marketPlace .msg
 {
-  color:#FFEE00;
-  font-size:18px;
+  font-size:15px;
   position:absolute;
   text-align:center;
-  text-shadow:2px 1px #770000;
-  top:335px;
+  color : black;
+  top:146px;
   width:100%;
-  word-spacing:5px;
-  
-}
-#marketPlace #towers .addedItem
-{
-  float:left;
-  height:75px;
-  overflow:hidden;
-  width:65.5px;
-  position : relative;
-}
-#marketPlace #towers .emptyItem
-{
-  float:left;
-  height:75px;
-  overflow:hidden;
-  width:65.5px;
-  position : relative;
-  text-align : center;
-  padding-top : 17px;
-}
-
-
-#marketPlace #weapons #addedItems, #marketPlace #upgrades #addedItems
-{
-  height:68px;
-  left:46px;
-  position:absolute;
-  top:398px;
-  width:655px;
-}
-#marketPlace #weapons .addedItem, #marketPlace #upgrades .addedItem
-{
-  float:left;
-  height:68px;
-  margin-right:4px;
-  overflow:hidden;
-  position:relative;
-  width:127px;
-  text-align : center;
-}
-#marketPlace #weapons .addedItem .addedItemImg
-{
-  margin-top : 5px;
-  overflow : hidden;
-}
-#marketPlace #upgrades  .addedItem .addedItemImg
-{
-  margin-top : 10px;
-  overflow : hidden;
-}
-#marketPlace #weapons .emptyItem, #marketPlace #upgrades .emptyItem
-{
-  float:left;
-  height:68px;
-  margin-right:4px;
-  overflow:hidden;
-  position:relative;
-  width:127px;
-  text-align : center;
-  padding-top : 10px;
-}
-
-#marketPlace #towersDisplay, #marketPlace #weaponsDisplay, #marketPlace #upgradesDisplay
-{
-  height:249px;
-  left:240px;
-  position:absolute;
-  top:58px;
-  width:447px;
-}
-#marketPlace .item
-{
-  height : 87px;
-  width : 144px;
-  margin : 0px 4px 0px 0px;
-  float : left;
-  text-align : center;
-  vertical-align : middle;
-  position : relative;
-  overflow : hidden;
-}
-#marketPlace .item div
-{
-  height:75px;
-  overflow : hidden;
-}
-#marketPlace .itemImage
-{
-  position : absolute;
-  top : 0px;
-  left : 0px;
-  width : 100%;
-  height : 100%;
-}
-#marketPlace #weapons .itemImage img
-{
-  padding-top : 7px;
-}
-#marketPlace #upgrades .itemImage img
-{
-  padding-top : 12px;
-}
-#marketPlace .item .label
-{
-  position : absolute;
-  bottom : 14px;
-  left : 2px;
 }
 #marketPlace .action
 {
@@ -655,28 +774,6 @@ body {
   text-align:center;
   top:0;
   width:100%;
-}
-#marketPlace .addedItem .action
-{
-  position : absolute;
-  right : 2px;
-  top : 7px;
-  cursor : pointer;  
-}
-#marketPlace #weapons .addedItem .action, #marketPlace #upgrades .addedItem .action
-{
-  top : 5px;
-}
-#marketPlace .coins
-{
-  left:92px;
-  position:absolute;
-  text-align:center;
-  text-shadow:1px 1px white;
-  top:240px;
-  width:110px;
-  font-family : Digital;
-  font-size : 24px;
 }
 .item .clickable div, #addedItems .clickable div
 {
@@ -702,10 +799,10 @@ div.clickableButton:hover
 #marketPlace #floatBg
 {
   color : #FAC200;
-  left:155px;
+  left:130px;
   position:absolute;
-  top:100px;
-  z-index:100;
+  top:150px;
+  z-index:101;
 }
 #marketPlace #floatBg #close
 {

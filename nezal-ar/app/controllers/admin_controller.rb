@@ -1,4 +1,4 @@
-class AdminController < ApplicationController 
+  class AdminController < ApplicationController 
   
   ADMIN_URL = "nezal-admin"
 

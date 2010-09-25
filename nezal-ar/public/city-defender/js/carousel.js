@@ -21,7 +21,7 @@ var Carousel = Class.create( {
                 'right' : "",
                 'right-disabled' : "" },
     
-    initialize : function(id, images){
+    initialize : function(id, images, displayCount){
         this.id = id;
         this.images = images;
         this.width = parseInt($$('#' + this.id + ' ul li')[0].getStyle('width')) + 
@@ -29,6 +29,7 @@ var Carousel = Class.create( {
                         parseInt($$('#' + this.id + ' ul li')[0].getStyle('padding-right')) +
                         parseInt($$('#' + this.id + ' ul li')[0].getStyle('margin-left')) + 
                         parseInt($$('#' + this.id + ' ul li')[0].getStyle('margin-right'));
+        this.displayCount = displayCount;
         this.ulId = $$('#' + this.id + ' ul')[0].id;
         this.listSize =  $$('#' + this.ulId + ' li').length;
         $(this.ulId).style.left = 0;

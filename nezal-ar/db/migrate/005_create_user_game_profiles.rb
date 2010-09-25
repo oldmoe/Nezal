@@ -6,7 +6,7 @@ class CreateUserGameProfiles < ActiveRecord::Migration
       t.column :game_id, :integer, :null => false
       t.column :rank_id, :integer, :null => false
       t.column :user_id, :integer, :null => false
-      t.column :locale, :string,   :default => "en_US"
+      t.column :locale, :string,   :default => nil
       t.column :newbie,  :boolean, :default => true
       t.column :metadata, :string # This is supposed to hold the user game profile specific data hash
                                   # Hash transformed into string and converted back upon need

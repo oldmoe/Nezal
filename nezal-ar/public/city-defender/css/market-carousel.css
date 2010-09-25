@@ -1,0 +1,75 @@
+/* Horizontal Carousel */
+#weapons-scroll, #towers-scroll{
+  float:left;
+  width: 100%;
+  height: 100%;
+  position: relative;  
+}         
+
+#weapons-scroll .container, #towers-scroll .container{
+  position: absolute;
+  top: 0px;
+  left: 26px;  
+  width: 541px;
+  height: 100%;
+  overflow:hidden;   
+}            
+
+#weapons-scroll .right, #towers-scroll .right{
+  position: absolute;
+  right: 0px;
+  width: 26px;
+  margin-top : 10px;
+  z-index: 100;
+  text-align : center;
+}        
+
+#weapons-scroll .left, #towers-scroll .left{
+  position: absolute;
+  left: 0px;
+  width: 26px;
+  margin-top : 10px;
+  z-index: 100;    
+  text-align : center;
+}   
+
+#weapons-scroll ul, #towers-scroll ul{
+  margin: 0;
+  padding:0;
+  width: 100000px;
+  position: relative;
+  top: 0;
+  left: 0;
+  height: 100%;
+}                      
+
+#weapons-scroll ul li, #towers-scroll ul li {
+  font-family:verdana,arial,sans-serif;
+  font-size:10px;
+  border : 0px solid green;
+  color : #E3EDFA;
+  margin : 0px 1.5px;
+  width : 105px;
+  height : 100px;
+  list-style : none;   
+  float : left;
+  text-align : center;
+  overflow : hidden;
+}
+
+.leftOn
+{
+  cursor:pointer;
+}
+.leftOff
+{
+  cursor:default;
+}
+.rightOn
+{
+  cursor:pointer;
+}
+.rightOff
+{
+  cursor:default;
+}
