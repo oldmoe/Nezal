@@ -6,7 +6,7 @@ var Config = {
 	superWeapons : ["Splash", "Hyper", "Nuke","Weak","Heal"],
 	towers : ["Turret","DoubleTurret","RocketLauncher","Patriot"],
 	upgrades : ["Bullets","Shields"],
-	waves : [[{category : "Tank",count : "10"}],[{category : "Tank",count : "10"}],[{category : "Plane",count : "10"}],[{category : "Tank",count : "10"}]],
+	waves : [[{category : "Tank",count : "10"},{category : "RedPlane",count : "10"}],[{category : "Tank",count : "10"}],[{category : "Plane",count : "10"}],[{category : "Tank",count : "10"}]],
 	rank : "PVT"
 }
 

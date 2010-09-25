@@ -1,0 +1,293 @@
+<html>
+	<head>
+		<style>
+			body{
+				margin:0px;
+			}
+			#friends{
+				background-image: url('images/friends_background.png');
+				width : 757px;
+				height: 113px;
+			}
+			#friends .friend{
+				position : relative;
+				float : left;
+				margin : 5px;
+				margin-top : 8px;
+			}
+			#friends .friend .photo{
+				position : absolute;
+				left : 20px;
+				top : 16px;
+				width : 28px;
+				height : 36px;
+			}
+
+			#friends-container {
+				width : 317px;
+				overflow: hidden;
+				height : 113px;
+			}
+
+			#friends-ul{
+				width : 2000px;
+				height :113px;			
+			}
+			#friends-scroll div,img,ul{
+				float :left;			
+			}
+			#friends-scroll .right, .left{
+				margin-top : 38px;
+			}
+
+			#friends-ul {
+				margin : 0px;
+				padding : 0px;
+			}
+			#friends li {
+				float : left;
+				list-style : none;			
+			}
+
+			.friend .name {
+				position : absolute;
+				top : 57px;
+				width: 100%;
+				text-align : center;
+				font-family : helvetica;
+				font-size : 14px;
+				color : white;
+				font-weight: bold;			
+				line-height : 17px;
+			}
+
+			.friend .score {
+				position : absolute;
+				top : 72px;
+				width: 100%;
+				text-align : center;
+				font-family : helvetica;
+				font-size : 14px;
+				color : orange;
+				font-weight: bold;			
+			}
+
+			.friend .top_rank,.rank {
+				position : absolute;
+				top : 20px;
+				left: 60px;
+				text-align : center;
+				font-family : helvetica;
+				font-size : 16px;
+				color : orange;
+				font-weight: bold;			
+			}
+
+			.friend .top_rank sup{
+				position : absolute;
+			}
+			#friendsRanks, #worldRanks{
+				padding-top:3px;
+				width:98px;
+				height:32px;
+				background-repeat:no-repeat;
+				text-align : center;
+				float : left;
+				cursor:pointer;
+			}
+			#friendsRanks{
+				margin-left : 10px;
+				margin-right:3px;
+			}
+			.active{
+				background-image:url('images/button_active.png');
+			}
+			.inactive{
+				background-image:url('images/button_inactive.png');
+			}
+			
+
+		</style>
+		<script src="http://connect.facebook.net/en_US/all.js"></script>
+		<script src="../js/facebook.js" type="text/javascript"></script>
+		<script src="../js/base/prototype.js" type="text/javascript"></script>
+		<script src="../js/base/effects.js" type="text/javascript"></script>
+		<script src="../js/base/template.js" type="text/javascript"></script>
+		<script src="../js/game/loader.js" type="text/javascript"></script>
+		<script src="../js/carousel.js" type="text/javascript"></script>
+	</head>
+	<body>
+	<div id="container"></div>
+	<textarea id='friendsTemplate' style="display:none">
+		<div id="friends">
+			{for friend in top_scorers}
+			<div class = "friend"><img src="images/blank.png" />
+				{if friend}
+						<div class="top_rank">${top_ranks[friend_index]}</div>
+						<div class="name" >${friend['name'].split(' ')[0]}</div>
+						<div class="score" > ${friend.score}</div>
+						<img class='photo' src='http://graph.facebook.com/${friend.id}/picture' />	
+				{else}
+					<img class='photo' src='images/q_mark.png' />				
+					<div class="name" >Add<br/>Friend</div>
+				{/if}			
+			</div>
+			{/for}			
+			<div id="friends-scroll">
+	          <div class="left">
+              <img src="" />
+	          </div> 
+	          <div id="friends-container" class="container">
+		          <ul id='friends-ul'>
+    		        {for friend in friends }
+    		          <li class="friend">
+									  <img src="images/blank.png"/>
+										{if friend}
+											<div class="rank">${friend.rank}</div>
+											<div class="name" >${friend['name'].split(' ')[0]}</div>
+											<img class='photo' src='http://graph.facebook.com/${friend.id}/picture' />	
+											<div class="score" > ${friend.score}</div>
+										{else}
+											<img class='photo' src='images/q_mark.png' />				
+											<div class="name" >Add<br/>Friend</div>
+										{/if}			
+    		          </li>
+		            {/for}
+		          </ul>
+	          </div>
+						<div class = "friend">
+							<img src="images/blank.png" />
+							<img class='photo' src='images/q_mark.png' />				
+							<div class="name" >Add<br/>Friend</div>
+						</div>
+	          <div class="right">
+              <img src="" />
+	          </div> 
+       </div>
+		</div>
+	</textarea >
+		<div id="friendsRanks" class="active" onclick = "viewFriendsRanks()">	
+				Friends
+			</div>
+		<div id="worldRanks" class="inactive" onclick = "viewWorldRanks()">
+					Everyone
+					</div>
+
+
+<script>
+		var friendsIds = null
+		FBConnect.init(function(){        
+			var	query = FB.Data.query("SELECT uid FROM user WHERE is_app_user=1 and uid IN (SELECT uid2 FROM friend WHERE uid1 = {0})", FB.getSession().uid);
+			FB.Data.waitOn([query], function(){
+						friendsIds = query.value.collect(function(row){return Number(row.uid)}) 
+						friendsIds.push(Number(FB.getSession().uid))		
+						viewFriendsRanks()
+					})
+				});
+
+		function getUserName(users,callback){
+			var ids = users.collect(function(user){return user.id})
+			var	query2 = FB.Data.query("SELECT name,uid FROM user WHERE uid IN ({0})", ids);
+			FB.Data.waitOn([query2], function(){
+				query2.value.each(function(row,i){
+					users[i].name = row.name
+				})
+				if(callback)callback()
+			})
+		}
+
+		function getUserPhoto(user){
+			var image = new Image()
+			image.src = "http://graph.facebook.com/"+user.id+'/picture'
+		}
+		function fillUsersData(response,callback){
+					getUserName(response['top'], function(){
+							response['top'].each(function(friend){    
+									getUserPhoto(friend)
+							})
+        if(response['top'].length<3) response['close'] =[]
+				while(response['top'].length < 3){
+							response['top'].push(null) 			
+						}
+					});	
+					getUserName(response['close'], function(){
+						response['close'].each(function(friend){    
+								getUserPhoto(friend)
+							})
+					while(response['close'].length < 3){
+					response['close'].push(null) 			
+				}
+					if(callback)callback(response)
+				});
+		}
+		function getFriendsRanks(callback){
+			var url = '../tunisia/'+FB.getSession().uid+'/friendsranks'
+							new Ajax.Request( url ,
+					     { method:'post',
+												parameters: { 'friends' : Object.toJSON(friendsIds).gsub(/\[/,"").gsub(/\]/,"") }, 
+							          onSuccess : function(t){
+													var response = JSON.parse(t.responseText)
+													fillUsersData(response,callback)
+					            }
+					      });
+		}
+		function getWorldRanks(callback){
+				var url = '../tunisia/'+FB.getSession().uid+'/worldranks'
+							new Ajax.Request( url ,
+					     { method:'post',
+					            onSuccess : function(t){
+												var response = JSON.parse(t.responseText)
+												fillUsersData(response,callback)
+					            }
+					      });
+		}
+		</script>		
+
+		<script>
+        var template = TrimPath.parseDOMTemplate('friendsTemplate')
+				var images = {
+                  'left' : 'images/left.png',
+                  'left-disabled' : 'images/left-disabled.png',
+                  'right' : 'images/right.png',
+                  'right-disabled' :'images/right-disabled.png'
+                  };
+				function prepareRanks(friends){
+          if(!friends[0])return
+					var index = 0
+					var rank = 0
+					while(!friends[index]['rank']){
+						index ++
+					}
+					rank = friends[index]['rank']
+					for(var i=0;i<friends.length;i++){
+						if(friends[i])
+						friends[i]['rank'] = rank+i-index
+					}
+				}
+				function activate(div){
+							$(div).addClassName('active')
+							$(div).removeClassName('inactive')
+				}
+				function deactivate(div){
+							$(div).addClassName('inactive')
+							$(div).removeClassName('active')
+				}
+				function renderResponse(response){
+								prepareRanks(response['close'])			
+								$('container').innerHTML = template.process( {friends: response['close'], top_scorers :response['top'],top_ranks : ['1<sup>st</sup>', '2<sup>nd</sup>', '3<sup>rd</sup>']})
+					      var friendsCarousel = new Carousel("friends-scroll", images);
+		           	friendsCarousel.displayCount = 3;
+				}
+				function viewFriendsRanks(){
+							activate('friendsRanks')
+							deactivate('worldRanks')
+							getFriendsRanks(renderResponse)
+				}
+				function viewWorldRanks(){
+							activate('worldRanks')
+							deactivate('friendsRanks')
+							getWorldRanks(renderResponse)
+				}
+		</script>
+	</body>
+</html>

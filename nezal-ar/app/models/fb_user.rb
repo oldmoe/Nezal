@@ -7,16 +7,16 @@ class FbUser < ActiveRecord::Base
   attr_accessor :session
 
   # Get Global Top Scorers 
-  def self.top_scorers(camp_id, user_ids = [], limit = 5)
-    conditions =  { :campaign_id => camp_id }
+  def self.top_scorers(camp_id, user_ids = [], limit = 3)
+    conditions =  " campaign_id = #{camp_id} "
     if user_ids && !(user_ids.empty?)
-      conditions[:fb_user] = user_ids
+     conditions+= " AND fb_user IN (#{user_ids})"
     end
     UserCampaign.all( :conditions => conditions, :limit => limit, :order=> 'user_campaigns.score DESC, fb_user')
   end
   
-  def friends_top_scorers(camp_id, limit = 5)
-    self.class.top_scorers(camp_id, friends(), limit)
+  def friends_top_scorers(camp_id,friends, limit = 3)
+    self.class.top_scorers(camp_id, friends, limit)
   end
   
   # Get User Ranking
@@ -28,7 +28,7 @@ class FbUser < ActiveRecord::Base
     after_length = list_size - before_length
     conditions =  " campaign_id = #{camp_id} "
     if user_ids && !(user_ids.empty?)
-      conditions += " AND fb_user IN #{user_ids}"
+      conditions += " AND fb_user IN (#{user_ids.gsub!(' ','')})"
     end
     user_campaign = UserCampaign.find_by_campaign_id_and_fb_user(camp_id, self.fb_id)
     result[:rank] =  UserCampaign.count( :conditions => conditions + " AND ( score > #{user_campaign.score} " + 
@@ -52,8 +52,9 @@ class FbUser < ActiveRecord::Base
                                                                                             " OR (score == #{user_campaign.score}" + 
                                                                                                   " AND fb_user > #{user_campaign.fb_user} ) )" ) 
     if result[:rank] < top_score_size
-      result[:next] = result[:next][(top_score_size - result[:rank])..(result[:next].length-1)]
+     result[:next] = result[:next][(top_score_size - result[:rank])..(result[:next].length-1)]
     end
+    result[:next] = [] if !result[:next]
     result
   end
 

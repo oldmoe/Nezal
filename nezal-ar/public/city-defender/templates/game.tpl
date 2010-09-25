@@ -11,17 +11,17 @@
 			{if tower!=null}
 			<div class="diagram ${tower.cssClass}">
 				{if tower.rank > 0}
-					<img src="${Loader.images.game['rank_'+tower.rank+'.png'].src}" />				
+					<div id="diagramRank"><img src="${Loader.images.game['rank_'+tower.rank+'.png'].src}" /></div>				
 				{/if}			
 			</div>
 			<div id="towerData">
 			<h4>{if tower.healthSprite !=null }
-					<div id = "sellTower" onclick = "game.scene.sellSelectedTower()">sell |$${Math.round(tower.price*0.75*tower.hp/tower.maxHp)}</div>
+					<div id = "sellTower" onmousedown = "game.scene.sellSelectedTower()">Sell<hr/>$${Math.round(tower.price*0.75*tower.hp/tower.maxHp)}</div>
 					{else}
 						$${tower.price}
 					{/if}
 			</h4>
-			<b>${tower.name}</b>
+				<h4>${tower.name}</h4>
 			<table>
 				<tr>
 					<td><div class='meter' id = 'powerMeter' style="width:${Math.round(65 * tower.power / 420)}px;backgroundColor:blue">Power</div>
@@ -40,12 +40,12 @@
 			</table>
 				{if tower.healthSprite !=null }
 					{if tower.rank < tower.maxRank}
-					<div id = "upgradeTower" onclick = "game.scene.upgradeSelectedTower()">upgrade to 
-						<img src="${Loader.images.game['rank_'+(tower.rank+1)+'.png'].src}" /></br>	 $${tower.upgrades[tower.rank].price}			
+					<div id = "upgradeTower" onmousedown = "game.scene.upgradeSelectedTower()">Upgrade<hr/>
+						$${tower.upgrades[tower.rank].price}&nbsp; &nbsp;<img src="${Loader.images.game['rank_'+(tower.rank+1)+'.png'].src}" /> 
 					</div>
 					{else}
-					<div id = "upgradeTower">
-						locked
+					<div id = "upgradeTower" >
+						<div id = "maxUpgrade" style = "paddingTop:10px">Max upgrade</div>
 					</div>
 					{/if}
 				{/if}
@@ -58,12 +58,13 @@
 		<div id="gameContainer">
 			<div id="modalWindow" style="display:none">
 				<div id="character">
+		
 				</div>
 				<div class="content" style="overflow:auto"> 
 				
 				</div>
 				<div id = "ok">
-				<img src="images/tutorial/ok.png"></img>
+				<img src="images/background/ok.png"></img>
 				</div>
 			</div>
 			<div id= "pauseWindow" style="display:none">	</div>
@@ -90,6 +91,7 @@
 					<div id="score" class="score">0</div>
 					<div id="lives" class="lives">0</div>
 					<div id="waves" class="waves">0/0</div>
+					<div id="statusBarEmpty"><div id="statusBarLeft"> </div><div id="statusBarFill"> </div><div id="statusBarRight"> </div></div>
 				</div>
 				<div class="fps"></div>
 				
@@ -114,6 +116,21 @@
 					<div class="like"></div>
 					<!--div class="subscribe"></div-->
 					<div class="bookmark"></div>
+				</div>
+					<textarea id='wavesTemplate' style='display:none'>
+						<div id="incomingWaves">
+						{for wave in Config.waves}
+							<div class='wave'>
+								{for creep in wave}
+									<div class='creep' style ="width :${100/wave.length}%">
+										<center><img src='images/intro/creeps/${creep.category.underscore()}.png'></img></center>
+									</div>															  
+								{/for}
+							</div>										
+						{/for}		
+					</div>
+				</textarea>
+				<div id =container>	
 				</div>
 
 				<div class="superWeapons">

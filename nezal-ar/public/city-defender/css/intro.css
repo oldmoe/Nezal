@@ -177,6 +177,7 @@ body {
   top:50px;
   width:75px;
   cursor : pointer;
+  direction:ltr;
 }
 #levelSelection #msg
 {

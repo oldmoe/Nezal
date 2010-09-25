@@ -32,18 +32,23 @@ var CityDefenderScene = Class.create(Scene, {
 		this.config.superWeapons.each( function(weapon){
 			self.usedWeapons[weapon.capitalize()] = 0;
 		});
+		this.exp = this.config.exp
+		this.wavesCount = this.config.waves.length
+		this.minExp = Intro.ranks[this.config.rank][0]
+		this.maxExp = Intro.ranks[this.config.rank][1]
 		this.baseCtx = baseCtx;
 		this.upperCtx = upperCtx;
 		this.scenario = new Scenario(this)
 		this.scenario.start()
-		this.nuke = new Nuke(this, {count: this.config.weaponsPackage.Nuke, type:'nuke'})
-		this.heal = new Heal(this, {count: this.config.weaponsPackage.Heal, type:'heal'})
-		this.weak = new Weak(this, {count: this.config.weaponsPackage.Weak, type:'weak'})
-		this.splash = new Splash(this, {count: this.config.weaponsPackage.Splash, type:'splash'})
-		this.hyper = new Hyper(this, {count: this.config.weaponsPackage.Hyper, type:'hyper'})
+		this.nuke = new Nuke(this, {count: 2, type:'nuke'})
+		this.heal = new Heal(this, {count: 2, type:'heal'})
+		this.weak = new Weak(this, {count: 2, type:'weak'})
+		this.splash = new Splash(this, {count: 2, type:'splash'})
+		this.hyper = new Hyper(this, {count: 2, type:'hyper'})
 		this.templates = {}
 		this.templates['towerInfo'] = TrimPath.parseTemplate($('towerInfoTemplate').value) 
 		this.templates['stats'] = TrimPath.parseTemplate($('statsTemplate').value) 
+		IncomingWaves.init("container","wavesTemplate","incomingWaves",this.reactor)
 	},
 	init : function(){
 		this.rank = Config.rank
@@ -90,7 +95,7 @@ var CityDefenderScene = Class.create(Scene, {
 		return this
 	},
 	addCreep : function(creep){
-		creep.price+=creep.price+0.5*this.waveNumber
+		creep.price=creep.price+0.5*this.waveNumber
 		this.scenario.notify({name:"creepEntered", method: false, unit:creep})
 		if(this.turrets[0])this.scenario.notify({name:"creepEnteredTower", method: false, unit:this.turrets[0]})
 		creep.hp = Math.round(creep.hp*Math.pow(this.creepMultiplier[this.config.level-1],this.waveNumber))
@@ -105,7 +110,7 @@ var CityDefenderScene = Class.create(Scene, {
 		return this
 	},
 	addPlane : function(plane){
-		plane.price+=plane.price+0.5*this.waveNumber
+		plane.price=plane.price+0.5*this.waveNumber
 		plane.hp = Math.round(plane.hp*Math.pow(this.creepMultiplier[this.config.level-1],this.waveNumber))
 		plane.maxHp = plane.hp
 		if(plane){
@@ -133,16 +138,22 @@ var CityDefenderScene = Class.create(Scene, {
 		}	
 	},
 	renderData : function(){
+		this.currentExp = Math.round(this.exp+this.score*this.config.level/5000)
+		if(this.currentExp>this.maxExp){
+			this.minExp = this.maxExp	
+			this.maxExp = this.maxExp*2
+		}
+		$('statusBarFill').style.width = ((this.currentExp-this.minExp)/(this.maxExp-this.minExp))*100+"%"
 		$('money').innerHTML = this.money;
-		$('lives').innerHTML = Math.max(this.maxEscaped - this.escaped,0);
-		$('score').innerHTML = this.score;
+		$('lives').innerHTML = "Lives "+Math.max(this.maxEscaped - this.escaped,0);
+		$('score').innerHTML = "Score "+this.score;
 		//$$('#gameElements .fps').first().innerHTML = "FPS: "+this.fps;
 		var self = this
 		this.config.superWeapons.each(function(weapon){
 			weapon = weapon.toLowerCase()
 			$(weapon).innerHTML = self[weapon].count
 		})
-		$('waves').innerHTML = this.wave +'/'+this.wavesCount;
+		$('waves').innerHTML = "Wave "+this.wave +'/'+this.wavesCount;
 			$('towerInfo').show()
 			$('towerInfo').innerHTML = this.templates['towerInfo'].process({tower: this.selectedTower})
 			if(this.selectedTower && this.selectedTower.healthSprite){
@@ -253,6 +264,7 @@ var CityDefenderScene = Class.create(Scene, {
 				return
 			}else if(this.creeps.length == 0  &&this.waitingCreeps == 0 && this.config.waves.length > 0 && !this.wavePending && this.running){
 				this.waveNumber++
+				IncomingWaves.nextWave()
 				var score = 10*(this.waveNumber+5-Math.round((new Date()-this.startTime)/1000)) 
 				if(score>0)
 				this.score+=score
@@ -280,7 +292,6 @@ var CityDefenderScene = Class.create(Scene, {
 						$('loseDiv').hide()
 						$('winDiv').show()
 						new Effect.Appear("static")
-						Sounds.play(Sounds.gameSounds.wash)
 						$('droppingGround').addClassName('off')
 						new Effect.SwitchOff('static');
 						new Effect.Appear("result", {delay : 3.0})
@@ -314,7 +325,6 @@ var CityDefenderScene = Class.create(Scene, {
 			$('winDiv').hide()
 			$('loseDiv').show()
 			new Effect.Appear("static")
-			Sounds.play(Sounds.gameSounds.wash)
 			$('droppingGround').addClassName('off')
 			new Effect.SwitchOff('static');
 			new Effect.Appear("result", {delay : 3.0})
@@ -378,8 +388,6 @@ var CityDefenderScene = Class.create(Scene, {
 	sendWaves : function(config){
 		if(this.playing) return;
 		this.playing = true;
-		this.wavesCount = this.config.waves.length
-		this.wavesCount = this.config.waves.length
 		this.wave = 0
 		this.startTime = new Date()
 		var wave = config.waves.pop()

@@ -13,7 +13,7 @@ var Loader = {
 		else if(test.canPlayType('audio/ogg')){
 			this.soundsFormat = 'ogg'	
 		}							
-		this.toLoad = ["animations.html", "intro.html", this.soundsFormat+".html", "user.html", "background.html",  "game.html", "english.html", "arabic.html"]
+		this.toLoad = ["animations.html", "intro.html", "user.html", "background.html",  "game.html", "english.html", "arabic.html"]
 		this.soundIndex = this.toLoad.indexOf(this.soundsFormat+".html")
 	},
 
@@ -22,14 +22,12 @@ var Loader = {
 		var i =0
 		while(resources.length>i){
 			var resource = resources[i]
-			if(this.index==this.soundIndex)i++
-			else resource = div.removeChild(resource)
+			resource = div.removeChild(resource)
 			var id = resource.id
 			var parts = id.split('#')
 			if(!Loader[parts[0]][parts[1]])Loader[parts[0]][parts[1]] = {}
 			Loader[parts[0]][parts[1]][parts[2]] = resource;
 		}
-		if(this.index==this.soundIndex) createSounds()
 		if(this.index == this.toLoad.length-1){
 			this.index++
 			if(development){

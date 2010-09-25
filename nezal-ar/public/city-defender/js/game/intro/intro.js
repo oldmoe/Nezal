@@ -125,6 +125,19 @@ var Intro = {
       	          Intro.doneLoading = true;
                   Intro.start();
               });
+          });
+    },
+
+    retrieveData: function( callback){
+        new Ajax.Request( 'metadata', {method:'get',
+            onSuccess: function(t){
+                var data = JSON.parse(t.responseText);
+                Intro.gameData = JSON.parse(data['game_data']['metadata']);
+                Intro.userData = data['user_data'];
+                Intro.userData["metadata"] = JSON.parse(data['user_data']['metadata']);
+                Intro.ranks = data['ranks'];
+                callback();
+            }
         });
     },
     
