@@ -75,10 +75,10 @@ class GamesController < ApplicationController
     camp = Campaign.where(:path => params['camp_path'], :game_id => @game.id).first
     user_camp = UserCampaign.where('campaign_id'=> camp.id, 'fb_user' => @user.fb_id).first
     klass.edit_user_campaign(user_camp, params['data'])
-    user_camp = UserCampaign.where('campaign_id'=> camp.id, 'fb_user' => @user.fb_id).first
+    user_camp_metadata = klass.load_user_campaign(user_camp)
     data = {
       :user_data => { 
-                      :metadata => user_camp.metadata,
+                      :metadata => user_camp_metadata,
                       :rank => user_camp.profile.rank.name,
                       :exp => user_camp.profile.score
                    }

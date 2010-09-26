@@ -30,7 +30,7 @@ class FbUser < ActiveRecord::Base
     if user_ids && !(user_ids.empty?)
       conditions += " AND fb_user IN (#{user_ids.gsub!(' ','')})"
     end
-    user_campaign = UserCampaign.find_by_campaign_id_and_fb_user(camp_id, self.fb_id)
+    user_campaign = UserCampaign.find_by_campaign_id_and_fb_user(camp_id, self.fb_id) || OpenStruct.new({'score' => 0, 'fb_user' => self.fb_id})
     result[:rank] =  UserCampaign.count( :conditions => conditions + " AND ( score > #{user_campaign.score} " + 
                                                                              " OR ( score == #{user_campaign.score}" + 
                                                                                    " AND fb_user < #{user_campaign.fb_user} ) )" ) + 1

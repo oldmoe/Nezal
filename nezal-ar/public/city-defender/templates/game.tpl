@@ -156,11 +156,8 @@
 				</div>				
 			</div>
 			<div id="splashScreen" style="display:none">
-				<img src="images/background/interface.png"></img>
 				<div class="loading_bar_bg">
-					<img src="images/background/loading_bar_down.png"></img>
 					<div id="loading_bar">
-					<img src="images/background/loading_bar_up.png"></img>
 					</div>
 				</div>
 			</div>
