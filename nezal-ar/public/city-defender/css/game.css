@@ -693,6 +693,7 @@ canvas.turret{
 }
 #modalWindow .content
 {
+  font-size:13px;	
   width : 245px;
   height : 105px;
   position : absolute;
@@ -824,6 +825,14 @@ position:"absolute";
 	position: absolute;
 	top : 550;
 }
-
-
+#planeSilhouette{
+	position:absolute;
+	top:80px;
+	left:15px;
+}
+#tankSilhouette{
+	position:absolute;
+	top:50px;
+	left:15px;
+}
 

@@ -9,16 +9,13 @@ var IncomingWaves = {
 		this.div = $(this.divId)
 		this.div.style.width = Config.waves.length*this.waveWidth
 		this.div.style.left = -154*(Config.waves.length-3)
-		this.div.children[this.wave].style.border="4px solid gold";	
-		this.div.children[this.wave].style.marginTop="-1px";	
+		this.div.children[this.wave].style.border="1px solid gold";	
 	},
 
 	nextWave : function(){
 	this.div.children[this.wave].style.border="1px solid red";	
-	this.div.children[this.wave].style.marginTop="1px";	
 	this.wave++
-    this.div.children[this.wave].style.border="3px solid gold";	
-	this.div.children[this.wave].style.marginTop="-1px";	
+    this.div.children[this.wave].style.border="1px solid gold";	
 		this.div = $(this.divId)
 		this.moved = 0;
 		this.reactor.push(0, this.advance, this)				

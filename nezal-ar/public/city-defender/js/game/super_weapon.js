@@ -11,13 +11,8 @@ var SuperWeapon = Class.create({
 	
 	fire : function(){
 		if(!this.active) return
-		this.deactivate()
-		this.count = this.count - 1
+		this.clockEffect($$('#gameElements .superWeapons .'+this.type+' img').first(),this.coolDown)
 		this.action()
-		this.render()
-		this.progress = 0
-		var self = this
-		this.scene.reactor.push(this.progressInterval, function(){self.progressTick()})
 	},
 	
 	render : function(){
@@ -41,7 +36,47 @@ var SuperWeapon = Class.create({
 			this.scene.reactor.push(this.progressInterval, function(){self.progressTick()})
 		}		
 	},
-	
+	clockEffect: function(img, delay){
+		this.active = false
+		var image = img
+		var canvas = document.createElement('canvas')
+		canvas.width = image.width
+		canvas.height = image.height
+		canvas.style.position  = 'absolute'
+		canvas.style.left  = '0px'
+		var ctx = canvas.getContext('2d')
+		var angle = 0
+		image.parentNode.appendChild(canvas)
+		var self= this
+		function tick(){
+			ctx.save()
+			ctx.fillStyle = "white";
+			ctx.globalCompositeOperation = 'source-over'
+			ctx.clearRect(0,0,300,300)
+			ctx.translate(image.width/2, image.height/2)
+			ctx.rotate(-(Math.PI/180)*90)
+			ctx.beginPath();
+			ctx.arc(0, 0, (image.width > image.height ? image.width : image.height) + 5 , 0, (Math.PI/180)*angle, false);
+			ctx.lineTo(0, 0)
+			ctx.closePath ();
+			ctx.fill()
+			ctx.restore()
+			ctx.globalCompositeOperation = 'xor'
+			ctx.drawImage(overlay, 0, 0)
+			angle = angle + (360 / (delay*1000/50))
+			if(angle > 360){
+				// we are done
+				self.active = true
+				image.parentNode.removeChild(canvas)
+				return
+			}
+			self.scene.push(50,tick)
+		}
+		var overlay = Loader.images.background[this.type+'_button_off.png']
+		tick()
+		
+	},
+
 	notify : function(progress){
 			
 	},

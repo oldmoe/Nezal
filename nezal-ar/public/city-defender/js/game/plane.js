@@ -65,14 +65,15 @@ var Plane = Class.create(Creep, {
 		var anim = new CoinsAnimation(this.x, this.y - 40)
 		this.scene.towerHealthLayer.attach(anim)
 		this.scene.objects.push(anim)
-
+		var moneyAnim = new MoneyAnimation(this.x-10,this.y-5,Math.floor(this.price))
+		this.scene.objects.push(moneyAnim)
 		if(Map.grid[this.gridX] && Map.grid[this.gridX][this.gridY]){
 			var cell = Map.grid[this.gridX][this.gridY];
 			var res = cell.splice(cell.indexOf(this), 1);
 		}
 		this.scene.money += Math.floor(this.price);
 		this.scene.stats.creepsDestroyed++
-		this.scene.score += this.maxHp
+		this.scene.score += Math.floor(this.maxHp/100)
 	},
 	destroySprites : function(){
 		this.dead = true	

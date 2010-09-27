@@ -25,7 +25,6 @@ var CityDefenderScene = Class.create(Scene, {
 		}
 		this.waveNumber = 1
 		$super(delay);
-		//this.startTime = null
 		this.config = Nezal.clone_obj(config)
 		this.usedWeapons = {}
 		var self = this;
@@ -34,8 +33,12 @@ var CityDefenderScene = Class.create(Scene, {
 		});
 		this.exp = this.config.exp
 		this.wavesCount = this.config.waves.length
-		this.minExp = Intro.ranks[this.config.rank][0]
-		this.maxExp = Intro.ranks[this.config.rank][1]
+		if(!development){
+			this.minExp = Intro.ranks[this.config.rank][0]
+			this.maxExp = Intro.ranks[this.config.rank][1]
+		}else{
+			this.minExp = this.maxExp = 0
+		}
 		this.baseCtx = baseCtx;
 		this.upperCtx = upperCtx;
 		this.scenario = new Scenario(this)
@@ -95,7 +98,7 @@ var CityDefenderScene = Class.create(Scene, {
 		return this
 	},
 	addCreep : function(creep){
-		creep.price=creep.price+0.5*this.waveNumber
+		creep.price=creep.price+0.25*this.waveNumber
 		this.scenario.notify({name:"creepEntered", method: false, unit:creep})
 		if(this.turrets[0])this.scenario.notify({name:"creepEnteredTower", method: false, unit:this.turrets[0]})
 		creep.hp = Math.round(creep.hp*Math.pow(this.creepMultiplier[this.config.level-1],this.waveNumber))
@@ -110,7 +113,7 @@ var CityDefenderScene = Class.create(Scene, {
 		return this
 	},
 	addPlane : function(plane){
-		plane.price=plane.price+0.5*this.waveNumber
+		plane.price=plane.price+0.25*this.waveNumber
 		plane.hp = Math.round(plane.hp*Math.pow(this.creepMultiplier[this.config.level-1],this.waveNumber))
 		plane.maxHp = plane.hp
 		if(plane){
@@ -147,12 +150,7 @@ var CityDefenderScene = Class.create(Scene, {
 		$('money').innerHTML = this.money;
 		$('lives').innerHTML = "Lives "+Math.max(this.maxEscaped - this.escaped,0);
 		$('score').innerHTML = "Score "+this.score;
-		//$$('#gameElements .fps').first().innerHTML = "FPS: "+this.fps;
 		var self = this
-		this.config.superWeapons.each(function(weapon){
-			weapon = weapon.toLowerCase()
-			$(weapon).innerHTML = self[weapon].count
-		})
 		$('waves').innerHTML = "Wave "+this.wave +'/'+this.wavesCount;
 			$('towerInfo').show()
 			$('towerInfo').innerHTML = this.templates['towerInfo'].process({tower: this.selectedTower})
@@ -192,9 +190,14 @@ var CityDefenderScene = Class.create(Scene, {
 	},
 	renderStartAttack: function(){
 		var self = this
+		
 		$$('#gameElements .superWeapons div').each(function(div){ 
-			if(div.className != ''){div.observe('click', function(){self.fire(div.className)})}
+			if(div.className != ''){
+			self[div.className].active = true
+			div.observe('click', function(){self.fire(div.className)})
+			}
 		})
+
 		var startDev = $$('#gameElements .start').first()
 		startDev.addClassName('resumed')
 		$$(".startText").first().innerHTML = T.pause
