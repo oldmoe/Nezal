@@ -143,7 +143,7 @@ var Tutorial = Class.create({
 		self.viewMessage(9)
 		self.scene.reactor.pause()
 		self.ok.stopObserving('click')
-		self.ok.observe('click',function(){self.scene.reactor.resume();self.hide()})
+		self.ok.observe('click',function(){self.scene.reactor.resume();self.hide();Intro.newbieNoMore()})
 	},
 	waveEffect : function (){
 		$('modalWindow').show()
@@ -154,7 +154,6 @@ var Tutorial = Class.create({
 		self.ok.observe('click',function(){
 			self.scene.reactor.resume();
 			self.hide()
-			Intro.newbieNoMore()
 			self.scene.push(6000,function (){game.tutorial.initiateSuperWeapon()})
 		})
 	},

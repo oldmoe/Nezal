@@ -184,7 +184,13 @@ var Intro = {
                         else
                           $('intro').style['direction'] = 'ltr';
                         $('levelSelection').innerHTML = Intro.templates.levelSelection[1].process(); 
-                        Intro.show();
+                        if(Intro.userData.newbie)
+                        {
+                          Intro.displayTutorial();
+                          Intro.disablePauseScreen();
+                        }else{
+                          Intro.show();
+                        }
                     });
                 });
             }
@@ -414,6 +420,8 @@ var Intro = {
               {   method:'post', 
                   onSuccess : function(t, json){
                       Intro.userData.newbie = false;
+                      $("intro").show();   
+                      $('gameStart').hide();
                   }
               });
     },
