@@ -70,25 +70,27 @@
       <img src="${Loader.images.intro['background.png'].src}"/>
       <img id="paper" src="${Loader.images.intro['paper.png'].src}"/>
     </div>
-    <div class="camp-details">
-      <div class="name">
-        ${camp['name']}
+    <div class="camp-info">
+      <div class="camp-details">
+        <div class="name">
+          ${camp['name']}
+        </div>
+        <div class="desc">
+          ${camp['description']}
+        </div>
       </div>
-      <div class="desc">
-        ${camp['description']}
-      </div>
-    </div>
-    <img id="camp-map" src="${Loader.challenges[GameConfigs.campaign]['images/camp-map.png'].src}"/>
+      <img id="camp-map" src="${Loader.challenges[GameConfigs.campaign]['images/camp-map.png'].src}"/>
+    </div>  
     <div id="missions">
-      {for mission in Intro.campaignInfo.camp_data.metadata }
-          {if (Intro.campaignInfo.user_data.metadata.missions[mission['order'] - 1]) }  
+      {for mission in Intro.campaignData.camp_data.metadata }
+          {if (Intro.campaignData.user_data.metadata.missions[mission['order'] - 1]) }  
             <div class="mission clickableButton">
               <div path="${mission['path']}" onclick="Intro.selectMission(this); Intro.next();" class="clickSound" >
                 <img id="${mission['path']}" 
                    src="${Loader.challenges[GameConfigs.campaign]['images/'+mission.path+'/mission_active.png'].src}"/>
               </div>
               <div class="missionName">
-                ${Intro.campaignInfo.missions[mission.path]['name']}
+                ${Intro.campaignData.missionsInfo[mission.path]['name']}
               </div>
             </div>
           {else}
@@ -96,16 +98,18 @@
               <img id="${mission['path']}" 
                  src="${Loader.challenges[GameConfigs.campaign]['images/'+mission.path+'/mission_inactive.png'].src}"/>
               <div class="missionName">
-                ${Intro.campaignInfo.missions[mission.path]['name']}
+                ${Intro.campaignData.missionsInfo[mission.path]['name']}
               </div>
             </div>
           {/if}
       {/for}
     </div>
-    <div id="back" onclick="Intro.previous();" class="clickableButton clickSound">
-      <img src="${Loader.images.intro['back.png'].src}"/>
-      <div class="text buttonText">
-          ${Text.intro.campaign.back}
+    <div id="backContainer">
+      <div id="back" onclick="Intro.previous();" class="clickableButton clickSound">
+        <img src="${Loader.images.intro['back.png'].src}" style="margin-left : -30px;"/>
+        <div class="text buttonText">
+            ${Text.intro.campaign.back}
+        </div>
       </div>
     </div>
 </textarea>
@@ -113,8 +117,6 @@
 
 <textarea id='missionTemplate' style="display:none">
     <div id="floatBg" style="display : none;">
-      <img src="${Loader.images.intro['float-bg.png'].src}" style="width:400px;"></img>
-      <div id="close" onclick="Intro.hideFloatBg();" class="clickSound"></div>
       <div class="content"> 
         <div class="spans">
           <span class="name">   </span>
@@ -125,6 +127,7 @@
           <img src=""></img>
         </div>
       </div>
+      <div id="close" onclick="Intro.hideFloatBg();" class="clickSound"> X </div>
     </div>
     <div id="background">
       <img src="${Loader.images.intro['background.png'].src}"/>
@@ -192,8 +195,6 @@
 
 
 <textarea id='marketItemDetailsTemplate' style="display:none">
-    <img src="${Loader.images.intro['float-bg.png'].src}"></img>
-    <div id="close" onclick="Intro.hideFloatBg();" class="clickSound"></div>
     <div class="content"> 
       <div class="spans">
         <div class="name">  ${data.configs[data.itemid]['name']} </div>
@@ -202,8 +203,16 @@
         </div>
       </div>
       <div class="image">
+        <div>
+          <div style="width:90px; display : inline-block; height : 5px;"> </div>
+          <div id="close" onclick="Intro.hideFloatBg();" class="clickSound">x</div>
+        </div>
         <div class="skeleton">
-          <img src="${Loader.images.intro[data.type+'/'+data.configs[data.itemid]['skeleton']].src}"></img>
+          <img src="${Loader.images.intro[data.type+'/'+data.configs[data.itemid]['skeleton']].src}" 
+            {if (data.type=='weapons')}
+              style="padding-top : 20px;"
+            {/if}
+           />
         </div>
         <div class="cost">
             <div class="img">
@@ -225,13 +234,15 @@
       <div class="action  clickableButton">
           {if (!Intro.userData.metadata[data.type][data.itemid])}
             {if ((data.cost > data.coins) || ( data.rank[0] > data.exp))}
-              <span class="inactive"> unlock </span>
+              <div class="addMoney" >
               {if (data.cost > data.coins)}
-                <div class="addMoney" >
                   <img src="${Loader.images.intro['market/money.png'].src}" > </img>
-                </div>
               {/if}
+              </div>
+              <span class="inactive"> unlock </span>
             {else}
+              <div class="addMoney" >
+              </div>
               <span class="active action clickSound" itemid="${data.itemid}" 
                     type="${data.type}" onclick="Intro.unlockItem(this);"> unlock </span>
             {/if}
