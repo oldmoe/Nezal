@@ -124,6 +124,14 @@ var Intro = {
               var data = JSON.parse(loader.resources.get('metadata'));
               GameConfigs.campaign = data['game_data']['current_campaign'];
               Intro.gameData = JSON.parse(data['game_data']['metadata']);
+              for(var i in Intro.gameData.towers)
+              {
+                  Intro.gameData.towers[i].upgrades = JSON.parse(Intro.gameData.towers[i].upgrades);
+              }
+              for(var i in Intro.gameData.weapons)
+              {
+                  Intro.gameData.weapons[i].upgrades = JSON.parse(Intro.gameData.weapons[i].upgrades);
+              }
               Intro.userData = data['user_data'];
               Intro.userData["metadata"] = JSON.parse(data['user_data']['metadata']);
               Intro.ranks = data['ranks'];
@@ -308,19 +316,42 @@ var Intro = {
             setFloatBgInfo : function(element){
                   var id = element.getAttribute('itemid');
                   var type = element.getAttribute('type'); 
+                  var upgrade = element.getAttribute('upgrade');
                   var itemConfig = TowerConfig;
                   if(type == "weapons")
                   {
                     itemConfig = SuperWeaponConfig;
                   }
                   var item_rank;
-                  for(var rank in Intro.ranks)                 
+                  var cost = Intro.gameData[type][id].cost;
+                  var exp = Intro.gameData[type][id].exp;
+                  var currUpgrade = 0;
+                  if(upgrade)
                   {
-                      if(Intro.ranks[rank][0]<=Intro.gameData[type][id].exp &&
-                                     Intro.ranks[rank][1]>=Intro.gameData[type][id].exp )
+                      cost = Intro.gameData[type][id].upgrades[Intro.userData.metadata[type][id]['upgrades']]['cost'];
+                      exp = Intro.gameData[type][id].upgrades[Intro.userData.metadata[type][id]['upgrades']]['exp'];
+                      upgrade = Intro.gameData[type][id].upgrades[Intro.userData.metadata[type][id]['upgrades']];
+                      currUpgrade = Intro.gameData[type][id].upgrades[Intro.userData.metadata[type][id]['upgrades']-1];
+                      for(var rank in Intro.ranks)                 
                       {
-                        item_rank = rank;
-                        break;
+                          if( (Intro.ranks[rank][0]<=
+                                  Intro.gameData[type][id].upgrades[Intro.userData.metadata[type][id]['upgrades']]['exp']) &&
+                              (Intro.ranks[rank][1]>=
+                                  Intro.gameData[type][id].upgrades[Intro.userData.metadata[type][id]['upgrades']]['exp']) )
+                          {
+                            item_rank = rank;
+                            break;
+                          }
+                      }
+                  }else{
+                      for(var rank in Intro.ranks)                 
+                      {
+                          if(Intro.ranks[rank][0]<=Intro.gameData[type][id].exp &&
+                                         Intro.ranks[rank][1]>=Intro.gameData[type][id].exp )
+                          {
+                            item_rank = rank;
+                            break;
+                          }
                       }
                   }
                   var data  = { 'coins' : Intro.userData.coins,
@@ -328,8 +359,10 @@ var Intro = {
                                 'configs' : itemConfig,
                                 'itemid' : id,
                                 'type': type,
-                                'cost' : Intro.gameData[type][id].cost,
-                                'rank' : [Intro.gameData[type][id].exp, item_rank]
+                                'upgrade' : upgrade,
+                                'currUpgrade' : currUpgrade,
+                                'cost' : cost,
+                                'rank' : [exp, item_rank]
                               }
                   $$("#marketPlace #floatBg")[0].innerHTML = 
                                                   Intro.templates['marketplaceItem'][1].process({ "data" : data });
@@ -420,6 +453,7 @@ var Intro = {
               {   method:'post', 
                   onSuccess : function(t, json){
                       Intro.userData.newbie = false;
+                      Intro.show();
                       $("intro").show();   
                       $('gameStart').hide();
                   }

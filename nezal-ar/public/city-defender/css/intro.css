@@ -254,7 +254,9 @@ body {
   color : white;
 }
 
-
+/***************************
+  Css for the campaign page
+***************************/
 #campaign #background
 {
   position: absolute;
@@ -346,11 +348,12 @@ body {
   top:160px;
   width:100%;
 }
-#
-/* Mission Info Page */
+
+/***************************
+  Css for the mission page
+***************************/
 #mission
 {
-/*  background : url("../images/intro/city/city-info.png") no-repeat scroll 0 0 transparent;*/
 }
 #mission #background
 {
@@ -595,6 +598,9 @@ body {
   margin:0 5px;
 }
 
+/***************************
+  Css for the marketplace page
+***************************/
 #marketPlace #background
 {
   position: absolute;
@@ -716,6 +722,15 @@ body {
   float : left;
   width:60px;
 }
+#marketPlace .upgradeLevel
+{
+  font-family:Adlib;
+  font-size:30px;
+  position:absolute;
+  text-align:right;
+  top:10px;
+  width:105px;
+}
 #marketPlace .qBoxImage
 {
   padding-top : 14px;
@@ -738,17 +753,17 @@ body {
 }
 #marketPlace .infoImage
 {
-  left:37px;
-  position:relative;
-  top:-42px;
-  cursor : pointer;
+  cursor:pointer;
+  float:right;
+  margin-right:3px;
+  margin-top:4px;
 }
 #marketPlace .unlockImage
 {
-  left:-14px;
   position:relative;
   top:-14px;
 }
+
 #marketPlace .unlockText
 {
   color:white;
@@ -801,10 +816,6 @@ body {
   top:146px;
   width:100%;
 }
-#marketPlace .action
-{
-  cursor : pointer;  
-}
 #marketPlace .action .text
 {
   color:white;
@@ -817,12 +828,12 @@ body {
   top:0;
   width:100%;
 }
-div.clickableButton
+div.clickableButton, span.clickableButton
 {
   opacity : 0.85;
   cursor : pointer;
 }
-div.clickableButton:hover
+div.clickableButton:hover, span.clickableButton:hover
 {
   opacity : 1;
   cursor : pointer;
@@ -875,30 +886,10 @@ div.clickableButton:hover
   vertical-align:top;
   width:23%;
 }
-#upgrade #floatBg .content .spans
-{
-  display:inline-block;
-  font-size:10px;
-  height:100%;
-  margin:10px;
-  text-align:justify;
-  width:40%;
-}
-#upgrade .div
-{
-  display:inline-block;
-  height:100%;
-  width:31%;
-}
 #marketPlace #floatBg .content .image .skeleton
 {
   height : 100px;
   margin:5px 0;
-}
-#marketPlace #weapons #floatBg .content .image .skeleton
-{
-  margin-top : 10px;
-  height : 80px;
 }
 #marketPlace #floatBg .content .image .cost img
 {
@@ -953,7 +944,7 @@ div.clickableButton:hover
   display:inline-block;
   text-transform:capitalize;
   vertical-align:top;
-  width:70%;
+  width:50%;
 }
 #marketPlace #floatBg .actions .rank span
 {
@@ -971,7 +962,7 @@ div.clickableButton:hover
   cursor:pointer;
   display:inline-block;
   font-size:11px;
-  width:28%;
+  width:45%;
 }
 #marketPlace #floatBg .actions .action .active
 {
@@ -979,6 +970,7 @@ div.clickableButton:hover
   font-size:19px;
   display:inline-block;
   padding-top:10px;
+  width : 78%;
 }
 #marketPlace #floatBg .actions .action .inactive
 {
@@ -987,6 +979,7 @@ div.clickableButton:hover
   cursor : default; 
   display:inline-block;
   padding-top:10px;
+  width : 78%;
 }
 #marketPlace #floatBg .actions .addMoney
 {
@@ -995,10 +988,89 @@ div.clickableButton:hover
   cursor:pointer;
   display:inline-block;
   height:10px;
-  margin:0 11px;
   text-transform:capitalize;
-  width:40px;
 }
+
+
+#marketPlace #floatBg #upgrade .content .spans
+{
+  display:inline-block;
+  font-size:10px;
+  height:100%;
+  margin:0 10px;
+  text-align:justify;
+  vertical-align:top;
+  width:35%;
+}
+#marketPlace  #floatBg #upgrade .upgradeInfo
+{
+  display:inline-block;
+  height:80%;
+  margin-top:30px;
+  width:36%;
+}
+#marketPlace  #floatBg #upgrade .desc
+{
+  font-size : 11px;
+}
+#marketPlace  #floatBg #upgrade .towerText
+{
+  font-size:13px;
+  padding-top:5px;
+  vertical-align:top;
+  width:30px;
+  display:inline-block;
+}
+#marketPlace  #floatBg #upgrade .beforeText
+{
+  color : #ff4102;
+}
+#marketPlace  #floatBg #upgrade .parent
+{
+  height:35px;
+  margin:0 5px;
+}
+#marketPlace  #floatBg #upgrade .bar
+{
+  display:inline-block;
+  height:25px;
+  width:100px;
+}
+#marketPlace  #floatBg #upgrade .barRed
+{
+  display:inline-block;
+  width : 70%;
+  height : 100%;
+  background : #ff4102;
+}
+#marketPlace  #floatBg #upgrade .barYellow
+{
+  display:inline-block;
+  width : 25%;
+  height : 100%;
+  background : #fac200;
+  margin : 0px -5px;
+}
+#marketPlace  #floatBg #upgrade .optionName
+{
+  position:relative;
+  text-align:center;
+  top:-25px;
+  width:100%;
+  color : white;
+}
+#marketPlace  #floatBg #upgrade .currUpgrade, #marketPlace  #floatBg #upgrade .newUpgrade
+{
+  font-size:14px;
+  height:55px;
+  margin-bottom:15px;
+  text-align:justify;
+}
+#marketPlace  #floatBg #upgrade .currUpgrade
+{
+  color:#ff4102;
+}
+
 
 /*
 #challenges

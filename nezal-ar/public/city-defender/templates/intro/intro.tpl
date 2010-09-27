@@ -238,6 +238,9 @@
 
 
 <textarea id='marketItemDetailsTemplate' style="display:none">
+{if (data.upgrade)}
+  <div id="upgrade">
+{/if}
     <div class="content"> 
       <div class="spans">
         <div class="name">  ${data.configs[data.itemid]['name']} </div>
@@ -245,6 +248,88 @@
           ${data.configs[data.itemid]['desc']} 
         </div>
       </div>
+      {if (data.upgrade && data.type=='towers')}
+        <div class="upgradeInfo">
+            <div class="parent"> 
+                <span class="towerText beforeText">
+                  ${data.currUpgrade.power}
+                </span>
+                <div class="bar">
+                  <div class="barRed" 
+                        style="width : ${data.currUpgrade.power * 95 / Intro.gameData[data.type][data.itemid].upgrades.last().power}%;">
+                  </div>
+                  <div class="barYellow"
+                        style="width : ${(data.upgrade.power-data.currUpgrade.power) * 95 / Intro.gameData[data.type][data.itemid].upgrades.last().power}%;">
+                  </div>
+                  <div class="optionName"> ${Text.intro.upgrades.power} </div>
+                </div>
+                <span class="towerText">
+                  ${data.upgrade.power}
+                </span>
+            </div>
+            <div class="parent"> 
+                <span class="towerText beforeText">
+                  ${data.currUpgrade.range}
+                </span>
+                <div class="bar">
+                  <div class="barRed" 
+                        style="width : ${data.currUpgrade.range * 95 / Intro.gameData[data.type][data.itemid].upgrades.last().range}%;">
+                  </div>
+                  <div class="barYellow"
+                        style="width : ${(data.upgrade.range-data.currUpgrade.range) * 95 / Intro.gameData[data.type][data.itemid].upgrades.last().range}%;">
+                  </div>
+                  <div class="optionName"> ${Text.intro.upgrades.range} </div>
+                </div>
+                <span class="towerText">
+                  ${data.upgrade.range}
+                </span>
+            </div>
+            <div class="parent"> 
+                <span class="towerText beforeText">
+                  ${data.currUpgrade.maxHp}
+                </span>
+                <div class="bar">
+                  <div class="barRed" 
+                        style="width : ${data.currUpgrade.maxHp * 95 / Intro.gameData[data.type][data.itemid].upgrades.last().maxHp}%;">
+                  </div>
+                  <div class="barYellow"
+                        style="width : ${(data.upgrade.maxHp-data.currUpgrade.maxHp) * 95 / Intro.gameData[data.type][data.itemid].upgrades.last().maxHp}%;">
+                  </div>
+                  <div class="optionName"> ${Text.intro.upgrades.maxHp} </div>
+                </div>
+                <span class="towerText">
+                  ${data.upgrade.maxHp}
+                </span>
+            </div>
+            <div class="parent"> 
+                <span class="towerText beforeText">
+                  ${data.currUpgrade.rate*100}
+                </span>
+                <div class="bar">
+                  <div class="barRed" 
+                        style="width : ${data.currUpgrade.rate * 95 / Intro.gameData[data.type][data.itemid].upgrades.last().rate}%;">
+                  </div>
+                  <div class="barYellow"
+                        style="width : ${(data.upgrade.rate-data.currUpgrade.rate) * 95 / Intro.gameData[data.type][data.itemid].upgrades.last().rate}%;">
+                  </div>
+                  <div class="optionName"> ${Text.intro.upgrades.rate} </div>
+                </div>
+                <span class="towerText">
+                  ${data.upgrade.rate*100}
+                </span>
+            </div>
+        </div>
+      {/if}
+      {if (data.upgrade && data.type=='weapons')}
+        <div class="upgradeInfo">
+          <div class="currUpgrade">
+            ${Text.intro.upgrades[data.itemid][Intro.userData.metadata[data.type][data.itemid]['upgrades']-1]}
+          </div>
+          <div class="newUpgrade">
+            ${Text.intro.upgrades[data.itemid][Intro.userData.metadata[data.type][data.itemid]['upgrades']]}
+          </div>
+        </div>
+      {/if}
       <div class="image">
         <div>
           <div style="width:90px; display : inline-block; height : 5px;"> </div>
@@ -270,28 +355,51 @@
     <div class="actions">
       <div class='rank'>
         <span {if (data.rank[0] > data.exp)} "style="color:red;" {/if}>
-          Required Rank : 
+          ${Text.intro.marketPlace.requiredRank} :
         </span>
         <img src="${Loader.images.intro['ranks/'+data.rank[1]+'.png'].src}"> </img>
       </div>
-      <div class="action  clickableButton">
+      <div class="action">
           {if (!Intro.userData.metadata[data.type][data.itemid])}
             {if ((data.cost > data.coins) || ( data.rank[0] > data.exp))}
-              <div class="addMoney" >
-              {if (data.cost > data.coins)}
-                  <img src="${Loader.images.intro['market/money.png'].src}" > </img>
-              {/if}
-              </div>
-              <span class="inactive"> unlock </span>
+            <div  class="inactive">
+              <span> ${Text.intro.marketPlace.unlock} </span>
+            </div>
             {else}
-              <div class="addMoney" >
-              </div>
-              <span class="active action clickSound" itemid="${data.itemid}" 
-                    type="${data.type}" onclick="Intro.unlockItem(this);"> unlock </span>
+            <div class="active">
+              <span class="clickableButton clickSound" itemid="${data.itemid}" 
+                    type="${data.type}" onclick="Intro.unlockItem(this);"> 
+                  ${Text.intro.marketPlace.unlock}
+              </span>
+            </div>
+            {/if}
+          {else}
+            {if (Intro.userData.metadata[data.type][data.itemid]['upgrades'] < 
+                         Intro.gameData[data.type][data.itemid]['upgrades'].length )}
+                {if ((data.cost > data.coins) || ( data.rank[0] > data.exp))}
+                  <div  class="inactive">
+                    <span> ${Text.intro.marketPlace.upgrade} </span>
+                  </div>
+                {else}
+                  <div class="active">
+                    <span class="clickableButton clickSound" itemid="${data.itemid}" 
+                          type="${data.type}" onclick="Intro.unlockItem(this);"> 
+                        ${Text.intro.marketPlace.upgrade}
+                    </span>
+                  </div>
+                {/if}
+            {else}
+                <div  class="inactive"></div>
             {/if}
           {/if}
+          <div class="addMoney" >
+            <img src="${Loader.images.intro['market/money.png'].src}" > </img>
+          </div>
       </div>
     </div>
+{if (data.upgrade)}
+  </div>
+{/if}
 </textarea>
 
 <textarea id='marketItemsTemplate' style="display:none">
@@ -384,11 +492,15 @@
                 {if (!Intro.userData.metadata[type][item])}
   		            <img class="lockImage"  
 		                    src="${Loader.images.intro['market/lock.png'].src}"> </img>
+                {else}
+                  <div class="upgradeLevel">
+                      ${Intro.userData.metadata[type][item]['upgrades']}
+                  </div>
                 {/if}
                 <div id="info" style="display : none;">
                   {if (!Intro.userData.metadata[type][item])}
-                    <div>
-                      <div class="unlockText" type="${type}" itemid="${item}"
+                    <div style="float:left; margin-left:5px;">
+                      <div class="unlockText clickSound" type="${type}" itemid="${item}"
                             onclick="Intro.showFloatBg(this)">
                           ${Text.intro.marketPlace.unlock}
                       </div>
@@ -398,8 +510,10 @@
                   {else}
                     {if (Intro.userData.metadata[type][item]['upgrades'] < 
                          Intro.gameData[type][item]['upgrades'].length )}
-                      <div>
-                        <div class="unlockText clickableButton">
+                      <div style="float:left; margin-left:5px;">
+                        <div class="unlockText clickableButton clickSound" type="${type}"
+                            itemid="${item}" upgrade="true"
+                            onclick="Intro.showFloatBg(this)">
                           ${Text.intro.marketPlace.upgrade}
                         </div>
         		            <img class="unlockImage"  
@@ -407,7 +521,7 @@
                       </div>
                     {/if}
                   {/if}
-  		            <img class="infoImage"  
+  		            <img class="infoImage clickSound"  
 		                  src="${Loader.images.intro['market/info.png'].src}"
 		                  type="${type}" itemid="${item}" onclick="Intro.showFloatBg(this)"/>
                 </div>
