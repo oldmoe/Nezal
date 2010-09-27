@@ -3,6 +3,8 @@ window.Text = {
         levelSelection : {
             msg : 'دافع عن بلد جديد كل أسبوع',
             title : 'التحدي الاسبوعي',
+            extraMaps : 'بلاد أخري',
+            tutorial : 'البرنامج التعليمي',
             easy : 'سهل',
             medium : 'متوسط',
             hard : 'صعب',

@@ -3,6 +3,8 @@ window.Text = {
         levelSelection : {
             msg : 'defend a new country every week',
             title : 'Weekly chanllenge',
+            extraMaps : 'Extra Maps',
+            tutorial : 'Tutorial',
             easy : 'easy',
             medium : 'medium',
             hard : 'hard',

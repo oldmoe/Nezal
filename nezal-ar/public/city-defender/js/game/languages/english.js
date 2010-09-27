@@ -2,7 +2,9 @@ window.Text = {
     intro : {
         levelSelection : {
             msg : 'defend a new country every week',
-            title : 'Weekly chanllenge',
+            title : 'Weekly challenge',
+            extraMaps : 'Extra Maps',
+            tutorial : 'Tutorial',
             easy : 'easy',
             medium : 'medium',
             hard : 'hard',

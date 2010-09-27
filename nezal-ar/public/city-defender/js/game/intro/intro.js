@@ -122,6 +122,7 @@ var Intro = {
               $("gameStart").innerHTML = loader.resources.get(PathConfigs.gameTemplate);
               Intro.templates['game'] = loader.resources.get(PathConfigs.gameTemplate);
               var data = JSON.parse(loader.resources.get('metadata'));
+              GameConfigs.campaign = data['game_data']['current_campaign'];
               Intro.gameData = JSON.parse(data['game_data']['metadata']);
               Intro.userData = data['user_data'];
               Intro.userData["metadata"] = JSON.parse(data['user_data']['metadata']);
@@ -471,6 +472,14 @@ var Intro = {
     
     disablePauseScreen : function() {
         $('pause').hide()
+    },
+    
+    displayTutorial : function() {
+        Intro.userData.newbie = true;
+        city_defender_start();
+        $('gameStart').show();
+        $("intro").hide();    
+				onFinish()
     },
 
     show: function(){

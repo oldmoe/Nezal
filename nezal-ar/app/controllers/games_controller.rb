@@ -18,7 +18,8 @@ class GamesController < ApplicationController
     ranks = {}
     @game.ranks.each { |rank| ranks[rank.name] = [rank.lower_exp, rank.upper_exp]}
     data = {
-      :game_data => { :metadata => game_metadata} , 
+      :game_data => { :metadata => game_metadata,
+                      :current_campaign => @game.current_campaign.path} , 
       :user_data => { :coins => @user.coins, 
                       :rank => @game_profile.rank.name,
                       :exp => @game_profile.score, 

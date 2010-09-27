@@ -15,8 +15,6 @@
 
 
 <textarea id='levelSelectionTemplate' style="display:none">
-		<div id = "msg"> ${Text.intro.levelSelection.msg} </div>
-		<div id = "challengesText"> ${Text.intro.levelSelection.title} </div>
     <div id="background">
       <img id="paper" src="${Loader.images.intro['paper.png'].src}"/>
       <img id="introText" src="${Loader.images.intro['text.png'].src}"/>
@@ -25,27 +23,68 @@
       <img id="blank" src="${Loader.images.intro['blank.png'].src}"/>
       <img id="titleAr" src="${Loader.images.intro['title-ar.png'].src}"/>
     </div>
-    <div id="language">
-      {for lang in Language.langsNames}
-        {if (lang[0]==Language.userLanguage)}
-          <div  id="selectedLang">
+    {for lang in Language.langsNames}
+      {if (lang[0]==Language.userLanguage)}
+          <div  id="selectedLang" class="clickableButton clickSound" 
+                onclick="$$('#levelSelection #language')[0].toggle(); return false;">
             <img id="selected" src="${Loader.images.intro['language.png'].src}"/>
-            <div style="position : relative; top : -40px" >
+            <div style="position : relative; top : -33px" >
               ${lang[1]}  
             </div>
           </div>
-        {/if}
-      {/for}
+      {/if}
+    {/for}
+    <div id="language" style="display:none;">
       {for lang in Language.langsNames}
         {if !(lang[0]==Language.userLanguage)}
-          <div style="height : 25px;" language="${lang[0]}"
+          <div style="height : 25px;" language="${lang[0]}" class="clickSound clickableButton"
                 onclick="Intro.selectLanguage(this)">
             ${lang[1]}
           </div>
         {/if}
       {/for}
     </div>
-    <div id="levels">
+		<div id = "msg"> ${Text.intro.levelSelection.msg} </div>
+		<div id="tutorial"> 
+		  <div style="width : 70%; display:inline-block; height:10px;"></div>
+		  <div class="clickableButton clickSound tutorialText" onclick="Intro.displayTutorial(); return false;">
+  		  ${Text.intro.levelSelection.tutorial} 
+		  </div>
+	  </div>
+		<div id = "challengesText" class="title clickableButton clickSound"
+	       onclick="this.removeClassName('clickableButton');
+          	      this.addClassName('clicked');
+          	      if(this.hasClassName('clickSound'))
+            	      Sounds.play(Sounds.gameSounds.click);
+          	      this.removeClassName('clickSound');
+          	      this.stopObserving('click');
+          	      $$('#levelSelection #levels')[0].show(); return false;"> ${Text.intro.levelSelection.title} </div>
+    <div id="levels" style="display : none;">
+        <span id="easy" onclick="GameConfigs.level=1; Intro.next(); return false;" class="clickSound">
+          ${Text.intro.levelSelection.easy}
+          <span style="font-size:14px;text-transform:lowercase;"> 1 </span>
+          <span style="font-size:14px;text-transform:lowercase;"> ${Text.intro.levelSelection.score} </span>
+        </span>
+        <span id="medium" onclick="GameConfigs.level=2; Intro.next(); return false;" class="clickSound">
+          ${Text.intro.levelSelection.medium}
+          <span style="font-size:14px;text-transform:lowercase;"> 2 </span>
+          <span style="font-size:14px;text-transform:lowercase;"> ${Text.intro.levelSelection.score} </span>
+        </span>
+        <span id="hard" onclick="GameConfigs.level=3; Intro.next(); return false;" class="clickSound">
+          ${Text.intro.levelSelection.hard}
+          <span style="font-size:14px;text-transform:lowercase;"> 3 </span>
+          <span style="font-size:14px;text-transform:lowercase;"> ${Text.intro.levelSelection.score} </span>
+        </span>
+    </div>
+		<div id="extraMap" class="title clickableButton clickSound" style="display : none;"
+		      onclick="this.removeClassName('clickableButton');
+          	      this.addClassName('clicked');
+          	      if(this.hasClassName('clickSound'))
+            	      Sounds.play(Sounds.gameSounds.click);
+          	      this.removeClassName('clickSound');
+          	      this.stopObserving('click');
+          	      $$('#levelSelection #extraLevels')[0].show(); return false;"> ${Text.intro.levelSelection.extraMaps} </div>
+    <div id="extraLevels" style="display : none;">
         <span id="easy" onclick="GameConfigs.level=1; Intro.next(); return false;" class="clickSound">
           ${Text.intro.levelSelection.easy}
           <span style="font-size:14px;text-transform:lowercase;"> 1 </span>
@@ -79,7 +118,7 @@
           ${camp['description']}
         </div>
       </div>
-      <img id="camp-map" src="${Loader.challenges[GameConfigs.campaign]['images/camp-map.png'].src}"/>
+      <img id="camp-map" src="${Loader.challenges[GameConfigs.campaign]['images/flag.png'].src}"/>
     </div>  
     <div id="missions">
       {for mission in Intro.campaignData.camp_data.metadata }
@@ -106,7 +145,11 @@
     </div>
     <div id="backContainer">
       <div id="back" onclick="Intro.previous();" class="clickableButton clickSound">
-        <img src="${Loader.images.intro['back.png'].src}" style="margin-left : -30px;"/>
+        {if ($('intro').getStyle('direction')=='rtl') }
+          <img src="${Loader.images.intro['ready.png'].src}"/>
+        {else}
+          <img src="${Loader.images.intro['back.png'].src}"/>
+        {/if}
         <div class="text buttonText">
             ${Text.intro.campaign.back}
         </div>
@@ -144,7 +187,7 @@
         ${city.summary}
     </div>
     <div id="cityImage">
-        <img src="${Loader.challenges[GameConfigs.campaign]['images/camp-map.png'].src}">
+        <img src="${Loader.challenges[GameConfigs.campaign]['images/flag.png'].src}">
     </div>
     <div id="fullDesc">
         ${city.description}    
@@ -297,17 +340,30 @@
       </div>
     </div>
     
-    <div id="back" onclick="Intro.previous();" class="buttonText clickableButton clickSound" >
-      <div id="backText">
-        ${Text.intro.marketPlace.back}
+    <div id="actionContainer">
+      <div id="back" onclick="Intro.previous();" class="buttonText clickableButton clickSound" >
+        {if ($('intro').getStyle('direction')=='rtl') }
+          <img src="${Loader.images.intro['ready.png'].src}"/>
+        {else}
+          <img src="${Loader.images.intro['back.png'].src}"/>
+        {/if}
+        <div style="width : 30px; height : 10px;display:inline-block;"></div>
+        <div id="backText">
+          ${Text.intro.marketPlace.back}
+        </div>
       </div>
-      <img  src="${Loader.images.intro['back.png'].src}"/>
-    </div>
-    <div id="ready" onclick="Intro.next();" class="buttonText clickableButton clickSound">
-      <div id="readyText">
-        ${Text.intro.marketPlace.ready}
+      <div style="width : 450px; height : 10px;display:inline-block;"></div>
+      <div id="ready" onclick="Intro.next();" class="buttonText clickableButton clickSound">
+        {if ($('intro').getStyle('direction')=='rtl') }
+          <img src="${Loader.images.intro['back.png'].src}"/>
+        {else}
+          <img src="${Loader.images.intro['ready.png'].src}"/>
+        {/if}
+        <div id="readyText">
+          ${Text.intro.marketPlace.ready}
+        </div>
+        <div style="width : 30px; height : 10px;display:inline-block;"></div>
       </div>
-      <img  src="${Loader.images.intro['ready.png'].src}"/>
     </div>
 </textarea>
 
