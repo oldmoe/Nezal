@@ -131,7 +131,44 @@ window.Text = {
 				msg10:"That is it soldier, you are now ready to defend your city against any hostile activities. I am sure you will do your best to complete all missions assigned to you."
 		+"</br>Do not forget to like us and bookmark  us to get a nice reward. Good Luck.",
 				msg11: "After each wave enemies get stronger, so prepare yourself well"
+		},
+		upperBar : {
+			lives: "Lives",
+			score: "Score",
+			wave : "Wave",
+		},
+		gameState:{
+			start:"Start",
+			pause:"Pause",
+			resume:"Resume"
+		},
+		towerInfo:{
+			power:"Power",
+			shield:"Shield",
+			rate: "Rate",
+			range:"Range"
+		},
+		ranks:{
+			PVT :{ name:"Private" ,abbr : "PVT"},
+			LCpl:{ name:"Private" ,abbr : "PVT"},
+			Cpl:{ name:"Private" ,abbr : "PVT"},
+			Sgt:{ name:"Private" ,abbr : "PVT"},
+			SSgt:{ name:"Private" ,abbr : "PVT"},
+			GySgt:{ name:"Private" ,abbr : "PVT"},
+			MSgt:{ name:"Private" ,abbr : "PVT"},
+			1stSgt:{ name:"Private" ,abbr : "PVT"},
+			MGySgt:{ name:"Private" ,abbr : "PVT"},
+			SgtMaj:{ name:"Private" ,abbr : "PVT"},
+			2ndLt:{ name:"Private" ,abbr : "PVT"},
+			1stLt:{ name:"Private" ,abbr : "PVT"},
+			Capt:{ name:"Private" ,abbr : "PVT"},
+			Maj:{ name:"Private" ,abbr : "PVT"},
+			LtCol:{ name:"Private" ,abbr : "PVT"},
+			Col:{ name:"Private" ,abbr : "PVT"},
+			BGen:{ name:"Private" ,abbr : "PVT"},
+			MajGen:{ name:"Private" ,abbr : "PVT"},
+			LtGen:{ name:"Private" ,abbr : "PVT"},
+			Gen:{ name:"Private" ,abbr : "PVT"}
 		}
-	
 	}
 }
