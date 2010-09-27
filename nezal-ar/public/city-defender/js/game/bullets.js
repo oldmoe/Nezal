@@ -118,8 +118,6 @@ var Turret = Class.create(Unit, {
 		var power = this.power
 		target.takeHit(power)
 		if(target.dead){
-			var moneyAnim = new MoneyAnimation(target.x-10,target.y-5,Math.round(target.price))
-			this.scene.objects.push(moneyAnim)
 			this.scene.scenario.notify({name:"towerDestroyedCreep", method: false, unit:this})
 		}
 	},

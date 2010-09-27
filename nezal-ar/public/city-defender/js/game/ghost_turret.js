@@ -18,7 +18,39 @@ var ghostTurretFeatures = {
 			this.valid = false;
 		}
 	},
-		
+	droppingGroundClick : function(e){
+		var x=0,y=0
+		var self = GhostTurret
+		if(e.layerX){x = e.layerX;y = e.layerY}					//other than opera
+		else{x=e.x;y=e.y}										//opera
+		self.xGrid = Math.floor(x/32)
+		self.yGrid = Math.floor(y/32)
+		self.validate();
+		if(self.valid&&self.selected){
+			self.selected = true
+			Sounds.play(Sounds.gameSounds.correct_tower)
+			var turret = new self.tower(Math.floor(x/32), Math.floor(y/32),game.scene)
+			game.scene.towerMutators.each(function(mutator){
+				mutator.action(turret)
+			})
+			game.scene.addTurret(turret)
+			game.scene.stats.towersCreated++
+			game.scene.money -= self.tower.prototype.price
+		}
+		else if (Map.grid[self.xGrid][self.yGrid].tower){
+			self.selected = false
+			if(game.scene.selectedTower){
+				if(game.scene.selectedTower.rangeSprite){
+					game.scene.selectedTower.rangeSprite.visible = false
+				}
+			}
+			game.scene.selectedTower = Map.grid[self.xGrid][self.yGrid].tower
+			game.scene.selectedTower.rangeSprite.visible = true
+		}
+		else{
+				Sounds.play(Sounds.gameSounds.wrong_tower)
+		}
+	},
 	select : function(div){
 		$('droppingGround').stopObserving("mouseenter")
 		var self = GhostTurret
@@ -56,46 +88,12 @@ var ghostTurretFeatures = {
 				self.yGrid = Math.floor(y/32)
 				self.tower = towerCategory
 				self.validate()
-			}).observe("click", function(e){
-				var x=0,y=0
-				if(e.layerX){x = e.layerX;y = e.layerY}					//other than opera
-				else{x=e.x;y=e.y}										//opera
-				self.xGrid = Math.floor(x/32)
-				self.yGrid = Math.floor(y/32)
-				self.tower = towerCategory
-				self.validate();
-				if(self.valid&&self.selected){
-					self.selected = true
-					Sounds.play(Sounds.gameSounds.correct_tower)
-					var turret = new towerCategory(Math.floor(x/32), Math.floor(y/32),game.scene)
-					game.scene.towerMutators.each(function(mutator){
-						mutator.action(turret)
-					})
-					game.scene.addTurret(turret)
-					game.scene.stats.towersCreated++
-					game.scene.money -= towerCategory.prototype.price
-				}
-				else if (Map.grid[self.xGrid][self.yGrid].tower){
-					self.selected = false
-					if(game.scene.selectedTower){
-			 			if(game.scene.selectedTower.rangeSprite){
-							game.scene.selectedTower.rangeSprite.visible = false
-						}
-					}
-					game.scene.selectedTower = Map.grid[self.xGrid][self.yGrid].tower
-					game.scene.selectedTower.rangeSprite.visible = true
-					this.removeClassName('turret')
-				}
-				else{
-						Sounds.play(Sounds.gameSounds.wrong_tower)
-				}
-			})
+			}).observe("click",function(e){GhostTurret.droppingGroundClick(e)})
 		}).observe("mouseleave", function(e){
 			self.isIn = false
 			this.stopObserving("mousemove").stopObserving("click")
 		}).addClassName('turret')
 	},
-	
 	showInfo : function(){
 	},
 	clear : function(){

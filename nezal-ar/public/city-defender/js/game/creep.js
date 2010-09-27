@@ -213,9 +213,11 @@ var Creep = Class.create(Unit, {
 		this.scene.towerHealthLayer.attach(anim)
 		this.scene.objects.push(anim)
 		this.destroySprites()
+		var moneyAnim = new MoneyAnimation(this.x-10,this.y-5,Math.floor(this.price))
+		this.scene.objects.push(moneyAnim)
 		this.scene.money += Math.floor(this.price);
 		this.scene.stats.creepsDestroyed++
-		this.scene.score += this.maxHp
+		this.scene.score += Math.floor(this.maxHp/100)
 	},
 	destroySprites : function(){
 		var cell = Map.grid[this.gridX][this.gridY];

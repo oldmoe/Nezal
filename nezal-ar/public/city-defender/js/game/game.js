@@ -10,29 +10,30 @@ var Game = Class.create({
 	
 	start : function(){
 		Map.init();
+		if(Intro.userData.newbie)Config = tutorialConfig
 		this.prepareConfig()
 		this.config = Nezal.clone_obj(Config)
 		this.config.waves.reverse()
-		this.scene = new CityDefenderScene(this.config,50,this.ctx,this.topCtx);
+		$('scores').show()
+		if(Intro.userData.newbie){
+			$('modalWindow').show()
+			this.scene = new TutorialScene(this.config,50,this.ctx,this.topCtx);
+			this.tutorial = new Tutorial(this.scene,this.tutorialCtx)
+		}
+		else{
+			this.scene = new CityDefenderScene(this.config,50,this.ctx,this.topCtx);
+			this.registerHandlers();
+			if(Config.map)Map.bgGrid = Config.map
+			if(Config.mapEntry)Map.entry = Config.mapEntry
+		}
+		GhostTurret = new Turret(0, 0,this.scene, ghostTurretFeatures)
+		$$('.startText').first().innerHTML = T.start
 		var arr = ['Splash','Heal','Hyper','Weak','Nuke']
 				arr.each(function(weapon){
 					if(Config.superWeapons.indexOf(weapon)==-1){
 						game.scene[weapon.toLowerCase()].deactivate()
 					}
 		})
-     $('scores').show()
-		GhostTurret = new Turret(0, 0,this.scene, ghostTurretFeatures)
-		$$('.startText').first().innerHTML = T.start
-//		Intro.userData.newbie = true
-//		if(Intro.userData.newbie){
-//			$('modalWindow').show()
-//			this.tutorial = new Tutorial(this.scene,this.tutorialCtx)
-//		}
-//		else{
-			this.registerHandlers();
-//		}
-		if(Config.map)Map.bgGrid = Config.map
-		if(Config.mapEntry)Map.entry = Config.mapEntry
 		this.scene.start();
 	},
 	prepareConfig : function(){
@@ -50,6 +51,7 @@ var Game = Class.create({
 		}
 	},
 	setGameImages : function(){
+		if(Intro.userData.newbie)Config = tutorialConfig
 		Loader.images.background['win.png'].setAttribute("id","winImage")
 		$$('#result #winImage')[0].src = Loader.images.background['win.png'].src;
 		$$('#result #loseImage')[0].src = Loader.images.background['lose.png'].src;
@@ -76,9 +78,6 @@ var Game = Class.create({
 				div.style.cursor = "pointer"
 				div.setAttribute('class',weapon);
 				$$(".superWeapons").first().appendChild(div)
-				var childDiv = document.createElement("div");
-				childDiv.setAttribute('id',weapon);
-				div.appendChild(childDiv)	
 				var div2 = document.createElement("div");
 				div2.setAttribute('class',weapon);
 				$$(".superWeaponsOff").first().appendChild(div2)
@@ -94,14 +93,15 @@ var Game = Class.create({
 		$$('.start').first().appendChild(Loader.images.background['start.png'])
 
 		$('gameElements').appendChild(Loader.images.background['l_shape.png'])
-		$('canvasContainer').appendChild(Loader.challenges[Config.campaign]['images/'+Config.missionPath+'/path.png'])
+		if(Intro.userData.newbie)$('canvasContainer').appendChild(Loader.images.background['path.png'])
+		else $('canvasContainer').appendChild(Loader.challenges[Config.campaign]['images/'+Config.missionPath+'/path.png'])
 		Config.towers.each(function(turret){ 
 			$$('.'+turret).first().appendChild(Loader.images.background[turret.toLowerCase()+'_button.png'])
 			
 		})
 	
 		var img8 = Loader.images.background['character.png']
-		$('character').appendChild(img8)
+		$$('#modalWindow #character').first().appendChild(img8)
 		var img9 = document.createElement("IMG");
 		$('playAgain').appendChild(Loader.images.background['play_again.png'])
 		$('exit').appendChild(Loader.images.background['exit.png'])
@@ -129,9 +129,13 @@ var Game = Class.create({
 		$$('.towers div').invoke('observe','click', function(){
 			Sounds.play(Sounds.gameSounds.click);GhostTurret.select(this)
 		})
-		//$('sellTower').observe('click',function(){
-		//	self.scene.sellSelectedTower()
-		//})		
+		$$('#gameElements .superWeapons div').each(function(div){ 
+			if(div.className != ''){
+				div.observe('click', function(){self.scene.fire(div.className)})
+				self.scene[div.className].active = false
+			}
+		})
+				
 		$$('#gameElements .start').first().observe('click', function(){self.scene.startAttack()})
 		$('playAgain').observe('click', game.reset)
 		$('exit').observe('click', game.exit)
@@ -196,11 +200,10 @@ function onFinish(){
 	$('gameElements').style.visibility = 'visible'
 	$('canvasContainer').style.visibility = 'visible'
 	window.setTimeout(function(){
-		Effect.Fade('splashScreen')
 		$('gameElements').show();
 		$('canvasContainer').show();
 		$('static').show();
 		$('waitScreen').hide()
-		Effect.Fade('static',{duration: 2.0})
-	},1000)
+		Effect.Fade('static',{duration: 1.0})
+	},100)
 }

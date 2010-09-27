@@ -123,7 +123,5 @@ soundManager.onready(function() {
   if (soundManager.supported()) {
     // SM2 is ready to go!
     createSounds()
-  } else {
-    alert('el7a2oooooony!!! ana ba2eeet a\'7raaaaas')
-  }
+  } 
 });

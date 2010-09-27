@@ -10,6 +10,12 @@
 		<textarea id='towerInfoTemplate' style="display:none">
 			{if tower!=null}
 			<div class="diagram ${tower.cssClass}">
+			{if tower.canHitGround}
+				<img id="tankSilhouette" src = ${Loader.images.game['tank_silhouette.png'].src} />
+			{/if}
+			{if tower.canHitFlying}
+				<img id="planeSilhouette" src=${Loader.images.game['plane_silhouette.png'].src} />
+			{/if}
 				{if tower.rank > 0}
 					<div id="diagramRank"><img src="${Loader.images.game['rank_'+tower.rank+'.png'].src}" /></div>				
 				{/if}			
@@ -60,7 +66,7 @@
 				<div id="character">
 		
 				</div>
-				<div class="content" style="overflow:auto"> 
+				<div class="content"> 
 				
 				</div>
 				<div id = "ok">
