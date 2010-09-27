@@ -81,7 +81,7 @@ class CityDefender < Metadata
                                                       old_score = metadata['missions'][data['mission'] -1]['score']
                                                       data['score']
                                                     end
-        user_campaign.profile.score += ( data['score'] / 1000)
+        user_campaign.profile.score += ( data['score'] / 50)
         user_campaign.score -= old_score 
         user_campaign.score += data['score']
         ranks = user_campaign.profile.game.ranks.where( " lower_exp <= #{user_campaign.profile.score} AND " + 

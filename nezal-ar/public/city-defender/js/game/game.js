@@ -157,6 +157,7 @@ var Game = Class.create({
 	},
 	exit :function(){
           $('scores').hide()
+          Intro.enablePauseScreen();
 					$('gameStart').hide()
     	    $("gameStart").innerHTML = Intro.templates['game'];
     	    Intro.replay();	

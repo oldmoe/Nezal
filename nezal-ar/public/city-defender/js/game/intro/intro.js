@@ -30,6 +30,11 @@ var ResourceLoader = Class.create( {
             this.resources.set(resource, null);
         }
     },
+    
+    resetResource: function(resource)
+    {
+        this.resources.set(resource, null);
+    },
 
     load: function(callback, errorCallback)
     {
@@ -192,23 +197,26 @@ var Intro = {
                 loader.addResource(campInfoPath);
                 loader.addResource(campMetadata);
                 loader.load(function(){
-                                ChallengeSelector.campaignInfo = JSON.parse(loader.resources.get(campInfoPath));
-                                Intro.campaignInfo = JSON.parse(loader.resources.get(campMetadata));
-                                Intro.campaignInfo.missions = {};
+                                Intro.campaignData = JSON.parse(loader.resources.get(campMetadata));
+                                Intro.campaignData.campaignInfo = JSON.parse(loader.resources.get(campInfoPath));
+                                Intro.campaignData.missionsInfo = {};
+                                loader.resetResource(campMetadata);
                                 var missionLoader = Intro.missionLoader;
-                                Intro.campaignInfo.camp_data.metadata.each(function(mission){
+                                Intro.campaignData.camp_data.metadata.each(function(mission){
                                    var missionPath = Intro.campPath() + "/" + mission['path'] + "/mission.info"; 
                                    missionLoader.addResource(missionPath);
                                 });
                                 missionLoader.load( function(){
-                                    Intro.campaignInfo.camp_data.metadata.each(function(mission){
+                                    Intro.campaignData.camp_data.metadata.each(function(mission){
                                        var missionPath = Intro.campPath() + "/" + mission['path'] + "/mission.info"; 
-                                       Intro.campaignInfo.missions[mission['path']] = 
+                                       Intro.campaignData.missionsInfo[mission['path']] = 
                                             JSON.parse(missionLoader.resources.get(missionPath));
                                     });
                                     $('campaign').innerHTML = 
-                                      Intro.templates.campaign[1].process({"camp":ChallengeSelector.campaignInfo}); 
+                                      Intro.templates.campaign[1].process({"camp":Intro.campaignData.campaignInfo}); 
                                     Intro.show();
+                                    $('intro').show();
+                                    $('gameStart').hide();
                                 });
                             });
             }
@@ -224,15 +232,15 @@ var Intro = {
                                         creepInfo = creepInfo.concat([element[i]['category']]);
                                     }
                                 })
-                ChallengeSelector.missionCreeps = creepInfo.uniq();
+                var missionCreeps = creepInfo.uniq();
                 var loader = Intro.missionLoader;
                 var missionPath = Intro.campPath() + Intro.missionPath() + "/mission.info";
                 loader.addResource(missionPath)
                 loader.load( function(){
-                          ChallengeSelector.mission = JSON.parse(loader.resources.get(missionPath));
-                          ChallengeSelector.mission.creeps = ChallengeSelector.missionCreeps;
+                          var mission = JSON.parse(loader.resources.get(missionPath));
+                          mission.creeps = missionCreeps;
                           $('mission').innerHTML = Intro.templates.mission[1].process({ 
-                                              "city" : ChallengeSelector.mission,
+                                              "city" : mission,
                                               "path" : Intro.missionPath(),
                                               "creepConfig" : CreepConfig }); 
                           var images = {
@@ -246,8 +254,8 @@ var Intro = {
         	            });
             },
             setFloatBgInfo : function(element){
-                  $$("#mission #floatBg div span")[0].innerHTML = CreepConfig[element.getAttribute("creepid")].name;
-                  $$("#mission #floatBg div span")[1].innerHTML = CreepConfig[element.getAttribute("creepid")].desc;  
+                  $$("#mission #floatBg div span")[0].innerHTML = Text.intro.creeps[element.getAttribute("creepid")].name;
+                  $$("#mission #floatBg div span")[1].innerHTML = Text.intro.creeps[element.getAttribute("creepid")].desc;  
                   $$("#mission #floatBg .skeleton img")[0].src = Loader.images.intro[ "creeps/" + 
                                                   CreepConfig[element.getAttribute("creepid")].skeleton].src;    
             }
@@ -391,7 +399,7 @@ var Intro = {
                                                        'score' : score }) },
                   onSuccess : function(t, json){
                       var data = JSON.parse(t.responseText);
-                      Intro.campaignInfo.user_data.metadata = JSON.parse(data['user_data']['metadata']);
+                      Intro.campaignData.user_data.metadata = data['user_data']['metadata'];
                       Intro.userData.rank = data['user_data'].rank;
                       Intro.userData.exp = data['user_data'].exp;                      
                       Intro.setupGameConfigs();
@@ -410,10 +418,10 @@ var Intro = {
     },
     
     setupGameConfigs : function(){
-        var missions = Intro.campaignInfo.camp_data.metadata
+        var missions = Intro.campaignData.camp_data.metadata
         var mission = missions.find(function(mission){ if ( GameConfigs.missionPath == mission['path'] ) return true; })
         GameConfigs.mission = mission;
-        var map = Intro.campaignInfo.user_data.metadata.missions[mission['order'] - 1  ]['map'];
+        var map = Intro.campaignData.user_data.metadata.missions[mission['order'] - 1  ]['map'];
         var mapFlipped = [];
         for(var i=0; i< map[0].length; i++)
         {
@@ -427,9 +435,9 @@ var Intro = {
             }
         }
         GameConfigs.map = mapFlipped;
-        GameConfigs.mapEntry = Intro.campaignInfo.user_data.metadata.missions[mission['order'] - 1  ]['mapEntry'];
+        GameConfigs.mapEntry = Intro.campaignData.user_data.metadata.missions[mission['order'] - 1  ]['mapEntry'];
         GameConfigs.mapImage = 'challenges/' + GameConfigs.campaign + '/images' + Intro.missionPath() + '/path.png';
-        GameConfigs.waves = Intro.campaignInfo.user_data.metadata.missions[mission['order'] - 1  ]['waves'];
+        GameConfigs.waves = Intro.campaignData.user_data.metadata.missions[mission['order'] - 1  ]['waves'];
         var towers = [];
         for( j in Intro.userData.metadata.towers) 
         {
@@ -511,19 +519,14 @@ var Intro = {
         callback();
 	  },
 	  
-	  replay: function(){
-	      Intro.retrieveData(function(){
-	                                      
-	                                      Intro.select('campaign');
-                                        $('gameStart').hide();
-                                        $('marketPlace').hide();
-                                        $("intro").show();
-	                                  });
+	  replay: function(){  
+        Intro.select('campaign');
 	  },
 	  
 	  finish: function(){
 	      Intro.setupGameConfigs();
         city_defender_start();
+        Intro.disablePauseScreen();
         $('gameStart').show();
         $("intro").hide();    
 				onFinish()

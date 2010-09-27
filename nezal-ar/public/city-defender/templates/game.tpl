@@ -161,5 +161,11 @@
 				<div id="exit">
 				</div>				
 			</div>
+			<div id="splashScreen" style="display:none">
+				<div class="loading_bar_bg">
+					<div id="loading_bar">
+					</div>
+				</div>
+			</div>
 			<div id="waitScreen"></div>
 		</div>		
