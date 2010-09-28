@@ -143,7 +143,67 @@ window.Text = {
                     'upgrade 3'
                 ]
         }
-    }
+    },
+	game : {
+		tutorial : {
+				msg1: 'Welcome to the academy of defense'
+		+'</br>During this training period, you will get all the required information, and gain the basic skills that are needed'
+		+'to defend your city against any hostile activities',
+				msg2: '</br>Your goal is to kill all coming waves of enemy units and prevent them from passing to your city',
+				msg3: 'You can always see your current rank at the top right of the map </br>'
+		+'</br>The upper bar indicates your rank progress, the wave number, your score in this game'
+		+'and the remaining enemy units to escape that indicate your loss</br>',
+				msg4: 'Now it is time to place some towers. Click on the Belcher tower in the towers box.</br>'
+		+'Notice that the tower information will be visible in the information box.',
+				msg5: 'Click here to place the tower. ',
+				msg6: 'Place more towers as long as you have enough gold. then press start to begin the battle',
+				msg7: 'You can always use super weapons on demand. ',
+				msg8: 'click on a tower to see it\'s abilities, sell or upgrade it',
+				msg9: 'Finally, there is an important hint you need to know before finishing this training. Air units do not respect any path, they simply fly over anything.',
+				msg10:'That is it soldier, you are now ready to defend your city against any hostile activities. I am sure you will do your best to complete all missions assigned to you.'
+		+'</br>Do not forget to like us and bookmark  us to get a nice reward. Good Luck.',
+				msg11: 'After each wave enemies get stronger, so prepare yourself well'
+		},
+		upperBar : {
+			lives: 'Lives',
+			score: 'Score',
+			wave : 'Wave'
+		},
+		gameState:{
+			start:'Start',
+			pause:'Pause',
+			resume:'Resume'
+		},
+		towerInfo:{
+			power:'Power',
+			shield:'Shield',
+			rate: 'Rate',
+			range:'Range'
+		},
+		ranks:{
+			PVT :{ name:'Private' ,abbr : 'PVT'},
+			LCpl:{ name:'Private' ,abbr : 'PVT'},
+			Cpl:{ name:'Private' ,abbr : 'PVT'},
+			Sgt:{ name:'Private' ,abbr : 'PVT'},
+			SSgt:{ name:'Private' ,abbr : 'PVT'},
+			GySgt:{ name:'Private' ,abbr : 'PVT'},
+			MSgt:{ name:'Private' ,abbr : 'PVT'},
+			'1stSgt':{ name:'Private' ,abbr : 'PVT'},
+			MGySgt:{ name:'Private' ,abbr : 'PVT'},
+			SgtMaj:{ name:'Private' ,abbr : 'PVT'},
+			'2ndLt':{ name:'Private' ,abbr : 'PVT'},
+			'1stLt':{ name:'Private' ,abbr : 'PVT'},
+			Capt:{ name:'Private' ,abbr : 'PVT'},
+			Maj:{ name:'Private' ,abbr : 'PVT'},
+			LtCol:{ name:'Private' ,abbr : 'PVT'},
+			Col:{ name:'Private' ,abbr : 'PVT'},
+			BGen:{ name:'Private' ,abbr : 'PVT'},
+			MajGen:{ name:'Private' ,abbr : 'PVT'},
+			LtGen:{ name:'Private' ,abbr : 'PVT'},
+			Gen:{ name:'Private' ,abbr : 'PVT'}
+		}
+	}
+	
 }
 
 

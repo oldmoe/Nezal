@@ -374,19 +374,22 @@
             </div>
             {/if}
           {else}
-            {if (Intro.userData.metadata[data.type][data.itemid]['upgrades'] < 
+            {if (data.upgrade)}
+                {if (Intro.userData.metadata[data.type][data.itemid]['upgrades'] < 
                          Intro.gameData[data.type][data.itemid]['upgrades'].length )}
-                {if ((data.cost > data.coins) || ( data.rank[0] > data.exp))}
-                  <div  class="inactive">
-                    <span> ${Text.intro.marketPlace.upgrade} </span>
-                  </div>
-                {else}
-                  <div class="active">
-                    <span class="clickableButton clickSound" itemid="${data.itemid}" 
-                          type="${data.type}" onclick="Intro.unlockItem(this);"> 
-                        ${Text.intro.marketPlace.upgrade}
-                    </span>
-                  </div>
+               
+                    {if ((data.cost > data.coins) || ( data.rank[0] > data.exp))}
+                      <div  class="inactive">
+                        <span> ${Text.intro.marketPlace.upgrade} </span>
+                      </div>
+                    {else}
+                      <div class="active">
+                        <span class="clickableButton clickSound" itemid="${data.itemid}" 
+                              type="${data.type}" onclick="Intro.upgradeItem(this);"> 
+                            ${Text.intro.marketPlace.upgrade}
+                        </span>
+                      </div>
+                    {/if}
                 {/if}
             {else}
                 <div  class="inactive"></div>

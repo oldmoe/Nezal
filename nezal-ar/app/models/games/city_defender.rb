@@ -8,12 +8,12 @@ class CityDefender < Metadata
     weapons = {}
     game_data['towers'].each_pair do |key, val|
       if val['unlocked'] == true
-        towers[key] = {'upgrades' =>  val['upgradeLevel'] || 1}
+        towers[key] = {'upgrades' =>  val['upgradeLevel']}
       end
     end
     game_data['weapons'].each_pair do |key, val|
       if val['unlocked'] == true
-        weapons[key] = {'upgrades' => val['upgradeLevel'] || 1}
+        weapons[key] = {'upgrades' => val['upgradeLevel']}
       end
     end
     game_profile.metadata= self.encode({'towers'=>towers,'weapons'=>weapons})
@@ -113,7 +113,7 @@ class CityDefender < Metadata
   def self.upgrade(game_profile, data)
     game_data = self.decode(game_profile.game.metadata)
     profile_data = self.decode(game_profile.metadata)
-    upgrade = profile_data[data['type']][data['item_id']]['upgrades']
+    upgrade = profile_data[data['type']][data['item_id']]['upgrades'] + 1
     if(game_data[data['type']][data['item_id']]['upgrades'][upgrade])
       if (game_data[data['type']][data['item_id']]['upgrades'][upgrade]['cost'].to_i <= game_profile.user.coins &&
             game_data[data['type']][data['item_id']]['upgrades'][upgrade]['exp'].to_i <= game_profile.score )

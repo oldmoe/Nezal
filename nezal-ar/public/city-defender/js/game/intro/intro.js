@@ -410,10 +410,42 @@ var Intro = {
                                 itemConfig = SuperWeaponConfig;
                                 typeName = "super weapon";
                             }
-                            else if (type == "upgrade")
+                            FBDefender.publishUnlockedItem(
+                                { name : itemid,
+                                  image : 'intro/'+ type + "/" + itemConfig[itemid]['image'],
+                                  mission : GameConfigs.missionPath, type : typeName})
+                            Intro.select('marketPlace');
+                            Intro.disablePauseScreen();
+                  }
+            });
+        }else{
+        }
+    },
+    
+    upgradeItem: function(element){
+        var type = element.getAttribute('type');
+        var itemid = element.getAttribute('itemid');
+        var cost = Intro.gameData[type][itemid].upgrades[Intro.userData.metadata[type][itemid]['upgrades']]['cost'];
+        var exp = Intro.gameData[type][itemid].upgrades[Intro.userData.metadata[type][itemid]['upgrades']]['exp'];
+        if ( Intro.userData.coins >= cost &&
+               Intro.userData.exp >= exp ) 
+        {
+            Intro.enablePauseScreen();
+            new Ajax.Request( 'metadata',
+                    {   method:'post', 
+                        parameters: { 'data' : Object.toJSON({ 'type' :type,
+                                                                'item_id' : itemid,
+                                                                'event': 'upgrade' }) },
+                        onSuccess : function(t, json){
+                            var data = JSON.parse(t.responseText);
+                            Intro.userData = data['user_data'];
+                            Intro.userData["metadata"] = JSON.parse(data['user_data']['metadata']);
+                            var typeName = 'tower';
+                            var itemConfig = TowerConfig;
+                            if(type == "weapons")
                             {
-                                 itemConfig = UpgradeConfig;
-                                 typeName = "upgrade";
+                                itemConfig = SuperWeaponConfig;
+                                typeName = "super weapon";
                             }
                             FBDefender.publishUnlockedItem(
                                 { name : itemid,
@@ -426,6 +458,7 @@ var Intro = {
         }else{
         }
     },
+    
 
     sendScore : function(score, weapons, win, callback){
         if(!weapons)
