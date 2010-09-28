@@ -102,7 +102,7 @@ class CityDefender < Metadata
           game_data[data['type']][data['item_id']]['exp'].to_i <= game_profile.score )
       game_profile.user.coins -= game_data[data['type']][data['item_id']]['cost'].to_i
       if !(profile_data[data['type']][data['item_id']])
-        profile_data[data['type']][data['item_id']] = {'upgrades' => 0}
+        profile_data[data['type']][data['item_id']] = {'upgrades' => game_data[data['type']][data['item_id']]['upgradeLevel']}
       end
       game_profile.user.save
       game_profile.metadata = self.encode(profile_data)
