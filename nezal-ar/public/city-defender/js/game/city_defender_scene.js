@@ -99,7 +99,7 @@ var CityDefenderScene = Class.create(Scene, {
 	},
 	addCreep : function(creep){
 		creep.range+=1
-		creep.rate+=0.1
+		//creep.rate+=0.1
 		creep.maxHp = creep.maxHp/2
 		creep.hp = creep.maxHp
 		creep.price=creep.price+0.25*this.waveNumber
@@ -119,7 +119,7 @@ var CityDefenderScene = Class.create(Scene, {
 	},
 	addPlane : function(plane){
 		plane.range+=1
-		plane.rate+=0.1
+	//	plane.rate+=0.1
 		plane.maxHp = plane.maxHp/2
 		plane.hp = plane.maxHp
 		plane.price=plane.price+0.25*this.waveNumber
