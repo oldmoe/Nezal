@@ -59,16 +59,9 @@ var Sounds = {
 		return 'sounds/sfx/'
 	},
 
-	format : 'ogg'
+	format : 'mp3'
 }
 
-var test = new Audio
-if(test.canPlayType('audio/mpeg')){
-	Sounds.format = 'mp3'	
-}
-else if(test.canPlayType('audio/ogg')){
-	Sounds.format = 'ogg'	
-}
 
 var soundNames = ['accept','pause' ,'wash','add_item', 'plane',
 'add_money', 'rank_promotion','win', 'lose', 'reject','wrong_tower','click','correct_tower' ]
