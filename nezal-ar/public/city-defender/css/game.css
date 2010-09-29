@@ -309,13 +309,13 @@ body{
 #money{
   color:white;
   font-family:Digital;
-  font-size:15px;
+  font-size:18px;
   font-weight:bold;
   height:20px;
   left:672px;
   text-align:center;
   text-shadow:-1px 1px black;
-  top:93px;
+  top:91px;
   width:79px;
   position:absolute;
 }
@@ -415,47 +415,50 @@ body{
 	height: 56px;
 }
 
+
+
 #gameElements .controls{
 	position:absolute;
-	top:5px;
-	left:5px;
-	width:50px;
-	height:200px;
-	z-index : 101;
-}
-
-#gameElements .controls div{
 	height: 36px;
 	width: 36px;
 	margin-bottom: 4px;
 	opacity : 0.7;
+	z-index:101;
+	margin-left:3px;
 }
 
-#gameElements .controls div:hover{
+#gameElements .controls:hover{
 	opacity : 1.0;
 }
 
-#gameElements .controls .sound.on{
+#gameElements  .sound.controls.on{
 	width: 40px;
-	margin-left: 3px;
-	background-image: url('../images/background/sound_on_button.png');			
+	background-image: url('../images/background/sound_on_button.png');		
+	top:35px
 }
 
-#gameElements .controls .sound.off{
-	width: 35;
-	margin-left: 6px;
+#gameElements  .sound.controls.off{
+	width: 35px;
+	top:35px;
 	background-image: url('../images/background/sound_off_button.png');				
 }
 
-#gameElements .controls .like{
+#gameElements .like{
 	width: 40px;
 	background-image: url('../images/background/like_button.png');			
+	top:117px;
 }
 
-#gameElements .controls .bookmark{
-	margin-left: 4px;
-	background-image: url('../images/background/bookmark_button.png');			
+#gameElements  .bookmark{
+	background-image: url('../images/background/bookmark_button.png');
+	top :75px;
 }
+#gameElements  .subscribe{
+	margin-left: 4px;
+	background-image: url('../images/background/subscribe_button.png');
+	top :80px;
+}
+
 
 #gameElements .status{
 	position: absolute;
@@ -876,7 +879,7 @@ position:"absolute";
 	width :358px; 
 	height: 136px;
 	border :5px solid #FF4102;
-	background-color : #066266;
+	background-color : #01060d;
 	opacity : 0.78;
 }
 #result #exit,#result #playAgain{
@@ -902,9 +905,33 @@ position:"absolute";
 }
 #pauseWindow{
 	z-index : 299;
-	width :760;
-	height :550; 
+	width :760px;
+	height :550px; 
 	position :absolute;
 	background-color :black;
 	opacity:0.5;
+}
+#gameReset,#resetText,#gameExit,#exitText{
+	position:absolute;
+}
+#gameReset  img,#gameExit img{
+	width:75px;
+}
+#gameReset {
+	cursor:pointer;
+	left:64px;
+	top:5px;
+	z-index:100;
+}
+#resetText ,#exitText{
+	font-size:12px;
+	font-weight:bold;
+	left:20px;
+	top:3px;
+}
+#gameExit{
+	top:5px;
+	cursor:pointer;
+	left:545px;
+	z-index:100
 }

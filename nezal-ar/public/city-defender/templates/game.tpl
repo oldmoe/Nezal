@@ -90,6 +90,8 @@
 				<canvas id="gameForeground" width="736" height="480""></canvas>
 			</div>
 			<div id="gameElements" style="display:none">
+				<div id="gameReset"><div id="resetText">Reset</div></div>
+				<div id="gameExit"><div id="exitText">Exit</div></div>
 				<div id="money">
 					0
 				</div>
@@ -117,12 +119,9 @@
 					</b>
 					</p>
 				</div>
-				<div class="controls">
-					<div class="sound on"></div>
-					<div class="like"></div>
-					<!--div class="subscribe"></div-->
-					<div class="bookmark"></div>
-				</div>
+				<div class="sound controls on"></div>
+				<div class="like controls"></div>
+				<div class="bookmark controls"></div>
 					<textarea id='wavesTemplate' style='display:none'>
 						<div id="incomingWaves">
 						{for wave in Config.waves}
