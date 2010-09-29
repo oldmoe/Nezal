@@ -1,6 +1,7 @@
 require 'active_record'
 require 'logger'
 require 'yaml'
+load Dir.pwd + '/lib/resource_bundler.rb'
 
 namespace :db do
   
@@ -22,6 +23,17 @@ namespace :db do
         ActiveRecord::Base.logger = Logger.new(File.open('log/database.log', 'a'))
     end
   
+end
+
+namespace :deploy do
+	
+	desc "Bundle resources and compress them, also add cache busters"
+    task :bundle do
+		bundle
+		generate_resources
+		render
+    end
+	
 end
 
 

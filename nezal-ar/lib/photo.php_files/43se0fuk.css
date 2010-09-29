@@ -1,0 +1,88 @@
+/*
+HTTP Host: static.ak.fbcdn.net
+Generated: September 17th 2010 1:22:43 PM PDT
+Machine: 10.30.148.190
+Locale: nu_ll
+Path: css/dock/chat/tabs_old.css
+*/
+
+#fbDockChatTabs .fbNubFlyout{width:228px}
+#fbDockChatTabs{position:static}
+#fbDockChatTabs .fbChatTab.highlight.disabled,
+#fbDockChatTabs .fbChatTab.highlight{color:#fff;margin:0;border-color:#3b5998;background:url(/rsrc.php/zEJ9M/hash/da4gzcim.png) repeat-x}
+#fbDockChatTabs .tab_hit_area{position:relative;overflow:hidden;float:left;width:110px;cursor:pointer;padding:2px 4px 6px 6px}
+#fbDockChatTabSlider .numMessages,
+#fbDockChatTabSlider .tab_count{position:absolute;top:-8px;right:12px;padding-top:1px;font-weight:bold;text-align:center;width:18px;height:16px;font-size:9px;color:#fff;background:url(/rsrc.php/z3NEK/hash/1uif288b.png) no-repeat -66px -26px;_background-image:url(/rsrc.php/zIFG5/hash/dj8w6stz.gif)}
+#fbDockChatTabSlider .numMessages a,
+#fbDockChatTabSlider .numMessages a:hover,
+#fbDockChatTabSlider .tab_count a,
+#fbDockChatTabSlider .tab_count a:hover{color:#fff;text-decoration:none}
+#fbDockChatTabSlider .next .tab_count{right:6px}
+#fbDockChatTabSlider .previous .numMessages{right:2px}
+#fbDockChatTabs .fbNubButton .tab_name .tab_availability{width:7px;height:7px;background:url(/rsrc.php/z34F6/hash/bjb7s8k5.gif) no-repeat -1px -1px;margin:0 0 1px 4px}
+#fbDockChatTabs .idle .fbNubButton .tab_name .tab_availability{background:url(/rsrc.php/z7PYZ/hash/2m9ightr.gif) no-repeat -1px -1px}
+#fbDockChatTabs .fbChatTab.highlight .fbNubButton.hover .tab_name .tab_availability,
+#fbDockChatTabs .fbChatTab.highlight .fbNubButton .tab_name .tab_availability{background:url(/rsrc.php/z8BA5/hash/aki860f1.gif) no-repeat -1px -1px}
+#fbDockChatTabs .fbChatTab.highlight.typing .fbNubButton .tab_name .tab_availability,
+#fbDockChatTabs .typing .fbNubButton .tab_name .tab_availability{background:url(/rsrc.php/z3NEK/hash/1uif288b.png) no-repeat -87px -29px;_background-image:url(/rsrc.php/zIFG5/hash/dj8w6stz.gif);height:11px;width:11px;margin:0 0 0 4px}
+#fbDockChatTabs .fbChatTab.disabled .fbNubButton .tab_name .tab_availability,
+#fbDockChatTabs .fbChatTab.disabled .fbNubButton.hover .tab_name .tab_availability{background:url(/rsrc.php/z56FS/hash/9zr18t1k.png) no-repeat -1px -1px}
+#fbDockChatTabs .disabled .fbNubButton.hover .tab_name span,
+#fbDockChatTabs .fbNubButton.hover .tab_name span{text-decoration:underline}
+#fbDockChatTabs .fbChatTab.highlight.disabled{color:#c3cddf}
+#fbDockChatTabs .fbChatTab.disabled.focused{color:#555;background-color:#fff}
+#fbDockChatTabs .fbChatTab.focused{color:#111;border-color:#333;border-bottom:1px solid #333;margin-top:0;background:#fff}
+#fbDockChatTabs .fbChatTab.focused .tab_hit_area{margin-top:0;padding-top:3px;padding-bottom:5px}
+#fbDockChatTabs .chat_header{background:#526ea6;border:1px solid #254588;border-bottom:1px solid #526ea6;cursor:pointer}
+#fbDockChatTabs .chat_header{cursor:auto}
+#fbDockChatTabs .chat_header_name{margin-left:46px;padding:0}
+#fbDockChatTabs .chat_header_name a{color:#fff;font-weight:bold;padding:0}
+#fbDockChatTabs .chat_info{padding:2px 0 2px 50px;background:#eee;min-height:28px;width:176px}
+#fbDockChatTabs .chat_info.chat_info_no_pic{padding-left:0;width:100%}
+#fbDockChatTabs img.chat_info_pic{position:absolute;top:11px;left:13px;width:45px;height:45px;padding:0 1px 1px 0;background:url(/rsrc.php/zA4IG/hash/cny9pytx.png) no-repeat -480px -166px}
+#fbDockChatTabs .fbNubFlyoutBody{overflow:auto;overflow-x:hidden;color:#000;cursor:default;position:relative}
+#fbDockChatTabs .toolbox{background-color:#fff}
+#fbDockChatTabs .chat_actions{color:#3b5998;font-size:9px;padding:2px 5px;border-bottom:1px solid #ccc}
+#fbDockChatTabs .chat_actions .divider{margin:0 2px}
+#fbDockChatTabs .chat_actions .action,
+#fbDockChatTabs .chat_actions .action_wrapper{white-space:nowrap}
+#fbDockChatTabs .chat_actions .action_wrapper:hover{cursor:pointer}
+#fbDockChatTabs .chat_actions .action_wrapper:hover .action{text-decoration:underline}
+#fbDockChatTabs .chat_actions .action_wrapper img{margin-right:4px;vertical-align:middle}
+#fbDockChatTabs .chat_actions .action:hover{cursor:pointer;text-decoration:underline}
+#fbDockChatTabs .disabled .fbNubFlyoutBody{background:#f7f7f7}
+#fbDockChatTabs .fbNubFlyoutBodyContent{padding-bottom:3px}
+#fbDockChatTabs .fbNubFlyoutBody h5{font-size:11px;margin:2px 0 0 0;padding:3px 6px 1px;border-top:1px solid #eee}
+#fbDockChatTabs .fbNubFlyoutBody h5.self{color:#777}
+#fbDockChatTabs .fbNubFlyoutBody h5.other a{cursor:pointer}
+#fbDockChatTabs .fbNubFlyout .time_stamp{color:#999;float:right;font-size:9px;font-weight:normal;padding:1px 0}
+#fbDockChatTabs .fbNubFlyoutBody p{color:#000;padding:2px 3px;margin:0 4px;line-height:14px}
+#fbDockChatTabs .fbNubFlyoutBody .cyphertext{color:#999;font-size:9px;line-height:11px}
+#fbDockChatTabs .fbNubFlyoutBody .msg_warning{background-color:#fff9d7}
+#fbDockChatTabs .fbNubFlyoutBody .chat_notice,
+#fbDockChatTabs .fbNubFlyoutBody .visibility_change{color:#999;margin:0;padding:3px 6px 2px}
+#fbDockChatTabs .fbNubFlyout .date_divider{margin-top:10px;font-size:9px;font-weight:bold;color:#777;padding-left:6px}
+#fbDockChatTabs .fbNubFlyout .date_divider.first{margin-top:2px}
+#fbDockChatTabs .chat_input_div{padding:0;border-top:1px solid #93a2c1;position:relative}
+#fbDockChatTabs .chat_shadow_input,
+#fbDockChatTabs .chat_input{border:0;padding:4px 4px 4px 24px;margin:0}
+#fbDockChatTabs .disabled .chat_input{background-color:#e4e4e4;color:#888}
+#fbDockChatTabs .chat_shadow_input{position:absolute;visibility:hidden;height:0;width:196px}
+#fbDockChatTabs .chat_input{overflow:auto;resize:none}
+#fbDockChatTabs .chat_input_icon{background:url(/rsrc.php/z4VTX/hash/7qua77sc.png) no-repeat;left:4px;height:16px;position:absolute;top:4px;width:16px}
+#fbDockChatTabs .tab_content{position:relative;padding:1px 0 0}
+#fbDockChatTabs .highlight.disabled,
+#fbDockChatTabs .highlight{margin:0;height:27px}
+#fbDockChatTabs .highlight a.fbNubButton,
+#fbDockChatTabs .highlight.disabled a.fbNubButton{background:url(/rsrc.php/zEJ9M/hash/da4gzcim.png) repeat-x;border-color:#283b8a;color:#fff}
+#fbDockChatTabs .highlight a.fbNubButton:hover,
+#fbDockChatTabs .highlight.disabled a.fbNubButton:hover{background-image:none}
+#fbDockChatTabSlider .disabled a.fbNubButton{background-color:#d8d8d8;color:#555}
+#fbDockChatTabs .highlight.disabled{color:#c3cddf}
+#fbDockChatTabs .openToggler.disabled a.fbNubButton{background-color:#d8d8d8;color:#555}
+#fbDockChatTabs .fbNubButton .close{position:absolute;right:0;top:50%;margin-top:-5px}
+#fbDockChatTabs .fbNubFlyoutHeader{position:relative}
+#fbDockChatTabs .chat_info_pic_link{position:absolute;top:-17px;left:5px;background:url(/rsrc.php/zA4IG/hash/cny9pytx.png) no-repeat -480px -166px;width:auto;height:auto}
+#fbDockChatTabs .chat_info_pic_link img{display:block;width:45px;height:45px}
+
+#bootloader_css_dock_chat_tabs_old_css { height: 42px; }

@@ -102,6 +102,7 @@ var CityDefenderScene = Class.create(Scene, {
 		this.scenario.notify({name:"creepEntered", method: false, unit:creep})
 		if(this.turrets[0])this.scenario.notify({name:"creepEnteredTower", method: false, unit:this.turrets[0]})
 		creep.hp = Math.round(creep.hp*Math.pow(this.creepMultiplier[this.config.level-1],this.waveNumber))
+		creep.power = Math.round(creep.power*Math.pow(this.creepPowerMultiplier[this.config.level-1],this.waveNumber))
 		creep.maxHp = creep.hp
 		if(creep){
 			if(!this.firstCreep){
@@ -115,6 +116,7 @@ var CityDefenderScene = Class.create(Scene, {
 	addPlane : function(plane){
 		plane.price=plane.price+0.25*this.waveNumber
 		plane.hp = Math.round(plane.hp*Math.pow(this.creepMultiplier[this.config.level-1],this.waveNumber))
+		plane.power = Math.round(plane.power*Math.pow(this.creepPowerMultiplier[this.config.level-1],this.waveNumber))
 		plane.maxHp = plane.hp
 		if(plane){
 			this.rocketsLayer.attach(plane.shadowSprite);
@@ -141,7 +143,7 @@ var CityDefenderScene = Class.create(Scene, {
 		}	
 	},
 	renderData : function(){
-		this.currentExp = Math.round(this.exp+this.score*this.config.level/5000)
+		this.currentExp = Math.round(this.exp+this.score/50)
 		if(this.currentExp>this.maxExp){
 			this.minExp = this.maxExp	
 			this.maxExp = this.maxExp*2
@@ -192,7 +194,7 @@ var CityDefenderScene = Class.create(Scene, {
 		var self = this
 		
 		$$('#gameElements .superWeapons div').each(function(div){ 
-			if(div.className != ''){
+			if(Config.superWeapons.indexOf(div.className.capitalize())!=-1){
 			self[div.className].active = true
 			div.observe('click', function(){self.fire(div.className)})
 			}
@@ -233,6 +235,8 @@ var CityDefenderScene = Class.create(Scene, {
 		$$(".start").first().observe('click', function(){self.pause()})
 	},
 	displayStats : function(){
+		$$('#score #scoreValue').first().innerHTML = this.score
+		/*
 		if(this.statText){
 			if(this.statText.length == this.statTextIndex){
 				this.statText = ''
@@ -250,20 +254,16 @@ var CityDefenderScene = Class.create(Scene, {
 		}
 		var self = this
 		this.push(50,function(){self.displayStats()})
+		*/
 	},
 	checkStatus: function(){
 		var self = game.scene
 		if(this.running && this.escaped >= this.maxEscaped){
-			this.score*=this.config.level
 			this.uploadScore(false,function(){self.end("lose")})
 			return
 		}else if(this.config && this.playing){
 			if(this.config.waves.length == 0 && this.creeps.length == 0 && this.waitingCreeps == 0 ){
-				this.score*=this.config.level
-				this.uploadScore(true,function(){
-				                        self.end("win");
-                              })
-                    		                                           
+				this.uploadScore(true,function(){self.end("win");})                    		                                           
 				return
 			}else if(this.creeps.length == 0  &&this.waitingCreeps == 0 && this.config.waves.length > 0 && !this.wavePending && this.running){
 				this.waveNumber++
@@ -292,8 +292,8 @@ var CityDefenderScene = Class.create(Scene, {
 						$('pauseWindow').style.zIndex = 299
 						$('pauseWindow').hide()	
 						$('popup').hide()
-						$('loseDiv').hide()
-						$('winDiv').show()
+						$$('#result #lose').first().hide()
+						$$('#result #win').first().show()
 						new Effect.Appear("static")
 						$('droppingGround').addClassName('off')
 						new Effect.SwitchOff('static');
@@ -325,8 +325,8 @@ var CityDefenderScene = Class.create(Scene, {
 				}
 		}
 		else{
-			$('winDiv').hide()
-			$('loseDiv').show()
+			$$('#result #win').first().hide()
+			$$('#result #lose').first().show()
 			new Effect.Appear("static")
 			$('droppingGround').addClassName('off')
 			new Effect.SwitchOff('static');
@@ -384,7 +384,7 @@ var CityDefenderScene = Class.create(Scene, {
 				self.waitingCreeps++;
 			}
 			self.push(delay + (32 / creepCat.prototype.speed), function(){
-			self.wavePending = false;
+				self.wavePending = false;
 			})
 		})
 	},
@@ -444,7 +444,6 @@ var CityDefenderScene = Class.create(Scene, {
 		this.selectedTower = null
 	},
 	upgradeSelectedTower: function(){
-			
 		this.selectedTower.upgrade()
 	},
 	updateMeters : function(tower){
@@ -465,12 +464,13 @@ var CityDefenderScene = Class.create(Scene, {
 	ctx : null,
 	topCtx : null,
 	maxEscaped : 20,
-	money : 100,
+	money : 200,
 	delay : 25,
 	fps : 0,
 	score: 0,
 	moneyMultiplier: [1.2,1.1,1.05],
 	creepMultiplier: [1.05,1.1,1.15],
+	creepPowerMultiplier: [1.1,1.15,1.2],
 	wave : 0,
 	sound : true,
 	wavesCount : 0,

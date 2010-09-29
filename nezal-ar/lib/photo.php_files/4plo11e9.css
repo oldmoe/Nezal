@@ -1,0 +1,597 @@
+/*
+HTTP Host: static.ak.fbcdn.net
+Generated: September 24th 2010 11:28:38 AM PDT
+Machine: 10.30.148.189
+Locale: nu_ll
+Path: css/4pbm7a8hkmww4g8s.pkg.css
+*/
+
+.interaction_form div.dialog_content{border-width:0}
+.interaction_dialog_body{border-bottom:1px solid #ccc}
+.interaction_form_body{padding:0;border-bottom:none}
+.interaction_form .underline{border-bottom:1px solid #edeff5;margin:0 10px}
+.interaction_form .minifeedwall .story{margin-top:0;margin-bottom:0}
+.interim_status{padding:15px 10px}
+.interaction_form .story_preview_nile{padding:10px 3px 6px 20px}
+.interaction_form .link_placeholder{color:#3b5998;display:inline;padding:0}
+.interaction_form .title .link_placeholder{font-weight:bold}
+.interaction_form .not_me_link{float:right;padding:2px 10px}
+.interaction_form .feed_dialog_disclaimer{padding:0 0 10px 10px;color:#808080;font-size:9px}
+.interaction_form .dialog_buttons{padding:10px;zoom:1}
+.interaction_form .connect_privacy_widget{display:inline-block}
+.interaction_form .dialog_buttons_msg{float:left;width:340px;text-align:left;padding-top:3px}
+.canvas_iframe_util{overflow:hidden;width:646px;height:800px}
+.frame_wide .canvas_iframe_util{width:760px}
+.frame_wide #fb_sell_profile{overflow:hidden;max-height:100px}
+.fbframe .canvas_rel_positioning{position:relative;overflow:hidden;zoom:1}
+.withCanvasNav .canvasSidebar{padding-left:17px}
+.withCanvasNav #sidebar_ads{padding-top:17px}
+.withCanvasNavAndBorder #sidebar_ads .adcolumn_wrapper{border-top:1px solid #ccc}
+.withCanvasNavAndBorder #sidebar_ads .adcolumn{border-top:4px solid #e5e5e5;padding-top:5px}
+#fbDockChatBuddylistNub{width:201px}
+#fbDockChatBuddylistNub .fbNubFlyout{width:202px}
+#fbDockChatBuddylistNub .fbNubFlyoutTitlebar{border-bottom:1px solid #254588}
+#fbDockChatBuddylistNub .menuOpened .fbNubFlyoutTitlebar{border-bottom-color:#777}
+#fbDockChatBuddylistNub .icon{float:left;background:url(/rsrc.php/z2WR4/hash/f17le19o.gif) no-repeat;width:16px;height:10px;margin:3px 4px 0 0}
+#fbDockChat.offline #fbDockChatBuddylistNub .icon{background:url(/rsrc.php/z6FHH/hash/c1xjy4te.gif) no-repeat}
+#fbDockChatBuddylistNub .label .buddy_count_num{color:#777}
+#fbDockChatBuddylistNub .label .buddy_count_num strong{color:#333}
+.fbChatBuddylist .subheader,
+.fbChatBuddylist .hide_idle_marker,
+.fbChatBuddylist .suppress,
+.fbChatBuddylist .hide_empty_item,
+.fbChatBuddylist .list_drop_zone,
+.fbChatBuddylist .other_friends_list .friend_list_container .list_drop_zone,
+.fbChatBuddylist .hide_friend_list,
+.fbChatBuddylist .hover.drag_over .friendlist_name .edit_link,
+#fbDockChatBuddylist.reorder_fl .fbChatBuddylistTypeahead,
+.fbChatBuddylist .hover.other_friends_list .friendlist_name .edit_link,
+#fbDockChatBuddylist.reorder_fl .list_select .suppress,
+#fbDockChatBuddylist.reorder_fl .switch,
+.fbChatBuddylistPanel span.offline,
+.fbChatBuddylist .offline .list_drop_zone,
+.fbChatBuddylist .drag_over .friend_list_container .droppable_placeholder,
+.fbChatBuddylistContent .titletip,
+.error .fbChatBuddylistContent,
+.fbChatBuddylistError{display:none}
+.chat_buddylist_typeahead{position:relative;*position:static}
+#fbDockChatBuddylistNub .chat_buddylist_typeahead input{background:url(/rsrc.php/z3NEK/hash/1uif288b.png) no-repeat left -3px;_background-image:url(/rsrc.php/zIFG5/hash/dj8w6stz.gif);border-color:#93a2c1;border-width:1px 0 0 0;height:14px;padding:4px 4px 4px 21px;width:175px}
+.chat_buddylist_typeahead .clear_input{position:absolute;top:50%;right:4px;width:17px;height:17px;margin-top:-9px;background:url(/rsrc.php/zBWWQ/hash/4wrf1np6.gif) no-repeat;cursor:pointer}
+.chat_buddylist_typeahead .clear_input:hover{background-position:0 -33px}
+.fbChatBuddylist a.friend em{background-color:#dce1e8;font-style:normal;font-weight:bold}
+.fbChatBuddylist a.selected em,
+.fbChatBuddylistContent a:hover em{background-color:#5670a6}
+.fbChatBuddylist .friendlist_name{background-color:#fff;color:#888;float:left;padding:0 5px 0 6px}
+.fbChatBuddylist span.title a,
+.fbChatBuddylist span.title a:hover{font-size:11px;background:#fff;color:#888;text-decoration:none}
+.fbChatBuddylist .friendlist_name .edit_link{display:none;font-size:9px;line-height:9px}
+.fbChatBuddylist .hover .friendlist_name .edit_link{display:-moz-inline-box;display:inline-block;padding:0 5px}
+.fbChatBuddylist a.friend{background:url(/rsrc.php/z2IHN/hash/c8hrcja7.png) no-repeat right 8px;border-top:1px solid #fff;border-bottom:1px solid #fff;clear:left;padding:1px 15px 1px 10px}
+.fbChatBuddylist .compact a.friend{background-position:right 6px}
+.fbChatBuddylist a.friend span{float:left;width:130px;line-height:22px}
+.fbChatBuddylist .compact a.friend span{line-height:18px}
+.fbChatBuddylist a.friend:hover,
+.fbChatBuddylist a.selected,
+.fbChatBuddylist a.drag{background-color:#6d84b4 !important;background-position:right -52px;border-top:1px solid #3b5998;border-bottom:1px solid #3b5998;color:#fff;text-decoration:none}
+.fbChatBuddylist .compact a.friend:hover,
+.fbChatBuddylist .compact a.selected,
+.fbChatBuddylist .compact a.drag{background-position:right -54px}
+.fbChatBuddylist .drag_active a.friend:hover{background-color:#fff !important;color:#3b5998}
+.fbChatBuddylist .drag_active a.friend.drag{background-color:#3b5998 !important;color:#fff}
+.fbChatBuddylist a.idle{background-position:right -112px}
+.fbChatBuddylist .compact a.idle{background-position:right -114px}
+.fbChatBuddylist a.idle:hover,
+.fbChatBuddylist a.selected.idle,
+.fbChatBuddylist a.drag.idle{background-position:right -172px}
+.fbChatBuddylist .compact a.idle:hover,
+.fbChatBuddylist .compact a.selected.idle,
+.fbChatBuddylist .compact a.drag.idle{background-position:right -174px}
+.fbChatBuddylist a.friend img{float:left;margin-right:5px}
+.fbChatBuddylist .friend_list_container{clear:both;padding:2px 0 0 0}
+.fbChatBuddylist .friend_list{background:#fff url(/rsrc.php/zD9WR/hash/6e47avqg.gif) 0 10px repeat-x;padding:4px 0 0}
+.fbChatBuddylist .show_empty_list{display:block !important}
+.ie6 .fbChatBuddylist .friend_list{z-index:-1}
+.reorder_fl span.title a,
+.reorder_fl span.title a:hover{background:transparent}
+#fbDockChatBuddylist.reorder_fl .friendlist_name span.title{background:url(/rsrc.php/z15OG/hash/nkbggqs8.gif) 4px 0 no-repeat;display:block;float:left;padding:0 20px}
+#fbDockChatBuddylist.reorder_fl .friend_list{background:none;margin:0 5px;overflow:hidden}
+.ie6 #fbDockChatBuddylist.reorder_fl .friend_list,
+.ie7 #fbDockChatBuddylist.reorder_fl .friend_list{overflow:auto}
+#fbDockChatBuddylist.reorder_fl .friend_list div.friendlist_name{background:#ededed;border-top:1px solid #d0d0d0;clear:left;color:#000;cursor:move;margin:3px 0;padding:5px 0;width:94%}
+#fbDockChatBuddylist.reorder_fl .friend_list div.friendlist_name span.title a{cursor:move}
+#fbDockChatBuddylist #reorder_fl_alert{background:#fff9d7;border-bottom:1px solid #e2c822;padding:4px 6px;text-align:center}
+#fbDockChatBuddylist #reorder_fl_alert span{display:block;text-align:left}
+#fbDockChatBuddylist #reorder_fl_alert input{margin:4px auto 0 auto}
+#fbDockChatBuddylist #error_fl_alert{background:#fff9d7;border-bottom:1px solid #e2c822;padding:4px 6px;text-align:center}
+#fbDockChatBuddylist #error_fl_alert span{display:block;text-align:left}
+#fbDockChatBuddylist #error_fl_alert input{margin:4px auto 0 auto}
+.fbDock .available .show_available,
+.fbDock .unavailable .show_unavailable,
+.fbDock .idle .show_idle,
+.fbDock .availability_loading .show_loading,
+.fbDock .chat_setting_loading .show_loading,
+.fbDock .hide_loading{display:block}
+.fbDock .available .show_unavailable,
+.fbDock .available .show_idle,
+.fbDock .idle .show_unavailable,
+.fbDock .unavailable .show_available,
+.fbDock .unavailable .show_idle,
+.fbDock .idle .show_available,
+.fbDock .available .availability_loading .hide_loading,
+.fbDock .unavailable .availability_loading .hide_loading,
+.fbDock .show_loading,
+.fbDock .chat_setting_loading .hide_loading{display:none}
+.fbChatBuddylistPanel{background:#ededed;border-bottom:1px solid #808080}
+.fbChatBuddylistPanel .lists,
+.fbChatBuddylistPanel .settings{border-right:1px solid #999;position:relative;z-index:11}
+.fbChatBuddylistPanel .flyout{background:#fff;border:1px solid #777;padding:6px 0;position:absolute;right:-1px;top:20px;width:186px;z-index:10}
+.fbChatBuddylistPanel .flyout_reversed{bottom:19px;top:auto}
+.fbChatBuddylistPanel .fbChatBuddylistPanel_settings_flyout{padding:4px 0 6px 0}
+.fbChatBuddylistPanel .flyout .text,
+.fbChatBuddylistPanel .flyout .new_list span{color:#888;cursor:default;font-weight:bold}
+.fbChatBuddylistPanel .flyout .text{padding:0 0 1px 8px}
+.fbChatBuddylistPanel a.panel_item{display:block;background:#eee url(/rsrc.php/zCCSI/hash/7am1obcj.png) repeat-x 0 0;padding:2px 1px 0 1px}
+.fbChatBuddylistPanel a.panel_item:hover{background-color:#fff;text-decoration:none}
+.fbChatBuddylistPanel .flyout_open a.panel_item{background-color:#6d84b4;background-image:none}
+.fbChatBuddylistPanel a.panel_item span{color:#333;display:block;line-height:11px;font-weight:bold;padding:2px 7px 5px 0}
+.fbChatBuddylistPanel .flyout_open a.panel_item span{color:#fff}
+.fbChatBuddylistPanel .flyout_open a.panel_item:hover span{border-top:0}
+.Locale_ca_ES .fbChatBuddylistPanel a.panel_item span,
+.Locale_da_DK .fbChatBuddylistPanel a.panel_item span,
+.Locale_es_LA .fbChatBuddylistPanel a.panel_item span,
+.Locale_es_ES .fbChatBuddylistPanel a.panel_item span,
+.Locale_ru_RU .fbChatBuddylistPanel a.panel_item span,
+.Locale_sk_SK .fbChatBuddylistPanel a.panel_item span,
+.Locale_sl_SI .fbChatBuddylistPanel a.panel_item span,
+.Locale_vi_VN .fbChatBuddylistPanel a.panel_item span,
+.Locale_tr_TR .fbChatBuddylistPanel a.panel_item span,
+.Locale_el_GR .fbChatBuddylistPanel a.panel_item span,
+.Locale_bg_BG .fbChatBuddylistPanel a.panel_item span,
+.Locale_mk_MK .fbChatBuddylistPanel a.panel_item span,
+.Locale_sr_RS .fbChatBuddylistPanel a.panel_item span{font-size:10px}
+.Locale_cy_GB .fbChatBuddylistPanel a.panel_item span,
+.Locale_hu_HU .fbChatBuddylistPanel a.panel_item span{font-size:9px}
+.Locale_tl_PH .fbChatBuddylistPanel a.panel_item span{font-size:9px;font-weight:normal;padding:1px 1px 5px 2px}
+.fbChatBuddylistPanel a.panel_item span .panel_icon{float:left;height:8px;margin:2px 3px 0 5px;overflow:hidden;width:8px}
+.fbChatBuddylistPanel #buddy_list_panel_settings_control .panel_icon{background:url(/rsrc.php/z7K0T/hash/btbbka1w.png) no-repeat}
+.fbChatBuddylistPanel #buddy_list_panel_lists_control .panel_icon{background:url(/rsrc.php/z7PIG/hash/4690t3zu.png) no-repeat}
+.fbChatBuddylistPanel #buddy_list_panel_settings_control.flyout_open .panel_icon{background:url(/rsrc.php/zEDYR/hash/agroivby.png) no-repeat}
+.fbChatBuddylistPanel #buddy_list_panel_lists_control.flyout_open .panel_icon{background:url(/rsrc.php/z1B7C/hash/5l5hkqtc.png) no-repeat}
+.Locale_tl_PH .fbChatBuddylistPanel a.panel_item span .panel_icon{display:none}
+.fbChatBuddylistPanel .flyout_open{border:1px solid #3b5998;border-bottom:0;margin:-1px 0 0 -1px}
+.fbChatBuddylistPanel .flyout .new_list{margin:5px 0 0 8px}
+.fbChatBuddylistPanel .flyout .new_list input{margin-top:5px;width:162px}
+.fbChatBuddylistPanel .chat_setting{padding:0 0 6px 4px}
+.fbChatBuddylistPanel .chat_setting .input_box{float:left;width:16px;height:16px}
+.fbChatBuddylistPanel .chat_setting label{float:left;padding:2px 2px 0 6px;font-weight:normal;color:#000;width:118px;cursor:default}
+.fbChatBuddylistPanel .options_actions{margin:0;padding:0 0 2px 0}
+.fbChatBuddylistPanel .flyout a{color:#333;display:block;border-bottom:1px solid #fff}
+.fbChatBuddylistPanel .flyout a:hover{color:#fff;background-color:#6d84b4;background-position-y:-56px;border-top:1px solid #3b5998;border-bottom:1px solid #3b5998;margin:-1px 0 0;text-decoration:none}
+.fbChatBuddylistPanel .flyout .menu_divider{background-color:#ddd;border:0;color:#ccc;height:1px;margin:0 8px 4px 8px;padding:0}
+.fbChatBuddylistPanel .options_actions a span{display:block;padding:2px 8px 3px 26px}
+.fbChatBuddylistPanel .flyout a .menu_icon{background-repeat:no-repeat;display:block;height:8px;float:left;margin:5px 0 0 11px;overflow:hidden;width:8px}
+.ie6 .fbChatBuddylistPanel .flyout a .menu_icon,
+.ie6 .fbChatBuddylistPanel .flyout a.list_reorder_control .menu_icon{margin:5px 0 0 5px}
+.ie6 .fbChatBuddylistPanel .flyout a:hover{background:#333}
+.fbChatBuddylistPanel .flyout a.go_offline_control .menu_icon{background:url(/rsrc.php/z56FS/hash/9zr18t1k.png) no-repeat}
+.fbChatBuddylistPanel .flyout a.list_reorder_control .menu_icon{background:url(/rsrc.php/z8WQ2/hash/dpys9ec8.png) no-repeat;height:9px;margin-left:10px;width:10px}
+.fbChatBuddylistPanel .flyout a.list_popout_control .menu_icon{background:url(/rsrc.php/z8SQ3/hash/dvi1svc5.png) no-repeat}
+.fbChatBuddylistPanel .flyout a:hover.go_offline_control .menu_icon{background:url(/rsrc.php/zBYU2/hash/bou8o1ym.png) no-repeat}
+.fbChatBuddylistPanel .flyout a:hover.list_reorder_control .menu_icon{background:url(/images/sprite/MegaSprite/chat_sort_hover.png) no-repeat}
+.fbChatBuddylistPanel .flyout a:hover.list_popout_control .menu_icon{background:url(/rsrc.php/z9UIJ/hash/f1wd58cg.png) no-repeat}
+.fbChatBuddylist .switch{background:#fff;display:block;padding:3px 6px;float:right;position:relative}
+.fbChatBuddylist .switch a{background-color:#fff;background-image:url(/rsrc.php/zA4IG/hash/cny9pytx.png);background-repeat:no-repeat;background-position:-663px -101px;cursor:pointer;display:block;height:8px;width:17px;padding:0;text-decoration:none}
+.fbChatBuddylist .switch a:hover{background-position:-663px -109px;background-color:#fff}
+.fbChatBuddylist .switch a:active{background-position:-680px -101px}
+.fbChatBuddylist .offline .switch a{background-position:-680px -109px}
+.fbChatBuddylist .offline .switch a:hover{background-position:-697px -101px}
+.fbChatBuddylist .offline .switch a:active{background-position:-697px -109px}
+.fbChatBuddylist .drag{left:0 !important;right:0;z-index:1}
+.fbChatBuddylist .drag span{background-image:none}
+.fbChatBuddylist .show_empty_list .list_drop_zone{display:none !important}
+.fbChatBuddylist .empty_friend_list .list_drop_zone{background:url(/rsrc.php/z7BYL/hash/owa7t3h0.gif) top left no-repeat;display:block;margin:3px 6px;padding:3px 0 0 0;width:174px}
+.fbChatBuddylist .scroll .empty_friend_list .list_drop_zone{margin:3px 6px}
+.ie6 .fbChatBuddylist .empty_friend_list .list_drop_zone{margin:3px 5px}
+.fbChatBuddylist .empty_friend_list .list_drop_zone .list_drop_zone_inner{background:url(/rsrc.php/z7BYL/hash/owa7t3h0.gif) bottom left no-repeat;color:#999;display:block;margin-top:8px;padding:0 10px 10px 10px;text-align:center}
+.fbChatBuddylist .drag_over .friend_list_container .list_drop_zone{background-position:-196px 0}
+.fbChatBuddylist .drag_over .friend_list_container .list_drop_zone .list_drop_zone_inner{background-position:-196px bottom;padding:15px 10px 26px 10px;color:#fff}
+.fbChatBuddylistContent .hover .switch a:hover .titletip{display:block}
+.fbChatBuddylistContent .titletip{background:url(/rsrc.php/zOSV4/hash/d9fmazqs.gif) no-repeat right 5px;top:-3px;bottom:auto;right:26px;padding-right:5px;padding-bottom:4px;position:absolute;z-index:20}
+.fbChatBuddylistContent .titletip a{color:#fff;text-decoration:underline}
+.fbChatBuddylistContent .titletip strong{background:#282828;color:#fff;display:block;font-weight:normal;padding:3px 8px;text-align:center;white-space:nowrap;*margin:0}
+.fbChatBuddylistContent .accessibility_tip{position:absolute;top:-999px;filter:alpha(opacity=0);opacity:0;width:0;height:0;overflow:hidden}
+.error .fbChatBuddylistError{display:block}
+.fbChatBuddylist .fbChatBuddylistError,
+.fbChatBuddylist .info_text{background-color:#fff;color:#666;padding:6px 8px}
+html>body #fbDockChatBuddylist ul li.subheader{*margin-top:-6px}
+html>body #fbDockChatBuddylist .compact ul li{*margin-top:-2px}
+.fbDock .available .show_available,
+.fbDock .unavailable .show_unavailable,
+.fbDock .idle .show_idle,
+.fbDock .availability_loading .show_loading,
+.fbDock .chat_setting_loading .show_loading,
+.fbDock .hide_loading{display:block}
+.fbDock .available .show_unavailable,
+.fbDock .available .show_idle,
+.fbDock .idle .show_unavailable,
+.fbDock .unavailable .show_available,
+.fbDock .unavailable .show_idle,
+.fbDock .idle .show_available,
+.fbDock .available .availability_loading .hide_loading,
+.fbDock .unavailable .availability_loading .hide_loading,
+.fbDock .show_loading,
+.fbDock .chat_setting_loading .hide_loading{display:none}
+.show_on_presence_error,
+.show_on_popped_out,
+.presence_error .hide_on_presence_error,
+.popped_out .hide_on_popped_out{display:none}
+.presence_error .show_on_presence_error,
+.popped_out .show_on_popped_out{display:block}
+#fbDockChatTabSlider .arrow{background:url(/rsrc.php/z3NEK/hash/1uif288b.png) no-repeat -107px -27px;_background-image:url(/rsrc.php/zIFG5/hash/dj8w6stz.gif);width:4px;height:8px;margin:4px 2px 0 0;float:left}
+#fbDockChatTabSlider .previous .arrow{background:url(/rsrc.php/z3NEK/hash/1uif288b.png) no-repeat -117px -27px;_background-image:url(/rsrc.php/zIFG5/hash/dj8w6stz.gif)}
+#fbDockChatTabSlider .next.disabled .arrow{background:url(/rsrc.php/z3NEK/hash/1uif288b.png) no-repeat -112px -27px;_background-image:url(/rsrc.php/zIFG5/hash/dj8w6stz.gif)}
+#fbDockChatTabSlider .previous.disabled .arrow{background:url(/rsrc.php/z3NEK/hash/1uif288b.png) no-repeat -102px -27px;_background-image:url(/rsrc.php/zIFG5/hash/dj8w6stz.gif)}
+#fbDockChatTabSlider .disabled a.fbNubButton:hover{background-color:#d8d8d8}
+#fbDockChatTabSlider .numTabs{margin:1px 5px;float:left}
+#fbDockChatTabSlider .disabled .numTabs{color:#999}
+.fbNub{top:-1px}
+.fbNub,
+.fbNubGroup{float:left;position:relative}
+.fbNubButton{border-color:#999;border-style:solid;border-width:1px 0 0 1px;color:#333;display:block;height:16px;font-weight:bold;padding:4px 5px;position:relative;z-index:1}
+.fbNubButton:hover{background:#fff;border-top-color:#b5b5b5;text-decoration:none}
+.openToggler .fbNubButton{background:#fff;border-color:#777;border-right-width:1px;border-top-width:0;margin-right:-1px;padding:5px}
+.openToggler .fbNubButton .rule{border-top:1px solid #ccc;margin-top:-5px;padding-top:4px;position:relative}
+.fbNubFlyout{display:none;background-color:#fff;border-bottom:1px solid #777;bottom:25px;position:absolute}
+.lNubContainer .fbNubFlyout,
+.rNubContainer .fbNub .swapDirection{left:0;right:auto}
+.rNubContainer .fbNubFlyout,
+.lNubContainer .fbNub .swapDirection{left:auto;right:-1px}
+.openToggler .fbNubFlyout{display:block}
+.fbNub .noTitlebar{border-top:1px solid #777}
+.fbNubFlyoutTitlebar{background-color:#6d84b4;border:1px solid #254588;color:#fff;cursor:pointer;font-size:11px;font-weight:bold;padding:3px 3px 3px 8px}
+.fbNubFlyoutHeader,
+.fbNubFlyoutBody,
+.fbNubFlyoutFooter{border-color:#777;border-style:solid;border-width:0 1px}
+.fbNubFlyoutBody{overflow-x:hidden;overflow-y:auto}
+.menuOpened .fbNubFlyoutTitlebar{background-color:#f2f2f2;border-color:#777;color:#333}
+.fbNub .fbNubButton .UIImageBlock_Content{float:left;width:auto}
+.fbNub .fbNubButton .spritemap_icons{display:block}
+.fbDockWrapper{bottom:0;direction:ltr;height:25px;left:0;position:fixed;right:0;z-index:99}
+.fbDockWrapperTop{bottom:auto;top:0}
+.fbDockWrapperLeft{right:auto}
+.fbDockWrapperRight{left:auto}
+.fbDock{margin:0 15px}
+.fbDock .lNubContainer{float:left}
+.fbDock .rNubContainer{float:right}
+.fbDock,
+.fbDockWrapperLeft .lNubContainer,
+.fbDockWrapperRight .rNubContainer{background:#f4f4f4 url(/rsrc.php/zCCSI/hash/7am1obcj.png) 0 0 repeat-x;border-color:#999;border-style:solid;border-width:1px 1px 0 0}
+.fbDockWrapperLeft .fbDock,
+.fbDockWrapperRight .fbDock{background:none;border:0 none}
+#jewelCase{left:97px;position:absolute;bottom:0;_bottom:-1px;width:84px}
+#jewelCase .jewel{border:1px solid #3b5998;border-bottom:0;float:left;height:31px;margin:13px -1px 0 0;position:relative;width:24px}
+#jewelCase .openToggler{border-color:#333;height:30px;margin-top:14px;z-index:3}
+.jewelCount{background-color:#00376a;top:-2px;color:#fff;display:none;font-size:9px;font-weight:bold;padding-bottom:1px;position:absolute;right:-2px;z-index:4;-webkit-border-radius:2px;-moz-border-radius:2px}
+.ff2 .jewelCount{-moz-border-radius:2px 4px 4px 1px}
+.jewelCount span{background-color:#f03d25;border:1px solid #dd3822;border-top:0;display:block;padding:1px 2px 0 1px;-webkit-border-radius:2px;-moz-border-radius:2px}
+.ff3 .jewelCount span{padding-right:1px}
+.ff2 .jewelCount span{-moz-border-radius:2px 4px 4px 1px}
+.jewelNew .jewelCount{display:block}
+.jewelToggler{background:no-repeat url(/rsrc.php/z7VU4/hash/66ad7upf.png);display:inline-block;height:31px;position:absolute;text-decoration:none;width:24px}
+.jewelToggler:active,
+.jewelToggler:focus,
+.jewelToggler:hover{outline:none;background-color:#4b67a1;text-decoration:none}
+.openToggler .jewelToggler{background-color:#fff !important;z-index:4}
+#jewelMail{background-position:-24px -73px}
+#jewelMail:hover,
+#jewelMail:focus,
+#jewelMail:active{background-position:-51px -73px}
+.jewelNew #jewelMail{background-position:-78px -73px}
+.openToggler #jewelMail{background-position:-105px -74px !important}
+#jewelRequest{background-position:-24px -105px}
+#jewelRequest:hover,
+#jewelRequest:focus,
+#jewelRequest:active{background-position:-51px -105px}
+#jewelRequestsContent .jewelRequest .jewelRequestContent{padding-top:5px}
+#jewelRequestsContent .uiTextTitle{font-size:11px}
+#jewelRequestsContent .requestLabel{line-height:12px}
+.jewelNew #jewelRequest{background-position:-78px -105px}
+.openToggler #jewelRequest{background-position:-105px -106px !important}
+#jewelNotif{background-position:-24px -137px}
+#jewelNotif:hover,
+#jewelNotif:focus,
+#jewelNotif:active{background-position:-51px -137px}
+.jewelNew #jewelNotif{background-position:-78px -137px}
+.openToggler #jewelNotif{background-position:-105px -138px !important}
+#jewelCase .jewelBox{background-color:#fff;border:1px solid #333;border-bottom:2px solid #293e6a;display:none;left:-1px;overflow:visible;position:absolute;top:29px;width:330px;z-index:3}
+#jewelCase .openToggler .jewelBox{display:block}
+#jewelBoxRequest li,
+#jewelCase .empty{padding:4px 8px}
+.jewelBox ul{padding:4px 0}
+#jewelCase .jewelHeader{margin:7px 8px 0}
+#jewelCase .jewelHeader a{position:relative;top:2px}
+#jewelCase .jewelItemNew{background:#eff1f7}
+#jewelCase .jewelItemResponded{background:#fff9d7}
+#jewelCase .jewelLoading{display:block;margin:5px auto}
+.jewelBox .profileImage{height:50px;width:50px}
+.jewelBox .messageRowExternalPic .profileImage{background-color:#e6e6e6;height:16px;width:16px;padding:17px}
+.jewelBox .metadata{padding-top:3px}
+#jewelBoxRequest .async_saving{position:relative}
+#jewelBoxRequest .async_saving .loadingIndicator{background:url(/rsrc.php/zBS5C/hash/7hwy7at6.gif) no-repeat 0 0;height:11px;left:50%;margin:-5px 0 0 -6px;position:absolute;top:50%;width:16px}
+#jewelBoxRequest .async_saving .uiButton{visibility:hidden}
+#jewelBoxMail li a{display:block;overflow:hidden;padding:4px 6px;text-overflow:ellipsis;white-space:nowrap}
+#jewelBoxMail .content{display:block;_overflow:hidden;_text-overflow:ellipsis;width:auto;_width:220px}
+#jewelBoxMail .author{color:#3b5998;font-weight:bold;padding-top:2px}
+#jewelBoxMail .preview{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#jewelBoxMail .subject{color:#333}
+#jewelBoxMail .time{color:#9d9d9d;font-size:9px}
+#jewelCase .jewelFooter a{background-color:#f7f7f7;border-top:1px solid #e0e0e0;display:block;font-weight:bold;padding:8px;text-align:center}
+#jewelCase .jewelFooter a:hover,
+#jewelCase .jewelFooter a:active,
+#jewelCase .jewelFooter a:focus{background-color:#6d84b4;border-top:1px solid #3b5998;color:#fff;outline:none;text-decoration:none}
+#jewelCase .jewelFooter .seeMoreCount{display:none;font-weight:bold;padding:2px 0 0}
+#requestsWrapper .jewelFooter .seeMoreCount,
+#jewelCase .jewelUnread .jewelFooter .seeMoreCount{display:block}
+#jewelBoxNotif li a{color:#333;display:block;padding:4px 6px;text-decoration:none}
+#jewelCase .jewelHighlightItem li a:hover,
+#jewelCase .jewelHighlightItem li a:active,
+#jewelCase .jewelHighlightItem li a:focus{background-color:#6d84b4 !important;border-bottom:1px solid #3b5998;border-top:1px solid #3b5998;outline:none;padding-top:3px;padding-bottom:3px;text-decoration:none}
+#jewelBoxNotif.jewelHighlightItem #presence_notifications_loading.selected{background-color:#fff !important;border:none;cursor:auto;padding:4px 8px}
+#jewelCase .jewelHighlightItem a:hover span,
+#jewelCase .jewelHighlightItem a:active span,
+#jewelCase .jewelHighlightItem a:focus span,
+#jewelCase .jewelHighlightItem a:hover div,
+#jewelCase .jewelHighlightItem a:active div,
+#jewelCase .jewelHighlightItem a:focus div,
+#jewelCase .jewelHighlightItem li.selected a,
+#jewelCase .jewelHighlightItem li.selected .timestamp,
+#jewelBoxNotif a:hover .blueName{color:#fff}
+#jewelCase .jewelHighlightItem li{cursor:pointer}
+#jewelBoxNotif .staticAppIcon{background-position:right;height:16px;width:16px}
+#jewelBoxNotif .selected .staticAppIcon{background-position:left}
+#jewelBoxNotif .blueName{color:#3b5998;font-weight:bold}
+.gifts_mall_breadcrumb .not_first{padding-left:15px;margin-left:8px;background:transparent url(/rsrc.php/zB1FT/hash/19zwd1xa.gif) no-repeat scroll center left}
+.gifts_mall .browser .canvas_iframe_util{height:285px;width:514px}
+.gifts_mall .browser .skus_holder img{height:50px;width:50px;padding:0 4px}
+.gifts_mall .browser .skus_holder{text-align:center;margin:10px auto 0}
+.gifts_mall .browser .UITabGrid_Cell .UITabGrid_Link{border-bottom:1px solid #e5e5e5;padding:10px 0 15px 0;margin:5px 5px 5px 5px}
+.gifts_mall .browser .UITabGrid_Cell .UITabGrid_Link:hover,
+.gifts_mall .browser .UITabGrid_Cell .UITabGrid_Link_Selected{border-bottom:1px solid #fff}
+.gifts_mall .browser .UITabGrid_Row_Last .UITabGrid_Cell .UITabGrid_Link{border-bottom:none}
+.giftshop #unavailable .message{padding:20px 0 20px 10px;font-weight:bold;color:#333}
+.giftshop #unavailable .message .title{font-size:18px}
+.giftshop #unavailable .message .explanation{padding-top:4px;font-size:14px}
+.giftshop_in_fbpage{padding:20px}
+#embedded_store #giftshop_tool_bar{margin:5px 4px 0 5px}
+#embedded_store #giftshop_tool_bar #top_tags_options{float:left}
+#embedded_store #giftshop_tool_bar #search_options{float:left;margin:0 2px 2px 7px;width:120px}
+#embedded_store .gift_caption .gift_title{display:none}
+#embedded_store .gift_outer_onmouseover .gift_caption .gift_title{display:block}
+#embedded_store .gift_outer_onmouseover .gift_caption .gift_price{display:none}
+#embedded_store .gift_caption,
+#embedded_store .gift_caption span{width:64px;margin-top:2px;margin-bottom:2px;text-align:center;color:#999;font-size:9px;font-weight:bold;height:22px}
+#embedded_store span.credits_rendered_with_symbol{background:transparent url(/rsrc.php/z8220/hash/5gew4ddz.gif) no-repeat scroll left 1px}
+.giftshop h2{margin-bottom:5px}
+.giftshop h3{margin-bottom:8px}
+.giftshop .step{background-color:#f7f7f7;border:solid 1px #ccc;padding:10px;margin:0 0 10px 0}
+.giftshop .step .step_body{border-top:solid 1px #ccc;margin-top:10px;padding-top:10px}
+.giftshop .step .full_page_gifts_mall_wrapper{background-color:#fff}
+.giftshop .extra_text{width:770px;margin-bottom:16px;font-weight:normal;font-size:11px}
+.giftshop .extra_text strong{color:#008000}
+.giftshop .extra_text .banner_explanation{font-size:13px;font-weight:bold;margin-top:20px}
+.giftshop div.gift_assigner_step{position:relative}
+.giftshop .compose_header{margin-bottom:15px}
+.giftshop .compose_header .learn_more{font-size:11px;font-weight:normal}
+.giftshop input.continue{margin-right:20px}
+.giftshop #friend_selector{float:left;width:240px}
+#recipient_pic{background-repeat:no-repeat;float:left;margin:0 0 0 10px}
+.giftshop_in_fbpage #embedded_store{background-color:#fff}
+.giftshop_in_fbpage #embedded_store,
+.giftshop .full_page_gifts_mall_wrapper{width:514px;border:1px solid #ccc;padding:4px}
+.giftshop #gifts_full_page_breadcrumb{color:#666;font-weight:bold}
+.giftshop .gifts_full_page_breadcrumb_wrapper{padding-bottom:4px;border-bottom:1px solid #dfdfdf;margin-bottom:8px}
+#embedded_store #gifts_grid.gifts_loading{background:url(/rsrc.php/z5R48/hash/ejut8v2y.gif) no-repeat center center}
+#embedded_store #giftshop_search_option_input{border:1px solid #bdc7d8;width:auto}
+#embedded_store #giftshop_search_option_input.tokenizer{padding:0 0 0 3px}
+#embedded_store #giftshop_search_option_input.tokenizer .inline_placeholder{color:#777;display:block;float:left;padding:3px 0 0 2px}
+#embedded_store #giftshop_search_option_input.tokenizer .token span span span span{padding:0 3px 0 5px}
+#embedded_store #giftshop_search_option_input.tokenizer .tokenizer_stretcher{padding-top:6px}
+#embedded_store #store_footer{border-top:1px solid #d5d5df;padding:3px 0 0 0}
+#embedded_store #store_footer #giftstore_pager{float:right;padding:3px 3px 2px 0}
+#embedded_store #store_footer #giftstore_pager .UIPager_PageNum{color:#999;font-weight:bold}
+#embedded_store #store_footer #summary{color:#333;float:left;font-weight:normal;padding:3px 0 4px}
+#embedded_store .gift_outer_onmouseover{padding:3px;float:left;margin-left:3px;margin-top:4px;background:url(/rsrc.php/zCYHP/hash/bu3sdhz5.jpg) no-repeat left top;cursor:pointer;cursor:hand}
+#embedded_store .gift_outer_onclick{padding:3px;float:left;margin-left:3px;margin-top:4px;background:url(/rsrc.php/z3JXA/hash/baxprq0j.jpg) no-repeat left top}
+.gift_inner{background-repeat:no-repeat;width:64px;height:64px}
+.giftshop textarea{height:74px;font-size:13px}
+.giftshop .privacy_options .privacy_option{margin-bottom:6px}
+.giftshop .privacy_options .privacy_option .short label{margin-left:2px;color:#000;font-weight:normal}
+.giftshop .privacy_options .privacy_option .description{margin:0 0 0 22px;color:#777}
+.giftshop .giftshop_footer{margin-top:10px}
+.creditsBalanceIcon{margin-bottom:-3px}
+.negativeBalance{color:#f03d25}
+.needsRepayment .getMore{display:none}
+.repay{display:none}
+.needsRepayment .repay{display:inline}
+#UIErrorForm_GenericError{margin:0 0 7px 0}
+.UIErrorForm_Field .inputtext{border:none;padding:3px 0 3px 3px;display:block}
+.UIErrorForm_Field select{border:1px solid #bdc7d8}
+.UIErrorForm_NoError{border:1px solid #bdc7d8;display:block;float:left;position:relative}
+.UIErrorForm_NoInput{display:block;float:left;position:relative}
+.UIErrorForm_ErrorField{border:2px solid #dd3c10}
+.UIErrorForm_ErrorField input{border:none;margin:0}
+.UIErrorForm_Flag{background:url(/rsrc.php/z9D57/hash/4ch2qx47.gif) top left no-repeat;padding:0 0 0 10px;position:absolute;top:-2px;width:200px;z-index:2}
+.UIErrorForm_Flag_Inner{background-color:#ffebe8;border-bottom:1px solid #eb8266;display:block;padding:4px 7px 3px 9px}
+.UIPager_Button{background-image:url(/rsrc.php/z894N/hash/399m61ra.png);background-repeat:no-repeat;float:left;height:23px;position:relative;width:43px;z-index:2}
+.UIPager_ButtonBack{margin-right:-1px}
+.UIPager_ButtonBack:active{background-position:0 -23px}
+.UIPager_ButtonForward{background-position:-43px 0}
+.UIPager_ButtonForward:active{background-position:-43px -23px}
+.UIPager_ButtonDisabled .UIPager_ButtonBack,
+.UIPager_ButtonDisabled .UIPager_ButtonBack:active{background-position:0 -46px;cursor:default;z-index:1}
+.UIPager_ButtonDisabled .UIPager_ButtonForward,
+.UIPager_ButtonDisabled .UIPager_ButtonForward:active{background-position:-43px -46px;cursor:default;z-index:1}
+.UIPager_Vertical .UIPager_ButtonBack{background-position:-86px 0}
+.UIPager_Vertical .UIPager_ButtonBack:active{background-position:-86px -23px}
+.UIPager_Vertical .UIPager_ButtonForward{background-position:-129px 0}
+.UIPager_Vertical .UIPager_ButtonForward:active{background-position:-129px -23px}
+.UIPager_Vertical .UIPager_ButtonDisabled .UIPager_ButtonBack,
+.UIPager_Vertical .UIPager_ButtonDisabled .UIPager_ButtonBack:active{background-position:-86px -46px}
+.UIPager_Vertical .UIPager_ButtonDisabled .UIPager_ButtonForward,
+.UIPager_Vertical .UIPager_ButtonDisabled .UIPager_ButtonForward:active{background-position:-129px -46px}
+.UIPager .UIPager_PageNum{color:#000;float:left;font-size:10px;line-height:22px;padding-right:10px}
+.UISelectList{background-color:#fff;margin:0;padding:3px 0;width:100%}
+.UISelectList_Item{margin:0;padding:0;text-align:left}
+.UISelectList_Item input{visibility:hidden;position:absolute;left:-20px}
+.UISelectList_Label{color:#111;background-color:#fff;display:block;font-weight:normal;min-width:100px;max-width:300px;overflow:hidden;white-space:nowrap;padding:2px 4px 3px 19px}
+.UISelectList_Label:focus,
+.UISelectList_Label:active{outline:none;background-color:#333;color:#eee}
+.UISelectList_check_Checked,
+.UISelectList_radio_Checked{background:white no-repeat left 4px;cursor:pointer;font-weight:bold}
+.UISelectList_check_Checked{background-image:url(/rsrc.php/zEB7R/hash/3w3zk8ej.gif)}
+.UISelectList_radio_Checked{background-image:url(/rsrc.php/zDOUV/hash/6m1zsoz1.gif)}
+.UISelectList_check_Checked:focus,
+.UISelectList_check_Checked:active{background-position:left -56px}
+.UISelectList_radio_Checked:focus,
+.UISelectList_radio_Checked:active{background-position:left -16px}
+.uiSearchInput{background:#fff;border:1px solid #899bc1;border-top-color:#6484b4;display:inline-block}
+.uiSearchInput span{border:0;border-top:1px solid #ededed;display:inline-block;padding:1px 0 2px;*padding:0 0 1px;position:relative}
+.uiSearchInput input{border:0;border-right:1px solid #e5e5e5;margin:0 22px 0 5px;outline:none;padding:1px 5px 2px 0;width:190px}
+.uiSearchInput button{background:url(/rsrc.php/z7VU4/hash/66ad7upf.png) no-repeat 0 -1px;border:0;cursor:pointer;display:block;float:right;height:19px;padding:0;position:absolute;right:0;top:0;width:22px;z-index:2}
+.opera .uiSearchInput button{right:-22px}
+.ff2 .uiSearchInput{padding:3px 0 4px}
+.ff2 .uiSearchInput span{padding:2px 0}
+.ff3.mac .uiSearchInput input{padding-bottom:1px !important}
+.objectListItem{padding-bottom:8px;padding-top:8px}
+.passive .objectListItem{color:#808080}
+.objectListItem .auxiliary{text-align:right}
+.uiSideNav ul{display:none}
+.uiSideNav .open ul{display:block}
+.uiSideNav li{display:block;position:relative;zoom:1}
+.uiSideNav .hidden{display:none}
+.uiSideNav .item,
+.uiSideNav .subitem{color:#333;display:block;border-bottom:1px solid #fff;line-height:13px;padding:3px 8px 4px 28px;position:relative;text-decoration:none;zoom:1}
+.uiSideNav .subitem{padding-left:37px}
+.uiSideNav .item:hover,
+.uiSideNav .item:active,
+.uiSideNav .item:focus,
+.uiSideNav .subitem:hover,
+.uiSideNav .subitem:active,
+.uiSideNav .subitem:focus{background-color:#eff2f7;text-decoration:none}
+.uiSideNav .selected .item,
+.uiSideNav .selected .item:hover,
+.uiSideNav ul .selected .subitem,
+.uiSideNav ul .selected .subitem:hover{background-color:#d8dfea;font-weight:bold}
+.uiSideNav .item .imgWrap{position:absolute;top:2px;left:5px;text-align:center;width:18px}
+.uiSideNav .external{*display:inline-block;padding-right:12px;background:url(/rsrc.php/z9T00/hash/a0c6t4d4.png) no-repeat right 3px}
+.uiSideNav .loading ul .count,
+.uiSideNav .count{color:#808080}
+.uiSideNav .loading a{background-color:#eff2f7;border-color:#eff2f7;border-bottom-color:#fff}
+.uiSideNav .loading ul a{background-color:#fff;border-color:#fff}
+.uiSideNav .loadingIndicator{background:url(/rsrc.php/zBS5C/hash/7hwy7at6.gif) no-repeat 0 0;display:none;height:11px;position:absolute;right:5px;top:5px;width:16px}
+.loading .loadingIndicator{display:block}
+.loading ul .loadingIndicator{display:none}
+.uiSideNav ul .loading .loadingIndicator{top:5px}
+.uiSideNav .showSubitems .hiddenSubitem,
+.uiSideNav .open .navMore{display:block}
+.uiSideNav .hiddenSubitem,
+.uiSideNav .showSubitems .navMore,
+.uiSideNav .navMore{display:none}
+.uiSideNav li .navMore{margin:4px 0 10px 37px}
+.uiSideNav .loading .navMore{background-color:transparent}
+.navMore .moreLessArrow,
+.navLess .moreLessArrow{margin:4px 0 0 4px;position:absolute;display:inline}
+.uiSideNav .uiBubbleCount{margin-left:2px}
+.uiSideNav .divider{border-bottom:1px solid #ededed;border-top:1px solid #ededed;height:1px;left:auto;display:none;padding-left:0;margin-bottom:1px;width:179px;font-size:1px;line-height:1px;overflow:hidden}
+.editMode .uiSideNav .hidden,
+.expandedMode .uiSideNav .hidden,
+.expandedMode .uiSideNav .divider{display:block}
+.navMoreLess{line-height:13px;padding:0 0 2px 6px}
+.navMoreLessCount{margin:3px 8px 0 0}
+.navMoreText{display:block;padding:3px 0 0 0;width:100%}
+.navMoreTextWithCount{width:75% !important}
+.navLess{padding-top:3px}
+.navLess,
+.expandedMode .navMore{display:none}
+.expandedMode .navLess{display:inline}
+.uiTypeahead{background:#fff;border:solid #bdc7d8;border-width:1px 0;cursor:default;position:relative}
+.uiTypeahead .wrap{border:solid #bdc7d8;border-width:0 1px;overflow:hidden;zoom:1}
+.uiTypeahead .textInput{border:0;outline:0;width:100%}
+.uiTypeahead .selected .textInput{background:#e2e8f6}
+.uiTypeaheadDisabled,
+.uiTypeaheadDisabled div.wrap{border-color:#ccc}
+.uiTypeaheadDisabled div.wrap .textInput{background:#e2e2e2;color:#333}
+.uiTypeaheadFocused,
+.uiTypeaheadFocused .uiTypeahead{z-index:1}
+.uiTypeaheadView{display:block;left:0;position:absolute;top:100%;width:100%}
+.uiTypeaheadView ul{background:#fff;border:solid;border-width:1px 1px 2px;border-color:#333 #333 #293e6a;overflow:hidden;padding:2px 0}
+.uiTypeaheadView li{border:solid #fff;border-width:1px 0;color:#333;cursor:pointer;display:block;_height:1px;min-height:1px;padding:0 6px;position:relative}
+.uiTypeaheadView strong{background-color:#d8dfea;color:#3b5998}
+.uiTypeaheadView .selected{background-color:#6d84b4;border-color:#3b5998}
+.uiTypeaheadView .selected,
+.uiTypeaheadView .selected a,
+.uiTypeaheadView .selected div,
+.uiTypeaheadView .selected span{color:#fff !important}
+.uiTypeaheadView .selected strong{background-color:#5670a6}
+.uiTypeaheadView .text,
+.uiTypeaheadView .subtext,
+.uiTypeaheadView .category{display:block;padding-bottom:2px}
+.uiTypeaheadView .category{color:#666}
+.uiTypeaheadView .subtext{color:#999}
+.uiTypeaheadView .arrow{background:transparent url(/rsrc.php/zA4IG/hash/cny9pytx.png) 0 -413px;display:inline-block;height:7px;margin-left:4px;*vertical-align:middle;width:4px}
+.uiTypeaheadView .selected .arrow{background-position:0 -420px}
+.uiTypeahead .uiTypeaheadView .calltoaction{background:#f7f7f7;border-bottom:none;border-color:#ddd;display:block;_height:1px;min-height:1px;margin:2px 0 -2px;padding:8px;text-align:center}
+.uiTypeahead .uiTypeaheadView .calltoaction.selected{background:#6d84b4;border-color:#3b5998}
+.uiTypeaheadView i{background-repeat:no-repeat;display:none;height:16px;position:absolute;right:7px;width:16px}
+.uiTypeaheadView .menu ul{background-color:#f2f2f2;border-top-color:#666;left:-39px;padding:0;position:absolute;right:0}
+.uiTypeaheadView .menu i{right:353px}
+.uiTypeaheadView .bucketed .search li{border-width:0;min-height:0;padding:0;_height:0}
+.uiTypeaheadView .menu .search li{padding-left:38px}
+.uiTypeaheadView .nomenu .selected.place i{background:url(/rsrc.php/z71LD/hash/cgufw7pv.png) no-repeat}
+.uiTypeaheadView .nomenu .selected.question i{background:url(/rsrc.php/z5A2L/hash/cbjcev25.png) no-repeat}
+.uiTypeaheadView .nomenu .selected.user i{background:url(/rsrc.php/zA0CJ/hash/5jgefc9h.png) no-repeat}
+.uiTypeaheadView .nomenu .selected.page i{background:url(/rsrc.php/z2PFZ/hash/8vyebjy4.gif) no-repeat}
+.uiTypeaheadView .nomenu .selected.event i{background:url(/rsrc.php/zAUMA/hash/1ejqa007.gif) no-repeat}
+.uiTypeaheadView .nomenu .selected.group i{background:url(/rsrc.php/z3F54/hash/awj1evqo.png) no-repeat}
+.uiTypeaheadView .nomenu .selected.app i{background:url(/rsrc.php/zCEH8/hash/8hrk3is1.gif) no-repeat}
+.uiTypeaheadView .nomenu .selected.share i{background:url(/rsrc.php/z6NXG/hash/36pu7clk.gif) no-repeat}
+.uiTypeaheadView .nomenu .selected.shortcut i{background:url(/rsrc.php/z6BWG/hash/6juzphhy.gif) no-repeat}
+.uiTypeaheadView .bucketed .place i{background:url(/rsrc.php/zDTMO/hash/6isz0j9d.png) no-repeat 0 -51px;_background-image:url(/rsrc.php/z5YWQ/hash/dmyhtqwa.gif)}
+.uiTypeaheadView .bucketed .question i{background:url(/rsrc.php/zES3V/hash/6hqx0lns.png) no-repeat}
+.uiTypeaheadView .bucketed .user i{background:url(/rsrc.php/z3WSJ/hash/39ij0315.png) no-repeat 0 -51px;_background-image:url(/rsrc.php/zEQ9M/hash/aqihzqiu.gif)}
+.uiTypeaheadView .bucketed .page i{background:url(/rsrc.php/zI375/hash/eq4cx2p2.png) no-repeat 0 -17px;_background-image:url(/rsrc.php/z3EXF/hash/27iad49z.gif)}
+.uiTypeaheadView .bucketed .event i{background:url(/rsrc.php/z6USD/hash/7fyjbwev.png) no-repeat -55px -91px;_background-image:url(/rsrc.php/z986Y/hash/4df4ao58.gif)}
+.uiTypeaheadView .bucketed .group i{background:url(/rsrc.php/z3WSJ/hash/39ij0315.png) no-repeat 0 -85px;_background-image:url(/rsrc.php/zEQ9M/hash/aqihzqiu.gif)}
+.uiTypeaheadView .bucketed .app i{background:url(/rsrc.php/zD8LX/hash/jnfnys3b.png) no-repeat 0 -51px;_background-image:url(/rsrc.php/z9U7H/hash/84f1s8p6.gif)}
+.uiTypeaheadView .bucketed .share i{background:url(/rsrc.php/z6USD/hash/7fyjbwev.png) no-repeat 0 -110px;_background-image:url(/rsrc.php/z986Y/hash/4df4ao58.gif)}
+.uiTypeaheadView .bucketed .shortcut i{background:url(/rsrc.php/zD8LX/hash/jnfnys3b.png) no-repeat 0 -68px;_background-image:url(/rsrc.php/z9U7H/hash/84f1s8p6.gif)}
+.uiTypeaheadView .bucketed .search .first i{display:block;top:1px}
+.uiTypeaheadView .menu .search .first i{top:8px}
+.uiTypeaheadView .menu .search li:first-child i{top:4px}
+.uiTypeaheadView .bucketed .search .divider{background-color:#fff;display:block}
+.uiTypeaheadView .menu .search .divider{border-left:solid 1px #dedede}
+.uiTypeaheadView .bucketed .search .first .divider{padding-top:4px}
+.uiTypeaheadView .bucketed .search li:first-child .divider{padding-top:0}
+.uiTypeaheadView .menu .search li:first-child .divider{padding-top:1px}
+.uiTypeaheadView .bucketed .search .last .divider{padding-bottom:4px}
+.uiTypeaheadView .bucketed .search .first{border-top:solid 1px #dedede}
+.uiTypeaheadView .bucketed .search li:first-child{border-top:none}
+.uiTypeaheadView .bucketed .search a{background-color:#fff;border:solid #fff;border-width:1px 0;display:block;min-height:50px;outline:none;padding:2px 30px 2px 63px;position:relative;_height:50px}
+.uiTypeaheadView .menu .search a{border-left-width:1px}
+.uiTypeaheadView .bucketed .search .question a{min-height:17px;padding:3px 30px 3px 10px;_height:17px}
+.uiTypeaheadView .bucketed .search .question .text{display:inline}
+.uiTypeaheadView .bucketed .search .question .subtext{display:inline;margin-left:5px;white-space:nowrap}
+.uiTypeaheadView .bucketed .search li.calltoaction{border-top:solid 1px #ccc;margin-top:0;padding:0}
+.uiTypeaheadView .bucketed .search .calltoaction a{background:#f7f7f7;border:none;min-height:1px;padding:8px}
+.uiTypeaheadView .menu .search .selected{background-color:#f2f2f2}
+.uiTypeaheadView .bucketed .search .selected a{background-color:#6d84b4;border-color:#3b5998}
+.uiTypeaheadView .search ul{padding-bottom:0}
+.uiTypeaheadView .search li{_height:50px;min-height:50px;padding:2px 30px 2px 63px}
+.uiTypeaheadView .search li a{outline:none}
+.uiTypeaheadView .search li a:hover{text-decoration:none}
+.uiTypeaheadView .search img{background-color:#eceff5;display:block;height:50px;left:6px;position:absolute;width:50px}
+.uiTypeaheadView .search .text{color:#3b5998;font-weight:bold}
+.uiTypeaheadView .search .subtext{font-size:9px}
+.uiTypeaheadView .search .seeMore{color:#3b5998;font-size:11px;font-weight:bold;padding-bottom:0;padding-right:7px}
+
+#bootloader_css_4pbm7a8hkmww4g8s_pkg_css { height: 42px; }

@@ -2,7 +2,6 @@ var Turret = Class.create(Unit, {
 	theta :0,
 	cannonTheta : 0,
 	rank : 0,
-	maxRank : 3,
 	fireSound : Sounds.turret.fire,
 	canHitFlying: true,
 	canHitGround: true,

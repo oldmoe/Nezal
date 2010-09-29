@@ -112,6 +112,7 @@ var Tutorial = Class.create({
 		this.scene.reactor.pause()
 		$('modalWindow').show()
 		this.viewMessage(6)
+		this.ok.hide()
 		$$('#gameElements .superWeapons .splash').first().show()
 		$$('#gameElements .superWeapons .splash').first().observe('click', function(){self.fireSuperWeapon("splash",anim)})
 	},
@@ -120,16 +121,10 @@ var Tutorial = Class.create({
 		this.scene.reactor.resume()
 		anim.finish()
 		this.scene.fire(weapon)
-		var self = this
-		this.tutorialScene.push(10000,function(){
-			self.scene.reactor.pause()
-			$('modalWindow').show()
-			self.ok.stopObserving('click')			
-			self.ok.observe('click',function(){self.scene.reactor.resume();self.hide()})
-			self.viewMessage(7)
-		})	
+		var self = this	
 	},
 	planesAttack : function (){
+		this.ok.show()
 		$('modalWindow').show()
 		var self = this
 		self.viewMessage(8)
@@ -138,12 +133,17 @@ var Tutorial = Class.create({
 		self.ok.observe('click',function(){self.scene.reactor.resume();self.hide()})
 	},
 	wishLuck : function (){
+		this.ok.show()
 		$('modalWindow').show()
 		var self = this
 		self.viewMessage(9)
 		self.scene.reactor.pause()
 		self.ok.stopObserving('click')
-		self.ok.observe('click',function(){self.scene.reactor.resume();self.hide();Intro.newbieNoMore()})
+		self.ok.observe('click',function(){
+			self.scene.reactor.pause()
+			self.hide();Intro.newbieNoMore()
+			$("gameStart").innerHTML = Intro.templates['game'];
+		})
 	},
 	waveEffect : function (){
 		$('modalWindow').show()

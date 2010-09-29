@@ -23,7 +23,7 @@ var TutorialScene = Class.create(CityDefenderScene, {
 		
 		}
 		else if (this.waveNumber == 2){
-			game.tutorial.waveEffect()
+			this.push(6000,function (){game.tutorial.initiateSuperWeapon()})
 		}
 		else if (this.waveNumber == 3){
 				
@@ -32,9 +32,12 @@ var TutorialScene = Class.create(CityDefenderScene, {
 			game.tutorial.planesAttack()
 		}
 		else if (this.waveNumber == 5){
-			game.tutorial.wishLuck()
+
 		}
 		$super(wave)
+	},
+	end : function (status){
+		game.tutorial.wishLuck()
 	},
 	uploadScore : function(win,callback){
 		callback()

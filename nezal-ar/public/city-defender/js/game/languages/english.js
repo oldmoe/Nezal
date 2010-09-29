@@ -1,4 +1,7 @@
 window.Text = {
+	gameName: "Defender of Arabia",
+	tower : "tower",
+	superWeapon : "super weapon",
     intro : {
         levelSelection : {
             msg : 'defend a new country every week',
@@ -201,6 +204,18 @@ window.Text = {
 			MajGen:{ name:'Private' ,abbr : 'PVT'},
 			LtGen:{ name:'Private' ,abbr : 'PVT'},
 			Gen:{ name:'Private' ,abbr : 'PVT'}
+		},
+		result :{
+			winMission1: "You have successsfully defended",
+			winMission2: "and protected",
+			loseMission: "has fallen to the enemy forces </br> don't give up, you can try again",
+			coins: "Coins",
+			score: "Score",
+			enemies : "Enemies",
+			destroyed : "destroyed:",
+			escaped : "escaped:",
+			towers : "towers",
+			built : "built"
 		}
 	}
 	
