@@ -76,24 +76,6 @@ body{
 	z-index:200
 }
 
-#result #exit{
-	cursor : pointer;
-	position: absolute;
-	width: 115px;
-	height: 60px;
-	left:558px;
-	top: 410px;
-	z-index:4;
-}
-#result #playAgain{
-	cursor : pointer;
-	position: absolute;
-	width: 115px;
-	height: 60px;
-	left:63px;
-	top: 410px;
-	z-index:4;
-}
 #splashScreen{
 	width : 760px;
 	height: 550px;
@@ -802,21 +784,27 @@ position:"absolute";
 #incomingWaves{
 	position : absolute;
 }
-#incomingWaves div.wave{
-	border : 1px solid white;		
-	width : 150px;
-	margin : 1px;
-	height : 58;
-	float :right;
+#incomingWaves div.wave {
+	background-color:#444444;
+	border:2px solid #888888;
+	float:right;
+	height:38px;
+	margin:10px 1px 1px;
+	width:148px;
+}
+#incomingWaves div.active {
+	border:2px solid gold;
+}
+#incomingWaves div.passed {
+	border:2px solid red;
 }
 #incomingWaves div.wave div.creep{
 	float:right;
-	height:58;
+	height:38;
 }
 #incomingWaves div.wave div.creep img{
-	width : 70px;
-	height: 42px;		
-	margin : 5px;
+	height: 32px;		
+	margin-top:3px;
 }
 #scores{
 	width :757;	
@@ -835,4 +823,88 @@ position:"absolute";
 	top:50px;
 	left:15px;
 }
-
+#result img{
+	position: absolute;
+}
+#result #winClouds,#result #loseClouds{
+	position: absolute;
+	top: 45px;
+	left: 60px;
+}
+#result #winCenter{
+	left:277px;
+	top:114px;
+	z-index:2;
+}
+#result #loseCenter{
+	top: 40px;
+	left:225px;
+	z-index:2
+}
+#result #resultBlank{
+	left:236;
+	top:250;
+	z-index:1;
+}
+#result #resultCoin {
+	left:73px;
+	top:250px;
+	z-index:2;
+}
+#result #coins,#result #score{
+	position:absolute;
+	top:252px;
+	color:#e91;
+	font-size:27;
+	font-family:Adlib;
+	text-shadow: #000 2px 2px 1px;
+}
+#result #coins{
+	left:113px;
+}
+#result #score{
+	left:585;
+}
+#result #resultText{
+	position:absolute;
+	-moz-border-radius:20px;
+	-webkit-border-radius:20px;
+	-o-border-radius:20px;
+	border-radius:20px;
+	top:325px;
+	left:194px;
+	width :358px; 
+	height: 136px;
+	border :5px solid #FF4102;
+	background-color : #066266;
+	opacity : 0.78;
+}
+#result #exit,#result #playAgain{
+	position:absolute;
+	color:white;
+	text-shadow: #000 2px 2px 1px;
+	top:375px;
+	font-family:Pakgirl;
+	cursor:pointer;
+}
+#result #exit:hover,#result #playAgain:hover{
+	color:red;
+}
+#result #exit{
+	left:585px;
+	font-size:16;
+	width:20px;
+}
+#result #playAgain{
+	left:100px;
+	font-size: 16;
+	width:20px;
+}
+#pauseWindow{
+	z-index : 299;
+	width :760;
+	height :550; 
+	position :absolute;
+	background-color :black;
+	opacity:0.5;
+}

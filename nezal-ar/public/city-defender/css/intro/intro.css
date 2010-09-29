@@ -1,0 +1,1045 @@
+@font-face {
+  font-family: "Adlib";
+  src: url("../css/fonts/ADLIB.TTF");
+}
+@font-face {
+  font-family: "Digital";
+  src: url("../css/fonts/DIGITAL.TTF");
+}
+@font-face {
+  font-family: "Alpine";
+  src: url("../css/fonts/ALPINE.TTF");
+}    
+@font-face {
+  font-family: "Pakgirl";
+  src: url("../css/fonts/30pakgirl_bold_TBS.ttf");
+}
+@font-face {
+  font-family: "Inc";
+  src: url("../css/fonts/INC901BC.TTF");
+}
+@font-face {
+  font-family: "IncB";
+  src: url("../css/fonts/INC901B.TTF");
+}
+body {
+  font-family : Adlib;
+}
+
+#pause
+{
+  position:absolute;
+  left:0;
+  top:0;
+  width : 760px;
+  height : 550px;
+  z-index:1000;
+}
+#pause #inProgress
+{
+  height:100%;
+  left:0;
+  position:absolute;
+  top:60px;
+  width:100%;
+}
+#inProgress #logo
+{
+ left:175px;
+  position:absolute;
+  top:24px;
+}
+#inProgress #title
+{
+  left:300px;
+  position:absolute;
+  top:142px;
+}
+#inProgress #titleAr
+{
+  left:314px;
+  position:absolute;
+  top:245px;
+}
+#inProgress #blank
+{
+  left:247px;
+  position:absolute;
+  top:234px;
+}
+
+#intro
+{
+  width : 760px;
+  height : 550px;
+  position : absolute;
+}
+
+#intro #levelSelection, #cityInfo, #marketPlace
+{
+  width : 100%;
+  height : 100%;
+}
+
+#intro #levelSelection .gameName
+{
+  left:150px;
+  position:absolute;
+  top:30px;
+}
+
+.buttonText
+{
+  font-family : Adlib;
+  text-transform : capitalize;
+  text-align:center;
+}
+#levelSelection #paper
+{
+}
+#levelSelection #introText
+{
+  left:60px;
+  position:absolute;
+  top:30px;
+}
+#levelSelection #logo
+{
+ left:175px;
+  position:absolute;
+  top:24px;
+}
+#levelSelection #title
+{
+  left:300px;
+  position:absolute;
+  top:142px;
+}
+#levelSelection #titleAr
+{
+  left:314px;
+  position:absolute;
+  top:245px;
+}
+#levelSelection #blank
+{
+  left:247px;
+  position:absolute;
+  top:234px;
+}
+#levelSelection #selectedLang
+{
+  color:sienna;
+  font-size:16px;
+  height:42px;
+  left:575px;
+  position:absolute;
+  text-align:center;
+  top:50px;
+  width:105px;
+  z-index:100;
+}
+#levelSelection #language
+{
+  -moz-border-radius:0px 0px 10px 10px;
+  -webkit-border-radius: 0px 0px 10px 10px;
+  -khtml-border-radius: 0px 0px 10px 10px;
+  background:none repeat scroll 0 0 black;
+  color:white;
+  cursor:pointer;
+  direction:ltr;
+  font-size:14px;
+  height:57px;
+  left:590px;
+  opacity:0.6;
+  padding-top:15px;
+  position:absolute;
+  text-align:center;
+  top:80px;
+  width:75px;
+}
+#levelSelection #msg
+{
+  color:wheat;
+  font-size:20px;
+  left:150px;
+  position:absolute;
+  text-align:center;
+  text-transform:capitalize;
+  top:310px;
+  width:500px;
+}
+#levelSelection #tutorial
+{
+  color:#820000;
+  font-size:24px;
+  width:300px;
+  left:50px;
+  position:absolute;
+  top:405px;
+  width : 660px;
+}
+#levelSelection .tutorialText
+{
+  display:inline-block; 
+  text-decoration:underline;
+}
+#levelSelection .title 
+{
+  color:#820000;
+  font-size:24px;
+  width:300px;
+  left:245px;
+  position:absolute;
+}
+#challengesText:hover, #extraMap:hover, #levelSelection .clicked 
+{
+  color:#FAC200;
+  font-size:30px;
+  text-shadow:-1px 2px 1px #000000;
+}
+#levelSelection #challengesText
+{
+  top:342px;
+}
+#levelSelection #extraMap
+{
+  top:405px;
+}
+#levels
+{
+  color:wheat;
+  font-size:24px;
+  height:40px;
+  left:100px;
+  position:absolute;
+  text-align:center;
+  text-transform:capitalize;
+  top:375px;
+  width:560px;
+}
+#extraLevels
+{
+  color:wheat;
+  font-size:24px;
+  height:40px;
+  left:100px;
+  position:absolute;
+  text-align:center;
+  text-transform:capitalize;
+  top:435px;
+  width:560px;
+}
+#levels #easy, #extraLevels #easy
+{
+  height : 40%;
+  cursor : pointer;
+  display:inline-block;
+}
+#levels #medium, #extraLevels #medium
+{
+  width : 38%;
+  height : 40%;
+  cursor : pointer;
+  display:inline-block;
+}
+#levels #hard, #extraLevels #hard
+{
+  height : 40%;
+  cursor : pointer;
+  display:inline-block;
+}
+#levels span:hover, #extraLevels span:hover
+{
+  color : white;
+}
+
+
+#campaign #background
+{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+#campaign #paper
+{
+  position: absolute;
+  top: 12px;
+  left: 0px;
+}
+#campaign #backContainer
+{
+  left:80px;
+  position:absolute;
+  top:482px;
+  width:585px;
+}
+#campaign #back
+{
+  cursor:pointer;
+  height:43px;
+  width:83px;
+}
+#campaign #back .text
+{ 
+  color:#FAC200;
+  position:absolute;
+  text-align:center;
+  top:12px;
+  width:80px;
+  margin:0px 30px;
+}
+#campaign .camp-info
+{
+  left:70px;
+  position:absolute;
+  top:50px;
+  vertical-align:top;
+  width:605px;
+}
+#campaign .camp-details
+{
+  display:inline-block;
+  height:200px;
+  margin:25px 20px;
+  vertical-align:top;
+  width:290px;
+}
+#campaign .name
+{
+  color:#FAC200;
+  font-size:27px;
+  padding-bottom:5px;
+  text-transform:capitalize;
+}
+#campaign .desc
+{
+  color:white;
+  font-size:14px;
+  line-height:140%;
+  text-align:justify;
+  text-shadow:2px 1px #990000;
+}
+
+#campaign #camp-map 
+{
+  display:inline-block;
+  margin-top:15px;
+  width:270px;
+}
+#campaign #missions
+{
+  left:70px;
+  position:absolute;
+  top:280px;
+}
+#campaign .mission
+{
+  display:inline-block;
+  margin:0 9px;
+  position:relative;
+}
+#campaign .mission .missionName
+{
+  position:absolute;
+  text-align:center;
+  top:160px;
+  width:100%;
+}
+#
+/* Mission Info Page */
+#mission
+{
+/*  background : url("../images/intro/city/city-info.png") no-repeat scroll 0 0 transparent;*/
+}
+#mission #background
+{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+#mission #paper
+{
+  position: absolute;
+  top: 12px;
+  left: 0px;
+}
+#mission #mapBackground
+{
+  left:81px;
+  position:absolute;
+  top:173px;
+}
+#mission #buble
+{
+  left:166px;
+  position:absolute;
+  top:40px;
+}
+#mission #character
+{
+  left:70px;
+  position:absolute;
+  top:35px;
+}
+#mission #creepBackground
+{
+  left:50px;
+  position:absolute;
+  top:407px;
+}
+#creeps-scroll ul li img {
+  padding-top: 7px;
+}
+#creeps-scroll ul li img:hover {
+  opacity: 0.7;
+  cursor : pointer;
+}
+#mission #cityName
+{
+  color:#FF4102;
+  font-weight:bold;
+  left:235px;
+  position:absolute;
+  text-align:center;
+  text-transform:uppercase;
+  top:65px;
+  width:150px;
+}
+#mission #cityDesc
+{
+  color:#550000;
+  font-size:13px;
+  left:225px;
+  line-height:17l0%;
+  position:absolute;
+  text-align:center;
+  top:90px;
+  width:170px;
+}
+#mission #fullDesc
+{
+  color:white;
+  font-size:13px;
+  left:405px;
+  line-height:140%;
+  position:absolute;
+  text-align:justify;
+  text-shadow:-1px -1px #555555;
+  top:245px;
+  width:280px;
+}
+#mission #cityImage
+{
+  height:200px;
+  left:420px;
+  position:absolute;
+  text-align:center;
+  top:45px;
+  width:260px;
+}
+#mission #cityImage img
+{
+  width : 100%;
+}
+#mission #cityMap
+{
+  height:164px;
+  left:90px;
+  overflow:hidden;
+  position:absolute;
+  top:180px;
+  width:220px;
+}
+#mission #cityMap img
+{
+  width:224px;  
+  height:169px;
+}
+#mission #stamp
+{
+  height:116px;
+  left:245px;
+  position:absolute;
+  top:295px;
+  width:160px;
+}
+#mission #accept
+{
+  height:46px;
+  left:485px;
+  position:absolute;
+  top:420px;
+  width:90px;
+  cursor : pointer;
+}
+#mission #accept .text
+{
+  color:white;
+  position:absolute;
+  top:30%;
+  left:0px;
+  width : 100%;
+  text-align:center;
+}
+#mission #reject
+{
+  color:#FAC200;
+  cursor:pointer;
+  font-size:15px;
+  height:35px;
+  left:580px;
+  position:absolute;
+  top:440px;
+  width:100px;
+  text-shadow : 1px 1px #333333;
+}
+#mission #reject:hover
+{
+  text-decoration : underline;
+}
+#mission #creeps
+{
+  height:72px;
+  left:30px;
+  position:absolute;
+  top:408px;
+  width:430px;
+  direction:ltr;
+}
+#mission .creep
+{
+  float:left;
+  height:65px;
+  width:101px;
+}
+#mission #creepBar
+{
+  height:28px;
+  left:72px;
+  position:absolute;
+  top:502px;
+  width:390px;
+}
+#mission #floatBg
+{
+  -moz-border-radius:10px 10px 10px 10px;
+  -webkit-border-radius: 10px 10px 10px 10px;
+  -khtml-border-radius: 10px 10px 10px 10px;
+  background:none repeat scroll 0 0 black;
+  opacity : 0.8;
+  width : 400px;
+  height : 170px;
+  position : absolute;
+  top : 245px;
+  left : 45px;
+  z-index : 200;
+  color : #FAC200;
+}
+#mission .creepsHeadline
+{
+  color:#550000;
+  font-size:13px;
+  height:15px;
+  left:40px;
+  position:absolute;
+  top:390px;
+  width:400px;
+  z-index : 100;
+}
+#mission #floatBg #close
+{
+  cursor:pointer;
+  display:inline-block;
+  font-family:PakGirl;
+  font-size:16px;
+  height:20px;
+  margin-top:9px;
+  vertical-align:top;
+  width:20px;
+}
+#mission #floatBg .content
+{
+  height:120px;
+  margin:25px 40px;
+  overflow:hidden;
+  width:295px;
+  display:inline-block;
+}
+#mission #floatBg .name
+{
+  font-size:19px;
+}
+#mission #floatBg .desc
+{
+  white-space:normal;
+  word-wrap:break-word;
+  font-size : 12px;
+  line-height : 150%;
+}
+#mission #floatBg .spans
+{
+  display:inline-block;
+  height:100px;
+  margin-top:10px;
+  vertical-align:top;
+  width:70%;
+  text-align:justify;
+}
+#mission #floatBg .skeleton
+{
+  display:inline-block;
+  padding-top:30px;
+  text-align:center;
+  width:25%;
+  margin:0 5px;
+}
+
+#marketPlace #background
+{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+#marketPlace #paper
+{
+  position: absolute;
+  top: 10px;
+  left: 0px;
+}
+#marketPlace #upperPart
+{
+  left:73px;
+  position:absolute;
+  top:35px;
+  width:606px;
+}
+#marketPlace #upperPart .rank
+{
+  color:#FAC200;
+  height:65px;
+  left:35px;
+  position:absolute;
+  text-align:center;
+  top:30px;
+  width:135px;
+}
+#marketPlace #upperPart .rankImg
+{
+  height : 35px;
+}
+#marketPlace .rankText
+{
+  margin-top : 10px;
+}
+
+#marketPlace #upperPart .titleImg
+{
+  left:212px;
+  position:absolute;
+  top:12px;
+}
+#marketPlace #upperPart .coins
+{
+  font-family:Digital;
+  font-size:21px;
+  left:480px;
+  position:absolute;
+  text-align:center;
+  top:35px;
+  width:75px;
+}
+#marketPlace #upperPart .addMoney
+{
+  color:#FAC200;
+  font-family:Adlib;
+  font-size:15px;
+  left:423px;
+  position:absolute;
+  text-align:center;
+  top:76px;
+  width:155px;
+}
+#marketPlace #upperPart .addText
+{
+  display:inline-block;
+  text-align:center;
+  width:46%;
+}
+#marketPlace #upperPart .moneyText
+{
+  display:inline-block;
+  width:50%;
+}
+#marketPlace #weapons
+{
+  font-size:14px;
+  left:4px;
+  position:absolute;
+  top:160px;
+  text-align : center;
+  direction : ltr;
+}
+#marketPlace #towers
+{
+  font-size:14px;
+  left:4px;
+  position:absolute;
+  top:320px;
+  text-align : center;
+  direction : ltr;
+}
+#marketPlace #weaponsDisplay, #marketPlace #towersDisplay
+{
+  height:100px;
+  left:70px;
+  position:absolute;
+  top:25px;
+  width:595px;
+}
+#marketPlace .itemImage
+{
+  position:relative;
+}
+#marketPlace .coinImage
+{
+  padding-left : 5px;
+  float : left;
+}
+#marketPlace .itemPrice
+{
+  color:#FAC200;
+  font-family:Adlib;
+  font-size:18px;
+  text-align:center;
+  padding-top:4px;
+  float : left;
+  width:60px;
+}
+#marketPlace .qBoxImage
+{
+  padding-top : 14px;
+}
+#marketPlace #towers .lockImage
+{
+  position:relative;
+  top:-25px;
+}
+#marketPlace #weapons .lockImage
+{
+  position:relative;
+  top:-30px;
+}
+#marketPlace #info
+{
+  position:absolute;
+  top:65px;
+  width:104px;
+}
+#marketPlace .infoImage
+{
+  left:37px;
+  position:relative;
+  top:-42px;
+  cursor : pointer;
+}
+#marketPlace .unlockImage
+{
+  left:-14px;
+  position:relative;
+  top:-14px;
+}
+#marketPlace .unlockText
+{
+  color:white;
+  cursor:pointer;
+  font-family:Adlib;
+  font-size:14px;
+  left:4px;
+  position:relative;
+  text-align:center;
+  top:7px;
+  width:70px;
+  z-index:100;
+}
+#marketPlace #ready, #marketPlace #back
+{
+  width : 115px;
+  height : 45px;
+  cursor : pointer;
+  color : #FAC200;
+  display:inline-block;
+}
+#marketPlace #ready
+{
+  left : 595px;
+}
+#marketPlace #actionContainer
+{
+  position : absolute;
+  top : 482px;
+  width : 690px;
+  left:27px;
+  height : 45px;
+  cursor : pointer;
+  color : #FAC200;
+}
+#marketPlace #backText, #marketPlace #readyText
+{
+  display:inline-block;
+  position:relative;
+  text-align:center;
+  top:-31px;
+  width:80px;
+}
+#marketPlace .msg
+{
+  font-size:15px;
+  position:absolute;
+  text-align:center;
+  color : black;
+  top:146px;
+  width:100%;
+}
+#marketPlace .action
+{
+  cursor : pointer;  
+}
+#marketPlace .action .text
+{
+  color:white;
+  font-size:11px;
+  height:100%;
+  left:0;
+  line-height:180%;
+  position:absolute;
+  text-align:center;
+  top:0;
+  width:100%;
+}
+div.clickableButton
+{
+  opacity : 0.85;
+  cursor : pointer;
+}
+div.clickableButton:hover
+{
+  opacity : 1;
+  cursor : pointer;
+}
+
+#marketPlace #floatBg
+{
+  -moz-border-radius:25px;
+  -webkit-border-radius: 25px;
+  -khtml-border-radius: 25px;
+  background:none repeat scroll 0 0 black;
+  color:#FAC200;
+  height:222px;
+  left:130px;
+  opacity:0.85;
+  position:absolute;
+  top:150px;
+  width:520px;
+  z-index:101;
+}
+#marketPlace #floatBg #close
+{
+  cursor:pointer;
+  display:inline-block;
+  font-family:PakGirl;
+  font-size:20px;
+  height:20px;
+  vertical-align:top;
+  width:20px;
+}
+#marketPlace #floatBg .content
+{
+  display:inline-block;
+  height:150px;
+  margin:10px;
+  width:500px;
+}
+#marketPlace #floatBg .content .spans
+{
+  display:inline-block;
+  height:100%;
+  margin:10px 15px;
+  text-align:justify;
+  width:70%;
+}
+#marketPlace #floatBg .content .image
+{
+  display:inline-block;
+  text-align:center;
+  vertical-align:top;
+  width:23%;
+}
+#upgrade #floatBg .content .spans
+{
+  display:inline-block;
+  font-size:10px;
+  height:100%;
+  margin:10px;
+  text-align:justify;
+  width:40%;
+}
+#upgrade .div
+{
+  display:inline-block;
+  height:100%;
+  width:31%;
+}
+#marketPlace #floatBg .content .image .skeleton
+{
+  height : 100px;
+  margin:5px 0;
+}
+#marketPlace #weapons #floatBg .content .image .skeleton
+{
+  margin-top : 10px;
+  height : 80px;
+}
+#marketPlace #floatBg .content .image .cost img
+{
+  float : right;
+}
+#marketPlace #floatBg .image .cost
+{
+  width: 100%;
+  height : 24px;
+}
+#marketPlace #floatBg .image .cost .img
+{
+  width: 30%;
+  margin-left : 4%;
+  float : left;
+}
+#marketPlace #floatBg .image .cost .value
+{
+  float:left;
+  font-family:Digital;
+  font-size:26px;
+  margin-top:-6px;
+  text-align:center;
+  width:60%;
+}
+#marketPlace #floatBg .name
+{
+  font-size:20px;
+  font-weight:bold;
+  line-height:150%;
+  text-decoration:underline;
+  text-transform:uppercase;
+}
+#marketPlace #floatBg .desc
+{
+  font-size:15px;
+  font-weight:normal;
+  line-height:130%;
+  white-space:normal;
+  word-wrap:break-word;
+}
+#marketPlace #floatBg .actions
+{
+  height:30px;
+  margin:0 25px;
+  position:absolute;
+  top:170px;
+  width:470px;
+}
+#marketPlace #floatBg .actions .rank
+{
+  display:inline-block;
+  text-transform:capitalize;
+  vertical-align:top;
+  width:70%;
+}
+#marketPlace #floatBg .actions .rank span
+{
+  display:inline-block;
+  margin-top:12px;
+  vertical-align:top;
+}
+#marketPlace #floatBg .actions .rank img
+{
+  height:35px;
+}
+#marketPlace #floatBg .actions .action
+{
+  bottom:0;
+  cursor:pointer;
+  display:inline-block;
+  font-size:11px;
+  width:28%;
+}
+#marketPlace #floatBg .actions .action .active
+{
+  color:#FF4102;
+  font-size:19px;
+  display:inline-block;
+  padding-top:10px;
+}
+#marketPlace #floatBg .actions .action .inactive
+{
+  color:silver;
+  font-size:19px; 
+  cursor : default; 
+  display:inline-block;
+  padding-top:10px;
+}
+#marketPlace #floatBg .actions .addMoney
+{
+  bottom:0;
+  color:white;
+  cursor:pointer;
+  display:inline-block;
+  height:10px;
+  margin:0 11px;
+  text-transform:capitalize;
+  width:40px;
+}
+
+/*
+#challenges
+{
+  background : url("../images/intro/challenge-selection.png") no-repeat scroll 0 0 transparent;
+  text-align : center;
+  display : none; 
+}
+
+.challenge
+{
+  width : 100px;
+  height : 100px;
+  margin : auto;
+}
+
+#challengeSelection div
+{
+  position : absolute;
+  left : 185px;
+  height : 180px;
+  width : 400px;
+}
+
+#challengeSelection #weekly 
+{ 
+  background : url("../images/intro/weekly-challenge.png") no-repeat scroll 0 0 transparent;
+  top : 90px;
+
+}
+
+#challengeSelection #all
+{
+  background : url("../images/intro/all-challenges.png") no-repeat scroll 0 0 transparent;
+  top : 300px;
+}
+
+#challengeSelection div a 
+{
+  display : block;
+  height : 180px;
+  width : 400px;
+}
+*/

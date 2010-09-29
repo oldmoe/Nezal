@@ -11,6 +11,7 @@ var Game = Class.create({
 	start : function(){
 		Map.init();
 		if(Intro.userData.newbie)Config = tutorialConfig
+		else Config = GameConfigs
 		this.prepareConfig()
 		this.config = Nezal.clone_obj(Config)
 		this.config.waves.reverse()
@@ -37,26 +38,48 @@ var Game = Class.create({
 		this.scene.start();
 	},
 	prepareConfig : function(){
-		var ind = Config.towers.indexOf("Belcher")
-		if(ind!=-1)Config.towers[ind] = "Turret"
-		var ind = Config.towers.indexOf("Reaper")
-		if(ind!=-1)Config.towers[ind] = "DoubleTurret"
-		var ind = Config.towers.indexOf("Exploder")
-		if(ind!=-1)Config.towers[ind] = "RocketLauncher"
+		var inputNames = ["Belcher","Reaper","Exploder","Patriot"]
+		var replacement = ["Turret","DoubleTurret","Exploder","Patriot"]
+		var upgradeValues = ["maxHp","power","range","rate","price"]
+		for(var i=0;i<inputNames.length;i++){
+			var ind = Config.towers.indexOf(inputNames[i])
+			if(ind!=-1){
+				Config.towers[ind] = replacement[i]
+				var values = Intro.gameData.towers[inputNames[i]].upgrades
+				var upgrades = []
+				upgradeValues.each(function(upgradeValue){
+						eval(replacement[i]).prototype[upgradeValue] = values[0][upgradeValue]
+				})
+				eval(replacement[i]).prototype.maxRank = Intro.gameData.towers[inputNames[i]].upgradeLevel-1
+				for(var j=1;j<values.length;j++){
+					var value = values[j]
+					var upgrade = {}
+					upgradeValues.each(function(upgradeValue){
+						upgrade[upgradeValue] = value[upgradeValue]
+					})
+					upgrades.push(upgrade)
+				}
+				eval(replacement[i]).prototype.upgrades = upgrades
+			}
+		}
+		
+		var weaponValues = Intro.gameData.weapons
+		Config.superWeapons.each(function(weapon){
+			eval(weapon).prototype.factor1 = weaponValues[weapon].upgrades[weaponValues[weapon].upgradeLevel-1].factor1
+			eval(weapon).prototype.factor2 = weaponValues[weapon].upgrades[weaponValues[weapon].upgradeLevel-1].factor2
+			eval(weapon).prototype.cooldown = weaponValues[weapon].upgrades[weaponValues[weapon].upgradeLevel-1].cooldown
+		})
 		if(Config.superWeapons.indexOf('Splash')!=-1&&Config.superWeapons[0]!="Splash"){
 			var x = Config.superWeapons[0]
 			var y = Config.superWeapons.indexOf("Splash")
 			Config.superWeapons[0] = "Splash"
 			Config.superWeapons[y]=x
 		}
+		
 	},
 	setGameImages : function(){
 		if(Intro.userData.newbie)Config = tutorialConfig
-		Loader.images.background['win.png'].setAttribute("id","winImage")
-		$$('#result #winImage')[0].src = Loader.images.background['win.png'].src;
-		$$('#result #loseImage')[0].src = Loader.images.background['lose.png'].src;
-		$$('#result #youWin')[0].src = Loader.images.background['you_win.png'].src ;
-		$$('#result #youLose')[0].src = Loader.images.background['you_lose.png'].src ;
+		else Config = GameConfigs
 		game.prepareConfig()
 		Config.towers.each(function(tower){
 			var div = document.createElement("div");
@@ -83,12 +106,6 @@ var Game = Class.create({
 				$$(".superWeaponsOff").first().appendChild(div2)
 			
 		})		
-		$('pauseWindow').style.zIndex = 299;
-		$('pauseWindow').style.width =760;
-		$('pauseWindow').style.height = 550; 
-		$('pauseWindow').style.position = "absolute"
-		$('pauseWindow').style.backgroundColor = "black";
-		$('pauseWindow').style.opacity =0.5;
 
 		$$('.start').first().appendChild(Loader.images.background['start.png'])
 
@@ -103,8 +120,8 @@ var Game = Class.create({
 		var img8 = Loader.images.background['character.png']
 		$$('#modalWindow #character').first().appendChild(img8)
 		var img9 = document.createElement("IMG");
-		$('playAgain').appendChild(Loader.images.background['play_again.png'])
-		$('exit').appendChild(Loader.images.background['exit.png'])
+		//$('playAgain').appendChild(Loader.images.background['play_again.png'])
+		//$('exit').appendChild(Loader.images.background['exit.png'])
 		
 		$$('#gameElements .superWeapons div').each(function(div){ 
 			if(div.className != ''){
@@ -156,12 +173,11 @@ var Game = Class.create({
 		game.start()	
 	},
 	exit :function(){
-          $('scores').hide()
           Intro.enablePauseScreen();
-					$('gameStart').hide()
-    	    $("gameStart").innerHTML = Intro.templates['game'];
-    	    Intro.replay();	
-			    onFinish()
+		  $('gameStart').hide()
+    	  $("gameStart").innerHTML = Intro.templates['game'];
+    	  Intro.replay();	
+		  onFinish()
 	},
 	unRegisterHandlers : function(){	
 		$$('.towers div').invoke('stopObserving','click')
@@ -176,7 +192,6 @@ var Game = Class.create({
 
 var game = new Game()
 function city_defender_start(){
-		$('popup').hide()	
 		$$("canvas").each(function(canvas){
 			canvas.width = Map.width * Map.pitch
 			canvas.height = Map.height * Map.pitch

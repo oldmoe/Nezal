@@ -6,22 +6,13 @@ var Loader = {
   callbacks: {},
 
 	initialize: function (){
-		var test = new Audio
-		if(test.canPlayType('audio/mpeg')){
-			this.soundsFormat = 'mp3'	
-		}
-		else if(test.canPlayType('audio/ogg')){
-			this.soundsFormat = 'ogg'	
-		}							
 		this.toLoad = ["animations.html", "intro.html", "user.html", "background.html",  "game.html", "english.html", "arabic.html", "french.html"]
-		this.soundIndex = this.toLoad.indexOf(this.soundsFormat+".html")
 	},
 
 	notify : function(win, resources){
 		var div = win.document.getElementById('resources')
-		var i =0
-		while(resources.length>i){
-			var resource = resources[i]
+		while(resources.length>0){
+			var resource = resources[0]
 			resource = div.removeChild(resource)
 			var id = resource.id
 			var parts = id.split('#')
@@ -33,19 +24,21 @@ var Loader = {
 			if(development){
 				city_defender_start()
 				onFinish()
+			}else{
+				Loader.doneLoading = true;
+				Intro.start();
 			}
-			else{
-        Loader.doneLoading = true;
-        Intro.start();
+		}else if(this.index < this.toLoad.length-1){
+			var found = false
+			this.toLoad.each(function(url){
+				if(win.document.URL.indexOf(url.split('?')[0])>=0){
+					found = true
+				}
+			})
+			if(found){
+				this.index++
+				window.setTimeout(function(){$('iframe').src = Loader.toLoad[Loader.index]}, 100)
 			}
-		}
-		else if(this.index < this.toLoad.length-1){
-  		var callbackKey = win.document.URL.split('/').pop();
-  		if(this.toLoad.indexOf(callbackKey)>=0)
-  		{
-			    this.index++
-			    window.setTimeout(function(){$('iframe').src = "html_resources/"+Loader.toLoad[Loader.index]}, 500)
-	    }
 		}
 		var callbackKey = win.document.URL.split('/').pop();
 		if(this.callbacks[callbackKey]){

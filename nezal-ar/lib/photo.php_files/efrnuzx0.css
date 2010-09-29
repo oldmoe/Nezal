@@ -1,0 +1,264 @@
+/*
+HTTP Host: static.ak.fbcdn.net
+Generated: September 7th 2010 10:01:20 PM PDT
+Machine: 10.30.147.194
+Locale: nu_ll
+Path: css/dk581sbcahskkcck.pkg.css
+*/
+
+.text_exposed_root{display:inline}
+.text_exposed .text_exposed_show{display:inline}
+.text_exposed_show,
+.text_exposed .text_exposed_hide{display:none}
+.text_exposed_link{font-size:9px;padding:0 12px 0 0;white-space:nowrap}
+.text_exposed_link_icon{margin:0 0 -1px 4px}
+.text_exposed .text_exposed_link{display:none !important}
+.UIComposer{margin-bottom:10px;position:relative}
+#home_stream .UIComposer{border-bottom:1px solid #eee;margin-bottom:8px;padding-bottom:9px}
+.UIComposer_Upload_Iframe{height:1px;position:absolute;top:-10000px;width:1px}
+.UIComposer_Pic, .UIComposer_PicRounded{left:0;position:absolute}
+.UIComposer_Prompt{color:#696969;display:block;font-size:13px;font-weight:bold;margin-bottom:5px;padding-left:1px}
+.UIComposer .UIComposer_Box{background-color:#f2f2f2;border-color:#b5b5b5;border-bottom-color:#cbcbcb;border-top:2px solid #919191;padding:7px 0}
+.UIComposer_Content{padding:0 7px}
+.NewHighLight .UIComposer_Content{padding:0}
+.UIComposer_InputArea_Base{background:#fff;display:block;position:relative}
+.UIComposer_InputArea{border:1px solid #bbb;border-top-color:#aeaeae}
+.UIComposer_InputShadow{border-top:1px solid #e8e8e8;padding:2px 5px 3px}
+.NewHighLight .UIComposer_InputShadow{padding:2px 4px 3px}
+.UIComposer_InputShadow .DOMControl_placeholder{line-height:21px}
+.UIComposer .UIComposer_TextArea{border:none;font-size:13px;height:21px;margin:0;outline:none;overflow:hidden;padding:0;resize:none;vertical-align:bottom;width:100%}
+.UIComposer_AttachmentTitle{color:#666;font-weight:bold;padding-left:22px;background:no-repeat left center}
+.UIComposer_AttachmentArea{display:none;background:#fff;border:1px solid #bbb;border-top-color:#aeaeae;margin-top:6px}
+.UIComposer_AttachmentArea .app_content{overflow:auto;overflow-y:hidden}
+.UIComposer_AttachmentArea_Shadow{overflow:hidden;border-top:1px solid #e8e8e8;padding:3px 4px 4px 4px}
+.UIComposer_AttachmentArea_Header{line-height:18px;overflow:hidden;padding-bottom:4px;border-bottom:1px solid #dfdfdf;zoom:1}
+.UIComposer_AttachmentArea_CloseButton{background:no-repeat -150px -83px;float:right;height:18px;width:18px}
+.UIComposer_AttachmentArea_CloseButton:hover{background-position:-168px -83px}
+.UIComposer_AttachmentArea_Cache{overflow:hidden;padding-top:4px}
+.UIComposer .UIShareStage{padding:9px}
+.UIComposer_AttachmentArea_Loader{padding:6px 0;text-align:center}
+.UIComposer_Attachment_Cached{zoom:1;display:none}
+.UIComposer_Attachment .uiButtonSuppressed{height:17px;*height:14px}
+.UIComposer_Box .uiButtonSuppressed{_border-color:#f2f2f2}
+.UIComposer_ButtonArea{height:24px;margin-bottom:0;padding-top:7px}
+.UIComposer_ButtonArea ul{display:block}
+.UIComposer_Buttons li.UIComposer_FormButtons,
+.UIComposer_Buttons li.UIComposer_PrivacyEtc{float:right;margin-left:5px}
+.UIComposer_Attachments li{float:left}
+.UIComposer_AttachmentPrompt{color:#777;font-weight:bold;line-height:24px;padding-right:4px}
+.hide_buttons #composer_buttons{display:none}
+.UIComposer_AttachmentArea_CloseButton{background-image:url(/rsrc.php/z9WEN/hash/6w95fo9x.gif)}
+.UIComposer_STATE_PIC_OUTSIDE .UIComposer_Box{padding-left:60px}
+.UIComposer_STATE_PIC_OUTSIDE .UIComposer_Pic{padding-left:14px;padding-top:10px}
+.UIComposer_STATE_PIC_INSIDE .UIComposer_Pic{padding:0}
+.UIComposer_STATE_PIC_INSIDE .UIComposer_InputArea{padding-left:60px}
+.UIComposer_STATE_INPUT_DISABLED .Mentions_Input,
+.UIComposer_STATE_INPUT_DISABLED .UIComposer_InputArea,
+.UIComposer_STATE_INPUT_DISABLED .UIComposer_InputShadow,
+.UIComposer_STATE_INPUT_DISABLED .UIComposer_TextArea{background-color:#ddd}
+.UIComposer_STATE_INPUT_EXPANDED .Mentions_Input,
+.UIComposer_STATE_INPUT_FOCUSED .Mentions_Input{min-height:36px}
+.ie6 .UIComposer_STATE_INPUT_EXPANDED .Mentions_Input,
+.ie6 .UIComposer_STATE_INPUT_FOCUSED .Mentions_Input{height:36px;overflow:visible}
+.UIComposer_STATE_INPUT_EXPANDED .UIComposer_TextArea,
+.UIComposer_STATE_INPUT_FOCUSED .UIComposer_TextArea{height:36px}
+.UIComposer_STATE_ATTACHMENT_AREA .UIComposer_AttachmentList,
+.UIComposer_STATE_ATTACHMENT_LOADED .UIComposer_AttachmentArea_Loader{display:none}
+.UIComposer_STATE_ATTACHMENT_AREA .UIComposer_AttachmentArea,
+.UIComposer_STATE_ATTACHMENT_LOADED .UIComposer_Attachment_Visible{display:block}
+.UIComposer_Buttons .UIComposer_PrivacyEtc{width:100px}
+.UIComposer_Buttons .UIComposer_PrivacyEtc .UIComposer_PrivacyEtcButton{float:right}
+.Mentions_Input{width:100%;margin:0;padding:0;font-size:13px;min-height:20px;max-height:200px;cursor:text;border:none;outline:none;overflow:auto;overflow-x:hidden;background-color:#fff;-webkit-user-modify:read-write-plaintext-only}
+.Mentions_Input a{cursor:default}
+.Mentions_Input a span{outline:none}
+.Mentions_Input a:hover{text-decoration:none}
+.UIComposer_PrivacyWidgetConfirmationBody{overflow:hidden}
+.UIComposer_PrivacyWidgetConfirmationBody p{margin:0 0 10px 0}
+.UIComposer_PrivacyWidgetConfirmationImage{float:right;margin-left:5px}
+.UIComposer_PrivacyCallout{background-color:transparent;margin-top:-5px;position:absolute;right:38px;width:180px;z-index:100}
+.UIComposer_PrivacyCallout_Title,
+.UIComposer_PrivacyCallout_Text{border:1px solid #467c2c}
+.UIComposer_PrivacyCallout_Arrow{background:url(/rsrc.php/z7WVM/hash/6nuj81lw.gif) no-repeat scroll right top;height:7px;margin-right:40px;position:relative;top:1px}
+.UIComposer_PrivacyCallout_Arrow span{display:none}
+.UIComposer_PrivacyCallout_Title{background-color:#67a54b;border-bottom:medium none;color:#fff;font-size:11px;margin:0;padding:3px 6px}
+.UIComposer_PrivacyCallout_Text{background-color:#fff;color:#666;margin:0;padding:6px 12px}
+.UIComposer_PrivacyCallout_Text a{display:block}
+.UIComposer_PrivacyCallout_CloseLink{float:right;padding:4px 6px}
+.UIComposer_PrivacyCallout_CloseLink a{color:#fff}
+.UIComposer_PrivacyWidget .uiTooltipWrap,
+.UIComposer_TargetedPrivacyWidget .uiTooltipWrap{bottom:23px;margin-left:4px;right:16px}
+div.pop_dialog .UIComposer{margin-bottom:0}
+div.pop_dialog .UIComposer .UIComposer_ButtonArea{display:none}
+div.pop_dialog .UIComposer_ButtonArea .UIComposer_FormButtons .uiButton{min-width:44px}
+.UIComposer_MentionsCallout{background-color:transparent;position:absolute;width:180px;left:-1px;margin-top:-4px;z-index:100}
+.UIComposer_MentionsCallout_Arrow{margin-right:150px}
+.dialog_body .dialog_option{padding:14px 0 7px 0}
+.dialog_body .dialog_option input{width:13px;height:13px;padding:0;margin:0;vertical-align:bottom;position:relative;top:0;*overflow:hidden}
+.dialog_body .dialog_option .dialog_option_text{padding-left:5px;text-indent:-15px}
+.nile_profile .minifeedwall{padding-top:6px}
+.fbpage .extra_media .fbpage_pic{float:left;padding:0}
+.fbpage .extra_media .fbpage_info{float:left;width:250px;padding:3px 0 3px 7px}
+.minifeedwall .loading_layer{background:white url(/rsrc.php/z5R48/hash/ejut8v2y.gif) no-repeat center;filter:alpha(opacity=5);opacity:.5;position:absolute}
+.minifeedwall .loading_placeholder{background:white url(/rsrc.php/z5R48/hash/ejut8v2y.gif) no-repeat center;height:200px}
+#feedwall_with_composer{padding-top:10px}
+#feedwall_with_composer .uiComposer{border-top:none}
+#feedwall_controls_wrapper .advanced_controls_link{background:#fff;display:none;float:right;margin-top:-7px}
+#feedwall_controls_wrapper.show_advanced_options_link .advanced_controls_link{display:block}
+#feedwall_controls_wrapper.show_advanced_options_link #feedwall_controls{display:none}
+#feedwall_controls ul.Tabset_tabset li{float:left}
+.minifeedwall .empty_wall .status{background:#f5f5f5;border:none;border-top:1px solid #eaeaea;margin:45px 0 20px}
+.minifeedwall .status{overflow:hidden}
+#feedwall_controls ul.Tabset_tabset #profile_stream_filters_settings,
+#feedwall_controls ul.Tabset_tabset .walltowall{float:right}
+#profile_stream_filters_settings span.settings{background:transparent url(/rsrc.php/z6UCP/hash/6vkuk0vc.gif) no-repeat scroll left 3px;padding-left:14px;display:inline-block}
+#profile_stream_filters_settings.Tabset_selected span.settings{background-position:left -10px}
+#profile_pager_container .page_loading{display:block}
+.story_ff .comment_box{margin-left:57px}
+.story_ff .size_1 .comment_box{margin-left:0}
+.fbPrivacyWidget .customEdit .editLink:hover{text-decoration:underline}
+.fbPrivacyWidget .customEdit,
+.fbPrivacyWidget .checked .customize{display:none}
+.fbPrivacyWidget .checked .customEdit{display:inline}
+.UIStory{*background-color:#fff;*zoom:1}
+.UIStory_Hide{display:block;float:right;margin-top:-2px}
+.UIStory_Hide a{-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;-moz-opacity:0;*filter:alpha(opacity=0);_filter:alpha(opacity=20)}
+.UIStory_Hide a:hover{-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";_filter:alpha(opacity=100)}
+.UIStory:hover .UIStory_Hide a,
+.UIStory_Hide .openToggler a{opacity:1;-moz-opacity:1;*filter:alpha(opacity=100)}
+.stream_participants_not_expanded .stream_participants_long,
+.stream_participants_expanded .stream_participants_short{display:none}
+.UIStory_Privacy a{padding:0 5px;line-height:12px;display:inline-block;background:url(/rsrc.php/zTG3I/hash/5rzjfw6v.gif) no-repeat center right}
+.UIStory_Privacy.UIStory_TargetedPrivacy a{background-image:url(/rsrc.php/zAYK1/hash/6pj5fpic.gif);padding:0 7px;line-height:14px}
+.UIStory_Privacy .uiTooltip .uiTooltipWrap{left:-1px;bottom:14px}
+.UIStory .text_exposed_link{display:block;padding-top:4px;font-size:11px}
+.UIIntentionalStory{background-color:#fff;border-top:1px solid #eee;margin-bottom:7px;min-height:50px;padding:7px 0 0 60px;position:relative}
+.ie6 .UIIntentionalStory{height:50px;overflow:visible;border-top:none}
+.UIStory:first-child{border-top:none;margin-top:0}
+.story_preview_nile .UIIntentionalStory{border:none}
+.UIIntentionalStory_Location,
+.UIIntentionalStory_Time,
+.UIIntentionalStory_Time a{color:#777;font-size:11px}
+.UIIntentionalStory_BottomAttribution{color:#777}
+.UIIntentionalStory_BottomAttribution a{color:#777}
+.UIIntentionalStory_Pic{left:0;position:absolute}
+.UIIntentionalStory_Image{display:block;position:absolute;vertical-align:middle}
+.UIIntentionalStory_Message,
+.UIIntentionalStory .location{font-size:13px;font-weight:normal;overflow:hidden}
+.UIIntentionalStory_Message_Generated{color:#777}
+.UIFeedFormStory_Prompt{color:#777;font-size:13px;padding-right:25px}
+.UIFeedFormStory_Prompt .UIFeedFormStory_Lead{font-weight:bold}
+.UIFeedFormStory_Prompt textarea{font-size:13px;font-weight:normal;margin-top:7px;overflow:hidden;width:100%}
+.UIIntentionalStory_Arrow{padding:0 1px}
+.UIIntentionalStory_Names{color:#808080}
+.UIIntentionalStory_Names a, a.UIIntentionalStory_Names{font-weight:bold}
+a.UIIntentionalStory_Names{color:#3b5998}
+.UIIntentionalStory_Attribution{color:#808080}
+.UIIntentionalStory .UIStoryAttachment_MediaSingle{padding-right:10px}
+.UIIntentionalStory_PhotoExtra{padding-left:8px}
+.UIIntentionalStory_MediaExtra{display:none;padding-left:8px}
+.text_exposed .UIIntentionalStory_MediaExtra{display:block}
+.UIIntentionalStory_Info{clear:left;margin-top:3px;min-height:16px;display:block}
+.ie6 .UIIntentionalStory_Info{height:16px;overflow:visible}
+.UIActionLinks .UIIntentionalStory_Mobile{margin-top:-2px}
+.UIIntentionalStory_InfoText{color:#777;min-height:16px;padding:2px 0 0 0}
+.ie6 .UIIntentionalStory_InfoText{height:16px}
+.UIIntentionalStory_InfoTextIndented{padding-left:22px}
+.UIIntentionalStory_Tagged{background:url(/rsrc.php/zA4IG/hash/cny9pytx.png) no-repeat;background-position:0 -395px;padding-left:16px;width:0;display:inline-block}
+.story_hide_menu{text-align:center}
+.UIIntentionalStory_hover{background:#eee}
+.UIIntentionalStory .swfvideo .extra{padding-bottom:0;padding-right:0}
+.UIIntentionalStory .UIMediaItem_video{padding-bottom:0}
+.UIIntentionalStory_CollapsedStories{background-color:#fff;border-top:1px solid #eee;display:block;font-size:9px;font-weight:bold;margin-bottom:7px;padding-top:7px;margin-top:7px;position:relative}
+.UIIntentionalStory_CollapsedStoriesLoading{background:#fff url(/rsrc.php/zBS5C/hash/7hwy7at6.gif) 6px right no-repeat}
+.UIIntentionalStream_Error{display:none;padding-top:2px;padding-bottom:8px}
+.UIIntentionalStream_HiddenInfo{float:right}
+.UIIntentionalStream_AutoUpdate{margin:5px}
+.UIIntentionalStream_AutoUpdateMessage,
+.UIIntentionalStream_AutoUpdateControl{float:right}
+.UIMediaItem_ManyItems{float:left}
+.UIMediaItem img{display:block}
+.UIMediaItem .uiVideoThumb{display:block}
+.UIMediaItem_Wrapper{overflow:hidden}
+.UIMediaItem_Photo .UIMediaItem_Wrapper{border:1px solid #ccc;padding:3px}
+.UIMediaItem_Photo .UIMediaItem_PhotoBorder{border:1px solid #ccc}
+.UIMediaItem_Photo a:hover .UIMediaItem_Wrapper,
+.UIMediaItem_Photo a:hover .UIMediaItem_PhotoBorder{border:1px solid #3b5998}
+.UIMediaItem_Photo .UIMediaItem_PhotoFrame{border:3px solid white}
+.UIMediaItem_UnknownWidth img{max-width:90px;max-height:90px}
+.ie6 .UIMediaItem_UnknownWidth img{width:90px}
+.UIRecentActivityStory{background:#fff;clear:both;display:block;padding-top:4px;position:relative}
+.UIRecentActivityStory_First{padding-top:0}
+.UIRecentActivityStory .UIRecentActivity_Time{color:#777;font-size:9px;margin-left:4px}
+.UIRecentActivity_Body{min-height:18px}
+.ie6 .UIRecentActivity_Body{height:18px}
+.UIRecentActivityStory .UIStoryAttachment_MediaSingle{padding-right:10px}
+.UIRecentActivityStory .UIStoryAttachment{font-size:11px}
+.UIRecentActivity_Stream{padding:4px 0 14px}
+.UIStream_Border{border-top:solid #eee 1px;padding-top:12px}
+a.UIStream_Chunk_Expand{display:block;padding:0 2px 0 22px;margin:2px 0 4px}
+.UIRecentActivity_Stream{padding-left:60px}
+.UIRecentActivity_Stream .UIRecentActivity_Header{color:#aaa;font-size:9px;font-weight:bold;padding:2px 0 5px}
+.UIRecentActivity_Stream .UIStory_Hide{margin-top:-4px;float:right}
+.UIRecentActivityStream_Interspersed{padding:12px 0 12px 58px}
+.UIStoryAttachment{margin-top:6px;overflow:hidden;padding-right:10px;margin-bottom:5px}
+.UIStoryAttachment_Tab{position:absolute}
+.UIStoryAttachment_Icon{background:#fff;padding-bottom:2px}
+.UIStoryAttachment_BlockQuote{border-left:2px solid #ccc;padding:0 0 3px 8px}
+.ie6 .UIStoryAttachment_BlockQuote{zoom:1}
+.UIStoryAttachment_BlockQuote .UIStoryAttachment_Title{margin-top:0}
+.UIStoryAttachment_Media{float:left;overflow:hidden;padding-right:10px}
+.UIStoryAttachment_MediaWide{float:none}
+.UIStoryAttachment_MediaShortened .UIStoryAttachment_MediaWide{float:left}
+.text_exposed .UIStoryAttachment_MediaShortened .UIStoryAttachment_MediaWide{float:none;display:block;*zoom:1}
+.UIStoryAttachment_Info{display:table;*zoom:1}
+.text_exposed .UIStoryAttachment_MediaShortened .UIStoryAttachment_Info,
+.UIStory_Open .UIStoryAttachment_Info{display:block;clear:left}
+.UIStoryAttachment_Title{font-weight:bold;padding-top:3px}
+.UIStoryAttachment_TitleAbove{margin:0}
+.UIStoryAttachment_TitleAboveMedia{margin:0 0 5px}
+.UIStoryAttachment_TitleBelow{clear:left;padding:5px 0 0}
+.ie6 .UIStoryAttachment_TitleBelow{padding-top:2px}
+.UIStoryAttachment_Title_Byline{color:#777;font-weight:normal}
+.UIStoryAttachment_Title_Byline a{font-weight:bold}
+.UIStoryAttachment_Caption{color:#808080;padding-top:3px}
+.UIStoryAttachment_Copy{color:#808080;padding:3px 0}
+.UIStoryAttachment_Copy .CopyTitle{font-weight:bold}
+.UIStoryAttachment_Copy table{border-collapse:collpase}
+.UIStoryAttachment_Copy table td{padding:2px 2px 0 0}
+.UIStoryAttachment_Table{padding-top:2px}
+.UIStoryAttachment_Tags{color:#808080;padding:0 0 3px}
+.UIStoryAttachment_Label{color:#999;padding-right:4px}
+.UIStoryAttachment_Tags .UIStoryAttachment_Label{background:transparent url(/rsrc.php/zA4IG/hash/cny9pytx.png) no-repeat left -395px;padding-left:16px}
+.UIStoryAttachment_InlineInfo .UIStoryAttachment_Copy,
+.UIStoryAttachment_InlineInfo .UIStoryAttachment_Title{display:inline}
+.typeahead_search{border-width:0;border-style:none}
+.typeahead_search .typeahead_list_with_shadow{background:transparent url(/rsrc.php/z9UWL/hash/2w7bwhgb.png) no-repeat bottom left;border:0 none;padding:0 4px 4px 4px}
+.ie6 .typeahead_search .typeahead_list_with_shadow{background-image:none;border:0 none;margin:0 4px 4px;padding:0}
+.typeahead_search .typeahead_list_fbx{background:transparent}
+.typeahead_search .suggestions_bottom_border{border-bottom:solid 1px #3b5998}
+.typeahead_search .no_border_list{border:none}
+.typeahead_search .typeahead_suggestions{border-left:1px solid #95a5c6;border-right:1px solid #95a5c6;height:auto;width:auto}
+.typeahead_search .typeahead_suggestion{filter:alpha(opacity=100);opacity:1.0}
+.typeahead_search .icon{background-position:-16px 0;background-repeat:no-repeat;display:inline;float:left;margin-left:10px;margin-right:5px;height:16px;width:16px}
+.typeahead_search .typeahead_selected .icon{background-position:left top}
+.typeahead_search .app{overflow:hidden}
+.typeahead_search .app span{float:left;padding:1px 0 0 1px;width:142px}
+.typeahead_search .typeahead_suggestion{overflow:hidden;position:relative}
+.typeahead_search img{border:1px solid white;position:absolute;margin-top:2px;line-height:1px;height:25px;width:25px;top:1px}
+.ie6 .typeahead_search img{left:0}
+.typeahead_search .typeahead_selected img{border:1px solid #6e84b3}
+.typeahead_search .with_pic{padding-left:32px;min-height:27px}
+.typeahead_search .with_pic{_height:27px}
+.typeahead_search .typeahead_suggestion .with_pic small{padding:1px 0}
+.typeahead_search .typeahead_suggestion .with_pic small,
+.typeahead_search .typeahead_suggestion .with_pic span{display:block;padding-left:0}
+.typeahead_mentions{border:1px solid #bbb;border-top:none}
+.typeahead_mentions .typeahead_message{background:#f2f2f2;border:none;border-top:1px solid #ddd;padding:5px}
+.typeahead_mentions .typeahead_suggestions{border:none}
+.uiMorePager{padding:10px 15px}
+.uiMorePager .arrow{display:inline;position:absolute}
+.uiMorePager .loader{display:none;margin-top:1px;position:absolute}
+.async_saving .loader,
+.uiMorePager .async_saving .loader{display:inline}
+
+#bootloader_css_dk581sbcahskkcck_pkg_css { height: 42px; }

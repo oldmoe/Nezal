@@ -146,20 +146,29 @@
 			</div>
 			<canvas id="droppingGround" width="672" height="480"></canvas>
 			<div id="static" style="display:none"></div>
-			<div id="result" style="display:none">
-			  <div class="statusDiv" id="winDiv">
-			    <img src="" id="winImage"/>
-  			  <img id="youWin" src="" class="statusImage">
-			  </div>
-			  <div class="statusDiv" id="loseDiv">
-			    <img src="" id="loseImage" />
-  			  <img id="youLose" src="" class="statusImage">
-			  </div>
-				<pre id="stats"></pre>
-				<div id="playAgain">
+			<div id="result" style="display:none;">
+				<img src="images/intro/paper.png"/>
+				<img id="resultCoin" src="images/background/coin.png"/>
+				<div id="coins">
+					<div id="coinsWord">Coins</div>
+					<div id="coinsValue">0</div>
 				</div>
-				<div id="exit">
-				</div>				
+				<div id="score">
+					<div id="scoreWord">Score</div>
+					<div id="scoreValue">123123</div>
+				</div>
+				<div id="win">
+					<img id="resultBlank" src="images/intro/blank.png"/>
+					<img id="winClouds" src="images/background/win_clouds.png"/>
+					<img id="winCenter" src="images/background/win_center.png"/>
+				</div>
+				<div id="lose" >
+					<img id="loseClouds" src="images/background/lose_clouds.png"/>
+					<img id="loseCenter" src="images/background/lose_center.png"/>
+				</div>
+				<div id="resultText"></div>
+				<div id="playAgain">Play again</div>
+				<div id="exit">Continue campaign</div>
 			</div>
 			<div id="splashScreen" style="display:none">
 				<div class="loading_bar_bg">
