@@ -1,34 +1,37 @@
 window.Text = {
+	gameName: 'Defender of Arabia',
+	tower : 'tower',
+	superWeapon : 'Super Weapon',
     intro : {
         levelSelection : {
-            msg : 'defend a new country every week',
-            title : 'Weekly challenge',
-            extraMaps : 'Extra Maps',
+            msg : 'Defend a new country every week',
+            title : 'Weekly Challenge',
+            extraMaps : 'Previous Campaigns',
             tutorial : 'Tutorial',
-            easy : 'easy',
-            medium : 'medium',
-            hard : 'hard',
-            score : 'x score'
+            easy : 'Easy',
+            medium : 'Medium',
+            hard : 'Hard',
+            score : 'x Score'
         },
         campaign : {
             back : 'back'          
         },
         mission : {
-            msg : 'Intelligence suggests the enemy is sending these forces :',
-            accept : 'accept',
+            msg : 'Intelligence information:',
+            accept : 'Accept',
             or : 'or',
-            goBack : 'go back to campaign'
+            goBack : 'back to campaign'
         },
         marketPlace : {
             add : 'add',
             money : 'money',
-            addWeapon : 'unlock and upgrade your super weapons',
-            addTower : 'unlock and upgrade your towers',
+            addWeapon : 'Unlock and upgrade your super weapons',
+            addTower : 'Unlock and upgrade your towers',
             back : 'back',
-            ready : 'ready',
-            unlock : 'unlock',
-            upgrade : 'upgrade',
-            requiredRank : 'required rank'
+            ready : 'Ready',
+            unlock : 'Unlock',
+            upgrade : 'Upgrade',
+            requiredRank : 'Required Rank'
         },
         creeps : {
             BlackTank : {
@@ -67,23 +70,23 @@ window.Text = {
         superWeapons : {
             Splash : { 
                 name : 'Splash',
-                desc : 'Sends up to 10 rockets that targets biggest 10 enemy units, each deal 2000 damage. Can be used 10 times.' 
+                desc : 'Sends up to 10 rockets that targets biggest 10 enemy units.' 
             },
             Weak : {  
                 name : 'Weak',
-                desc : 'Reduces all units\' health point by 10% per second. Lasts for 10 seconds. Can be used 10 times.' 
+                desc : 'Reduces all units\' health point over time.' 
             },
             Hyper : { 
                 name : 'Hyper',
-                desc : 'Doubles the attack speed of all your towers. Lasts for 30 seconds. Can be used 10 times.' 
+                desc : 'Increase the attack speed of all your towers.' 
             },
             Nuke : {  
                 name : 'Nuke',
-                desc : 'Call the nuke bomb to destroy all units on the map. Can be used 5 times.' 
+                desc : 'Calls the nuke bomb to destroy all units on the map.' 
             },
             Heal : {  
                 name : 'Heal',
-                desc : 'Restores all your towers\' full health point . Can be used 10 times.' 
+                desc : 'Restores a percentage of all your towers\' health point.' 
             }
         },
         towers : {
@@ -113,36 +116,89 @@ window.Text = {
            }
         },
         upgrades : {
-            power : 'power',
-            rate : 'rate',
-            range : 'range',
-            maxHp : 'shield',
+            power : 'Power',
+            rate : 'Rate',
+            range : 'Range',
+            maxHp : 'Shield',
             Heal : [ 
-                    'upgrade 1', 
-                    'upgrade 2',
-                    'upgrade 3'
+                    'Restores 20% of total health point. Cool down 120 sec.',
+					'Restores 40% of total health point. Cool down 120 sec.',
+					'Restores 60% of total health point. Cool down 120 sec.',
+                    'Restores 80% of total health point. Cool down 120 sec.',
+                    'Restores 100% of total health point. Cool down 120 sec.'
                 ],
             Weak : [
-                    'upgrade 1', 
-                    'upgrade 2',
-                    'upgrade 3'
+                    'Reduce 10% of current hp per second over 10 seconds. Cool down 90 sec.',
+					'Reduce 10% of current hp per second over 15 seconds. Cool down 90 sec.',
+					'Reduce 15% of current hp per second over 15 seconds. Cool down 90 sec.',
+                    'Reduce 15% of current hp per second over 20 seconds. Cool down 90 sec.',
+                    'Reduce 20% of current hp per second over 15 seconds. Cool down 90 sec.'
                 ],
             Nuke : [
-                    'upgrade 1', 
-                    'upgrade 2',
-                    'upgrade 3'
+                    'Cool down 300 sec.', 
+                    'Cool down 240 sec.',
+                    'Cool down 180 sec.'
                 ],
             Splash : [
-                    'upgrade 1', 
-                    'upgrade 2',
-                    'upgrade 3'
+                    'Cause damage equal to 20% of unit\'s health point.',
+					'Cause damage equal to 40% of unit\'s health point.',
+					'Cause damage equal to 60% of unit\'s health point.',
+                    'Cause damage equal to 80% of unit\'s health point.',
+                    'Cause damage equal to 100% of unit\'s health point.'
                 ],
             Hyper : [
-                    'upgrade 1', 
-                    'upgrade 2',
-                    'upgrade 3'
+                    'Increase attack speed by 50% over 10 sec.',
+					'Increase attack speed by 50% over 20 sec.',
+					'Increase attack speed by 100% over 20 sec.',
+                    'Increase attack speed by 100% over 25 sec.',
+                    'Increase attack speed by 100% over 30 sec.'
                 ]
         }
+    },
+    facebook : {
+        completeMession: [
+              'courageously defended',
+              'at',
+              'heroic efforts defended the city and scored',
+              '. Can you top such efforts?'
+        ],
+        completeCampaign: [
+              'with a legendary defense saved',
+              'at',
+              'showed bullet proof defense on the way to save', 
+              '& earned',
+              'points through out the journey. Can you out play that?'
+        ],
+        rankPromotion: [
+              'has been promoted to become',
+              'at',
+              'In recognition of such outstanding defending skills at',
+              'has been promoted to become',
+              '. Salute is in due to such brave efforts.'
+        ],
+        unlockItem: [
+              'unlocked the',
+              'at',
+              'unlocked the',
+              'to gain massive tactical advantage on the battle.'
+        ],
+        campaignRanking: [
+            'finished',
+            'among friends &',
+            'among all players while defending',
+            'at',
+            'has earned the',
+            'rank among friends and',
+            'rank among all players in the journey to save',
+            '. Dare to challenge these efforts?'
+        ],
+        upgradeItem: [
+            'upgraded the',
+            'at',
+            'upgraded the',
+            'to gain massive tactical advantage on the battle.'
+        ],
+        userPrompt : 'Tell your friends about your accomplishment'
     },
 	game : {
 		tutorial : {
@@ -161,8 +217,7 @@ window.Text = {
 				msg8: 'click on a tower to see it\'s abilities, sell or upgrade it',
 				msg9: 'Finally, there is an important hint you need to know before finishing this training. Air units do not respect any path, they simply fly over anything.',
 				msg10:'That is it soldier, you are now ready to defend your city against any hostile activities. I am sure you will do your best to complete all missions assigned to you.'
-		+'</br>Do not forget to like us and bookmark  us to get a nice reward. Good Luck.',
-				msg11: 'After each wave enemies get stronger, so prepare yourself well'
+		+'</br>Do not forget to like us and bookmark  us to get a nice reward. Good Luck.'
 		},
 		upperBar : {
 			lives: 'Lives',
@@ -182,27 +237,95 @@ window.Text = {
 		},
 		ranks:{
 			PVT :{ name:'Private' ,abbr : 'PVT'},
-			LCpl:{ name:'Private' ,abbr : 'PVT'},
-			Cpl:{ name:'Private' ,abbr : 'PVT'},
-			Sgt:{ name:'Private' ,abbr : 'PVT'},
-			SSgt:{ name:'Private' ,abbr : 'PVT'},
-			GySgt:{ name:'Private' ,abbr : 'PVT'},
-			MSgt:{ name:'Private' ,abbr : 'PVT'},
-			'1stSgt':{ name:'Private' ,abbr : 'PVT'},
-			MGySgt:{ name:'Private' ,abbr : 'PVT'},
-			SgtMaj:{ name:'Private' ,abbr : 'PVT'},
-			'2ndLt':{ name:'Private' ,abbr : 'PVT'},
-			'1stLt':{ name:'Private' ,abbr : 'PVT'},
-			Capt:{ name:'Private' ,abbr : 'PVT'},
-			Maj:{ name:'Private' ,abbr : 'PVT'},
-			LtCol:{ name:'Private' ,abbr : 'PVT'},
-			Col:{ name:'Private' ,abbr : 'PVT'},
-			BGen:{ name:'Private' ,abbr : 'PVT'},
-			MajGen:{ name:'Private' ,abbr : 'PVT'},
-			LtGen:{ name:'Private' ,abbr : 'PVT'},
-			Gen:{ name:'Private' ,abbr : 'PVT'}
-		}
-	}
+			LCpl:{ name:'Lance Corporal' ,abbr : 'LCpl'},
+			Cpl:{ name:'Corporal' ,abbr : 'Cpl'},
+			Sgt:{ name:'Sergant' ,abbr : 'Sgt'},
+			SSgt:{ name:'Staff Sergant' ,abbr : 'SSgt'},
+			GySgt:{ name:'Gunnery Sergant' ,abbr : 'GySgt'},
+			MSgt:{ name:'Master Sergant' ,abbr : 'MSgt'},
+			'1stSgt':{ name:'First Sergant' ,abbr : '1stSgt'},
+			MGySgt:{ name:'Master Gunnery Sergant' ,abbr : 'MGySgt'},
+			SgtMaj:{ name:'Sergant Major' ,abbr : 'SgtMaj'},
+			'2ndLt':{ name:'Second Lieutenant' ,abbr : '2ndLt'},
+			'1stLt':{ name:'First Lieutenant' ,abbr : '1stLt'},
+			Capt:{ name:'Captain' ,abbr : 'Capt'},
+			Maj:{ name:'Major' ,abbr : 'Maj'},
+			LtCol:{ name:'Lieutenant Colonel' ,abbr : 'LtCol'},
+			Col:{ name:'Colonel' ,abbr : 'Col'},
+			BGen:{ name:'Brigadier General' ,abbr : 'BGen'},
+			MajGen:{ name:'Major General' ,abbr : 'MajGen'},
+			LtGen:{ name:'Lieutenant General' ,abbr : 'LtGen'},
+			Gen:{ name:'General' ,abbr : 'Gen'}
+		},
+		result : {
+			winMission1: 'You have successsfully defended',
+			winMission2: 'and protected',
+			loseMission: 'has fallen to the enemy forces </br> don\'t give up, you can try again.',
+			coins: 'Coins',
+			score: 'Score',
+			enemies : 'Enemies',
+			destroyed : 'Destroyed:',
+			escaped : 'Escaped:',
+			towers : 'towers',
+			built : 'Built'
+		},
+		towerDestroyedCreep :{
+      msg1 : 'Who\'s next?!',
+      msg2 : 'BRING IT ON!!!',
+      msg3 : 'Die, Die, Die',
+      msg4 : 'Did it hurt?',
+      msg5 : 'Take that!'
+    },
+    creepDestroyedTower: {
+      msg1 : 'Oops, was that a tower?',
+      msg2 : 'WE WILL CRUSH\'em!!!',
+      msg3 : 'Die, Die, Die',
+      msg4 : 'Hurray!',
+      msg5 : 'Take that!',
+      msg6 : 'FATALITY!'
+    },
+    superWeaponsHeal: {
+      msg1 : 'Just in time!',
+      msg2 : 'Thanks Man!',
+      msg3 : 'Feels Better!'
+    },
+    superWeaponsWeak: {
+      msg1 : 'I AM BLIND!',
+      msg2 : 'Cough, cough!',
+      msg3 : 'I feel s l e e p y!'
+    },
+    superWeaponsSplash: {
+      msg1 : 'What is this?!',
+      msg2 : 'Run!!',
+      msg3 : 'Rockets, Run!'
+    },
+    superWeaponsNuke: {
+      msg1 : 'Wha..',
+      msg2 : 'Ru...',
+      msg3 : 'I see a ...',
+      msg4 : 'Lights ...',
+      msg5 : '#3aaaa..'
+    },
+    superWeaponsHyper: {
+      msg1 : 'COFFEE!!',
+      msg2 : 'GOOD STUFF!!',
+      msg3 : 'I AM HYPER!!',
+      msg4 : 'WEEHAAAA!'
+    },
+    creepEntered:{
+      msg1 : 'Born to destroy!!',
+      msg2 : 'ATTAAACK!!',
+      msg3 : 'RUN THEM OVER!!',
+      msg4 : 'CRUSH THEM!'
+    },
+    creepEnteredTower: {
+      msg1 : 'BRING IT ON!!',
+      msg2 : 'HOLD!!',
+      msg3 : 'STAND YOUR GROUND!!',
+      msg4 : 'That\'s all you got?'
+    }
+  
+  }
 	
 }
 

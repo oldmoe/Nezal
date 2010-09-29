@@ -144,6 +144,51 @@ window.Text = {
                 ]
         }
     },
+    facebook : {
+        completeMession: [
+              'courageously defended',
+              'at',
+              'heroic efforts defended the city and scored',
+              '. Can you top such efforts?'
+        ],
+        completeCampaign: [
+              'with a legendary defense saved',
+              'at',
+              'showed bullet proof defense on the way to save', 
+              '& earned',
+              'points through out the journey. Can you out play that?'
+        ],
+        rankPromotion: [
+              'has been promoted to become',
+              'at',
+              'In recognition of such outstanding defending skills at',
+              'has been promoted to become',
+              '. Salute is in due to such brave efforts.'
+        ],
+        unlockItem: [
+              'unlocked the',
+              'at',
+              'unlocked the',
+              'to gain massive tactical advantage on the battle.'
+        ],
+        campaignRanking: [
+            'finished',
+            'among friends &',
+            'among all players while defending',
+            'at',
+            'has earned the',
+            'rank among friends and',
+            'rank among all players in the journey to save',
+            '. Dare to challenge these efforts?'
+        ],
+        upgradeItem: [
+            'upgraded the',
+            'at',
+            'upgraded the',
+            'to gain massive tactical advantage on the battle.'
+        ],
+        userPrompt : 'Tell your friends about your accomplishment'
+    },
 	game : {
 		tutorial : {
 				msg1: 'Welcome to the academy of defense'
@@ -201,6 +246,73 @@ window.Text = {
 			MajGen:{ name:'Private' ,abbr : 'PVT'},
 			LtGen:{ name:'Private' ,abbr : 'PVT'},
 			Gen:{ name:'Private' ,abbr : 'PVT'}
-		}
+		},
+		result : {
+			winMission1: 'You have successsfully defended',
+			winMission2: 'and protected',
+			loseMission: 'has fallen to the enemy forces </br> don\'t give up, you can try again.',
+			coins: 'Coins',
+			score: 'Score',
+			enemies : 'Enemies',
+			destroyed : 'Destroyed:',
+			escaped : 'Escaped:',
+			towers : 'towers',
+			built : 'Built'
+		},
+		towerDestroyedCreep :{
+      msg1 : 'Who\'s next?!',
+      msg2 : 'BRING IT ON!!!',
+      msg3 : 'Die, Die, Die',
+      msg4 : 'Did it hurt?',
+      msg5 : 'Take that!'
+    },
+    creepDestroyedTower: {
+      msg1 : 'Oops, was that a tower?',
+      msg2 : 'WE WILL CRUSH\'em!!!',
+      msg3 : 'Die, Die, Die',
+      msg4 : 'Hurray!',
+      msg5 : 'Take that!',
+      msg6 : 'FATALITY!'
+    },
+    superWeaponsHeal: {
+      msg1 : 'Just in time!',
+      msg2 : 'Thanks Man!',
+      msg3 : 'Feels Better!'
+    },
+    superWeaponsWeak: {
+      msg1 : 'I AM BLIND!',
+      msg2 : 'Cough, cough!',
+      msg3 : 'I feel s l e e p y!'
+    },
+    superWeaponsSplash: {
+      msg1 : 'What is this?!',
+      msg2 : 'Run!!',
+      msg3 : 'Rockets, Run!'
+    },
+    superWeaponsNuke: {
+      msg1 : 'Wha..',
+      msg2 : 'Ru...',
+      msg3 : 'I see a ...',
+      msg4 : 'Lights ...',
+      msg5 : '#3aaaa..'
+    },
+    superWeaponsHyper: {
+      msg1 : 'COFFEE!!',
+      msg2 : 'GOOD STUFF!!',
+      msg3 : 'I AM HYPER!!',
+      msg4 : 'WEEHAAAA!'
+    },
+    creepEntered:{
+      msg1 : 'Born to destroy!!',
+      msg2 : 'ATTAAACK!!',
+      msg3 : 'RUN THEM OVER!!',
+      msg4 : 'CRUSH THEM!'
+    },
+    creepEnteredTower: {
+      msg1 : 'BRING IT ON!!',
+      msg2 : 'HOLD!!',
+      msg3 : 'STAND YOUR GROUND!!',
+      msg4 : 'That\'s all you got?'
+    }
 	}
 }
