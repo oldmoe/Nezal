@@ -1,6 +1,6 @@
 var Humvee = Class.create(Creep, {
   name : 'Humvee',
-	hp : 300 , maxHp : 300,speed : 4,
+	hp : 275 , maxHp : 275,speed : 4,
   price : 2,
 	cannonDisplacement : [-1, 1],
 	images : {},
@@ -32,7 +32,7 @@ var TankI = Class.create(Creep, {
   images : {},
   name : 'TankI',
    price : 1,
-	hp : 250,maxHp : 250,
+	hp : 225,maxHp : 225,
   initImages : function(){
 	this.images = {
 		base : Loader.images.game['tank_1_body.png'],
@@ -47,7 +47,7 @@ var TankII = Class.create(Creep, {
   name : 'TankII',
   price : 2,
   speed : 8,
-  hp : 250,maxHp : 250,
+  hp : 225,maxHp : 225,
   initImages : function(){
 	this.images = {
 		base : Loader.images.game['tank_2_body.png'],
@@ -76,7 +76,8 @@ var RedTank = Class.create(Creep,{
   images : {},
   name : 'RedTank',
   price : 3,
-  hp : 150, maxHp : 150,
+  power : 2,
+  hp : 125, maxHp : 125,
   initImages : function(){
 	this.images = {
 		base : Loader.images.game['red_tank_body.png'],

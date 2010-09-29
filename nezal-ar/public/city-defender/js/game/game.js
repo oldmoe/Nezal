@@ -41,6 +41,8 @@ var Game = Class.create({
 		var inputNames = ["Belcher","Reaper","Exploder","Patriot"]
 		var replacement = ["Turret","DoubleTurret","Exploder","Patriot"]
 		var upgradeValues = ["maxHp","power","range","rate","price"]
+		//Config.towerUpgrades = { "Reaper" : 3 , "Belcher" : 3 }
+		//Config.weaponUpgrades = { "Weak" : 1 , "Hyper" : 2,"Heal" :2 } 
 		for(var i=0;i<inputNames.length;i++){
 			var ind = Config.towers.indexOf(inputNames[i])
 			if(ind!=-1){
@@ -50,7 +52,7 @@ var Game = Class.create({
 				upgradeValues.each(function(upgradeValue){
 						eval(replacement[i]).prototype[upgradeValue] = values[0][upgradeValue]
 				})
-				eval(replacement[i]).prototype.maxRank = Intro.gameData.towers[inputNames[i]].upgradeLevel-1
+				eval(replacement[i]).prototype.maxRank = Config.towerUpgrades[inputNames[i]]-1
 				for(var j=1;j<values.length;j++){
 					var value = values[j]
 					var upgrade = {}
@@ -62,12 +64,11 @@ var Game = Class.create({
 				eval(replacement[i]).prototype.upgrades = upgrades
 			}
 		}
-		
 		var weaponValues = Intro.gameData.weapons
 		Config.superWeapons.each(function(weapon){
-			eval(weapon).prototype.factor1 = weaponValues[weapon].upgrades[weaponValues[weapon].upgradeLevel-1].factor1
-			eval(weapon).prototype.factor2 = weaponValues[weapon].upgrades[weaponValues[weapon].upgradeLevel-1].factor2
-			eval(weapon).prototype.cooldown = weaponValues[weapon].upgrades[weaponValues[weapon].upgradeLevel-1].cooldown
+			eval(weapon).prototype.factor1 = weaponValues[weapon].upgrades[Config.weaponUpgrades[weapon]-1].factor1
+			eval(weapon).prototype.factor2 = weaponValues[weapon].upgrades[Config.weaponUpgrades[weapon]-1].factor2
+			eval(weapon).prototype.cooldown = weaponValues[weapon].upgrades[Config.weaponUpgrades[weapon]-1].cooldown
 		})
 		if(Config.superWeapons.indexOf('Splash')!=-1&&Config.superWeapons[0]!="Splash"){
 			var x = Config.superWeapons[0]
@@ -134,7 +135,12 @@ var Game = Class.create({
 			div.appendChild(Loader.images.background[div.className+'_button_off.png'])
 			}
 		})
-
+	var image1 = new Image()
+	var image2 = new Image()
+	image1.src = Loader.images.background['exit_restart_button.png'].src
+	image2.src = Loader.images.background['exit_restart_button.png'].src
+	$('gameReset').appendChild(image1)
+	$('gameExit').appendChild(image2)
     //Here we make the rank 
     $$('#rank img')[0].src = "images/intro/ranks/" + Config.rank + ".png";
     $$('.rankName')[0].innerHTML = Config.rank;
@@ -156,7 +162,10 @@ var Game = Class.create({
 		$$('#gameElements .start').first().observe('click', function(){self.scene.startAttack()})
 		$('playAgain').observe('click', game.reset)
 		$('exit').observe('click', game.exit)
-			
+		$('gameExit').observe('click', game.exit)	
+		$('gameReset').observe('click', game.reset)	
+		$$('.bookmark').first().observe('click', FBConnect.bookmark)	
+		$$('.sound').first().observe('click',Sounds.mute)
 	},
 	reset : function(){
 		game.scene.reactor.pause()
@@ -171,6 +180,12 @@ var Game = Class.create({
 			if(div.className != ''){div.stopObserving('click')}
 		})
 		game.start()	
+		$('playAgain').stopObserving('click')
+		$('exit').stopObserving('click')
+		$('gameExit').stopObserving('click')	
+		$('gameReset').stopObserving('click')	
+		$$('.bookmark').first().stopObserving('click')	
+		$$('.sound').first().stopObserving('click')
 	},
 	exit :function(){
           Intro.enablePauseScreen();

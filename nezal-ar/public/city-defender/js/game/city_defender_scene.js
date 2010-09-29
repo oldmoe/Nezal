@@ -477,7 +477,7 @@ var CityDefenderScene = Class.create(Scene, {
 	fps : 0,
 	score: 0,
 	moneyMultiplier: [1.2,1.1,1.05],
-	creepMultiplier: [1.07,1.1,1.15],
+	creepMultiplier: [1.05,1.1,1.15],
 	creepPowerMultiplier: [1.1,1.15,1.2],
 	wave : 0,
 	sound : true,

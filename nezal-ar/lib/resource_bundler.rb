@@ -183,7 +183,7 @@ def generate_resources
 end
 
 def wrap(path)
-	STDERR.print "Processing #{path} ... "
+	STDERR.print "Processing #{path.split('/').last} ... "
 	file = StringIO.new
 	file.puts("<html><body><div id='resources'>")
 	yield file
