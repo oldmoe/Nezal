@@ -1,321 +1,334 @@
-window.Text = {
-	  gameName: 'درغ العرب',
-	  towers : '',
-	  superWeapons : '',
+﻿window.Text = {
+	gameName: 'درع العرب',
+	towers : 'مدفع',
+	superWeapon : 'سلاح خاص',
     intro : {
         levelSelection : {
             msg : 'دافع عن بلد جديد كل أسبوع',
-            title : 'التحدي الاسبوعي',
-            extraMaps : 'بلاد أخري',
-            tutorial : 'البرنامج التعليمي',
+            title : 'التحدي الإسبوعي',
+            extraMaps : 'الحملات السابقة',
+            tutorial : 'الآكاديمية الحربية',
             easy : 'سهل',
             medium : 'متوسط',
             hard : 'صعب',
-            score : 'x نتيجة'
+            score : 'X النقاط'
         },
         campaign : {
             back : 'ارجع'          
         },
         mission : {
-            msg : 'الاستخبارات أطلعتنا علي التالي :',
-            accept : 'اقبل',
+            msg : 'معلومات استخباراتية:',
+            accept : 'موافق',
             or : 'أو',
-            goBack : 'ارجع الي البلد'
+            goBack : 'ارجع إلى البلد'
         },
         marketPlace : {
             add : 'اشتري',
             money : 'نقود',
-            addWeapon : 'اشتري اسلحة أو طور سلاحك',
-            addTower : 'أستري تور أو طوره',
+            addWeapon : 'اشتري أو طور اسلحتك الخاصة',
+            addTower : 'اشتري أو طور مدافعاك',
             back : 'ارجع',
             ready : 'مستعد',
             unlock : 'اشتري',
             upgrade : 'طور',
-            requiredRank : 'الرانك المطلوب'
+            requiredRank : 'الرتبة المطلوبة'
         },
         creeps : {
             BlackTank : {
-                name : 'A30 Avenger',
-                desc : 'The A30 is a heavy armored tank, it is not easy to get destroyed as it survives in difficult situations.' 
+                name : 'أ 30 افينجر',
+                desc : 'دبابة ثقيلة ليس من السهل تدميرها وتستطيع الهرب في المواقف الصعبة' 
             },
             RedTank : {
-                name : 'M18 HellCat',
-                desc : 'The M18 is a gun motor carriage tank, it has high fire power that can cause mass destruction.' 
+                name : 'م 18 هيلكات',
+                desc : 'تتميز هذه الدبابة بقوة تدميرها العالية ويمكن ان تسبب دمارا هائلا' 
             },
             Tank : {
-                name : 'M48 Patton',
-                desc : 'The M48 is a medium gun tank, it is mainly used as a reinforcement unit. It is a primary tank during war.' 
+                name : 'م 48 باتون',
+                desc : 'دبابة أساسية في الحروب وتستخدم في الاساس في عمليات الدعم' 
             },
             TankI : {
-                name : 'M42 Duster',
-                desc : 'The M42 is a self-propelled medium tank, it acts as a basic main battle tank.' 
+                name : 'م 42 دستر',
+                desc : 'دبابة متوسطة القوة تستخدم للدعم أو المناورات' 
             },
             TankII : {
-                name : 'M41 Walker',
-                desc : 'The M41 is a light tank, it has an extremely high speed that makes it move faster than any other tank.' 
+                name : 'م 41 والكر',
+                desc : 'دبابة خفيفة تتميز بسرعتها العالية حيث تستطيع التحرك أسرع من أي دبابة أخرى' 
             },
             Humvee : {
-                name : 'Humveee',
-                desc : 'Humvee is a high mobility multipurpose wheeled vehicle, it is among the most capable all-terrain vehicles in the world.'
+                name : 'همفي',
+                desc : 'مركبة متعددة الوظائف لها القدرة على الحركة في جميع أنواع الأراضي'
             },
             RedPlane :{
-                name : 'F-22 Raptor',
-                desc : 'The F-22 is an air dominance fighter, It is widely regarded as the most advanced fighter in the world.'
+                name : 'ف 22 رابتر',
+                desc : 'تعتبر هذه الطائرة من أقوى الطائرات الموجودة في العالم حيث تمتاز بسرعتها العالية وقوة تدميرها'
             },
             Plane : {
-                name : 'F-15 Eagle',
-                desc : 'The F-15 is an extremely maneuverable, tactical fighter designed to gain and maintain air superiority in combats.'
+                name : 'ف 15 إيجل',
+                desc : 'تمتاز هذه الطائرة بقدرتها على المناورة للسيطرة على المعارك الجوية'
             }
         },
         superWeapons : {
             Splash : { 
-                name : 'Splash',
-                desc : 'Sends up to 10 rockets that targets biggest 10 enemy units, each deal 2000 damage. Can be used 10 times.' 
+                name : 'غارة',
+                desc : 'يرسل 10 صواريخ بحد اقصى تستهدف أكبر 10 وحدات من العدو' 
             },
             Weak : {  
-                name : 'Weak',
-                desc : 'Reduces all units\' health point by 10% per second. Lasts for 10 seconds. Can be used 10 times.' 
+                name : 'إضعاف',
+                desc : 'يقلل من نقاط قوة العدو بمرور الوقت' 
             },
             Hyper : { 
-                name : 'Hyper',
-                desc : 'Doubles the attack speed of all your towers. Lasts for 30 seconds. Can be used 10 times.' 
+                name : 'سرعة',
+                desc : 'يزيد من سرعة اطلاق جميع مدافعك' 
             },
             Nuke : {  
-                name : 'Nuke',
-                desc : 'Call the nuke bomb to destroy all units on the map. Can be used 5 times.' 
+                name : 'نووي',
+                desc : 'يرسل قنبلة نووية تدمر جميع الأعداء على الخريطة' 
             },
             Heal : {  
-                name : 'Heal',
-                desc : 'Restores all your towers\' full health point . Can be used 10 times.' 
+                name : 'اصلاح',
+                desc : 'يصلح جميع مدافعك بزيادة نسبة مئوية من نقاط قوتهم' 
             }
         },
         towers : {
             Belcher : {  
-                name : 'Belcher', 
-                desc : 'Belcher, a fast machine gun tower, it has small range nozzle,' + 
-                       ' and can be used to counter both air and ground units.' +
-                       ' It uses bullets as its main ammunition and doesn\'t have any detection mechanism, but it will fire on sight.' 
+                name : 'بدر 1', 
+                desc : 'مدفع سريع الطلقات قصير المدى ويحتوي على ماسورة اطلاق واحدة' + 
+                       '  ويمكن ان يستخدم كمضاد للدبابات والطائرات.' +
+                       ' يستخدم الرصاص كذخيرة أساسية ولا يوجد به أي جهاز توجيه' 
             },
             Reaper : {
-                name : 'Reaper',
-                desc : 'Reaper, an upgraded version of the Belcher machine gun tower,' + 
-                         ' it has two nozzles which enable it to attack with a higher rate than the Belcher.' + 
-                         ' It is more effective than the Belcher as it secures more fire power against any hostile activities.' 
+                name : 'بدر 2',
+                desc : 'يعتبر بدر 2 نسخة مطورة من مدفع بدر 1' + 
+                         ' يحتوي على ماسورتين اطلاق مما يضاعف معدل اطلاقه للنيران عنه لدى بدر 1' + 
+                         ' ويعتبر هذا المدفع أكثر فاعلية من بدر 1 ضد وحدات العدو' 
             },
             Patriot : { 
-                name : 'Patriot',
-                desc : 'Patriot , a long-range, all-altitude, surface-to-air missile (SAM) launcher.' + 
-                       ' This air defense system is used to counter advanced aircraft.' +
-                       ' It uses an advanced aerial interceptor missiles and high performance radar systems to destroy its target.' 
+                name : 'صقر',
+                desc : 'مدفع صواريخ أرض جو بعيدة المدى' + 
+                       ' يستخدم كدفاع جوي ضد طائرات العدو' +
+                       ' ولديه نظام اعتراض صاروخي موجه عن طريق رادار عالي الدقة لتدمير اهدافه' 
             },
             Exploder : {
-                name : 'Exploder',
-                desc : 'Exploder, a tactical surface-to-surface missile (SSM) launcher,' +
-                       ' Its major use is as a general bombardment weapon to counter heavy land units.' +
-                       ' It has a radar system for detecting its targets to destroy them.' 
+                name : 'شهاب',
+                desc : 'مدفع صواريخ أرض أرض' +
+                       ' يستخدم كمضاد لجميع الدبابات الثقيلة.' +
+                       ' ولديه نظام رادار لإستهداف الوحدات الأرضية لتدميرها' 
            }
         },
         upgrades : {
-            power : 'power',
-            rate : 'rate',
-            range : 'range',
-            maxHp : 'shield',
+            power : 'تدمير',
+            rate : 'سرعة',
+            range : 'مدى',
+            maxHp : 'نقاط القوة',
             Heal : [ 
-                    'upgrade 1', 
-                    'upgrade 2',
-                    'upgrade 3'
+                    'يعيد 20% من نقاط القوة. يمكن اعادة استخدامه كل 90 ثانية',
+					'يعيد 40%من نقاط القوة. يمكن اعادة استخدامه كل 90 ثانية',
+					'يعيد 60%من نقاط القوة. يمكن اعادة استخدامه كل 90 ثانية',
+                    'يعيد 80%من نقاط القوة. يمكن اعادة استخدامه كل 90 ثانية',
+                    'يعيد 100%من نقاط القوة. يمكن اعادة استخدامه كل 90 ثانية'
                 ],
             Weak : [
-                    'upgrade 1', 
-                    'upgrade 2',
-                    'upgrade 3'
+                    'يقلل 10% من نقاط قوة العدو الحالية لمدة 10 ثواني. يمكن اعادة استخدامه كل 60 ثانية',
+					'يقلل 10% من نقاط قوة العدو الحالية لمدة 15 ثانية. يمكن اعادة استخدامه كل 60 ثانية',
+					'يقلل 15% من نقاط قوة العدو الحالية لمدة 15 ثانية. يمكن اعادة استخدامه كل 60 ثانية',
+                    'يقلل 15% من نقاط قوة العدو الحالية لمدة 20 ثانية. يمكن اعادة استخدامه كل 60 ثانية',
+                    'يقلل 20% من نقاط قوة العدو الحالية لمدة 20 ثانية. يمكن اعادة استخدامه كل 60 ثانية'
                 ],
             Nuke : [
-                    'upgrade 1', 
-                    'upgrade 2',
-                    'upgrade 3'
+                    'يمكن اعادة استخدامه كل 240 ثانية', 
+                    'يمكن اعادة استخدامه كل 180 ثانية',
+                    'يمكن اعادة استخدامه كل 120 ثانية'
                 ],
             Splash : [
-                    'upgrade 1', 
-                    'upgrade 2',
-                    'upgrade 3'
+                    'قوة التدمير تساوي 20% من نقاط قوة العدو. يمكن اعادة استخدامه كل 120 ثانية',
+					'قوة التدمير تساوي 40% من نقاط قوة العدو. يمكن اعادة استخدامه كل 120 ثانية',
+					'قوة التدمير تساوي 60% من نقاط قوة العدو. يمكن اعادة استخدامه كل 120 ثانية',
+                    'قوة التدمير تساوي 80% من نقاط قوة العدو. يمكن اعادة استخدامه كل 120 ثانية',
+                    'قوة التدمير تساوي 100% من نقاط قوة العدو. يمكن اعادة استخدامه كل 120 ثانية'
                 ],
             Hyper : [
-                    'upgrade 1', 
-                    'upgrade 2',
-                    'upgrade 3'
+                    'يزيد من سرعة اطلاق المدفع بنسبة 50% لمدة 10 ثواني. يمكن اعادة استخدامه كل 120 ثانية',
+					'يزيد من سرعة اطلاق المدفع بنسبة 50% لمدة 20 ثانية. يمكن اعادة استخدامه كل 120 ثانية',
+					'يزيد من سرعة اطلاق المدفع بنسبة 100% لمدة 20 ثانية. يمكن اعادة استخدامه كل 120 ثانية',
+                    'يزيد من سرعة اطلاق المدفع بنسبة 100% لمدة 25 ثانية. يمكن اعادة استخدامه كل 120 ثانية',
+                    'يزيد من سرعة اطلاق المدفع بنسبة 100% لمدة 30 ثانية. يمكن اعادة استخدامه كل 120 ثانية'
                 ]
         }
     },
     facebook : {
         completeMession: [
-              'دافع بشجاعة',
+              'دافع بشجاعة عن',
               'في',
-              'بجهوده البطولية دافع عن المدينة',
-              '. هل يمكنك التفوق عليه ؟'
+              'دافع ببطولة عن المدينة وحصل على',
+              'نقطة. هل يمكنك ان تحطم هذا الرقم؟'
         ],
         completeCampaign: [
-              'ودفاع اسطوري',
+              'بدفاع أسطوري أنقذ',
               'في',
-              'أظهر استماتة في الدفع', 
-              'وكسب',
-              'نقطة خلال الرحلةز هل يمكنك ؟.'
+              'اظهر دفاع بطولي لإنقاذ', 
+              'وحصل على',
+              'نقطة خلال رحلة الدفاع. هل يمكنك تحقيق هذا الانجاز؟'
         ],
         rankPromotion: [
-              'اترقي',
+              'تمت ترقيته ليصبح',
               'في',
-              'اعترافا بتكتيكاته الخارقة',
-              'تمت ترقيته الي',
-              '. فلتطلق المدفعية تحية عسكرية تقديرا.'
+              'تقديرا لمهاراته الدفاعية في',
+              'تمت ترقيته ليصبح',
+              '. نهنئه لشجاعته ومجهوداته العظيمة'
         ],
         unlockItem: [
-              'اشتري السلاح',
-              'فيي',
-              'اشتري السلاح',
-              'ليكتسب اي حاجة.'
+              'اشترى',
+              'في',
+              'اشترى',
+              'ليحصل على ميزة اضافية في المعارك'
         ],
         campaignRanking: [
-            'finished',
-            'among friends &',
-            'among all players while defending',
-            'at',
-            'has earned the',
-            'rank among friends and',
-            'rank among all players in the journey to save',
-            '. Dare to challenge these efforts?'
+            'أنهى في المركز',
+            'بين اصدقاؤه و',
+            'بين جميع اللاعبين خلال دفاعه عن',
+            'في',
+            'حصل على المركز',
+            'بين اصدقاؤه و المركز',
+            'بين جميع اللاعبين خلال رحلة دفاعه عن',
+            '. هل يمكنك ان تحطم هذا الرقم؟'
         ],
         upgradeItem: [
-            'upgraded the',
-            'at',
-            'upgraded the',
-            'to gain massive tactical advantage on the battle.'
+            'طور',
+            'في',
+            'طور',
+            'ليحصل على ميزة اضافية في المعارك'
         ],
-        userPrompt : 'أخبر باقي الجنود و أكسب 5 عملات.'
+        userPrompt : 'أخبر اصدقائك عن انجازك وأحصل على 5 نقود'
     },
 	game : {
 		tutorial : {
-				msg1: 'Welcome to the academy of defense'
-		+'</br>During this training period, you will get all the required information, and gain the basic skills that are needed'
-		+'to defend your city against any hostile activities',
-				msg2: '</br>Your goal is to kill all coming waves of enemy units and prevent them from passing to your city',
-				msg3: 'You can always see your current rank at the top right of the map </br>'
-		+'</br>The upper bar indicates your rank progress, the wave number, your score in this game'
-		+'and the remaining enemy units to escape that indicate your loss</br>',
-				msg4: 'Now it is time to place some towers. Click on the Belcher tower in the towers box.</br>'
-		+'Notice that the tower information will be visible in the information box.',
-				msg5: 'Click here to place the tower. ',
-				msg6: 'Place more towers as long as you have enough gold. then press start to begin the battle',
-				msg7: 'You can always use super weapons on demand. ',
-				msg8: 'click on a tower to see it\'s abilities, sell or upgrade it',
-				msg9: 'Finally, there is an important hint you need to know before finishing this training. Air units do not respect any path, they simply fly over anything.',
-				msg10:'That is it soldier, you are now ready to defend your city against any hostile activities. I am sure you will do your best to complete all missions assigned to you.'
-		+'</br>Do not forget to like us and bookmark  us to get a nice reward. Good Luck.',
-				msg11: 'After each wave enemies get stronger, so prepare yourself well'
+				msg1: 'أهلا بك في اكاديمية الدفاع'
+		+'</br>خلال فترة التدريب سوف  تحصل على المعلومات اللازمة و تكتسب المهارات الأساسية المطلوبة'
+		+' لتتمكن من الدفاع عن مدينتك ضد أي اعتداءات',
+				msg2: '</br>سيكون هدفك هو تدمير جميع وحدات العدو ومنعها من الوصول إلى المدينة',
+				msg3: 'يمكنك متابعة رتبتك الحالية من خلال العلامة الموجودة أعلى يمين الشاشة </br>'
+		+'</br>يمكنك أيضًا متابعة مجموع نقاطك وعدد الوحدات المتبقية ومدى تقدمك في الرتبة'
+		+' من خلال الشريط الموجود أعلى الشاشة</br>',
+				msg4: 'و الان حان الوقت لوضع بعض المدافع. اضغط على مدفع بدر الموجود في مربع المدافع</br>'
+		+'لاحظ ظهور المعلومات الخاصة بالمدفع بعد الضخط عليه في المربع الخاص بالمعلومات',
+				msg5: 'اضخط هنا لوضع المدفع في هذا المكان',
+				msg6: 'أضف المزيد من المدافع طالما تملك مايكفي من الذهب. و الان انت على استعداد لبدء المعركة اضخط ابدأ',
+				msg7: 'يمكنك ان تستعمل الاسلحة الخاصة في أي وقت تحتاجه',
+				msg8: 'اضغط على المدفع لترى قدراته وتطوره أو تبيعه',
+				msg9: 'واخيرا قبل انتهاء التدريب لا بد ان تعلم ان الطائرات لا تلتزم بأي مسار مرسوم بل تطير فوق كل شيء',
+				msg10:'الان انت على استعداد لتدافع عن مدينتك ضد أي اعتداءات و أنا واثق من انك سوف تبذل كل الجهد لتنفيذ المهام المكلف بها. حظا موفقا'
+		+'</br>لا تنسى ان تعجب بنا و تضيفنا إلى قائمة اشاراتك لتربح جائزة جيدة'
 		},
 		upperBar : {
-			lives: 'Lives',
-			score: 'Score',
-			wave : 'Wave'
+			lives: 'باقي',
+			score: 'النقاط',
+			wave : 'موجة'
 		},
 		gameState:{
-			start:'Start',
-			pause:'Pause',
-			resume:'Resume'
+			start:'ابدأ',
+			pause:'اوقف',
+			resume:'استأنف'
 		},
 		towerInfo:{
-			power:'Power',
-			shield:'Shield',
-			rate: 'Rate',
-			range:'Range'
+			power:'تدمير',
+			shield:'نقاط القوة',
+			rate: 'سرعة',
+			range:'مدى',
+			upgrade : "طور",
+			sell : "بيع"
 		},
 		ranks:{
-			PVT :{ name:'Private' ,abbr : 'PVT'},
-			LCpl:{ name:'Private' ,abbr : 'PVT'},
-			Cpl:{ name:'Private' ,abbr : 'PVT'},
-			Sgt:{ name:'Private' ,abbr : 'PVT'},
-			SSgt:{ name:'Private' ,abbr : 'PVT'},
-			GySgt:{ name:'Private' ,abbr : 'PVT'},
-			MSgt:{ name:'Private' ,abbr : 'PVT'},
-			'1stSgt':{ name:'Private' ,abbr : 'PVT'},
-			MGySgt:{ name:'Private' ,abbr : 'PVT'},
-			SgtMaj:{ name:'Private' ,abbr : 'PVT'},
-			'2ndLt':{ name:'Private' ,abbr : 'PVT'},
-			'1stLt':{ name:'Private' ,abbr : 'PVT'},
-			Capt:{ name:'Private' ,abbr : 'PVT'},
-			Maj:{ name:'Private' ,abbr : 'PVT'},
-			LtCol:{ name:'Private' ,abbr : 'PVT'},
-			Col:{ name:'Private' ,abbr : 'PVT'},
-			BGen:{ name:'Private' ,abbr : 'PVT'},
-			MajGen:{ name:'Private' ,abbr : 'PVT'},
-			LtGen:{ name:'Private' ,abbr : 'PVT'},
-			Gen:{ name:'Private' ,abbr : 'PVT'}
+			PVT :{ name:'جندي' ,abbr : 'جندي'},
+			LCpl:{ name:'عريف' ,abbr : 'عريف'},
+			Cpl:{ name:'عريف أول' ,abbr : 'عريف أول'},
+			Sgt:{ name:'صول' ,abbr : 'صول'},
+			SSgt:{ name:'أمين' ,abbr : 'أمين'},
+			GySgt:{ name:'رقيب' ,abbr : 'رقيب'},
+			MSgt:{ name:'رقيب أول' ,abbr : 'رقيب أول'},
+			'1stSgt':{ name:'مساعد' ,abbr : 'مساعد'},
+			MGySgt:{ name:'مساعد أول' ,abbr : 'مساعد أول'},
+			SgtMaj:{ name:'ملازم' ,abbr : 'ملازم'},
+			'2ndLt':{ name:'ملازم أول' ,abbr : 'ملازم أول'},
+			'1stLt':{ name:'نقيب' ,abbr : 'نقيب'},
+			Capt:{ name:'رائد' ,abbr : 'رائد'},
+			Maj:{ name:'مقدم' ,abbr : 'مقدم'},
+			LtCol:{ name:'عقيد' ,abbr : 'عقيد'},
+			Col:{ name:'عميد' ,abbr : 'عميد'},
+			BGen:{ name:' لواء' ,abbr : ' لواء'},
+			MajGen:{ name:'فريق' ,abbr : 'فريق'},
+			LtGen:{ name:'‎ فريق أول' ,abbr : '‎ فريق أول'},
+			Gen:{ name:'مشير' ,abbr : 'مشير'}
 		},
 		result : {
-			winMission1: 'You have successsfully defended',
-			winMission2: 'and protected',
-			loseMission: 'has fallen to the enemy forces </br> don\'t give up, you can try again.',
-			coins: 'Coins',
-			score: 'Score',
-			enemies : 'Enemies',
-			destroyed : 'Destroyed:',
-			escaped : 'Escaped:',
-			towers : 'towers',
-			built : 'Built'
+			winMission1: ' لقد نجحت في الدفاع عن',
+			winMission2: ' وانقذت',
+			loseMission: ' سقطت في ايدي الأعداء </br> لا تستسلم وحاول مرة أخرى',
+			coins: 'نقود',
+			score: 'النقاط',
+			enemies : 'اعداء',
+			destroyed : 'تدمر:',
+			escaped : 'هرب:',
+			towers : 'مدافع',
+			built : 'بني:'
 		},
 		towerDestroyedCreep :{
-      msg1 : 'Who\'s next?!',
-      msg2 : 'BRING IT ON!!!',
-      msg3 : 'Die, Die, Die',
-      msg4 : 'Did it hurt?',
-      msg5 : 'Take that!'
+      msg1 : 'من التالي؟؟!!',
+      msg2 : 'فلتبدأ الحرب!!!',
+      msg3 : 'موت, موت, موت',
+      msg4 : 'ألست قويا؟',
+      msg5 : 'خذ هذا!!'
     },
     creepDestroyedTower: {
-      msg1 : 'Oops, was that a tower?',
-      msg2 : 'WE WILL CRUSH\'em!!!',
-      msg3 : 'Die, Die, Die',
-      msg4 : 'Hurray!',
-      msg5 : 'Take that!',
-      msg6 : 'FATALITY!'
+      msg1 : 'هل كان هذا مدفع؟!!',
+      msg2 : 'سندمرهم!!!',
+      msg3 : 'موت, موت, موت',
+      msg4 : 'هييييييييه!!!',
+      msg5 : 'خذ هذا!!',
+      msg6 : 'كارثة!!!'
     },
     superWeaponsHeal: {
-      msg1 : 'Just in time!',
-      msg2 : 'Thanks Man!',
-      msg3 : 'Feels Better!'
+      msg1 : 'في الوقت المناسب!',
+      msg2 : 'شكرا!',
+      msg3 : 'اشعر بتحسن!!'
     },
     superWeaponsWeak: {
-      msg1 : 'I AM BLIND!',
-      msg2 : 'Cough, cough!',
-      msg3 : 'I feel s l e e p y!'
+      msg1 : 'لقد وقعنا في الفخ!!!',
+      msg2 : 'ااااااه ااااااه!!',
+      msg3 : 'لقد وقعنا في الفخ!!!'
     },
     superWeaponsSplash: {
-      msg1 : 'What is this?!',
-      msg2 : 'Run!!',
-      msg3 : 'Rockets, Run!'
+      msg1 : 'ماهذا؟!',
+      msg2 : 'اهرب!!',
+      msg3 : 'صواريخ اهرب!!!!'
     },
     superWeaponsNuke: {
-      msg1 : 'Wha..',
-      msg2 : 'Ru...',
-      msg3 : 'I see a ...',
-      msg4 : 'Lights ...',
-      msg5 : '#3aaaa..'
+      msg1 : 'ما.....',
+      msg2 : 'اهر.....',
+      msg3 : 'اااااااااه....',
+      msg4 : 'لاااااا.....',
+      msg5 : 'اااااااااه....'
     },
     superWeaponsHyper: {
-      msg1 : 'COFFEE!!',
-      msg2 : 'GOOD STUFF!!',
-      msg3 : 'I AM HYPER!!',
-      msg4 : 'WEEHAAAA!'
+      msg1 : 'منشطات!!!',
+      msg2 : 'رائع!!',
+      msg3 : 'أنا سرييييع!!!',
+      msg4 : 'منشطات!!!'
     },
     creepEntered:{
-      msg1 : 'Born to destroy!!',
-      msg2 : 'ATTAAACK!!',
-      msg3 : 'RUN THEM OVER!!',
-      msg4 : 'CRUSH THEM!'
+      msg1 : 'سأدمركم!!',
+      msg2 : 'اضرب!!!',
+      msg3 : 'دمرهم!!!',
+      msg4 : 'اسحقهم!!!'
     },
     creepEnteredTower: {
-      msg1 : 'BRING IT ON!!',
-      msg2 : 'HOLD!!',
-      msg3 : 'STAND YOUR GROUND!!',
-      msg4 : 'That\'s all you got?'
+      msg1 : 'فلتبدأ الحرب!!!',
+      msg2 : 'دافع!!',
+      msg3 : 'دافع عن ارضك!!!!',
+      msg4 : 'هذا كل مالديك؟!'
     }
-	}
+  
+  }
+	
 }
+
+

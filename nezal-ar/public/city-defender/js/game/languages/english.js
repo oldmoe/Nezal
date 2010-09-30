@@ -1,7 +1,7 @@
 window.Text = {
-	  gameName: 'Defender of Arabia',
-	  towers : 'tower',
-	  superWeapons : 'Super Weapon',
+	gameName: 'Defender of Arabia',
+	towers : 'tower',
+	superWeapon : 'Super Weapon',
     intro : {
         levelSelection : {
             msg : 'Defend a new country every week',
@@ -24,7 +24,7 @@ window.Text = {
         },
         marketPlace : {
             add : 'Add',
-            money : 'money',
+            money : 'coins',
             addWeapon : 'Unlock and upgrade your super weapons',
             addTower : 'Unlock and upgrade your towers',
             back : 'back',
@@ -202,17 +202,17 @@ window.Text = {
     },
 	game : {
 		tutorial : {
-				msg1: 'Welcome to the academy of defense'
+				msg1: 'Welcome to the academy of defense.'
 		+'</br>During this training period, you will get all the required information, and gain the basic skills that are needed'
-		+'to defend your city against any hostile activities',
+		+' to defend your city against any hostile activities',
 				msg2: '</br>Your goal is to kill all coming waves of enemy units and prevent them from passing to your city',
 				msg3: 'You can always see your current rank at the top right of the map </br>'
 		+'</br>The upper bar indicates your rank progress, the wave number, your score in this game'
-		+'and the remaining enemy units to escape that indicate your loss</br>',
+		+' and the remaining enemy units to escape that indicate your loss</br>',
 				msg4: 'Now it is time to place some towers. Click on the Belcher tower in the towers box.</br>'
 		+'Notice that the tower information will be visible in the information box.',
 				msg5: 'Click here to place the tower. ',
-				msg6: 'Place more towers as long as you have enough gold. then press start to begin the battle',
+				msg6: 'Place more towers as long as you have enough gold. Now you are ready to click the start button to start the battle.',
 				msg7: 'You can always use super weapons on demand. ',
 				msg8: 'Click on a tower to see its abilities, sell or upgrade it',
 				msg9: 'Finally, there is an important hint you need to know before finishing this training. Air units do not respect any path, they simply fly over anything.',
@@ -233,7 +233,9 @@ window.Text = {
 			power:'Power',
 			shield:'Shield',
 			rate: 'Rate',
-			range:'Range'
+			range:'Range',
+			upgrade : "upgrade",
+			sell : "sell"
 		},
 		ranks:{
 			PVT :{ name:'Private' ,abbr : 'PVT'},
@@ -258,16 +260,16 @@ window.Text = {
 			Gen:{ name:'General' ,abbr : 'Gen'}
 		},
 		result : {
-			winMission1: 'You have successsfully defended',
-			winMission2: 'and protected',
-			loseMission: 'has fallen to the enemy forces </br> don\'t give up, you can try again.',
+			winMission1: 'You have successsfully defended ',
+			winMission2: 'and protected ',
+			loseMission: ' has fallen to the enemy forces </br> don\'t give up, you can try again.',
 			coins: 'Coins',
 			score: 'Score',
 			enemies : 'Enemies',
 			destroyed : 'Destroyed:',
 			escaped : 'Escaped:',
 			towers : 'towers',
-			built : 'Built'
+			built : 'Built:'
 		},
 		towerDestroyedCreep :{
       msg1 : 'Who\'s next?!',

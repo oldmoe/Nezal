@@ -417,7 +417,7 @@
         <div class="rank">
           <img class="rankImg" src="${Loader.images.intro['ranks/'+Intro.userData.rank +'.png'].src}"/>
           <div class="rankText">
-            ${data.userData['rank']}
+            ${Text.game.ranks[data.userData['rank']]['abbr']}
           </div>
         </div>
         <img class="titleImg" src="${Loader.images.intro['title.png'].src}"/>
