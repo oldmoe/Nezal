@@ -130,7 +130,8 @@ def generateImageHTMLFile resourceDir,fileToWrite,id
 							image_id.sub!('/', '#').sub!('/', '#')							
 						end					
 					end
-					fileToWrite.puts "<img id='#{image_id}' src='data:image/png;base64,#{data}'/>"
+					fileToWrite.puts "['#{image_id}', 'data:image/png;base64,#{data}'],"
+					#fileToWrite.puts "<img id='#{image_id}' src='data:image/png;base64,#{data}'/>"
 				elsif File.directory? "#{resourceDir}/#{filename}"
 					generateImageHTMLFile "#{resourceDir}/#{filename}",fileToWrite,id
 				end
@@ -185,10 +186,9 @@ end
 def wrap(path)
 	STDERR.print "Processing #{path.split('/').last} ... "
 	file = StringIO.new
-	file.puts("<html><body><div id='resources'>")
+	file.puts("<html><body><div id='resources'><script>var resources = [")
 	yield file
-	file.puts("</div></body></html>")
-	file.puts("<script>parent.register(this)</script>")
+	file.puts("null];parent.register(window, resources)</script></div></body></html>")
 	file.rewind
 	data = file.read
 	original = File.read(path) rescue nil
