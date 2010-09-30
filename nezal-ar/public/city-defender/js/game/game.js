@@ -22,6 +22,7 @@ var Game = Class.create({
 			this.tutorial = new Tutorial(this.scene,this.tutorialCtx)
 		}
 		else{
+			console.log('here')
 			this.scene = new CityDefenderScene(this.config,50,this.ctx,this.topCtx);
 			this.registerHandlers();
 			if(Config.map)Map.bgGrid = Config.map
@@ -121,9 +122,6 @@ var Game = Class.create({
 		var img8 = Loader.images.background['character.png']
 		$$('#modalWindow #character').first().appendChild(img8)
 		var img9 = document.createElement("IMG");
-		//$('playAgain').appendChild(Loader.images.background['play_again.png'])
-		//$('exit').appendChild(Loader.images.background['exit.png'])
-		
 		$$('#gameElements .superWeapons div').each(function(div){ 
 			if(div.className != ''){
 			div.appendChild(Loader.images.background[div.className+'_button.png'])
@@ -168,7 +166,7 @@ var Game = Class.create({
 		$$('.sound').first().observe('click',Sounds.mute)
 	},
 	reset : function(){
-		game.scene.reactor.pause()
+		game.scene.reactor.stop()
 		new Effect.Fade('static')
 		$$('#gameElements .start').first().stopObserving('click')
 		$$('#gameElements .start').first().removeClassName('resumed')
@@ -180,14 +178,9 @@ var Game = Class.create({
 			if(div.className != ''){div.stopObserving('click')}
 		})
 		game.start()	
-		$('playAgain').stopObserving('click')
-		$('exit').stopObserving('click')
-		$('gameExit').stopObserving('click')	
-		$('gameReset').stopObserving('click')	
-		$$('.bookmark').first().stopObserving('click')	
-		$$('.sound').first().stopObserving('click')
 	},
 	exit :function(){
+		  game.scene.reactor.stop()
           Intro.enablePauseScreen();
 		  $('gameStart').hide()
     	  $("gameStart").innerHTML = Intro.templates['game'];
@@ -200,7 +193,12 @@ var Game = Class.create({
 		$$('#gameElements .superWeapons div').each(function(div){ 
 			if(div.className != ''){div.stopObserving('click')}
 		})
-
+		$('playAgain').stopObserving('click')
+		$('exit').stopObserving('click')
+		$('gameExit').stopObserving('click')	
+		$('gameReset').stopObserving('click')	
+		$$('.bookmark').first().stopObserving('click')	
+		$$('.sound').first().stopObserving('click')
 	},
 	
 });
