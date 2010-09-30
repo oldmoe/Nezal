@@ -4,6 +4,7 @@ var BaseDefenderScene = Class.create(Scene, {
   width : 760,
   height : 550,
   groundLayer : null,
+  buildingsLayer : null,
   map : [],
   
   navigation : null,

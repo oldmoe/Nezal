@@ -1,3 +1,0 @@
-var Game = Class.create({
-  
-});

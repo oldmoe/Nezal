@@ -1,13 +1,40 @@
-require 'json'
+require "json"
+require_all "#{Dir.pwd}/app/models/games/base_defender/"
 
 class BaseDefender < Metadata
   
-  def self.load_game_profile(game_profile)
-    game_profile.metadata || "{}"
+  @@building_modules = {
+    "townhall" => BD::Townhall, 
+    "quarry" => BD::Quarry,
+    "mine" => BD::Mine 
+  }
+  
+  def self.load_game_profile(user_game_profile)
+    user_game_profile.metadata || "{}"
   end
   
-  def self.init_game_profile(game_profile)
-    game_profile.metadata= self.encode(
+  def self.edit_game_profile(user_game_profile, data)
+    data = self.decode(data)
+    if data['event'] == 'upgrade'
+      upgrade_building(user_game_profile, data)
+    end
+    user_game_profile.metadata || "{}"
+  end
+  
+  # {'building' : 'townhall', 'coords' : {'x':'', 'y':''} }
+  def upgrade_building(user_game_profile, data)
+    profile_data = self.decode(user_game_profile.metadata)
+    
+    building = data['building']
+    if(profile_data[building]['level'] == 0)
+      @@building_modules[building].build(profile_data)
+    else
+      @@building_modules[building].upgrade(prodile_data)
+    end
+  end
+  
+  def self.init_game_profile(user_game_profile)
+    user_game_profile.metadata= self.encode(
                   {'townhall' => {'level' => 0, 'coords' => {'x' => nil, 'y' => nil}},
                    'mines' => [],
                    'quarries' => [],
