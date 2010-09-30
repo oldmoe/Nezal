@@ -41,8 +41,6 @@ var Game = Class.create({
 		var inputNames = ["Belcher","Reaper","Exploder","Patriot"]
 		var replacement = ["Turret","DoubleTurret","RocketLauncher","Patriot"]
 		var upgradeValues = ["maxHp","power","range","rate","price"]
-		Config.towerUpgrades = { "Reaper" : 4 , "Belcher" : 4, "RocketLauncher" :4 ,"Patriot" :4 }
-		Config.weaponUpgrades = { "Weak" : 1 , "Hyper" : 2,"Heal" :2 ,"Splash":1,"Nuke":1} 
 		for(var i=0;i<inputNames.length;i++){
 			var ind = Config.towers.indexOf(inputNames[i])
 			if(ind!=-1){
@@ -134,10 +132,10 @@ var Game = Class.create({
 		})
 	var image1 = new Image()
 	var image2 = new Image()
-//	image1.src = Loader.images.background['exit_restart_button.png'].src
-//	image2.src = Loader.images.background['exit_restart_button.png'].src
-//	$('gameReset').appendChild(image1)
-//	$('gameExit').appendChild(image2)
+	image1.src = Loader.images.background['exit_restart_button.png'].src
+	image2.src = Loader.images.background['exit_restart_button.png'].src
+	$('gameReset').appendChild(image1)
+	$('gameExit').appendChild(image2)
     //Here we make the rank 
     $$('#rank img')[0].src = "images/intro/ranks/" + Config.rank + ".png";
     $$('.rankName')[0].innerHTML = Config.rank;

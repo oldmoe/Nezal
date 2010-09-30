@@ -5,6 +5,8 @@ var tutorialConfig = {
 	mapImage : "challenges/tunisia/sfax/images/path.png",
 	superWeapons : ["Splash", "Hyper", "Nuke","Weak","Heal"],
 	towers : ["Turret"],
+	weaponUpgrades : { "Splash" : 1, "Hyper" : 1, "Weak" : 1, "Heal" : 1, "Nuke" : 1 },
+	towerUpgrades : {"Turret" : 1},
 	upgrades : ["Bullets","Shields"],
 	waves : [[{category : "Tank",count : "5"}],[{category : "Tank",count : "10"}],[{category : "Tank",count : "10"}],[{category : "Plane",count : "3"}]],
 	rank : "PVT"

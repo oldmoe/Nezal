@@ -310,7 +310,7 @@ var CityDefenderScene = Class.create(Scene, {
 						game.scene.push(3000,function(){self.displayStats()})
 						game.scene.push(4000,function(){
 						                              FBDefender.publishMissionCompletion({name : GameConfigs.missionPath,
-                  		                                                         score : game.scene.score});
+                  		                                                         score : self.score});
                                            });
 					}
 				if(game.scene.rank!=Config.rank){
@@ -442,7 +442,7 @@ var CityDefenderScene = Class.create(Scene, {
 		      $$('.rankName')[0].innerHTML = Config.rank;
 		      callback();
 		  }
-		  Intro.sendScore(this.score, this.usedWeapons, win, onSuccess);
+		  Intro.sendScore(this.score, win, onSuccess);
 		}
 	},
 	sellSelectedTower: function(){

@@ -403,17 +403,17 @@ var Intro = {
                             var data = JSON.parse(t.responseText);
                             Intro.userData = data['user_data'];
                             Intro.userData["metadata"] = JSON.parse(data['user_data']['metadata']);
-                            var typeName = 'tower';
+                            var typeName = 'towers';
                             var itemConfig = TowerConfig;
                             if(type == "weapons")
                             {
                                 itemConfig = SuperWeaponConfig;
-                                typeName = "super weapon";
+                                typeName = "superWeapons";
                             }
                             FBDefender.publishUnlockedItem(
                                 { name : itemid,
                                   image : 'intro/'+ type + "/" + itemConfig[itemid]['image'],
-                                  mission : GameConfigs.missionPath, type : typeName})
+                                  mission : Intro.campaignData.missionsInfo[GameConfigs.missionPath]['name'], type : typeName})
                             Intro.select('marketPlace');
                             Intro.disablePauseScreen();
                   }
@@ -440,17 +440,17 @@ var Intro = {
                             var data = JSON.parse(t.responseText);
                             Intro.userData = data['user_data'];
                             Intro.userData["metadata"] = JSON.parse(data['user_data']['metadata']);
-                            var typeName = 'tower';
+                            var typeName = 'towers';
                             var itemConfig = TowerConfig;
                             if(type == "weapons")
                             {
                                 itemConfig = SuperWeaponConfig;
-                                typeName = "super weapon";
+                                typeName = "superWeapons";
                             }
-                            FBDefender.publishUnlockedItem(
+                            FBDefender.publishUpgradedItem(
                                 { name : itemid,
                                   image : 'intro/'+ type + "/" + itemConfig[itemid]['image'],
-                                  mission : GameConfigs.missionPath, type : typeName})
+                                  mission : Intro.campaignData.missionsInfo[GameConfigs.missionPath]['name'], type : typeName})
                             Intro.select('marketPlace');
                             Intro.disablePauseScreen();
                   }
@@ -458,17 +458,14 @@ var Intro = {
         }else{
         }
     },
-    
 
-    sendScore : function(score, weapons, win, callback){
+    sendScore : function(score, win, callback){
         if(!weapons)
             weapons = {}
         new Ajax.Request(  GameConfigs.campaign + "/metadata" ,
               {   method:'post', 
                   parameters: { 'data' : Object.toJSON({'mission' : GameConfigs.mission.order,
                                                         'win' : win,
-                                                        'items' : weapons,
-                                                        'event' : 'consumed_weapons',
                                                        'score' : score }) },
                   onSuccess : function(t, json){
                       var data = JSON.parse(t.responseText);
@@ -486,9 +483,16 @@ var Intro = {
               {   method:'post', 
                   onSuccess : function(t, json){
                       Intro.userData.newbie = false;
+                      data = JSON.parse(t.responseText);
+                      Intro.userData.exp = data['user_data']['exp'];
+                      var oldRank = Intro.userData.rank;
+                      Intro.userData.rank = data['user_data']['rank'];
                       Intro.show();
                       $("intro").show();   
                       $('gameStart').hide();
+                      console.log(oldRank, Intro.userData.rank)
+                      if(oldRank != Intro.userData.rank)
+                          FBDefender.publishRankPromotion({name : Intro.userData.rank, image : "fb-" + Intro.userData.rank + '.png'});
                   }
               });
     },
@@ -510,24 +514,26 @@ var Intro = {
                 mapFlipped[j][i] = map[i][j];
             }
         }
+        var towers = [], towerUpgrades={};
+        for( var j in Intro.userData.metadata.towers)
+        {
+            towers.push(j);
+            towerUpgrades[j] = Intro.userData.metadata.towers[j]['upgrades'];
+        }
+        var weapons = [], weaponUpgrades={};
+        for( var j in Intro.userData.metadata.weapons)
+        {
+            weapons.push(j);
+            weaponUpgrades[j] = Intro.userData.metadata.weapons[j]['upgrades'];
+        }
         GameConfigs.map = mapFlipped;
         GameConfigs.mapEntry = Intro.campaignData.user_data.metadata.missions[mission['order'] - 1  ]['mapEntry'];
         GameConfigs.mapImage = 'challenges/' + GameConfigs.campaign + '/images' + Intro.missionPath() + '/path.png';
         GameConfigs.waves = Intro.campaignData.user_data.metadata.missions[mission['order'] - 1  ]['waves'];
-        var towers = [];
-        for( j in Intro.userData.metadata.towers) 
-        {
-            towers.push(j);
-        }
-        var weapons = [];
-        for( j in Intro.userData.metadata.weapons) 
-        {
-            weapons.push(j);
-        }
         GameConfigs.towers = towers;
+        GameConfigs.towerUpgrades = towerUpgrades;
+        GameConfigs.weaponUpgrades = weaponUpgrades;
         GameConfigs.superWeapons = weapons;
-        GameConfigs.upgrades = [];
-        GameConfigs.weaponsPackage = [];
         GameConfigs.rank = Intro.userData.rank;
         GameConfigs.exp = Intro.userData.exp;
     },
@@ -575,6 +581,7 @@ var Intro = {
     },
 
 	  next: function(current){
+	      Intro.disabled = false;
         Intro.enablePauseScreen();
         Intro.nextPageIndex = Intro.currentPage + 1;
         var callback = function() {
@@ -588,6 +595,7 @@ var Intro = {
 	  },
 	  
 	  previous: function(current){
+	      Intro.disabled = false;
         Intro.enablePauseScreen();
         Intro.nextPageIndex = Intro.currentPage - 1;
         var callback = function() { Intro.pages[Intro.sequence[Intro.currentPage - 1]].onSelect(); } 
@@ -595,6 +603,7 @@ var Intro = {
 	  },
 	  
 	  select: function(page){
+	      Intro.disabled = false;
         Intro.enablePauseScreen();
         var index = Intro.pages[page].index
         Intro.nextPageIndex = index;

@@ -14,20 +14,7 @@ var FBConnect = {
 		    //document.domain = origDomain
 		    return data;
 	  },
-	  
-/*	    
-	  http://www.facebook.com/connect/uiserver.php?app_id=110196392331352&next=http://apps.facebook.com/local-city-defender/&display=page&locale=en_US&return_session=0&fbconnect=0&canvas=1&legacy_return=1&method=permissions.request
-	  
-	  
-	  http://www.facebook.com/connect/uiserver.php?app_id=113574023556&next=http%3A%2F%2Fapps.facebook.com%2Fdesktopdefender%2F&display=page&locale=en_US&return_session=0&fbconnect=0&canvas=1&legacy_return=1&method=permissions.request
-	  
-	  https://graph.facebook.com/oauth/authorize?client_id=110196392331352&redirect_uri=http://apps.facebook.com/local-city-defender
-	  
-	  http://www.facebook.com/r.php?referrer=112&app_id=110196392331352&app_data=http://apps.facebook.com/local-city-defender/
-	  
-	  http://www.facebook.com/login.php?v=1.0&app_id=110196392331352&next=http://apps.facebook.com/local-city-defender/&canvas=1
-*/
-	  
+
 	  retry : 10,
 	  
 	  callback : null,
@@ -50,9 +37,19 @@ var FBConnect = {
             cookie : true // enable cookies to allow the server to access the session
         });
         FBConnect.callback = successCallback;
+/*        Ajax.Responders.register({
+				          onCreate: function(req) {					
+                  req.url += (req.url.include('?') ? '&' : '?') +
+                   "uid=750199343&session_key=2._q4N5Z7fbRHClFWAwy_BIg__.3600.1285282800-750199343&" +   
+                   "secret=FUhyx41N5Ge_5iOhxDOQIw__&expires=1285282800&" + 
+                   "access_token=110196392331352%7C2._q4N5Z7fbRHClFWAwy_BIg__.3600.1285282800-750199343%7ChjkI8VTeynvd1LQkEPVETWTptBw&sig=bd702b0e55ab50534a15ede456c262c3"
+					        return true
+				          }
+			          });
+        FBConnect.getUser();*/
         FB.getLoginStatus(function(response) {
 			      if (response.session) {
-			          FBConnect.session = response.session
+			          FBConnect.session = response.session;
 			          Ajax.Responders.register({
 				          onCreate: function(req) {					
 					        req.url += (req.url.include('?') ? '&' : '?') + Object.toQueryString(FBConnect.session)
@@ -64,7 +61,7 @@ var FBConnect = {
                     document.getElementsByTagName('fb:fan')[0].writeAttribute('profile_id', FBConnect.appIds[FBConnect.url()]);
                     FB.XFBML.parse();
                 }
-                FBConnect.getUser();
+			          FBConnect.getUser();
             }else{
                 /* He is either not logged in or doesnt have the application added 
                  * First case he is not logged in : status = unknown
@@ -109,19 +106,49 @@ var FBConnect = {
         FB.ui({ method: 'bookmark.add' });
     },
     
-    publish : function(attachment, usePrompt, actionLink) {
+    publish : function(attachment, usePrompt, actionLink, successCallback) {
         var loc = "http://apps.facebook.com/" + FBConnect.url() + "/";
         FB.ui(
               {
-                method: 'stream.publish',
-                display: 'dialog',
-                message: '',
-                attachment: attachment,
-                action_links: actionLink,
-                user_message_prompt: usePrompt
+                  method: 'stream.publish',
+                  display: 'dialog',
+                  message: '',
+                  attachment: attachment,
+                  action_links: actionLink,
+                  user_message_prompt: usePrompt
+              }, 
+              function(response) {
+                  if (response && response.post_id) {
+                      successCallback();
+                  }
               }
+
         );
     },
+    
+    invite : function(userPrompt, inviteMsg){
+        var appUrl = "http://apps.facebook.com/" + FBConnect.url();
+        FB.api(
+            {  method: 'friends.getAppUsers' },
+            function(response) {
+                var ids = response;
+                FB.ui({
+                    method:'fbml.dialog',
+                    display: 'popup',
+                    width: '550px',
+                    fbml:'<fb:Fbml>   ' +
+                                '<fb:request-form action="' + window.location + '"' + ' method="GET" invite="true" targer="_self" ' +
+                                                  'type="Studio SA 2010" content="I am predicting the results of the world cup 2010 on Studio S.A. Predict with me ' +
+                                                  '<fb:req-choice url=\'' + appUrl + '\' ' +  'label=\'Play\' />" >' +
+                                '<div style="width : 80%; margin:auto;padding:auto;"> ' +
+                                  '<fb:multi-friend-selector  targer="_self" showborder="false"' + 'exclude_ids="' + ids + '"' + 'actiontext="Invite your friends to play Studio South Africa 2010 with you" cols="3" rows="2"/>' +         
+                                '<div/> ' +
+                                '</fb:request-form>' +
+                          '</fb:Fbml> '
+                  });
+            }
+        );
+    }
 
 }
 

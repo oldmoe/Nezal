@@ -1,7 +1,7 @@
 window.Text = {
-	gameName: 'Defender of Arabia',
-	tower : 'tower',
-	superWeapon : 'Super Weapon',
+	  gameName: 'Defender of Arabia',
+	  towers : 'tower',
+	  superWeapons : 'Super Weapon',
     intro : {
         levelSelection : {
             msg : 'Defend a new country every week',
@@ -23,7 +23,7 @@ window.Text = {
             goBack : 'back to campaign'
         },
         marketPlace : {
-            add : 'add',
+            add : 'Add',
             money : 'money',
             addWeapon : 'Unlock and upgrade your super weapons',
             addTower : 'Unlock and upgrade your towers',
@@ -121,37 +121,37 @@ window.Text = {
             range : 'Range',
             maxHp : 'Shield',
             Heal : [ 
-                    'Restores 20% of total health point. Cool down 120 sec.',
-					'Restores 40% of total health point. Cool down 120 sec.',
-					'Restores 60% of total health point. Cool down 120 sec.',
-                    'Restores 80% of total health point. Cool down 120 sec.',
-                    'Restores 100% of total health point. Cool down 120 sec.'
+                    'Restores 20% of total health point. Cool down 90 seconds.',
+					'Restores 40% of total health point. Cool down 90 seconds.',
+					'Restores 60% of total health point. Cool down 90 seconds.',
+                    'Restores 80% of total health point. Cool down 90 seconds.',
+                    'Restores 100% of total health point. Cool down 90 seconds.'
                 ],
             Weak : [
-                    'Reduce 10% of current hp per second over 10 seconds. Cool down 90 sec.',
-					'Reduce 10% of current hp per second over 15 seconds. Cool down 90 sec.',
-					'Reduce 15% of current hp per second over 15 seconds. Cool down 90 sec.',
-                    'Reduce 15% of current hp per second over 20 seconds. Cool down 90 sec.',
-                    'Reduce 20% of current hp per second over 15 seconds. Cool down 90 sec.'
+                    'Reduce 10% of current hp per second over 10 seconds. Cool down 60 seconds.',
+					'Reduce 10% of current hp per second over 15 seconds. Cool down 60 seconds.',
+					'Reduce 15% of current hp per second over 15 seconds. Cool down 60 seconds.',
+                    'Reduce 15% of current hp per second over 20 seconds. Cool down 60 seconds.',
+                    'Reduce 20% of current hp per second over 20 seconds. Cool down 60 seconds.'
                 ],
             Nuke : [
-                    'Cool down 300 sec.', 
-                    'Cool down 240 sec.',
-                    'Cool down 180 sec.'
+                    'Cool down 240 seconds.', 
+                    'Cool down 180 seconds.',
+                    'Cool down 120 seconds.'
                 ],
             Splash : [
-                    'Cause damage equal to 20% of unit\'s health point.',
-					'Cause damage equal to 40% of unit\'s health point.',
-					'Cause damage equal to 60% of unit\'s health point.',
-                    'Cause damage equal to 80% of unit\'s health point.',
-                    'Cause damage equal to 100% of unit\'s health point.'
+                    'Cause damage equal to 20% of unit\'s health point. Cool down 120 seconds.',
+					'Cause damage equal to 40% of unit\'s health point. Cool down 120 seconds.',
+					'Cause damage equal to 60% of unit\'s health point. Cool down 120 seconds.',
+                    'Cause damage equal to 80% of unit\'s health point. Cool down 120 seconds.',
+                    'Cause damage equal to 100% of unit\'s health point. Cool down 120 seconds.'
                 ],
             Hyper : [
-                    'Increase attack speed by 50% over 10 sec.',
-					'Increase attack speed by 50% over 20 sec.',
-					'Increase attack speed by 100% over 20 sec.',
-                    'Increase attack speed by 100% over 25 sec.',
-                    'Increase attack speed by 100% over 30 sec.'
+                    'Increase attack speed by 50% over 10 seconds. Cool down 120 seconds.',
+					'Increase attack speed by 50% over 20 seconds. Cool down 120 seconds.',
+					'Increase attack speed by 100% over 20 seconds. Cool down 120 seconds.',
+                    'Increase attack speed by 100% over 25 seconds. Cool down 120 seconds.',
+                    'Increase attack speed by 100% over 30 seconds. Cool down 120 seconds.'
                 ]
         }
     },
@@ -177,9 +177,9 @@ window.Text = {
               '. Salute is in due to such brave efforts.'
         ],
         unlockItem: [
-              'unlocked the',
+              'unlocked',
               'at',
-              'unlocked the',
+              'unlocked',
               'to gain massive tactical advantage on the battle.'
         ],
         campaignRanking: [
@@ -193,12 +193,12 @@ window.Text = {
             '. Dare to challenge these efforts?'
         ],
         upgradeItem: [
-            'upgraded the',
+            'upgraded',
             'at',
-            'upgraded the',
+            'upgraded',
             'to gain massive tactical advantage on the battle.'
         ],
-        userPrompt : 'Tell your friends about your accomplishment'
+        userPrompt : 'Tell your friends about your accomplishment and get 5 coins'
     },
 	game : {
 		tutorial : {
@@ -214,7 +214,7 @@ window.Text = {
 				msg5: 'Click here to place the tower. ',
 				msg6: 'Place more towers as long as you have enough gold. then press start to begin the battle',
 				msg7: 'You can always use super weapons on demand. ',
-				msg8: 'click on a tower to see it\'s abilities, sell or upgrade it',
+				msg8: 'Click on a tower to see its abilities, sell or upgrade it',
 				msg9: 'Finally, there is an important hint you need to know before finishing this training. Air units do not respect any path, they simply fly over anything.',
 				msg10:'That is it soldier, you are now ready to defend your city against any hostile activities. I am sure you will do your best to complete all missions assigned to you.'
 		+'</br>Do not forget to like us and bookmark  us to get a nice reward. Good Luck.'
@@ -328,3 +328,5 @@ window.Text = {
   }
 	
 }
+
+

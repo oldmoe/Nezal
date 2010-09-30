@@ -1,4 +1,7 @@
 window.Text = {
+	  gameName: 'درغ العرب',
+	  towers : '',
+	  superWeapons : '',
     intro : {
         levelSelection : {
             msg : 'دافع عن بلد جديد كل أسبوع',
@@ -146,30 +149,30 @@ window.Text = {
     },
     facebook : {
         completeMession: [
-              'courageously defended',
-              'at',
-              'heroic efforts defended the city and scored',
-              '. Can you top such efforts?'
+              'دافع بشجاعة',
+              'في',
+              'بجهوده البطولية دافع عن المدينة',
+              '. هل يمكنك التفوق عليه ؟'
         ],
         completeCampaign: [
-              'with a legendary defense saved',
-              'at',
-              'showed bullet proof defense on the way to save', 
-              '& earned',
-              'points through out the journey. Can you out play that?'
+              'ودفاع اسطوري',
+              'في',
+              'أظهر استماتة في الدفع', 
+              'وكسب',
+              'نقطة خلال الرحلةز هل يمكنك ؟.'
         ],
         rankPromotion: [
-              'has been promoted to become',
-              'at',
-              'In recognition of such outstanding defending skills at',
-              'has been promoted to become',
-              '. Salute is in due to such brave efforts.'
+              'اترقي',
+              'في',
+              'اعترافا بتكتيكاته الخارقة',
+              'تمت ترقيته الي',
+              '. فلتطلق المدفعية تحية عسكرية تقديرا.'
         ],
         unlockItem: [
-              'unlocked the',
-              'at',
-              'unlocked the',
-              'to gain massive tactical advantage on the battle.'
+              'اشتري السلاح',
+              'فيي',
+              'اشتري السلاح',
+              'ليكتسب اي حاجة.'
         ],
         campaignRanking: [
             'finished',
@@ -187,7 +190,7 @@ window.Text = {
             'upgraded the',
             'to gain massive tactical advantage on the battle.'
         ],
-        userPrompt : 'Tell your friends about your accomplishment'
+        userPrompt : 'أخبر باقي الجنود و أكسب 5 عملات.'
     },
 	game : {
 		tutorial : {

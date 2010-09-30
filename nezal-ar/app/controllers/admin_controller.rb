@@ -89,7 +89,7 @@
   get '/:game_name/metadata' do 
     @game = Game.find_by_name(params[:game_name])
     klass = self.get_helper_klass
-    klass.load(@game)
+    klass.load_game(@game)
   end
   
   # For city defender this should save missions, towers, creeps, super weapons, upgrades
