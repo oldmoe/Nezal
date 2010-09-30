@@ -218,7 +218,7 @@ var Creep = Class.create(Unit, {
 		this.scene.objects.push(moneyAnim)
 		this.scene.money += Math.floor(this.price);
 		this.scene.stats.creepsDestroyed++
-		this.scene.score += Math.floor(this.maxHp/100)*this.scene.config.level
+		this.scene.score += Math.round(this.maxHp/100)*this.scene.config.level
 	},
 	destroySprites : function(){
 		var cell = Map.grid[this.gridX][this.gridY];
