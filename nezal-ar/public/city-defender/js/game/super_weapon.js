@@ -106,7 +106,7 @@ var SuperWeapon = Class.create({
 		var div = $$('#gameElements .superWeapons div.'+this.type)[0]
 		div.stopObserving('click')
 		div.setOpacity(0);
-	},
+	}
 	
 })
 

@@ -22,7 +22,7 @@ var ChallengeSelector = {
         callback();
 			}
 		})
-  },
+  }
   
 }
 

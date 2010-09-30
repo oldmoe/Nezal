@@ -168,7 +168,6 @@
 					Everyone
 					</div>
 
-
 <script>
 		var friendsIds = null
 		FBConnect.init(function(){        
@@ -195,36 +194,39 @@
 			var image = new Image()
 			image.src = "http://graph.facebook.com/"+user.id+'/picture'
 		}
+
 		function fillUsersData(response,callback){
-					getUserName(response['top'], function(){
-							response['top'].each(function(friend){    
-									getUserPhoto(friend)
-							})
-        if(response['top'].length<3) response['close'] =[]
+			getUserName(response['top'], function(){
+				response['top'].each(function(friend){    
+						getUserPhoto(friend)
+				})
+			if(response['top'].length<3) response['close'] =[]
 				while(response['top'].length < 3){
 							response['top'].push(null) 			
 						}
 					});	
 					getUserName(response['close'], function(){
 						response['close'].each(function(friend){    
-								getUserPhoto(friend)
-							})
+						getUserPhoto(friend)
+					})
+					
 					while(response['close'].length < 3){
-					response['close'].push(null) 			
-				}
+						response['close'].push(null) 			
+					}
+					
 					if(callback)callback(response)
 				});
 		}
 		function getFriendsRanks(callback){
 			var url = '../tunisia/'+FB.getSession().uid+'/friendsranks'
-							new Ajax.Request( url ,
-					     { method:'post',
-												parameters: { 'friends' : Object.toJSON(friendsIds).gsub(/\[/,"").gsub(/\]/,"") }, 
-							          onSuccess : function(t){
-													var response = JSON.parse(t.responseText)
-													fillUsersData(response,callback)
-					            }
-					      });
+				new Ajax.Request( url ,{ 	
+					method:'post',
+					parameters: { 'friends' : Object.toJSON(friendsIds).gsub(/\[/,"").gsub(/\]/,"") }, 
+					onSuccess : function(t){
+						var response = JSON.parse(t.responseText)
+						fillUsersData(response,callback)
+					}
+				});
 		}
 		function getWorldRanks(callback){
 				var url = '../tunisia/'+FB.getSession().uid+'/worldranks'
@@ -247,7 +249,7 @@
                   'right-disabled' :'images/right-disabled.png'
                   };
 				function prepareRanks(friends){
-          if(!friends[0])return
+					if(!friends[0])return
 					var index = 0
 					var rank = 0
 					while(!friends[index]['rank']){
@@ -260,28 +262,29 @@
 					}
 				}
 				function activate(div){
-							$(div).addClassName('active')
-							$(div).removeClassName('inactive')
+					$(div).addClassName('active')
+					$(div).removeClassName('inactive')
 				}
 				function deactivate(div){
-							$(div).addClassName('inactive')
-							$(div).removeClassName('active')
+					$(div).addClassName('inactive')
+					$(div).removeClassName('active')
 				}
 				function renderResponse(response){
-								prepareRanks(response['close'])			
-								$('container').innerHTML = template.process( {friends: response['close'], top_scorers :response['top'],top_ranks : ['1<sup>st</sup>', '2<sup>nd</sup>', '3<sup>rd</sup>']})
-					      var friendsCarousel = new Carousel("friends-scroll", images);
+					prepareRanks(response['close'])			
+					$('container').innerHTML = template.process( {friends: response['close'], top_scorers :response['top'],top_ranks : ['1<sup>st</sup>', '2<sup>nd</sup>', '3<sup>rd</sup>']})
+					var friendsCarousel = new Carousel("friends-scroll", images);
 		           	friendsCarousel.displayCount = 3;
+					friendsCarousel.checkButtons();
 				}
 				function viewFriendsRanks(){
-							activate('friendsRanks')
-							deactivate('worldRanks')
-							getFriendsRanks(renderResponse)
+					activate('friendsRanks')
+					deactivate('worldRanks')
+					getFriendsRanks(renderResponse)
 				}
 				function viewWorldRanks(){
-							activate('worldRanks')
-							deactivate('friendsRanks')
-							getWorldRanks(renderResponse)
+					activate('worldRanks')
+					deactivate('friendsRanks')
+					getWorldRanks(renderResponse)
 				}
 		</script>
 	</body>

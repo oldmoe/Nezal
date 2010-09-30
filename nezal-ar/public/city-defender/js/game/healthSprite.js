@@ -20,6 +20,6 @@ var HealthSprite = Class.create(Sprite, {
 		ctx.fillStyle = 'green'
 		ctx.fillRect(-16, -22, 32 * this.hp / this.maxHp, 3 )
 		ctx.restore()
-	},
+	}
 	
 })

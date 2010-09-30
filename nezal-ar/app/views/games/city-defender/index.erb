@@ -23,7 +23,7 @@
 <iframe id ="iframe" src="#" style="display : none;"> 
 </iframe>
 <iframe id="pages" src="#" style="display : none;"> </iframe>
-<div id ="images" ></div>
+<div id ="images"></div>
 
 <div id="pause" style="display : none;">
   <div style="width:100%; height:100%; background:white;"> </div>
@@ -64,21 +64,19 @@
   </div>
   <iframe id ="scores" src="" style = "width :757;height:150;display:none;"></iframe>
 </div>
+<script>
+	function register(win, resources){
+		Loader.notify(win, resources)			
+	}
+</script>
 </body>
 <script>		
 
 	development = false
   FBConnect.init(function(){
                       Intro.initialize();
-							$('scores').src = 'scores/friends.html'
+							$('scores').src = '<%=bust_cache('scores/friends.html')%>'
                 });
-	function register(win){
-		var resources = win.document.getElementsByTagName('img')
-		if(resources.length == 0){
-			resources = win.document.getElementsByTagName('audio')
-		}
-		Loader.notify(win, resources)			
-	}
 	var loadedProgress = 0
 	function onFinishProgress()
 	{
@@ -102,11 +100,6 @@
 			'<%=bust_cache('html_resources/french.html')%>'
 		]
 		$('iframe').src = Loader.toLoad[0]
-/*		Loader.loadPage('progress', function(){
-		        $('loading.png').src = Loader.images.progress['loading.png'].src;
-		        $('loading-text.png').src = Loader.images.progress['loading-text.png'].src;
-		        window.setTimeout(function(){$('pause').show()}, 100);
-		    }*/
 	})
 </script>
 <link type="text/css" href="<%=bust_cache('css/game.css')%>" rel="stylesheet" />

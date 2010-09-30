@@ -13,21 +13,20 @@
     {/for}
 </textarea>
 
-
 <textarea id='levelSelectionTemplate' style="display:none">
     <div id="background">
-      <img id="paper" src="${Loader.images.intro['paper.png'].src}"/>
-      <img id="introText" src="${Loader.images.intro['text.png'].src}"/>
-      <img id="logo" src="${Loader.images.intro['logo.png'].src}"/>
-      <img id="title" src="${Loader.images.intro['title.png'].src}"/>
-      <img id="blank" src="${Loader.images.intro['blank.png'].src}"/>
-      <img id="titleAr" src="${Loader.images.intro['title-ar.png'].src}"/>
+      <img id="paper" src="${Loader.images.intro['paper.png'].getAttribute('data')}"/>
+      <img id="introText" src="${Loader.images.intro['text.png'].getAttribute('data')}"/>
+      <img id="logo" src="${Loader.images.intro['logo.png'].getAttribute('data')}"/>
+      <img id="title" src="${Loader.images.intro['title.png'].getAttribute('data')}"/>
+      <img id="blank" src="${Loader.images.intro['blank.png'].getAttribute('data')}"/>
+      <img id="titleAr" src="${Loader.images.intro['title-ar.png'].getAttribute('data')}"/>
     </div>
     {for lang in Language.langsNames}
       {if (lang[0]==Language.userLanguage)}
           <div  id="selectedLang" class="clickableButton clickSound" 
                 onclick="$$('#levelSelection #language')[0].toggle(); return false;">
-            <img id="selected" src="${Loader.images.intro['language.png'].src}"/>
+            <img id="selected" src="${Loader.images.intro['language.png'].getAttribute('data')}"/>
             <div style="position : relative; top : -33px" >
               ${lang[1]}  
             </div>
@@ -106,8 +105,8 @@
 
 <textarea id='campaignTemplate' style="display:none">
     <div id="background">
-      <img src="${Loader.images.intro['background.png'].src}"/>
-      <img id="paper" src="${Loader.images.intro['paper.png'].src}"/>
+      <img src="${Loader.images.intro['background.png'].getAttribute('data')}"/>
+      <img id="paper" src="${Loader.images.intro['paper.png'].getAttribute('data')}"/>
     </div>
     <div class="camp-info">
       <div class="camp-details">
@@ -118,7 +117,7 @@
           ${camp['description']}
         </div>
       </div>
-      <img id="camp-map" src="${Loader.challenges[GameConfigs.campaign]['images/flag.png'].src}"/>
+      <img id="camp-map" src="${Loader.challenges[GameConfigs.campaign]['images/flag.png'].getAttribute('data')}"/>
     </div>  
     <div id="missions">
       {for mission in Intro.campaignData.camp_data.metadata }
@@ -126,7 +125,7 @@
             <div class="mission clickableButton">
               <div path="${mission['path']}" onclick="Intro.selectMission(this); Intro.next();" class="clickSound" >
                 <img id="${mission['path']}" 
-                   src="${Loader.challenges[GameConfigs.campaign]['images/'+mission.path+'/mission_active.png'].src}"/>
+                   src="${Loader.challenges[GameConfigs.campaign]['images/'+mission.path+'/mission_active.png'].getAttribute('data')}"/>
               </div>
               <div class="missionName">
                 ${Intro.campaignData.missionsInfo[mission.path]['name']}
@@ -135,7 +134,7 @@
           {else}
             <div class="mission">
               <img id="${mission['path']}" 
-                 src="${Loader.challenges[GameConfigs.campaign]['images/'+mission.path+'/mission_inactive.png'].src}"/>
+                 src="${Loader.challenges[GameConfigs.campaign]['images/'+mission.path+'/mission_inactive.png'].getAttribute('data')}"/>
               <div class="missionName">
                 ${Intro.campaignData.missionsInfo[mission.path]['name']}
               </div>
@@ -146,9 +145,9 @@
     <div id="backContainer">
       <div id="back" onclick="Intro.previous();" class="clickableButton clickSound">
         {if ($('intro').getStyle('direction')=='rtl') }
-          <img src="${Loader.images.intro['ready.png'].src}"/>
+          <img src="${Loader.images.intro['ready.png'].getAttribute('data')}"/>
         {else}
-          <img src="${Loader.images.intro['back.png'].src}"/>
+          <img src="${Loader.images.intro['back.png'].getAttribute('data')}"/>
         {/if}
         <div class="text buttonText">
             ${Text.intro.campaign.back}
@@ -173,12 +172,12 @@
       <div id="close" onclick="Intro.hideFloatBg();" class="clickSound"> X </div>
     </div>
     <div id="background">
-      <img src="${Loader.images.intro['background.png'].src}"/>
-      <img id="paper" src="${Loader.images.intro['paper.png'].src}"/>
-      <img id="character" src="${Loader.images.intro['mission/character.png'].src}"/>
-      <img id="buble" src="${Loader.images.intro['mission/buble.png'].src}"/>
-      <img id="mapBackground" src="${Loader.images.intro['mission/map.png'].src}"/>
-      <img id="creepBackground" src="${Loader.images.intro['mission/creep.png'].src}"/>
+      <img src="${Loader.images.intro['background.png'].getAttribute('data')}"/>
+      <img id="paper" src="${Loader.images.intro['paper.png'].getAttribute('data')}"/>
+      <img id="character" src="${Loader.images.intro['mission/character.png'].getAttribute('data')}"/>
+      <img id="buble" src="${Loader.images.intro['mission/buble.png'].getAttribute('data')}"/>
+      <img id="mapBackground" src="${Loader.images.intro['mission/map.png'].getAttribute('data')}"/>
+      <img id="creepBackground" src="${Loader.images.intro['mission/creep.png'].getAttribute('data')}"/>
     </div>
     <div id="cityName">
         ${city.name}
@@ -187,17 +186,17 @@
         ${city.summary}
     </div>
     <div id="cityImage">
-        <img src="${Loader.challenges[GameConfigs.campaign]['images/flag.png'].src}">
+        <img src="${Loader.challenges[GameConfigs.campaign]['images/flag.png'].getAttribute('data')}">
     </div>
     <div id="fullDesc">
         ${city.description}    
     </div>
     <div id="cityMap">       
-      <img src="${Loader.challenges[GameConfigs.campaign]['images'+path+'/path.png'].src}"
+      <img src="${Loader.challenges[GameConfigs.campaign]['images'+path+'/path.png'].getAttribute('data')}"
            style="width:222px;">
     </div>
     <div id="accept" onclick="Intro.next();" class="clickableButton clickSound">
-      <img src="${Loader.images.intro['mission/accept.png'].src}" >
+      <img src="${Loader.images.intro['mission/accept.png'].getAttribute('data')}" >
       <div class="text buttonText">
         ${Text.intro.mission.accept}
       </div>
@@ -218,7 +217,7 @@
 		          <ul id='creeps-ul'>
     		        {for creep in city.creeps }
     		          <li creepid="${creep}" onclick="Intro.showFloatBg(this)" class="clickSound">
-    		            <img src="${Loader.images.intro['creeps/'+creepConfig[creep]['image']].src}" > </img>
+    		            <img src="${Loader.images.intro['creeps/'+creepConfig[creep]['image']].getAttribute('data')}" > </img>
     		          </li>
 		            {/for}
 		          </ul>
@@ -232,7 +231,7 @@
     <div id="creepBar">
     </div>
     <div id="stamp">
-      <img src="${Loader.images[GameConfigs.language]['confidintial-stamp.png'].src}"> </img>
+      <img src="${Loader.images[GameConfigs.language]['confidintial-stamp.png'].getAttribute('data')}"> </img>
     </div>
 </textarea>
 
@@ -336,7 +335,7 @@
           <div id="close" onclick="Intro.hideFloatBg();" class="clickSound">x</div>
         </div>
         <div class="skeleton">
-          <img src="${Loader.images.intro[data.type+'/'+data.configs[data.itemid]['skeleton']].src}" 
+          <img src="${Loader.images.intro[data.type+'/'+data.configs[data.itemid]['skeleton']].getAttribute('data')}" 
             {if (data.type=='weapons')}
               style="padding-top : 20px;"
             {/if}
@@ -344,7 +343,7 @@
         </div>
         <div class="cost">
             <div class="img">
-              <img src="${Loader.images.intro['market/coin.png'].src}"></img>
+              <img src="${Loader.images.intro['market/coin.png'].getAttribute('data')}"></img>
             </div>
             <div class="value">
               ${data.cost}  
@@ -357,7 +356,7 @@
         <span {if (data.rank[0] > data.exp)} "style="color:red;" {/if}>
           ${Text.intro.marketPlace.requiredRank} :
         </span>
-        <img src="${Loader.images.intro['ranks/'+data.rank[1]+'.png'].src}"> </img>
+        <img src="${Loader.images.intro['ranks/'+data.rank[1]+'.png'].getAttribute('data')}"> </img>
       </div>
       <div class="action">
           {if (!Intro.userData.metadata[data.type][data.itemid])}
@@ -396,7 +395,7 @@
             {/if}
           {/if}
           <div class="addMoney" >
-            <img src="${Loader.images.intro['market/money.png'].src}" > </img>
+            <img src="${Loader.images.intro['market/money.png'].getAttribute('data')}" > </img>
           </div>
       </div>
     </div>
@@ -409,18 +408,18 @@
     <div id="floatBg" style="display : none;">
     </div>
     <div id="background">
-      <img src="${Loader.images.intro['background.png'].src}"/>
-      <img id="paper" src="${Loader.images.intro['paper.png'].src}"/>
+      <img src="${Loader.images.intro['background.png'].getAttribute('data')}"/>
+      <img id="paper" src="${Loader.images.intro['paper.png'].getAttribute('data')}"/>
     </div>
     <div id="upperPart">
-        <img src="${Loader.images.intro['market/upper.png'].src}"/>
+        <img src="${Loader.images.intro['market/upper.png'].getAttribute('data')}"/>
         <div class="rank">
-          <img class="rankImg" src="${Loader.images.intro['ranks/'+Intro.userData.rank +'.png'].src}"/>
+          <img class="rankImg" src="${Loader.images.intro['ranks/'+Intro.userData.rank +'.png'].getAttribute('data')}"/>
           <div class="rankText">
             ${Text.game.ranks[data.userData['rank']]['abbr']}
           </div>
         </div>
-        <img class="titleImg" src="${Loader.images.intro['title.png'].src}"/>
+        <img class="titleImg" src="${Loader.images.intro['title.png'].getAttribute('data')}"/>
         <div class="coins">
           ${data.userData['coins']}
         </div>
@@ -434,7 +433,7 @@
         </div>
     </div>
     <div id="weapons">
-      <img  src="${Loader.images.intro['market/scroller.png'].src}"/>
+      <img  src="${Loader.images.intro['market/scroller.png'].getAttribute('data')}"/>
       <div class="msg">
           ${Text.intro.marketPlace.addWeapon}
       </div>
@@ -443,7 +442,7 @@
     </div>
     
     <div id="towers">
-      <img  src="${Loader.images.intro['market/scroller.png'].src}"/>
+      <img  src="${Loader.images.intro['market/scroller.png'].getAttribute('data')}"/>
       <div class="msg">
           ${Text.intro.marketPlace.addTower}
       </div>
@@ -454,9 +453,9 @@
     <div id="actionContainer">
       <div id="back" onclick="Intro.previous();" class="buttonText clickableButton clickSound" >
         {if ($('intro').getStyle('direction')=='rtl') }
-          <img src="${Loader.images.intro['ready.png'].src}"/>
+          <img src="${Loader.images.intro['ready.png'].getAttribute('data')}"/>
         {else}
-          <img src="${Loader.images.intro['back.png'].src}"/>
+          <img src="${Loader.images.intro['back.png'].getAttribute('data')}"/>
         {/if}
         <div style="width : 30px; height : 10px;display:inline-block;"></div>
         <div id="backText">
@@ -466,9 +465,9 @@
       <div style="width : 450px; height : 10px;display:inline-block;"></div>
       <div id="ready" onclick="Intro.next();" class="buttonText clickableButton clickSound">
         {if ($('intro').getStyle('direction')=='rtl') }
-          <img src="${Loader.images.intro['back.png'].src}"/>
+          <img src="${Loader.images.intro['back.png'].getAttribute('data')}"/>
         {else}
-          <img src="${Loader.images.intro['ready.png'].src}"/>
+          <img src="${Loader.images.intro['ready.png'].getAttribute('data')}"/>
         {/if}
         <div id="readyText">
           ${Text.intro.marketPlace.ready}
@@ -488,13 +487,13 @@
 	                onmouseover="this.select('#info')[0].show();"
 	                onmouseout="this.select('#info')[0].hide();">
 		            <img class="coinImage" 
-		                  src="${Loader.images.intro['market/coin.png'].src}"> </img>
+		                  src="${Loader.images.intro['market/coin.png'].getAttribute('data')}"> </img>
                 <div class="itemPrice">${Intro.gameData[type][item].cost}</div>
 		            <img class="itemImage" 
-		                  src="${Loader.images.intro[type+'/'+itemConfig[item]['image']].src}"> </img>
+		                  src="${Loader.images.intro[type+'/'+itemConfig[item]['image']].getAttribute('data')}"> </img>
                 {if (!Intro.userData.metadata[type][item])}
   		            <img class="lockImage"  
-		                    src="${Loader.images.intro['market/lock.png'].src}"> </img>
+		                    src="${Loader.images.intro['market/lock.png'].getAttribute('data')}"> </img>
                 {else}
                   <div class="upgradeLevel">
                       ${Intro.userData.metadata[type][item]['upgrades']}
@@ -508,7 +507,7 @@
                           ${Text.intro.marketPlace.unlock}
                       </div>
       		            <img class="unlockImage"  
-  		                      src="${Loader.images.intro['market/unlock.png'].src}"/>
+  		                      src="${Loader.images.intro['market/unlock.png'].getAttribute('data')}"/>
                     </div>
                   {else}
                     {if (Intro.userData.metadata[type][item]['upgrades'] < 
@@ -520,12 +519,12 @@
                           ${Text.intro.marketPlace.upgrade}
                         </div>
         		            <img class="unlockImage"  
-        		                  src="${Loader.images.intro['market/unlock.png'].src}"/>
+        		                  src="${Loader.images.intro['market/unlock.png'].getAttribute('data')}"/>
                       </div>
                     {/if}
                   {/if}
   		            <img class="infoImage clickSound"  
-		                  src="${Loader.images.intro['market/info.png'].src}"
+		                  src="${Loader.images.intro['market/info.png'].getAttribute('data')}"
 		                  type="${type}" itemid="${item}" onclick="Intro.showFloatBg(this)"/>
                 </div>
 		          </li>
@@ -533,7 +532,7 @@
 		        {for item in data.gameData.empty[type] }  
   		        <li>
 		            <img class="qBoxImage" 
-		                  src="${Loader.images.intro['market/q-box.png'].src}"> </img>
+		                  src="${Loader.images.intro['market/q-box.png'].getAttribute('data')}"> </img>
 		          </li>
 		        {/for}
           </ul>
