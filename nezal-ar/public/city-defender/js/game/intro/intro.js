@@ -105,8 +105,8 @@ var Intro = {
     },
     
     start: function(){  
-        if(Intro.doneLoading && Loader.doneLoading)
-            Intro.next();          
+		//alert('starting')
+		if(Intro.doneLoading && Loader.doneLoading) Intro.next();          
     },
     
     retrieveTemplates: function(){
@@ -115,12 +115,12 @@ var Intro = {
         loader.addResource(PathConfigs.gameTemplate);
         loader.addResource('metadata');
         loader.load(function(){
-              $('introTemplates').innerHTML = loader.resources.get(PathConfigs.introTemplate);
-              for(var template in Intro.templates){
+			  $('introTemplates').innerHTML = loader.resources.get(PathConfigs.introTemplate);
+			  for(var template in Intro.templates){
             		  Intro.templates[template][1] = TrimPath.parseDOMTemplate(Intro.templates[template][0]);
               }
-              $("gameStart").innerHTML = loader.resources.get(PathConfigs.gameTemplate);
-              Intro.templates['game'] = loader.resources.get(PathConfigs.gameTemplate);
+			  //$("gameStart").innerHTML = loader.resources.get(PathConfigs.gameTemplate);
+              $("gameStart").innerHTML = Intro.templates['game'] = loader.resources.get(PathConfigs.gameTemplate);
               var data = JSON.parse(loader.resources.get('metadata'));
               GameConfigs.campaign = data['game_data']['current_campaign'];
               Intro.gameData = JSON.parse(data['game_data']['metadata']);
@@ -136,7 +136,7 @@ var Intro = {
               Intro.userData["metadata"] = JSON.parse(data['user_data']['metadata']);
               Intro.ranks = data['ranks'];
               Loader.loadPage(GameConfigs.campaign, function(){
-      	          Intro.doneLoading = true;
+				  Intro.doneLoading = true;
                   Intro.start();
               });
           });
@@ -191,6 +191,9 @@ var Intro = {
                           $('intro').style['direction'] = 'rtl';
                         else
                           $('intro').style['direction'] = 'ltr';
+						//alert(Intro.templates.levelSelection[1].source)
+						//alert(Loader.images.intro['paper.png'].getAttribute('data'))
+						//alert(Intro.templates.levelSelection[1].process())						
                         $('levelSelection').innerHTML = Intro.templates.levelSelection[1].process(); 
                         if(Intro.userData.newbie)
                         {
@@ -490,7 +493,7 @@ var Intro = {
                       Intro.show();
                       $("intro").show();   
                       $('gameStart').hide();
-                      console.log(oldRank, Intro.userData.rank)
+                      //console.log(oldRank, Intro.userData.rank)
                       if(oldRank != Intro.userData.rank)
                           FBDefender.publishRankPromotion({name : Intro.userData.rank, image : "fb-" + Intro.userData.rank + '.png'});
                   }
@@ -571,12 +574,15 @@ var Intro = {
     },
     
     display : function(){
+		//alert('in display')
         Intro.disablePauseScreen();
+		//alert('pause is off')
         if(	Intro.currentPage >= 0) {
           $(Intro.sequence[Intro.currentPage]).hide();
         }
         Intro.currentPage = Intro.nextPageIndex;
         $(Intro.sequence[Intro.currentPage]).style['display'] = "block"; //show();    
+		//alert($(Intro.sequence[Intro.currentPage]).innerHTML)
         $("intro").style['cursor'] = 'auto';
     },
 
