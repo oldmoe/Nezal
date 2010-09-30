@@ -41,8 +41,8 @@ var Game = Class.create({
 		var inputNames = ["Belcher","Reaper","Exploder","Patriot"]
 		var replacement = ["Turret","DoubleTurret","RocketLauncher","Patriot"]
 		var upgradeValues = ["maxHp","power","range","rate","price"]
-		//Config.towerUpgrades = { "Reaper" : 3 , "Belcher" : 3 }
-		//Config.weaponUpgrades = { "Weak" : 1 , "Hyper" : 2,"Heal" :2 } 
+		Config.towerUpgrades = { "Reaper" : 4 , "Belcher" : 4, "RocketLauncher" :4 ,"Patriot" :4 }
+		Config.weaponUpgrades = { "Weak" : 1 , "Hyper" : 2,"Heal" :2 ,"Splash":1,"Nuke":1} 
 		for(var i=0;i<inputNames.length;i++){
 			var ind = Config.towers.indexOf(inputNames[i])
 			if(ind!=-1){
@@ -121,9 +121,6 @@ var Game = Class.create({
 		var img8 = Loader.images.background['character.png']
 		$$('#modalWindow #character').first().appendChild(img8)
 		var img9 = document.createElement("IMG");
-		//$('playAgain').appendChild(Loader.images.background['play_again.png'])
-		//$('exit').appendChild(Loader.images.background['exit.png'])
-		
 		$$('#gameElements .superWeapons div').each(function(div){ 
 			if(div.className != ''){
 			div.appendChild(Loader.images.background[div.className+'_button.png'])
@@ -168,7 +165,7 @@ var Game = Class.create({
 		$$('.sound').first().observe('click',Sounds.mute)
 	},
 	reset : function(){
-		game.scene.reactor.pause()
+		game.scene.reactor.stop()
 		new Effect.Fade('static')
 		$$('#gameElements .start').first().stopObserving('click')
 		$$('#gameElements .start').first().removeClassName('resumed')
@@ -180,14 +177,9 @@ var Game = Class.create({
 			if(div.className != ''){div.stopObserving('click')}
 		})
 		game.start()	
-		$('playAgain').stopObserving('click')
-		$('exit').stopObserving('click')
-		$('gameExit').stopObserving('click')	
-		$('gameReset').stopObserving('click')	
-		$$('.bookmark').first().stopObserving('click')	
-		$$('.sound').first().stopObserving('click')
 	},
 	exit :function(){
+		  game.scene.reactor.stop()
           Intro.enablePauseScreen();
 		  $('gameStart').hide()
     	  $("gameStart").innerHTML = Intro.templates['game'];
@@ -200,7 +192,12 @@ var Game = Class.create({
 		$$('#gameElements .superWeapons div').each(function(div){ 
 			if(div.className != ''){div.stopObserving('click')}
 		})
-
+		$('playAgain').stopObserving('click')
+		$('exit').stopObserving('click')
+		$('gameExit').stopObserving('click')	
+		$('gameReset').stopObserving('click')	
+		$$('.bookmark').first().stopObserving('click')	
+		$$('.sound').first().stopObserving('click')
 	},
 	
 });
