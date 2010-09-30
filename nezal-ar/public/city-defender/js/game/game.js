@@ -39,10 +39,10 @@ var Game = Class.create({
 	},
 	prepareConfig : function(){
 		var inputNames = ["Belcher","Reaper","Exploder","Patriot"]
-		var replacement = ["Turret","DoubleTurret","Exploder","Patriot"]
+		var replacement = ["Turret","DoubleTurret","RocketLauncher","Patriot"]
 		var upgradeValues = ["maxHp","power","range","rate","price"]
-		//Config.towerUpgrades = { "Reaper" : 3 , "Belcher" : 3 }
-		//Config.weaponUpgrades = { "Weak" : 1 , "Hyper" : 2,"Heal" :2 } 
+		Config.towerUpgrades = { "Reaper" : 4 , "Belcher" : 4, "RocketLauncher" :4 ,"Patriot" :4 }
+		Config.weaponUpgrades = { "Weak" : 1 , "Hyper" : 2,"Heal" :2 ,"Splash":1,"Nuke":1} 
 		for(var i=0;i<inputNames.length;i++){
 			var ind = Config.towers.indexOf(inputNames[i])
 			if(ind!=-1){
