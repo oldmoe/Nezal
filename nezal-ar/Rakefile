@@ -7,12 +7,12 @@ namespace :db do
   
     desc "Migrate the database through scripts in db/migrate."
     task :migrate => :environment do
-      ActiveRecord::Migrator.migrate('db/migrate', ENV["VERSION"] ? ENV["VERSION"].to_i : nil)
+      ActiveRecord::Migrator.migrate('db/migrate', ENV["version"] ? ENV["version"].to_i : nil)
     end
   
     desc "Rollback the database schema to the previous version"
     task :rollback => :environment do
-      previous_version = ENV["VERSION"] ? ENV["VERSION"].to_i : ActiveRecord::Migrator.current_version.to_i - 1
+      previous_version = ENV["version"] ? ENV["version"].to_i : ActiveRecord::Migrator.current_version.to_i - 1
       ActiveRecord::Migrator.migrate("db/migrate/", previous_version)
       puts "Schema rolled back to previous verison (#{previous_version})."
     end
