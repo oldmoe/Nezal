@@ -22,7 +22,6 @@ var Game = Class.create({
 			this.tutorial = new Tutorial(this.scene,this.tutorialCtx)
 		}
 		else{
-			console.log('here')
 			this.scene = new CityDefenderScene(this.config,50,this.ctx,this.topCtx);
 			this.registerHandlers();
 			if(Config.map)Map.bgGrid = Config.map
