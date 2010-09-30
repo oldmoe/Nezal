@@ -10,18 +10,24 @@
 		<textarea id='towerInfoTemplate' style="display:none">
 			{if tower!=null}
 			<div class="diagram ${tower.cssClass}">
+			{if tower.canHitGround}
+				<img id="tankSilhouette" src = ${Loader.images.game['tank_silhouette.png'].src} />
+			{/if}
+			{if tower.canHitFlying}
+				<img id="planeSilhouette" src=${Loader.images.game['plane_silhouette.png'].src} />
+			{/if}
 				{if tower.rank > 0}
-					<img src="${Loader.images.game['rank_'+tower.rank+'.png'].src}" />				
+					<div id="diagramRank"><img src="${Loader.images.game['rank_'+tower.rank+'.png'].src}" /></div>				
 				{/if}			
 			</div>
 			<div id="towerData">
 			<h4>{if tower.healthSprite !=null }
-					<div id = "sellTower" onclick = "game.scene.sellSelectedTower()">sell |$${Math.round(tower.price*0.75*tower.hp/tower.maxHp)}</div>
+					<div id = "sellTower" onmousedown = "game.scene.sellSelectedTower()">Sell<hr/>$${Math.round(tower.price*0.75*tower.hp/tower.maxHp)}</div>
 					{else}
 						$${tower.price}
 					{/if}
 			</h4>
-			<b>${tower.name}</b>
+				<h4>${tower.name}</h4>
 			<table>
 				<tr>
 					<td><div class='meter' id = 'powerMeter' style="width:${Math.round(65 * tower.power / 420)}px;backgroundColor:blue">Power</div>
@@ -40,12 +46,12 @@
 			</table>
 				{if tower.healthSprite !=null }
 					{if tower.rank < tower.maxRank}
-					<div id = "upgradeTower" onclick = "game.scene.upgradeSelectedTower()">upgrade to 
-						<img src="${Loader.images.game['rank_'+(tower.rank+1)+'.png'].src}" /></br>	 $${tower.upgrades[tower.rank].price}			
+					<div id = "upgradeTower" onmousedown = "game.scene.upgradeSelectedTower()">Upgrade<hr/>
+						$${tower.upgrades[tower.rank].price}&nbsp; &nbsp;<img src="${Loader.images.game['rank_'+(tower.rank+1)+'.png'].src}" /> 
 					</div>
 					{else}
-					<div id = "upgradeTower">
-						locked
+					<div id = "upgradeTower" >
+						<div id = "maxUpgrade" style = "paddingTop:10px">Max upgrade</div>
 					</div>
 					{/if}
 				{/if}
@@ -58,12 +64,13 @@
 		<div id="gameContainer">
 			<div id="modalWindow" style="display:none">
 				<div id="character">
+		
 				</div>
-				<div class="content" style="overflow:auto"> 
+				<div class="content"> 
 				
 				</div>
 				<div id = "ok">
-				<img src="images/tutorial/ok.png"></img>
+				<img src="images/background/ok.png"></img>
 				</div>
 			</div>
 			<div id= "pauseWindow" style="display:none">	</div>
@@ -83,6 +90,8 @@
 				<canvas id="gameForeground" width="736" height="480""></canvas>
 			</div>
 			<div id="gameElements" style="display:none">
+				<div id="gameReset"><div id="resetText">Reset</div></div>
+				<div id="gameExit"><div id="exitText">Exit</div></div>
 				<div id="money">
 					0
 				</div>
@@ -90,6 +99,7 @@
 					<div id="score" class="score">0</div>
 					<div id="lives" class="lives">0</div>
 					<div id="waves" class="waves">0/0</div>
+					<div id="statusBarEmpty"><div id="statusBarLeft"> </div><div id="statusBarFill"> </div><div id="statusBarRight"> </div></div>
 				</div>
 				<div class="fps"></div>
 				
@@ -109,11 +119,23 @@
 					</b>
 					</p>
 				</div>
-				<div class="controls">
-					<div class="sound on"></div>
-					<div class="like"></div>
-					<!--div class="subscribe"></div-->
-					<div class="bookmark"></div>
+				<div class="sound controls on"></div>
+				<div class="like controls"></div>
+				<div class="bookmark controls"></div>
+					<textarea id='wavesTemplate' style='display:none'>
+						<div id="incomingWaves">
+						{for wave in Config.waves}
+							<div class='wave'>
+								{for creep in wave}
+									<div class='creep' style ="width :${100/wave.length}%">
+										<center><img src='images/intro/creeps/${creep.category.underscore()}.png'></img></center>
+									</div>															  
+								{/for}
+							</div>										
+						{/for}		
+					</div>
+				</textarea>
+				<div id =container>	
 				</div>
 
 				<div class="superWeapons">
@@ -123,27 +145,33 @@
 			</div>
 			<canvas id="droppingGround" width="672" height="480"></canvas>
 			<div id="static" style="display:none"></div>
-			<div id="result" style="display:none">
-			  <div class="statusDiv" id="winDiv">
-			    <img src="" id="winImage"/>
-  			  <img id="youWin" src="" class="statusImage">
-			  </div>
-			  <div class="statusDiv" id="loseDiv">
-			    <img src="" id="loseImage" />
-  			  <img id="youLose" src="" class="statusImage">
-			  </div>
-				<pre id="stats"></pre>
-				<div id="playAgain">
+			<div id="result" style="display:none;">
+				<img src="images/intro/paper.png"/>
+				<img id="resultCoin" src="images/background/coin.png"/>
+				<div id="coins">
+					<div id="coinsWord">Coins</div>
+					<div id="coinsValue">0</div>
 				</div>
-				<div id="exit">
-				</div>				
+				<div id="score">
+					<div id="scoreWord">Score</div>
+					<div id="scoreValue">123123</div>
+				</div>
+				<div id="win">
+					<img id="resultBlank" src="images/intro/blank.png"/>
+					<img id="winClouds" src="images/background/win_clouds.png"/>
+					<img id="winCenter" src="images/background/win_center.png"/>
+				</div>
+				<div id="lose" >
+					<img id="loseClouds" src="images/background/lose_clouds.png"/>
+					<img id="loseCenter" src="images/background/lose_center.png"/>
+				</div>
+				<div id="resultText"></div>
+				<div id="playAgain">Play again</div>
+				<div id="exit">Continue campaign</div>
 			</div>
 			<div id="splashScreen" style="display:none">
-				<img src="images/background/interface.png"></img>
 				<div class="loading_bar_bg">
-					<img src="images/background/loading_bar_down.png"></img>
 					<div id="loading_bar">
-					<img src="images/background/loading_bar_up.png"></img>
 					</div>
 				</div>
 			</div>

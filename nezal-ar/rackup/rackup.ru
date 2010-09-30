@@ -12,7 +12,6 @@ require_all "#{Dir.pwd}/app/controllers/"
 Yajl::Encoder.enable_json_gem_compatability
 
 use	Rack::MethodOverride
-use Rack::ShowExceptions
 
 use Rack::Static, :urls => [ "/stylesheets", "/javascripts", "/favicon.ico", "/game_images", "/html/facebook"], :root => "public"  
 

@@ -1,23 +1,23 @@
 var SuperWeapon = Class.create({
+	factor1 : 0,
+	factor2 : 0,
+	cooldown :15,
 	initialize : function(scene, options){
 		this.scene = scene
 		var options = options || {}
 		this.active = true
 		this.count = options.count || 0
-		this.coolDown = options.coolDown || 15
 		this.progressInterval = options.progressInterval || 1
 		this.type = options.type
 	},
 	
 	fire : function(){
 		if(!this.active) return
-		this.deactivate()
-		this.count = this.count - 1
-		this.action()
-		this.render()
-		this.progress = 0
-		var self = this
-		this.scene.reactor.push(this.progressInterval, function(){self.progressTick()})
+		try{
+			this.action()
+			this.clockEffect($$('#gameElements .superWeapons .'+this.type+' img').first(),this.cooldown)
+		}catch(e){
+		}
 	},
 	
 	render : function(){
@@ -41,7 +41,46 @@ var SuperWeapon = Class.create({
 			this.scene.reactor.push(this.progressInterval, function(){self.progressTick()})
 		}		
 	},
-	
+	clockEffect: function(img, delay){
+		this.active = false
+		var image = img
+		var canvas = document.createElement('canvas')
+		canvas.width = image.width
+		canvas.height = image.height
+		canvas.style.position  = 'absolute'
+		canvas.style.left  = '0px'
+		var ctx = canvas.getContext('2d')
+		var angle = 0
+		image.parentNode.appendChild(canvas)
+		var self= this
+		function tick(){
+			ctx.clearRect(0,0,300,300)
+			ctx.drawImage(overlay, 0, 0)
+			ctx.save()
+			ctx.globalCompositeOperation = 'destination-out'
+			ctx.fillStyle = "white";
+			ctx.translate(image.width/2, image.height/2)
+			ctx.rotate(-(Math.PI/180)*90)
+			ctx.beginPath();
+			ctx.arc(0, 0, (image.width > image.height ? image.width : image.height) + 5 , 0, (Math.PI/180)*angle, false);
+			ctx.lineTo(0, 0)
+			ctx.closePath ();
+			ctx.fill()
+			ctx.restore()
+			angle = angle + (360 / (delay*1000/50))
+			if(angle > 360){
+				// we are done
+				self.active = true
+				image.parentNode.removeChild(canvas)
+				return
+			}
+			self.scene.push(50,tick)
+		}
+		var overlay = Loader.images.background[this.type+'_button_off.png']
+		tick()
+		
+	},
+
 	notify : function(progress){
 			
 	},
@@ -79,15 +118,15 @@ var Weak = Class.create(SuperWeapon, {
 		this.scene.objects.push(anim)
 		this.scene.rocketsLayer.attach(anim)
 		var self = this
-		this.scene.push(5000, function(){self.unWeak()})
 		this.weak(0)
 	},
 	weak : function(count){
 		var self = this
-		this.scene.creeps.each(function(creep){creep.takeHit(Math.floor(creep.hp * 0.1));})
+		this.scene.creeps.each(function(creep){creep.takeHit(Math.floor(creep.hp * self.factor1));})
 		count++
 		var self = this
-		if(count < 10){ this.scene.push(1000, function(){self.weak(count);}) }
+		if(count < self.factor2){ this.scene.push(1000, function(){self.weak(count);}) }
+		else self.unWeak()
 	},
 	unWeak : function(){
 		var index = -1
@@ -111,8 +150,8 @@ var Splash = Class.create(SuperWeapon, {
 		var self = this
 		this.scene.creeps.sort(function(a,b){
 			return b.hp - a.hp
-		}).slice(0,10).each(function(creep){
-			self.scene.rockets.push(new PatriotRocket(0, 0, self.scene, {theta: 0, targetUnit : creep, x : x, y : y, power: 2000, speed: 15}))
+		}).slice(0,self.factor2).each(function(creep){
+		self.scene.rockets.push(new PatriotRocket(0, 0, self.scene, {theta: 0, targetUnit : creep, x : x, y : y, power: creep.maxHp*self.factor1, speed: 15}))
 		})
 	}
 })
@@ -137,7 +176,7 @@ var Heal = Class.create(SuperWeapon, {
 		Sounds.play(Sounds.superWeapons.heal,true)
 		var self = this
 		self.scene.turrets.each(function(tower){
-			tower.hp = tower.maxHp
+			tower.hp = Math.min(tower.maxHp,tower.hp+tower.maxHp*self.factor1)
 			var anim = new HealAnimation(tower.x, tower.y - 43)
 			self.scene.objects.push(anim)
 			self.scene.rocketsLayer.attach(anim)
@@ -150,10 +189,10 @@ var Hyper = Class.create(SuperWeapon, {
 		this.scene.scenario.notify({name:"superWeaponsHyper", method: false, unit:this.scene.turrets.random()})
 		Sounds.play(Sounds.superWeapons.hyper,true)
 		var hyper = function(tower){
-			tower.rate *= 2;
+			tower.rate *= self.factor1;
 		}
 		this.scene.turrets.each(hyper)
-		this.scene.push(20000, function(){self.unHyper();})
+		this.scene.push(self.factor2*1000, function(){self.unHyper();})
 		this.scene.towerMutators.push({name : 'hyper', action : hyper})
 	},
 	unHyper : function(){

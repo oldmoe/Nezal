@@ -3,39 +3,32 @@ require 'json'
 
 class ApplicationController < Sinatra::Base
 
-  enable :sessions 
-
-  set :root,  File.dirname(File.dirname(File.dirname(__FILE__)))
-  set :static, true
+  enable :sessions
 
   before do 
     app_name = env['PATH_INFO'].split('/')[1]
     if app_name
       @app_configs = FB_CONFIGS::find('name', app_name)
-      puts env['PATH_INFO'].split('/')[1]
     	if @app_configs && get_fb_session
-	      retry_times = 1
     	  begin
-          @user = FbUser.find_or_create_by_fb_id(@fb_uid)
-          @user.session = @fb_session_key
-          @game = Game.find_by_name(app_name)
-          @game_profile = UserGameProfile.find_by_game_id_and_user_id(@game.id, @user.id)
+          @game = Game.where( 'name' =>app_name).first
+          @user = FbUser.where( 'fb_id' => @fb_uid ).first
+          if(!@user)
+            @user = FbUser.create('fb_id' => @fb_uid )
+          end
+          @game_profile = UserGameProfile.where('game_id' => @game.id, 'user_id' => @user.id).first
           if !(@game_profile)
-            puts "game profile not found"
+            LOGGER.debug "Game profile not found, creating one"
             @game_profile = UserGameProfile.new()
             @game_profile.game= @game
             @game_profile.user= @user
             get_helper_klass.init_game_profile(@game_profile)
-            puts "going to call save"
             @game_profile.save!()
           end
         rescue Exception => e
-          p e
+          LOGGER.debug e
           ''
         end
-        p "--------------------------------------------------------------------"
-        p @game_profile
-        p "--------------------------------------------------------------------"
 	    else
         LOGGER.debug "No Cookie Or Params Found"
 	    end
@@ -51,7 +44,6 @@ class ApplicationController < Sinatra::Base
   protected
     
   def get_fb_session
-    puts env['rack.request.cookie_hash']
 	  if env['rack.request.cookie_hash'] && 
 	        (fb_cookie = env['rack.request.cookie_hash']["fbs_#{@app_configs['id']}"] ||
            env['rack.request.cookie_hash']["fbs_#{@app_configs['key']}"])

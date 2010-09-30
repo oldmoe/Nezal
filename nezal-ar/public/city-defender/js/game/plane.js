@@ -1,7 +1,7 @@
 var Plane = Class.create(Creep, {
 	name : 'Plane',parent : 'Plane',
 	flying : true,
-	hp:150,maxHp:150,speed:4, power:2, rate:0.1, range: 3,price:2,
+	hp:125,maxHp:125,speed:4, power:1, rate:0.1, range: 2,price:2,
 	initialize : function($super,x,y,extension){
 		$super(x,y,extension)
 		this.theta = 0
@@ -65,13 +65,15 @@ var Plane = Class.create(Creep, {
 		var anim = new CoinsAnimation(this.x, this.y - 40)
 		this.scene.towerHealthLayer.attach(anim)
 		this.scene.objects.push(anim)
-
+		var moneyAnim = new MoneyAnimation(this.x-10,this.y-5,Math.floor(this.price))
+		this.scene.objects.push(moneyAnim)
 		if(Map.grid[this.gridX] && Map.grid[this.gridX][this.gridY]){
 			var cell = Map.grid[this.gridX][this.gridY];
 			var res = cell.splice(cell.indexOf(this), 1);
 		}
-		this.scene.money += this.price;
+		this.scene.money += Math.floor(this.price);
 		this.scene.stats.creepsDestroyed++
+		this.scene.score += Math.round(this.maxHp/100)*this.scene.config.level
 	},
 	destroySprites : function(){
 		this.dead = true	
@@ -83,7 +85,7 @@ var Plane = Class.create(Creep, {
 })
 
 var RedPlane = Class.create(Plane, {
-	hp:200,maxHp:200,speed : 6,power:4, rate:0.2, range: 3,price:3,
+	hp:125,maxHp:125,speed : 6,power:1, rate:0.1, range: 2,price:3,
    initImages : function(){
 		this.images = {
 			base : Loader.images.game['red_air_craft.png'],

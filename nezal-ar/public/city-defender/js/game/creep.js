@@ -7,9 +7,10 @@ var Creep = Class.create(Unit, {
 	hp : 100, maxHp : 100,
 	speed :4, price : 4,
 	evading : false, direction : 0,
-	rate : 0.2, power: 2.0,
+	rate : 0.1, power: 1.0,
 	cannonDisplacement : [-4, 0],
 	turningPoint : [0, 0],
+	range : 1,
 	initialize : function($super,x,y,scene,extension){
 		$super(x,y,scene,extension)
 		Map.grid[x][y].push(this)
@@ -213,9 +214,11 @@ var Creep = Class.create(Unit, {
 		this.scene.towerHealthLayer.attach(anim)
 		this.scene.objects.push(anim)
 		this.destroySprites()
+		var moneyAnim = new MoneyAnimation(this.x-10,this.y-5,Math.floor(this.price))
+		this.scene.objects.push(moneyAnim)
 		this.scene.money += Math.floor(this.price);
 		this.scene.stats.creepsDestroyed++
-		this.scene.score += this.maxHp
+		this.scene.score += Math.round(this.maxHp/100)*this.scene.config.level
 	},
 	destroySprites : function(){
 		var cell = Map.grid[this.gridX][this.gridY];

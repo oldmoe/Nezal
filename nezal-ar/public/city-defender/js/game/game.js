@@ -7,43 +7,79 @@ pause : "pause"
 var Game = Class.create({
 	initialize : function(delay){
 	},
+	
 	start : function(){
 		Map.init();
+		if(Intro.userData.newbie)Config = tutorialConfig
+		else Config = GameConfigs
+		this.prepareConfig()
 		this.config = Nezal.clone_obj(Config)
 		this.config.waves.reverse()
-		this.scene = new CityDefenderScene(this.config,50,this.ctx,this.topCtx);
+		$('scores').show()
+		if(Intro.userData.newbie){
+			$('modalWindow').show()
+			this.scene = new TutorialScene(this.config,50,this.ctx,this.topCtx);
+			this.tutorial = new Tutorial(this.scene,this.tutorialCtx)
+		}
+		else{
+			this.scene = new CityDefenderScene(this.config,50,this.ctx,this.topCtx);
+			this.registerHandlers();
+			if(Config.map)Map.bgGrid = Config.map
+			if(Config.mapEntry)Map.entry = Config.mapEntry
+		}
+		GhostTurret = new Turret(0, 0,this.scene, ghostTurretFeatures)
+		$$('.startText').first().innerHTML = T.start
 		var arr = ['Splash','Heal','Hyper','Weak','Nuke']
 				arr.each(function(weapon){
 					if(Config.superWeapons.indexOf(weapon)==-1){
 						game.scene[weapon.toLowerCase()].deactivate()
 					}
 		})
-		GhostTurret = new Turret(0, 0,this.scene, ghostTurretFeatures)
-		$$('.startText').first().innerHTML = T.start
-		//Intro.userData.newbie = false
-		//if(Intro.userData.newbie){
-		//	$('modalWindow').show()
-		//	this.tutorial = new Tutorial(this.scene,this.tutorialCtx)
-		//}
-		//else{
-			this.registerHandlers();
-		//}
-		if(Config.map)Map.bgGrid = Config.map
-		if(Config.mapEntry)Map.entry = Config.mapEntry
 		this.scene.start();
 	},
+	prepareConfig : function(){
+		var inputNames = ["Belcher","Reaper","Exploder","Patriot"]
+		var replacement = ["Turret","DoubleTurret","RocketLauncher","Patriot"]
+		var upgradeValues = ["maxHp","power","range","rate","price"]
+		for(var i=0;i<inputNames.length;i++){
+			var ind = Config.towers.indexOf(inputNames[i])
+			if(ind!=-1){
+				Config.towers[ind] = replacement[i]
+				var values = Intro.gameData.towers[inputNames[i]].upgrades
+				var upgrades = []
+				upgradeValues.each(function(upgradeValue){
+						eval(replacement[i]).prototype[upgradeValue] = values[0][upgradeValue]
+				})
+				eval(replacement[i]).prototype.maxRank = Config.towerUpgrades[inputNames[i]]-1
+				for(var j=1;j<values.length;j++){
+					var value = values[j]
+					var upgrade = {}
+					upgradeValues.each(function(upgradeValue){
+						upgrade[upgradeValue] = value[upgradeValue]
+					})
+					upgrades.push(upgrade)
+				}
+				eval(replacement[i]).prototype.upgrades = upgrades
+			}
+		}
+		var weaponValues = Intro.gameData.weapons
+		Config.superWeapons.each(function(weapon){
+			eval(weapon).prototype.factor1 = weaponValues[weapon].upgrades[Config.weaponUpgrades[weapon]-1].factor1
+			eval(weapon).prototype.factor2 = weaponValues[weapon].upgrades[Config.weaponUpgrades[weapon]-1].factor2
+			eval(weapon).prototype.cooldown = weaponValues[weapon].upgrades[Config.weaponUpgrades[weapon]-1].cooldown
+		})
+		if(Config.superWeapons.indexOf('Splash')!=-1&&Config.superWeapons[0]!="Splash"){
+			var x = Config.superWeapons[0]
+			var y = Config.superWeapons.indexOf("Splash")
+			Config.superWeapons[0] = "Splash"
+			Config.superWeapons[y]=x
+		}
+		
+	},
 	setGameImages : function(){
-		Loader.images.background['win.png'].setAttribute("id","winImage")
-		$$('#result #winImage')[0].src = Loader.images.background['win.png'].src;
-		$$('#result #loseImage')[0].src = Loader.images.background['lose.png'].src;
-		$$('#result #youWin')[0].src = Loader.images.background['you_win.png'].src ;
-		$$('#result #youLose')[0].src = Loader.images.background['you_lose.png'].src ;
-		var ind = Config.towers.indexOf("Belcher")
-		if(ind!=-1)Config.towers[ind] = "Turret"
-		var ind = Config.towers.indexOf("Reaper")
-		if(ind!=-1)Config.towers[ind] = "DoubleTurret"
-		var ind = Config.towers.indexOf("Exploder")
-		if(ind!=-1)Config.towers[ind] = "RocketLauncher"
+		if(Intro.userData.newbie)Config = tutorialConfig
+		else Config = GameConfigs
+		game.prepareConfig()
 		Config.towers.each(function(tower){
 			var div = document.createElement("div");
 			div.style.cursor = "pointer"
@@ -55,12 +91,7 @@ var Game = Class.create({
 			var div = document.createElement("div");
 			$$(".towers").first().appendChild(div)
 		}		
-		if(Config.superWeapons.indexOf('Splash')!=-1&&Config.superWeapons[0]!="Splash"){
-			var x = Config.superWeapons[0]
-			var y = Config.superWeapons.indexOf("Splash")
-			Config.superWeapons[0] = "Splash"
-			Config.superWeapons[y]=x
-		}
+		
 		var arr = ['Splash','Heal','Hyper','Weak','Nuke']
 		arr.each(function(weapon){
 				var wCapital = weapon
@@ -69,44 +100,25 @@ var Game = Class.create({
 				div.style.cursor = "pointer"
 				div.setAttribute('class',weapon);
 				$$(".superWeapons").first().appendChild(div)
-				var childDiv = document.createElement("div");
-				childDiv.setAttribute('id',weapon);
-				div.appendChild(childDiv)	
 				var div2 = document.createElement("div");
 				div2.setAttribute('class',weapon);
 				$$(".superWeaponsOff").first().appendChild(div2)
 			
 		})		
-		Config.superWeapons.each(function(weapon){
-			weapon = weapon.toLowerCase();
-			
-			
-		})
-		$('pauseWindow').style.zIndex = 299;
-		$('pauseWindow').style.width =760;
-		$('pauseWindow').style.height = 550; 
-		$('pauseWindow').style.position = "absolute"
-		$('pauseWindow').style.backgroundColor = "black";
-		$('pauseWindow').style.opacity =0.5;
 
 		$$('.start').first().appendChild(Loader.images.background['start.png'])
 
 		$('gameElements').appendChild(Loader.images.background['l_shape.png'])
-		var img7 = document.createElement("IMG");
-		img7.src=Config.mapImage
-		$('canvasContainer').appendChild(img7)
+		if(Intro.userData.newbie)$('canvasContainer').appendChild(Loader.images.background['path.png'])
+		else $('canvasContainer').appendChild(Loader.challenges[Config.campaign]['images/'+Config.missionPath+'/path.png'])
 		Config.towers.each(function(turret){ 
 			$$('.'+turret).first().appendChild(Loader.images.background[turret.toLowerCase()+'_button.png'])
 			
 		})
 	
-		var img8 = document.createElement("IMG");
-		img8.src=Config.mapImage
-		$('character').appendChild(img8)
+		var img8 = Loader.images.background['character.png']
+		$$('#modalWindow #character').first().appendChild(img8)
 		var img9 = document.createElement("IMG");
-		$('playAgain').appendChild(Loader.images.background['play_again.png'])
-		$('exit').appendChild(Loader.images.background['exit.png'])
-		
 		$$('#gameElements .superWeapons div').each(function(div){ 
 			if(div.className != ''){
 			div.appendChild(Loader.images.background[div.className+'_button.png'])
@@ -118,7 +130,12 @@ var Game = Class.create({
 			div.appendChild(Loader.images.background[div.className+'_button_off.png'])
 			}
 		})
-
+	var image1 = new Image()
+	var image2 = new Image()
+	image1.src = Loader.images.background['exit_restart_button.png'].src
+	image2.src = Loader.images.background['exit_restart_button.png'].src
+	$('gameReset').appendChild(image1)
+	$('gameExit').appendChild(image2)
     //Here we make the rank 
     $$('#rank img')[0].src = "images/intro/ranks/" + Config.rank + ".png";
     $$('.rankName')[0].innerHTML = Config.rank;
@@ -126,28 +143,32 @@ var Game = Class.create({
 	},
 	
 	registerHandlers : function(){
-		var self = this
-		$$('#gameElements .upgrades .upgrade.next').invoke('observe', 'click', Upgrades.upgrade)	
-		$$('#gameElements .upgrades .upgradeItem').invoke('observe', 'click', Upgrades.select)			
+		var self = this	
 		$$('.towers div').invoke('observe','click', function(){
 			Sounds.play(Sounds.gameSounds.click);GhostTurret.select(this)
 		})
-		//$('sellTower').observe('click',function(){
-		//	self.scene.sellSelectedTower()
-		//})		
+		$$('#gameElements .superWeapons div').each(function(div){ 
+			if(div.className != ''){
+				div.observe('click', function(){self.scene.fire(div.className)})
+				self.scene[div.className].active = false
+			}
+		})
+				
 		$$('#gameElements .start').first().observe('click', function(){self.scene.startAttack()})
 		$('playAgain').observe('click', game.reset)
 		$('exit').observe('click', game.exit)
-			
+		$('gameExit').observe('click', game.exit)	
+		$('gameReset').observe('click', game.reset)	
+		$$('.bookmark').first().observe('click', FBConnect.bookmark)	
+		$$('.sound').first().observe('click',Sounds.mute)
 	},
 	reset : function(){
-		game.scene.reactor.pause()
-		Upgrades.init()
-		Upgrades.selectDefault();
+		game.scene.reactor.stop()
 		new Effect.Fade('static')
 		$$('#gameElements .start').first().stopObserving('click')
 		$$('#gameElements .start').first().removeClassName('resumed')
 		$$('#gameElements .start').first().removeClassName('paused')
+		game.unRegisterHandlers()
 		$('droppingGround').removeClassName('off')	
 		$('result').hide()
 		$$('#gameElements .superWeapons div').each(function(div){ 
@@ -156,27 +177,31 @@ var Game = Class.create({
 		game.start()	
 	},
 	exit :function(){
-					$('gameStart').hide()
-    	    $("gameStart").innerHTML = Intro.templates['game'];
-    	    Intro.replay();	
-			    onFinish()
+		  game.scene.reactor.stop()
+          Intro.enablePauseScreen();
+		  $('gameStart').hide()
+    	  $("gameStart").innerHTML = Intro.templates['game'];
+    	  Intro.replay();	
+		  onFinish()
 	},
-	unRegisterHandlers : function(){
-		$$('#gameElements .upgrades .upgrade.next').invoke('stopObserving', 'click')	
-		$$('#gameElements .upgrades .upgradeItem').invoke('stopObserving', 'click')			
+	unRegisterHandlers : function(){	
 		$$('.towers div').invoke('stopObserving','click')
 		$$('#gameElements .start').first().stopObserving('click')
 		$$('#gameElements .superWeapons div').each(function(div){ 
 			if(div.className != ''){div.stopObserving('click')}
 		})
-
+		$('playAgain').stopObserving('click')
+		$('exit').stopObserving('click')
+		$('gameExit').stopObserving('click')	
+		$('gameReset').stopObserving('click')	
+		$$('.bookmark').first().stopObserving('click')	
+		$$('.sound').first().stopObserving('click')
 	},
 	
 });
 
 var game = new Game()
 function city_defender_start(){
-		$('popup').hide()	
 		$$("canvas").each(function(canvas){
 			canvas.width = Map.width * Map.pitch
 			canvas.height = Map.height * Map.pitch
@@ -200,11 +225,10 @@ function onFinish(){
 	$('gameElements').style.visibility = 'visible'
 	$('canvasContainer').style.visibility = 'visible'
 	window.setTimeout(function(){
-		Effect.Fade('splashScreen')
 		$('gameElements').show();
 		$('canvasContainer').show();
 		$('static').show();
 		$('waitScreen').hide()
-		Effect.Fade('static',{duration: 2.0})
-	},1000)
+		Effect.Fade('static',{duration: 1.0})
+	},100)
 }
