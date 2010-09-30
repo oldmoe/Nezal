@@ -110,11 +110,12 @@ class CityDefender < Metadata
   def self.upgrade(game_profile, data)
     game_data = self.decode(game_profile.game.metadata)
     profile_data = self.decode(game_profile.metadata)
-    upgrade = profile_data[data['type']][data['item_id']]['upgrades'] + 1
-    if(game_data[data['type']][data['item_id']]['upgrades'][upgrade])
-      if (game_data[data['type']][data['item_id']]['upgrades'][upgrade]['cost'].to_i <= game_profile.user.coins &&
-            game_data[data['type']][data['item_id']]['upgrades'][upgrade]['exp'].to_i <= game_profile.exp )
-        game_profile.user.coins -= game_data[data['type']][data['item_id']]['upgrades'][upgrade]['cost'].to_i
+    upgrade = profile_data[data['type']][data['item_id']]['upgrades']
+    upgrades = self.decode(game_data[data['type']][data['item_id']]['upgrades'])
+    if(upgrades[upgrade])
+      if (upgrades[upgrade]['cost'].to_i <= game_profile.user.coins &&
+            upgrades[upgrade]['exp'].to_i <= game_profile.exp )
+        game_profile.user.coins -= upgrades[upgrade]['cost'].to_i
         profile_data[data['type']][data['item_id']]['upgrades'] += 1
         game_profile.user.save
         game_profile.metadata = self.encode(profile_data)
