@@ -1,7 +1,7 @@
 window.Text = {
 	gameName: 'Defender of Arabia',
 	towers : 'tower',
-	superWeapon : 'Super Weapon',
+	superWeapons : 'Super Weapon',
     intro : {
         levelSelection : {
             msg : 'Defend a new country every week',
