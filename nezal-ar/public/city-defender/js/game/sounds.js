@@ -171,8 +171,6 @@ function createBackgroundMusic(){
 	  volume: 30,
 	  loops : 10000
 	});
-	Sounds.gameSounds.intro = []
-	Sounds.gameSounds.intro.push(introSound)
 	Sounds.gameSounds.game= []
 	Sounds.gameSounds.game.push(gameSound)
 }
