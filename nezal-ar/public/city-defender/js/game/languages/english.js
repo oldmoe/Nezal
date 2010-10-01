@@ -326,7 +326,11 @@ window.Text = {
        'HOLD!!',
        'STAND YOUR GROUND!!',
       'That\'s all you got?'
-    ]
+    ],
+	controls: {
+		exit : "exit",
+		reset : "reset"
+	}
   
   }
 	
