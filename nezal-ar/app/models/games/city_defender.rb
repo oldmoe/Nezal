@@ -79,7 +79,6 @@ class CityDefender < Metadata
                                                   end
       user_campaign.score -= old_score 
       user_campaign.score += data['score']
-      user_campaign.metadata = self.encode(metadata)
       if (data['win'])
         metadata['missions'][data['mission']] = { 'order' => data['mission'] + 1, 'score' => 0 }
         user_campaign.profile.exp += (( data['score'] / 50) * 1.5)
@@ -89,6 +88,7 @@ class CityDefender < Metadata
       ranks = user_campaign.profile.game.ranks.where( " lower_exp <= #{user_campaign.profile.exp} AND " + 
                                               " ( upper_exp > #{user_campaign.profile.exp} OR upper_exp == -1 ) "  )
       user_campaign.profile.rank = ranks.first
+      user_campaign.metadata = self.encode(metadata)
       user_campaign.profile.save
       user_campaign.save
     end
