@@ -196,7 +196,7 @@ var Game = Class.create({
 		$('gameReset').stopObserving('click')	
 		$$('.bookmark').first().stopObserving('click')	
 		$$('.sound').first().stopObserving('click')
-	},
+	}
 	
 });
 

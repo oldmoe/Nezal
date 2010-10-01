@@ -167,7 +167,7 @@ var PatriotRocket = Class.create(Rocket, {
 		this.rocketSprite.rotation = Nezal.degToRad(this.theta)
 		this.rocketSprite.transitionX = -(this.step*this.speed)
 	},
-	speed : 10,
+	speed : 10
 	
 })
 

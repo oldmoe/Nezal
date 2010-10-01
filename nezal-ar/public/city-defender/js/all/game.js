@@ -1,28 +1,35 @@
 
-FBDefender={imagesUrl:'http://studio.nezal.com:5500/fb-games/city-defender/images/',gameName:" Arab Warriors",publishMissionCompletion:function(mission){FBConnect.getUserInfo(function(){var loc="http://apps.facebook.com/"+FBConnect.url()+"/";var attachment={name:FBConnect.user.first_name+" courageously defends "+
-mission.name.toUpperCase()+" at "+FBDefender.gameName,href:loc,'media':[{'type':'image','src':FBDefender.imagesUrl+'facebook/medal.png','href':loc}],caption:FBConnect.user.first_name+" heroic efforts defended the city and scored "+
-mission.score+". Can you top such efforts?"};var actionLinks=[{text:FBDefender.gameName,href:loc}];FBConnect.publish(attachment,"Tell your friends about your accomplishment",actionLinks)});},publishCampaignCompletion:function(campaign){FBConnect.getUserInfo(function(){var loc="http://apps.facebook.com/"+FBConnect.url()+"/";var attachment={name:FBConnect.user.first_name+" with a legendary defense to save "+
-campaign.name.toUpperCase()+" at "+FBDefender.gameName,href:loc,'media':[{'type':'image','src':FBDefender.imagesUrl+'facebook/medal.png','href':loc}],caption:FBConnect.user.first_name+" shows bullet proof defense on the way to save "+
-campaign.name.toUpperCase()+" & nails "+
-campaign.score+" points through out the journey. Can you out play that?"};var actionLinks=[{text:FBDefender.gameName,href:loc}];FBConnect.publish(attachment,"Tell your friends about your accomplishment",actionLinks)});},publishRankPromotion:function(info){FBConnect.getUserInfo(function(){var loc="http://apps.facebook.com/"+FBConnect.url()+"/";var attachment={name:FBConnect.user.first_name+" promoted to become "+
-info.name.toUpperCase()+" at "+FBDefender.gameName,href:loc,'media':[{'type':'image','src':FBDefender.imagesUrl+'facebook/ranks/'+info.image,'href':loc}],caption:"In recognition of such outstanding defending skills at "+
-FBDefender.gameName+", "+
-FBConnect.user.first_name+" has been promoted to become "+
-info.name+". Salute is in due to such brave efforts."};var actionLinks=[{text:FBDefender.gameName,href:loc}];FBConnect.publish(attachment,"Tell your friends about your accomplishment",actionLinks)});},publishUnlockedItem:function(info){FBConnect.getUserInfo(function(){var loc="http://apps.facebook.com/"+FBConnect.url()+"/";var attachment={name:FBConnect.user.first_name+" unlocks the "+
-info.name+" "+info.type+" at "+FBDefender.gameName,href:loc,'media':[{'type':'image','src':FBDefender.imagesUrl+info.image,'href':loc}],caption:FBConnect.user.first_name+" unlocked the "+
-info.name+" "+info.type+" to gain massive tactical advantage on the battle to save "+
-info.mission.toUpperCase()+"."};var actionLinks=[{text:FBDefender.gameName,href:loc}];FBConnect.publish(attachment,"Tell your friends about your accomplishment",actionLinks)});},publishCampaignRanking:function(info){FBConnect.getUserInfo(function(){var loc="http://apps.facebook.com/"+FBConnect.url()+"/";var attachment={name:FBConnect.user.first_name+" finishes "+
-info.ranking+" among friends while defending "+
-info.campaignName.toUpperCase()+" at "+FBDefender.gameName,href:loc,'media':[{'type':'image','src':FBDefender.imagesUrl+'facebook/medal.png','href':loc}],caption:FBConnect.user.first_name+" defense along the march to save "+
-info.campaignName.toUpperCase()+" earned the "+
-info.ranking+" position among fellow warriors. Dare to challange their efforts?"};var actionLinks=[{text:FBDefender.gameName,href:loc}];FBConnect.publish(attachment,"Tell your friends about your accomplishment",actionLinks)});}}
+FBDefender={imagesUrl:'http://studio.nezal.com:5500/fb-games/city-defender/images/',gameName:function(){return Text.gameName;},isMarket:false,onPublishSuccess:function(){new Ajax.Request('users/coins',{method:'post',parameters:{'coins':5},onSuccess:function(t,json){var data=JSON.parse(t.responseText);Intro.userData.coins=data['user_data'].coins;if(Intro.currentPage==Intro.pages['marketPlace'].index&&FBDefender.isMarket==true)
+Intro.select('marketPlace');}});},publishMissionCompletion:function(mission){FBConnect.getUserInfo(function(){var loc="http://apps.facebook.com/"+FBConnect.url()+"/";var attachment={name:FBConnect.user.first_name+" "+Text.facebook.completeMession[0]+" "+
+mission.name.toUpperCase()+" "+Text.facebook.completeMession[1]+" "+
+FBDefender.gameName(),href:loc,'media':[{'type':'image','src':FBDefender.imagesUrl+'facebook/medal.png','href':loc}],caption:FBConnect.user.first_name+" "+Text.facebook.completeMession[2]+" "+
+mission.score+Text.facebook.completeMession[3]};var actionLinks=[{text:FBDefender.gameName(),href:loc}];FBDefender.isMarket=false;FBConnect.publish(attachment,Text.facebook.userPrompt,actionLinks,FBDefender.onPublishSuccess)});},publishCampaignCompletion:function(campaign){FBConnect.getUserInfo(function(){var loc="http://apps.facebook.com/"+FBConnect.url()+"/";var attachment={name:FBConnect.user.first_name+" "+Text.facebook.completeCampaign[0]+" "+
+campaign.name.toUpperCase()+" "+Text.facebook.completeCampaign[1]+" "+
+FBDefender.gameName(),href:loc,'media':[{'type':'image','src':FBDefender.imagesUrl+'facebook/medal.png','href':loc}],caption:FBConnect.user.first_name+" "+Text.facebook.completeCampaign[2]+" "+
+campaign.name.toUpperCase()+" "+Text.facebook.completeCampaign[3]+" "+
+campaign.score+" "+Text.facebook.completeCampaign[4]};var actionLinks=[{text:FBDefender.gameName(),href:loc}];FBDefender.isMarket=false;FBConnect.publish(attachment,Text.facebook.userPrompt,actionLinks,FBDefender.onPublishSuccess)});},publishRankPromotion:function(info){FBConnect.getUserInfo(function(){var loc="http://apps.facebook.com/"+FBConnect.url()+"/";var attachment={name:FBConnect.user.first_name+" "+Text.facebook.rankPromotion[0]+" "+
+Text.game.ranks[info.name]['name']+" "+Text.facebook.rankPromotion[1]+" "+
+FBDefender.gameName(),href:loc,'media':[{'type':'image','src':FBDefender.imagesUrl+'facebook/ranks/'+info.image,'href':loc}],caption:Text.facebook.rankPromotion[2]+" "+
+FBDefender.gameName()+", "+
+FBConnect.user.first_name+" "+Text.facebook.rankPromotion[3]+" "+
+Text.game.ranks[info.name]['name']+" "+Text.facebook.rankPromotion[4]};var actionLinks=[{text:FBDefender.gameName(),href:loc}];FBDefender.isMarket=false;FBConnect.publish(attachment,Text.facebook.userPrompt,actionLinks,FBDefender.onPublishSuccess)});},publishUnlockedItem:function(info){FBConnect.getUserInfo(function(){var loc="http://apps.facebook.com/"+FBConnect.url()+"/";var attachment={name:FBConnect.user.first_name+" "+Text.facebook.unlockItem[0]+" "+
+Text.intro[info.type][info.name]['name']+" "+Text[info.type]+" "+Text.facebook.unlockItem[1]+" "+FBDefender.gameName(),href:loc,'media':[{'type':'image','src':FBDefender.imagesUrl+info.image,'href':loc}],caption:FBConnect.user.first_name+" "+Text.facebook.unlockItem[2]+" "+
+Text.intro[info.type][info.name]['name']+" "+Text[info.type]+" "+Text.facebook.unlockItem[3]};var actionLinks=[{text:FBDefender.gameName(),href:loc}];FBDefender.isMarket=true;FBConnect.publish(attachment,Text.facebook.userPrompt,actionLinks,FBDefender.onPublishSuccess)});},publishUpgradedItem:function(info){FBConnect.getUserInfo(function(){var loc="http://apps.facebook.com/"+FBConnect.url()+"/";var attachment={name:FBConnect.user.first_name+" "+Text.facebook.upgradeItem[0]+" "+
+Text.intro[info.type][info.name]['name']+" "+Text[info.type]+" "+Text.facebook.upgradeItem[1]+" "+FBDefender.gameName(),href:loc,'media':[{'type':'image','src':FBDefender.imagesUrl+info.image,'href':loc}],caption:FBConnect.user.first_name+" "+Text.facebook.upgradeItem[2]+" "+
+Text.intro[info.type][info.name]['name']+" "+Text[info.type]+" "+Text.facebook.upgradeItem[3]};var actionLinks=[{text:FBDefender.gameName(),href:loc}];FBDefender.isMarket=true;FBConnect.publish(attachment,Text.facebook.userPrompt,actionLinks,FBDefender.onPublishSuccess)});},publishCampaignRanking:function(info){FBConnect.getUserInfo(function(){var loc="http://apps.facebook.com/"+FBConnect.url()+"/";var attachment={name:FBConnect.user.first_name+" "+Text.facebook.campaignRanking[0]+" "+
+info.ranking+" "+Text.facebook.campaignRanking[1]+" "+
+info.rankingGlobal+" "+Text.facebook.campaignRanking[2]+" "+" "+Text.facebook.campaignRanking[3]+" "+
+FBDefender.gameName(),href:loc,'media':[{'type':'image','src':FBDefender.imagesUrl+'facebook/medal.png','href':loc}],caption:FBConnect.user.first_name+" "+Text.facebook.campaignRanking[4]+" "+
+info.ranking+" "+Text.facebook.campaignRanking[5]+" "+
+info.rankingGlobal+" "+Text.facebook.campaignRanking[6]+" "+
+info.campaignName.toUpperCase()+" "+Text.facebook.campaignRanking[6]+" "};var actionLinks=[{text:FBDefender.gameName(),href:loc}];FBDefender.isMarket=false;FBConnect.publish(attachment,Text.facebook.userPrompt,actionLinks,FBDefender.onPublishSuccess)});}}
 var CreepConfig={"BlackTank":{image:'black_tank.png',skeleton:'black_tank_skeleton.png'},"RedTank":{image:'red_tank.png',skeleton:'red_tank_skeleton.png'},"Tank":{image:'tank.png',skeleton:'tank_skeleton.png'},"TankI":{image:'tank_i.png',skeleton:'tank_i_skeleton.png'},"TankII":{image:'tank_ii.png',skeleton:'tank_ii_skeleton.png'},"Humvee":{image:'humvee.png',skeleton:'humvee_skeleton.png'},"RedPlane":{image:'red_plane.png',skeleton:'red_plane_skeleton.png'},"Plane":{image:'plane.png',skeleton:'plane_skeleton.png'}}
 var TowerConfig={"Belcher":{name:'Belcher',image:'belecher.png',smallImage:'belecher_small.png',skeleton:'belecher_skeleton.png',desc:"Belcher, a fast machine gun tower, it has small range nozzle,"+" and can be used to counter both air and ground units."+" It uses bullets as its main ammunition and doesn't have any detection mechanism, but it will fire on sight."},"Reaper":{name:'Reaper',image:'reaper.png',smallImage:'reaper_small.png',skeleton:'reaper_skeleton.png',desc:"Reaper, an upgraded version of the Belcher machine gun tower,"+" it has two nozzles which enable it to attack with a higher rate than the Belcher."+" It is more effective than the Belcher as it secures more fire power against any hostile activities."},"Patriot":{name:'Patriot',image:'patriot.png',smallImage:'patriot_small.png',skeleton:'patriot_skeleton.png',desc:"Patriot , a long-range, all-altitude, surface-to-air missile (SAM) launcher."+" This air defense system is used to counter advanced aircraft."+" It uses an advanced aerial interceptor missiles and high performance radar systems to destroy its target."},"Exploder":{name:'Exploder',image:'exploder.png',smallImage:'exploder_small.png',skeleton:'exploder_skeleton.png',desc:"Exploder, a tactical surface-to-surface missile (SSM) launcher,"+" Its major use is as a general bombardment weapon to counter heavy land units."+" It has a radar system for detecting its targets to destroy them."}}
 var SuperWeaponConfig={"Splash":{name:"Splash",image:'splash.png',skeleton:'splash.png',desc:"Sends up to 10 rockets that targets biggest 10 enemy units, each deal 2000 damage. Can be used 10 times."},"Weak":{name:"Weak",image:'weak.png',skeleton:'weak.png',desc:"Reduces all units' health point by 10% per second. Lasts for 10 seconds. Can be used 10 times."},"Hyper":{name:"Hyper",image:'hyper.png',skeleton:'hyper.png',desc:"Doubles the attack speed of all your towers. Lasts for 30 seconds. Can be used 10 times."},"Nuke":{name:"Nuke",image:'nuke.png',skeleton:'nuke.png',desc:"Call the nuke bomb to destroy all units on the map. Can be used 5 times."},"Heal":{name:"Heal",image:'heal.png',skeleton:'heal.png',desc:"Restores all your towers' full health point . Can be used 10 times."}}
 var UpgradeConfig={"Bullets":{name:"Bullets",image:'upgrade1.png',smallImage:'upgrade1.png',skeleton:'upgrade1.png',desc:"Increases attack speed of all bullets towers by 50%."},"Rockets":{name:"Rockets",image:'upgrade2.png',smallImage:'upgrade2.png',skeleton:'upgrade2.png',desc:"Increases attack speed of all rocket towers by 50%."},"Shields":{name:"Shields",image:'upgrade3.png',smallImage:'upgrade3.png',skeleton:'upgrade3.png',desc:"Increases the health point of all towers by 50% and restores towers' full health point."}}
 var ChallengeSelector={challenges:[],selected:0,list:function(element){$(Intro.pages[Intro.currentPage]).style['cursor']="progress"
 element.style['cursor']="progress"
-new Ajax.Request('challenges',{method:'get',onComplete:function(t,json){ChallengeSelector.challenges=JSON.parse(t.responseText);$('challenges').innerHTML=Intro.templates.challenges[1].process({"challenges":ChallengeSelector.challenges});Intro.next();}})},select:function(challenge,callback){new Ajax.Request('challenges'+challenge+"/city.info",{method:'get',onComplete:function(t,json){ChallengeSelector.city=JSON.parse(t.responseText);$('cityInfo').innerHTML=Intro.templates.cityInfo[1].process({"city":ChallengeSelector.city,"path":challenge});callback();}})},}
+new Ajax.Request('challenges',{method:'get',onComplete:function(t,json){ChallengeSelector.challenges=JSON.parse(t.responseText);$('challenges').innerHTML=Intro.templates.challenges[1].process({"challenges":ChallengeSelector.challenges});Intro.next();}})},select:function(challenge,callback){new Ajax.Request('challenges'+challenge+"/city.info",{method:'get',onComplete:function(t,json){ChallengeSelector.city=JSON.parse(t.responseText);$('cityInfo').innerHTML=Intro.templates.cityInfo[1].process({"city":ChallengeSelector.city,"path":challenge});callback();}})}}
 var GameConfigs={level:0,campaign:'tunisia',missionPath:'cairo',mapImage:'',waves:[],map:[],mapEntry:[],towers:[],superWeapons:[],upgrades:[],weaponsPackage:{},language:'arabic'}
 var ResourceLoader=Class.create({resources:null,loadedCount:0,addResource:function(resource)
 {if(!this.resources)
@@ -36,9 +43,8 @@ if(!this.resources.get(resource))
 errorCallback();}});}else{self.loadedCount++;if(self.loadedCount==self.resources.keys().length)
 {self.loadedCount=0;callback();}}});}})
 var Config=GameConfigs;var PathConfigs={introTemplate:"templates/intro/intro.tpl",gameTemplate:"templates/game.tpl"}
-var Intro={dirty:false,currentPage:-1,nextPageIndex:0,campLoader:new ResourceLoader(),missionLoader:new ResourceLoader(),sequence:["levelSelection","campaign","mission","marketPlace"],templates:{challenges:["challengesTemplate",0],levelSelection:["levelSelectionTemplate",0],campaign:["campaignTemplate",0],mission:["missionTemplate",0],marketPlace:["marketItemsTemplate",0],marketplaceItem:["marketItemDetailsTemplate",0],marketScroll:["marketScrollerTemplate",0]},initialize:function(){this.currentPage=-1;Intro.retrieveTemplates();},start:function(){if(Intro.doneLoading&&Loader.doneLoading)
-Intro.next();},retrieveTemplates:function(){var loader=new ResourceLoader();loader.addResource(PathConfigs.introTemplate);loader.addResource(PathConfigs.gameTemplate);loader.addResource('metadata');loader.load(function(){$('introTemplates').innerHTML=loader.resources.get(PathConfigs.introTemplate);for(var template in Intro.templates){Intro.templates[template][1]=TrimPath.parseDOMTemplate(Intro.templates[template][0]);}
-$("gameStart").innerHTML=loader.resources.get(PathConfigs.gameTemplate);Intro.templates['game']=loader.resources.get(PathConfigs.gameTemplate);var data=JSON.parse(loader.resources.get('metadata'));GameConfigs.campaign=data['game_data']['current_campaign'];Intro.gameData=JSON.parse(data['game_data']['metadata']);for(var i in Intro.gameData.towers)
+var Intro={dirty:false,currentPage:-1,nextPageIndex:0,campLoader:new ResourceLoader(),missionLoader:new ResourceLoader(),sequence:["levelSelection","campaign","mission","marketPlace"],templates:{challenges:["challengesTemplate",0],levelSelection:["levelSelectionTemplate",0],campaign:["campaignTemplate",0],mission:["missionTemplate",0],marketPlace:["marketItemsTemplate",0],marketplaceItem:["marketItemDetailsTemplate",0],marketScroll:["marketScrollerTemplate",0]},initialize:function(){this.currentPage=-1;Intro.retrieveTemplates();},start:function(){if(Intro.doneLoading&&Loader.doneLoading)Intro.next();},retrieveTemplates:function(){var loader=new ResourceLoader();loader.addResource(PathConfigs.introTemplate);loader.addResource(PathConfigs.gameTemplate);loader.addResource('metadata');loader.load(function(){$('introTemplates').innerHTML=loader.resources.get(PathConfigs.introTemplate);for(var template in Intro.templates){Intro.templates[template][1]=TrimPath.parseDOMTemplate(Intro.templates[template][0]);}
+$("gameStart").innerHTML=Intro.templates['game']=loader.resources.get(PathConfigs.gameTemplate);var data=JSON.parse(loader.resources.get('metadata'));GameConfigs.campaign=data['game_data']['current_campaign'];Intro.gameData=JSON.parse(data['game_data']['metadata']);for(var i in Intro.gameData.towers)
 {Intro.gameData.towers[i].upgrades=JSON.parse(Intro.gameData.towers[i].upgrades);}
 for(var i in Intro.gameData.weapons)
 {Intro.gameData.weapons[i].upgrades=JSON.parse(Intro.gameData.weapons[i].upgrades);}
@@ -64,32 +70,33 @@ var data={'coins':Intro.userData.coins,'exp':Intro.userData.exp,'configs':itemCo
 $$("#marketPlace #floatBg")[0].innerHTML=Intro.templates['marketplaceItem'][1].process({"data":data});$$('#marketPlace #floatBg .clickSound').each(function(element){element.observe('click',function(){Sounds.play(Sounds.gameSounds.click)})})}}},selectLanguage:function(element)
 {var lang=element.getAttribute('language')
 Intro.enablePauseScreen();Language.select(lang,function(){Intro.userData.locale=Language.userLanguage;Intro.select('levelSelection')});},selectMission:function(element){GameConfigs.missionPath=element.getAttribute('path');},unlockItem:function(element){var type=element.getAttribute('type');var itemid=element.getAttribute('itemid');if(Intro.userData.coins>=parseInt(Intro.gameData[type][itemid]['cost'])&&Intro.userData.exp>=parseInt(Intro.gameData[type][itemid]['exp']))
-{Intro.enablePauseScreen();new Ajax.Request('metadata',{method:'post',parameters:{'data':Object.toJSON({'type':type,'item_id':itemid,'event':'unlock'})},onSuccess:function(t,json){var data=JSON.parse(t.responseText);Intro.userData=data['user_data'];Intro.userData["metadata"]=JSON.parse(data['user_data']['metadata']);var typeName='tower';var itemConfig=TowerConfig;if(type=="weapons")
-{itemConfig=SuperWeaponConfig;typeName="super weapon";}
-FBDefender.publishUnlockedItem({name:itemid,image:'intro/'+type+"/"+itemConfig[itemid]['image'],mission:GameConfigs.missionPath,type:typeName})
+{Intro.enablePauseScreen();new Ajax.Request('metadata',{method:'post',parameters:{'data':Object.toJSON({'type':type,'item_id':itemid,'event':'unlock'})},onSuccess:function(t,json){var data=JSON.parse(t.responseText);Intro.userData=data['user_data'];Intro.userData["metadata"]=JSON.parse(data['user_data']['metadata']);var typeName='towers';var itemConfig=TowerConfig;if(type=="weapons")
+{itemConfig=SuperWeaponConfig;typeName="superWeapons";}
+FBDefender.publishUnlockedItem({name:itemid,image:'intro/'+type+"/"+itemConfig[itemid]['image'],mission:Intro.campaignData.missionsInfo[GameConfigs.missionPath]['name'],type:typeName})
 Intro.select('marketPlace');Intro.disablePauseScreen();}});}else{}},upgradeItem:function(element){var type=element.getAttribute('type');var itemid=element.getAttribute('itemid');var cost=Intro.gameData[type][itemid].upgrades[Intro.userData.metadata[type][itemid]['upgrades']]['cost'];var exp=Intro.gameData[type][itemid].upgrades[Intro.userData.metadata[type][itemid]['upgrades']]['exp'];if(Intro.userData.coins>=cost&&Intro.userData.exp>=exp)
-{Intro.enablePauseScreen();new Ajax.Request('metadata',{method:'post',parameters:{'data':Object.toJSON({'type':type,'item_id':itemid,'event':'upgrade'})},onSuccess:function(t,json){var data=JSON.parse(t.responseText);Intro.userData=data['user_data'];Intro.userData["metadata"]=JSON.parse(data['user_data']['metadata']);var typeName='tower';var itemConfig=TowerConfig;if(type=="weapons")
-{itemConfig=SuperWeaponConfig;typeName="super weapon";}
-FBDefender.publishUnlockedItem({name:itemid,image:'intro/'+type+"/"+itemConfig[itemid]['image'],mission:GameConfigs.missionPath,type:typeName})
-Intro.select('marketPlace');Intro.disablePauseScreen();}});}else{}},sendScore:function(score,weapons,win,callback){if(!weapons)
+{Intro.enablePauseScreen();new Ajax.Request('metadata',{method:'post',parameters:{'data':Object.toJSON({'type':type,'item_id':itemid,'event':'upgrade'})},onSuccess:function(t,json){var data=JSON.parse(t.responseText);Intro.userData=data['user_data'];Intro.userData["metadata"]=JSON.parse(data['user_data']['metadata']);var typeName='towers';var itemConfig=TowerConfig;if(type=="weapons")
+{itemConfig=SuperWeaponConfig;typeName="superWeapons";}
+FBDefender.publishUpgradedItem({name:itemid,image:'intro/'+type+"/"+itemConfig[itemid]['image'],mission:Intro.campaignData.missionsInfo[GameConfigs.missionPath]['name'],type:typeName})
+Intro.select('marketPlace');Intro.disablePauseScreen();}});}else{}},sendScore:function(score,win,callback){if(!weapons)
 weapons={}
-new Ajax.Request(GameConfigs.campaign+"/metadata",{method:'post',parameters:{'data':Object.toJSON({'mission':GameConfigs.mission.order,'win':win,'items':weapons,'event':'consumed_weapons','score':score})},onSuccess:function(t,json){var data=JSON.parse(t.responseText);Intro.campaignData.user_data.metadata=data['user_data']['metadata'];Intro.userData.rank=data['user_data'].rank;Intro.userData.exp=data['user_data'].exp;Intro.setupGameConfigs();callback();}});},newbieNoMore:function(){new Ajax.Request('users/newbie',{method:'post',onSuccess:function(t,json){Intro.userData.newbie=false;Intro.show();$("intro").show();$('gameStart').hide();}});},setupGameConfigs:function(){var missions=Intro.campaignData.camp_data.metadata
+new Ajax.Request(GameConfigs.campaign+"/metadata",{method:'post',parameters:{'data':Object.toJSON({'mission':GameConfigs.mission.order,'win':win,'score':score})},onSuccess:function(t,json){var data=JSON.parse(t.responseText);Intro.campaignData.user_data.metadata=data['user_data']['metadata'];Intro.userData.rank=data['user_data'].rank;Intro.userData.exp=data['user_data'].exp;Intro.setupGameConfigs();callback();}});},newbieNoMore:function(){new Ajax.Request('users/newbie',{method:'post',onSuccess:function(t,json){Intro.userData.newbie=false;data=JSON.parse(t.responseText);Intro.userData.exp=data['user_data']['exp'];var oldRank=Intro.userData.rank;Intro.userData.rank=data['user_data']['rank'];Intro.show();$("intro").show();$('gameStart').hide();if(oldRank!=Intro.userData.rank)
+FBDefender.publishRankPromotion({name:Intro.userData.rank,image:"fb-"+Intro.userData.rank+'.png'});}});},setupGameConfigs:function(){var missions=Intro.campaignData.camp_data.metadata
 var mission=missions.find(function(mission){if(GameConfigs.missionPath==mission['path'])return true;})
 GameConfigs.mission=mission;var map=Intro.campaignData.user_data.metadata.missions[mission['order']-1]['map'];var mapFlipped=[];for(var i=0;i<map[0].length;i++)
 {mapFlipped[i]=[];}
 for(var i=0;i<map.length;i++)
 {for(var j=0;j<map[i].length;j++)
 {mapFlipped[j][i]=map[i][j];}}
-GameConfigs.map=mapFlipped;GameConfigs.mapEntry=Intro.campaignData.user_data.metadata.missions[mission['order']-1]['mapEntry'];GameConfigs.mapImage='challenges/'+GameConfigs.campaign+'/images'+Intro.missionPath()+'/path.png';GameConfigs.waves=Intro.campaignData.user_data.metadata.missions[mission['order']-1]['waves'];var towers=[];for(j in Intro.userData.metadata.towers)
-{towers.push(j);}
-var weapons=[];for(j in Intro.userData.metadata.weapons)
-{weapons.push(j);}
-GameConfigs.towers=towers;GameConfigs.superWeapons=weapons;GameConfigs.upgrades=[];GameConfigs.weaponsPackage=[];GameConfigs.rank=Intro.userData.rank;GameConfigs.exp=Intro.userData.exp;},showFloatBg:function(element){Intro.pages[Intro.sequence[Intro.currentPage]].setFloatBgInfo(element);$$("#"+Intro.sequence[Intro.currentPage]+" #"+"floatBg")[0].show();},hideFloatBg:function(){$$("#"+Intro.sequence[Intro.currentPage]+" #"+"floatBg")[0].hide();},enablePauseScreen:function(){$('pause').show()},disablePauseScreen:function(){$('pause').hide()},displayTutorial:function(){Intro.userData.newbie=true;city_defender_start();$('gameStart').show();$("intro").hide();onFinish()},show:function(){$$('.clickSound').each(function(element){element.observe('click',function(element){Sounds.play(Sounds.gameSounds.click)})})
+var towers=[],towerUpgrades={};for(var j in Intro.userData.metadata.towers)
+{towers.push(j);towerUpgrades[j]=Intro.userData.metadata.towers[j]['upgrades'];}
+var weapons=[],weaponUpgrades={};for(var j in Intro.userData.metadata.weapons)
+{weapons.push(j);weaponUpgrades[j]=Intro.userData.metadata.weapons[j]['upgrades'];}
+GameConfigs.map=mapFlipped;GameConfigs.mapEntry=Intro.campaignData.user_data.metadata.missions[mission['order']-1]['mapEntry'];GameConfigs.mapImage='challenges/'+GameConfigs.campaign+'/images'+Intro.missionPath()+'/path.png';GameConfigs.waves=Intro.campaignData.user_data.metadata.missions[mission['order']-1]['waves'];GameConfigs.towers=towers;GameConfigs.towerUpgrades=towerUpgrades;GameConfigs.weaponUpgrades=weaponUpgrades;GameConfigs.superWeapons=weapons;GameConfigs.rank=Intro.userData.rank;GameConfigs.exp=Intro.userData.exp;},showFloatBg:function(element){Intro.pages[Intro.sequence[Intro.currentPage]].setFloatBgInfo(element);$$("#"+Intro.sequence[Intro.currentPage]+" #"+"floatBg")[0].show();},hideFloatBg:function(){$$("#"+Intro.sequence[Intro.currentPage]+" #"+"floatBg")[0].hide();},enablePauseScreen:function(){$('pause').show()},disablePauseScreen:function(){$('pause').hide()},displayTutorial:function(){Intro.userData.newbie=true;city_defender_start();$('gameStart').show();$("intro").hide();onFinish()},show:function(){$$('.clickSound').each(function(element){element.observe('click',function(element){Sounds.play(Sounds.gameSounds.click)})})
 window.setTimeout(Intro.display,200);},display:function(){Intro.disablePauseScreen();if(Intro.currentPage>=0){$(Intro.sequence[Intro.currentPage]).hide();}
-Intro.currentPage=Intro.nextPageIndex;$(Intro.sequence[Intro.currentPage]).style['display']="block";$("intro").style['cursor']='auto';},next:function(current){Intro.enablePauseScreen();Intro.nextPageIndex=Intro.currentPage+1;var callback=function(){if(Intro.nextPageIndex==Intro.sequence.length)
+Intro.currentPage=Intro.nextPageIndex;$(Intro.sequence[Intro.currentPage]).style['display']="block";$("intro").style['cursor']='auto';},next:function(current){Intro.disabled=false;Intro.enablePauseScreen();Intro.nextPageIndex=Intro.currentPage+1;var callback=function(){if(Intro.nextPageIndex==Intro.sequence.length)
 Intro.finish();else{Intro.pages[Intro.sequence[Intro.currentPage+1]].onSelect();}}
-callback();},previous:function(current){Intro.enablePauseScreen();Intro.nextPageIndex=Intro.currentPage-1;var callback=function(){Intro.pages[Intro.sequence[Intro.currentPage-1]].onSelect();}
-callback();},select:function(page){Intro.enablePauseScreen();var index=Intro.pages[page].index
+callback();},previous:function(current){Intro.disabled=false;Intro.enablePauseScreen();Intro.nextPageIndex=Intro.currentPage-1;var callback=function(){Intro.pages[Intro.sequence[Intro.currentPage-1]].onSelect();}
+callback();},select:function(page){Intro.disabled=false;Intro.enablePauseScreen();var index=Intro.pages[page].index
 Intro.nextPageIndex=index;$("intro").style['curspr']='progress';var callback=function(){Intro.pages[Intro.sequence[index]].onSelect();}
 callback();},replay:function(){Intro.select('campaign');},finish:function(){Intro.setupGameConfigs();city_defender_start();Intro.disablePauseScreen();$('gameStart').show();$("intro").hide();onFinish()}}
 var Baloon=Class.create(Sprite,{x:0,y:0,initialize:function(num){this.parent=$('gameElements');this.div=document.createElement('div');this.div.setOpacity(0.7)
@@ -107,48 +114,49 @@ this.parent.appendChild(this.div);},render:function(ctx){this.div.style.left=thi
 this.div.style.top=this.y},destroy:function($super){$super()
 if(this.div)
 this.parent.removeChild(this.div)}})
-var Sounds={turret:{fire:[],reload:[],rocketPrepare:[],rocketLaunch:[],patriotLaunch:[]},doubleTurret:{fire:[]},boom:{unit:[]},plane:{move:[]},superWeapons:{weak:[],heal:[],nuke:[],hyper:[]},gameSounds:{},channels:[],play:function(store,direct){store[0].play()
-return
-Sounds.checkFinishedAudio()
-if(Sounds.channels.length==5)return
-if(direct){store[0].load()
-store[0].play()
-return}
-if(store.length>0){var audio=store.pop()
-Sounds.channels.push({audio:audio,store:store})
-audio.play()}},checkFinishedAudio:function(){var notFinished=[]
+var Sounds={turret:{fire:[],reload:[],rocketPrepare:[],rocketLaunch:[],patriotLaunch:[]},doubleTurret:{fire:[]},boom:{unit:[]},plane:{move:[]},superWeapons:{weak:[],heal:[],nuke:[],hyper:[]},gameSounds:{},channels:[],maxChannels:10,mute:function(){soundManager.mute()
+$$('.sound').first().stopObserving('click')
+$$('.sound').first().removeClassName('on')
+$$('.sound').first().addClassName('off')
+$$('.sound').first().observe('click',Sounds.soundOn)},soundOn:function(){soundManager.unmute()
+$$('.sound').first().stopObserving('click')
+$$('.sound').first().removeClassName('off')
+$$('.sound').first().addClassName('on')
+$$('.sound').first().observe('click',Sounds.mute)},garbageCollect:function(){newChannels=[]
+time=new Date
+Sounds.channels.each(function(sound){if(sound[0][0].duration<=time-sound[1]){sound[0][2]--}else{newChannels.push(sound)}})
+Sounds.channels=newChannels},play:function(store,direct){if(direct){store[0].play()
+return}else{this.garbageCollect();if(Sounds.channels.length>=Sounds.channelsMax){return}else if(store[2]>=store[1]){return}else{Sounds.channels.push([store,new Date])
+store[2]++
+store[0].play()}}},checkFinishedAudio:function(){var notFinished=[]
 Sounds.channels.each(function(channel){if(channel.audio.ended){channel.audio.load()
 channel.store.push(channel.audio)}else{notFinished.push(channel)}})
-Sounds.channels=notFinished},path:function(){return'sounds/sfx/'},format:'ogg'}
-var test=new Audio
-if(test.canPlayType('audio/mpeg')){Sounds.format='mp3'}
-else if(test.canPlayType('audio/ogg')){Sounds.format='ogg'}
+Sounds.channels=notFinished},path:function(){return'sounds/sfx/'},format:'mp3'}
 var soundNames=['accept','pause','wash','add_item','plane','add_money','rank_promotion','win','lose','reject','wrong_tower','click','correct_tower']
-function createSounds(){createAudioElements(2,Sounds.turret.fire,"bullet")
-createAudioElements(2,Sounds.turret.rocketLaunch,"rocket");createAudioElements(2,Sounds.turret.patriotLaunch,"patriot");createAudioElements(2,Sounds.boom.unit,"explosion")
+function createSounds(){createAudioElements(5,Sounds.turret.fire,"bullet")
+createAudioElements(5,Sounds.turret.rocketLaunch,"rocket");createAudioElements(5,Sounds.turret.patriotLaunch,"patriot");createAudioElements(5,Sounds.boom.unit,"explosion")
 createAudioElements(1,Sounds.superWeapons.heal,"heal")
 createAudioElements(1,Sounds.superWeapons.hyper,"hyper")
 createAudioElements(1,Sounds.superWeapons.nuke,"nuke")
 createAudioElements(1,Sounds.superWeapons.weak,"weak")
 for(var i=0;i<soundNames.size();i++){Sounds.gameSounds[soundNames[i]]=[]
-createAudioElements(1,Sounds.gameSounds[soundNames[i]],soundNames[i])}}
-function createAudioElements(count,store,url){var sound=soundManager.createSound({id:url,url:'sounds/sfx/mp3/'+url+'.mp3',autoLoad:true,autoPlay:false,volume:50});if(!store)store=[]
-store.push(sound)}
-soundManager.onready(function(){if(soundManager.supported()){createSounds()}});var Loader={callbacks:{},initialize:function(){var test=new Audio
-if(test.canPlayType('audio/mpeg')){this.soundsFormat='mp3'}
-else if(test.canPlayType('audio/ogg')){this.soundsFormat='ogg'}
-this.toLoad=["animations.html","intro.html","user.html","background.html","game.html","english.html","arabic.html","french.html"]
-this.soundIndex=this.toLoad.indexOf(this.soundsFormat+".html")},notify:function(win,resources){var div=win.document.getElementById('resources')
-while(resources.length>0){var resource=resources[0]
-resource=div.removeChild(resource)
-var id=resource.id
+createAudioElements(3,Sounds.gameSounds[soundNames[i]],soundNames[i])}}
+function createAudioElements(count,store,url){if(!store)store=[]
+var sound=soundManager.createSound({id:url,url:'sounds/sfx/mp3/'+url+'.mp3',autoLoad:true,autoPlay:false,volume:50});store.push(sound)
+store.push(count)
+store.push(0)}
+soundManager.onready(function(){if(soundManager.supported()){createSounds()}});var Loader={callbacks:{},initialize:function(){this.toLoad=["animations.html","intro.html","user.html","background.html","game.html","english.html","arabic.html","french.html"]},notify:function(win,resources){for(var i=0;i<resources.length-1;i++){var image=new Image
+var resource=resources[i]
+var id=resource[0]
 var parts=id.split('#')
 if(!Loader[parts[0]][parts[1]])Loader[parts[0]][parts[1]]={}
-Loader[parts[0]][parts[1]][parts[2]]=resource;}
+image.setAttribute('data',resource[1])
+image.src=resource[1]
+Loader[parts[0]][parts[1]][parts[2]]=image;}
 if(this.index==this.toLoad.length-1){this.index++
 if(development){city_defender_start()
 onFinish()}else{Loader.doneLoading=true;Intro.start();}}else if(this.index<this.toLoad.length-1){var found=false
-this.toLoad.each(function(url){if(win.document.URL.indexOf(url)>=0)found=true})
+this.toLoad.each(function(url){if(win.document.URL.indexOf(url.split('?')[0])>=0){found=true}})
 if(found){this.index++
 window.setTimeout(function(){$('iframe').src=Loader.toLoad[Loader.index]},100)}}
 var callbackKey=win.document.URL.split('/').pop();if(this.callbacks[callbackKey]){this.callbacks[callbackKey]();this.callbacks[callbackKey]=null;}},loadPage:function(page,callback){this.callbacks[page+".html"]=callback;$('pages').src="html_resources/"+page+".html"}}
@@ -168,7 +176,7 @@ ctx.fillStyle='red'
 ctx.fillRect(-16,-22,32,3)
 ctx.fillStyle='green'
 ctx.fillRect(-16,-22,32*this.hp/this.maxHp,3)
-ctx.restore()},})
+ctx.restore()}})
 var CompositeUnitSprite=Class.create(Sprite,{rotation:0,visible:true,layer:null,cannonRotation:0,initialize:function(images,hp,maxHp,properties){this.healthSprite=new HealthSprite(hp,maxHp)
 this.maxHp=maxHp
 this.hp=hp
@@ -243,7 +251,10 @@ this.towerCannonLayer.attach(turret.cannonSprite)
 this.towerHealthLayer.attach(turret.healthSprite)
 if(turret.rocketSprite)this.towerHealthLayer.attach(turret.rocketSprite)
 this.rankLayer.attach(turret.rankSprite)
-return this},addCreep:function(creep){creep.price=creep.price+0.25*this.waveNumber
+return this},addCreep:function(creep){creep.range+=1
+creep.maxHp=creep.maxHp/2
+creep.hp=creep.maxHp
+creep.price=creep.price+0.25*this.waveNumber
 this.scenario.notify({name:"creepEntered",method:false,unit:creep})
 if(this.turrets[0])this.scenario.notify({name:"creepEnteredTower",method:false,unit:this.turrets[0]})
 creep.hp=Math.round(creep.hp*Math.pow(this.creepMultiplier[this.config.level-1],this.waveNumber))
@@ -252,7 +263,10 @@ creep.maxHp=creep.hp
 if(creep){if(!this.firstCreep){this.firstCreep=true}
 this.creepsLayer.attach(creep.sprite)
 this.creeps.push(creep)}
-return this},addPlane:function(plane){plane.price=plane.price+0.25*this.waveNumber
+return this},addPlane:function(plane){plane.range+=1
+plane.maxHp=plane.maxHp/2
+plane.hp=plane.maxHp
+plane.price=plane.price+0.25*this.waveNumber
 plane.hp=Math.round(plane.hp*Math.pow(this.creepMultiplier[this.config.level-1],this.waveNumber))
 plane.power=Math.round(plane.power*Math.pow(this.creepPowerMultiplier[this.config.level-1],this.waveNumber))
 plane.maxHp=plane.hp
@@ -277,7 +291,7 @@ newArr.push(obj)}})
 return newArr},fire:function(name){try{this[name].fire()
 this.usedWeapons[name.capitalize()]++;}catch(e){}},startAttack:function(){this.sendWaves(this.config)
 this.renderStartAttack()},renderStartAttack:function(){var self=this
-$$('#gameElements .superWeapons div').each(function(div){if(div.className!=''){self[div.className].active=true
+$$('#gameElements .superWeapons div').each(function(div){if(Config.superWeapons.indexOf(div.className.capitalize())!=-1){self[div.className].active=true
 div.observe('click',function(){self.fire(div.className)})}})
 var startDev=$$('#gameElements .start').first()
 startDev.addClassName('resumed')
@@ -301,15 +315,7 @@ resumeDev.addClassName('resumed')
 $$(".start").first().stopObserving('click')
 var self=this
 $$('#gameElements .superWeapons div').each(function(div){if(div.className!=''){div.observe('click',function(){self.fire(div.className)})}})
-$$(".start").first().observe('click',function(){self.pause()})},displayStats:function(){if(this.statText){if(this.statText.length==this.statTextIndex){this.statText=''
-this.reactor.pause()
-return}else{var data=$('stats').innerHTML
-$('stats').innerHTML=data+this.statText[this.statTextIndex]
-this.statTextIndex++}}else{this.statText=this.templates['stats'].process({})
-this.statTextIndex=0
-$('stats').innerHTML=''}
-var self=this
-this.push(50,function(){self.displayStats()})},checkStatus:function(){var self=game.scene
+$$(".start").first().observe('click',function(){self.pause()})},displayStats:function(){$$('#score #scoreValue').first().innerHTML=this.score},checkStatus:function(){var self=game.scene
 if(this.running&&this.escaped>=this.maxEscaped){this.uploadScore(false,function(){self.end("lose")})
 return}else if(this.config&&this.playing){if(this.config.waves.length==0&&this.creeps.length==0&&this.waitingCreeps==0){this.uploadScore(true,function(){self.end("win");})
 return}else if(this.creeps.length==0&&this.waitingCreeps==0&&this.config.waves.length>0&&!this.wavePending&&this.running){this.waveNumber++
@@ -336,7 +342,7 @@ $('droppingGround').addClassName('off')
 new Effect.SwitchOff('static');new Effect.Appear("result",{delay:3.0})
 game.scene.push(3000,function(){Sounds.play(Sounds.gameSounds[state])})
 game.scene.push(3000,function(){self.displayStats()})
-game.scene.push(4000,function(){FBDefender.publishMissionCompletion({name:GameConfigs.missionPath,score:game.scene.score});});}
+game.scene.push(4000,function(){FBDefender.publishMissionCompletion({name:GameConfigs.missionPath,score:self.score});});}
 if(game.scene.rank!=Config.rank){Sounds.play(Sounds.gameSounds.rank_promotion)
 $('pauseWindow').style.zIndex=302
 $('pauseWindow').show()
@@ -376,8 +382,7 @@ creep.theta=theta
 self.issueCreep(creep,(theta==90||theta==270)?Math.round(Math.random()*(Map.width-1)):x,(theta==0||theta==180)?(Math.round(Math.random()*(Map.height-2))+1):y,delay)}else{self.issueCreep(creep,entry[0],entry[1],delay)}
 delay+=70*(32/creepCat.prototype.speed)+10
 self.waitingCreeps++;}
-self.push(delay+(32/creepCat.prototype.speed),function(){console.log('FALSE')
-self.wavePending=false;})})},sendWaves:function(config){if(this.playing)return;this.playing=true;this.wave=0
+self.push(delay+(32/creepCat.prototype.speed),function(){self.wavePending=false;})})},sendWaves:function(config){if(this.playing)return;this.playing=true;this.wave=0
 this.startTime=new Date()
 var wave=config.waves.pop()
 if(wave){this.sendWave(wave);this.wavePending=true}else{}},issueCreep:function(creep,x,y,delay){var self=this
@@ -389,7 +394,7 @@ else{self.addCreep(obj)}
 self.creepMutators.each(function(mutator){mutator.action(obj)})
 self.waitingCreeps--}catch(e){console.log(e)}})},uploadScore:function(win,callback){if(development)callback()
 else{var currRank=Config.rank;onSuccess=function(){$$('#rank img')[0].src="images/intro/ranks/"+Config.rank+".png";$$('.rankName')[0].innerHTML=Config.rank;callback();}
-Intro.sendScore(this.score,this.usedWeapons,win,onSuccess);}},sellSelectedTower:function(){this.money+=Math.round(this.selectedTower.price*0.75*this.selectedTower.hp/this.selectedTower.maxHp)
+Intro.sendScore(this.score,win,onSuccess);}},sellSelectedTower:function(){this.money+=Math.round(this.selectedTower.price*0.75*this.selectedTower.hp/this.selectedTower.maxHp)
 Map.grid[this.selectedTower.gridX][this.selectedTower.gridY].tower=null
 this.selectedTower.destroySprites()
 this.selectedTower=null},upgradeSelectedTower:function(){this.selectedTower.upgrade()},updateMeters:function(tower){if(tower.upgrades[tower.rank]){if(tower.upgrades[tower.rank].power)
@@ -399,7 +404,7 @@ $('rateMeter').style.borderRight=(tower.upgrades[tower.rank].rate-tower.rate)*65
 if(tower.upgrades[tower.rank].range)
 $('rangeMeter').style.borderRight=(tower.upgrades[tower.rank].range-tower.range)*65/6+"px solid red"
 if(tower.upgrades[tower.rank].maxHp)
-$('shieldsMeter').style.borderRight=(tower.upgrades[tower.rank].maxHp-tower.maxHp)*65/3100+"px solid red"}},waitingCreeps:0,wavePending:false,escaped:0,ctx:null,topCtx:null,maxEscaped:20,money:100,delay:25,fps:0,score:0,moneyMultiplier:[1.2,1.1,1.05],creepMultiplier:[1.05,1.1,1.15],creepPowerMultiplier:[1.1,1.15,1.2],wave:0,sound:true,wavesCount:0,skipFrames:0})
+$('shieldsMeter').style.borderRight=(tower.upgrades[tower.rank].maxHp-tower.maxHp)*65/3100+"px solid red"}},waitingCreeps:0,wavePending:false,escaped:0,ctx:null,topCtx:null,maxEscaped:20,money:200,delay:25,fps:0,score:0,moneyMultiplier:[1.2,1.1,1.05],creepMultiplier:[1.05,1.1,1.15],creepPowerMultiplier:[1.1,1.15,1.2],wave:0,sound:true,wavesCount:0,skipFrames:0})
 var TutorialScene=Class.create(CityDefenderScene,{initialize:function($super,config,delay,baseCtx,upperCtx){$super(config,delay,baseCtx,upperCtx)
 $$('#gameElements .superWeapons div').each(function(div){})},addCreep:function($super,creep){if(this.waveNumber==2){creep.hp=creep.maxHp=80}else{creep.hp=creep.maxHp=20}
 $super(creep)},addPlane:function($super,plane){plane.hp=plane.maxHp=20
@@ -412,7 +417,7 @@ $super(wave)},end:function(status){game.tutorial.wishLuck()},uploadScore:functio
 var Map={pitch:32,width:20,height:15,grid:[],tiles:[new Image(),new Image()],bgGrid:[[0,0,1,1,0,0,0,0,0,0,0,0,0,0,0],[0,0,1,1,0,0,0,0,0,0,0,0,0,0,0],[0,0,1,1,0,1,1,1,1,1,0,1,1,1,1],[0,0,1,1,0,1,1,1,1,1,0,1,1,1,1],[0,0,1,1,0,1,1,0,1,1,0,1,1,0,0],[0,0,1,1,0,1,1,0,1,1,0,1,1,0,0],[0,0,1,1,0,1,1,0,1,1,0,1,1,0,0],[0,0,1,1,0,1,1,0,1,1,1,1,1,0,0],[0,0,1,1,0,1,1,0,1,1,1,1,1,0,0],[0,0,1,1,0,1,1,0,0,0,0,0,0,0,0],[0,0,1,1,0,1,1,1,1,1,1,1,1,0,0],[0,0,1,1,0,1,1,1,1,1,1,1,1,0,0],[0,0,1,1,0,0,0,0,0,0,0,1,1,0,0],[0,0,1,1,0,1,1,1,1,1,0,1,1,0,0],[0,0,1,1,0,1,1,1,1,1,0,1,1,0,0],[0,0,1,1,0,1,1,0,1,1,0,1,1,0,0],[0,0,1,1,1,1,1,0,1,1,1,1,1,0,0],[0,0,1,1,1,1,1,0,1,1,1,1,1,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]],entry:[[0,2],[0,3]],init:function(){for(var i=0;i<this.width;i++){this.grid[i]=[]
 for(var j=0;j<this.height;j++){this.grid[i][j]=[]
 this.grid[i][j].tower=null}}},value:function(x,y){return Map.bgGrid[Math.floor(x/Map.pitch)][Math.floor(y/Map.pitch)]},findTile:function(x,y){return[Math.floor(x/this.pitch),Math.floor(y/this.pitch)]},transform:function(x){return Math.floor(x/this.pitch)*this.pitch},empty:function(x,y){if(!this.grid[x])return false;if(!this.grid[x][y])return true;return this.grid[x][y].tower==null}}
-var tutorialConfig={campaign:"tunisia",exp:29,level:3,mapImage:"challenges/tunisia/sfax/images/path.png",superWeapons:["Splash","Hyper","Nuke","Weak","Heal"],towers:["Turret"],upgrades:["Bullets","Shields"],waves:[[{category:"Tank",count:"5"}],[{category:"Tank",count:"10"}],[{category:"Tank",count:"10"}],[{category:"Plane",count:"3"}]],rank:"PVT"}
+var tutorialConfig={campaign:"tunisia",exp:29,level:3,mapImage:"challenges/tunisia/sfax/images/path.png",superWeapons:["Splash","Hyper","Nuke","Weak","Heal"],towers:["Turret"],weaponUpgrades:{"Splash":1,"Hyper":1,"Weak":1,"Heal":1,"Nuke":1},towerUpgrades:{"Turret":1},upgrades:["Bullets","Shields"],waves:[[{category:"Tank",count:"5"}],[{category:"Tank",count:"10"}],[{category:"Tank",count:"10"}],[{category:"Plane",count:"3"}]],rank:"PVT"}
 var T={start:"start",resume:"resume",pause:"pause"}
 var Game=Class.create({initialize:function(delay){},start:function(){Map.init();if(Intro.userData.newbie)Config=tutorialConfig
 else Config=GameConfigs
@@ -429,14 +434,23 @@ $$('.startText').first().innerHTML=T.start
 var arr=['Splash','Heal','Hyper','Weak','Nuke']
 arr.each(function(weapon){if(Config.superWeapons.indexOf(weapon)==-1){game.scene[weapon.toLowerCase()].deactivate()}})
 this.scene.start();},prepareConfig:function(){var inputNames=["Belcher","Reaper","Exploder","Patriot"]
-var replacement=["Turret","DoubleTurret","Exploder","Patriot"]
-var ind=Config.towers.indexOf("Belcher")
-if(ind!=-1){Config.towers[ind]="Turret"}
-var ind=Config.towers.indexOf("Reaper")
-if(ind!=-1){Config.towers[ind]="DoubleTurret"}
-var ind=Config.towers.indexOf("Exploder")
-if(ind!=-1){Config.towers[ind]="RocketLauncher"}
-var ind=Config.towers.indexOf("Patriot")
+var replacement=["Turret","DoubleTurret","RocketLauncher","Patriot"]
+var upgradeValues=["maxHp","power","range","rate","price"]
+for(var i=0;i<inputNames.length;i++){var ind=Config.towers.indexOf(inputNames[i])
+if(ind!=-1){Config.towers[ind]=replacement[i]
+var values=Intro.gameData.towers[inputNames[i]].upgrades
+var upgrades=[]
+upgradeValues.each(function(upgradeValue){eval(replacement[i]).prototype[upgradeValue]=values[0][upgradeValue]})
+eval(replacement[i]).prototype.maxRank=Config.towerUpgrades[inputNames[i]]-1
+for(var j=1;j<values.length;j++){var value=values[j]
+var upgrade={}
+upgradeValues.each(function(upgradeValue){upgrade[upgradeValue]=value[upgradeValue]})
+upgrades.push(upgrade)}
+eval(replacement[i]).prototype.upgrades=upgrades}}
+var weaponValues=Intro.gameData.weapons
+Config.superWeapons.each(function(weapon){eval(weapon).prototype.factor1=weaponValues[weapon].upgrades[Config.weaponUpgrades[weapon]-1].factor1
+eval(weapon).prototype.factor2=weaponValues[weapon].upgrades[Config.weaponUpgrades[weapon]-1].factor2
+eval(weapon).prototype.cooldown=weaponValues[weapon].upgrades[Config.weaponUpgrades[weapon]-1].cooldown})
 if(Config.superWeapons.indexOf('Splash')!=-1&&Config.superWeapons[0]!="Splash"){var x=Config.superWeapons[0]
 var y=Config.superWeapons.indexOf("Splash")
 Config.superWeapons[0]="Splash"
@@ -461,13 +475,23 @@ var img8=Loader.images.background['character.png']
 $$('#modalWindow #character').first().appendChild(img8)
 var img9=document.createElement("IMG");$$('#gameElements .superWeapons div').each(function(div){if(div.className!=''){div.appendChild(Loader.images.background[div.className+'_button.png'])}})
 $$('#gameElements .superWeaponsOff div').each(function(div){if(div.className!=''){div.appendChild(Loader.images.background[div.className+'_button_off.png'])}})
+var image1=new Image()
+var image2=new Image()
+image1.src=Loader.images.background['exit_restart_button.png'].src
+image2.src=Loader.images.background['exit_restart_button.png'].src
+$('gameReset').appendChild(image1)
+$('gameExit').appendChild(image2)
 $$('#rank img')[0].src="images/intro/ranks/"+Config.rank+".png";$$('.rankName')[0].innerHTML=Config.rank;},registerHandlers:function(){var self=this
 $$('.towers div').invoke('observe','click',function(){Sounds.play(Sounds.gameSounds.click);GhostTurret.select(this)})
 $$('#gameElements .superWeapons div').each(function(div){if(div.className!=''){div.observe('click',function(){self.scene.fire(div.className)})
 self.scene[div.className].active=false}})
 $$('#gameElements .start').first().observe('click',function(){self.scene.startAttack()})
 $('playAgain').observe('click',game.reset)
-$('exit').observe('click',game.exit)},reset:function(){game.scene.reactor.pause()
+$('exit').observe('click',game.exit)
+$('gameExit').observe('click',game.exit)
+$('gameReset').observe('click',game.reset)
+$$('.bookmark').first().observe('click',FBConnect.bookmark)
+$$('.sound').first().observe('click',Sounds.mute)},reset:function(){game.scene.reactor.stop()
 new Effect.Fade('static')
 $$('#gameElements .start').first().stopObserving('click')
 $$('#gameElements .start').first().removeClassName('resumed')
@@ -476,10 +500,17 @@ game.unRegisterHandlers()
 $('droppingGround').removeClassName('off')
 $('result').hide()
 $$('#gameElements .superWeapons div').each(function(div){if(div.className!=''){div.stopObserving('click')}})
-game.start()},exit:function(){Intro.enablePauseScreen();$('gameStart').hide()
+game.start()},exit:function(){game.scene.reactor.stop()
+Intro.enablePauseScreen();$('gameStart').hide()
 $("gameStart").innerHTML=Intro.templates['game'];Intro.replay();onFinish()},unRegisterHandlers:function(){$$('.towers div').invoke('stopObserving','click')
 $$('#gameElements .start').first().stopObserving('click')
-$$('#gameElements .superWeapons div').each(function(div){if(div.className!=''){div.stopObserving('click')}})},});var game=new Game()
+$$('#gameElements .superWeapons div').each(function(div){if(div.className!=''){div.stopObserving('click')}})
+$('playAgain').stopObserving('click')
+$('exit').stopObserving('click')
+$('gameExit').stopObserving('click')
+$('gameReset').stopObserving('click')
+$$('.bookmark').first().stopObserving('click')
+$$('.sound').first().stopObserving('click')}});var game=new Game()
 function city_defender_start(){$$("canvas").each(function(canvas){canvas.width=Map.width*Map.pitch
 canvas.height=Map.height*Map.pitch})
 game.setGameImages()
@@ -516,7 +547,7 @@ if(this.hp<=0){var anim=new CreepBoom(this.x,this.y)
 game.scene.rankLayer.attach(anim)
 game.scene.objects.push(anim)
 this.dead=true;this.die();Sounds.play(Sounds.boom.unit)}
-return this;},die:function(){alert('die not implemented')},hp:100,maxHp:100,rate:0.2,toFire:0,reloded:true,fired:false,power:2.5,range:2,x:0,y:0,gridX:0,gridY:0,})
+return this;},die:function(){alert('die not implemented')},hp:100,maxHp:100,rate:0.2,toFire:0,reloded:true,fired:false,power:2.5,range:2,x:0,y:0,gridX:0,gridY:0})
 var Creep=Class.create(Unit,{parent:"creep",speeds:[0,1.08,2.245,4.852,6.023,7.945,11.71,22.625],angles:[0,3.75,7.5,15,18,22.5,30,45],cannonTheta:0,olderTheta:0,oldestTheta:0,hp:100,maxHp:100,speed:4,price:4,evading:false,direction:0,rate:0.1,power:1.0,cannonDisplacement:[-4,0],turningPoint:[0,0],range:1,initialize:function($super,x,y,scene,extension){$super(x,y,scene,extension)
 Map.grid[x][y].push(this)
 this.initImages()
@@ -587,10 +618,10 @@ this.destroySprites()
 var moneyAnim=new MoneyAnimation(this.x-10,this.y-5,Math.floor(this.price))
 this.scene.objects.push(moneyAnim)
 this.scene.money+=Math.floor(this.price);this.scene.stats.creepsDestroyed++
-this.scene.score+=Math.floor(this.maxHp/100)*this.scene.config.level},destroySprites:function(){var cell=Map.grid[this.gridX][this.gridY];cell.splice(cell.indexOf(this),1);this.sprite.destroy()
+this.scene.score+=Math.round(this.maxHp/100)*this.scene.config.level},destroySprites:function(){var cell=Map.grid[this.gridX][this.gridY];cell.splice(cell.indexOf(this),1);this.sprite.destroy()
 if(this.baloon)this.baloon.destroy()
 this.dead=true}})
-var Turret=Class.create(Unit,{theta:0,cannonTheta:0,rank:0,maxRank:3,fireSound:Sounds.turret.fire,canHitFlying:true,canHitGround:true,name:'Belcher',targets:'Air &<br/>Ground',facilities:'Fires Bullets',cssClass:'tower',hp:500,maxHp:500,power:10,rate:0.2,price:15,range:2,upgradeValues:['maxHp','power','rate','range'],upgrades:[{maxHp:1100,power:18,price:3},{maxHp:1300,power:22,price:8,range:3},{maxHp:1600,power:26,rate:0.3,price:21,range:4}],initialize:function($super,x,y,scene,extension){$super(x,y,scene,extension)
+var Turret=Class.create(Unit,{theta:0,cannonTheta:0,rank:0,fireSound:Sounds.turret.fire,canHitFlying:true,canHitGround:true,name:'Belcher',targets:'Air &<br/>Ground',facilities:'Fires Bullets',cssClass:'tower',hp:500,maxHp:500,power:10,rate:0.2,price:15,range:2,upgradeValues:['maxHp','power','rate','range'],upgrades:[{maxHp:1100,power:18,price:3},{maxHp:1300,power:22,price:8,range:3},{maxHp:1600,power:26,rate:0.3,price:21,range:4}],initialize:function($super,x,y,scene,extension){$super(x,y,scene,extension)
 this.initImages()
 this.createSprites()},upgrade:function(){if(this.rank==this.maxRank)return
 var upgrade=this.upgrades[this.rank]
@@ -704,7 +735,7 @@ this.rocketSprite.images=[Loader.images.game['patriot_rocket.png']]
 this.scene.basesLayer.attach(this.rocketSprite)
 this.rocketSprite.rotation=Nezal.degToRad(this.theta)
 this.rocketSprite.moveTo(this.x,this.y)},modifySprites:function(){this.rocketSprite.rotation=Nezal.degToRad(this.theta)
-this.rocketSprite.transitionX=-(this.step*this.speed)},speed:10,})
+this.rocketSprite.transitionX=-(this.step*this.speed)},speed:10})
 var ghostTurretFeatures={validate:function(){this.valid=true
 try{if(Map.grid[this.xGrid]&&Map.grid[this.xGrid][this.yGrid])
 if(this.xGrid==Map.bgGrid.length-1||Map.grid[this.xGrid][this.yGrid].tower||Map.bgGrid[this.xGrid][this.yGrid]>0||game.scene.money<this.tower.prototype.price){this.valid=false}}
@@ -764,13 +795,13 @@ ctx.beginPath();ctx.arc(0,0,128,0,Math.PI*2,false)
 ctx.closePath();ctx.fill();ctx.fillStyle='rgba(255,0,0,0.9)'
 ctx.fillRect(32,0,32,32)}
 ctx.restore();}}
-var Humvee=Class.create(Creep,{name:'Humvee',hp:300,maxHp:300,speed:4,price:2,cannonDisplacement:[-1,1],images:{},initImages:function(){this.images={base:Loader.images.game['humvee_body.png'],cannon:Loader.images.game['humvee_tower.png'],fire:Loader.images.game['humvee_tower_in_action.png'],}}})
-var Tank=Class.create(Creep,{name:'Tank',images:{},price:1,power:1,initImages:function(){this.images={base:Loader.images.game['tank_body.png'],cannon:Loader.images.game['tank_tower.png'],fire:Loader.images.game['tank_tower_in_action.png'],}}})
-var TankI=Class.create(Creep,{images:{},name:'TankI',price:1,hp:250,maxHp:250,initImages:function(){this.images={base:Loader.images.game['tank_1_body.png'],cannon:Loader.images.game['tank_1_tower.png'],fire:Loader.images.game['tank_1_tower_in_action.png'],}}})
-var TankII=Class.create(Creep,{images:{},name:'TankII',price:2,speed:8,hp:250,maxHp:250,initImages:function(){this.images={base:Loader.images.game['tank_2_body.png'],cannon:Loader.images.game['tank_2_tower.png'],fire:Loader.images.game['tank_2_tower_in_action.png'],}}})
-var BlackTank=Class.create(Creep,{images:{},name:'BlackTank',price:50,hp:2000,maxHp:2000,speed:2,power:3,initImages:function(){this.images={base:Loader.images.game['black_tank_body.png'],cannon:Loader.images.game['black_tank_tower.png'],fire:Loader.images.game['black_tank_tower_in_action.png'],}}})
-var RedTank=Class.create(Creep,{images:{},name:'RedTank',price:3,hp:150,maxHp:150,initImages:function(){this.images={base:Loader.images.game['red_tank_body.png'],cannon:Loader.images.game['red_tank_tower.png'],fire:Loader.images.game['red_tank_tower_in_action.png'],}}})
-var Plane=Class.create(Creep,{name:'Plane',parent:'Plane',flying:true,hp:150,maxHp:150,speed:4,power:1,rate:0.1,range:2,price:2,initialize:function($super,x,y,extension){$super(x,y,extension)
+var Humvee=Class.create(Creep,{name:'Humvee',hp:275,maxHp:275,speed:4,price:2,cannonDisplacement:[-1,1],images:{},initImages:function(){this.images={base:Loader.images.game['humvee_body.png'],cannon:Loader.images.game['humvee_tower.png'],fire:Loader.images.game['humvee_tower_in_action.png']}}})
+var Tank=Class.create(Creep,{name:'Tank',images:{},price:1,power:1,initImages:function(){this.images={base:Loader.images.game['tank_body.png'],cannon:Loader.images.game['tank_tower.png'],fire:Loader.images.game['tank_tower_in_action.png']}}})
+var TankI=Class.create(Creep,{images:{},name:'TankI',price:1,hp:225,maxHp:225,initImages:function(){this.images={base:Loader.images.game['tank_1_body.png'],cannon:Loader.images.game['tank_1_tower.png'],fire:Loader.images.game['tank_1_tower_in_action.png']}}})
+var TankII=Class.create(Creep,{images:{},name:'TankII',price:2,speed:8,hp:225,maxHp:225,initImages:function(){this.images={base:Loader.images.game['tank_2_body.png'],cannon:Loader.images.game['tank_2_tower.png'],fire:Loader.images.game['tank_2_tower_in_action.png']}}})
+var BlackTank=Class.create(Creep,{images:{},name:'BlackTank',price:50,hp:2000,maxHp:2000,speed:2,power:3,initImages:function(){this.images={base:Loader.images.game['black_tank_body.png'],cannon:Loader.images.game['black_tank_tower.png'],fire:Loader.images.game['black_tank_tower_in_action.png']}}})
+var RedTank=Class.create(Creep,{images:{},name:'RedTank',price:3,power:2,hp:125,maxHp:125,initImages:function(){this.images={base:Loader.images.game['red_tank_body.png'],cannon:Loader.images.game['red_tank_tower.png'],fire:Loader.images.game['red_tank_tower_in_action.png']}}})
+var Plane=Class.create(Creep,{name:'Plane',parent:'Plane',flying:true,hp:125,maxHp:125,speed:4,power:1,rate:0.1,range:2,price:2,initialize:function($super,x,y,extension){$super(x,y,extension)
 this.theta=0},initImages:function(){this.images={base:Loader.images.game['air_craft.png'],fire:Loader.images.game['air_craft_in_action.png'],shadow:Loader.images.game['air_craft_shade.png']}},createSprites:function(){this.cannonSprite=new Sprite([this.images.base,this.images.fire])
 this.shadowSprite=new Sprite([this.images.shadow])
 this.healthSprite=new HealthSprite(this.hp,this.maxHp)
@@ -797,11 +828,11 @@ var moneyAnim=new MoneyAnimation(this.x-10,this.y-5,Math.floor(this.price))
 this.scene.objects.push(moneyAnim)
 if(Map.grid[this.gridX]&&Map.grid[this.gridX][this.gridY]){var cell=Map.grid[this.gridX][this.gridY];var res=cell.splice(cell.indexOf(this),1);}
 this.scene.money+=Math.floor(this.price);this.scene.stats.creepsDestroyed++
-this.scene.score+=Math.floor(this.maxHp/100)*this.scene.config.level},destroySprites:function(){this.dead=true
+this.scene.score+=Math.round(this.maxHp/100)*this.scene.config.level},destroySprites:function(){this.dead=true
 this.cannonSprite.destroy()
 this.shadowSprite.destroy()
 this.healthSprite.destroy()}})
-var RedPlane=Class.create(Plane,{hp:150,maxHp:150,speed:6,power:1,rate:0.1,range:2,price:3,initImages:function(){this.images={base:Loader.images.game['red_air_craft.png'],fire:Loader.images.game['red_air_craft_in_action.png'],shadow:Loader.images.game['air_craft_shade.png']}}})
+var RedPlane=Class.create(Plane,{hp:125,maxHp:125,speed:6,power:1,rate:0.1,range:2,price:3,initImages:function(){this.images={base:Loader.images.game['red_air_craft.png'],fire:Loader.images.game['red_air_craft_in_action.png'],shadow:Loader.images.game['air_craft_shade.png']}}})
 var Animation=Class.create({x:0,y:0,dead:false,currentFrame:0,delay:1,delayIndex:0,dx:20,dy:20,fps:0,score:0,initialize:function(x,y){this.visible=true
 this.frames=[]
 this.x=x;this.y=y;this.initImages()},initImages:function(){},tick:function(){this.delayIndex++
@@ -822,7 +853,7 @@ var VerticalArrowAnimation=Class.create(Animation,{dx:0,dy:0,increment:0,initIma
 this.y+=3
 this.increment+=3
 this.currentFrame=1}})
-var WeakAnimation=Class.create(Animation,{type:'weak',tick:function(){},render:function(ctx){game.scene.creeps.each(function(creep){ctx.drawImage(Loader.images.game['weak.png'],creep.x-16,creep.y-16)})},})
+var WeakAnimation=Class.create(Animation,{type:'weak',tick:function(){},render:function(ctx){game.scene.creeps.each(function(creep){ctx.drawImage(Loader.images.game['weak.png'],creep.x-16,creep.y-16)})}})
 var MoneyAnimation=Class.create(Animation,{increment:0,initialize:function($super,x,y,money){this.money=money
 $super(x,y)
 this.frames=Loader.animations.coins},initImages:function(){this.parent=$('gameElements');this.div=document.createElement('div');this.div.innerHTML="+"+this.money
@@ -835,15 +866,14 @@ this.increment+=3
 this.y-=3
 this.div.style.top=this.y},finish:function($super){$super()
 this.parent.removeChild(this.div)}})
-var SuperWeapon=Class.create({initialize:function(scene,options){this.scene=scene
+var SuperWeapon=Class.create({factor1:0,factor2:0,cooldown:15,initialize:function(scene,options){this.scene=scene
 var options=options||{}
 this.active=true
 this.count=options.count||0
-this.coolDown=options.coolDown||15
 this.progressInterval=options.progressInterval||1
 this.type=options.type},fire:function(){if(!this.active)return
 try{this.action()
-this.clockEffect($$('#gameElements .superWeapons .'+this.type+' img').first(),this.coolDown)}catch(e){}},render:function(){},action:function(){},activate:function(){this.active=true
+this.clockEffect($$('#gameElements .superWeapons .'+this.type+' img').first(),this.cooldown)}catch(e){}},render:function(){},action:function(){},activate:function(){this.active=true
 this.renderActivate()},progressTick:function(){this.progress++
 this.notify(this.progress)
 if(this.progress==this.coolDown){if(this.count>0)this.activate()}else{var self=this
@@ -881,7 +911,7 @@ div.observe('click',function(){self.scene.fire(div.className)})
 div.setOpacity(1)}else{var self=this
 this.scene.push(this.progressInterval,function(){self.activate()})}},renderDeactivate:function(){var div=$$('#gameElements .superWeapons div.'+this.type)[0]
 div.stopObserving('click')
-div.setOpacity(0);},})
+div.setOpacity(0);}})
 var Weak=Class.create(SuperWeapon,{action:function(){Sounds.play(Sounds.superWeapons.weak,true)
 var anim=new WeakAnimation()
 this.scene.scenario.notify({name:"superWeaponsNuke",method:false,unit:this.scene.creeps.random()})
@@ -889,11 +919,11 @@ this.scene.objects.push(anim)
 this.scene.rocketsLayer.attach(anim)
 var self=this
 this.weak(0)},weak:function(count){var self=this
-this.scene.creeps.each(function(creep){creep.takeHit(Math.floor(creep.hp*0.1));})
+this.scene.creeps.each(function(creep){creep.takeHit(Math.floor(creep.hp*self.factor1));})
 count++
 var self=this
-if(count<10){this.scene.push(1000,function(){self.weak(count);})}
-else this.scene.push(5000,function(){self.unWeak()})},unWeak:function(){var index=-1
+if(count<self.factor2){this.scene.push(1000,function(){self.weak(count);})}
+else self.unWeak()},unWeak:function(){var index=-1
 this.scene.objects.each(function(obj,i){if(index==-1&&obj.constructor==WeakAnimation){index=i}})
 var anim=this.scene.objects.splice(index,1)[0]
 anim.layer=null}})
@@ -903,7 +933,7 @@ var y=[0,Map.height*Map.pitch-1][Math.round(Math.random())]
 Sounds.play(Sounds.turret.rocketLaunch,true)
 Sounds.play(Sounds.turret.rocketLaunch,true)
 var self=this
-this.scene.creeps.sort(function(a,b){return b.hp-a.hp}).slice(0,10).each(function(creep){self.scene.rockets.push(new PatriotRocket(0,0,self.scene,{theta:0,targetUnit:creep,x:x,y:y,power:2000,speed:15}))})}})
+this.scene.creeps.sort(function(a,b){return b.hp-a.hp}).slice(0,self.factor2).each(function(creep){self.scene.rockets.push(new PatriotRocket(0,0,self.scene,{theta:0,targetUnit:creep,x:x,y:y,power:creep.maxHp*self.factor1,speed:15}))})}})
 var Nuke=Class.create(SuperWeapon,{action:function(){this.scene.scenario.notify({name:"superWeaponsNuke",method:false,unit:this.scene.creeps.random()})
 Sounds.play(Sounds.superWeapons.nuke,true)
 function startNuke(){this.scene.creeps.each(function(creep){creep.takeHit(Math.round(creep.hp*1));})
@@ -914,16 +944,16 @@ this.scene.push(1000,startNuke,this)}})
 var Heal=Class.create(SuperWeapon,{action:function(){this.scene.scenario.notify({name:"superWeaponsHeal",method:false,unit:this.scene.turrets.random()})
 Sounds.play(Sounds.superWeapons.heal,true)
 var self=this
-self.scene.turrets.each(function(tower){tower.hp=tower.maxHp
+self.scene.turrets.each(function(tower){tower.hp=Math.min(tower.maxHp,tower.hp+tower.maxHp*self.factor1)
 var anim=new HealAnimation(tower.x,tower.y-43)
 self.scene.objects.push(anim)
 self.scene.rocketsLayer.attach(anim)})}})
 var Hyper=Class.create(SuperWeapon,{action:function(){var self=this
 this.scene.scenario.notify({name:"superWeaponsHyper",method:false,unit:this.scene.turrets.random()})
 Sounds.play(Sounds.superWeapons.hyper,true)
-var hyper=function(tower){tower.rate*=2;}
+var hyper=function(tower){tower.rate*=self.factor1;}
 this.scene.turrets.each(hyper)
-this.scene.push(20000,function(){self.unHyper();})
+this.scene.push(self.factor2*1000,function(){self.unHyper();})
 this.scene.towerMutators.push({name:'hyper',action:hyper})},unHyper:function(){var self=this
 self.scene.turrets.each(function(tower){tower.rate/=2;});var index=-1
 this.scene.towerMutators.splice(index,1)}})
@@ -1074,7 +1104,7 @@ this.scenario['superWeaponsSplash']=["What is this?!","Run!!","Rockets, Run!"]
 this.scenario['superWeaponsNuke']=["Wha..","Ru...","I see a ...","Lights ...","#3aaaa.."]
 this.scenario['superWeaponsHyper']=["COFFEE!!","GOOD STUFF!!","I AM HYPER!!","WEEHAAAA!"]
 this.scenario['creepEntered']=["Born to destroy!!","ATTAAACK!!","RUN THEM OVER!!","CRUSH THEM!"]
-this.scenario['creepEnteredTower']=["BRING IT ON!!","HOLD!!","STAND YOUR GROUND!!","That's all you got?"]},})
+this.scenario['creepEnteredTower']=["BRING IT ON!!","HOLD!!","STAND YOUR GROUND!!","That's all you got?"]}})
 var RangeSprite=Class.create(Sprite,{initialize:function(range){this.range=range
 this.visible=false},render:function(ctx){ctx.save()
 ctx.translate(Map.transform(this.x)-Map.pitch,Map.transform(this.y))

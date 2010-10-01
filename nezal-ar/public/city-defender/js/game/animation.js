@@ -113,7 +113,7 @@ var WeakAnimation = Class.create(Animation, {
 		game.scene.creeps.each(function(creep){
 			ctx.drawImage(Loader.images.game['weak.png'], creep.x - 16, creep.y - 16)
 		})
-	},
+	}
 })
 var MoneyAnimation = Class.create(Animation, {
 	increment : 0,

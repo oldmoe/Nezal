@@ -10,14 +10,16 @@ var Loader = {
 	},
 
 	notify : function(win, resources){
-		var div = win.document.getElementById('resources')
-		while(resources.length>0){
-			var resource = resources[0]
-			resource = div.removeChild(resource)
-			var id = resource.id
+		for(var i=0; i < resources.length-1 ;i++){	
+			var image = new Image
+			var resource = resources[i]
+			var id = resource[0]
 			var parts = id.split('#')
 			if(!Loader[parts[0]][parts[1]])Loader[parts[0]][parts[1]] = {}
-			Loader[parts[0]][parts[1]][parts[2]] = resource;
+			image.setAttribute('data', resource[1])
+			image.src = resource[1]
+			//$('images').appendChild(image)
+			Loader[parts[0]][parts[1]][parts[2]] = image;
 		}
 		if(this.index == this.toLoad.length-1){
 			this.index++

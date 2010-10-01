@@ -105,7 +105,7 @@ var Carousel = Class.create( {
             this.left.src = this.images['left'];
             this.left.removeClassName('leftOff');
         }
-        if( (this.currIndex == (this.listSize - this.displayCount )) || (this.listSize < this.displayCount))
+		if( (this.currIndex == (this.listSize - this.displayCount )) || (this.listSize < this.displayCount))
         {
             this.right.addClassName('rightOff');
             this.right.src = this.images['right-disabled'];

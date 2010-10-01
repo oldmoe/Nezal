@@ -1,4 +1,4 @@
-  class AdminController < ApplicationController 
+class AdminController < ApplicationController 
   
   ADMIN_URL = "nezal-admin"
 
@@ -96,7 +96,7 @@
   put '/:game_name/metadata' do 
     @game = Game.find_by_name(params[:game_name])
     klass = self.get_helper_klass
-    klass.edit(@game, params["data"])
+    klass.edit_game(@game, params["data"])
     ''
   end
   

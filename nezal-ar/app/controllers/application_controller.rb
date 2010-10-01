@@ -11,26 +11,19 @@ class ApplicationController < Sinatra::Base
       @app_configs = FB_CONFIGS::find('name', app_name)
     	if @app_configs && get_fb_session
     	  begin
-    	    if 	ENV['RACK_ENV'] == "development"
-            @game = Game.where( 'name' =>app_name).first
-            @user = FbUser.where( 'fb_id' => @fb_uid ).first
-            if(!@user)
-              LOGGER.debug "User not found, creating one"
-              @user = FbUser.create('fb_id' => @fb_uid )
-            end
-            @game_profile = UserGameProfile.where('game_id' => @game.id, 'user_id' => @user.id).first
-            if !(@game_profile)
-              LOGGER.debug "Game profile not found, creating one"
-              @game_profile = UserGameProfile.new()
-              @game_profile.game= @game
-              @game_profile.user= @user
-              get_helper_klass.init_game_profile(@game_profile)
-              @game_profile.save!()
-            end
-          else
-            @game = Game.where('name'=>app_name).first
-            @user = FbUser.where('fb_id'=>@fb_uid).first
-            @game_profile = UserGameProfile.where(game_id => @game.id, user_id => @user.id).first
+          @game = Game.where( 'name' =>app_name).first
+          @user = FbUser.where( 'fb_id' => @fb_uid ).first
+          if(!@user)
+            @user = FbUser.create('fb_id' => @fb_uid )
+          end
+          @game_profile = UserGameProfile.where('game_id' => @game.id, 'user_id' => @user.id).first
+          if !(@game_profile)
+            LOGGER.debug "Game profile not found, creating one"
+            @game_profile = UserGameProfile.new()
+            @game_profile.game= @game
+            @game_profile.user= @user
+            get_helper_klass.init_game_profile(@game_profile)
+            @game_profile.save!()
           end
         rescue Exception => e
           LOGGER.debug e

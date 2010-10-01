@@ -1,206 +1,334 @@
 window.Text = {
+	gameName: 'Défenseur du monde arabe',
+	towers : 'tour',
+	superWeapon : 'Armes fatales',
     intro : {
         levelSelection : {
-            msg : 'defend a new country every week',
-            title : 'Weekly chanllenge',
-            extraMaps : 'Extra Maps',
-            tutorial : 'Tutorial',
-            easy : 'easy',
-            medium : 'medium',
-            hard : 'hard',
-            score : 'x score'
+            msg : 'Défends un nouveau pays chaque semaine',
+            title : 'Défit hebdomadaire',
+            extraMaps : 'Missions précédentes',
+            tutorial : 'Tutoriel',
+            easy : 'Facile',
+            medium : 'Moyenne',
+            hard : 'Supérieure',
+            score : 'x Score'
         },
         campaign : {
-            back : 'back'          
+            back : 'Précédent'          
         },
         mission : {
-            msg : 'Intelligence suggests the enemy is sending these forces :',
-            accept : 'accept',
-            or : 'or',
-            goBack : 'go back to campaign'
+            msg : 'Informations intelligentes:',
+            accept : 'Accepter',
+            or : 'ou',
+            goBack : 'Retour à la mission'
         },
         marketPlace : {
-            add : 'add',
-            money : 'money',
-            addWeapon : 'unlock and upgrade your super weapons',
-            addTower : 'unlock and upgrade your towers',
-            back : 'back',
-            ready : 'ready',
-            unlock : 'unlock',
-            upgrade : 'upgrade',
-            requiredRank : 'required rank'
+            add : 'Rajouter',
+            money : 'argent',
+            addWeapon : 'Déverouiller et actualiser tes armes fatales',
+            addTower : 'Déverouiller ET actualiser les tours',
+            back : 'Précédent',
+            ready : 'Prêt',
+            unlock : 'Déverouiller',
+            upgrade : 'Actualiser',
+            requiredRank : 'Grade exigé'
         },
         creeps : {
             BlackTank : {
                 name : 'A30 Avenger',
-                desc : 'The A30 is a heavy armored tank, it is not easy to get destroyed as it survives in difficult situations.' 
+                desc : 'Le A30 est un char blindé de poids lourd. Il est difficile à détruire et endure les situations critiques.' 
             },
             RedTank : {
                 name : 'M18 HellCat',
-                desc : 'The M18 is a gun motor carriage tank, it has high fire power that can cause mass destruction.' 
+                desc : 'Le M18 est un affût de canons. Il est capable de destruction massive grâce à la puissance de ses feux.' 
             },
             Tank : {
                 name : 'M48 Patton',
-                desc : 'The M48 is a medium gun tank, it is mainly used as a reinforcement unit. It is a primary tank during war.' 
+                desc : 'Le M48 est un char de taille moyenne. Il est surtout utilisé comme renfort. C\'est un char d\'ordre primordial dans la guerre.' 
             },
             TankI : {
                 name : 'M42 Duster',
-                desc : 'The M42 is a self-propelled medium tank, it acts as a basic main battle tank.' 
+                desc : 'Le M42 est un char autopropulsé de taille moyenne. C\'est un char essentiel dans les batailles.' 
             },
             TankII : {
                 name : 'M41 Walker',
-                desc : 'The M41 is a light tank, it has an extremely high speed that makes it move faster than any other tank.' 
+                desc : 'Le M41 est un char léger. Il se caractérise par sa grande vitesse qui lui permet de circuler plus rapidement que tout autre char.' 
             },
             Humvee : {
                 name : 'Humveee',
-                desc : 'Humvee is a high mobility multipurpose wheeled vehicle, it is among the most capable all-terrain vehicles in the world.'
+                desc : 'Humvee est un véhicule à roués polyvalent et se déplace facilement. Humvee est l\'un des véhicules tout-terrain les plus puissants dans le monde.'
             },
             RedPlane :{
                 name : 'F-22 Raptor',
-                desc : 'The F-22 is an air dominance fighter, It is widely regarded as the most advanced fighter in the world.'
+                desc : 'Le F-22 est un combatant aérien dominant, il est largement considéré comme le combattant le plus développé dans le monde.'
             },
             Plane : {
                 name : 'F-15 Eagle',
-                desc : 'The F-15 is an extremely maneuverable, tactical fighter designed to gain and maintain air superiority in combats.'
+                desc : 'Le F-15 est un combatant tactique, extrêmement manoeuvrable. Crée pour atteindre et maintenir des niveaux  supérieurs dans l\'air  pendant les combats.'
             }
         },
         superWeapons : {
             Splash : { 
-                name : 'Splash',
-                desc : 'Sends up to 10 rockets that targets biggest 10 enemy units, each deal 2000 damage. Can be used 10 times.' 
+                name : 'Explose',
+                desc : 'Lance jusqu\'à 10 roquettes visant les 10 unités les plus grandes de l\'ennemie.' 
             },
             Weak : {  
-                name : 'Weak',
-                desc : 'Reduces all units\' health point by 10% per second. Lasts for 10 seconds. Can be used 10 times.' 
+                name : 'Faible',
+                desc : 'Diminue l\'énergie avec le temps.' 
             },
             Hyper : { 
                 name : 'Hyper',
-                desc : 'Doubles the attack speed of all your towers. Lasts for 30 seconds. Can be used 10 times.' 
+                desc : 'Augmente la rapidité de l\'attaque des tours.' 
             },
             Nuke : {  
-                name : 'Nuke',
-                desc : 'Call the nuke bomb to destroy all units on the map. Can be used 5 times.' 
+                name : 'Nucléaire',
+                desc : 'Choisis la bombe nucléaire pour détruire toutes les unités sur la carte.' 
             },
             Heal : {  
-                name : 'Heal',
-                desc : 'Restores all your towers\' full health point . Can be used 10 times.' 
+                name : 'Soin',
+                desc : 'Recupère un pourcentage de l\'energie de toutes les tours.' 
             }
         },
         towers : {
             Belcher : {  
-                name : 'Belcher', 
-                desc : 'Belcher, a fast machine gun tower, it has small range nozzle,' + 
-                       ' and can be used to counter both air and ground units.' +
-                       ' It uses bullets as its main ammunition and doesn\'t have any detection mechanism, but it will fire on sight.' 
+                name : 'Cracheur', 
+                desc : 'Le cracheur est une mitrailleuse rapide au bec étroit' + 
+                       ' et qui peut être utilisée contre les éléments à détruire soit dans l\'air ou sur la terre.' +
+                       ' Il fonctionne principalement avec les balles et ne contient aucun mécanisme de détéction, mais il se déclenche automatiquement.' 
             },
             Reaper : {
-                name : 'Reaper',
-                desc : 'Reaper, an upgraded version of the Belcher machine gun tower,' + 
-                         ' it has two nozzles which enable it to attack with a higher rate than the Belcher.' + 
-                         ' It is more effective than the Belcher as it secures more fire power against any hostile activities.' 
+                name : 'La faucheuse',
+                desc : 'La faucheuse est une version actualisée du Cracheur.' + 
+                         ' Elle a deux becs lui permettant d\'attaquer plus fréquemment que le Cracheur.' + 
+                         ' Elle est plus efficace que le Cracheur puisqu\'elle produit des flammes puissantes arrêtant ainsi toute activité hostile.' 
             },
             Patriot : { 
-                name : 'Patriot',
-                desc : 'Patriot , a long-range, all-altitude, surface-to-air missile (SAM) launcher.' + 
-                       ' This air defense system is used to counter advanced aircraft.' +
-                       ' It uses an advanced aerial interceptor missiles and high performance radar systems to destroy its target.' 
+                name : 'Patriote',
+                desc : 'Patriote est un missile tactique Sol-air, toute-altitude à longue portée.' + 
+                       ' Ce systèe de défense aérien est utilisé contre les aéronefs développés.' +
+                       ' Patriote se sert d\'une antenne développée pour intercepter les missiles ainsi que d\'un système de radar performant; pour détruire sa cible ennemie.' 
             },
             Exploder : {
-                name : 'Exploder',
-                desc : 'Exploder, a tactical surface-to-surface missile (SSM) launcher,' +
-                       ' Its major use is as a general bombardment weapon to counter heavy land units.' +
-                       ' It has a radar system for detecting its targets to destroy them.' 
+                name : 'L\'explosif',
+                desc : 'L\'explosif est un missile tactique sol-sol (mss).' +
+                       ' Utilisé principalement comme bombardier contre les éléments de poids lourd.' +
+                       ' Il contient un système de radar capable de détécter les cibles à détruire.' 
            }
         },
         upgrades : {
-            power : 'power',
-            rate : 'rate',
-            range : 'range',
-            maxHp : 'shield',
+            power : 'énergie',
+            rate : 'Taux',
+            range : 'Distance',
+            maxHp : 'Bouclier',
             Heal : [ 
-                    'upgrade 1', 
-                    'upgrade 2',
-                    'upgrade 3'
+                    'Récupère 20% du total de l\'énergie. Attends 120 secondes.',
+					'Récupère 40% du total de l\'énergie. Attends 120 secondes.',
+					'Récupère 60% du total de l\'énergie. Attends 120 secondes.',
+                    'Récupère 80% du total de l\'énergie. Attends 120 secondes.',
+                    'Récupère 100% du total de l\'énergie. Attends 120 secondes.'
                 ],
             Weak : [
-                    'upgrade 1', 
-                    'upgrade 2',
-                    'upgrade 3'
+                    'Réduit 10%  de l\'énergie actuelle/seconde pendant 10 secondes. Attends 90 secondes.',
+					'Réduit 10%  de l\'énergie actuelle/seconde pendant 15 secondes. Attends 90 secondes.',
+					'Réduit 15%  de l\'énergie actuelle/seconde pendant 15 secondes. Attends 90 secondes.',
+                    'Réduit 15%  de l\'énergie actuelle/seconde pendant 20 secondes. Attends 90 secondes.',
+                    'Réduit 20%  de l\'énergie actuelle/seconde pendant 20 secondes. Attends 90 secondes.'
                 ],
             Nuke : [
-                    'upgrade 1', 
-                    'upgrade 2',
-                    'upgrade 3'
+                    'Attends 240 secondes.', 
+                    'Attends 180 secondes.',
+                    'Attends 120 secondes.'
                 ],
             Splash : [
-                    'upgrade 1', 
-                    'upgrade 2',
-                    'upgrade 3'
+                    'Abîme  20% de l\'énergie de l\'objet. Attends 120 secondes.',
+					'Abîme  40% de l\'énergie de l\'objet. Attends 120 secondes.',
+					'Abîme  60% de l\'énergie de l\'objet. Attends 120 secondes.',
+                    'Abîme  80% de l\'énergie de l\'objet. Attends 120 secondes.',
+                    'Abîme  100% de l\'énergie de l\'objet. Attends 120 secondes.'
                 ],
             Hyper : [
-                    'upgrade 1', 
-                    'upgrade 2',
-                    'upgrade 3'
+                    'Augmente la rapidité de l\'attaque de 50% pendant 10 secs. Attends 120 secondes.',
+					'Augmente la rapidité de l\'attaque de 50% pendant 20 secs. Attends 120 secondes.',
+					'Augmente la rapidité de l\'attaque de 100% pendant 20 secs. Attends 120 secondes.',
+                    'Augmente la rapidité de l\'attaque de 100% pendant 25 secs. Attends 120 secondes.',
+                    'Augmente la rapidité de l\'attaque de 100% pendant 30 secs. Attends 120 secondes.'
                 ]
         }
     },
+    facebook : {
+        completeMession: [
+              'courageously defended',
+              'at',
+              'heroic efforts defended the city and scored',
+              '. Can you top such efforts?'
+        ],
+        completeCampaign: [
+              'with a legendary defense saved',
+              'at',
+              'showed bullet proof defense on the way to save', 
+              '& earned',
+              'points through out the journey. Can you out play that?'
+        ],
+        rankPromotion: [
+              'has been promoted to become',
+              'at',
+              'In recognition of such outstanding defending skills at',
+              'has been promoted to become',
+              '. Salute is in due to such brave efforts.'
+        ],
+        unlockItem: [
+              'unlocked the',
+              'at',
+              'unlocked the',
+              'to gain massive tactical advantage on the battle.'
+        ],
+        campaignRanking: [
+            'finished',
+            'among friends &',
+            'among all players while defending',
+            'at',
+            'has earned the',
+            'rank among friends and',
+            'rank among all players in the journey to save',
+            '. Dare to challenge these efforts?'
+        ],
+        upgradeItem: [
+            'upgraded the',
+            'at',
+            'upgraded the',
+            'to gain massive tactical advantage on the battle.'
+        ],
+        userPrompt : 'Raconte tes accomplissements à tes amis et gagne 5 pièces de monnaie.'
+    },
 	game : {
 		tutorial : {
-				msg1: "Welcome to the academy of defense"
-		+"</br>During this training period, you will get all the required information, and gain the basic skills that are needed"
-		+"to defend your city against any hostile activities",
-				msg2: "</br>Your goal is to kill all coming waves of enemy units and prevent them from passing to your city",
-				msg3: "You can always see your current rank at the top right of the map </br>"
-		+"</br>The upper bar indicates your rank progress, the wave number, your score in this game"
-		+"and the remaining enemy units to escape that indicate your loss</br>",
-				msg4: "Now it is time to place some towers. Click on the Belcher tower in the towers box.</br>"
-		+"Notice that the tower information will be visible in the information box.",
-				msg5: "Click here to place the tower. ",
-				msg6: "Place more towers as long as you have enough gold. then press start to begin the battle",
-				msg7: "You can always use super weapons on demand. ",
-				msg8: "click on a tower to see it's abilities, sell or upgrade it",
-				msg9: "Finally, there is an important hint you need to know before finishing this training. Air units do not respect any path, they simply fly over anything.",
-				msg10:"That is it soldier, you are now ready to defend your city against any hostile activities. I am sure you will do your best to complete all missions assigned to you."
-		+"</br>Do not forget to like us and bookmark  us to get a nice reward. Good Luck.",
-				msg11: "After each wave enemies get stronger, so prepare yourself well"
+				msg1: 'Bienvenue pour l\'académie de défense.'
+		+'</br>Au long de cette période de stage; tu vas recevoir toutes les informations nécessaires, et tu vas acquérir les compétences essentielles'
+		+' pour défendre ta ville contre tout acte d\'hostilité.',
+				msg2: '</br>Ton but sera d\'achever toutes les vagues d\'attaques venant de la part de l\'ennemie et de leur défendre de passer à travers ta ville.',
+				msg3: 'Tu peux toujours vérifier ton grade en haut à droite de la carte. </br>'
+		+'</br>5.	La barre d\'outils supérieure indique le progrès de ton grade, le nombre de vagues, ton score '
+		+'et le nombre d\'ennemie que tu dois esquiver et qui indique ta perte.</br>',
+				msg4: 'Maintenant, il est temps de mettre en place quelques tours. Clique sur la tour Cracheur qui se trouve dans la boîte des tours.</br>'
+		+'Tu vas remarquer que les informations s\'affichent dans la boîte d\'infos.',
+				msg5: 'Clique ici pour placer la tour. ',
+				msg6: 'Mets en place des tours tant que tu possèdes assez d\'or. Maintenant, tu es prêt à cliquer le bouton "commencer" pour déclencher la bataille.',
+				msg7: 'Tu peux toujours utiliser armes supers. ',
+				msg8: 'Clique sur la tour pour afficher ses capacités, la vendre ou l\'actualiser.',
+				msg9: 'Enfin, il y a un conseil que tu dois savoir avant de terminer ce stage. Les aéronefs ne respectent aucun itinéraire, ils survolent simplement TOUT.',
+				msg10:'C\'est bon, Soldat! Maintenant tu es prêt à défendre ta ville contre toute preuve d\'hostilité. Je suis certain que tu feras de ton mieux pour accomplir toutes les missions dont tu es chargé'
+		+'</br>N\'oublie pas de nous favoriser et de nous marquer pour avoir ta récompense. Bonne Chance!'
 		},
 		upperBar : {
-			lives: "Lives",
-			score: "Score",
-			wave : "Wave",
+			lives: 'Vies',
+			score: 'Score',
+			wave : 'Vague'
 		},
 		gameState:{
-			start:"Start",
-			pause:"Pause",
-			resume:"Resume"
+			start:'Commener',
+			pause:'Arrêter',
+			resume:'Récupérer'
 		},
 		towerInfo:{
-			power:"Power",
-			shield:"Shield",
-			rate: "Rate",
-			range:"Range"
+			power:'énergie',
+			shield:'Bouclier',
+			rate: 'Taux',
+			range:'Distance',
+			upgrade : "Actualiser",
+			sell : "vendre"
 		},
 		ranks:{
 			PVT :{ name:'Private' ,abbr : 'PVT'},
-			LCpl:{ name:'Private' ,abbr : 'PVT'},
-			Cpl:{ name:'Private' ,abbr : 'PVT'},
-			Sgt:{ name:'Private' ,abbr : 'PVT'},
-			SSgt:{ name:'Private' ,abbr : 'PVT'},
-			GySgt:{ name:'Private' ,abbr : 'PVT'},
-			MSgt:{ name:'Private' ,abbr : 'PVT'},
-			'1stSgt':{ name:'Private' ,abbr : 'PVT'},
-			MGySgt:{ name:'Private' ,abbr : 'PVT'},
-			SgtMaj:{ name:'Private' ,abbr : 'PVT'},
-			'2ndLt':{ name:'Private' ,abbr : 'PVT'},
-			'1stLt':{ name:'Private' ,abbr : 'PVT'},
-			Capt:{ name:'Private' ,abbr : 'PVT'},
-			Maj:{ name:'Private' ,abbr : 'PVT'},
-			LtCol:{ name:'Private' ,abbr : 'PVT'},
-			Col:{ name:'Private' ,abbr : 'PVT'},
-			BGen:{ name:'Private' ,abbr : 'PVT'},
-			MajGen:{ name:'Private' ,abbr : 'PVT'},
-			LtGen:{ name:'Private' ,abbr : 'PVT'},
-			Gen:{ name:'Private' ,abbr : 'PVT'}
-		}
-	}
+			LCpl:{ name:'Lance Corporal' ,abbr : 'LCpl'},
+			Cpl:{ name:'Corporal' ,abbr : 'Cpl'},
+			Sgt:{ name:'Sergant' ,abbr : 'Sgt'},
+			SSgt:{ name:'Staff Sergant' ,abbr : 'SSgt'},
+			GySgt:{ name:'Gunnery Sergant' ,abbr : 'GySgt'},
+			MSgt:{ name:'Master Sergant' ,abbr : 'MSgt'},
+			'1stSgt':{ name:'First Sergant' ,abbr : '1stSgt'},
+			MGySgt:{ name:'Master Gunnery Sergant' ,abbr : 'MGySgt'},
+			SgtMaj:{ name:'Sergant Major' ,abbr : 'SgtMaj'},
+			'2ndLt':{ name:'Second Lieutenant' ,abbr : '2ndLt'},
+			'1stLt':{ name:'First Lieutenant' ,abbr : '1stLt'},
+			Capt:{ name:'Captain' ,abbr : 'Capt'},
+			Maj:{ name:'Major' ,abbr : 'Maj'},
+			LtCol:{ name:'Lieutenant Colonel' ,abbr : 'LtCol'},
+			Col:{ name:'Colonel' ,abbr : 'Col'},
+			BGen:{ name:'Brigadier General' ,abbr : 'BGen'},
+			MajGen:{ name:'Major General' ,abbr : 'MajGen'},
+			LtGen:{ name:'Lieutenant General' ,abbr : 'LtGen'},
+			Gen:{ name:'General' ,abbr : 'Gen'}
+		},
+		result : {
+			winMission1: 'You have successsfully defended',
+			winMission2: 'and protected',
+			loseMission: 'has fallen to the enemy forces </br> don\'t give up, you can try again.',
+			coins: 'argent',
+			score: 'Score',
+			enemies : 'Ennemis',
+			destroyed : 'Détruits:',
+			escaped : 'échappé:',
+			towers : 'tour',
+			built : 'Construit:'
+		},
+		towerDestroyedCreep :{
+      msg1 : 'Le suivant!!',
+      msg2 : 'HOO viens là salaud!!!',
+      msg3 : 'meurs, meurs, meurs',
+      msg4 : 'Ça fait mal hein?!',
+      msg5 : 'Prends ça!'
+    },
+    creepDestroyedTower: {
+      msg1 : 'Oups, c\'était une tour ça?',
+      msg2 : 'ON VA LES Écrabouiller!!!',
+      msg3 : 'meurs, meurs, meurs',
+      msg4 : 'YOUPIEEE!',
+      msg5 : 'Prends ça!',
+      msg6 : 'FATALITé!'
+    },
+    superWeaponsHeal: {
+      msg1 : 'Juste à temps!',
+      msg2 : 'Merci Mec!',
+      msg3 : 'ça va mieux!'
+    },
+    superWeaponsWeak: {
+      msg1 : 'JE SUIS AVEUGLE!',
+      msg2 : 'Tousse, Tousse!',
+      msg3 : 'J\'AI SOMMEIL!'
+    },
+    superWeaponsSplash: {
+      msg1 : 'C\'est quoi ça?!',
+      msg2 : 'Sauves-toi!!',
+      msg3 : 'Des roquettes, cours!!'
+    },
+    superWeaponsNuke: {
+      msg1 : 'c\'est qu..',
+      msg2 : 'COU…',
+      msg3 : 'Je vois...',
+      msg4 : 'Lumières',
+      msg5 : '#3aaaa..'
+    },
+    superWeaponsHyper: {
+      msg1 : 'CAFééé!!',
+      msg2 : 'Que de bonnes choses!!',
+      msg3 : 'Je carbure!!',
+      msg4 : 'WIHAAAA!'
+    },
+    creepEntered:{
+      msg1 : 'Né pour détruire!!',
+      msg2 : 'ATTAQUE!!',
+      msg3 : 'Écrase-les!!',
+      msg4 : 'Écrase-les!!'
+    },
+    creepEnteredTower: {
+      msg1 : 'HOO viens là salaud!!',
+      msg2 : 'Résiste!',
+      msg3 : 'Tiens bon!!',
+      msg4 : 'C\'est tout ce que tu peux?!'
+    }
+  
+  }
+	
 }
+
+

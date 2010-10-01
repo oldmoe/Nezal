@@ -74,7 +74,7 @@ var Scenario = Class.create({
 		this.scenario['creepEntered'] = ["Born to destroy!!","ATTAAACK!!", "RUN THEM OVER!!", "CRUSH THEM!"]
 		this.scenario['creepEnteredTower'] = ["BRING IT ON!!","HOLD!!", "STAND YOUR GROUND!!", "That's all you got?"]
 
-	},
+	}
 
 	
 })
