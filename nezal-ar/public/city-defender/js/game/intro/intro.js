@@ -321,9 +321,11 @@ var Intro = {
                   var type = element.getAttribute('type'); 
                   var upgrade = element.getAttribute('upgrade');
                   var itemConfig = TowerConfig;
+                  var translateName = "towers"
                   if(type == "weapons")
                   {
                     itemConfig = SuperWeaponConfig;
+                    translateName = "superWeapons";
                   }
                   var item_rank;
                   var cost = Intro.gameData[type][id].cost;
@@ -363,6 +365,7 @@ var Intro = {
                                 'itemid' : id,
                                 'type': type,
                                 'upgrade' : upgrade,
+                                'translateName' : translateName,
                                 'currUpgrade' : currUpgrade,
                                 'cost' : cost,
                                 'rank' : [exp, item_rank]
