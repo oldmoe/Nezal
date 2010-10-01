@@ -1,138 +1,138 @@
-window.Text = {
-	gameName: 'Défenseur du monde arabe',
+ï»¿window.Text = {
+	gameName: 'DÃ©fenseur du monde arabe',
 	towers : 'tour',
 	superWeapon : 'Armes fatales',
     intro : {
         levelSelection : {
-            msg : 'Défends un nouveau pays chaque semaine',
-            title : 'Défit hebdomadaire',
-            extraMaps : 'Missions précédentes',
+            msg : 'DÃ©fends un nouveau pays chaque semaine',
+            title : 'DÃ©fit hebdomadaire',
+            extraMaps : 'Missions prÃ©cÃ©dentes',
             tutorial : 'Tutoriel',
             easy : 'Facile',
             medium : 'Moyenne',
-            hard : 'Supérieure',
+            hard : 'SupÃ©rieure',
             score : 'x Score'
         },
         campaign : {
-            back : 'Précédent'          
+            back : 'PrÃ©cÃ©dent'          
         },
         mission : {
             msg : 'Informations intelligentes:',
             accept : 'Accepter',
             or : 'ou',
-            goBack : 'Retour à la mission'
+            goBack : 'Retour Ã  la mission'
         },
         marketPlace : {
             add : 'Rajouter',
             money : 'argent',
-            addWeapon : 'Déverouiller et actualiser tes armes fatales',
-            addTower : 'Déverouiller ET actualiser les tours',
-            back : 'Précédent',
-            ready : 'Prêt',
-            unlock : 'Déverouiller',
+            addWeapon : 'DÃ©verouiller et actualiser tes armes fatales',
+            addTower : 'DÃ©verouiller ET actualiser les tours',
+            back : 'PrÃ©cÃ©dent',
+            ready : 'PrÃªt',
+            unlock : 'DÃ©verouiller',
             upgrade : 'Actualiser',
-            requiredRank : 'Grade exigé'
+            requiredRank : 'Grade exigÃ©'
         },
         creeps : {
             BlackTank : {
                 name : 'A30 Avenger',
-                desc : 'Le A30 est un char blindé de poids lourd. Il est difficile à détruire et endure les situations critiques.' 
+                desc : 'Le A30 est un char blindÃ© de poids lourd. Il est difficile Ã  dÃ©truire et endure les situations critiques.' 
             },
             RedTank : {
                 name : 'M18 HellCat',
-                desc : 'Le M18 est un affût de canons. Il est capable de destruction massive grâce à la puissance de ses feux.' 
+                desc : 'Le M18 est un affÃ»t de canons. Il est capable de destruction massive grÃ¢ce Ã  la puissance de ses feux.' 
             },
             Tank : {
                 name : 'M48 Patton',
-                desc : 'Le M48 est un char de taille moyenne. Il est surtout utilisé comme renfort. C\'est un char d\'ordre primordial dans la guerre.' 
+                desc : 'Le M48 est un char de taille moyenne. Il est surtout utilisÃ© comme renfort. C\'est un char d\'ordre primordial dans la guerre.' 
             },
             TankI : {
                 name : 'M42 Duster',
-                desc : 'Le M42 est un char autopropulsé de taille moyenne. C\'est un char essentiel dans les batailles.' 
+                desc : 'Le M42 est un char autopropulsÃ© de taille moyenne. C\'est un char essentiel dans les batailles.' 
             },
             TankII : {
                 name : 'M41 Walker',
-                desc : 'Le M41 est un char léger. Il se caractérise par sa grande vitesse qui lui permet de circuler plus rapidement que tout autre char.' 
+                desc : 'Le M41 est un char lÃ©ger. Il se caractÃ©rise par sa grande vitesse qui lui permet de circuler plus rapidement que tout autre char.' 
             },
             Humvee : {
                 name : 'Humveee',
-                desc : 'Humvee est un véhicule à roués polyvalent et se déplace facilement. Humvee est l\'un des véhicules tout-terrain les plus puissants dans le monde.'
+                desc : 'Humvee est un vÃ©hicule Ã  rouÃ©s polyvalent et se dÃ©place facilement. Humvee est l\'un des vÃ©hicules tout-terrain les plus puissants dans le monde.'
             },
             RedPlane :{
                 name : 'F-22 Raptor',
-                desc : 'Le F-22 est un combatant aérien dominant, il est largement considéré comme le combattant le plus développé dans le monde.'
+                desc : 'Le F-22 est un combatant aÃ©rien dominant, il est largement considÃ©rÃ© comme le combattant le plus dÃ©veloppÃ© dans le monde.'
             },
             Plane : {
                 name : 'F-15 Eagle',
-                desc : 'Le F-15 est un combatant tactique, extrêmement manoeuvrable. Crée pour atteindre et maintenir des niveaux  supérieurs dans l\'air  pendant les combats.'
+                desc : 'Le F-15 est un combatant tactique, extrÃªmement manoeuvrable. CrÃ©e pour atteindre et maintenir des niveaux  supÃ©rieurs dans l\'air  pendant les combats.'
             }
         },
         superWeapons : {
             Splash : { 
                 name : 'Explose',
-                desc : 'Lance jusqu\'à 10 roquettes visant les 10 unités les plus grandes de l\'ennemie.' 
+                desc : 'Lance jusqu\'Ã  10 roquettes visant les 10 unitÃ©s les plus grandes de l\'ennemie.' 
             },
             Weak : {  
                 name : 'Faible',
-                desc : 'Diminue l\'énergie avec le temps.' 
+                desc : 'Diminue l\'Ã©nergie avec le temps.' 
             },
             Hyper : { 
                 name : 'Hyper',
-                desc : 'Augmente la rapidité de l\'attaque des tours.' 
+                desc : 'Augmente la rapiditÃ© de l\'attaque des tours.' 
             },
             Nuke : {  
-                name : 'Nucléaire',
-                desc : 'Choisis la bombe nucléaire pour détruire toutes les unités sur la carte.' 
+                name : 'NuclÃ©aire',
+                desc : 'Choisis la bombe nuclÃ©aire pour dÃ©truire toutes les unitÃ©s sur la carte.' 
             },
             Heal : {  
                 name : 'Soin',
-                desc : 'Recupère un pourcentage de l\'energie de toutes les tours.' 
+                desc : 'RecupÃ¨re un pourcentage de l\'energie de toutes les tours.' 
             }
         },
         towers : {
             Belcher : {  
                 name : 'Cracheur', 
-                desc : 'Le cracheur est une mitrailleuse rapide au bec étroit' + 
-                       ' et qui peut être utilisée contre les éléments à détruire soit dans l\'air ou sur la terre.' +
-                       ' Il fonctionne principalement avec les balles et ne contient aucun mécanisme de détéction, mais il se déclenche automatiquement.' 
+                desc : 'Le cracheur est une mitrailleuse rapide au bec Ã©troit' + 
+                       ' et qui peut Ãªtre utilisÃ©e contre les Ã©lÃ©ments Ã  dÃ©truire soit dans l\'air ou sur la terre.' +
+                       ' Il fonctionne principalement avec les balles et ne contient aucun mÃ©canisme de dÃ©tÃ©ction, mais il se dÃ©clenche automatiquement.' 
             },
             Reaper : {
                 name : 'La faucheuse',
-                desc : 'La faucheuse est une version actualisée du Cracheur.' + 
-                         ' Elle a deux becs lui permettant d\'attaquer plus fréquemment que le Cracheur.' + 
-                         ' Elle est plus efficace que le Cracheur puisqu\'elle produit des flammes puissantes arrêtant ainsi toute activité hostile.' 
+                desc : 'La faucheuse est une version actualisÃ©e du Cracheur.' + 
+                         ' Elle a deux becs lui permettant d\'attaquer plus frÃ©quemment que le Cracheur.' + 
+                         ' Elle est plus efficace que le Cracheur puisqu\'elle produit des flammes puissantes arrÃªtant ainsi toute activitÃ© hostile.' 
             },
             Patriot : { 
                 name : 'Patriote',
-                desc : 'Patriote est un missile tactique Sol-air, toute-altitude à longue portée.' + 
-                       ' Ce systèe de défense aérien est utilisé contre les aéronefs développés.' +
-                       ' Patriote se sert d\'une antenne développée pour intercepter les missiles ainsi que d\'un système de radar performant; pour détruire sa cible ennemie.' 
+                desc : 'Patriote est un missile tactique Sol-air, toute-altitude Ã  longue portÃ©e.' + 
+                       ' Ce systÃ¨e de dÃ©fense aÃ©rien est utilisÃ© contre les aÃ©ronefs dÃ©veloppÃ©s.' +
+                       ' Patriote se sert d\'une antenne dÃ©veloppÃ©e pour intercepter les missiles ainsi que d\'un systÃ¨me de radar performant; pour dÃ©truire sa cible ennemie.' 
             },
             Exploder : {
                 name : 'L\'explosif',
                 desc : 'L\'explosif est un missile tactique sol-sol (mss).' +
-                       ' Utilisé principalement comme bombardier contre les éléments de poids lourd.' +
-                       ' Il contient un système de radar capable de détécter les cibles à détruire.' 
+                       ' UtilisÃ© principalement comme bombardier contre les Ã©lÃ©ments de poids lourd.' +
+                       ' Il contient un systÃ¨me de radar capable de dÃ©tÃ©cter les cibles Ã  dÃ©truire.' 
            }
         },
         upgrades : {
-            power : 'énergie',
+            power : 'Ã©nergie',
             rate : 'Taux',
             range : 'Distance',
             maxHp : 'Bouclier',
             Heal : [ 
-                    'Récupère 20% du total de l\'énergie. Attends 120 secondes.',
-					'Récupère 40% du total de l\'énergie. Attends 120 secondes.',
-					'Récupère 60% du total de l\'énergie. Attends 120 secondes.',
-                    'Récupère 80% du total de l\'énergie. Attends 120 secondes.',
-                    'Récupère 100% du total de l\'énergie. Attends 120 secondes.'
+                    'RÃ©cupÃ¨re 20% du total de l\'Ã©nergie. Attends 120 secondes.',
+					'RÃ©cupÃ¨re 40% du total de l\'Ã©nergie. Attends 120 secondes.',
+					'RÃ©cupÃ¨re 60% du total de l\'Ã©nergie. Attends 120 secondes.',
+                    'RÃ©cupÃ¨re 80% du total de l\'Ã©nergie. Attends 120 secondes.',
+                    'RÃ©cupÃ¨re 100% du total de l\'Ã©nergie. Attends 120 secondes.'
                 ],
             Weak : [
-                    'Réduit 10%  de l\'énergie actuelle/seconde pendant 10 secondes. Attends 90 secondes.',
-					'Réduit 10%  de l\'énergie actuelle/seconde pendant 15 secondes. Attends 90 secondes.',
-					'Réduit 15%  de l\'énergie actuelle/seconde pendant 15 secondes. Attends 90 secondes.',
-                    'Réduit 15%  de l\'énergie actuelle/seconde pendant 20 secondes. Attends 90 secondes.',
-                    'Réduit 20%  de l\'énergie actuelle/seconde pendant 20 secondes. Attends 90 secondes.'
+                    'RÃ©duit 10%  de l\'Ã©nergie actuelle/seconde pendant 10 secondes. Attends 90 secondes.',
+					'RÃ©duit 10%  de l\'Ã©nergie actuelle/seconde pendant 15 secondes. Attends 90 secondes.',
+					'RÃ©duit 15%  de l\'Ã©nergie actuelle/seconde pendant 15 secondes. Attends 90 secondes.',
+                    'RÃ©duit 15%  de l\'Ã©nergie actuelle/seconde pendant 20 secondes. Attends 90 secondes.',
+                    'RÃ©duit 20%  de l\'Ã©nergie actuelle/seconde pendant 20 secondes. Attends 90 secondes.'
                 ],
             Nuke : [
                     'Attends 240 secondes.', 
@@ -140,18 +140,18 @@ window.Text = {
                     'Attends 120 secondes.'
                 ],
             Splash : [
-                    'Abîme  20% de l\'énergie de l\'objet. Attends 120 secondes.',
-					'Abîme  40% de l\'énergie de l\'objet. Attends 120 secondes.',
-					'Abîme  60% de l\'énergie de l\'objet. Attends 120 secondes.',
-                    'Abîme  80% de l\'énergie de l\'objet. Attends 120 secondes.',
-                    'Abîme  100% de l\'énergie de l\'objet. Attends 120 secondes.'
+                    'AbÃ®me  20% de l\'Ã©nergie de l\'objet. Attends 120 secondes.',
+					'AbÃ®me  40% de l\'Ã©nergie de l\'objet. Attends 120 secondes.',
+					'AbÃ®me  60% de l\'Ã©nergie de l\'objet. Attends 120 secondes.',
+                    'AbÃ®me  80% de l\'Ã©nergie de l\'objet. Attends 120 secondes.',
+                    'AbÃ®me  100% de l\'Ã©nergie de l\'objet. Attends 120 secondes.'
                 ],
             Hyper : [
-                    'Augmente la rapidité de l\'attaque de 50% pendant 10 secs. Attends 120 secondes.',
-					'Augmente la rapidité de l\'attaque de 50% pendant 20 secs. Attends 120 secondes.',
-					'Augmente la rapidité de l\'attaque de 100% pendant 20 secs. Attends 120 secondes.',
-                    'Augmente la rapidité de l\'attaque de 100% pendant 25 secs. Attends 120 secondes.',
-                    'Augmente la rapidité de l\'attaque de 100% pendant 30 secs. Attends 120 secondes.'
+                    'Augmente la rapiditÃ© de l\'attaque de 50% pendant 10 secs. Attends 120 secondes.',
+					'Augmente la rapiditÃ© de l\'attaque de 50% pendant 20 secs. Attends 120 secondes.',
+					'Augmente la rapiditÃ© de l\'attaque de 100% pendant 20 secs. Attends 120 secondes.',
+                    'Augmente la rapiditÃ© de l\'attaque de 100% pendant 25 secs. Attends 120 secondes.',
+                    'Augmente la rapiditÃ© de l\'attaque de 100% pendant 30 secs. Attends 120 secondes.'
                 ]
         }
     },
@@ -159,6 +159,7 @@ window.Text = {
         completeMession: [
               'courageously defended',
               'at',
+              '\'s',
               'heroic efforts defended the city and scored',
               '. Can you top such efforts?'
         ],
@@ -198,26 +199,26 @@ window.Text = {
             'upgraded the',
             'to gain massive tactical advantage on the battle.'
         ],
-        userPrompt : 'Raconte tes accomplissements à tes amis et gagne 5 pièces de monnaie.'
+        userPrompt : 'Raconte tes accomplissements Ã  tes amis et gagne 5 piÃ¨ces de monnaie.'
     },
 	game : {
 		tutorial : {
-				msg1: 'Bienvenue pour l\'académie de défense.'
-		+'</br>Au long de cette période de stage; tu vas recevoir toutes les informations nécessaires, et tu vas acquérir les compétences essentielles'
-		+' pour défendre ta ville contre tout acte d\'hostilité.',
-				msg2: '</br>Ton but sera d\'achever toutes les vagues d\'attaques venant de la part de l\'ennemie et de leur défendre de passer à travers ta ville.',
-				msg3: 'Tu peux toujours vérifier ton grade en haut à droite de la carte. </br>'
-		+'</br>5.	La barre d\'outils supérieure indique le progrès de ton grade, le nombre de vagues, ton score '
+				msg1: 'Bienvenue pour l\'acadÃ©mie de dÃ©fense.'
+		+'</br>Au long de cette pÃ©riode de stage; tu vas recevoir toutes les informations nÃ©cessaires, et tu vas acquÃ©rir les compÃ©tences essentielles'
+		+' pour dÃ©fendre ta ville contre tout acte d\'hostilitÃ©.',
+				msg2: '</br>Ton but sera d\'achever toutes les vagues d\'attaques venant de la part de l\'ennemie et de leur dÃ©fendre de passer Ã  travers ta ville.',
+				msg3: 'Tu peux toujours vÃ©rifier ton grade en haut Ã  droite de la carte. </br>'
+		+'</br>5.	La barre d\'outils supÃ©rieure indique le progrÃ¨s de ton grade, le nombre de vagues, ton score '
 		+'et le nombre d\'ennemie que tu dois esquiver et qui indique ta perte.</br>',
-				msg4: 'Maintenant, il est temps de mettre en place quelques tours. Clique sur la tour Cracheur qui se trouve dans la boîte des tours.</br>'
-		+'Tu vas remarquer que les informations s\'affichent dans la boîte d\'infos.',
+				msg4: 'Maintenant, il est temps de mettre en place quelques tours. Clique sur la tour Cracheur qui se trouve dans la boÃ®te des tours.</br>'
+		+'Tu vas remarquer que les informations s\'affichent dans la boÃ®te d\'infos.',
 				msg5: 'Clique ici pour placer la tour. ',
-				msg6: 'Mets en place des tours tant que tu possèdes assez d\'or. Maintenant, tu es prêt à cliquer le bouton "commencer" pour déclencher la bataille.',
+				msg6: 'Mets en place des tours tant que tu possÃ¨des assez d\'or. Maintenant, tu es prÃªt Ã  cliquer le bouton "commencer" pour dÃ©clencher la bataille.',
 				msg7: 'Tu peux toujours utiliser armes supers. ',
-				msg8: 'Clique sur la tour pour afficher ses capacités, la vendre ou l\'actualiser.',
-				msg9: 'Enfin, il y a un conseil que tu dois savoir avant de terminer ce stage. Les aéronefs ne respectent aucun itinéraire, ils survolent simplement TOUT.',
-				msg10:'C\'est bon, Soldat! Maintenant tu es prêt à défendre ta ville contre toute preuve d\'hostilité. Je suis certain que tu feras de ton mieux pour accomplir toutes les missions dont tu es chargé'
-		+'</br>N\'oublie pas de nous favoriser et de nous marquer pour avoir ta récompense. Bonne Chance!'
+				msg8: 'Clique sur la tour pour afficher ses capacitÃ©s, la vendre ou l\'actualiser.',
+				msg9: 'Enfin, il y a un conseil que tu dois savoir avant de terminer ce stage. Les aÃ©ronefs ne respectent aucun itinÃ©raire, ils survolent simplement TOUT.',
+				msg10:'C\'est bon, Soldat! Maintenant tu es prÃªt Ã  dÃ©fendre ta ville contre toute preuve d\'hostilitÃ©. Je suis certain que tu feras de ton mieux pour accomplir toutes les missions dont tu es chargÃ©'
+		+'</br>N\'oublie pas de nous favoriser et de nous marquer pour avoir ta rÃ©compense. Bonne Chance!'
 		},
 		upperBar : {
 			lives: 'Vies',
@@ -226,11 +227,11 @@ window.Text = {
 		},
 		gameState:{
 			start:'Commener',
-			pause:'Arrêter',
-			resume:'Récupérer'
+			pause:'ArrÃªter',
+			resume:'RÃ©cupÃ©rer'
 		},
 		towerInfo:{
-			power:'énergie',
+			power:'Ã©nergie',
 			shield:'Bouclier',
 			rate: 'Taux',
 			range:'Distance',
@@ -261,72 +262,72 @@ window.Text = {
 		},
 		result : {
 			winMission1: 'You have successsfully defended',
-			winMission2: 'and protected',
+			winMission2: 'and drove the enemies away',
 			loseMission: 'has fallen to the enemy forces. don\'t give up, you can try again.',
 			coins: 'argent',
 			score: 'Score',
 			enemies : 'Ennemis',
-			destroyed : 'Détruits:',
-			escaped : 'échappé:',
+			destroyed : 'DÃ©truits:',
+			escaped : 'Ã©chappÃ©:',
 			towers : 'tour',
 			built : 'Construit:'
 		},
+
 		towerDestroyedCreep :[
       'Le suivant!!',
-      'HOO viens là salaud!!!',
+       'HOO viens lÃ  salaud!!!',
        'meurs, meurs, meurs',
-       'Ça fait mal hein?!',
-       'Prends ça!'
+       'Ã‡a fait mal hein?!',
+       'Prends Ã§a!'
     ],
     creepDestroyedTower: [
-      'Oups, c\'était une tour ça?',
-      'ON VA LES Écrabouiller!!!',
-      'meurs, meurs, meurs',
-      'YOUPIEEE!',
-      'Prends ça!',
-      'FATALITé!'
+       'Oups, c\'Ã©tait une tour Ã§a?',
+       'ON VA LES Ã‰crabouiller!!!',
+       'meurs, meurs, meurs',
+       'YOUPIEEE!',
+       'Prends Ã§a!',
+       'FATALITÃ©!'
     ],
     superWeaponsHeal: [
-      'Juste à temps!',
-      'Merci Mec!',
-      'ça va mieux!'
+       'Juste Ã  temps!',
+       'Merci Mec!',
+       'Ã§a va mieux!'
     ],
     superWeaponsWeak: [
       'JE SUIS AVEUGLE!',
-      'Tousse, Tousse!',
-      'J\'AI SOMMEIL!'
+       'Tousse, Tousse!',
+       'J\'AI SOMMEIL!'
     ],
     superWeaponsSplash: [
-      'C\'est quoi ça?!',
-      'Sauves-toi!!',
-      'Des roquettes, cours!!'
+      'C\'est quoi Ã§a?!',
+       'Sauves-toi!!',
+       'Des roquettes, cours!!'
     ],
     superWeaponsNuke: [
       'c\'est qu..',
-      'COU…',
-      'Je vois...',
-      'Lumières',
-      '#3aaaa..'
+       'COUâ€¦',
+       'Je vois...',
+       'LumiÃ¨res',
+       '#3aaaa..'
     ],
     superWeaponsHyper: [
-      'CAFééé!!',
+      'CAFÃ©Ã©Ã©!!',
       'Que de bonnes choses!!',
-      'Je carbure!!',
+       'Je carbure!!',
       'WIHAAAA!'
     ],
     creepEntered:[
-      'Né pour détruire!!',
-      'ATTAQUE!!',
-      'Écrase-les!!',
-      'Écrase-les!!'
+       'NÃ© pour dÃ©truire!!',
+       'ATTAQUE!!',
+       'Ã‰crase-les!!',
+       'Ã‰crase-les!!'
     ],
     creepEnteredTower: [
-      'HOO viens là salaud!!',
-      'Résiste!',
-      'Tiens bon!!',
-      'C\'est tout ce que tu peux?!'
-    ]
-  
+		'HOO viens lÃ  salaud!!',
+        'RÃ©siste!',
+        'Tiens bon!!',
+        'C\'est tout ce que tu peux?!'
+    ]  
   }
 	
 }

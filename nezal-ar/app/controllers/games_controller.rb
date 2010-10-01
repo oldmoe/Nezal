@@ -128,7 +128,7 @@ class GamesController < ApplicationController
 
 	post '/:game_name/:camp_name/:userid/worldranks' do 
 		response = {:top => []}
-		camp = Campaign.where(:game_id => @game.id, :path => params['camp_path']).first
+		camp = Campaign.where(:game_id => @game.id, :path => params['camp_name']).first
 		result = @user.ranking camp.id
 		response[:close] = result[:previous].collect{|uc| {:id => uc[:fb_user], :score => uc[:score] } } + [{:id => result[:user_camp][:fb_user], :score => result[:user_camp][:score], :rank => result[:rank]}]+ result[:next].collect{|uc| {:id => uc[:fb_user], :score => uc[:score] } }
 		top_scorers = FbUser.top_scorers camp.id
