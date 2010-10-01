@@ -26,7 +26,8 @@ FBDefender = {
                   var loc = "http://apps.facebook.com/" + FBConnect.url() + "/";
                   var attachment =  {
                               name : FBConnect.user.first_name + " " + Text.facebook.completeMession[0] + " " +
-                                     mission.name.toUpperCase() + " " + Text.facebook.completeMession[1] +" " +
+                                     Intro.campaignData.missionsInfo[mission.name]['name'].toUpperCase() + " " +
+                                     Text.facebook.completeMession[1] +" " +
                                      FBDefender.gameName(),
                               href : loc,
                             	'media': [{ 'type': 'image', 
@@ -46,7 +47,8 @@ FBDefender = {
                   var loc = "http://apps.facebook.com/" + FBConnect.url() + "/";
                   var attachment =  {
                               name : FBConnect.user.first_name + " " + Text.facebook.completeCampaign[0] + " " +
-                                     campaign.name.toUpperCase() + " " + Text.facebook.completeCampaign[1] + " " +
+                                     Intro.campaignData.campaignInfo['name'].toUpperCase() + " " +
+                                     Text.facebook.completeCampaign[1] + " " +
                                      FBDefender.gameName(),
                               href : loc,
                             	'media': [{ 'type': 'image', 
