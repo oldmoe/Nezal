@@ -33,8 +33,9 @@ FBDefender = {
                             	'media': [{ 'type': 'image', 
                             	            'src': FBDefender.imagesUrl+ 'facebook/medal.png',
                             	            'href': loc }],
-                              caption: FBConnect.user.first_name + " " + Text.facebook.completeMession[2] + " " +
-                                      mission.score +  Text.facebook.completeMession[3]
+                              caption: FBConnect.user.first_name + Text.facebook.completeMession[2] +
+                                       " " +Text.facebook.completeMession[3] +
+                                        " " +mission.score +  Text.facebook.completeMession[4]
                   };
                   var actionLinks = [ {text: FBDefender.gameName(), href: loc } ];
                   FBDefender.isMarket = false;
