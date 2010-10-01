@@ -1,7 +1,7 @@
 ﻿window.Text = {
 	gameName: 'درع العرب',
-	towers : 'مدفع',
-	superWeapon : 'سلاح خاص',
+	towers : '',
+	superWeapon : '',
     intro : {
         levelSelection : {
             msg : 'دافع عن بلد جديد كل أسبوع',
@@ -26,7 +26,7 @@
             add : 'اشتري',
             money : 'نقود',
             addWeapon : 'اشتري أو طور اسلحتك الخاصة',
-            addTower : 'اشتري أو طور مدافعاك',
+            addTower : 'اشتري أو طور مدافعك',
             back : 'ارجع',
             ready : 'مستعد',
             unlock : 'اشتري',
