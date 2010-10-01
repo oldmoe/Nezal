@@ -271,61 +271,61 @@ window.Text = {
 			towers : 'tour',
 			built : 'Construit:'
 		},
-		towerDestroyedCreep :{
-      msg1 : 'Le suivant!!',
-      msg2 : 'HOO viens là salaud!!!',
-      msg3 : 'meurs, meurs, meurs',
-      msg4 : 'Ça fait mal hein?!',
-      msg5 : 'Prends ça!'
-    },
-    creepDestroyedTower: {
-      msg1 : 'Oups, c\'était une tour ça?',
-      msg2 : 'ON VA LES Écrabouiller!!!',
-      msg3 : 'meurs, meurs, meurs',
-      msg4 : 'YOUPIEEE!',
-      msg5 : 'Prends ça!',
-      msg6 : 'FATALITé!'
-    },
-    superWeaponsHeal: {
-      msg1 : 'Juste à temps!',
-      msg2 : 'Merci Mec!',
-      msg3 : 'ça va mieux!'
-    },
-    superWeaponsWeak: {
-      msg1 : 'JE SUIS AVEUGLE!',
-      msg2 : 'Tousse, Tousse!',
-      msg3 : 'J\'AI SOMMEIL!'
-    },
-    superWeaponsSplash: {
-      msg1 : 'C\'est quoi ça?!',
-      msg2 : 'Sauves-toi!!',
-      msg3 : 'Des roquettes, cours!!'
-    },
-    superWeaponsNuke: {
-      msg1 : 'c\'est qu..',
-      msg2 : 'COU…',
-      msg3 : 'Je vois...',
-      msg4 : 'Lumières',
-      msg5 : '#3aaaa..'
-    },
-    superWeaponsHyper: {
-      msg1 : 'CAFééé!!',
-      msg2 : 'Que de bonnes choses!!',
-      msg3 : 'Je carbure!!',
-      msg4 : 'WIHAAAA!'
-    },
-    creepEntered:{
-      msg1 : 'Né pour détruire!!',
-      msg2 : 'ATTAQUE!!',
-      msg3 : 'Écrase-les!!',
-      msg4 : 'Écrase-les!!'
-    },
-    creepEnteredTower: {
-      msg1 : 'HOO viens là salaud!!',
-      msg2 : 'Résiste!',
-      msg3 : 'Tiens bon!!',
-      msg4 : 'C\'est tout ce que tu peux?!'
-    }
+		towerDestroyedCreep :[
+      'Le suivant!!',
+      'HOO viens là salaud!!!',
+       'meurs, meurs, meurs',
+       'Ça fait mal hein?!',
+       'Prends ça!'
+    ],
+    creepDestroyedTower: [
+      'Oups, c\'était une tour ça?',
+      'ON VA LES Écrabouiller!!!',
+      'meurs, meurs, meurs',
+      'YOUPIEEE!',
+      'Prends ça!',
+      'FATALITé!'
+    ],
+    superWeaponsHeal: [
+      'Juste à temps!',
+      'Merci Mec!',
+      'ça va mieux!'
+    ],
+    superWeaponsWeak: [
+      'JE SUIS AVEUGLE!',
+      'Tousse, Tousse!',
+      'J\'AI SOMMEIL!'
+    ],
+    superWeaponsSplash: [
+      'C\'est quoi ça?!',
+      'Sauves-toi!!',
+      'Des roquettes, cours!!'
+    ],
+    superWeaponsNuke: [
+      'c\'est qu..',
+      'COU…',
+      'Je vois...',
+      'Lumières',
+      '#3aaaa..'
+    ],
+    superWeaponsHyper: [
+      'CAFééé!!',
+      'Que de bonnes choses!!',
+      'Je carbure!!',
+      'WIHAAAA!'
+    ],
+    creepEntered:[
+      'Né pour détruire!!',
+      'ATTAQUE!!',
+      'Écrase-les!!',
+      'Écrase-les!!'
+    ],
+    creepEnteredTower: [
+      'HOO viens là salaud!!',
+      'Résiste!',
+      'Tiens bon!!',
+      'C\'est tout ce que tu peux?!'
+    ]
   
   }
 	

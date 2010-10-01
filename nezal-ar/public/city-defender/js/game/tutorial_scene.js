@@ -1,6 +1,7 @@
 var TutorialScene = Class.create(CityDefenderScene, {
 	initialize : function($super,config,delay,baseCtx,upperCtx){
 		$super(config,delay,baseCtx,upperCtx)
+		this.splash.factor1 = 1;
 		$$('#gameElements .superWeapons div').each(function(div){ 
 	//			div.hide()
 		})
@@ -26,7 +27,7 @@ var TutorialScene = Class.create(CityDefenderScene, {
 			this.push(6000,function (){game.tutorial.initiateSuperWeapon()})
 		}
 		else if (this.waveNumber == 3){
-				
+			game.tutorial.upgradeTower()	
 		}
 		else if (this.waveNumber == 4){
 			game.tutorial.planesAttack()
@@ -38,6 +39,7 @@ var TutorialScene = Class.create(CityDefenderScene, {
 	},
 	end : function (status){
 		game.tutorial.wishLuck()
+		Sounds.gameSounds.game[0].togglePause()
 	},
 	uploadScore : function(win,callback){
 		callback()

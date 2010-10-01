@@ -24,11 +24,11 @@ var Game = Class.create({
 		else{
 			this.scene = new CityDefenderScene(this.config,50,this.ctx,this.topCtx);
 			this.registerHandlers();
-			if(Config.map)Map.bgGrid = Config.map
-			if(Config.mapEntry)Map.entry = Config.mapEntry
 		}
+		if(Config.map)Map.bgGrid = Config.map
+		if(Config.mapEntry)Map.entry = Config.mapEntry
 		GhostTurret = new Turret(0, 0,this.scene, ghostTurretFeatures)
-		$$('.startText').first().innerHTML = T.start
+		$$('.startText').first().innerHTML = window.Text.game.gameState.start
 		var arr = ['Splash','Heal','Hyper','Weak','Nuke']
 				arr.each(function(weapon){
 					if(Config.superWeapons.indexOf(weapon)==-1){
@@ -141,7 +141,7 @@ var Game = Class.create({
 	$('gameExit').appendChild(image2)
     //Here we make the rank 
     $$('#rank img')[0].src = "images/intro/ranks/" + Config.rank + ".png";
-    $$('.rankName')[0].innerHTML = Config.rank;
+    $$('.rankName')[0].innerHTML = window.Text.game.ranks[Config.rank].abbr;
 
 	},
 	
@@ -175,6 +175,7 @@ var Game = Class.create({
 		$$('#gameElements .start').first().stopObserving('click')
 		$$('#gameElements .start').first().removeClassName('resumed')
 		$$('#gameElements .start').first().removeClassName('paused')
+		$('stats').innerHTML = ''
 		game.unRegisterHandlers()
 		$('droppingGround').removeClassName('off')	
 		$('result').hide()

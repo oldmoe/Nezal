@@ -151,17 +151,18 @@ var CityDefenderScene = Class.create(Scene, {
 		}	
 	},
 	renderData : function(){
-		this.currentExp = Math.round(this.exp+this.score/75)
+		//this.currentExp = Math.round(this.exp+this.score/75)
+		this.currentExp = this.exp
 		if(this.currentExp>this.maxExp){
 			this.minExp = this.maxExp	
 			this.maxExp = this.maxExp*2
 		}
 		$('statusBarFill').style.width = ((this.currentExp-this.minExp)/(this.maxExp-this.minExp))*100+"%"
 		$('money').innerHTML = this.money;
-		$('lives').innerHTML = "Lives "+Math.max(this.maxEscaped - this.escaped,0);
-		$('score').innerHTML = "Score "+this.score;
+		$('lives').innerHTML = window.Text.game.upperBar.lives+" "+Math.max(this.maxEscaped - this.escaped,0);
+		$('score').innerHTML = window.Text.game.upperBar.score+" "+this.score;
 		var self = this
-		$('waves').innerHTML = "Wave "+this.wave +'/'+this.wavesCount;
+		$('waves').innerHTML = window.Text.game.upperBar.wave+" "+this.wave +'/'+this.wavesCount;
 			$('towerInfo').show()
 			$('towerInfo').innerHTML = this.templates['towerInfo'].process({tower: this.selectedTower})
 			if(this.selectedTower && this.selectedTower.healthSprite){
@@ -207,10 +208,10 @@ var CityDefenderScene = Class.create(Scene, {
 			div.observe('click', function(){self.fire(div.className)})
 			}
 		})
-
+		Sounds.play(Sounds.gameSounds.pause)
 		var startDev = $$('#gameElements .start').first()
 		startDev.addClassName('resumed')
-		$$(".startText").first().innerHTML = T.pause
+		$$(".startText").first().innerHTML = window.Text.game.gameState.pause
 		startDev.stopObserving('click')
 		$$(".start").first().observe('click', function(){self.pause()})
 	},
@@ -218,7 +219,7 @@ var CityDefenderScene = Class.create(Scene, {
 		$('pauseWindow').show()	
 		Sounds.play(Sounds.gameSounds.pause)
 		var pauseDev = $$('#gameElements .resumed').first()
-		$$(".startText").first().innerHTML = T.resume
+		$$(".startText").first().innerHTML =  window.Text.game.gameState.resume
 		pauseDev.removeClassName('resumed')
 		pauseDev.addClassName('paused')
 		$$(".start").first().stopObserving('click')
@@ -232,7 +233,7 @@ var CityDefenderScene = Class.create(Scene, {
 		$('pauseWindow').hide()
 		Sounds.play(Sounds.gameSounds.pause)
 		var resumeDev = $$('#gameElements .paused').first()
-		$$(".startText").first().innerHTML = T.pause
+		$$(".startText").first().innerHTML = window.Text.game.gameState.pause
 		resumeDev.removeClassName('paused')
 		resumeDev.addClassName('resumed')
 		$$(".start").first().stopObserving('click')
@@ -289,6 +290,28 @@ var CityDefenderScene = Class.create(Scene, {
 		var self = this
 		this.push(50,function(){self.checkStatus()})
 	},
+	promoteUser : function(win){
+		Sounds.play(Sounds.gameSounds.rank_promotion)
+		$('pauseWindow').style.zIndex = 302
+		$('pauseWindow').show()	
+		$('popup').show()
+		$$('#popup #congratsContent').first().innerHTML = "Congratulations"
+		$$('#popup #promotedContent').first().innerHTML = "You have been promoted, you are now a "+window.Text.game.ranks[Config.rank].name
+		game.scene.rank = Config.rank
+		var img = document.createElement("IMG");
+		img.src = "images/intro/ranks/" + Config.rank + ".png";
+		$$('#popup #rankImg').first().appendChild(img)
+		$$('#rank img')[0].src = "images/intro/ranks/" + Config.rank + ".png";
+		if(win){
+			$('popupClose').observe('click',win)
+			$('popupOk').observe('click',win)
+			FBDefender.publishRankPromotion({name : Config.rank, image : "fb-" + Config.rank + '.png'});
+		}
+		else{
+			
+		}
+		
+	},
 	end : function(state){
 		var self = game.scene
 		self.push(2000,function(){
@@ -297,12 +320,13 @@ var CityDefenderScene = Class.create(Scene, {
 		var resultText = window.Text.game.result
 		if(state == "win"){
 				function win(){	
-						self.statText = resultText.winMission1 +" " +Config.mission.name+"\n"+resultText.enemies+"\t"+resultText.destroyed+" "
+						self.statText = resultText.winMission1 +" " +Intro.campaignData.missionsInfo[Config.missionPath]['name']+" "+resultText.winMission2+"\n\n"+resultText.enemies+"\t"+resultText.destroyed+" "
 						+self.stats.creepsDestroyed+"\t"+resultText.escaped+" "+self.escaped+"\n"+resultText.towers+"\t"+resultText.built+" "
 						+self.stats.towersCreated+"\t"+resultText.destroyed+" "+self.stats.towersDestroyed
 						$('pauseWindow').style.zIndex = 299
 						$('pauseWindow').hide()	
 						$('popup').hide()
+						$('popupOk').stopObserving('click')
 						$$('#result #lose').first().hide()
 						$$('#result #win').first().show()
 						new Effect.Appear("static")
@@ -320,26 +344,13 @@ var CityDefenderScene = Class.create(Scene, {
                                            });
 					}
 				if(game.scene.rank!=Config.rank){
-					Sounds.play(Sounds.gameSounds.rank_promotion)
-				 $('pauseWindow').style.zIndex = 302
-				 $('pauseWindow').show()	
-			 $('popup').show()
-				  $$('#popup #congratsContent').first().innerHTML = "Congratulations"
-				$$('#popup #promotedContent').first().innerHTML = "You have been promoted, you are now a "+Config.rank
-					game.scene.rank = Config.rank
-					var img = document.createElement("IMG");
-					img.src = "images/intro/ranks/" + Config.rank + ".png";
-					$$('#popup #rankImg').first().appendChild(img)
-					$$('#rank img')[0].src = "images/intro/ranks/" + Config.rank + ".png";
-					$('popupClose').observe('click',win)
-					$('popupOk').observe('click',win)
-					FBDefender.publishRankPromotion({name : Config.rank, image : "fb-" + Config.rank + '.png'});
+					self.promoteUser(win)
 				}else{
 					win()
 				}
 		}
 		else{
-			self.statText = Config.mission.name+" "+resultText.loseMission +"\n"+resultText.enemies+"\t"+resultText.destroyed+" "
+			self.statText = Intro.campaignData.missionsInfo[Config.missionPath]['name']+" "+resultText.loseMission +"\n\n"+resultText.enemies+"\t"+resultText.destroyed+" "
 			+self.stats.creepsDestroyed+"\t"+resultText.escaped+" "+self.escaped+"\n"+resultText.towers+"\t"+resultText.built+" "
 			+self.stats.towersCreated+"\t"+resultText.destroyed+" "+self.stats.towersDestroyed
 			$$('#result #win').first().hide()
@@ -451,7 +462,7 @@ var CityDefenderScene = Class.create(Scene, {
 			onSuccess = function() {
 			    //Here we make the rank 
 		      $$('#rank img')[0].src = "images/intro/ranks/" + Config.rank + ".png";
-		      $$('.rankName')[0].innerHTML = Config.rank;
+		      $$('.rankName')[0].innerHTML = window.Text.game.ranks[Config.rank].abbr;
 		      callback();
 		  }
 		  Intro.sendScore(this.score, win, onSuccess);

@@ -2,7 +2,7 @@ var Tutorial = Class.create({
 	count: 0 ,
 	initialize: function(scene,ctx){
 		this.scene = scene
-		this.scene.money = 30
+		this.scene.money = 60
 		this.tutorialScene = new Scene(50)
 		this.tutorialLayer = new Layer(ctx);
 		this.tutorialLayer.clear = true
@@ -122,6 +122,7 @@ var Tutorial = Class.create({
 		anim.finish()
 		this.scene.fire(weapon)
 		var self = this	
+		
 	},
 	planesAttack : function (){
 		this.ok.show()
@@ -141,9 +142,28 @@ var Tutorial = Class.create({
 		self.ok.stopObserving('click')
 		self.ok.observe('click',function(){
 			self.scene.reactor.pause()
-			self.hide();Intro.newbieNoMore()
-			$("gameStart").innerHTML = Intro.templates['game'];
+			//self.scene.promoteUser()
+			//$('popupClose').observe('click',function(){
+			//	$('popup').hide()
+				self.hide();Intro.newbieNoMore()
+				$("gameStart").innerHTML = Intro.templates['game'];
+			//})
+			//$('popupOk').observe('click',function(){
+			//	$('popup').hide()
+			//	self.hide();Intro.newbieNoMore()
+			//	$("gameStart").innerHTML = Intro.templates['game'];
+			//})
+			
 		})
+	},
+	upgradeTower : function (){
+		var self = this
+		self.scene.reactor.pause()
+		$('modalWindow').show()
+		self.ok.stopObserving('click')
+		self.ok.show()
+		self.ok.observe('click',function(){self.scene.reactor.resume();self.hide()})
+		self.viewMessage(7)
 	},
 	waveEffect : function (){
 		$('modalWindow').show()
