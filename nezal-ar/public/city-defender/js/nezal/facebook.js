@@ -112,7 +112,7 @@ var FBConnect = {
         FB.ui(
               {
                   method: 'stream.publish',
-                  display: 'popup',
+                  display: 'dialog',
                   message: '',
                   attachment: attachment,
                   action_links: actionLink,
