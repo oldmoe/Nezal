@@ -169,7 +169,8 @@ var Game = Class.create({
 			Sounds.gameSounds.game[0].stop()
 			game.exit()})
 		$('gameReset').observe('click', game.reset)	
-		$$('.bookmark').first().observe('click', FBConnect.bookmark)	
+		$$('.bookmark').first().hide()//observe('click', FBConnect.bookmark)	
+		$$('.like').first().hide()
 		$$('.sound').first().observe('click',Sounds.mute)
 	},
 	reset : function(){
