@@ -159,7 +159,7 @@ window.Text = {
         completeMession: [
               'courageously defended',
               'at',
-              '\s',
+              '\'s',
               'heroic efforts defended the city and scored',
               '. Can you top such efforts?'
         ],
