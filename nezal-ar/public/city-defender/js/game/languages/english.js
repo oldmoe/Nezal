@@ -262,7 +262,7 @@ window.Text = {
 		result : {
 			winMission1: 'You have successsfully defended ',
 			winMission2: 'and protected ',
-			loseMission: ' has fallen to the enemy forces </br> don\'t give up, you can try again.',
+			loseMission: ' has fallen to the enemy forces. don\'t give up, you can try again.',
 			coins: 'Coins',
 			score: 'Score',
 			enemies : 'Enemies',

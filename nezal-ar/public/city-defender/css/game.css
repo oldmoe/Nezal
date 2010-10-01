@@ -67,14 +67,6 @@ body{
 {
   margin-left : 10px;
 }
-#result #stats{
-	position: absolute;
-	width: 250px;
-	left:185px;
-	top: 300px;
-	height: 120px;
-	z-index:200
-}
 
 #splashScreen{
 	width : 760px;
@@ -121,7 +113,7 @@ body{
 
 #gameElements .rank{
 	position:absolute;
-	top:40px;
+	top:14px;
 	left:650px;
 	width:100px;
 	height:60px;
@@ -131,7 +123,7 @@ body{
 	position:absolute;
 	font-family: AdLib;
 	color: orange;
-	top: 25px;
+	top: 64px;
 	left:650px;
 	width:100px;
 	height:40px;
@@ -215,6 +207,7 @@ body{
 
 #gameElements #maxUpgrade{
  padding-top : 10px;
+ opacity :0.5;
 }
 #gameElements #sellTower{
  width : 50px;
@@ -281,13 +274,13 @@ body{
 }
 
 #gameElements .towerInfo td .meter{
-	background-color:blue;
+	background-color:003A7E;
 	padding-left:2px;
 	float:left;
 }
 
 #gameElements .towerInfo td .meterExtension{
-	background-color:red;
+	background-color:FAC200;
 	padding-left:2px;
 	float:left;
 	width:0px;
@@ -439,7 +432,7 @@ body{
 
 #gameElements  .sound.controls.off{
 	width: 35px;
-	top:35px;
+	top:38px;
 	background-image: url('../images/background/sound_off_button.png');				
 }
 
@@ -683,9 +676,15 @@ canvas.turret{
   height : 105px;
   position : absolute;
   top : 10px;
-  left : 110px;
+  left : 117px;
   z-index : 201;
   font-family: AdLib;
+}
+#modalWindow .innerContent{
+  width : 245px;
+  height : 105px;
+  vertical-align:middle;
+  display:table-cell;
 }
 #modalWindow #ok
 {
@@ -791,8 +790,8 @@ position:"absolute";
 	background-color:#444444;
 	border:2px solid #888888;
 	float:right;
-	height:38px;
-	margin:10px 1px 1px;
+	height:30px;
+	margin:13px 1px 1px;
 	width:148px;
 }
 #incomingWaves div.active {
@@ -806,7 +805,7 @@ position:"absolute";
 	height:38;
 }
 #incomingWaves div.wave div.creep img{
-	height: 32px;		
+	height: 24px;		
 	margin-top:3px;
 }
 #scores{
@@ -819,12 +818,12 @@ position:"absolute";
 #planeSilhouette{
 	position:absolute;
 	top:80px;
-	left:15px;
+	left:10px;
 }
 #tankSilhouette{
 	position:absolute;
 	top:50px;
-	left:15px;
+	left:10px;
 }
 #result img{
 	position: absolute;
@@ -874,13 +873,32 @@ position:"absolute";
 	-webkit-border-radius:20px;
 	-o-border-radius:20px;
 	border-radius:20px;
-	top:325px;
+	top:324px;
 	left:194px;
 	width :358px; 
 	height: 136px;
 	border :5px solid #FF4102;
 	background-color : #01060d;
+	white-space: pre-wrap;       /* css-3 */
+	white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+	white-space: -pre-wrap;      /* Opera 4-6 */
+	white-space: -o-pre-wrap;    /* Opera 7 */
+	word-wrap: break-word;  
 	opacity : 0.78;
+}
+#result #stats{
+	width :358px; 
+	height: 136px;
+	white-space: pre-wrap;       /* css-3 */
+	white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+	white-space: -pre-wrap;      /* Opera 4-6 */
+	white-space: -o-pre-wrap;    /* Opera 7 */
+	word-wrap: break-word;  
+	font-size:15px;
+	font-weight:bold;
+	left:6px;
+	position:absolute;
+	top:0px
 }
 #result #exit,#result #playAgain{
 	position:absolute;
@@ -926,8 +944,13 @@ position:"absolute";
 #resetText ,#exitText{
 	font-size:12px;
 	font-weight:bold;
+	top:5px;
+}
+#resetText{
 	left:20px;
-	top:3px;
+}
+#exitText{
+	left:25px;
 }
 #gameExit{
 	top:5px;

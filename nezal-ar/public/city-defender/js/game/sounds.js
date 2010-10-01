@@ -123,6 +123,9 @@ function createSounds(){
 		Sounds.gameSounds[soundNames[i]] = []
 		createAudioElements(3, Sounds.gameSounds[soundNames[i]],soundNames[i])
 	}
+	//createAudioElements(1, Sounds.gameSounds.intro,"intro")
+	//createAudioElements(1, Sounds.gameSounds.game,"game")
+	createBackgroundMusic()
 }
 /*
 function createAudioElements(count, store, url){
@@ -144,24 +147,34 @@ function createAudioElement(store, url){
 }
 */
 
-function createAudioElements(count, store, url){
+function createAudioElements(count, store, url, loops){
 	if(!store)store = []
-	var sound = soundManager.createSound({
+	var attributes = {
 	  id: url,
 	  url: 'sounds/sfx/mp3/'+url+'.mp3',
 	  autoLoad: true,
 	  autoPlay: false,
 	  volume: 50
-	});
-/*
-	sound.onfinish = function(){
-		store[2] = store[2]--
-		Sounds.channelsCount--
 	}
-*/
+	if(loops) attributes.loops = loops
+	var sound = soundManager.createSound(attributes);
 	store.push(sound)
 	store.push(count)
 	store.push(0)
+}
+function createBackgroundMusic(){
+	var gameSound = soundManager.createSound({
+	  id: "gameSound",
+	  url: 'sounds/sfx/mp3/game.mp3',
+	  autoLoad: true,
+	  autoPlay: false,
+	  volume: 30,
+	  loops : 10000
+	});
+	Sounds.gameSounds.intro = []
+	Sounds.gameSounds.intro.push(introSound)
+	Sounds.gameSounds.game= []
+	Sounds.gameSounds.game.push(gameSound)
 }
 
 soundManager.onready(function() {

@@ -73,7 +73,7 @@ var Plane = Class.create(Creep, {
 		}
 		this.scene.money += Math.floor(this.price);
 		this.scene.stats.creepsDestroyed++
-		this.scene.score += Math.round(this.maxHp/100)*this.scene.config.level
+		this.scene.score += Math.round(this.maxHp/20)*this.scene.config.level
 	},
 	destroySprites : function(){
 		this.dead = true	

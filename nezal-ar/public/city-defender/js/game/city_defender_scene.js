@@ -151,7 +151,7 @@ var CityDefenderScene = Class.create(Scene, {
 		}	
 	},
 	renderData : function(){
-		this.currentExp = Math.round(this.exp+this.score/50)
+		this.currentExp = Math.round(this.exp+this.score/75)
 		if(this.currentExp>this.maxExp){
 			this.minExp = this.maxExp	
 			this.maxExp = this.maxExp*2
@@ -244,11 +244,12 @@ var CityDefenderScene = Class.create(Scene, {
 	},
 	displayStats : function(){
 		$$('#score #scoreValue').first().innerHTML = this.score
-		/*
+		//console.log(this.statsText)
 		if(this.statText){
 			if(this.statText.length == this.statTextIndex){
 				this.statText = ''
 				this.reactor.pause()
+				this.statTextIndex = 0
 				return
 			}else{
 				var data = $('stats').innerHTML
@@ -256,13 +257,11 @@ var CityDefenderScene = Class.create(Scene, {
 				this.statTextIndex++
 			}
 		}else{
-			this.statText = this.templates['stats'].process({})
 			this.statTextIndex = 0
 			$('stats').innerHTML = ''
 		}
 		var self = this
 		this.push(50,function(){self.displayStats()})
-		*/
 	},
 	checkStatus: function(){
 		var self = game.scene
@@ -295,8 +294,12 @@ var CityDefenderScene = Class.create(Scene, {
 		self.push(2000,function(){
 		game.scene.running = false
 		$("result").addClassName(state);
+		var resultText = window.Text.game.result
 		if(state == "win"){
 				function win(){	
+						self.statText = resultText.winMission1 +" " +Config.mission.name+"\n"+resultText.enemies+"\t"+resultText.destroyed+" "
+						+self.stats.creepsDestroyed+"\t"+resultText.escaped+" "+self.escaped+"\n"+resultText.towers+"\t"+resultText.built+" "
+						+self.stats.towersCreated+"\t"+resultText.destroyed+" "+self.stats.towersDestroyed
 						$('pauseWindow').style.zIndex = 299
 						$('pauseWindow').hide()	
 						$('popup').hide()
@@ -306,11 +309,14 @@ var CityDefenderScene = Class.create(Scene, {
 						$('droppingGround').addClassName('off')
 						new Effect.SwitchOff('static');
 						new Effect.Appear("result", {delay : 3.0})
-						game.scene.push(3000,function(){Sounds.play(Sounds.gameSounds[state])})
+						game.scene.push(3000,function(){
+							Sounds.play(Sounds.gameSounds[state])
+							Sounds.gameSounds.game[0].togglePause()
+						})
 						game.scene.push(3000,function(){self.displayStats()})
 						game.scene.push(4000,function(){
-						                              FBDefender.publishMissionCompletion({name : GameConfigs.missionPath,
-                  		                                                         score : self.score});
+						  FBDefender.publishMissionCompletion({name : GameConfigs.missionPath,
+													 score : self.score});
                                            });
 					}
 				if(game.scene.rank!=Config.rank){
@@ -333,13 +339,19 @@ var CityDefenderScene = Class.create(Scene, {
 				}
 		}
 		else{
+			self.statText = Config.mission.name+" "+resultText.loseMission +"\n"+resultText.enemies+"\t"+resultText.destroyed+" "
+			+self.stats.creepsDestroyed+"\t"+resultText.escaped+" "+self.escaped+"\n"+resultText.towers+"\t"+resultText.built+" "
+			+self.stats.towersCreated+"\t"+resultText.destroyed+" "+self.stats.towersDestroyed
 			$$('#result #win').first().hide()
 			$$('#result #lose').first().show()
 			new Effect.Appear("static")
 			$('droppingGround').addClassName('off')
 			new Effect.SwitchOff('static');
 			new Effect.Appear("result", {delay : 3.0})
-			game.scene.push(3000,function(){Sounds.play(Sounds.gameSounds[state])})
+			game.scene.push(3000,function(){
+			Sounds.gameSounds.game[0].togglePause()
+			Sounds.play(Sounds.gameSounds[state])
+			})
 			game.scene.push(3000,function(){self.displayStats()})
 		}
 
@@ -450,9 +462,12 @@ var CityDefenderScene = Class.create(Scene, {
 		Map.grid[this.selectedTower.gridX][this.selectedTower.gridY].tower = null
 		this.selectedTower.destroySprites()
 		this.selectedTower = null
+		Sounds.play(Sounds.gameSounds.click)
 	},
 	upgradeSelectedTower: function(){
 		this.selectedTower.upgrade()
+		Sounds.play(Sounds.gameSounds.click)
+
 	},
 	updateMeters : function(tower){
 		if(tower.upgrades[tower.rank]){
@@ -482,5 +497,6 @@ var CityDefenderScene = Class.create(Scene, {
 	wave : 0,
 	sound : true,
 	wavesCount : 0,
-	skipFrames : 0
+	skipFrames : 0,
+	statTextIndex :0
 })
