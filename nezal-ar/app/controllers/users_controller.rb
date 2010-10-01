@@ -29,8 +29,7 @@ class UsersController < ApplicationController
       @game_profile = UserGameProfile.where('game_id' => @game.id, 'user_id' => @user.id).first 
       LOGGER.debug ">>>>>> Removing user from : " + @game.name  
       if @game_profile
-        @game_profile.user_campaigns.clear
-        @game_profile.delete
+        @game_profile.destroy
       end
     end
     ''
