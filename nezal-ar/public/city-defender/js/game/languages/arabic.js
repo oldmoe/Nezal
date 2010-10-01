@@ -1,7 +1,7 @@
 ﻿window.Text = {
 	gameName: 'درع العرب',
 	towers : '',
-	superWeapon : '',
+	superWeapons : '',
     intro : {
         levelSelection : {
             msg : 'دافع عن بلد جديد كل أسبوع',
