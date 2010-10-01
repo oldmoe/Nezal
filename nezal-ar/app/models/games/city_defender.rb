@@ -68,8 +68,8 @@ class CityDefender < Metadata
   def self.edit_user_campaign(user_campaign, data_encoded)
     data = self.decode(data_encoded)
     metadata = self.decode(user_campaign.metadata)
-    old_score = 0
     if metadata['missions'][data['mission'] -1]
+      old_score = metadata['missions'][data['mission'] -1]['score']
       metadata['missions'][data['mission'] -1]['score'] = 
                                                   if metadata['missions'][data['mission'] -1]['score'] > data['score']
                                                     metadata['missions'][data['mission'] -1]['score']
@@ -78,7 +78,7 @@ class CityDefender < Metadata
                                                     data['score']
                                                   end
       user_campaign.score -= old_score 
-      user_campaign.score += data['score']
+      user_campaign.score += metadata['missions'][data['mission'] -1]['score']
       if (data['win'])
         metadata['missions'][data['mission']] = { 'order' => data['mission'] + 1, 'score' => 0 }
         user_campaign.profile.exp += (( data['score'] / 50) * 1.5)
