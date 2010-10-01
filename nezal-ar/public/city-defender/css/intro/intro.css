@@ -192,10 +192,14 @@ body {
   left:245px;
   position:absolute;
 }
-#challengesText:hover, #extraMap:hover, #levelSelection .clicked 
+ #extraMap:hover, #levelSelection .clicked 
 {
   color:#FAC200;
   font-size:30px;
+  text-shadow:-1px 2px 1px #000000;
+}
+#challengesText:hover{
+  color:#FAC200;
   text-shadow:-1px 2px 1px #000000;
 }
 #levelSelection #challengesText

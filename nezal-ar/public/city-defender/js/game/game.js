@@ -34,6 +34,9 @@ var Game = Class.create({
 					if(Config.superWeapons.indexOf(weapon)==-1){
 						game.scene[weapon.toLowerCase()].deactivate()
 					}
+					else{
+						game.scene[weapon.toLowerCase()].end()
+					}
 		})
 		this.scene.start();
 	},
@@ -155,9 +158,13 @@ var Game = Class.create({
 		})
 				
 		$$('#gameElements .start').first().observe('click', function(){self.scene.startAttack()})
-		$('playAgain').observe('click', game.reset)
+		$('playAgain').observe('click',function(){
+			Sounds.gameSounds.game[0].togglePause()
+			game.reset()})
 		$('exit').observe('click', game.exit)
-		$('gameExit').observe('click', game.exit)	
+		$('gameExit').observe('click', function(){
+			Sounds.gameSounds.game[0].togglePause()
+			game.exit()})
 		$('gameReset').observe('click', game.reset)	
 		$$('.bookmark').first().observe('click', FBConnect.bookmark)	
 		$$('.sound').first().observe('click',Sounds.mute)
@@ -177,6 +184,7 @@ var Game = Class.create({
 		game.start()	
 	},
 	exit :function(){
+		  Sounds.gameSounds.game[0].togglePause()
 		  game.scene.reactor.stop()
           Intro.enablePauseScreen();
 		  $('gameStart').hide()
@@ -197,7 +205,6 @@ var Game = Class.create({
 		$$('.bookmark').first().stopObserving('click')	
 		$$('.sound').first().stopObserving('click')
 	}
-	
 });
 
 var game = new Game()
@@ -227,6 +234,7 @@ function onFinish(){
 	window.setTimeout(function(){
 		$('gameElements').show();
 		$('canvasContainer').show();
+		Sounds.gameSounds.game[0].togglePause()
 		$('static').show();
 		$('waitScreen').hide()
 		Effect.Fade('static',{duration: 1.0})

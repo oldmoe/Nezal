@@ -51,7 +51,7 @@
 					</div>
 					{else}
 					<div id = "upgradeTower" >
-						<div id = "maxUpgrade" style = "paddingTop:10px">Max upgrade</div>
+						<div id = "maxUpgrade" style = "paddingTop:10px bgcolor="grey"">Max upgrade</div>
 					</div>
 					{/if}
 				{/if}
@@ -67,7 +67,8 @@
 		
 				</div>
 				<div class="content"> 
-				
+					<div class="innerContent">
+					</div>
 				</div>
 				<div id = "ok">
 				<img src="images/background/ok.png"></img>
@@ -165,7 +166,9 @@
 					<img id="loseClouds" src="images/background/lose_clouds.png"/>
 					<img id="loseCenter" src="images/background/lose_center.png"/>
 				</div>
-				<div id="resultText"></div>
+				<div id="resultText">
+					<pre id="stats"></pre>
+				</div>
 				<div id="playAgain">Play again</div>
 				<div id="exit">Continue campaign</div>
 			</div>

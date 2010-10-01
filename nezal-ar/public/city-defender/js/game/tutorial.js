@@ -13,7 +13,7 @@ var Tutorial = Class.create({
 		$$('#gameElements .superWeapons div').each(function(div){
 			div.hide()
 		})
-		this.content = $$('#modalWindow .content').first()
+		this.content = $$('#modalWindow .innerContent').first()
 		this.ok = $$('#modalWindow #ok').first()
 		this.step1()
 	},

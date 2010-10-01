@@ -19,7 +19,12 @@ var SuperWeapon = Class.create({
 		}catch(e){
 		}
 	},
-	
+	end : function(){
+		var canvas = $$('#gameElements .superWeapons .'+this.type+' canvas')
+		if (canvas.length>0){
+			$$('#gameElements .superWeapons .'+this.type)[0].removeChild(canvas[0])
+		}
+	},
 	render : function(){
 	},
 	
