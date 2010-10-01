@@ -41,5 +41,5 @@ var Nezal = {
 }
 
 Array.prototype.random = function(){
-	return this[Math.floor(Math.random()*(this.length-1))]
+	return this[Math.round(Math.random()*(this.length-1))]
 }

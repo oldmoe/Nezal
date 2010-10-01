@@ -2,6 +2,7 @@ var Turret = Class.create(Unit, {
 	theta :0,
 	cannonTheta : 0,
 	rank : 0,
+	maxRank :3,
 	fireSound : Sounds.turret.fire,
 	canHitFlying: true,
 	canHitGround: true,
@@ -9,7 +10,7 @@ var Turret = Class.create(Unit, {
 	targets : 'Air &<br/>Ground',
 	facilities : 'Fires Bullets',
 	cssClass : 'tower',
-	hp:500, maxHp : 500, power:10, rate:0.2, price: 15, range: 2,
+	hp:500, maxHp : 500, power:10, rate:0.2, price: 30, range: 2,
 	upgradeValues : ['maxHp', 'power', 'rate', 'range'],
 	upgrades : [{maxHp: 1100, power:18, price: 3},
 							{maxHp: 1300, power:22, price: 8,range: 3},
@@ -131,7 +132,7 @@ var Turret = Class.create(Unit, {
 		this.cannonSprite.destroy()
 		this.healthSprite.destroy()
 		this.rankSprite.destroy()
-		if(this.scene.selectedTower.gridX == this.gridX && this.scene.selectedTower.gridY == this.gridY)this.scene.selectedTower = null
+		if(this.scene.selectedTower&&this.scene.selectedTower.gridX == this.gridX && this.scene.selectedTower.gridY == this.gridY)this.scene.selectedTower = null
 		if(this.baloon)this.baloon.destroy()
 		this.rangeSprite.destroy()
 	}

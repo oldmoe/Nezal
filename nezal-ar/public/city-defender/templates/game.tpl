@@ -22,7 +22,7 @@
 			</div>
 			<div id="towerData">
 			<h4>{if tower.healthSprite !=null }
-					<div id = "sellTower" onmousedown = "game.scene.sellSelectedTower()">Sell<hr/>$${Math.round(tower.price*0.75*tower.hp/tower.maxHp)}</div>
+					<div id = "sellTower" onmousedown = "game.scene.sellSelectedTower()">${window.Text.game.towerInfo.sell}<hr/>$${Math.round(tower.price*0.75*tower.hp/tower.maxHp)}</div>
 					{else}
 						$${tower.price}
 					{/if}
@@ -30,23 +30,23 @@
 				<h4>${tower.name}</h4>
 			<table>
 				<tr>
-					<td><div class='meter' id = 'powerMeter' style="width:${Math.round(65 * tower.power / 420)}px;backgroundColor:blue">Power</div>
+					<td><div class='meter' id = 'powerMeter' style="width:${Math.round(65 * tower.power / 420)}px;backgroundColor:blue">${window.Text.game.towerInfo.power}</div>
 					<div class='meterExtension'></div>
 				</td>
 				</tr>
 				<tr>
-					<td><div class='meter' id = 'shieldsMeter' style="width:${Math.round(65 * tower.hp / 3000)}px;backgroundColor:blue">Shields</div></td>
+					<td><div class='meter' id = 'shieldsMeter' style="width:${Math.round(65 * tower.hp / 3000)}px;backgroundColor:blue">${window.Text.game.towerInfo.shield}</div></td>
 				</tr>
 				<tr>
-					<td><div class='meter' id = 'rateMeter' style="width:${Math.round(65 * tower.rate / 1)}px;backgroundColor:blue">Rate</div></td>
+					<td><div class='meter' id = 'rateMeter' style="width:${Math.round(65 * tower.rate / 1)}px;backgroundColor:blue">${window.Text.game.towerInfo.rate}</div></td>
 				</tr>
 				<tr>
-					<td><div class='meter' id = 'rangeMeter' style="width:${Math.round(65 * tower.range / 6)}px;backgroundColor:blue">Range</div></td>
+					<td><div class='meter' id = 'rangeMeter' style="width:${Math.round(65 * tower.range / 6)}px;backgroundColor:blue">${window.Text.game.towerInfo.range}</div></td>
 				</tr>
 			</table>
 				{if tower.healthSprite !=null }
 					{if tower.rank < tower.maxRank}
-					<div id = "upgradeTower" onmousedown = "game.scene.upgradeSelectedTower()">Upgrade<hr/>
+					<div id = "upgradeTower" onmousedown = "game.scene.upgradeSelectedTower()">${window.Text.game.towerInfoupgrade}<hr/>
 						$${tower.upgrades[tower.rank].price}&nbsp; &nbsp;<img src="${Loader.images.game['rank_'+(tower.rank+1)+'.png'].src}" /> 
 					</div>
 					{else}
@@ -58,7 +58,6 @@
 			</div>
 		</table>
 		{else}
-				select tower to view tower info
 		{/if}
 		</textarea>
 		<div id="gameContainer">
@@ -161,6 +160,7 @@
 					<img id="resultBlank" src="images/intro/blank.png"/>
 					<img id="winClouds" src="images/background/win_clouds.png"/>
 					<img id="winCenter" src="images/background/win_center.png"/>
+					<img id="twoCannons" src="images/background/two_towers.png"/>
 				</div>
 				<div id="lose" >
 					<img id="loseClouds" src="images/background/lose_clouds.png"/>

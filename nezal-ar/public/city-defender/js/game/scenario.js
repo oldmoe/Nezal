@@ -38,7 +38,7 @@ var Scenario = Class.create({
 						if(event.unit.parent == "creep") baloonNum = 1
 						event.unit.createBaloon(baloonNum)
 						event.created = true
-						event.unit.baloon.text.innerHTML = this.scenario[event.name].random()
+						event.unit.baloon.text.innerHTML = window.Text.game[event.name].random()
 						if(event.method)this[event.name]()
 					}
 				}					

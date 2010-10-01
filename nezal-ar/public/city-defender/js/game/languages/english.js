@@ -213,7 +213,7 @@ window.Text = {
 				msg4: 'Now it is time to place some towers. Click on the Belcher tower in the towers box.</br>'
 		+'Notice that the tower information will be visible in the information box.',
 				msg5: 'Click here to place the tower. ',
-				msg6: 'Place more towers as long as you have enough gold. Now you are ready to click the start button to start the battle.',
+				msg6: 'Place more towers as long as you have enough money. Now you are ready to click the start button to start the battle.',
 				msg7: 'You can always use super weapons on demand. ',
 				msg8: 'Click on a tower to see its abilities, sell or upgrade it',
 				msg9: 'Finally, there is an important hint you need to know before finishing this training. Air units do not respect any path, they simply fly over anything.',
@@ -235,8 +235,8 @@ window.Text = {
 			shield:'Shield',
 			rate: 'Rate',
 			range:'Range',
-			upgrade : "upgrade",
-			sell : "sell"
+			upgrade : "Upgrade",
+			sell : "Sell"
 		},
 		ranks:{
 			PVT :{ name:'Private' ,abbr : 'PVT'},
@@ -262,71 +262,71 @@ window.Text = {
 		},
 		result : {
 			winMission1: 'You have successsfully defended ',
-			winMission2: 'and protected ',
+			winMission2: 'and drove the enemies away',
 			loseMission: ' has fallen to the enemy forces. don\'t give up, you can try again.',
 			coins: 'Coins',
 			score: 'Score',
 			enemies : 'Enemies',
 			destroyed : 'Destroyed:',
 			escaped : 'Escaped:',
-			towers : 'towers',
+			towers : 'Towers',
 			built : 'Built:'
 		},
-		towerDestroyedCreep :{
-      msg1 : 'Who\'s next?!',
-      msg2 : 'BRING IT ON!!!',
-      msg3 : 'Die, Die, Die',
-      msg4 : 'Did it hurt?',
-      msg5 : 'Take that!'
-    },
-    creepDestroyedTower: {
-      msg1 : 'Oops, was that a tower?',
-      msg2 : 'WE WILL CRUSH\'em!!!',
-      msg3 : 'Die, Die, Die',
-      msg4 : 'Hurray!',
-      msg5 : 'Take that!',
-      msg6 : 'FATALITY!'
-    },
-    superWeaponsHeal: {
-      msg1 : 'Just in time!',
-      msg2 : 'Thanks Man!',
-      msg3 : 'Feels Better!'
-    },
-    superWeaponsWeak: {
-      msg1 : 'I AM BLIND!',
-      msg2 : 'Cough, cough!',
-      msg3 : 'I feel s l e e p y!'
-    },
-    superWeaponsSplash: {
-      msg1 : 'What is this?!',
-      msg2 : 'Run!!',
-      msg3 : 'Rockets, Run!'
-    },
-    superWeaponsNuke: {
-      msg1 : 'Wha..',
-      msg2 : 'Ru...',
-      msg3 : 'I see a ...',
-      msg4 : 'Lights ...',
-      msg5 : '#3aaaa..'
-    },
-    superWeaponsHyper: {
-      msg1 : 'COFFEE!!',
-      msg2 : 'GOOD STUFF!!',
-      msg3 : 'I AM HYPER!!',
-      msg4 : 'WEEHAAAA!'
-    },
-    creepEntered:{
-      msg1 : 'Born to destroy!!',
-      msg2 : 'ATTAAACK!!',
-      msg3 : 'RUN THEM OVER!!',
-      msg4 : 'CRUSH THEM!'
-    },
-    creepEnteredTower: {
-      msg1 : 'BRING IT ON!!',
-      msg2 : 'HOLD!!',
-      msg3 : 'STAND YOUR GROUND!!',
-      msg4 : 'That\'s all you got?'
-    }
+	towerDestroyedCreep :[
+       'Who\'s next?!',
+       'BRING IT ON!!!',
+       'Die, Die, Die',
+       'Did it hurt?',
+       'Take that!'
+    ],
+    creepDestroyedTower: [
+       'Oops, was that a tower?',
+       'WE WILL CRUSH\'em!!!',
+      'Die, Die, Die',
+       'Hurray!',
+       'Take that!',
+       'FATALITY!'
+    ],
+    superWeaponsHeal: [
+       'Just in time!',
+       'Thanks Man!',
+       'Feels Better!'
+    ],
+    superWeaponsWeak: [
+       'I AM BLIND!',
+       'Cough, cough!',
+       'I feel s l e e p y!'
+    ],
+    superWeaponsSplash: [
+       'What is this?!',
+       'Run!!',
+       'Rockets, Run!'
+    ],
+    superWeaponsNuke: [
+       'Wha..',
+       'Ru...',
+       'I see a ...',
+       'Lights ...',
+       '#3aaaa..'
+    ],
+    superWeaponsHyper: [
+       'COFFEE!!',
+       'GOOD STUFF!!',
+       'I AM HYPER!!',
+      'WEEHAAAA!'
+    ],
+    creepEntered:[
+       'Born to destroy!!',
+       'ATTAAACK!!',
+       'RUN THEM OVER!!',
+       'CRUSH THEM!'
+    ],
+    creepEnteredTower: [
+       'BRING IT ON!!',
+       'HOLD!!',
+       'STAND YOUR GROUND!!',
+      'That\'s all you got?'
+    ]
   
   }
 	
