@@ -29,6 +29,9 @@ var Game = Class.create({
 		if(Config.mapEntry)Map.entry = Config.mapEntry
 		GhostTurret = new Turret(0, 0,this.scene, ghostTurretFeatures)
 		$$('.startText').first().innerHTML = window.Text.game.gameState.start
+		$$('#gameReset #resetText').first().innerHTML = window.Text.game.controls.reset
+		$$('#gameExit #exitText').first().innerHTML = window.Text.game.controls.exit
+		
 		var arr = ['Splash','Heal','Hyper','Weak','Nuke']
 				arr.each(function(weapon){
 					if(Config.superWeapons.indexOf(weapon)==-1){
@@ -159,11 +162,11 @@ var Game = Class.create({
 				
 		$$('#gameElements .start').first().observe('click', function(){self.scene.startAttack()})
 		$('playAgain').observe('click',function(){
-			Sounds.gameSounds.game[0].togglePause()
+			Sounds.gameSounds.game[0].stop()
 			game.reset()})
 		$('exit').observe('click', game.exit)
 		$('gameExit').observe('click', function(){
-			Sounds.gameSounds.game[0].togglePause()
+			Sounds.gameSounds.game[0].stop()
 			game.exit()})
 		$('gameReset').observe('click', game.reset)	
 		$$('.bookmark').first().observe('click', FBConnect.bookmark)	
