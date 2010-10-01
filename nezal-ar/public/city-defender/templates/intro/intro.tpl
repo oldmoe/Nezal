@@ -242,9 +242,9 @@
 {/if}
     <div class="content"> 
       <div class="spans">
-        <div class="name">  ${Text.intro[data.type][data.configs[data.itemid]]['name']} </div>
+        <div class="name">  ${Text.intro[data.type][data.itemid]['name']} </div>
         <div class="desc">  
-          ${Text.intro[data.type][data.configs[data.itemid]]['desc']} 
+          ${Text.intro[data.type][data.itemid]['desc']} 
         </div>
       </div>
       {if (data.upgrade && data.type=='towers')}
