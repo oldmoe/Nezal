@@ -419,7 +419,7 @@ var Intro = {
                             FBDefender.publishUnlockedItem(
                                 { name : itemid,
                                   image : 'intro/'+ type + "/" + itemConfig[itemid]['image'],
-                                  mission : Intro.campaignData.missionsInfo[GameConfigs.missionPath]['name'], type : typeName})
+                                  type : typeName})
                             Intro.select('marketPlace');
                             Intro.disablePauseScreen();
                   }
@@ -456,7 +456,7 @@ var Intro = {
                             FBDefender.publishUpgradedItem(
                                 { name : itemid,
                                   image : 'intro/'+ type + "/" + itemConfig[itemid]['image'],
-                                  mission : Intro.campaignData.missionsInfo[GameConfigs.missionPath]['name'], type : typeName})
+                                  type : typeName})
                             Intro.select('marketPlace');
                             Intro.disablePauseScreen();
                   }
