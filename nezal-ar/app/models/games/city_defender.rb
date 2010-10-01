@@ -69,7 +69,6 @@ class CityDefender < Metadata
     data = self.decode(data_encoded)
     metadata = self.decode(user_campaign.metadata)
     old_score = 0
-    metadata['missions'][data['mission']] = { 'order' => data['mission'] + 1, 'score' => 0 }
     if metadata['missions'][data['mission'] -1]
       metadata['missions'][data['mission'] -1]['score'] = 
                                                   if metadata['missions'][data['mission'] -1]['score'] > data['score']
@@ -82,6 +81,7 @@ class CityDefender < Metadata
       user_campaign.score += data['score']
       user_campaign.metadata = self.encode(metadata)
       if (data['win'])
+        metadata['missions'][data['mission']] = { 'order' => data['mission'] + 1, 'score' => 0 }
         user_campaign.profile.exp += (( data['score'] / 50) * 1.5)
       else
         user_campaign.profile.exp += ( data['score'] / 50)
