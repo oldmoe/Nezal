@@ -30,7 +30,7 @@ var Scenario = Class.create({
 				if(event.created)
 					event.tick++
 				else{
-					if(event.unit.baloon){
+					if(event.unit&&event.unit.baloon){
 						event.finished = true
 					}
 					else if(event.unit&&!event.unit.dead){

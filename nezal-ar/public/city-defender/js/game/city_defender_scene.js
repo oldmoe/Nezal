@@ -456,8 +456,6 @@ var CityDefenderScene = Class.create(Scene, {
 	},
 	uploadScore : function(win,callback){
 		// Upload Score code goes here
-		if(development)callback()
-		else{
 		  var currRank = Config.rank;
 			onSuccess = function() {
 			    //Here we make the rank 
@@ -466,7 +464,6 @@ var CityDefenderScene = Class.create(Scene, {
 		      callback();
 		  }
 		  Intro.sendScore(this.score, win, onSuccess);
-		}
 	},
 	sellSelectedTower: function(){
 		this.money +=Math.round(this.selectedTower.price*0.75*this.selectedTower.hp/this.selectedTower.maxHp)
