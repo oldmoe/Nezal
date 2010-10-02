@@ -216,6 +216,8 @@ var CityDefenderScene = Class.create(Scene, {
 		$$(".start").first().observe('click', function(){self.pause()})
 	},
 	renderPause: function(){
+		soundManager.mute()
+		Sounds.gameSounds.game[0].pause()
 		$('pauseWindow').show()	
 		Sounds.play(Sounds.gameSounds.pause)
 		var pauseDev = $$('#gameElements .resumed').first()
@@ -230,6 +232,8 @@ var CityDefenderScene = Class.create(Scene, {
 		$$(".start").first().observe('click', function(){self.resume()})	
 	},
 	renderResume: function(){
+		soundManager.unmute()
+		Sounds.gameSounds.game[0].resume()
 		$('pauseWindow').hide()
 		Sounds.play(Sounds.gameSounds.pause)
 		var resumeDev = $$('#gameElements .paused').first()
