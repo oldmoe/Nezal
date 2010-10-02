@@ -112,7 +112,7 @@ var ghostTurretFeatures = {
 		if(this.valid){
 			ctx.fillStyle = 'rgba(255,255,255,0.5)'
 			ctx.beginPath();
-			ctx.arc(Map.pitch+16, Map.pitch-16, this.range * Map.pitch, 0, Math.PI*2, false)
+			ctx.arc(Map.pitch+16, Map.pitch-16, (this.range * Map.pitch) + (Map.pitch/2), 0, Math.PI*2, false)
 			ctx.closePath();
 			ctx.fill();
 		}else{
