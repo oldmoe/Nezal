@@ -78,7 +78,8 @@ class GamesController < ApplicationController
       :user_data => { 
                       :metadata => user_camp_metadata,
                       :rank => user_camp.profile.rank.name,
-                      :exp => user_camp.profile.exp
+                      :exp => user_camp.profile.exp,
+                      :coins => user_camp.profile.user.coins
                    }
     }
     JSON.generate(data)

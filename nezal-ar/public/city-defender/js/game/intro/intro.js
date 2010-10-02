@@ -478,6 +478,7 @@ var Intro = {
                       Intro.campaignData.user_data.metadata = data['user_data']['metadata'];
                       Intro.userData.rank = data['user_data'].rank;
                       Intro.userData.exp = data['user_data'].exp;                      
+                      Intro.userData.coins = data['user_data'].coins;  
                       Intro.setupGameConfigs();
                       callback();
                   }
@@ -572,6 +573,12 @@ var Intro = {
     show: function(){
         $$('.clickSound').each(function(element){
           element.observe('click', function(element){Sounds.play(Sounds.gameSounds.click)})
+        });
+        $$('.acceptSound').each(function(element){
+          element.observe('click', function(element){Sounds.play(Sounds.gameSounds.accept)})
+        })
+        $$('.rejectSound').each(function(element){
+          element.observe('click', function(element){Sounds.play(Sounds.gameSounds.reject)})
         })
         window.setTimeout(Intro.display, 200);
     },

@@ -195,13 +195,13 @@
       <img src="${Loader.challenges[GameConfigs.campaign]['images'+path+'/path.png'].getAttribute('data')}"
            style="width:222px;">
     </div>
-    <div id="accept" onclick="Intro.next();" class="clickableButton clickSound">
+    <div id="accept" onclick="Intro.next();" class="clickableButton acceptSound">
       <img src="${Loader.images.intro['mission/accept.png'].getAttribute('data')}" >
       <div class="text buttonText">
         ${Text.intro.mission.accept}
       </div>
     </div>
-    <div id="reject" onclick="Intro.previous();" class="clickableButton clickSound">
+    <div id="reject" onclick="Intro.previous();" class="clickableButton rejectSound">
       <span style="color : #550000; font-size: 12px;">${Text.intro.mission.or}</span> ${Text.intro.mission.goBack}
     </div>
     <div class="creepsHeadline">
