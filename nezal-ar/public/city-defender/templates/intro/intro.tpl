@@ -486,9 +486,23 @@
 		          <li itemid="${item}" class="clickSound" 
 	                onmouseover="this.select('#info')[0].show();"
 	                onmouseout="this.select('#info')[0].hide();">
-		            <img class="coinImage" 
-		                  src="${Loader.images.intro['market/coin.png'].getAttribute('data')}"> </img>
-                <div class="itemPrice">${Intro.gameData[type][item].cost}</div>
+                {if (!Intro.userData.metadata[type][item])}   
+		                <img class="coinImage" 
+		                      src="${Loader.images.intro['market/coin.png'].getAttribute('data')}"> </img>
+                    <div class="itemPrice">
+                        ${Intro.gameData[type][item].cost}
+                    </div>
+                {else}  
+                    {if (Intro.gameData[type][item]['upgrades'][Intro.userData.metadata[type][item]['upgrades']])}
+                    <img class="coinImage" 
+		                      src="${Loader.images.intro['market/coin.png'].getAttribute('data')}"> </img>
+                    <div class="itemPrice">
+                        ${Intro.gameData[type][item]['upgrades'][Intro.userData.metadata[type][item]['upgrades']].cost}
+                    </div>  
+                    {else}
+                    <div style="width:20px;height:23px;"></div>
+                    {/if}
+                {/if}
 		            <img class="itemImage" 
 		                  src="${Loader.images.intro[type+'/'+itemConfig[item]['image']].getAttribute('data')}"> </img>
                 {if (!Intro.userData.metadata[type][item])}
