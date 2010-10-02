@@ -327,7 +327,11 @@
         'Résiste!',
         'Tiens bon!!',
         'C\'est tout ce que tu peux?!'
-    ]  
+    ], 
+	controls: {
+		exit : "sortie",
+		reset : "remise"
+	}
   }
 	
 }

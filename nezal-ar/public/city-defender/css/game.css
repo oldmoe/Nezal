@@ -140,27 +140,22 @@ body{
 	z-index:300;
 }
 
-#gameElements .startText{
-	position:absolute;
-	top:30px;
-	left:0px;
-	width:155px;
-	height:80px;
-	z-index:2;
+#gameElements .startText {
+	-moz-user-select:none;
+	color:white;
+	cursor:pointer;
 	font-family:AdLib;
-	font-size: 30;
-	text-align: center;
-	color: white;
-	margin-top:2%;
-	cursor : pointer;
-	text-shadow: #000 2px 2px 1px;
-	vertical-align:center;
-	-moz-user-select: none;
-   -khtml-user-select: none;
-    user-select: none;
-	z-index:301;        
+	font-size:23px;
+	height:30px;
+	left:0;
+	margin-top:7%;
+	position:absolute;
+	text-align:center;
+	text-shadow:2px 2px 1px #000000;
+	top:25px;
+	width:155px;
+	z-index:301;
 }
-
 
 #gameElements .towers{
 	position : absolute;
@@ -878,7 +873,6 @@ position:"absolute";
 	-webkit-border-radius:20px;
 	-o-border-radius:20px;
 	border-radius:20px;
-	text-align:center;
 	top:324px;
 	left:194px;
 	width :358px; 

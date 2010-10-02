@@ -166,7 +166,7 @@ var Nuke = Class.create(SuperWeapon, {
 		Sounds.play(Sounds.superWeapons.nuke,true)
 		function startNuke(){
 			this.scene.creeps.each(function(creep){
-				creep.takeHit(Math.round(creep.hp * 1));
+				creep.takeHit(Math.round(creep.maxHp * 1));
 			})
 			var anim = new NukeBoom(320, 240)
 			this.scene.objects.push(anim)

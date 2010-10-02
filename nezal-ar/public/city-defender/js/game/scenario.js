@@ -11,7 +11,7 @@ var Scenario = Class.create({
 	},
 	notify : function(event){
 		var x = Math.random()
-		if(x<0.1&&event.unit){
+		if((x<0.1&&event.unit)||(event.name!="creepEnteredTower"&&event.name!="creepEntered"&&event.name!="towerDestroyedCreep")){
 			event['tick']=0
 			event['created'] = false
 			event['finished'] = false
@@ -30,7 +30,7 @@ var Scenario = Class.create({
 				if(event.created)
 					event.tick++
 				else{
-					if(event.unit.baloon){
+					if(event.unit&&event.unit.baloon){
 						event.finished = true
 					}
 					else if(event.unit&&!event.unit.dead){
