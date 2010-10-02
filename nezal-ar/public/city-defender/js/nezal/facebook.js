@@ -104,7 +104,9 @@ var FBConnect = {
 	  },
     
     bookmark : function(){
-        FB.ui({ method: 'bookmark.add' });
+        FB.ui({ method: 'bookmark.add' },  
+            function(response) {
+             });
     },
     
     publish : function(attachment, usePrompt, actionLink, successCallback) {
@@ -125,6 +127,14 @@ var FBConnect = {
               }
 
         );
+        window.setTimeout(function(){
+                              var divs = $$('#fb-root .fb_dialog');
+                              if( divs.length > 1 && (parseInt(divs.last().getStyle('top')) < 0 ))
+                              {
+                                  divs.last().style["top"] = "203.6px";
+                                  divs.last().style["left"] = "82.5px";
+                              }
+                          }, 5000);
     },
     
     invite : function(userPrompt, inviteMsg){
@@ -136,17 +146,17 @@ var FBConnect = {
                 FB.ui({
                     method:'fbml.dialog',
                     display: 'popup',
-                    width: '550px',
+                    width:640, height:480,
                     fbml:'<fb:Fbml>   ' +
-                                '<fb:request-form action="' + window.location + '"' + ' method="GET" invite="true" targer="_self" ' +
-                                                  'type="Studio SA 2010" content="I am predicting the results of the world cup 2010 on Studio S.A. Predict with me ' +
-                                                  '<fb:req-choice url=\'' + appUrl + '\' ' +  'label=\'Play\' />" >' +
-                                '<div style="width : 80%; margin:auto;padding:auto;"> ' +
-                                  '<fb:multi-friend-selector  targer="_self" showborder="false"' + 'exclude_ids="' + ids + '"' + 'actiontext="Invite your friends to play Studio South Africa 2010 with you" cols="3" rows="2"/>' +         
+                              '<fb:request-form action="' + window.location + '"' + ' method="GET" invite="true" targer="_self" ' +
+                                                'type="Studio SA 2010" content="I am predicting the results of the world cup 2010 on Studio S.A. Predict with me ' +
+                                '<fb:req-choice url=\'' + appUrl + '\' ' +  'label=\'Play\' />" >' +
+                                '<div style="width : 83%; margin:auto;"> ' +
+                                  '<fb:multi-friend-selector  targer="_self" showborder="false"' + 'exclude_ids="' + ids + '"' + 'actiontext="Invite your friends to play Studio South Africa 2010 with you" cols="3" rows="1"/>' +         
                                 '<div/> ' +
                                 '</fb:request-form>' +
                           '</fb:Fbml> '
-                  });
+                });
             }
         );
     }
