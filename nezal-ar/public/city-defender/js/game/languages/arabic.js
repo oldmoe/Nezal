@@ -270,7 +270,9 @@
 			destroyed : 'تدمر:',
 			escaped : 'هرب:',
 			towers : 'مدافع',
-			built : 'بني:'
+			built : 'بني:',
+			playAgain :'Play again',
+			continueCamp : 'Continue Campaign'
 		},
 		towerDestroyedCreep :[
        'من التالي؟؟!!',
@@ -330,6 +332,11 @@
 	controls: {
 		exit : "خروج",
 		reset : "اعاده"
+	},
+	promotion: {
+		msg1 : "Congratulations",
+		msg2 : "You have been promoted , you are now a ",
+		okButton : "Ok"
 	}
   
   }

@@ -63,7 +63,6 @@
 		<div id="gameContainer">
 			<div id="modalWindow" style="display:none">
 				<div id="character">
-		
 				</div>
 				<div class="content"> 
 					<div class="innerContent">
@@ -75,13 +74,11 @@
 			</div>
 			<div id= "pauseWindow" style="display:none">	</div>
 			<div id= "popup" style="display:none">
-					<img src='images/background/pop_up.png'/>
 					<div id = "congratsContent"></div>
 					<div id = "promotedContent"></div>
 					<div id = "rankImg"> </div>
 					<div id = "popupClose" onclick = "$('popup').hide()"> </div>
 					<div id="popupOk" class="clickableButton" ">
-						<img src="images/intro/mission/accept.png"/>
 						<div class="text"> Ok </div>
 					</div>
 			</div>
@@ -145,33 +142,34 @@
 			</div>
 			<canvas id="droppingGround" width="672" height="480"></canvas>
 			<div id="static" style="display:none"></div>
-			<div id="result" style="display:none;">
-				<img src="images/intro/paper.png"/>
-				<img id="resultCoin" src="images/background/coin.png"/>
-				<div id="coins">
-					<div id="coinsWord">Coins</div>
-					<div id="coinsValue">0</div>
-				</div>
-				<div id="score">
-					<div id="scoreWord">Score</div>
-					<div id="scoreValue">123123</div>
-				</div>
-				<div id="win">
-					<img id="resultBlank" src="images/intro/blank.png"/>
-					<img id="winClouds" src="images/background/win_clouds.png"/>
-					<img id="winCenter" src="images/background/win_center.png"/>
-					<img id="twoCannons" src="images/background/two_towers.png"/>
-				</div>
-				<div id="lose" >
-					<img id="loseClouds" src="images/background/lose_clouds.png"/>
-					<img id="loseCenter" src="images/background/lose_center.png"/>
-				</div>
-				<div id="resultText">
-					<pre id="stats"></pre>
-				</div>
-				<div id="playAgain">Play again</div>
-				<div id="exit">Continue campaign</div>
-			</div>
+			<div id="result" style="display:none;"></div>
+			<textarea id='resultTemplate' style="display:none">
+					<img src="${Loader.images.intro['paper.png'].src}"/>
+					<img id="resultCoin" src="${Loader.images.background['coin.png'].src}"/>
+					<div id="coins">
+						<div id="coinsWord">${Text.game.result.coins}</div>
+						<div id="coinsValue">0</div>
+					</div>
+					<div id="score">
+						<div id="scoreWord">${Text.game.result.score}</div>
+						<div id="scoreValue"></div>
+					</div>
+					<div id="win">
+						<img id="resultBlank" src="${Loader.images.intro['blank.png'].src}"/>
+						<img id="winClouds" src="${Loader.images.background['win_clouds.png'].src}"/>
+						<img id="winCenter" src="${Loader.images.background['win_center.png'].src}"/>
+						<img id="twoCannons" src="${Loader.images.background['two_towers.png'].src}"/>
+					</div>
+					<div id="lose" >
+						<img id="loseClouds" src="${Loader.images.background['lose_clouds.png'].src}"/>
+						<img id="loseCenter" src="${Loader.images.background['lose_center.png'].src}"/>
+					</div>
+					<div id="resultText">
+						<pre id="stats"></pre>
+					</div>
+					<div id="playAgain">${Text.game.result.playAgain}</div>
+					<div id="exit">${Text.game.result.exit}</div>
+			</textarea>
 			<div id="splashScreen" style="display:none">
 				<div class="loading_bar_bg">
 					<div id="loading_bar">

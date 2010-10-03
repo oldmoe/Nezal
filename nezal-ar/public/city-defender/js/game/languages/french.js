@@ -270,7 +270,9 @@
 			destroyed : 'Détruits:',
 			escaped : 'échappé:',
 			towers : 'tour',
-			built : 'Construit:'
+			built : 'Construit:',
+			playAgain :'Play again',
+			continueCamp : 'Continue Campaign'
 		},
 
 		towerDestroyedCreep :[
@@ -331,6 +333,11 @@
 	controls: {
 		exit : "sortie",
 		reset : "remise"
+	},
+	promotion: {
+		msg1 : "Congratulations",
+		msg2 : "You have been promoted , you are now a ",
+		okButton : "Ok"
 	}
   }
 	

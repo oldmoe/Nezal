@@ -111,9 +111,7 @@ var Game = Class.create({
 				$$(".superWeaponsOff").first().appendChild(div2)
 			
 		})		
-
 		$$('.start').first().appendChild(Loader.images.background['start.png'])
-
 		$('gameElements').appendChild(Loader.images.background['l_shape.png'])
 		if(Intro.userData.newbie)$('canvasContainer').appendChild(Loader.images.background['path.png'])
 		else $('canvasContainer').appendChild(Loader.challenges[Config.campaign]['images/'+Config.missionPath+'/path.png'])
@@ -121,7 +119,9 @@ var Game = Class.create({
 			$$('.'+turret).first().appendChild(Loader.images.background[turret.toLowerCase()+'_button.png'])
 			
 		})
-	
+		
+		var template = TrimPath.parseTemplate($('resultTemplate').value) 
+		$('result').innerHTML = template.process()
 		var img8 = Loader.images.background['character.png']
 		$$('#modalWindow #character').first().appendChild(img8)
 		var img9 = document.createElement("IMG");
@@ -136,16 +136,17 @@ var Game = Class.create({
 			div.appendChild(Loader.images.background[div.className+'_button_off.png'])
 			}
 		})
-	var image1 = new Image()
-	var image2 = new Image()
-	image1.src = Loader.images.background['exit_restart_button.png'].src
-	image2.src = Loader.images.background['exit_restart_button.png'].src
-	$('gameReset').appendChild(image1)
-	$('gameExit').appendChild(image2)
-    //Here we make the rank 
-    $$('#rank img')[0].src = "images/intro/ranks/" + Config.rank + ".png";
-    $$('.rankName')[0].innerHTML = window.Text.game.ranks[Config.rank].abbr;
-
+		var image1 = new Image()
+		var image2 = new Image()
+		image1.src = Loader.images.background['exit_restart_button.png'].src
+		image2.src = Loader.images.background['exit_restart_button.png'].src
+		$('gameReset').appendChild(image1)
+		$('gameExit').appendChild(image2)
+		//Here we make the rank 
+		$$('#rank img')[0].src = "images/intro/ranks/" + Config.rank + ".png";
+		$$('.rankName')[0].innerHTML = window.Text.game.ranks[Config.rank].abbr;
+		$('popup').appendChild(Loader.images.background['pop_up.png'])
+		$$('#popup #popupOk').first().appendChild(Loader.images.intro['mission/accept.png'])
 	},
 	
 	registerHandlers : function(){

@@ -426,7 +426,7 @@ body{
 }
 
 #gameElements  .sound.controls.off{
-	width: 35px;
+	width: 40px;
 	top:38px;
 	background-image: url('../images/background/sound_off_button.png');				
 }
@@ -752,8 +752,8 @@ canvas.turret{
 {
   color:white;
   position:absolute;
-  top:15px;
-  left:25px;
+  top:13px;
+  left:30px;
   width : 100%;
   text-align:center;
 }

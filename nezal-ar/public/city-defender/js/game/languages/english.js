@@ -270,7 +270,9 @@ window.Text = {
 			destroyed : 'Destroyed:',
 			escaped : 'Escaped:',
 			towers : 'Towers',
-			built : 'Built:'
+			built : 'Built:',
+			playAgain :'Play again',
+			exit : 'Continue Campaign'
 		},
 	towerDestroyedCreep :[
        'Who\'s next?!',
@@ -330,6 +332,11 @@ window.Text = {
 	controls: {
 		exit : "exit",
 		reset : "reset"
+	},
+	promotion: {
+		msg1 : "Congratulations",
+		msg2 : "You have been promoted , you are now a ",
+		okButton : "Ok"
 	}
   
   }

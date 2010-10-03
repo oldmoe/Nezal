@@ -50,6 +50,7 @@ var CityDefenderScene = Class.create(Scene, {
 		this.hyper = new Hyper(this, {count: 2, type:'hyper'})
 		this.templates = {}
 		this.templates['towerInfo'] = TrimPath.parseTemplate($('towerInfoTemplate').value) 
+		this.templates['towerInfo'] = TrimPath.parseTemplate($('towerInfoTemplate').value) 
 		this.templates['stats'] = TrimPath.parseTemplate($('statsTemplate').value) 
 		IncomingWaves.init("container","wavesTemplate","incomingWaves",this.reactor)
 	},
@@ -299,8 +300,8 @@ var CityDefenderScene = Class.create(Scene, {
 		$('pauseWindow').style.zIndex = 302
 		$('pauseWindow').show()	
 		$('popup').show()
-		$$('#popup #congratsContent').first().innerHTML = "Congratulations"
-		$$('#popup #promotedContent').first().innerHTML = "You have been promoted, you are now a "+window.Text.game.ranks[Config.rank].name
+		$$('#popup #congratsContent').first().innerHTML = Text.game.promotion.msg1
+		$$('#popup #promotedContent').first().innerHTML = Text.game.promotion.msg2+" "+window.Text.game.ranks[Config.rank].name
 		game.scene.rank = Config.rank
 		var img = document.createElement("IMG");
 		img.src = "images/intro/ranks/" + Config.rank + ".png";
