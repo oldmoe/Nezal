@@ -84,7 +84,9 @@ class CityDefender < Metadata
       user_campaign.score -= old_score 
       user_campaign.score += metadata['missions'][data['mission'] -1]['score']
       if (data['win'])
-        metadata['missions'][data['mission']] = { 'order' => data['mission'] + 1, 'score' => 0 }
+        if(!metadata['missions'][data['mission']])
+          metadata['missions'][data['mission']] = { 'order' => data['mission'] + 1, 'score' => 0 }
+        end
         user_campaign.profile.exp += ( data['score'] * WIN_EXP_FACTOR).round
         user_campaign.profile.user.coins += (data['score']*WIN_COIN_FACTOR).round
       else
