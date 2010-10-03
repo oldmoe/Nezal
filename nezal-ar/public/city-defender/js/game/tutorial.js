@@ -72,7 +72,7 @@ var Tutorial = Class.create({
 		self.ok.observe('click',self.hide)
 		self.viewMessage(4)					
 		anim.finish()					
-		anim = self.addVerticalArrowAnim(120,40)
+		anim = self.addVerticalArrowAnim(120,35)
 		self.droppingGroundClick = GhostTurret.droppingGroundClick
 		GhostTurret.droppingGroundClick = tutorialGroundClicked
 		function tutorialGroundClicked(e){

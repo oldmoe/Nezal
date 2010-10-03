@@ -5,12 +5,13 @@
 				margin:0px;
 			}
 			#friends{
-				width : 757px;
+				width : 761px;
 				height: 113px;
 			}
 			#friends .friend{
 				position : relative;
 				float : left;
+				width:95px;
 				margin : 5px;
 				margin-top : 8px;
 			}
@@ -180,7 +181,7 @@
 			var	query = FB.Data.query("SELECT uid FROM user WHERE is_app_user=1 and uid IN (SELECT uid2 FROM friend WHERE uid1 = {0})", FB.getSession().uid);
 			FB.Data.waitOn([query], function(){
 						friendsIds = query.value.collect(function(row){return Number(row.uid)}) 
-						friendsIds.push(Number(FB.getSession().uid))		
+						friendsIds.push(Number(FB.getSession().uid))	
 						viewFriendsRanks()
 					})
 				});
