@@ -55,7 +55,7 @@ var Scenario = Class.create({
 		}
 		this.events = arr
 		var self = this
-		this.scene.push(500, function(){ self._speak() })
+		this.scene.push(10, function(){ self._speak() })
 		}catch(e){
 			console.log(e)
 		}

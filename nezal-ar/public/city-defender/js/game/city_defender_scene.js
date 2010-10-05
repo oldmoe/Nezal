@@ -164,13 +164,15 @@ var CityDefenderScene = Class.create(Scene, {
 		$('score').innerHTML = window.Text.game.upperBar.score+" "+this.score;
 		var self = this
 		$('waves').innerHTML = window.Text.game.upperBar.wave+" "+this.wave +'/'+this.wavesCount;
+			
 			$('towerInfo').show()
 			$('towerInfo').innerHTML = this.templates['towerInfo'].process({tower: this.selectedTower})
 			if(this.selectedTower && this.selectedTower.healthSprite){
 				$('upgradeTower').observe('mouseenter',function(){self.updateMeters(self.selectedTower)}).observe('mouseover',function(){self.updateMeters(self.selectedTower)})
 			}
+			
 		var self = this
-		this.push(500, function(){self.renderData()})
+		this.push(15, function(){self.renderData()})
 	},
 	tick : function(){
 		this.objects = this.invokeTick(this.objects);
@@ -211,42 +213,22 @@ var CityDefenderScene = Class.create(Scene, {
 		})
 		Sounds.play(Sounds.gameSounds.pause)
 		var startDev = $$('#gameElements .start').first()
-		startDev.addClassName('resumed')
+		//startDev.addClassName('resumed')
 		$$(".startText").first().innerHTML = window.Text.game.gameState.pause
 		startDev.stopObserving('click')
 		$$(".start").first().observe('click', function(){self.pause()})
 	},
 	renderPause: function(){
 		soundManager.mute()
-		Sounds.gameSounds.game[0].pause()
+		$$('#gameElements #gameMenu').first().show()
 		$('pauseWindow').show()	
 		Sounds.play(Sounds.gameSounds.pause)
-		var pauseDev = $$('#gameElements .resumed').first()
-		$$(".startText").first().innerHTML =  window.Text.game.gameState.resume
-		pauseDev.removeClassName('resumed')
-		pauseDev.addClassName('paused')
-		$$(".start").first().stopObserving('click')
-		var self = this
-		$$('#gameElements .superWeapons div').each(function(div){ 
-			if(div.className != ''){div.stopObserving('click')}
-		})
-		$$(".start").first().observe('click', function(){self.resume()})	
 	},
 	renderResume: function(){
-		soundManager.unmute()
-		Sounds.gameSounds.game[0].resume()
+		$$('#gameElements #gameMenu').first().hide()
 		$('pauseWindow').hide()
+		soundManager.unmute()
 		Sounds.play(Sounds.gameSounds.pause)
-		var resumeDev = $$('#gameElements .paused').first()
-		$$(".startText").first().innerHTML = window.Text.game.gameState.pause
-		resumeDev.removeClassName('paused')
-		resumeDev.addClassName('resumed')
-		$$(".start").first().stopObserving('click')
-		var self = this
-		$$('#gameElements .superWeapons div').each(function(div){ 
-			if(div.className != ''){div.observe('click', function(){self.fire(div.className)})}
-		})
-		$$(".start").first().observe('click', function(){self.pause()})
 	},
 	displayStats : function(){
 		$$('#score #scoreValue').first().innerHTML = this.score
@@ -267,7 +249,7 @@ var CityDefenderScene = Class.create(Scene, {
 			$('stats').innerHTML = ''
 		}
 		var self = this
-		this.push(50,function(){self.displayStats()})
+		this.push(2,function(){self.displayStats()})
 	},
 	checkStatus: function(){
 		var self = game.scene
@@ -285,7 +267,7 @@ var CityDefenderScene = Class.create(Scene, {
 				if(score>0)
 				this.score+=score
 				this.startTime = new Date()
-				this.push(2000, function(){this.sendWave(this.config.waves.pop())},this)
+				this.push(40, function(){this.sendWave(this.config.waves.pop())},this)
 				var oldMoney = this.money
 				this.money=Math.round(this.money*this.moneyMultiplier[this.config.level-1])
 				if((this.money-oldMoney)>0) this.objects.push(new MoneyAnimation(695,100,this.money-oldMoney))
@@ -293,7 +275,7 @@ var CityDefenderScene = Class.create(Scene, {
 			}
 		}	
 		var self = this
-		this.push(50,function(){self.checkStatus()})
+		this.push(2,function(){self.checkStatus()})
 	},
 	promoteUser : function(win){
 		Sounds.play(Sounds.gameSounds.rank_promotion)
@@ -319,7 +301,7 @@ var CityDefenderScene = Class.create(Scene, {
 	},
 	end : function(state){
 		var self = game.scene
-		self.push(2000,function(){
+		self.push(40,function(){
 		game.scene.running = false
 		$("result").addClassName(state);
 		var resultText = window.Text.game.result
@@ -338,12 +320,12 @@ var CityDefenderScene = Class.create(Scene, {
 						$('droppingGround').addClassName('off')
 						new Effect.SwitchOff('static');
 						new Effect.Appear("result", {delay : 3.0})
-						game.scene.push(3000,function(){
+						game.scene.push(60,function(){
 							Sounds.play(Sounds.gameSounds[state])
 							Sounds.gameSounds.game[0].togglePause()
 						})
-						game.scene.push(3000,function(){self.displayStats()})
-						game.scene.push(4000,function(){
+						game.scene.push(60,function(){self.displayStats()})
+						game.scene.push(80,function(){
 						  FBDefender.publishMissionCompletion({name : GameConfigs.missionPath,
 													 score : self.score});
                                            });
@@ -364,11 +346,11 @@ var CityDefenderScene = Class.create(Scene, {
 			$('droppingGround').addClassName('off')
 			new Effect.SwitchOff('static');
 			new Effect.Appear("result", {delay : 3.0})
-			game.scene.push(3000,function(){
+			game.scene.push(60,function(){
 			Sounds.gameSounds.game[0].togglePause()
 			Sounds.play(Sounds.gameSounds[state])
 			})
-			game.scene.push(3000,function(){self.displayStats()})
+			game.scene.push(60,function(){self.displayStats()})
 		}
 
 		})
@@ -412,14 +394,14 @@ var CityDefenderScene = Class.create(Scene, {
 					self.issueCreep(creep, 
 							(theta == 90 || theta == 270) ? Math.round(Math.random()* (Map.width - 1)) : x,
 							(theta == 0 || theta == 180) ? (Math.round(Math.random()* (Map.height - 2)) + 1) : y, 
-							delay)
+							delay/self.reactor.delay)
 				}else{
-					self.issueCreep(creep,  entry[0], entry[1], delay)
+					self.issueCreep(creep,  entry[0], entry[1], delay/self.reactor.delay)
 				}
 				delay += 70*(32 / creepCat.prototype.speed) + 10//Math.ceil( 64 / Creep.speed)
 				self.waitingCreeps++;
 			}
-			self.push(delay + (32 / creepCat.prototype.speed), function(){
+			self.push((delay + (32 / creepCat.prototype.speed))/self.reactor.delay, function(){
 				self.wavePending = false;
 			})
 		})
@@ -479,20 +461,29 @@ var CityDefenderScene = Class.create(Scene, {
 	},
 	upgradeSelectedTower: function(){
 		this.selectedTower.upgrade()
-		Sounds.play(Sounds.gameSounds.click)
-
 	},
 	updateMeters : function(tower){
 		if(tower.upgrades[tower.rank]){
 			if(tower.upgrades[tower.rank].power)
-			$('powerMeter').style.borderRight = (tower.upgrades[tower.rank].power-tower.power)*65/450+"px solid red"
+			$('powerMeter').style.borderRight = Math.ceil((tower.upgrades[tower.rank].power-tower.power)*60/450)+"px solid #FAC200"
 			if(tower.upgrades[tower.rank].rate)
-			$('rateMeter').style.borderRight = (tower.upgrades[tower.rank].rate-tower.rate)*65/1+"px solid red"
+			$('rateMeter').style.borderRight = Math.ceil((tower.upgrades[tower.rank].rate-tower.rate)*60/1)+"px solid #FAC200"
 			if(tower.upgrades[tower.rank].range)
-			$('rangeMeter').style.borderRight = (tower.upgrades[tower.rank].range-tower.range)*65/6+"px solid red"
-			if(tower.upgrades[tower.rank].maxHp)
-			$('shieldsMeter').style.borderRight = (tower.upgrades[tower.rank].maxHp-tower.maxHp)*65/3100+"px solid red"
+			$('rangeMeter').style.borderRight = Math.ceil((tower.upgrades[tower.rank].range-tower.range)*60/6)+"px solid #FAC200"
+			if(tower.upgrades[tower.rank].maxHp){
+				$('shieldsMeter').style.borderRight = Math.ceil((tower.upgrades[tower.rank].maxHp-tower.maxHp)*60/10000)+"px solid #FAC200"
+			}
 		}
+	},
+	resetScene : function(){
+		this.creeps.invoke('destroySprites')
+		this.creeps = []
+		this.turrets.invoke('destroySprites')
+		this.turrets = []
+		this.animations.invoke('finish')
+		this.animations=[]
+		this.objects.invoke('finish')
+		this.objects=[]
 	},
 	waitingCreeps : 0,
 	wavePending : false,

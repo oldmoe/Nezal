@@ -11,7 +11,7 @@ var ghostTurretFeatures = {
 		catch(e){
 		  console.log("error in map in ",x,y,e)
 		}
-		game.scene.push(1000,this.validate,this)
+		game.scene.push(20,this.validate,this)
 	},
 	checkMap : function(x, y){
 		if(!Map.empty(x, y-1) || !Map.empty(x, y) || !Map.empty(x, y + 1)){
@@ -68,7 +68,7 @@ var ghostTurretFeatures = {
 		self.images = towerCategory.prototype.images
 		self.initImages = towerCategory.prototype.initImages
 		self.range = towerCategory.prototype.range
-		self.initImages()
+		self.initImages(1)
 		self.selected = true;
 		//$('droppingGround').style.cursor = "none"
 		$('droppingGround').observe("mouseenter", function(e){

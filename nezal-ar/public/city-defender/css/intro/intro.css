@@ -1069,6 +1069,30 @@ div.clickableButton:hover, span.clickableButton:hover
 {
   color:#ff4102;
 }
+#pause  #loadingBarEmpty{
+	height:10px;
+	left:324px;
+	position:absolute;
+	top:296px;
+	width:134px;
+}
+#pause  #loadingBarEmpty div{
+	height : 8px;
+	float : left;
+}
+
+#pause  #loadingBarEmpty #loadingBarRight{				
+	width : 2px;
+}
+
+#pause  #loadingBarEmpty #loadingBarFill{
+	background-repeat:repeat-x;				
+}
+
+#pause  #loadingBarEmpty #loadingBarLeft{
+	width : 2px;
+}
+
 
 /*
 #challenges

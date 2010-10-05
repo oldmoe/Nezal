@@ -33,7 +33,7 @@ var Scene = Class.create(_Render, {
 	
 	//pushes an event to the reactor
 	push : function(delay, func, callback){
-		this.reactor.push(Math.round(delay/this.delay), func, callback)
+		this.reactor.push(delay, func, callback)
 		return this
 	},
 	//runs the reactor , starts _tick function and then render the start
@@ -93,7 +93,7 @@ var Scene = Class.create(_Render, {
 		this.tick()
 		this.render()
 		var self = this
-		this.push(this.delay, function(){self._tick()})
+		this.push(1, function(){self._tick()})
 	},
 	render : function(){
 		try{

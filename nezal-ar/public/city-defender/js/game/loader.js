@@ -9,7 +9,28 @@ var Loader = {
 		this.toLoad = ["animations.html", "intro.html", "user.html", "background.html",  "game.html", "english.html", "arabic.html", "french.html"]
 	},
 
+	events : {
+		intro : {
+			loaded : false, 
+			onLoad : function(){ 
+			//Loader.doneLoading = true; 
+			Intro.start(); 
+		}},
+		tutorial : {loaded : false, onLoad : null},
+		game : {loaded : false, onLoad : function(){
+			Loader.loadPage(GameConfigs.campaign, function(){Loader.fire('challenge')})
+		}},
+		challenge : {loaded : false, onLoad : null}
+	},
+	loaded :{},
+	fire : function(event){
+		Loader.events[event].loaded = true;
+		if(Loader.events[event].onLoad)Loader.events[event].onLoad();
+	},
+	fileLoading :null,
+
 	notify : function(win, resources){
+		Loader.loaded[Loader.toLoad[Loader.index]]=true
 		for(var i=0; i < resources.length-1 ;i++){	
 			var image = new Image
 			var resource = resources[i]
@@ -21,29 +42,38 @@ var Loader = {
 			//$('images').appendChild(image)
 			Loader[parts[0]][parts[1]][parts[2]] = image;
 		}
-		if(this.index == this.toLoad.length-1){
+		if(Loader.toLoad[Loader.index+1] && Loader.toLoad[Loader.index+1].constructor == Function){
+			this.index++
+			Loader.toLoad[Loader.index]()
+		}
+		if(this.index >= this.toLoad.length-1){
 			this.index++
 			if(development){
 				city_defender_start()
 				onFinish()
 			}else{
 				Loader.doneLoading = true;
-				Intro.start();
+				//Intro.start();
 			}
 		}else if(this.index < this.toLoad.length-1){
 			var found = false
 			this.toLoad.each(function(url){
+				if(url.constructor == Function) return
 				if(win.document.URL.indexOf(url.split('?')[0])>=0){
 					found = true
 				}
 			})
 			if(found){
-				this.index++
-				window.setTimeout(function(){$('iframe').src = Loader.toLoad[Loader.index]}, 100)
+			//	setTimeout(function(){
+					this.index++
+					Intro.startFileLoading(Loader.toLoad[Loader.index])
+					$('iframe').src = Loader.toLoad[Loader.index]
+			//	},6000)
 			}
 		}
 		var callbackKey = win.document.URL.split('/').pop();
 		if(this.callbacks[callbackKey]){
+			this.fire('challenge')
 			this.callbacks[callbackKey]();
 			this.callbacks[callbackKey] = null;
 		}

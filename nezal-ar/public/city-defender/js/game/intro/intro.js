@@ -100,13 +100,13 @@ var Intro = {
             },
 
     initialize: function(){
-        this.currentPage = -1;
+		Intro.currentPage = -1;
         Intro.retrieveTemplates();
     },
     
     start: function(){  
 		//alert('starting')
-		if(Intro.doneLoading && Loader.doneLoading) Intro.next();          
+		if(Intro.doneLoading && Loader.events.intro.loaded) Intro.next();
     },
     
     retrieveTemplates: function(){
@@ -135,10 +135,14 @@ var Intro = {
               Intro.userData = data['user_data'];
               Intro.userData["metadata"] = JSON.parse(data['user_data']['metadata']);
               Intro.ranks = data['ranks'];
+			  Intro.doneLoading = true;
+			  Intro.start()
+			  /*
               Loader.loadPage(GameConfigs.campaign, function(){
-				  Intro.doneLoading = true;
+				  
                   Intro.start();
               });
+			  */
           });
     },
 
@@ -191,14 +195,9 @@ var Intro = {
                           $('intro').style['direction'] = 'rtl';
                         else
                           $('intro').style['direction'] = 'ltr';
-						//alert(Intro.templates.levelSelection[1].source)
-						//alert(Loader.images.intro['paper.png'].getAttribute('data'))
-						//alert(Intro.templates.levelSelection[1].process())						
-                        $('levelSelection').innerHTML = Intro.templates.levelSelection[1].process(); 
-                        if(Intro.userData.newbie)
-                        {
-                          Intro.displayTutorial();
-                          Intro.disablePauseScreen();
+						$('levelSelection').innerHTML = Intro.templates.levelSelection[1].process(); 
+                        if(Intro.userData.newbie){
+							Intro.displayTutorial();
                         }else{
                           Intro.show();
                         }
@@ -208,35 +207,44 @@ var Intro = {
         },
         campaign : {
             index : 1,
-            onSelect : function() {
+			onSelect : function(){
+				if(Loader.events.challenge.loaded){
+					Intro.pages.campaign.doOnSelect()
+				}else{
+					Intro.enablePauseScreen();
+					Loader.events.challenge.onLoad = Intro.pages.campaign.doOnSelect
+				}
+			},
+            doOnSelect : function() {
                 var loader = Intro.campLoader;
                 var campInfoPath = Intro.campPath() + "/camp.info";
                 var campMetadata = GameConfigs.campaign + "/metadata";                
                 loader.addResource(campInfoPath);
                 loader.addResource(campMetadata);
                 loader.load(function(){
-                                Intro.campaignData = JSON.parse(loader.resources.get(campMetadata));
-                                Intro.campaignData.campaignInfo = JSON.parse(loader.resources.get(campInfoPath));
-                                Intro.campaignData.missionsInfo = {};
-                                loader.resetResource(campMetadata);
-                                var missionLoader = Intro.missionLoader;
-                                Intro.campaignData.camp_data.metadata.each(function(mission){
-                                   var missionPath = Intro.campPath() + "/" + mission['path'] + "/mission.info"; 
-                                   missionLoader.addResource(missionPath);
-                                });
-                                missionLoader.load( function(){
-                                    Intro.campaignData.camp_data.metadata.each(function(mission){
-                                       var missionPath = Intro.campPath() + "/" + mission['path'] + "/mission.info"; 
-                                       Intro.campaignData.missionsInfo[mission['path']] = 
-                                            JSON.parse(missionLoader.resources.get(missionPath));
-                                    });
-                                    $('campaign').innerHTML = 
-                                      Intro.templates.campaign[1].process({"camp":Intro.campaignData.campaignInfo}); 
-                                    Intro.show();
-                                    $('intro').show();
-                                    $('gameStart').hide();
-                                });
-                            });
+					Intro.campaignData = JSON.parse(loader.resources.get(campMetadata));
+					Intro.campaignData.campaignInfo = JSON.parse(loader.resources.get(campInfoPath));
+					Intro.campaignData.missionsInfo = {};
+					loader.resetResource(campMetadata);
+					var missionLoader = Intro.missionLoader;
+					Intro.campaignData.camp_data.metadata.each(function(mission){
+					   var missionPath = Intro.campPath() + "/" + mission['path'] + "/mission.info"; 
+					   missionLoader.addResource(missionPath);
+					});
+					missionLoader.load( function(){
+						Intro.campaignData.camp_data.metadata.each(function(mission){
+						   var missionPath = Intro.campPath() + "/" + mission['path'] + "/mission.info"; 
+						   Intro.campaignData.missionsInfo[mission['path']] = 
+								JSON.parse(missionLoader.resources.get(missionPath));
+						});
+						$('campaign').innerHTML = 
+						  Intro.templates.campaign[1].process({"camp":Intro.campaignData.campaignInfo}); 
+						Intro.show();
+						$('intro').show();
+						Intro.disablePauseScreen();
+						$('gameStart').hide();
+					});
+				});
             }
         },
         mission : {
@@ -262,10 +270,10 @@ var Intro = {
                                               "path" : Intro.missionPath(),
                                               "creepConfig" : CreepConfig }); 
                           var images = {
-                                      'left' : Loader.images.intro['mission/carousel/left.png'].src,
-                                      'left-disabled' : Loader.images.intro['mission/carousel/left-disabled.png'].src,
-                                      'right' : Loader.images.intro['mission/carousel/right.png'].src,
-                                      'right-disabled' : Loader.images.intro['mission/carousel/right-disabled.png'].src
+                                      'left' : Loader.images.intro['mission/carousel/left.png'].getAttribute('data'),
+                                      'left-disabled' : Loader.images.intro['mission/carousel/left-disabled.png'].getAttribute('data'),
+                                      'right' : Loader.images.intro['mission/carousel/right.png'].getAttribute('data'),
+                                      'right-disabled' : Loader.images.intro['mission/carousel/right-disabled.png'].getAttribute('data')
                           };
                           Intro.creepsCarousel = new Carousel("creeps-scroll", images, 4);
                           Intro.show();
@@ -275,7 +283,7 @@ var Intro = {
                   $$("#mission #floatBg div span")[0].innerHTML = Text.intro.creeps[element.getAttribute("creepid")].name;
                   $$("#mission #floatBg div span")[1].innerHTML = Text.intro.creeps[element.getAttribute("creepid")].desc;  
                   $$("#mission #floatBg .skeleton img")[0].src = Loader.images.intro[ "creeps/" + 
-                                                  CreepConfig[element.getAttribute("creepid")].skeleton].src;    
+                                                  CreepConfig[element.getAttribute("creepid")].skeleton].getAttribute('data');    
             }
         }, 
         marketPlace : {
@@ -307,10 +315,10 @@ var Intro = {
                                                   "data" : data,
                                                   "itemConfig" : TowerConfig });
                 var images = {
-                                      'left' : Loader.images.intro['market/carousel/left.png'].src,
-                                      'left-disabled' : Loader.images.intro['market/carousel/left-disabled.png'].src,
-                                      'right' : Loader.images.intro['market/carousel/right.png'].src,
-                                      'right-disabled' : Loader.images.intro['market/carousel/right-disabled.png'].src
+                                      'left' : Loader.images.intro['market/carousel/left.png'].getAttribute('data'),
+                                      'left-disabled' : Loader.images.intro['market/carousel/left-disabled.png'].getAttribute('data'),
+                                      'right' : Loader.images.intro['market/carousel/right.png'].getAttribute('data'),
+                                      'right-disabled' : Loader.images.intro['market/carousel/right-disabled.png'].getAttribute('data')
                           };
                 Intro.weaponsCarousel = new Carousel("weapons-scroll", images, 5);
                 Intro.towersCarousel = new Carousel("towers-scroll", images, 5);
@@ -549,7 +557,6 @@ var Intro = {
         Intro.pages[Intro.sequence[Intro.currentPage]].setFloatBgInfo(element);
         $$("#" + Intro.sequence[Intro.currentPage]  + " #" + "floatBg")[0].show();
     },
-    
     hideFloatBg : function(){
         $$("#" + Intro.sequence[Intro.currentPage]  + " #" + "floatBg")[0].hide();
     },
@@ -557,17 +564,40 @@ var Intro = {
     enablePauseScreen : function() {
         $('pause').show()
     },
-    
+	startFileLoading : function(fileName){
+		$$('#pause #fileName').first().innerHTML = "Loading resource "+fileName.split('?')[0].split('/')[1] + "....."
+		Intro.enableProgressbar(0,100,fileName)
+	},
+	enableProgressbar : function(percentage,timeout,fileName){
+		if(Loader.loaded[fileName]||percentage==97){
+			$$('#pause #loadingPercentage').first().innerHTML = "100 %"
+			$$('#pause  #loadingBarEmpty #loadingBarFill').first().style.width = "97%"		
+			return 
+		}
+		$$('#pause #loadingPercentage').first().innerHTML = percentage +" %"		
+		$$('#pause  #loadingBarEmpty #loadingBarFill').first().style.width = percentage +"%"		
+		
+		window.setTimeout(function(){Intro.enableProgressbar(percentage+1,timeout*1.1,fileName)}, timeout)
+	},
     disablePauseScreen : function() {
         $('pause').hide()
     },
     
-    displayTutorial : function() {
+	doDisplayTutorial :function(){
+		Intro.disablePauseScreen();
         Intro.userData.newbie = true;
         city_defender_start();
         $('gameStart').show();
         $("intro").hide();    
 				onFinish()
+	},
+	
+    displayTutorial : function() {
+	  if(Loader.events.tutorial.loaded){
+		Intro.doDisplayTutorial()
+	  }else{
+		Loader.events.tutorial.onLoad = Intro.doDisplayTutorial
+	  }	
     },
 
     show: function(){

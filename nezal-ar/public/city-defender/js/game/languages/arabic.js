@@ -271,8 +271,8 @@
 			escaped : 'هرب:',
 			towers : 'مدافع',
 			built : 'بني:',
-			playAgain :'Play again',
-			continueCamp : 'Continue Campaign'
+			playAgain :'العب مره اخري',
+			exit : 'استمر في الدفاع'
 		},
 		towerDestroyedCreep :[
        'من التالي؟؟!!',
@@ -334,9 +334,9 @@
 		reset : "اعاده"
 	},
 	promotion: {
-		msg1 : "Congratulations",
-		msg2 : "You have been promoted , you are now a ",
-		okButton : "Ok"
+		msg1 : "مبروك",
+		msg2 : "لقد تم ترقيتك و اصبحت الان ",
+		okButton : "موافق"
 	}
   
   }

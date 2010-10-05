@@ -18,11 +18,16 @@ var Game = Class.create({
 		$('scores').show()
 		if(Intro.userData.newbie){
 			$('modalWindow').show()
-			this.scene = new TutorialScene(this.config,50,this.ctx,this.topCtx);
+			this.scene = new TutorialScene(this.config,40,this.ctx,this.topCtx);
 			this.tutorial = new Tutorial(this.scene,this.tutorialCtx)
+			$('gameExit').hide()
+			$('gameReset').hide()
+			$$('.sound').first().observe('click',Sounds.mute)
+			$$('.bookmark').first().hide()
+			$$('.like').first().hide()
 		}
 		else{
-			this.scene = new CityDefenderScene(this.config,50,this.ctx,this.topCtx);
+			this.scene = new CityDefenderScene(this.config,33,this.ctx,this.topCtx);
 			this.registerHandlers();
 		}
 		if(Config.map)Map.bgGrid = Config.map
@@ -31,7 +36,7 @@ var Game = Class.create({
 		$$('.startText').first().innerHTML = window.Text.game.gameState.start
 		$$('#gameReset #resetText').first().innerHTML = window.Text.game.controls.reset
 		$$('#gameExit #exitText').first().innerHTML = window.Text.game.controls.exit
-		
+		$$('#gameResume #resumeText').first().innerHTML = window.Text.game.gameState.resume
 		var arr = ['Splash','Heal','Hyper','Weak','Nuke']
 				arr.each(function(weapon){
 					if(Config.superWeapons.indexOf(weapon)==-1){
@@ -138,10 +143,13 @@ var Game = Class.create({
 		})
 		var image1 = new Image()
 		var image2 = new Image()
-		image1.src = Loader.images.background['exit_restart_button.png'].src
-		image2.src = Loader.images.background['exit_restart_button.png'].src
+		var image3 = new Image()
+		image1.src = Loader.images.background['exit_restart_button.png'].getAttribute('data')
+		image2.src = Loader.images.background['exit_restart_button.png'].getAttribute('data')
+		image3.src = Loader.images.background['exit_restart_button.png'].getAttribute('data')
 		$('gameReset').appendChild(image1)
 		$('gameExit').appendChild(image2)
+		$('gameResume').appendChild(image3)
 		//Here we make the rank 
 		$$('#rank img')[0].src = "images/intro/ranks/" + Config.rank + ".png";
 		$$('.rankName')[0].innerHTML = window.Text.game.ranks[Config.rank].abbr;
@@ -151,8 +159,13 @@ var Game = Class.create({
 	
 	registerHandlers : function(){
 		var self = this	
-		$$('.towers div').invoke('observe','click', function(){
-			Sounds.play(Sounds.gameSounds.click);GhostTurret.select(this)
+		$$('.towers div').each(function(div){ 
+			if(div.className != ''){
+				div.observe('click', function(){
+					Sounds.play(Sounds.gameSounds.click);
+					GhostTurret.select(div)
+				})
+			}
 		})
 		$$('#gameElements .superWeapons div').each(function(div){ 
 			if(div.className != ''){
@@ -169,13 +182,19 @@ var Game = Class.create({
 		$('gameExit').observe('click', function(){
 			Sounds.gameSounds.game[0].stop()
 			game.exit()})
-		$('gameReset').observe('click', game.reset)	
-		$$('.bookmark').first().hide()//observe('click', FBConnect.bookmark)	
-		$$('.like').first().hide()
+		$('gameReset').observe('click',function(){game.reset()})	
+		$('gameResume').observe('click', function(){game.scene.resume()})	
 		$$('.sound').first().observe('click',Sounds.mute)
+		$$('.bookmark').first().hide()
+		$$('.like').first().hide()
+		//observe('click', FBConnect.bookmark)	
+		
 	},
 	reset : function(){
 		game.scene.reactor.stop()
+		game.scene.resetScene()
+		$$('#gameElements #gameMenu').first().hide()
+		$('pauseWindow').hide()
 		new Effect.Fade('static')
 		$$('#gameElements .start').first().stopObserving('click')
 		$$('#gameElements .start').first().removeClassName('resumed')
@@ -190,13 +209,14 @@ var Game = Class.create({
 		game.start()	
 	},
 	exit :function(){
-		  Sounds.gameSounds.game[0].togglePause()
-		  game.scene.reactor.stop()
-          Intro.enablePauseScreen();
-		  $('gameStart').hide()
-    	  $("gameStart").innerHTML = Intro.templates['game'];
-    	  Intro.replay();	
-		  onFinish()
+		$$('#gameElements #gameMenu').first().hide()
+		Sounds.gameSounds.game[0].togglePause()
+		game.scene.reactor.stop()
+		Intro.enablePauseScreen();
+		$('gameStart').hide()
+		$("gameStart").innerHTML = Intro.templates['game'];
+		Intro.replay();	
+		onFinish()
 	},
 	unRegisterHandlers : function(){	
 		$$('.towers div').invoke('stopObserving','click')
@@ -208,6 +228,7 @@ var Game = Class.create({
 		$('exit').stopObserving('click')
 		$('gameExit').stopObserving('click')	
 		$('gameReset').stopObserving('click')	
+		$('gameResume').stopObserving('click')	
 		$$('.bookmark').first().stopObserving('click')	
 		$$('.sound').first().stopObserving('click')
 	}
@@ -242,7 +263,6 @@ function onFinish(){
 		$('canvasContainer').show();
 		Sounds.gameSounds.game[0].togglePause()
 		$('static').show();
-		$('waitScreen').hide()
 		Effect.Fade('static',{duration: 1.0})
 	},100)
 }
