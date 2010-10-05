@@ -2,16 +2,21 @@ var Game = Class.create({
   network : null,
   gameStatus : null,
   scene : null,
-  gameData : null,
+  data : null,
   user : null,
   tutorial : null,
   buildingMode : null,
   townhall : null,
+  workers : null,
+  idleWorkers : null,
+  resources : {
+    rock : 0,
+    iron : 0
+  },
   
   initialize : function(){
     this.network = new Network();
     this.scene = new BaseDefenderScene();
-    this.user = new User();
     this.buildingMode = new BuildingMode(this);
   },
   
@@ -24,13 +29,15 @@ var Game = Class.create({
     thisScene.layers.push(thisScene.buildingsLayer);
     
     this.gameStatus = this.network.initializeGame();
-    this.user.data = JSON.parse(this.gameStatus.user_data.metadata);
-    this.user.newbie = this.gameStatus.user_data.newbie;
+    this.user = new User(this);
+    this.workers = this.user.data.workers;
+    this.idleWorkers = this.user.data.idle_workers;
+    this.rock = this.user.data.rock;
+    this.iron = this.user.data.iron;
+    this.data = JSON.parse(this.gameStatus.game_data.metadata);
     
     this.townhall = new Townhall(this);
     this.tutorial = new Tutorial(this);
-    
-    this.gameData = JSON.parse(this.gameStatus.game_data.metadata);
     
     thisScene.map = this.user.data["map"];
     thisScene.navigation.blocks.vertical = thisScene.map.length;

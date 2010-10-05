@@ -6,13 +6,16 @@ var BaseDefenderScene = Class.create(Scene, {
   groundLayer : null,
   buildingsLayer : null,
   map : [],
-  
+  landmarks : new Hash({"grass" : 0, "water" : 1, "rock" : 2, "iron" : 3}),
+  textures : [],  
   navigation : null,
-  
-  textures : ['grass.png', 'water.png', 'rock.png', 'iron.png'],
   
   initialize : function($super){
     $super();
+    var self = this;
+    this.landmarks.each(function(x,y){
+      self.textures.push(x[0] + ".png");
+    });
     this.navigation = new Navigation(this);
   },
   

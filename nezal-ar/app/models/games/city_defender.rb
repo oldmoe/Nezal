@@ -78,7 +78,6 @@ class CityDefender < Metadata
   end
   
   def self.unlock(game_profile, data)
-    game_data = self.decode(game_profile.game.metadata)
     profile_data = self.decode(game_profile.metadata)
     if (game_data[data['type']][data['item_id']]['cost'].to_i <= game_profile.user.coins &&
           game_data[data['type']][data['item_id']]['exp'].to_i <= game_profile.score )
