@@ -42,7 +42,7 @@ var Turret = Class.create(Unit, {
 	createSprites : function(){
 		this.rangeSprite = new RangeSprite(this.range)
 		this.baseSprite = new Sprite(this.images.base)
-		this.cannonSprite = new Sprite(this.images.cannon.concat(this.images.fire))
+		if(this.images.cannon)this.cannonSprite = new Sprite(this.images.cannon.concat(this.images.fire))
 		this.rankSprite = new Sprite(this.images.ranks)
 		this.healthSprite = new HealthSprite(this.hp,this.maxHp)
 		this.baseSprite.moveTo(this.x,this.y)
@@ -74,7 +74,7 @@ var Turret = Class.create(Unit, {
 		this.changeFireState()
 		this.healthSprite.hp = this.hp
 		this.baseSprite.images = this.images.base
-		this.cannonSprite.images = this.images.cannon.concat(this.images.fire)
+		if(this.images.cannon)this.cannonSprite.images = this.images.cannon.concat(this.images.fire)
 		this.healthSprite.maxHp = this.maxHp
 		this.rankSprite.currentFrame = this.rank %4;
 		if(this.baloon)this.baloon.moveTo(this.x,this.y-70);
