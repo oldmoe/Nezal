@@ -203,7 +203,7 @@
     },
 	game : {
 		tutorial : {
-				msg1: 'Bienvenue pour l\'académie de défense.'
+				msg1: 'bienvenue à l\'academie de défense'
 		+'</br>Au long de cette période de stage; tu vas recevoir toutes les informations nécessaires, et tu vas acquérir les compétences essentielles'
 		+' pour défendre ta ville contre tout acte d\'hostilité.',
 				msg2: '</br>Ton but sera d\'achever toutes les vagues d\'attaques venant de la part de l\'ennemie et de leur défendre de passer à travers ta ville.',
@@ -226,7 +226,7 @@
 			wave : 'Vague'
 		},
 		gameState:{
-			start:'Commener',
+			start:'Commencer',
 			pause:'Arrêter',
 			resume:'Récupérer'
 		},
@@ -261,9 +261,9 @@
 			Gen:{ name:'General' ,abbr : 'Gen'}
 		},
 		result : {
-			winMission1: 'You have successsfully defended',
-			winMission2: 'and drove the enemies away',
-			loseMission: 'has fallen to the enemy forces. don\'t give up, you can try again.',
+			winMission1: 'Tu as réussi à défendre',
+			winMission2: 'et tu as chassé les ennemis.',
+			loseMission: 'a été conquise. Ne cède pas, tu peux réessayer.',
 			coins: 'argent',
 			score: 'Score',
 			enemies : 'Ennemis',
@@ -272,7 +272,7 @@
 			towers : 'tour',
 			built : 'Construit:',
 			playAgain :'Play again',
-			continueCamp : 'Continue Campaign'
+			exit : 'Continue Campaign'
 		},
 
 		towerDestroyedCreep :[
@@ -331,12 +331,12 @@
         'C\'est tout ce que tu peux?!'
     ], 
 	controls: {
-		exit : "sortie",
+		exit : "sortir",
 		reset : "remise"
 	},
 	promotion: {
-		msg1 : "Congratulations",
-		msg2 : "You have been promoted , you are now a ",
+		msg1 : "Félicitations ",
+		msg2 : "Tu as eu une promotion; maintenant tu es ",
 		okButton : "Ok"
 	}
   }

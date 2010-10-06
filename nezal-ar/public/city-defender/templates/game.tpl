@@ -11,22 +11,18 @@
 			{if tower!=null}
 			<div class="diagram ${tower.cssClass}">
 			{if tower.canHitGround}
-				<img id="tankSilhouette" src = ${Loader.images.game['tank_silhouette.png'].src} />
+				<img id="tankSilhouette" src = ${Loader.images.game['tank_silhouette.png'].getAttribute('data')} />
 			{/if}
 			{if tower.canHitFlying}
-				<img id="planeSilhouette" src=${Loader.images.game['plane_silhouette.png'].src} />
+				<img id="planeSilhouette" src=${Loader.images.game['plane_silhouette.png'].getAttribute('data')} />
 			{/if}
-				{if tower.rank > 0}
-					<div id="diagramRank"><img src="${Loader.images.game['rank_'+tower.rank+'.png'].src}" /></div>				
-				{/if}			
 			</div>
 			<div id="towerData">
-			<h4>{if tower.healthSprite !=null }
-					<div id = "sellTower" onmousedown = "game.scene.sellSelectedTower()">${window.Text.game.towerInfo.sell}<hr/>$${Math.round(tower.price*0.75*tower.hp/tower.maxHp)}</div>
+			{if tower.healthSprite !=null }
+					<div id = "sellTower" onmousedown = "game.scene.sellSelectedTower()"><h4>${window.Text.game.towerInfo.sell}</h4><hr/>$${Math.round(tower.price*0.75*tower.hp/tower.maxHp)}</div>
 					{else}
-						$${tower.price}
+						<h4 style="margin-left:8px;margin-top:7px;">$${tower.price}</h4>
 					{/if}
-			</h4>
 				<h4>${tower.name}</h4>
 			<table>
 				<tr>
@@ -47,7 +43,7 @@
 				{if tower.healthSprite !=null }
 					{if tower.rank < tower.maxRank}
 					<div id = "upgradeTower" onmousedown = "game.scene.upgradeSelectedTower()">${window.Text.game.towerInfo.upgrade}<hr/>
-						$${tower.upgrades[tower.rank].price}&nbsp; &nbsp;<img src="${Loader.images.game['rank_'+(tower.rank+1)+'.png'].src}" /> 
+						<span id="upgradeWord" style="color:white;">$${tower.upgrades[tower.rank].price}&nbsp; &nbsp;Level ${tower.rank+1} </span>
 					</div>
 					{else}
 					<div id = "upgradeTower" >
@@ -87,16 +83,20 @@
 				<canvas id="gameForeground" width="736" height="480""></canvas>
 			</div>
 			<div id="gameElements" style="display:none">
-				<div id="gameReset"><div id="resetText">Reset</div></div>
-				<div id="gameExit"><div id="exitText">Exit</div></div>
+				<div id='gameMenu' style="display:none;">
+					<div id="gameResume" class="button"><div class='buttonTextContainer'><div id="resumeText" class='buttonText'>Resume</div></div></div>
+					<div id="gameReset" class="button"><div class='buttonTextContainer'><div id="resetText" class='buttonText'>Reset</div></div></div>
+					<div id="gameExit" class="button"><div class='buttonTextContainer'><div id="exitText" class='buttonText'>Exit</div></div></div>
+				</div>
 				<div id="money">
 					0
 				</div>
 				<div class="status">
+				<div id="statusBarEmpty"><div id="statusBarLeft"> </div><div id="statusBarFill"> </div><div id="statusBarRight"> </div></div>
 					<div id="score" class="score">0</div>
 					<div id="lives" class="lives">0</div>
 					<div id="waves" class="waves">0/0</div>
-					<div id="statusBarEmpty"><div id="statusBarLeft"> </div><div id="statusBarFill"> </div><div id="statusBarRight"> </div></div>
+					
 				</div>
 				<div class="fps"></div>
 				
@@ -125,7 +125,7 @@
 							<div class='wave'>
 								{for creep in wave}
 									<div class='creep' style ="width :${100/wave.length}%">
-										<center><img src='images/intro/creeps/${creep.category.underscore()}.png'></img></center>
+										<center><img src="${Loader.images.intro['creeps/'+creep.category.underscore()+'.png'].getAttribute('data')}"></img></center>
 									</div>															  
 								{/for}
 							</div>										
@@ -144,8 +144,8 @@
 			<div id="static" style="display:none"></div>
 			<div id="result" style="display:none;"></div>
 			<textarea id='resultTemplate' style="display:none">
-					<img src="${Loader.images.intro['paper.png'].src}"/>
-					<img id="resultCoin" src="${Loader.images.background['coin.png'].src}"/>
+					<img src="${Loader.images.intro['paper.png'].getAttribute('data')}"/>
+					<img id="resultCoin" src="${Loader.images.background['coin.png'].getAttribute('data')}"/>
 					<div id="coins">
 						<div id="coinsWord">${Text.game.result.coins}</div>
 						<div id="coinsValue">0</div>
@@ -155,14 +155,14 @@
 						<div id="scoreValue"></div>
 					</div>
 					<div id="win">
-						<img id="resultBlank" src="${Loader.images.intro['blank.png'].src}"/>
-						<img id="winClouds" src="${Loader.images.background['win_clouds.png'].src}"/>
-						<img id="winCenter" src="${Loader.images.background['win_center.png'].src}"/>
-						<img id="twoCannons" src="${Loader.images.background['two_towers.png'].src}"/>
+						<img id="resultBlank" src="${Loader.images.intro['blank.png'].getAttribute('data')}"/>
+						<img id="winClouds" src="${Loader.images.background['win_clouds.png'].getAttribute('data')}"/>
+						<img id="winCenter" src="${Loader.images.background['win_center.png'].getAttribute('data')}"/>
+						<img id="twoCannons" src="${Loader.images.intro['logo.png'].getAttribute('data')}"/>
 					</div>
 					<div id="lose" >
-						<img id="loseClouds" src="${Loader.images.background['lose_clouds.png'].src}"/>
-						<img id="loseCenter" src="${Loader.images.background['lose_center.png'].src}"/>
+						<img id="loseClouds" src="${Loader.images.background['lose_clouds.png'].getAttribute('data')}"/>
+						<img id="loseCenter" src="${Loader.images.background['lose_center.png'].getAttribute('data')}"/>
 					</div>
 					<div id="resultText">
 						<pre id="stats"></pre>
@@ -176,5 +176,4 @@
 					</div>
 				</div>
 			</div>
-			<div id="waitScreen"></div>
 		</div>		

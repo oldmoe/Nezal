@@ -204,12 +204,12 @@ window.Text = {
 	game : {
 		tutorial : {
 				msg1: 'Welcome to the academy of defense.'
-		+'</br>During this training period, you will get all the required information, and gain the basic skills that are needed'
+		+'</br>During this training period, You will get all the required information and gain the basic skills needed'
 		+' to defend your city against any hostile activities',
 				msg2: '</br>Your goal is to kill all coming waves of enemy units and prevent them from passing to your city',
 				msg3: 'You can always see your current rank at the top right of the map </br>'
-		+'</br>The upper bar indicates your rank progress, the wave number, your score in this game'
-		+' and the remaining enemy units to escape that indicate your loss</br>',
+		+'</br>The upper bar indicates your rank progress, the wave number, your score in the game'
+		+' and the remaining enemy units to escape which indicates your loss</br>',
 				msg4: 'Now it is time to place some towers. Click on the Belcher tower in the towers box.</br>'
 		+'Notice that the tower information will be visible in the information box.',
 				msg5: 'Click here to place the tower. ',
@@ -227,7 +227,7 @@ window.Text = {
 		},
 		gameState:{
 			start:'Start',
-			pause:'Pause',
+			pause:'Menu',
 			resume:'Resume'
 		},
 		towerInfo:{
@@ -338,7 +338,6 @@ window.Text = {
 		msg2 : "You have been promoted , you are now a ",
 		okButton : "Ok"
 	}
-  
   }
 	
 }

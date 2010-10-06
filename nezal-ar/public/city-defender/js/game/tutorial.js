@@ -63,6 +63,9 @@ var Tutorial = Class.create({
 	
 	step2 : function(div,anim,anim2){
 		$$('.towers .Turret').first().stopObserving('click')
+		$$('.towers .Turret').first().observe('click',function(){
+			GhostTurret.select(this)
+		})
 		$('modalWindow').show()
 		anim.finish()
 		anim2.finish()
@@ -72,7 +75,7 @@ var Tutorial = Class.create({
 		self.ok.observe('click',self.hide)
 		self.viewMessage(4)					
 		anim.finish()					
-		anim = self.addVerticalArrowAnim(120,35)
+		anim = self.addVerticalArrowAnim(120,30)
 		self.droppingGroundClick = GhostTurret.droppingGroundClick
 		GhostTurret.droppingGroundClick = tutorialGroundClicked
 		function tutorialGroundClicked(e){
@@ -174,7 +177,7 @@ var Tutorial = Class.create({
 		self.ok.observe('click',function(){
 			self.scene.reactor.resume();
 			self.hide()
-			self.scene.push(6000,function (){game.tutorial.initiateSuperWeapon()})
+			self.scene.push(120,function (){game.tutorial.initiateSuperWeapon()})
 		})
 	},
 	addArrowAnim : function(x,y){

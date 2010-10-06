@@ -137,7 +137,6 @@ body{
 	left:0px;
 	width:155px;
 	height:82px;
-	z-index:300;
 }
 
 #gameElements .startText {
@@ -154,7 +153,6 @@ body{
 	text-shadow:2px 2px 1px #000000;
 	top:25px;
 	width:155px;
-	z-index:301;
 }
 
 #gameElements .towers{
@@ -171,26 +169,22 @@ body{
 	height:43px;
 	margin-right: 3px;
 	margin-bottom: 2px;
-	background-image: url('../images/background/mystry_button.png');			
+	background-image: url('../images/background/mystry_button.png')	
 }
 #gameElements .towerInfo {
-	-moz-border-radius:5px 5px 5px 5px;
+	background-image: url('../images/background/monitor.png');
 	background-color:black;
-	border:2px solid gray;
 	color:white;
 	font-family:verdana;
 	font-size:10px;
-	height:184px;
+	height:186px;
 	left:642px;
 	padding:2px;
 	position:absolute;
 	top:354px;
-	width:106px;
+	width:113px;
 }
 
-#gameElements #upgradeTower:hover{
-	background-color:grey;	
-}
 #gameElements #sellTower:hover{
 	background-color:grey;	
 }
@@ -205,13 +199,14 @@ body{
  opacity :0.5;
 }
 #gameElements #sellTower{
- width : 50px;
+	width : 50px;
 	-moz-border-radius:5px 5px 5px 5px;
 	-webkit-border-radius:5px 5px 5px 5px;
 	-o-border-radius:5px 5px 5px 5px;
 	border-radius:5px 5px 5px 5px;
-	background-color:#F62;
 	border:2px solid white;
+	margin-left:4px;
+	margin-top:6px;
 	color:white;
 	cursor: pointer;
 	text-align : center;
@@ -223,19 +218,25 @@ body{
 
 
 #gameElements #upgradeTower {
-	-moz-border-radius:5px 5px 5px 5px;
-	background-color: #F62;
-	border:2px solid white;
-	color:white;
+	color:black;
 	cursor:pointer;
+	margin-left:8px;
+	margin-top:2px;
 	text-align:center;
-	width:96%;
+	width:87%;
 	font-family:Helvetica;
 	font-size:12px;
 	font-weight : bold;
 	height : 37px;
+	background: center url('../images/background/upgrade_button.png') no-repeat;
 }
-
+#gameElements #upgradeTower #upgradeWord{
+	color:white;
+	font-family:tahoma;
+	font-size:13px;
+	font-weight:bold;
+	margin:0;
+}
 #gameElements .towerInfo table {
 	border:medium none;
 	padding:0;
@@ -448,36 +449,36 @@ body{
 }
 
 
-#gameElements .status{
-	position: absolute;
-	top:-1px;
-	left:160px;
-	width:365px;
+#gameElements .status {
+	color:white;
+	font-family:verdana;
+	font-size:14px;
+	font-weight:bold;
 	height:28px;
-	font-family: verdana;
-	font-size: 14px;
-	font-weight: bold;
-	color: white;
-	background-repeat: no-repeat;
-	background-image: url('../images/background/upper_bar.png');
-	/*opacity : 0.8;*/
+	left:115px;
+	position:absolute;
+	top:0;
+	width:365px;
 }
 #gameElements .status #statusBarEmpty{
-	width : 357px;
-	height : 9px;
-	position : absolute;
-	top : 20px;
-	background-image: url('../images/background/filling_bar_background.png');				
+	background-image:url("../images/background/filling_bar_background.png");
+	background-repeat:no-repeat;
+	height:27px;
+	left:-3px;
+	padding:1px;
+	position:absolute;
+	top:0;
+	width:450px;		
 }
 
 #gameElements .status #statusBarEmpty div{
-	height : 7px;
+	height : 23px;
 	float : left;
 }
 
 #gameElements .status #statusBarEmpty #statusBarRight{
 	background-image: url('../images/background/filling_bar_right.png');				
-	width : 3px;
+	width : 7px;
 }
 
 #gameElements .status #statusBarEmpty #statusBarFill{
@@ -487,13 +488,13 @@ body{
 
 #gameElements .status #statusBarEmpty #statusBarLeft{
 	background-image: url('../images/background/filling_bar_left.png');
-	width : 3px;
+	width : 7px;
 }
 
 
 #gameElements .status .score{
 	position:absolute;
-	left:130px;
+	left:187px;
 	top: 1px;
 	width:130px;
 	height:13px;
@@ -501,7 +502,7 @@ body{
 
 #gameElements .status .lives{
 	position:absolute;
-	left:270px;
+	left:354px;
 	top: 1px;
 	width:80px;
 	height:13px;
@@ -512,7 +513,7 @@ body{
 	top: 1px;
 	width:100px;
 	height:13px;
-  left:10px
+	left:15px
 }
 
 
@@ -671,7 +672,7 @@ canvas.turret{
   height : 105px;
   position : absolute;
   top : 10px;
-  left : 117px;
+  left : 123px;
   z-index : 201;
   font-family: AdLib;
 }
@@ -680,6 +681,8 @@ canvas.turret{
   height : 105px;
   vertical-align:middle;
   display:table-cell;
+  font-family:Tahoma;
+  font-weight:bold;
 }
 #modalWindow #ok
 {
@@ -693,59 +696,59 @@ canvas.turret{
 #popup
 {
 	position : absolute;
-	top : 100;
-	left : 90;
-	width : 585;
-	height : 350;
+	top : 100px;
+	left : 90px;
+	width : 585px;
+	height : 350px;
 	z-index : 303;
 	opacity : 1;
 }
 #popup #congratsContent
 {
 	position : absolute;
-	top : 20;
-	left : 30;
-	width : 390;
-	height : 50;
+	top : 20px;
+	left : 50px;
+	width : 390px;
+	height : 50px;
 	color : orange;
-	font-size : 30;
+	font-size : 30px;
 	text-shadow: #000 2px 2px 1px;
 }
 #popup #promotedContent
 {
 	position : absolute;
-	top : 90;
-	left : 30;
-	width : 390;
-	height : 100;
+	top : 90px;
+	left : 50px;
+	width : 390px;
+	height : 100px;
 	font-family: AdLib;
-	font-size : 20;
+	font-size : 20px;
 	color : white;
 	text-align: center;
 }
 #popup #rankImg
 {
 	position : absolute;
-	top : 40;
-	left : 430;
-	width : 172;
-	height : 148;
+	top : 40px;
+	left : 430px;
+	width : 172px;
+	height : 148px;
 }
 #popup #popupClose
 {
 	position : absolute;
-	width : 30;
-	height : 30;
-	left : 523;
-	top : 10;
+	width : 30px;
+	height : 30px;
+	left : 523px;
+	top : 10px;
 }
 #popup #popupOk
 {
 	position : absolute;
-	width : 30;
-	height : 30;
-	left : 440;
-	top : 250;
+	width : 30px;
+	height : 30px;
+	left : 440px;
+	top : 250px;
 	cursor:pointer;
 }
 #popup #popupOk .text
@@ -760,8 +763,8 @@ canvas.turret{
 #pauseeWindow
 {
 position:"absolute";
-	width: 760;
-	height:550;
+	width: 760px;
+	height:550px;
 	z-index:300;
 }
 #gameElements #moneyAnimation
@@ -812,12 +815,12 @@ position:"absolute";
 }
 #planeSilhouette{
 	position:absolute;
-	top:80px;
+	top:91px;
 	left:10px;
 }
 #tankSilhouette{
 	position:absolute;
-	top:50px;
+	top:63px;
 	left:10px;
 }
 #result img{
@@ -835,8 +838,8 @@ position:"absolute";
 }
 #result #twoCannons{
 	left:166px;
-	top:160px;
-	z-index:2;
+	top:45px;
+	z-index:0;
 }
 #result #loseCenter{
 	top: 40px;
@@ -926,35 +929,38 @@ position:"absolute";
 	width :760px;
 	height :550px; 
 	position :absolute;
-	background-color :black;
-	opacity:0.5;
+	background-color :white;
+	opacity:0.7;
 }
-#gameReset,#resetText,#gameExit,#exitText{
+
+#gameElements .buttonTextContainer {
 	position:absolute;
 }
-#gameReset  img,#gameExit img{
-	width:75px;
-}
-#gameReset {
-	cursor:pointer;
-	left:64px;
-	top:5px;
-	z-index:100;
-}
-#resetText ,#exitText{
-	font-size:12px;
+
+#gameElements  .buttonText {
+	display:table-cell;
+	font-size:20px;
 	font-weight:bold;
+	height:50px;
+	text-align:center;
 	top:5px;
+	vertical-align:middle;
+	width:166px;
 }
-#resetText{
-	left:20px;
+
+#gameElements #gameMenu {
+	width:200px;
+	padding-left:12px;
+	padding-top:5px;
+	height:238px;
+	position : absolute;
+	left: 236px;
+	top:96px;
+	z-index:301;
 }
-#exitText{
-	left:25px;
+
+#gameElements #gameMenu .button {
+	margin: 5px;
+	cursor: pointer;
 }
-#gameExit{
-	top:5px;
-	cursor:pointer;
-	left:545px;
-	z-index:100
-}
+

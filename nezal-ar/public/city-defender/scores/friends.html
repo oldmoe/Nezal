@@ -8,11 +8,16 @@
 				width : 761px;
 				height: 113px;
 			}
+			
+			#friends a{
+				text-decoration : none;
+			}
+			
 			#friends .friend{
 				position : relative;
 				float : left;
 				width:95px;
-				margin : 5px;
+				margin : 4px;
 				margin-top : 8px;
 			}
 			#friends .friend .photo{
@@ -24,7 +29,7 @@
 			}
 
 			#friends-container {
-				width : 317px;
+				width : 309px;
 				overflow: hidden;
 				height : 113px;
 			}
@@ -34,10 +39,11 @@
 				height :113px;			
 			}
 			#friends-scroll div,img,ul{
-				float :left;			
+				float :left;	
+				border:none;
 			}
 			#friends-scroll .right, .left{
-				margin-top : 38px;
+				margin-top : 20px;
 			}
 
 			#friends-ul {
@@ -120,7 +126,7 @@
 			{if friend}
 				<a href='http://www.facebook.com/profile.php?id=${friend.id}' target='fb_${friend.id}'>
 			{/if}
-			<div class = "friend"><img src="images/blank.png" />
+			<div class = "friend"><img src="images/1st_blank.png" />
 				{if friend}
 						<div class="top_rank">${top_ranks[friend_index]}</div>
 						<div class="name" >${friend['name'].split(' ')[0]}</div>
@@ -207,22 +213,23 @@
 				response['top'].each(function(friend){    
 						getUserPhoto(friend)
 				})
-			if(response['top'].length<3) response['close'] =[]
-				while(response['top'].length < 3){
+				if(response['top'].length<3) response['close'] =[]
+					//response['close'] = response['close'].reject(function(friend){return })
+					while(response['top'].length < 3){
 							response['top'].push(null) 			
-						}
+					}
 					});	
 					getUserName(response['close'], function(){
 						response['close'].each(function(friend){    
-						getUserPhoto(friend)
-					})
-					
-					while(response['close'].length < 3){
-						response['close'].push(null) 			
-					}
-					
-					if(callback)callback(response)
-				});
+							getUserPhoto(friend)
+						})
+						
+						while(response['close'].length < 3){
+							response['close'].push(null) 			
+						}
+						
+						if(callback)callback(response)
+					});
 		}
 		function getFriendsRanks(callback){
 			var url = '../tunisia/'+FB.getSession().uid+'/friendsranks'
@@ -267,6 +274,7 @@
 						if(friends[i])
 						friends[i]['rank'] = rank+i-index
 					}
+					return index
 				}
 				function activate(div){
 					$(div).addClassName('active')
@@ -277,11 +285,13 @@
 					$(div).removeClassName('active')
 				}
 				function renderResponse(response){
-					prepareRanks(response['close'])			
+					var activeIndex = prepareRanks(response['close'])			
 					$('container').innerHTML = template.process( {friends: response['close'], top_scorers :response['top'],top_ranks : ['1<sup>st</sup>', '2<sup>nd</sup>', '3<sup>rd</sup>']})
 					var friendsCarousel = new Carousel("friends-scroll", images);
 		           	friendsCarousel.displayCount = 3;
 					friendsCarousel.checkButtons();
+					if(activeIndex>0)
+					friendsCarousel.scrollTo(activeIndex)
 				}
 				function viewFriendsRanks(){
 					activate('friendsRanks')

@@ -54,7 +54,7 @@ var NukeBoom = Class.create(Animation, {
 	dx : 640,
 	dy : 480,
 	initImages : function(){
-		this.frames = Loader.animations.nuke_boom
+		this.frames = Loader.images.nuke_boom
  	}
 })
 

@@ -24,7 +24,7 @@ var TutorialScene = Class.create(CityDefenderScene, {
 		
 		}
 		else if (this.waveNumber == 2){
-			this.push(6000,function (){game.tutorial.initiateSuperWeapon()})
+			this.push(120,function (){game.tutorial.initiateSuperWeapon()})
 		}
 		else if (this.waveNumber == 3){
 			game.tutorial.upgradeTower()	

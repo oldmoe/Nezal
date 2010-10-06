@@ -16,13 +16,15 @@ var Turret = Class.create(Unit, {
 							{maxHp: 1300, power:22, price: 8,range: 3},
 							{maxHp: 1600, power:26, rate: 0.3, price: 21,range: 4}],
 	initialize: function($super,x,y,scene,extension){
+		this.hp=this.maxHp
 		$super(x,y,scene,extension)
-		this.initImages()
+		this.initImages(1)
 		this.createSprites()
 	},
 	
 	upgrade : function(){
 		if(this.rank == this.maxRank) return		
+		Sounds.play(Sounds.gameSounds.click)
 		var upgrade = this.upgrades[this.rank] // this is the next rank (base 1 array)
 		if(this.scene.money < upgrade.price) return false
 		this.rank += 1
@@ -32,13 +34,15 @@ var Turret = Class.create(Unit, {
 		this.price += upgrade.price
 		this.hp *= this.maxHp / oldHp 
 		this.scene.money -= upgrade.price
+		if(this.rank==4)this.initImages(2)
+		else if(this.rank==8)this.initImages(3)
 		return this
 	},
 
 	createSprites : function(){
 		this.rangeSprite = new RangeSprite(this.range)
 		this.baseSprite = new Sprite(this.images.base)
-		this.cannonSprite = new Sprite(this.images.cannon.concat(this.images.fire))
+		if(this.images.cannon)this.cannonSprite = new Sprite(this.images.cannon.concat(this.images.fire))
 		this.rankSprite = new Sprite(this.images.ranks)
 		this.healthSprite = new HealthSprite(this.hp,this.maxHp)
 		this.baseSprite.moveTo(this.x,this.y)
@@ -49,11 +53,11 @@ var Turret = Class.create(Unit, {
 		this.rangeSprite.moveTo(this.x,this.y)
 		
 	},
-	initImages : function(){
+	initImages : function(rank){
 		this.images = {}
-		this.images.base = [Loader.images.game['tower_base.png']]
-		this.images.cannon = [Loader.images.game['cannon_1.png']]
-		this.images.fire = [Loader.images.game['cannon_1_in_action.png']]
+		this.images.base = [Loader.images.game['tower_base_'+rank+'.png']]
+		this.images.cannon = [Loader.images.game['belcher_'+rank+'.png']]
+		this.images.fire = [Loader.images.game['belcher_'+rank+'_inaction.png']]
 		this.images.ranks = [null,Loader.images.game['rank_1.png'], Loader.images.game['rank_2.png'], Loader.images.game['rank_3.png']]
 	},
 	
@@ -69,9 +73,11 @@ var Turret = Class.create(Unit, {
 		this.cannonSprite.rotation = Nezal.degToRad(this.cannonTheta)
 		this.changeFireState()
 		this.healthSprite.hp = this.hp
+		this.baseSprite.images = this.images.base
+		if(this.images.cannon)this.cannonSprite.images = this.images.cannon.concat(this.images.fire)
 		this.healthSprite.maxHp = this.maxHp
-		this.rankSprite.currentFrame = this.rank
-		if(this.baloon)this.baloon.moveTo(this.x,this.y-70)
+		this.rankSprite.currentFrame = this.rank %4;
+		if(this.baloon)this.baloon.moveTo(this.x,this.y-70);
 		this.rangeSprite.range = this.range
 	},
 	changeFireState: function(){
@@ -150,10 +156,10 @@ var DoubleTurret = Class.create(Turret, {
 	initialize: function($super,x,y,scene,extension){
 		$super(x,y,scene,extension)
 	},
-	initImages : function($super){
-		$super()
-		this.images.cannon = [Loader.images.game['cannon_2.png']]
-		this.images.fire = [Loader.images.game['cannon_2_in_action_right.png'],Loader.images.game['cannon_2_in_action_left.png']]	
+	initImages : function($super,rank){
+		$super(rank)
+		this.images.cannon = [Loader.images.game['reaper_'+rank+'.png']]
+		this.images.fire = [Loader.images.game['reaper_'+rank+'_inaction_right.png'],Loader.images.game['reaper_'+rank+'_inaction_left.png']]	
 
 	},
 	changeFireState : function(){
