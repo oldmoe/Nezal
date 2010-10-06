@@ -104,9 +104,8 @@ var Intro = {
         Intro.retrieveTemplates();
     },
     
-    start: function(){  
-		//alert('starting')
-		if(Intro.doneLoading && Loader.doneLoading) Intro.next();          
+    start: function(){
+    		if(Intro.doneLoading && Loader.doneLoading) Intro.next();          
     },
     
     retrieveTemplates: function(){
@@ -115,31 +114,30 @@ var Intro = {
         loader.addResource(PathConfigs.gameTemplate);
         loader.addResource('metadata');
         loader.load(function(){
-			  $('introTemplates').innerHTML = loader.resources.get(PathConfigs.introTemplate);
-			  for(var template in Intro.templates){
-            		  Intro.templates[template][1] = TrimPath.parseDOMTemplate(Intro.templates[template][0]);
-              }
-			  //$("gameStart").innerHTML = loader.resources.get(PathConfigs.gameTemplate);
-              $("gameStart").innerHTML = Intro.templates['game'] = loader.resources.get(PathConfigs.gameTemplate);
-              var data = JSON.parse(loader.resources.get('metadata'));
-              GameConfigs.campaign = data['game_data']['current_campaign'];
-              Intro.gameData = JSON.parse(data['game_data']['metadata']);
-              for(var i in Intro.gameData.towers)
-              {
-                  Intro.gameData.towers[i].upgrades = JSON.parse(Intro.gameData.towers[i].upgrades);
-              }
-              for(var i in Intro.gameData.weapons)
-              {
-                  Intro.gameData.weapons[i].upgrades = JSON.parse(Intro.gameData.weapons[i].upgrades);
-              }
-              Intro.userData = data['user_data'];
-              Intro.userData["metadata"] = JSON.parse(data['user_data']['metadata']);
-              Intro.ranks = data['ranks'];
-              Loader.loadPage(GameConfigs.campaign, function(){
-				  Intro.doneLoading = true;
-                  Intro.start();
-              });
-          });
+		        $('introTemplates').innerHTML = loader.resources.get(PathConfigs.introTemplate);
+		        for(var template in Intro.templates){
+          		  Intro.templates[template][1] = TrimPath.parseDOMTemplate(Intro.templates[template][0]);
+            }
+            $("gameStart").innerHTML = Intro.templates['game'] = loader.resources.get(PathConfigs.gameTemplate);
+            var data = JSON.parse(loader.resources.get('metadata'));
+            GameConfigs.campaign = data['game_data']['current_campaign'];
+            Intro.gameData = JSON.parse(data['game_data']['metadata']);
+            for(var i in Intro.gameData.towers)
+            {
+                Intro.gameData.towers[i].upgrades = JSON.parse(Intro.gameData.towers[i].upgrades);
+            }
+            for(var i in Intro.gameData.weapons)
+            {
+                Intro.gameData.weapons[i].upgrades = JSON.parse(Intro.gameData.weapons[i].upgrades);
+            }
+            Intro.userData = data['user_data'];
+            Intro.userData["metadata"] = JSON.parse(data['user_data']['metadata']);
+            Intro.ranks = data['ranks'];
+            Loader.loadPage(GameConfigs.campaign, function(){
+			          Intro.doneLoading = true;
+                Intro.start();
+            });
+        });
     },
 
     retrieveData: function( callback){
@@ -201,6 +199,12 @@ var Intro = {
                           Intro.disablePauseScreen();
                         }else{
                           Intro.show();
+                        }
+                        if(!Intro.userData.like)
+                        {
+                            FBDefender.isFan(function(status){
+                                alert('congrates u earned 500 coins for liking us');
+                            })
                         }
                     });
                 });
@@ -282,9 +286,7 @@ var Intro = {
             index : 3,
             emptySpots : 5,
             onSelect : function(){
-                /* Get User Data : coins, unlocked towers, super weapons & upgrade
-                   Also should contain User last used tower, weapon set 
-                   TODO replace this with Ajax  call to get the data */
+                /* Get User Data : coins, unlocked towers, super weapons & upgrade */
                 var gameData = [];
                 Intro.toLabels( Intro.gameData, gameData)
                 data = { "gameData" : gameData,
