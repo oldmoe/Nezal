@@ -382,8 +382,13 @@ var CityDefenderScene = Class.create(Scene, {
 			y = Map.height - 1
 		}
 		var self = this
+		var planeAttack = false
 		wave.each(function(creep){
 			var creepCat = eval(creep.category)
+			if(!planeAttack&&(creepCat == Plane || creepCat == RedPlane)){
+				Sounds.play(Sounds.gameSounds.plane)
+				planeAttack=true
+			}
 			for(var i=0; i < creep.count; i++){
 				self.creepsCount ++
 				var entry = Map.entry[Math.round(Math.random()*(Map.entry.length - 1))]
