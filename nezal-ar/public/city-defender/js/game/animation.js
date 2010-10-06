@@ -55,7 +55,21 @@ var NukeBoom = Class.create(Animation, {
 	dy : 480,
 	initImages : function(){
 		this.frames = Loader.images.nuke_boom
- 	}
+ 	},
+	render : function(ctx){
+		var shadeImage = ""
+		if(this.currentFrame==1)shadeImage="1"
+		else if (this.currentFrame>=2 &&this.currentFrame<=4)shadeImage="2_4"
+		else if (this.currentFrame>=5 &&this.currentFrame<=9)shadeImage="5_9"
+		else if (this.currentFrame>=10 &&this.currentFrame<=14)shadeImage="10_14"
+		else if (this.currentFrame>=15 &&this.currentFrame<=16)shadeImage="15_16"
+		else if (this.currentFrame>=17 &&this.currentFrame<=20)shadeImage="17_20"
+		if(this.frames[this.currentFrame+'.png']){
+			console.log(shadeImage+'_shade.png')
+			ctx.drawImage(Loader.images.nuke_boom[shadeImage+'_shade.png'], this.x-this.dx/2, this.y-this.dy/2)
+			ctx.drawImage(this.frames[this.currentFrame+'.png'], this.x-this.dx/2, this.y-this.dy/2)
+		}
+	}
 })
 
 var CoinsAnimation = Class.create(Animation, {
