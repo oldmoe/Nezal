@@ -10,6 +10,7 @@ var Scenario = Class.create({
 		this.formScenario()
 	},
 	notify : function(event){
+		if(event.unit && (event.unit.constructor==Plane||event.unit.constructor==RedPlane))return
 		var x = Math.random()
 		if((x<0.1&&event.unit)||(event.name!="creepEnteredTower"&&event.name!="creepEntered"&&event.name!="towerDestroyedCreep")){
 			event['tick']=0

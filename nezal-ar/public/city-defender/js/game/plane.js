@@ -79,6 +79,7 @@ var Plane = Class.create(Creep, {
 		this.dead = true	
 		this.cannonSprite.destroy()
 		this.shadowSprite.destroy()
+		if(this.baloon)this.baloon.destroy()
 		this.healthSprite.destroy()
 	}
 	
