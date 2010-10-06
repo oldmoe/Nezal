@@ -1092,7 +1092,20 @@ div.clickableButton:hover, span.clickableButton:hover
 #pause  #loadingBarEmpty #loadingBarLeft{
 	width : 2px;
 }
-
+#inprogress  #loadingPercentage, #inprogress #fileName{
+	font-family:tahoma;
+	font-size:x-small;
+	font-weight:bold;	
+	position:absolute;
+	top:318px
+}
+#inprogress  #loadingPercentage{
+	left:464px;
+}
+#inprogress #fileName{
+	left:273px;
+}
+	
 
 /*
 #challenges
