@@ -54,7 +54,7 @@ var NukeBoom = Class.create(Animation, {
 	dx : 640,
 	dy : 480,
 	initImages : function(){
-		this.frames = Loader.images.nuke_boom
+		this.frames = Loader.images.weapons
  	},
 	render : function(ctx){
 		var shadeImage = ""
@@ -65,7 +65,7 @@ var NukeBoom = Class.create(Animation, {
 		else if (this.currentFrame>=15 &&this.currentFrame<=16)shadeImage="15_16"
 		else if (this.currentFrame>=17 &&this.currentFrame<=20)shadeImage="17_20"
 		if(this.frames[this.currentFrame+'.png']){
-			ctx.drawImage(Loader.images.nuke_boom[shadeImage+'_shade.png'], this.x-this.dx/2, this.y-this.dy/2)
+			ctx.drawImage(Loader.images.weapons[shadeImage+'_shade.png'], this.x-this.dx/2, this.y-this.dy/2)
 			ctx.drawImage(this.frames[this.currentFrame+'.png'], this.x-this.dx/2, this.y-this.dy/2)
 		}
 	}
