@@ -74,7 +74,7 @@ window.Text = {
             },
             Weak : {  
                 name : 'Weak',
-                desc : 'Reduces all units\' health point over time.' 
+                desc :  'Reduce all units\’ health points over time.'
             },
             Hyper : { 
                 name : 'Hyper',
@@ -86,7 +86,7 @@ window.Text = {
             },
             Heal : {  
                 name : 'Heal',
-                desc : 'Restores a percentage of all your towers\' health point.' 
+                desc : 'Restores a percentage of all your towers health points.' 
             }
         },
         towers : {
@@ -121,18 +121,18 @@ window.Text = {
             range : 'Range',
             maxHp : 'Shield',
             Heal : [ 
-                    'Restores 20% of total health point. Cool down 90 seconds.',
-					'Restores 40% of total health point. Cool down 90 seconds.',
-					'Restores 60% of total health point. Cool down 90 seconds.',
-                    'Restores 80% of total health point. Cool down 90 seconds.',
-                    'Restores 100% of total health point. Cool down 90 seconds.'
+                    'Restores 20% of total HP. Cool down 90 seconds.',
+					'Restores 40% of total HP. Cool down 90 seconds.',
+					'Restores 60% of total HP. Cool down 90 seconds.',
+                    'Restores 80% of total HP. Cool down 90 seconds.',
+                    'Restores 100% of total HP. Cool down 90 seconds.'
                 ],
             Weak : [
-                    'Reduce 10% of current hp per second over 10 seconds. Cool down 60 seconds.',
-					'Reduce 10% of current hp per second over 15 seconds. Cool down 60 seconds.',
-					'Reduce 15% of current hp per second over 15 seconds. Cool down 60 seconds.',
-                    'Reduce 15% of current hp per second over 20 seconds. Cool down 60 seconds.',
-                    'Reduce 20% of current hp per second over 20 seconds. Cool down 60 seconds.'
+                    'Reduce 10% of current HP per second over 10 seconds. Cool down 60 seconds.',
+					'Reduce 10% of current HP per second over 15 seconds. Cool down 60 seconds.',
+					'Reduce 15% of current HP per second over 15 seconds. Cool down 60 seconds.',
+                    'Reduce 15% of current HP per second over 20 seconds. Cool down 60 seconds.',
+                    'Reduce 20% of current HP per second over 20 seconds. Cool down 60 seconds.'
                 ],
             Nuke : [
                     'Cool down 240 seconds.', 
