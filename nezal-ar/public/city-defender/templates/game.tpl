@@ -80,8 +80,8 @@
 					</div>
 			</div>
 			<div id="canvasContainer" style="display:none">
-				<canvas id="gameBackground" width="736" height="480"></canvas>
-				<canvas id="gameForeground" width="736" height="480""></canvas>
+				<canvas id="gameBackground" width="736" height="480" style="position:absolute;top:0px;left:0px"></canvas>
+				<canvas id="gameForeground" width="736" height="480" style="position:absolute;top:0px;left:0px"></canvas>
 			</div>
 			<div class="status">
 				<div id="statusBarEmpty">
@@ -144,7 +144,7 @@
 				<div class="superWeaponsOff">
 				</div>			
 			</div>
-			<canvas id="droppingGround" width="672" height="480"></canvas>
+			<canvas id="droppingGround" width="672" height="480" style="position:absolute;top:0px;left:0px"></canvas>
 			<div id="static" style="display:none"></div>
 			<div id="result" style="display:none;"></div>
 			<textarea id='resultTemplate' style="display:none">

@@ -552,12 +552,14 @@ body{
 #canvasContainer{
 	width:736px;
 	height: auto;
-	position: relative;
+	position: absolute;
+	top: 0px;
+	left: 0px;
 	visibility:hidden;
 	
 }
 
-#gameContainer canvas.off{
+#gameContainer .off{
 	background : black;
 }
 
@@ -569,19 +571,19 @@ body{
 	background-image: url('../images/background/snow.gif');
 }
 
-#gameContainer canvas#gameForeground{
+#gameContainer #gameForeground{
 	position :absolute;	
 	top : 0px;
 	left: 0px;
 	
 }
-#gameContainer canvas#gameBackground{
+#gameContainer #gameBackground{
 	position :absolute;	
 	top : 0px;
 	left: 0px;
 }
 
-#gameContainer canvas#droppingGround{
+#gameContainer #droppingGround{
 	position :absolute;	
 	top : 0px;
 	left: 0px;
@@ -634,10 +636,6 @@ body{
 	display : block;
 	position : absolute;
 	top : 2px;
-}
-
-canvas.turret{
-	/*cursor : none*/
 }
 
 #unitData {
