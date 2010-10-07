@@ -203,7 +203,7 @@ var Intro = {
                         }
                         if(!Intro.userData.like)
                         {
-                            FBDefender.isFan(function(status){
+                            FBDefender.isFan(function(){
                                 alert('congrates u earned 500 coins for liking us');
                             })
                         }

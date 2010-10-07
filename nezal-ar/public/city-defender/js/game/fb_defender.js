@@ -8,6 +8,49 @@ FBDefender = {
     
     isMarket : false,
     
+    
+    invite : function(){
+       FBConnect.invite(Text.facebook.invite.inviteMsg, Text.facebook.invite.userPrompt, FBDefender.gameName() );
+    },
+    
+    bookmark : function(callback){
+        FBConnect.bookmark(function(){
+                  new Ajax.Request(  'users/bookmark' ,
+                  {   method:'post', 
+                      onSuccess : function(t, json){
+                          var data = JSON.parse(t.responseText);
+                          Intro.userData.coins = data['user_data'].coins;
+                          if(Intro.currentPage == Intro.pages['marketPlace'].index && FBDefender.isMarket==true)
+                              Intro.select('marketPlace');
+                          if(callback)
+                              callback();
+                      }
+                  });
+        });
+    },
+    
+    isFan : function(callback){
+        FBConnect.isFan(function(status){
+                  if(status && status.page_id)
+                  {
+                      new Ajax.Request(  'users/like' ,
+                      {   method:'post', 
+                          onSuccess : function(t, json){
+                              var data = JSON.parse(t.responseText);
+                              var oldCoins = Intro.userData.coins
+                              Intro.userData.coins = data['user_data'].coins;
+                              if(callback && oldCoins != data['user_data'].coins)
+                              {
+                                  callback();
+                              }
+                              if(Intro.currentPage == Intro.pages['marketPlace'].index && FBDefender.isMarket==true)
+                                  Intro.select('marketPlace');
+                          }
+                      });
+                  }
+        });
+    },
+    
     onPublishSuccess : function(){
         new Ajax.Request(  'users/coins' ,
         {   method:'post', 

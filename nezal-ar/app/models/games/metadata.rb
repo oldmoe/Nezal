@@ -56,6 +56,15 @@ class Metadata
     user_campaign.metadata || "{}"
   end
   
+  def self.bookmark(profile)
+  end
+  
+  def self.like(profile)
+  end
+  
+  def self.reward_invitation(fb_id)
+  end
+  
   def self.encode(data)
      Yajl.dump(data)
   end

@@ -23,7 +23,7 @@ var Game = Class.create({
 			$('gameExit').hide()
 			$('gameReset').hide()
 			$$('.sound').first().observe('click',Sounds.mute)
-			$$('.bookmark').first().hide()
+			$$('.bookmark').first().observe('click', FBDefender.bookmark)	
 			$$('.like').first().hide()
 		}
 		else{
@@ -185,10 +185,8 @@ var Game = Class.create({
 		$('gameReset').observe('click',function(){game.reset()})	
 		$('gameResume').observe('click', function(){game.scene.resume()})	
 		$$('.sound').first().observe('click',Sounds.mute)
-		$$('.bookmark').first().hide()
+		$$('.bookmark').first().observe('click', FBDefender.bookmark)	
 		$$('.like').first().hide()
-		//observe('click', FBConnect.bookmark)	
-		
 	},
 	reset : function(){
 		game.scene.reactor.stop()
