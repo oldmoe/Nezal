@@ -54,6 +54,7 @@ var Sounds = {
 	},
 	
 	play : function(store, direct){
+		if(!store)return
 		if(direct){
 			store[0].play()
 			return 

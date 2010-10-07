@@ -26,18 +26,18 @@
 				<h4>${tower.name}</h4>
 			<table>
 				<tr>
-					<td><div class='meter' id = 'powerMeter' style="width:${Math.round(65 * tower.power / 420)}px;backgroundColor:blue">${window.Text.game.towerInfo.power}</div>
+					<td><div class='meter' id = 'powerMeter' style="width:${Math.round(60 * tower.power / 420)}px;backgroundColor:blue">${window.Text.game.towerInfo.power}</div>
 					<div class='meterExtension'></div>
 				</td>
 				</tr>
 				<tr>
-					<td><div class='meter' id = 'shieldsMeter' style="width:${Math.round(65 * tower.hp / 3000)}px;backgroundColor:blue">${window.Text.game.towerInfo.shield}</div></td>
+					<td><div class='meter' id = 'shieldsMeter' style="width:${Math.round(60 * tower.hp / 10000)}px;backgroundColor:blue">${window.Text.game.towerInfo.shield}</div></td>
 				</tr>
 				<tr>
-					<td><div class='meter' id = 'rateMeter' style="width:${Math.round(65 * tower.rate / 1)}px;backgroundColor:blue">${window.Text.game.towerInfo.rate}</div></td>
+					<td><div class='meter' id = 'rateMeter' style="width:${Math.round(60 * tower.rate / 1)}px;backgroundColor:blue">${window.Text.game.towerInfo.rate}</div></td>
 				</tr>
 				<tr>
-					<td><div class='meter' id = 'rangeMeter' style="width:${Math.round(65 * tower.range / 6)}px;backgroundColor:blue">${window.Text.game.towerInfo.range}</div></td>
+					<td><div class='meter' id = 'rangeMeter' style="width:${Math.round(60 * tower.range / 6)}px;backgroundColor:blue">${window.Text.game.towerInfo.range}</div></td>
 				</tr>
 			</table>
 				{if tower.healthSprite !=null }
@@ -50,6 +50,7 @@
 						<div id = "maxUpgrade" style = "paddingTop:10px bgcolor="grey"">Max upgrade</div>
 					</div>
 					{/if}
+					<img id="upgradeImg"src="${Loader.images.background['upgrade_button.png'].getAttribute('data')}"/>
 				{/if}
 			</div>
 		</table>
@@ -82,6 +83,16 @@
 				<canvas id="gameBackground" width="736" height="480"></canvas>
 				<canvas id="gameForeground" width="736" height="480""></canvas>
 			</div>
+			<div class="status">
+				<div id="statusBarEmpty">
+					<div id="statusBarLeft"> </div>
+					<div id="statusBarFill"> </div>
+					<div id="statusBarRight"> </div>
+				</div>
+				<div id="score" class="score">0</div>
+				<div id="lives" class="lives">0</div>
+				<div id="waves" class="waves">0/0</div>					
+			</div>
 			<div id="gameElements" style="display:none">
 				<div id='gameMenu' style="display:none;">
 					<div id="gameResume" class="button"><div class='buttonTextContainer'><div id="resumeText" class='buttonText'>Resume</div></div></div>
@@ -90,13 +101,6 @@
 				</div>
 				<div id="money">
 					0
-				</div>
-				<div class="status">
-				<div id="statusBarEmpty"><div id="statusBarLeft"> </div><div id="statusBarFill"> </div><div id="statusBarRight"> </div></div>
-					<div id="score" class="score">0</div>
-					<div id="lives" class="lives">0</div>
-					<div id="waves" class="waves">0/0</div>
-					
 				</div>
 				<div class="fps"></div>
 				

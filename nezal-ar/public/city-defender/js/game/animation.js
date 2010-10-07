@@ -130,6 +130,8 @@ var WeakAnimation = Class.create(Animation, {
 })
 var MoneyAnimation = Class.create(Animation, {
 	increment : 0,
+	step : 3,
+	totalMovement : 30,
 	initialize: function($super,x,y,money){
 		this.money = money
 		$super(x,y)
@@ -143,17 +145,23 @@ var MoneyAnimation = Class.create(Animation, {
 	    var divIdName = 'moneyAnimation';
 	    this.div.setAttribute('id',divIdName);
 		this.div.style.position = "absolute"
-		this.div.style.top = this.y
-		this.div.style.left = this.x
+		this.div.style.top = this.y+"px"
+		this.div.style.left = this.x+"px"
 		this.image = Loader.animations.coins[this.currentFrame+'.png']
 		this.parent.appendChild(this.div);
 		
 	},
+	enlarge : function(text){
+		this.step = 2
+		this.div.innerHTML = text
+		this.div.style.fontSize = "13px"
+	},
+	
 	tick : function(){
-		if(this.increment == 30)this.finish()
-			this.increment +=3
-			this.y-=3
-			this.div.style.top = this.y
+		if(this.increment == this.totalMovement)this.finish()
+			this.increment +=this.step
+			this.y-=this.step
+			this.div.style.top = this.y+"px"
 	},
 	finish : function($super){
 		$super()

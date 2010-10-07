@@ -13,12 +13,12 @@ var Baloon = Class.create(Sprite,{
 		this.text = document.createElement("div"); 
 		if(num==2)this.text.style.color = "white";
 		this.text.style.position = "absolute"
-		this.text.style.fontSize = "11"
+		this.text.style.fontSize = "11px"
 		this.text.style.fontWeight = "bold"
-		this.text.style.paddingTop = "2"
+		this.text.style.paddingTop = "2px"
 		this.text.style.textAlign = "center"
 		img.style.position = "relative"
-		this.text.style.top = 5;this.text.style.left = 3
+		this.text.style.top = "5px";this.text.style.left = "3px"
 		img.style.top = 0;img.style.left = 0
 		this.div.appendChild(img)
 		this.div.appendChild(this.text)

@@ -15,7 +15,6 @@
 
 <textarea id='levelSelectionTemplate' style="display:none">
     <div id="background">
-	  <img id="paper_shade" src="${Loader.images.intro['paper_shade.png'].getAttribute('data')}"/>
       <img id="paper" src="${Loader.images.intro['paper.png'].getAttribute('data')}"/>
       <img id="introText" src="${Loader.images.intro['text.png'].getAttribute('data')}"/>
       <img id="logo" src="${Loader.images.intro['logo.png'].getAttribute('data')}"/>
@@ -107,7 +106,6 @@
 <textarea id='campaignTemplate' style="display:none">
     <div id="background">
       <img src="${Loader.images.intro['background.png'].getAttribute('data')}"/>
-	  <img id="paper_shade" src="${Loader.images.intro['paper_shade.png'].getAttribute('data')}"/>
       <img id="paper" src="${Loader.images.intro['paper.png'].getAttribute('data')}"/>
     </div>
     <div class="camp-info">
@@ -175,7 +173,6 @@
     </div>
     <div id="background">
       <img src="${Loader.images.intro['background.png'].getAttribute('data')}"/>
-	  <img id="paper_shade" src="${Loader.images.intro['paper_shade.png'].getAttribute('data')}"/>
       <img id="paper" src="${Loader.images.intro['paper.png'].getAttribute('data')}"/>
       <img id="character" src="${Loader.images.intro['mission/character.png'].getAttribute('data')}"/>
       <img id="buble" src="${Loader.images.intro['mission/buble.png'].getAttribute('data')}"/>
@@ -412,7 +409,6 @@
     </div>
     <div id="background">
       <img src="${Loader.images.intro['background.png'].getAttribute('data')}"/>
-	  <img id="paper_shade" src="${Loader.images.intro['paper_shade.png'].getAttribute('data')}"/>
       <img id="paper" src="${Loader.images.intro['paper.png'].getAttribute('data')}"/>
     </div>
     <div id="upperPart">

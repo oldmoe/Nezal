@@ -50,7 +50,7 @@ var Tutorial = Class.create({
 		this.validate = GhostTurret.validate
 		GhostTurret.validate =function(){			
 			GhostTurret.valid = true
-			if((this.xGrid!=4||this.yGrid!=4)){
+			if((this.xGrid!=5||this.yGrid!=4)){
 				GhostTurret.valid = false
 			}
 		}
@@ -75,7 +75,7 @@ var Tutorial = Class.create({
 		self.ok.observe('click',self.hide)
 		self.viewMessage(4)					
 		anim.finish()					
-		anim = self.addVerticalArrowAnim(120,30)
+		anim = self.addVerticalArrowAnim(152,30)
 		self.droppingGroundClick = GhostTurret.droppingGroundClick
 		GhostTurret.droppingGroundClick = tutorialGroundClicked
 		function tutorialGroundClicked(e){

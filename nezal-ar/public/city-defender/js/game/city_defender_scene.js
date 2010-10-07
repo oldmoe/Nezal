@@ -266,7 +266,7 @@ var CityDefenderScene = Class.create(Scene, {
 			if(this.config.waves.length == 0 && this.creeps.length == 0 && this.waitingCreeps == 0 ){
 				this.uploadScore(true,function(){self.end("win");})                    		                                           
 				return
-			}else if(this.creeps.length == 0  && this.waitingCreeps == 0 && this.config.waves.length > 0 && !this.wavePending && this.running){
+			}else if(this.creeps.length == 0  &&this.waitingCreeps == 0 && this.config.waves.length > 0 && !this.wavePending && this.running){
 				this.waveNumber++
 				IncomingWaves.nextWave()
 				var score = 10*this.waveNumber*(25-Math.round((new Date()-this.startTime)/1000)) 
@@ -276,13 +276,13 @@ var CityDefenderScene = Class.create(Scene, {
 				this.push(40, function(){this.sendWave(this.config.waves.pop())},this)
 				var oldMoney = this.money
 				this.money=Math.round(this.money*this.moneyMultiplier[this.config.level-1])
-				var anim = new MoneyAnimation(550,100,this.money-oldMoney)
+				var anim = new MoneyAnimation(341,462,this.money-oldMoney)
 				anim.totalMovement = 90
 				var msg = "+"+(this.money-oldMoney) +"  Money"
 				//if(score>0)
-				msg+="<br/>+"+score+"   Score"
+				msg+="<br/>Time bonus: +"+score+"   Score"
 				anim.enlarge(msg)
-				if((this.money-oldMoney)>0) this.objects.push(anim)
+				this.objects.push(anim)
 				this.wavePending = true
 			}
 		}	
@@ -411,19 +411,16 @@ var CityDefenderScene = Class.create(Scene, {
 					self.issueCreep(creep, 
 							(theta == 90 || theta == 270) ? Math.round(Math.random()* (Map.width - 1)) : x,
 							(theta == 0 || theta == 180) ? (Math.round(Math.random()* (Map.height - 2)) + 1) : y, 
-							delay/self.reactor.delay, i == (creep.count - 1))
+							delay/self.reactor.delay)
 				}else{
-					self.issueCreep(creep,  entry[0], entry[1], delay/self.reactor.delay, i == (creep.count - 1))
+					self.issueCreep(creep,  entry[0], entry[1], delay/self.reactor.delay)
 				}
-				
 				delay += 70*(32 / creepCat.prototype.speed) + 10//Math.ceil( 64 / Creep.speed)
 				self.waitingCreeps++;
 			}
-			/*
 			self.push((delay + (32 / creepCat.prototype.speed))/self.reactor.delay, function(){
 				self.wavePending = false;
 			})
-			*/
 		})
 	},
 	sendWaves : function(config){
@@ -439,7 +436,7 @@ var CityDefenderScene = Class.create(Scene, {
 			// game finished
 		}
 	},
-	issueCreep : function(creep, x , y, delay, last){
+	issueCreep : function(creep, x , y, delay){
 		var self = this
 		var creepCat = eval(creep.category)
 		this.push(delay, function()
@@ -455,8 +452,7 @@ var CityDefenderScene = Class.create(Scene, {
 				self.creepMutators.each(function(mutator){
 					mutator.action(obj)
 				})
-				self.waitingCreeps--
-				if(last)self.wavePending = false;
+				self.waitingCreeps--		
 			}catch(e){
 				console.log(e)
 			}

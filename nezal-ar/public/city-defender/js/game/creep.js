@@ -84,7 +84,7 @@ var Creep = Class.create(Unit, {
 			var values = this.topBottomValues()
 			var top = values[0]
 			var bottom = values[1]
-			if(top == 0 && bottom == 0){
+			if(top != 1 && bottom != 1){
 				move = true
 				this.turningPoint = [0, 0]
 			}else{

@@ -208,11 +208,11 @@
 	game : {
 		tutorial : {
 				msg1: 'bienvenue à l\'academie de défense'
-		+'</br>Au long de cette période de stage; tu vas recevoir toutes les informations nécessaires, et tu vas acquérir les compétences essentielles'
+		+'<br/>Au long de cette période de stage; tu vas recevoir toutes les informations nécessaires, et tu vas acquérir les compétences essentielles'
 		+' pour défendre ta ville contre tout acte d\'hostilité.',
 				msg2: '</br>Ton but sera d\'achever toutes les vagues d\'attaques venant de la part de l\'ennemie et de leur défendre de passer à travers ta ville.',
 				msg3: 'Tu peux toujours vérifier ton grade en haut à droite de la carte. </br>'
-		+'</br>5.	La barre d\'outils supérieure indique le progrès de ton grade, le nombre de vagues, ton score '
+		+'<br/> La barre d\'outils supérieure indique le progrès de ton grade, le nombre de vagues, ton score '
 		+'et le nombre d\'ennemie que tu dois esquiver et qui indique ta perte.</br>',
 				msg4: 'Maintenant, il est temps de mettre en place quelques tours. Clique sur la tour Cracheur qui se trouve dans la boîte des tours.</br>'
 		+'Tu vas remarquer que les informations s\'affichent dans la boîte d\'infos.',

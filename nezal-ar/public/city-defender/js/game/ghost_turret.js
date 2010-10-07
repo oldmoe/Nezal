@@ -4,7 +4,7 @@ var ghostTurretFeatures = {
 		try{
 			if(Map.grid[this.xGrid]&&Map.grid[this.xGrid][this.yGrid])
 			if(this.xGrid==Map.bgGrid.length-1||Map.grid[this.xGrid][this.yGrid].tower || Map.bgGrid[this.xGrid][this.yGrid] > 0 || 
-			game.scene.money <this.tower.prototype.price){
+			game.scene.money <this.tower.prototype.price ||this.yGrid==0){
 				this.valid = false
 			}
 		}
