@@ -66,7 +66,7 @@ var Loader = {
 			if(found){
 			//	setTimeout(function(){
 					this.index++
-					Intro.startFileLoading(Loader.toLoad[Loader.index])
+					Intro.startFileLoading(Loader.toLoad[Loader.index].split('.')[0])
 					$('iframe').src = Loader.toLoad[Loader.index]
 			//	},6000)
 			}

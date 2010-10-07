@@ -121,7 +121,7 @@ body{
 
 #gameElements .rankName{
 	position:absolute;
-	font-family: AdLib;
+	font-family: AdLib, Arial Black, Tahoma;
 	color: orange;
 	top: 64px;
 	left:650px;
@@ -143,7 +143,7 @@ body{
 	-moz-user-select:none;
 	color:white;
 	cursor:pointer;
-	font-family:AdLib;
+	font-family:AdLib, Arial Black, Tahoma;
 	font-size:23px;
 	height:30px;
 	left:0;
@@ -297,7 +297,7 @@ body{
 
 #money{
   color:white;
-  font-family:Digital;
+  font-family:Digital, Arial Black, Tahoma;
   font-size:18px;
   font-weight:bold;
   height:20px;
@@ -672,9 +672,9 @@ canvas.turret{
   height : 105px;
   position : absolute;
   top : 10px;
-  left : 123px;
+  left : 117px;
   z-index : 201;
-  font-family: AdLib;
+  font-family: AdLib, Arial Black, Tahoma;
 }
 #modalWindow .innerContent{
   width : 245px;
@@ -721,7 +721,7 @@ canvas.turret{
 	left : 50px;
 	width : 390px;
 	height : 100px;
-	font-family: AdLib;
+	font-family: AdLib, Arial Black, Tahoma;
 	font-size : 20px;
 	color : white;
 	text-align: center;
@@ -861,7 +861,7 @@ position:"absolute";
 	top:252px;
 	color:#e91;
 	font-size:27;
-	font-family:Adlib;
+	font-family:Adlib, Arial Black, Tahoma;
 	text-shadow: #000 2px 2px 1px;
 }
 #result #coins{
@@ -908,7 +908,7 @@ position:"absolute";
 	color:white;
 	text-shadow: #000 2px 2px 1px;
 	top:375px;
-	font-family:Pakgirl;
+	font-family:Pakgirl, Arial Black, Tahoma;
 	cursor:pointer;
 }
 #result #exit:hover,#result #playAgain:hover{

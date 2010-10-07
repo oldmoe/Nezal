@@ -23,7 +23,7 @@
   src: url("../fonts/INC901B.TTF");
 }
 body {
-  font-family : Adlib;
+  font-family : Adlib, Arial Black, Tahoma;
 }
 #invite {
   position : absolute;
@@ -101,12 +101,14 @@ body {
 
 .buttonText
 {
-  font-family : Adlib;
+  font-family : Adlib, Arial Black, Tahoma;
   text-transform : capitalize;
   text-align:center;
 }
-#levelSelection #paper
+#levelSelection #paper_shade
 {
+	position:absolute;
+	z-index:-1;
 }
 #levelSelection #introText
 {
@@ -273,12 +275,13 @@ body {
   top: 0px;
   left: 0px;
 }
-#campaign #paper
+#campaign #paper,#campaign #paper_shade
 {
-  position: absolute;
-  top: 12px;
-  left: 0px;
+	left:26px;
+	position:absolute;
+	top:21px;
 }
+
 #campaign #backContainer
 {
   left:80px;
@@ -371,11 +374,11 @@ body {
   top: 0px;
   left: 0px;
 }
-#mission #paper
+#mission #paper,#mission #paper_shade
 {
-  position: absolute;
-  top: 12px;
-  left: 0px;
+	left:26px;
+	position:absolute;
+	top:22px;
 }
 #mission #mapBackground
 {
@@ -564,7 +567,7 @@ body {
 {
   cursor:pointer;
   display:inline-block;
-  font-family:PakGirl;
+  font-family:PakGirl, Arial Black, Tahoma;
   font-size:16px;
   height:20px;
   margin-top:9px;
@@ -617,11 +620,11 @@ body {
   top: 0px;
   left: 0px;
 }
-#marketPlace #paper
+#marketPlace #paper,#marketPlace #paper_shade
 {
   position: absolute;
-  top: 10px;
-  left: 0px;
+  top:22px;	
+  left:28px;
 }
 #marketPlace #upperPart
 {
@@ -657,7 +660,7 @@ body {
 }
 #marketPlace #upperPart .coins
 {
-  font-family:Digital;
+  font-family:Digital, Arial Black, Tahoma;
   font-size:21px;
   left:480px;
   position:absolute;
@@ -668,7 +671,7 @@ body {
 #marketPlace #upperPart .addMoney
 {
   color:#FAC200;
-  font-family:Adlib;
+  font-family:Adlib, Arial Black, Tahoma;
   font-size:15px;
   left:423px;
   position:absolute;
@@ -725,7 +728,7 @@ body {
 #marketPlace .itemPrice
 {
   color:#FAC200;
-  font-family:Adlib;
+  font-family:Adlib, Arial Black, Tahoma;
   font-size:18px;
   text-align:center;
   padding-top:4px;
@@ -734,7 +737,7 @@ body {
 }
 #marketPlace .upgradeLevel
 {
-  font-family:Adlib;
+  font-family:Adlib, Arial Black, Tahoma;
   font-size:30px;
   position:absolute;
   text-align:right;
@@ -778,7 +781,7 @@ body {
 {
   color:white;
   cursor:pointer;
-  font-family:Adlib;
+  font-family:Adlib, Arial Black, Tahoma;
   font-size:14px;
   left:4px;
   position:relative;
@@ -868,7 +871,7 @@ div.clickableButton:hover, span.clickableButton:hover
 {
   cursor:pointer;
   display:inline-block;
-  font-family:PakGirl;
+  font-family:PakGirl, Arial Black, Tahoma;
   font-size:20px;
   height:20px;
   vertical-align:top;
@@ -919,7 +922,7 @@ div.clickableButton:hover, span.clickableButton:hover
 #marketPlace #floatBg .image .cost .value
 {
   float:left;
-  font-family:Digital;
+  font-family:Digital, Arial Black, Tahoma;
   font-size:26px;
   margin-top:-6px;
   text-align:center;
@@ -1114,7 +1117,7 @@ div.clickableButton:hover, span.clickableButton:hover
 	left:464px;
 }
 #inprogress #fileName{
-	left:273px;
+	left:293px;
 }
 	
 
