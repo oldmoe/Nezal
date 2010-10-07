@@ -22,6 +22,7 @@ class UsersController < ApplicationController
   
 
   post '/remove' do
+=begin
     @user = FbUser.where('fb_id' => params['fb_sig_user']).first
     if ( @user && params['fb_sig_uninstall'] )
       @app_configs = FB_CONFIGS::find('id', params['fb_sig_app_id'])
@@ -32,6 +33,7 @@ class UsersController < ApplicationController
         @game_profile.destroy
       end
     end
+=end
     ''
   end
   

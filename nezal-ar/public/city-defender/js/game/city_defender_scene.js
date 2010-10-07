@@ -266,7 +266,7 @@ var CityDefenderScene = Class.create(Scene, {
 			if(this.config.waves.length == 0 && this.creeps.length == 0 && this.waitingCreeps == 0 ){
 				this.uploadScore(true,function(){self.end("win");})                    		                                           
 				return
-			}else if(this.creeps.length == 0  &&this.waitingCreeps == 0 && this.config.waves.length > 0 && !this.wavePending && this.running){
+			}else if(this.creeps.length == 0  && this.waitingCreeps == 0 && this.config.waves.length > 0 && !this.wavePending && this.running){
 				this.waveNumber++
 				IncomingWaves.nextWave()
 				var score = 10*this.waveNumber*(25-Math.round((new Date()-this.startTime)/1000)) 
@@ -411,16 +411,19 @@ var CityDefenderScene = Class.create(Scene, {
 					self.issueCreep(creep, 
 							(theta == 90 || theta == 270) ? Math.round(Math.random()* (Map.width - 1)) : x,
 							(theta == 0 || theta == 180) ? (Math.round(Math.random()* (Map.height - 2)) + 1) : y, 
-							delay/self.reactor.delay)
+							delay/self.reactor.delay, i == (creep.count - 1))
 				}else{
-					self.issueCreep(creep,  entry[0], entry[1], delay/self.reactor.delay)
+					self.issueCreep(creep,  entry[0], entry[1], delay/self.reactor.delay, i == (creep.count - 1))
 				}
+				
 				delay += 70*(32 / creepCat.prototype.speed) + 10//Math.ceil( 64 / Creep.speed)
 				self.waitingCreeps++;
 			}
+			/*
 			self.push((delay + (32 / creepCat.prototype.speed))/self.reactor.delay, function(){
 				self.wavePending = false;
 			})
+			*/
 		})
 	},
 	sendWaves : function(config){
@@ -436,7 +439,7 @@ var CityDefenderScene = Class.create(Scene, {
 			// game finished
 		}
 	},
-	issueCreep : function(creep, x , y, delay){
+	issueCreep : function(creep, x , y, delay, last){
 		var self = this
 		var creepCat = eval(creep.category)
 		this.push(delay, function()
@@ -452,7 +455,8 @@ var CityDefenderScene = Class.create(Scene, {
 				self.creepMutators.each(function(mutator){
 					mutator.action(obj)
 				})
-				self.waitingCreeps--		
+				self.waitingCreeps--
+				if(last)self.wavePending = false;
 			}catch(e){
 				console.log(e)
 			}

@@ -156,6 +156,12 @@ window.Text = {
         }
     },
     facebook : {
+        invite : {
+            inviteMsg : ' Check this game out ',
+            userPrompt : 'Invite your friends and earn 50 coins for each friend that start playing'
+        },
+        like : ' ',
+        bookmark : '',
         completeMession: [
               'courageously defended',
               'at',

@@ -18,6 +18,10 @@ class AdminController < ApplicationController
   # Add a new Game
   post '' do
     @game = Game.create({:name => params["name"], :description => params["description"]})
+    @app_configs = FB_CONFIGS::find('name', @game.name)
+    helper = ActiveSupport::Inflector.camelize(@app_configs['game_name'].sub("-", "_"))
+    klass = Kernel.const_get(helper)
+    klass.init_game(@game)
     redirect "/#{ADMIN_URL}/#{@game.name}"
   end
 
@@ -35,9 +39,7 @@ class AdminController < ApplicationController
   post '/:game_id/ranks' do
     @game = Game.find(params[:game_id])
     @game.ranks << Rank.new({:name => params["name"], :lower_exp => params["lower_exp"], :upper_exp => params["upper_exp"]})
-    puts "BEFORE SAVE RANK"
     @game.save
-    puts "AFTER SAVE RANK"
     redirect "/#{ADMIN_URL}/#{@game.name}"
   end
   
@@ -53,9 +55,7 @@ class AdminController < ApplicationController
   post '/:game_id/campaigns' do
     @game = Game.find(params[:game_id])
     @game.campaigns << Campaign.new({:name => params["name"], :path => params["config_path"]})
-    puts "BEFORE SAVE CAMPAIGN"
     @game.save
-    puts "AFTER SAVE CAMPAIGN"
     redirect "/#{ADMIN_URL}/#{@game[:name]}"
   end
   
@@ -71,9 +71,7 @@ class AdminController < ApplicationController
   post '/:game_id/current-campaign' do 
     @game = Game.find(params[:game_id])
     @game.current_campaign= Campaign.find(params[:current_campaign])
-    puts "BEFORE SAVE CAMPAIGN"
     @game.save
-    puts "AFTER SAVE CAMPAIGN"
     redirect "/#{ADMIN_URL}/#{@game[:name]}"
   end
   
@@ -92,7 +90,6 @@ class AdminController < ApplicationController
     klass.load_game(@game)
   end
   
-  # For city defender this should save missions, towers, creeps, super weapons, upgrades
   put '/:game_name/metadata' do 
     @game = Game.find_by_name(params[:game_name])
     klass = self.get_helper_klass
@@ -111,7 +108,6 @@ class AdminController < ApplicationController
     @camp.metadata
   end
   
-  # For city defender this should save missions, towers, creeps, super weapons, upgrades
   put '/:game_name/:camp_id/metadata' do 
     @camp = Campaign.find(params["camp_id"])
     klass = self.get_helper_klass

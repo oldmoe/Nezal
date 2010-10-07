@@ -156,6 +156,10 @@
         }
     },
     facebook : {
+        invite : {
+            inviteMsg : ' Check this game out ',
+            userPrompt : 'Invite your friends and earn 50 coins for each friend that start playing'
+        },
         completeMession: [
               'دافع بشجاعة عن',
               'في',

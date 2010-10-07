@@ -8,9 +8,11 @@ var FBConnect = {
 	  
     channelPath : "xd_receiver.html",
     
+    location : null,
+    
     url : function(){
-		    var data = window.location;
-		    data = data.toString().split("/");
+		    var data = FBConnect.location;
+		    data = data.split("/");
 		    data = data[4];
 		    //document.domain = origDomain
 		    return data;
@@ -28,9 +30,15 @@ var FBConnect = {
 	  },
 	  
     init : function( successCallback ) {
-        fbRoot = document.createElement('div');
+        FBConnect.location = window.location.toString();
+        var fbRoot = document.createElement('div');
         fbRoot.setAttribute("id", "fb-root");
+        var invite = document.createElement('iframe');
+        invite.setAttribute("id", "invite");
+        invite.setAttribute("src", "#");
+        invite.style.display = 'none';
         document.body.appendChild(fbRoot);
+        document.body.appendChild(invite);
         FB.init({
             appId  : FBConnect.appIds[FBConnect.url()],
             apiKey  : FBConnect.appIds[FBConnect.url()],
@@ -78,10 +86,17 @@ var FBConnect = {
                                    FBConnect.url();
                 }else if(response.status == "notConnected" )
                 {
+                    var inviter = FBConnect.location.split("inviter")[1];
+                    var appendParam = '';
+                    if(inviter)
+                    {
+                        var id = inviter.split('&')[0];
+                        appendParam = '?inviter' + id;
+                    }
                     redirect_url = "http://www.facebook.com/connect/uiserver.php?app_id=" + 
                                    FBConnect.appIds[FBConnect.url()] +  
                                    "&next=http://apps.facebook.com/"+ 
-                                   FBConnect.url() + "/" +
+                                   FBConnect.url() + "/" + appendParam +
                                  "&display=page&locale=en_US&return_session=0&" +
                                  "fbconnect=0&canvas=1&legacy_return=1&method=permissions.request";
                 }
@@ -102,15 +117,28 @@ var FBConnect = {
           callback();
         }
 	  },
+	  
+	  isFan : function(callback) {
+	      var query = FB.Data.query("SELECT page_id FROM page_fan WHERE uid={0}", FB.getSession().uid);
+        FB.Data.waitOn([query], function(){
+            var fan = query.value.find(function(obj){
+                if(obj.page_id == FB._apiKey){
+                    return true;
+                }
+            });
+            callback(fan);
+        });
+	  },
     
-    bookmark : function(){
+    bookmark : function(callback){
         FB.ui({ method: 'bookmark.add' },  
-            function(response) {
-             });
+              function(response) {
+                  if(response.bookmarked == 1)
+                      callback();
+              });
     },
     
     publish : function(attachment, usePrompt, actionLink, successCallback) {
-        var loc = "http://apps.facebook.com/" + FBConnect.url() + "/";
         FB.ui(
               {
                   method: 'stream.publish',
@@ -125,7 +153,6 @@ var FBConnect = {
                       successCallback();
                   }
               }
-
         );
         window.setTimeout(function(){
                               var divs = $$('#fb-root .fb_dialog');
@@ -134,32 +161,23 @@ var FBConnect = {
                                   divs.last().style["top"] = "203.6px";
                                   divs.last().style["left"] = "82.5px";
                               }
-                          }, 5000);
+                          }, 10000);
     },
     
-    invite : function(userPrompt, inviteMsg){
-        var appUrl = "http://apps.facebook.com/" + FBConnect.url();
-        FB.api(
-            {  method: 'friends.getAppUsers' },
-            function(response) {
-                var ids = response;
-                FB.ui({
-                    method:'fbml.dialog',
-                    display: 'popup',
-                    width:640, height:480,
-                    fbml:'<fb:Fbml>   ' +
-                              '<fb:request-form action="' + window.location + '"' + ' method="GET" invite="true" targer="_self" ' +
-                                                'type="Studio SA 2010" content="I am predicting the results of the world cup 2010 on Studio S.A. Predict with me ' +
-                                '<fb:req-choice url=\'' + appUrl + '\' ' +  'label=\'Play\' />" >' +
-                                '<div style="width : 83%; margin:auto;"> ' +
-                                  '<fb:multi-friend-selector  targer="_self" showborder="false"' + 'exclude_ids="' + ids + '"' + 'actiontext="Invite your friends to play Studio South Africa 2010 with you" cols="3" rows="1"/>' +         
-                                '<div/> ' +
-                                '</fb:request-form>' +
-                          '</fb:Fbml> '
-                });
-            }
-        );
+    invite : function(inviteMsg, userPrompt, appName){
+        $('invite').src = "html/invite.html?" +
+                                "msg=" + escape(inviteMsg) + "&propmt=" + escape(userPrompt) + "&name=" + escape(appName)
+        $('invite').show();
+/*        var win = window.open( "html/invite.html?" +
+                                "msg=" + escape(inviteMsg) + "&propmt=" + escape(userPrompt) + "&name=" + escape(appName) ,
+                               'Invite',
+                               'height=550,width=640, left=100, top =100');*/
+                               
+/*          var size = FB.UIServer.Methods['fbml.dialog'].size;
+          FB.UIServer.Methods['fbml.dialog'].size.height = 500;*/
+          
     }
 
 }
+
 
