@@ -43,7 +43,7 @@ body{
 	font-family : verdana;
 	color : #fff;
 	vertical-align:middle;
-	z-index : 101;
+	z-index : 500;
 }
 #result .statusDiv
 {
@@ -225,7 +225,7 @@ body{
 	font-weight:bold;
 	height:37px;
 	margin-left:5px;
-	margin-top:2px;
+	margin-top:7px;
 	position:absolute;
 	text-align:center;
 	width:87%;
@@ -242,7 +242,7 @@ body{
 #towerData #upgradeImg{
 	position:absolute;
 	margin-left:1px;
-	margin-top:4px;
+	margin-top:7px;
 }
 #gameElements .towerInfo table {
 	border:medium none;
@@ -711,7 +711,7 @@ canvas.turret{
 	left : 90px;
 	width : 585px;
 	height : 350px;
-	z-index : 303;
+	z-index : 600;
 	opacity : 1;
 }
 #popup #congratsContent

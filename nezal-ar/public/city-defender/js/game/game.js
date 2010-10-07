@@ -30,11 +30,11 @@ var Game = Class.create({
 			this.scene = new CityDefenderScene(this.config,33,this.ctx,this.topCtx);
 			this.registerHandlers();
 		}
-		
 		if(Config.map)Map.bgGrid = Config.map
 		if(Config.mapEntry)Map.entry = Config.mapEntry
 		GhostTurret = new Turret(0, 0,this.scene, ghostTurretFeatures)
 		$$('.startText').first().innerHTML = window.Text.game.gameState.start
+		$('pauseWindow').hide()	
 		$$('#gameReset #resetText').first().innerHTML = window.Text.game.controls.reset
 		$$('#gameExit #exitText').first().innerHTML = window.Text.game.controls.exit
 		$$('#gameResume #resumeText').first().innerHTML = window.Text.game.gameState.resume
