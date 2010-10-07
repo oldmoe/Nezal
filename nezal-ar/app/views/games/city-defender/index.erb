@@ -36,7 +36,13 @@
     <img id="title" name="title.png"/>
     <img id="blank" name="blank.png"/>
     <img id="titleAr" name="title-ar.png"/>
-    <img  name="loading-bar.gif" src="" style="left:321px;position:absolute;top:297px;width:28%;"/>
+	<div id="loadingBarEmpty">
+		<div id="loadingBarLeft"> </div>
+		<div id="loadingBarFill"> </div>
+		<div id="loadingBarRight"> </div>
+	</div>
+	<div id="fileName"> </div>
+	<div id="loadingPercentage"> </div>
   </div>
 </div>
 
@@ -62,7 +68,7 @@
   
   <div id="gameStart" style="display: none;">
   </div>
-  <iframe id ="scores" src="" style = "width :757;height:150;display:none;"></iframe>
+  <iframe id ="scores" src="" style = "width :761px;height:150px;display:none;"></iframe>
 </div>
 <script>
 	function register(win, resources){
@@ -84,20 +90,29 @@
 	    if (loadedProgress==$$('#inProgress img').length)
 	        window.setTimeout(function(){$('pause').show()}, 100)
 	}
+	$$('#pause  #loadingBarEmpty').first().style.backgroundImage = "url('images/intro/loading_bar_background.png')"
+	$$('#pause  #loadingBarEmpty #loadingBarLeft').first().style.backgroundImage = "url('images/intro/loading_bar_left.png')"
+	$$('#pause  #loadingBarEmpty #loadingBarRight').first().style.backgroundImage = "url('images/intro/loading_bar_right.png')"
+	$$('#pause  #loadingBarEmpty #loadingBarFill').first().style.backgroundImage = "url('images/intro/loading_bar_middle.png')"
 	$(document).observe('dom:loaded',function(){
     	$$('#inProgress img').each(function(image){
   	      	image.onload = onFinishProgress;
       			image.src = "images/intro/"+image.getAttribute('name')
-    			});				
+    			});		
+		
 		Loader.toLoad = [
-			'<%=bust_cache('html_resources/animations.html')%>',
-			'<%=bust_cache('html_resources/intro.html')%>',
 			'<%=bust_cache('html_resources/user.html')%>',
-			'<%=bust_cache('html_resources/background.html')%>',
-			'<%=bust_cache('html_resources/game.html')%>',
 			'<%=bust_cache('html_resources/english.html')%>',
 			'<%=bust_cache('html_resources/arabic.html')%>',
-			'<%=bust_cache('html_resources/french.html')%>'
+			'<%=bust_cache('html_resources/french.html')%>',
+			'<%=bust_cache('html_resources/intro.html')%>',
+			function(){Loader.fire('intro')},
+			'<%=bust_cache('html_resources/animations.html')%>',
+			'<%=bust_cache('html_resources/game.html')%>',
+			'<%=bust_cache('html_resources/background.html')%>',
+			function(){Loader.fire('tutorial')},
+			'<%=bust_cache('html_resources/nuke_boom.html')%>',
+			function(){Loader.fire('game')}
 		]
 		$('iframe').src = Loader.toLoad[0]
 	})

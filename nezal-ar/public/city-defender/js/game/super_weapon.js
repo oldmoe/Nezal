@@ -79,7 +79,7 @@ var SuperWeapon = Class.create({
 				image.parentNode.removeChild(canvas)
 				return
 			}
-			self.scene.push(50,tick)
+			self.scene.push(1,tick)
 		}
 		var overlay = Loader.images.background[this.type+'_button_off.png']
 		tick()
@@ -119,7 +119,7 @@ var Weak = Class.create(SuperWeapon, {
 	action : function(){
 		Sounds.play(Sounds.superWeapons.weak,true)
 		var anim = new WeakAnimation()
-		this.scene.scenario.notify({name:"superWeaponsNuke", method: false, unit:this.scene.creeps.random()})
+		this.scene.scenario.notify({name:"superWeaponsWeak", method: false, unit:this.scene.creeps.random()})
 		this.scene.objects.push(anim)
 		this.scene.rocketsLayer.attach(anim)
 		var self = this
@@ -130,7 +130,7 @@ var Weak = Class.create(SuperWeapon, {
 		this.scene.creeps.each(function(creep){creep.takeHit(Math.floor(creep.hp * self.factor1));})
 		count++
 		var self = this
-		if(count < self.factor2){ this.scene.push(1000, function(){self.weak(count);}) }
+		if(count < self.factor2){ this.scene.push(20, function(){self.weak(count);}) }
 		else self.unWeak()
 	},
 	unWeak : function(){
@@ -172,7 +172,7 @@ var Nuke = Class.create(SuperWeapon, {
 			this.scene.objects.push(anim)
 			this.scene.rocketsLayer.attach(anim)
 		}
-		this.scene.push(1000,startNuke,this)
+		this.scene.push(20,startNuke,this)
 	}
 })
 var Heal = Class.create(SuperWeapon, {
@@ -197,7 +197,7 @@ var Hyper = Class.create(SuperWeapon, {
 			tower.rate *= self.factor1;
 		}
 		this.scene.turrets.each(hyper)
-		this.scene.push(self.factor2*1000, function(){self.unHyper();})
+		this.scene.push(self.factor2*1000/this.scene.reactor.delay, function(){self.unHyper();})
 		this.scene.towerMutators.push({name : 'hyper', action : hyper})
 	},
 	unHyper : function(){

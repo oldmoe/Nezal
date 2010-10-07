@@ -270,7 +270,9 @@
 			destroyed : 'تدمر:',
 			escaped : 'هرب:',
 			towers : 'مدافع',
-			built : 'بني:'
+			built : 'بني:',
+			playAgain :'العب مره اخري',
+			exit : 'استمر في الدفاع'
 		},
 		towerDestroyedCreep :[
        'من التالي؟؟!!',
@@ -330,6 +332,11 @@
 	controls: {
 		exit : "خروج",
 		reset : "اعاده"
+	},
+	promotion: {
+		msg1 : "مبروك",
+		msg2 : "لقد تم ترقيتك و اصبحت الان ",
+		okButton : "موافق"
 	}
   
   }

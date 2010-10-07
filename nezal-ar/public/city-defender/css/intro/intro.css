@@ -94,8 +94,10 @@ body {
   text-transform : capitalize;
   text-align:center;
 }
-#levelSelection #paper
+#levelSelection #paper_shade
 {
+	position:absolute;
+	z-index:-1;
 }
 #levelSelection #introText
 {
@@ -262,12 +264,13 @@ body {
   top: 0px;
   left: 0px;
 }
-#campaign #paper
+#campaign #paper,#campaign #paper_shade
 {
-  position: absolute;
-  top: 12px;
-  left: 0px;
+	left:26px;
+	position:absolute;
+	top:21px;
 }
+
 #campaign #backContainer
 {
   left:80px;
@@ -360,11 +363,11 @@ body {
   top: 0px;
   left: 0px;
 }
-#mission #paper
+#mission #paper,#mission #paper_shade
 {
-  position: absolute;
-  top: 12px;
-  left: 0px;
+	left:26px;
+	position:absolute;
+	top:22px;
 }
 #mission #mapBackground
 {
@@ -606,11 +609,11 @@ body {
   top: 0px;
   left: 0px;
 }
-#marketPlace #paper
+#marketPlace #paper,#marketPlace #paper_shade
 {
   position: absolute;
-  top: 10px;
-  left: 0px;
+  top:22px;	
+  left:28px;
 }
 #marketPlace #upperPart
 {
@@ -1069,6 +1072,43 @@ div.clickableButton:hover, span.clickableButton:hover
 {
   color:#ff4102;
 }
+#pause  #loadingBarEmpty{
+	height:10px;
+	left:324px;
+	position:absolute;
+	top:296px;
+	width:134px;
+}
+#pause  #loadingBarEmpty div{
+	height : 8px;
+	float : left;
+}
+
+#pause  #loadingBarEmpty #loadingBarRight{				
+	width : 2px;
+}
+
+#pause  #loadingBarEmpty #loadingBarFill{
+	background-repeat:repeat-x;				
+}
+
+#pause  #loadingBarEmpty #loadingBarLeft{
+	width : 2px;
+}
+#inprogress  #loadingPercentage, #inprogress #fileName{
+	font-family:tahoma;
+	font-size:x-small;
+	font-weight:bold;	
+	position:absolute;
+	top:318px
+}
+#inprogress  #loadingPercentage{
+	left:464px;
+}
+#inprogress #fileName{
+	left:293px;
+}
+	
 
 /*
 #challenges

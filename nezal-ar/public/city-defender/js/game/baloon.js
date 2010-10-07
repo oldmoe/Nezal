@@ -5,12 +5,13 @@ var Baloon = Class.create(Sprite,{
 	initialize : function(num){
 		this.parent = $('gameElements');
 	    this.div = document.createElement('div');
-			this.div.setOpacity(0.7)
+			this.div.setOpacity(1)
 	    var divIdName = 'baloon';
 	    this.div.setAttribute('id',divIdName);
 		this.div.style.position = 'absolute';
 		var img = Element.clone(Loader.images.game["baloon"+num+".png"]);
 		this.text = document.createElement("div"); 
+		if(num==2)this.text.style.color = "white";
 		this.text.style.position = "absolute"
 		this.text.style.fontSize = "11"
 		this.text.style.fontWeight = "bold"

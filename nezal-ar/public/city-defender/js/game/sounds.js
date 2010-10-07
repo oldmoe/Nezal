@@ -168,7 +168,7 @@ function createBackgroundMusic(){
 	  url: 'sounds/sfx/mp3/game.mp3',
 	  autoLoad: true,
 	  autoPlay: false,
-	  volume: 30,
+	  volume: 50,
 	  loops : 10000
 	});
 	Sounds.gameSounds.game= []

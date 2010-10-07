@@ -2,6 +2,10 @@ require 'json'
 
 class CityDefender < Metadata
   
+  WIN_EXP_FACTOR = (1.5/50)
+  LOSE_EXP_FACTOR = (1.0/50)
+  WIN_COIN_FACTOR = (1.0/300)
+  
   def self.init_game_profile(game_profile)
     game_data = self.decode(game_profile.game.metadata)
     towers = {}
@@ -80,11 +84,13 @@ class CityDefender < Metadata
       user_campaign.score -= old_score 
       user_campaign.score += metadata['missions'][data['mission'] -1]['score']
       if (data['win'])
-        metadata['missions'][data['mission']] = { 'order' => data['mission'] + 1, 'score' => 0 }
-        user_campaign.profile.exp += (( data['score'] / 50) * 1.5)
-        user_campaign.profile.user.coins += data['score']/200
+        if(!metadata['missions'][data['mission']])
+          metadata['missions'][data['mission']] = { 'order' => data['mission'] + 1, 'score' => 0 }
+        end
+        user_campaign.profile.exp += ( data['score'] * WIN_EXP_FACTOR).round
+        user_campaign.profile.user.coins += (data['score']*WIN_COIN_FACTOR).round
       else
-        user_campaign.profile.exp += ( data['score'] / 50)
+        user_campaign.profile.exp += ( data['score'] * LOSE_EXP_FACTOR).round
       end
       ranks = user_campaign.profile.game.ranks.where( " lower_exp <= #{user_campaign.profile.exp} AND " + 
                                               " ( upper_exp > #{user_campaign.profile.exp} OR upper_exp == -1 ) "  )

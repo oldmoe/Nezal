@@ -15,6 +15,7 @@
 
 <textarea id='levelSelectionTemplate' style="display:none">
     <div id="background">
+	  <img id="paper_shade" src="${Loader.images.intro['paper_shade.png'].getAttribute('data')}"/>
       <img id="paper" src="${Loader.images.intro['paper.png'].getAttribute('data')}"/>
       <img id="introText" src="${Loader.images.intro['text.png'].getAttribute('data')}"/>
       <img id="logo" src="${Loader.images.intro['logo.png'].getAttribute('data')}"/>
@@ -106,6 +107,7 @@
 <textarea id='campaignTemplate' style="display:none">
     <div id="background">
       <img src="${Loader.images.intro['background.png'].getAttribute('data')}"/>
+	  <img id="paper_shade" src="${Loader.images.intro['paper_shade.png'].getAttribute('data')}"/>
       <img id="paper" src="${Loader.images.intro['paper.png'].getAttribute('data')}"/>
     </div>
     <div class="camp-info">
@@ -173,6 +175,7 @@
     </div>
     <div id="background">
       <img src="${Loader.images.intro['background.png'].getAttribute('data')}"/>
+	  <img id="paper_shade" src="${Loader.images.intro['paper_shade.png'].getAttribute('data')}"/>
       <img id="paper" src="${Loader.images.intro['paper.png'].getAttribute('data')}"/>
       <img id="character" src="${Loader.images.intro['mission/character.png'].getAttribute('data')}"/>
       <img id="buble" src="${Loader.images.intro['mission/buble.png'].getAttribute('data')}"/>
@@ -409,6 +412,7 @@
     </div>
     <div id="background">
       <img src="${Loader.images.intro['background.png'].getAttribute('data')}"/>
+	  <img id="paper_shade" src="${Loader.images.intro['paper_shade.png'].getAttribute('data')}"/>
       <img id="paper" src="${Loader.images.intro['paper.png'].getAttribute('data')}"/>
     </div>
     <div id="upperPart">
@@ -486,9 +490,23 @@
 		          <li itemid="${item}" class="clickSound" 
 	                onmouseover="this.select('#info')[0].show();"
 	                onmouseout="this.select('#info')[0].hide();">
-		            <img class="coinImage" 
-		                  src="${Loader.images.intro['market/coin.png'].getAttribute('data')}"> </img>
-                <div class="itemPrice">${Intro.gameData[type][item].cost}</div>
+                {if (!Intro.userData.metadata[type][item])}   
+		                <img class="coinImage" 
+		                      src="${Loader.images.intro['market/coin.png'].getAttribute('data')}"> </img>
+                    <div class="itemPrice">
+                        ${Intro.gameData[type][item].cost}
+                    </div>
+                {else}  
+                    {if (Intro.gameData[type][item]['upgrades'][Intro.userData.metadata[type][item]['upgrades']])}
+                    <img class="coinImage" 
+		                      src="${Loader.images.intro['market/coin.png'].getAttribute('data')}"> </img>
+                    <div class="itemPrice">
+                        ${Intro.gameData[type][item]['upgrades'][Intro.userData.metadata[type][item]['upgrades']].cost}
+                    </div>  
+                    {else}
+                    <div style="width:20px;height:23px;"></div>
+                    {/if}
+                {/if}
 		            <img class="itemImage" 
 		                  src="${Loader.images.intro[type+'/'+itemConfig[item]['image']].getAttribute('data')}"> </img>
                 {if (!Intro.userData.metadata[type][item])}

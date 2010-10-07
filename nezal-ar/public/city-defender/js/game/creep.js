@@ -90,6 +90,7 @@ var Creep = Class.create(Unit, {
 			}else{
 				if(this.turningPoint[0] == 0 && this.turningPoint[1] == 0){
 					this.turningPoint = [this.x, this.y]
+					//move = true
 				}else if(bottom == 1 && (this.shouldNotTurn(this.bottom)) ){
 					move = true
 				}else if(top == 1 && (this.shouldNotTurn(this.top)) ){
@@ -109,11 +110,13 @@ var Creep = Class.create(Unit, {
 						return a[0] - b[0];
 					})[0][1]
 					this.speed = this.speeds[this.index]
+					this.rotation+= this.direction * this.angles[this.index]
+					this.x += this.speed * Math.cos(this.rotation * Math.PI / 180 );
+					this.y += this.speed * Math.sin(this.rotation * Math.PI / 180 );
 				}
 			}
 		}else{		
 			this.rotation+= this.direction * this.angles[this.index]
-			move = false;
 			this.x += this.speed * Math.cos(this.rotation * Math.PI / 180 );
 			this.y += this.speed * Math.sin(this.rotation * Math.PI / 180 );
 			if(Math.abs(this.rotation - this.oldTheta) >= 90){
@@ -125,7 +128,6 @@ var Creep = Class.create(Unit, {
 				this.x = Math.round((this.x/4))*4
 				this.y = Math.round((this.y/4))*4
 				this.turningPoint = [0, 0]
-				//move = true
 			}
 		}
 		if(move){
