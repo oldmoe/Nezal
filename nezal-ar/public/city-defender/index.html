@@ -1,23 +1,15 @@
-﻿<html>
+<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 
-<link type="text/css" href="css/intro.css" rel="stylesheet" />
-<link type="text/css" href="css/creeps-carousel.css" rel="stylesheet"/>
-<link type="text/css" href="css/market-carousel.css" rel="stylesheet"/>
+<link type="text/css" href="css/all/intro.css?t=l9wj7m" rel="stylesheet" />
 
 <!-- <script src="http://connect.facebook.net/en_US/all.js"></script> -->
 
 <script src="http://connect.facebook.net/en_US/all.js"></script>
-<script src="js/nezal/facebook.js" type="text/javascript"></script>
-<script src="js/game/fb_defender.js" type="text/javascript"></script>
-<script src="js/nezal/language.js" type="text/javascript"></script>
-
-<script src="js/base/prototype.js" type="text/javascript"></script>
-<script src="js/base/effects.js" type="text/javascript"></script>
-<script src="js/base/template.js" type="text/javascript"></script>
-<script src="js/base/soundmanager2-nodebug-jsmin.js"></script>
+<script src="js/all/base.js?t=l9iipa"></script>
+<script src="js/all/nezal.js?t=l9wcj5"></script>
 <script>
     soundManager.url = 'swf/';
     soundManager.flashVersion = 9; // optional: shiny features (default = 8)
@@ -25,19 +17,13 @@
     // enable HTML5 audio support, if you're feeling adventurous.
     soundManager.useHTML5Audio = false;
 </script>
-<script src="js/nezal/carousel.js" type="text/javascript"></script>
-<script src="js/game/configs/creep_config.js" type="text/javascript"></script>
-<script src="js/game/configs/tower_config.js" type="text/javascript"></script>
-<script src="js/game/configs/super_weapon_config.js" type="text/javascript"></script>
-<script src="js/game/configs/upgrade_config.js" type="text/javascript"></script>
-<script src="js/game/intro/challenge_selector.js" type="text/javascript"></script>
-<script src="js/game/intro/intro.js" type="text/javascript"></script>
+<script src="js/all/game.js?t=l9wddb" type="text/javascript"></script>
 <body>
 
 <iframe id ="iframe" src="#" style="display : none;"> 
 </iframe>
 <iframe id="pages" src="#" style="display : none;"> </iframe>
-<div id ="images" ></div>
+<div id ="images"></div>
 
 <div id="pause" style="display : none;">
   <div style="width:100%; height:100%; background:white;"> </div>
@@ -50,8 +36,13 @@
     <img id="title" name="title.png"/>
     <img id="blank" name="blank.png"/>
     <img id="titleAr" name="title-ar.png"/>
-    <img  name="loading-bar.gif" src="" 
-          style="left:321px;position:absolute;top:297px;width:28%;"/>
+	<div id="loadingBarEmpty">
+		<div id="loadingBarLeft"> </div>
+		<div id="loadingBarFill"> </div>
+		<div id="loadingBarRight"> </div>
+	</div>
+	<div id="fileName"> </div>
+	<div id="loadingPercentage"> </div>
   </div>
 </div>
 
@@ -77,52 +68,21 @@
   
   <div id="gameStart" style="display: none;">
   </div>
-  <iframe id ="scores" src="" style = "width :757;height:150;display:none;"></iframe>
+  <iframe id ="scores" src="" style = "width :761px;height:150px;display:none;"></iframe>
 </div>
+<script>
+	function register(win, resources){
+		Loader.notify(win, resources)			
+	}
+</script>
 </body>
-<script src="js/nezal/layer.js"></script>
-<script src="js/nezal/nezal.js"></script>
-<script src="js/nezal/reactor.js"></script>
-<script src="js/nezal/scene.js"></script>
-<script src="js/nezal/sprite.js"></script>
-<script src="js/game/baloon.js"></script>
-<script src="js/game/sounds.js"></script>
-<script src="js/game/loader.js"></script>
-<script src="js/game/healthSprite.js"></script>
-<script src="js/game/composite_unit_sprite.js"></script>
-<script src="js/game/city_defender_scene.js"></script>
-<script src="js/game/tutorial_scene.js"></script>
-<script src="js/game/mapeasy1.js"></script>
-<script src="js/game/config.js"></script>
-<script src="js/game/game.js"></script>
-<script src="js/game/unit.js"></script>
-<script src="js/game/creep.js"></script>
-<script src="js/game/bullets.js"></script>
-<script src="js/game/rockets.js"></script>
-<script src="js/game/ghost_turret.js"></script>
-<script src="js/game/tanks.js"></script>
-<script src="js/game/plane.js"></script>
-<script src="js/game/animation.js"></script>
-<script src="js/game/super_weapon.js"></script>
-<script src="js/game/upgrade.js"></script>
-<script src="js/game/tutorial.js"></script>
-<script src="js/game/scenario.js"></script>
-<script src="js/game/range_sprite.js"></script>
-<script src="js/game/incoming_waves.js"></script>
 <script>		
 
 	development = false
   FBConnect.init(function(){
                       Intro.initialize();
-							$('scores').src = 'scores/friends.html'
+							$('scores').src = 'scores/friends.html?t=l9wcpu'
                 });
-	function register(win){
-		var resources = win.document.getElementsByTagName('img')
-		if(resources.length == 0){
-			resources = win.document.getElementsByTagName('audio')
-		}
-		Loader.notify(win, resources)			
-	}
 	var loadedProgress = 0
 	function onFinishProgress()
 	{
@@ -130,28 +90,32 @@
 	    if (loadedProgress==$$('#inProgress img').length)
 	        window.setTimeout(function(){$('pause').show()}, 100)
 	}
+	$$('#pause  #loadingBarEmpty').first().style.backgroundImage = "url('images/intro/loading_bar_background.png')"
+	$$('#pause  #loadingBarEmpty #loadingBarLeft').first().style.backgroundImage = "url('images/intro/loading_bar_left.png')"
+	$$('#pause  #loadingBarEmpty #loadingBarRight').first().style.backgroundImage = "url('images/intro/loading_bar_right.png')"
+	$$('#pause  #loadingBarEmpty #loadingBarFill').first().style.backgroundImage = "url('images/intro/loading_bar_middle.png')"
 	$(document).observe('dom:loaded',function(){
     	$$('#inProgress img').each(function(image){
   	      	image.onload = onFinishProgress;
       			image.src = "images/intro/"+image.getAttribute('name')
-    			});
-					Loader.toLoad = [
-			'html_resources/animations.html?t=l9h0mb',
-			'html_resources/intro.html?t=l9h0ze',
-			'html_resources/user.html?t=l9gzvj',
-			'html_resources/background.html?t=l9gzvj',
-			'html_resources/game.html?t=l9gzvj',
-			'html_resources/english.html?t=l9gzvj',
-			'html_resources/arabic.html?t=l9gzvj',
-			'html_resources/french.html?t=l9gzvj'
+    			});		
+		
+		Loader.toLoad = [
+			'html_resources/user.html?t=l9lko4',
+			'html_resources/english.html?t=l9lko7',
+			'html_resources/arabic.html?t=l9lko5',
+			'html_resources/french.html?t=l9lko7',
+			'html_resources/intro.html?t=l9w01k',
+			function(){Loader.fire('intro')},
+			'html_resources/animations.html?t=l9w01l',
+			'html_resources/game.html?t=l9w01j',
+			'html_resources/background.html?t=l9w01m',
+			function(){Loader.fire('tutorial')},
+			'html_resources/nuke_boom.html?t=l9w01l',
+			function(){Loader.fire('game')}
 		]
-		$('iframe').src = "html_resources/animations.html"
-/*		Loader.loadPage('progress', function(){
-		        $('loading.png').src = Loader.images.progress['loading.png'].src;
-		        $('loading-text.png').src = Loader.images.progress['loading-text.png'].src;
-		        window.setTimeout(function(){$('pause').show()}, 100);
-		    }*/
+		$('iframe').src = Loader.toLoad[0]
 	})
 </script>
-<link type="text/css" href="css/game.css" rel="stylesheet" />
+<link type="text/css" href="css/game.css?t=l9vp8g" rel="stylesheet" />
 </html>
