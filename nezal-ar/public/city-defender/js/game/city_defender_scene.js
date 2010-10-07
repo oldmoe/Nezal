@@ -312,6 +312,7 @@ var CityDefenderScene = Class.create(Scene, {
 		
 	},
 	end : function(state){
+		$('pause').show()
 		var self = game.scene
 		self.push(40,function(){
 		game.scene.running = false

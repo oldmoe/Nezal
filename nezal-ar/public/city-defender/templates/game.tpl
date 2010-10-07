@@ -42,8 +42,8 @@
 			</table>
 				{if tower.healthSprite !=null }
 					{if tower.rank < tower.maxRank}
-					<div id = "upgradeTower" onmousedown = "game.scene.upgradeSelectedTower()">${window.Text.game.towerInfo.upgrade}<hr/>
-						<span id="upgradeWord" style="color:white;">$${tower.upgrades[tower.rank].price}&nbsp; &nbsp;Level ${tower.rank+1} </span>
+					<div id = "upgradeTower" onmousedown = "game.scene.upgradeSelectedTower()">${window.Text.game.towerInfo.upgrade}
+						<span id="upgradeWord" style="color:white;display:block;">$${tower.upgrades[tower.rank].price}&nbsp; &nbsp;Level ${tower.rank+1} </span>
 					</div>
 					{else}
 					<div id = "upgradeTower" >
