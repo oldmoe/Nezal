@@ -474,8 +474,6 @@ var Intro = {
     },
 
     sendScore : function(score, win, callback){
-        if(!weapons)
-            weapons = {}
         new Ajax.Request(  GameConfigs.campaign + "/metadata" ,
               {   method:'post', 
                   parameters: { 'data' : Object.toJSON({'mission' : GameConfigs.mission.order,
@@ -576,7 +574,6 @@ var Intro = {
 		}
 		$$('#pause #loadingPercentage').first().innerHTML = percentage +" %"		
 		$$('#pause  #loadingBarEmpty #loadingBarFill').first().style.width = percentage +"%"		
-		
 		window.setTimeout(function(){Intro.enableProgressbar(percentage+1,timeout*1.1,fileName)}, timeout)
 	},
     disablePauseScreen : function() {
