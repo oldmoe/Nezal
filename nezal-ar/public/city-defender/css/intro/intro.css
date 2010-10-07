@@ -23,7 +23,7 @@
   src: url("../fonts/INC901B.TTF");
 }
 body {
-  font-family : Adlib;
+  font-family : Adlib, Arial Black, Tahoma;
 }
 
 #pause
@@ -90,7 +90,7 @@ body {
 
 .buttonText
 {
-  font-family : Adlib;
+  font-family : Adlib, Arial Black, Tahoma;
   text-transform : capitalize;
   text-align:center;
 }
@@ -553,7 +553,7 @@ body {
 {
   cursor:pointer;
   display:inline-block;
-  font-family:PakGirl;
+  font-family:PakGirl, Arial Black, Tahoma;
   font-size:16px;
   height:20px;
   margin-top:9px;
@@ -646,7 +646,7 @@ body {
 }
 #marketPlace #upperPart .coins
 {
-  font-family:Digital;
+  font-family:Digital, Arial Black, Tahoma;
   font-size:21px;
   left:480px;
   position:absolute;
@@ -657,7 +657,7 @@ body {
 #marketPlace #upperPart .addMoney
 {
   color:#FAC200;
-  font-family:Adlib;
+  font-family:Adlib, Arial Black, Tahoma;
   font-size:15px;
   left:423px;
   position:absolute;
@@ -714,7 +714,7 @@ body {
 #marketPlace .itemPrice
 {
   color:#FAC200;
-  font-family:Adlib;
+  font-family:Adlib, Arial Black, Tahoma;
   font-size:18px;
   text-align:center;
   padding-top:4px;
@@ -723,7 +723,7 @@ body {
 }
 #marketPlace .upgradeLevel
 {
-  font-family:Adlib;
+  font-family:Adlib, Arial Black, Tahoma;
   font-size:30px;
   position:absolute;
   text-align:right;
@@ -767,7 +767,7 @@ body {
 {
   color:white;
   cursor:pointer;
-  font-family:Adlib;
+  font-family:Adlib, Arial Black, Tahoma;
   font-size:14px;
   left:4px;
   position:relative;
@@ -857,7 +857,7 @@ div.clickableButton:hover, span.clickableButton:hover
 {
   cursor:pointer;
   display:inline-block;
-  font-family:PakGirl;
+  font-family:PakGirl, Arial Black, Tahoma;
   font-size:20px;
   height:20px;
   vertical-align:top;
@@ -908,7 +908,7 @@ div.clickableButton:hover, span.clickableButton:hover
 #marketPlace #floatBg .image .cost .value
 {
   float:left;
-  font-family:Digital;
+  font-family:Digital, Arial Black, Tahoma;
   font-size:26px;
   margin-top:-6px;
   text-align:center;

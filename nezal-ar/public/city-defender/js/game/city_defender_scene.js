@@ -41,6 +41,12 @@ var CityDefenderScene = Class.create(Scene, {
 		}
 		this.baseCtx = baseCtx;
 		this.upperCtx = upperCtx;
+		//if(this.baseCtx.f){
+			//this.baseCtx._f = this.baseCtx.f
+			//this.baseCtx.f = function(){}
+			//this.upperCtx._f = this.upperCtx.f
+			//this.upperCtx.f = function(){}
+		//}
 		this.scenario = new Scenario(this)
 		this.scenario.start()
 		this.nuke = new Nuke(this, {count: 2, type:'nuke'})
@@ -140,6 +146,11 @@ var CityDefenderScene = Class.create(Scene, {
 			$super()
 			if(GhostTurret && GhostTurret.selected && GhostTurret.isIn){
 				GhostTurret.render(this.upperCtx)
+			}
+			if (typeof FlashCanvas != "undefined") {
+				if(game.ctx.ready)game.ctx._myPostCommands();
+				if(game.topCtx.ready)game.topCtx._myPostCommands();
+				if(game.tutorialCtx.ready)game.tutorialCtx._myPostCommands();
 			}
 			var delay = new Date - startTime
 			this.fps = Math.round(1000/(delay))
