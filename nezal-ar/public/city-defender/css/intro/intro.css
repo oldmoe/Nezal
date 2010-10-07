@@ -25,7 +25,18 @@
 body {
   font-family : Adlib;
 }
-
+#invite {
+  position : absolute;
+  top : 125px;
+  left : 55px;
+  z-index : 1001;
+  width : 650px;
+  height : 550px;
+  -moz-border-radius:8px 8px 8px 8px;
+  -webkit-border-radius: 8px 8px 8px 8px;
+  -khtml-border-radius: 8px 8px 8px 8px;
+  background:none repeat scroll 0 0 rgba(82, 82, 82, 0.698);
+}
 #pause
 {
   position:absolute;
