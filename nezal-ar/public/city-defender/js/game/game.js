@@ -258,8 +258,12 @@ function city_defender_start(){
 		Upgrades.init(); 
 		var fg = $('gameBackground');
 		var top = $('gameForeground')
-		top.getContext('2d')//.globalAlpha = 0.5
 		var tutorialg = $('droppingGround')
+		if (typeof FlashCanvas != "undefined") {
+				FlashCanvas.initElement(fg)
+				FlashCanvas.initElement(top)
+				FlashCanvas.initElement(tutorialg)
+		}
 		var totorialTop = tutorialg.getContext('2d')
 		game.tutorialCtx = totorialTop
 		game.canvas = fg
