@@ -30,7 +30,7 @@ var Loader = {
 	fileLoading :null,
 
 	notify : function(win, resources){
-		Loader.loaded[Loader.toLoad[Loader.index]]=true
+		if(Loader.toLoad[Loader.index])Loader.loaded[Loader.toLoad[Loader.index].split('.')[0]]=true
 		for(var i=0; i < resources.length-1 ;i++){	
 			var image = new Image
 			var resource = resources[i]
