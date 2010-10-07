@@ -343,23 +343,31 @@ var Intro = {
                   var cost = Intro.gameData[type][id].cost;
                   var exp = Intro.gameData[type][id].exp;
                   var currUpgrade = 0;
-                  if(upgrade)
+                  var nextUpgrade = 0;
+                  if(upgrade )
                   {
-                      cost = Intro.gameData[type][id].upgrades[Intro.userData.metadata[type][id]['upgrades']]['cost'];
-                      exp = Intro.gameData[type][id].upgrades[Intro.userData.metadata[type][id]['upgrades']]['exp'];
-                      upgrade = Intro.gameData[type][id].upgrades[Intro.userData.metadata[type][id]['upgrades']];
-                      currUpgrade = Intro.gameData[type][id].upgrades[Intro.userData.metadata[type][id]['upgrades']-1];
-                      for(var rank in Intro.ranks)                 
+                      if(Intro.gameData[type][id].upgrades[Intro.userData.metadata[type][id]['upgrades']])
                       {
-                          if( (Intro.ranks[rank][0]<=
-                                  Intro.gameData[type][id].upgrades[Intro.userData.metadata[type][id]['upgrades']]['exp']) &&
-                              (Intro.ranks[rank][1]>=
-                                  Intro.gameData[type][id].upgrades[Intro.userData.metadata[type][id]['upgrades']]['exp']) )
+                          cost = Intro.gameData[type][id].upgrades[Intro.userData.metadata[type][id]['upgrades']]['cost'];
+                          exp = Intro.gameData[type][id].upgrades[Intro.userData.metadata[type][id]['upgrades']]['exp'];
+                          nextUpgrade = Intro.gameData[type][id].upgrades[Intro.userData.metadata[type][id]['upgrades']];
+                          currUpgrade = Intro.gameData[type][id].upgrades[Intro.userData.metadata[type][id]['upgrades']-1];
+                          for(var rank in Intro.ranks)                 
                           {
-                            item_rank = rank;
-                            break;
-                          }
+                              if( (Intro.ranks[rank][0]<=
+                                      Intro.gameData[type][id].upgrades[Intro.userData.metadata[type][id]['upgrades']]['exp']) &&
+                                  (Intro.ranks[rank][1]>=
+                                      Intro.gameData[type][id].upgrades[Intro.userData.metadata[type][id]['upgrades']]['exp']) )
+                              {
+                                item_rank = rank;
+                                break;
+                              }
+                          } 
+                      }else{
+                          currUpgrade = Intro.gameData[type][id].upgrades[Intro.userData.metadata[type][id]['upgrades']-1];
+                          nextUpgrade = currUpgrade;
                       }
+                        
                   }else{
                       for(var rank in Intro.ranks)                 
                       {
@@ -378,6 +386,7 @@ var Intro = {
                                 'type': type,
                                 'upgrade' : upgrade,
                                 'translateName' : translateName,
+                                'nextUpgrade' : nextUpgrade,
                                 'currUpgrade' : currUpgrade,
                                 'cost' : cost,
                                 'rank' : [exp, item_rank]
@@ -482,6 +491,7 @@ var Intro = {
               {   method:'post', 
                   parameters: { 'data' : Object.toJSON({'mission' : GameConfigs.mission.order,
                                                         'win' : win,
+                                                        'level' : (GameConfigs.level).toString(),
                                                        'score' : score }) },
                   onSuccess : function(t, json){
                       var data = JSON.parse(t.responseText);
@@ -580,25 +590,43 @@ var Intro = {
 		$$('#pause  #loadingBarEmpty #loadingBarFill').first().style.width = percentage +"%"		
 		window.setTimeout(function(){Intro.enableProgressbar(percentage+1,timeout*1.1,fileName)}, timeout)
 	},
+    
+	  startFileLoading : function(fileName){
+		  $$('#pause #fileName').first().innerHTML = "Loading resource "+fileName.split('?')[0].split('/')[1] + "....."
+		  Intro.enableProgressbar(0,100,fileName)
+	  },
+	
+	  enableProgressbar : function(percentage,timeout,fileName){
+		  if(Loader.loaded[fileName]||percentage==97){
+			  $$('#pause #loadingPercentage').first().innerHTML = "100 %"
+			  $$('#pause  #loadingBarEmpty #loadingBarFill').first().style.width = "97%"		
+			  return 
+		  }
+		  $$('#pause #loadingPercentage').first().innerHTML = percentage +" %"		
+		  $$('#pause  #loadingBarEmpty #loadingBarFill').first().style.width = percentage +"%"		
+		
+		  window.setTimeout(function(){Intro.enableProgressbar(percentage+1,timeout*1.1,fileName)}, timeout)
+	  },
+	
     disablePauseScreen : function() {
         $('pause').hide()
     },
     
-	doDisplayTutorial :function(){
-		Intro.disablePauseScreen();
+	  doDisplayTutorial :function(){
+		    Intro.disablePauseScreen();
         Intro.userData.newbie = true;
         city_defender_start();
         $('gameStart').show();
         $("intro").hide();    
-				onFinish()
-	},
+			  onFinish()
+	  },
 	
     displayTutorial : function() {
-	  if(Loader.events.tutorial.loaded){
-		Intro.doDisplayTutorial()
-	  }else{
-		Loader.events.tutorial.onLoad = Intro.doDisplayTutorial
-	  }	
+	      if(Loader.events.tutorial.loaded){
+		        Intro.doDisplayTutorial()
+	      }else{
+		        Loader.events.tutorial.onLoad = Intro.doDisplayTutorial
+	      }	
     },
 
     show: function(){
@@ -615,15 +643,13 @@ var Intro = {
     },
     
     display : function(){
-		//alert('in display')
         Intro.disablePauseScreen();
-		//alert('pause is off')
+
         if(	Intro.currentPage >= 0) {
           $(Intro.sequence[Intro.currentPage]).hide();
         }
         Intro.currentPage = Intro.nextPageIndex;
         $(Intro.sequence[Intro.currentPage]).style['display'] = "block"; //show();    
-		//alert($(Intro.sequence[Intro.currentPage]).innerHTML)
         $("intro").style['cursor'] = 'auto';
     },
 

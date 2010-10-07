@@ -61,7 +61,8 @@ class CityDefender < Metadata
   end
   
   def self.init_user_campaign(user_campaign)
-    user_campaign.metadata= self.encode({'missions'=> [ { 'order' => 1, 'score' => 0 } ] })
+    user_campaign.metadata= self.encode({'missions'=> [ { 'order' => 1, 'score' => 0 } ],
+                                         'levels' => { '1' => 1, '2' => 1, '3' => 1 } })
     user_campaign.save
   end
   
@@ -93,8 +94,17 @@ class CityDefender < Metadata
                                                   end
       user_campaign.score -= old_score 
       user_campaign.score += metadata['missions'][data['mission'] -1]['score']
+      puts "======================================================"
+      puts data['level']
+      puts metadata['levels']
+      puts metadata['levels'][data['level']]
+      puts data['mission']
+      puts "======================================================"      
       if (data['win'])
         metadata['missions'][data['mission']] ||= { 'order' => data['mission'] + 1, 'score' => 0 }
+        if ( metadata['levels'][data['level']] == data['mission'] )
+          metadata['levels'][data['level']] = data['mission'] + 1
+        end
         user_campaign.profile.exp += ( data['score'] * WIN_EXP_FACTOR).round
         user_campaign.profile.user.coins += (data['score']*WIN_COIN_FACTOR).round
       else

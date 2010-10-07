@@ -3,27 +3,19 @@
   src: url("../fonts/ADLIB.TTF");
 }
 @font-face {
+  font-family: "Mcs";
+  src: url("../fonts/MCS.TTF");
+}
+@font-face {
   font-family: "Digital";
   src: url("../fonts/DIGITAL.TTF");
 }
 @font-face {
-  font-family: "Alpine";
-  src: url("../fonts/ALPINE.TTF");
-}    
-@font-face {
   font-family: "Pakgirl";
   src: url("../fonts/30pakgirl_bold_TBS.ttf");
 }
-@font-face {
-  font-family: "Inc";
-  src: url("../fonts/INC901BC.TTF");
-}
-@font-face {
-  font-family: "IncB";
-  src: url("../fonts/INC901B.TTF");
-}
 body {
-  font-family : Adlib, Arial Black, Tahoma;
+  font-family : Adlib, Mcs, Arial Black, Tahoma;
 }
 #invite {
   position : absolute;
@@ -329,10 +321,11 @@ body {
 #campaign .desc
 {
   color:white;
-  font-size:14px;
+  font-family:verdana;
+  font-size:13px;
+  font-weight:bold;
   line-height:140%;
-  text-align:justify;
-  text-shadow:2px 1px #990000;
+  text-shadow:1px 1px #000000;
 }
 
 #campaign #camp-map 
@@ -352,6 +345,15 @@ body {
   display:inline-block;
   margin:0 9px;
   position:relative;
+}
+#campaign .mission .missionScore
+{
+  position:absolute;
+  text-align:center;
+  color : white;
+  text-shadow:-2px -1px #000;
+  top:140px;
+  width:100%;
 }
 #campaign .mission .missionName
 {
@@ -431,16 +433,20 @@ body {
   text-align:center;
   top:90px;
   width:170px;
+  font-family:verdana;
+  font-weight:bold;
 }
 #mission #fullDesc
 {
   color:white;
+  font-family:verdana;
   font-size:13px;
+  font-weight:bold;
   left:405px;
   line-height:140%;
   position:absolute;
   text-align:justify;
-  text-shadow:-1px -1px #555555;
+  text-shadow:-1px -1px #000000;
   top:245px;
   width:280px;
 }
@@ -591,6 +597,8 @@ body {
   word-wrap:break-word;
   font-size : 12px;
   line-height : 150%;
+  font-family:verdana;
+  font-weight:bold;
 }
 #mission #floatBg .spans
 {
@@ -942,6 +950,7 @@ div.clickableButton:hover, span.clickableButton:hover
   line-height:130%;
   white-space:normal;
   word-wrap:break-word;
+  font-family:verdana;
 }
 #marketPlace #floatBg .actions
 {

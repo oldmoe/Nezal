@@ -16,7 +16,7 @@
 <script type="text/javascript">
 $(document).observe('dom:loaded',function(){
 		FBConnect.init(function(){        
-        var actionUrl = "http://127.0.0.1:5500/local-city-defender/html/close.html" ;
+        var actionUrl = window.location.toString().split('html/invite.html')[0] + 'html/close.html' ;
         var appUrl = "http://apps.facebook.com/" + FBConnect.url() + "/";
         var params = window.location.toString().split('?')[1].split("&")
         var inviteMsg = unescape(params[0].split("=")[1]);
