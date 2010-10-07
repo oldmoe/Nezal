@@ -94,11 +94,6 @@ body {
   text-transform : capitalize;
   text-align:center;
 }
-#levelSelection #paper_shade
-{
-	position:absolute;
-	z-index:-1;
-}
 #levelSelection #introText
 {
   left:60px;
@@ -194,11 +189,16 @@ body {
   left:245px;
   position:absolute;
 }
+
+#challengesText, #extraMap, #levelSelection{
+ /* text-shadow:-1px 2px 1px #000000; */
+}
+
 #challengesText:hover, #extraMap:hover, #levelSelection .clicked 
 {
   color:#FAC200;
-  text-shadow:-1px 2px 1px #000000;
 }
+
 #levelSelection #challengesText
 {
   top:342px;
@@ -264,13 +264,12 @@ body {
   top: 0px;
   left: 0px;
 }
-#campaign #paper,#campaign #paper_shade
+#campaign #paper
 {
-	left:26px;
-	position:absolute;
-	top:21px;
+  position: absolute;
+  top: 12px;
+  left: 0px;
 }
-
 #campaign #backContainer
 {
   left:80px;
@@ -363,11 +362,11 @@ body {
   top: 0px;
   left: 0px;
 }
-#mission #paper,#mission #paper_shade
+#mission #paper
 {
-	left:26px;
-	position:absolute;
-	top:22px;
+  position: absolute;
+  top: 12px;
+  left: 0px;
 }
 #mission #mapBackground
 {
@@ -609,11 +608,11 @@ body {
   top: 0px;
   left: 0px;
 }
-#marketPlace #paper,#marketPlace #paper_shade
+#marketPlace #paper
 {
   position: absolute;
-  top:22px;	
-  left:28px;
+  top: 10px;
+  left: 0px;
 }
 #marketPlace #upperPart
 {
@@ -649,7 +648,7 @@ body {
 }
 #marketPlace #upperPart .coins
 {
-  font-family:Digital, Arial Black, Tahoma;
+  font-family:Digital, Verdana, Tahoma;
   font-size:21px;
   left:480px;
   position:absolute;
@@ -911,7 +910,7 @@ div.clickableButton:hover, span.clickableButton:hover
 #marketPlace #floatBg .image .cost .value
 {
   float:left;
-  font-family:Digital, Arial Black, Tahoma;
+  font-family:Digital, Verdana, Tahoma;
   font-size:26px;
   margin-top:-6px;
   text-align:center;
@@ -1095,61 +1094,17 @@ div.clickableButton:hover, span.clickableButton:hover
 #pause  #loadingBarEmpty #loadingBarLeft{
 	width : 2px;
 }
-#inprogress  #loadingPercentage, #inprogress #fileName{
+#inProgress  #loadingPercentage, #inProgress #fileName{
 	font-family:tahoma;
 	font-size:x-small;
 	font-weight:bold;	
 	position:absolute;
 	top:318px
 }
-#inprogress  #loadingPercentage{
-	left:464px;
+#inProgress  #loadingPercentage{
+	left:469px;
 }
-#inprogress #fileName{
-	left:293px;
+#inProgress #fileName{
+	left:298px;
 }
 	
-
-/*
-#challenges
-{
-  background : url("../images/intro/challenge-selection.png") no-repeat scroll 0 0 transparent;
-  text-align : center;
-  display : none; 
-}
-
-.challenge
-{
-  width : 100px;
-  height : 100px;
-  margin : auto;
-}
-
-#challengeSelection div
-{
-  position : absolute;
-  left : 185px;
-  height : 180px;
-  width : 400px;
-}
-
-#challengeSelection #weekly 
-{ 
-  background : url("../images/intro/weekly-challenge.png") no-repeat scroll 0 0 transparent;
-  top : 90px;
-
-}
-
-#challengeSelection #all
-{
-  background : url("../images/intro/all-challenges.png") no-repeat scroll 0 0 transparent;
-  top : 300px;
-}
-
-#challengeSelection div a 
-{
-  display : block;
-  height : 180px;
-  width : 400px;
-}
-*/
