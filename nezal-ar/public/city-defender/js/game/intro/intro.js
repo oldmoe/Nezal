@@ -577,17 +577,17 @@ var Intro = {
         $('pause').show()
     },
 	startFileLoading : function(fileName){
-		if(!Intro.fileLoading){
+		//	if(!Intro.fileLoading){
 			Intro.fileLoading=true
 			$$('#pause #fileName').first().innerHTML = "Loading resource "+fileName.split('?')[0].split('/')[1] + "....."
 			Intro.enableProgressbar(0,100,fileName)
-		}
+		//}
 	},
 	enableProgressbar : function(percentage,timeout,fileName){
 		if(Loader.loaded[fileName]||percentage==97){
 			$$('#pause #loadingPercentage').first().innerHTML = "100 %"
 			$$('#pause  #loadingBarEmpty #loadingBarFill').first().style.width = "97%"		
-			Intro.fileLoading=false
+			//Intro.fileLoading=false
 			return 
 		}
 		$$('#pause #loadingPercentage').first().innerHTML = percentage +" %"		
