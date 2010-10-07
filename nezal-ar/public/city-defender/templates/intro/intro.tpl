@@ -123,11 +123,15 @@
     </div>  
     <div id="missions">
       {for mission in Intro.campaignData.camp_data.metadata }
-          {if (Intro.campaignData.user_data.metadata.missions[mission['order'] - 1]) }  
+          {if ( (Intro.campaignData.user_data.metadata.levels[(GameConfigs.level).toString()] >= mission['order']) && 
+                 (Intro.campaignData.user_data.metadata.missions[[mission.order]-1]) ) }  
             <div class="mission clickableButton">
               <div path="${mission['path']}" onclick="Intro.selectMission(this); Intro.next();" class="clickSound" >
                 <img id="${mission['path']}" 
                    src="${Loader.challenges[GameConfigs.campaign]['images/'+mission.path+'/mission_active.png'].getAttribute('data')}"/>
+              </div>
+              <div class="missionScore">
+                ${Intro.campaignData.user_data.metadata.missions[[mission.order]-1].score}
               </div>
               <div class="missionName">
                 ${Intro.campaignData.missionsInfo[mission.path]['name']}
@@ -261,13 +265,15 @@
                         style="width : ${data.currUpgrade.power * 95 / Intro.gameData[data.type][data.itemid].upgrades.last().power}%;">
                   </div>
                   <div class="barYellow"
-                        style="width : ${(data.upgrade.power-data.currUpgrade.power) * 95 / Intro.gameData[data.type][data.itemid].upgrades.last().power}%;">
+                        style="width : ${(data.nextUpgrade.power-data.currUpgrade.power) * 95 / Intro.gameData[data.type][data.itemid].upgrades.last().power}%;">
                   </div>
                   <div class="optionName"> ${Text.intro.upgrades.power} </div>
                 </div>
-                <span class="towerText">
-                  ${data.upgrade.power}
-                </span>
+                {if ( data.nextUpgrade != data.currUpgrade ) }
+                  <span class="towerText">
+                    ${data.nextUpgrade.power}
+                  </span>
+                {/if}
             </div>
             <div class="parent"> 
                 <span class="towerText beforeText">
@@ -278,13 +284,15 @@
                         style="width : ${data.currUpgrade.range * 95 / Intro.gameData[data.type][data.itemid].upgrades.last().range}%;">
                   </div>
                   <div class="barYellow"
-                        style="width : ${(data.upgrade.range-data.currUpgrade.range) * 95 / Intro.gameData[data.type][data.itemid].upgrades.last().range}%;">
+                        style="width : ${(data.nextUpgrade.range-data.currUpgrade.range) * 95 / Intro.gameData[data.type][data.itemid].upgrades.last().range}%;">
                   </div>
                   <div class="optionName"> ${Text.intro.upgrades.range} </div>
                 </div>
-                <span class="towerText">
-                  ${data.upgrade.range}
-                </span>
+                {if ( data.nextUpgrade != data.currUpgrade ) }
+                  <span class="towerText">
+                    ${data.nextUpgrade.range}
+                  </span>
+                {/if}
             </div>
             <div class="parent"> 
                 <span class="towerText beforeText">
@@ -295,13 +303,15 @@
                         style="width : ${data.currUpgrade.maxHp * 95 / Intro.gameData[data.type][data.itemid].upgrades.last().maxHp}%;">
                   </div>
                   <div class="barYellow"
-                        style="width : ${(data.upgrade.maxHp-data.currUpgrade.maxHp) * 95 / Intro.gameData[data.type][data.itemid].upgrades.last().maxHp}%;">
+                        style="width : ${(data.nextUpgrade.maxHp-data.currUpgrade.maxHp) * 95 / Intro.gameData[data.type][data.itemid].upgrades.last().maxHp}%;">
                   </div>
                   <div class="optionName"> ${Text.intro.upgrades.maxHp} </div>
                 </div>
-                <span class="towerText">
-                  ${data.upgrade.maxHp}
-                </span>
+                {if ( data.nextUpgrade != data.currUpgrade ) }
+                  <span class="towerText">
+                    ${data.nextUpgrade.maxHp}
+                  </span>
+                {/if}
             </div>
             <div class="parent"> 
                 <span class="towerText beforeText">
@@ -312,13 +322,15 @@
                         style="width : ${data.currUpgrade.rate * 95 / Intro.gameData[data.type][data.itemid].upgrades.last().rate}%;">
                   </div>
                   <div class="barYellow"
-                        style="width : ${(data.upgrade.rate-data.currUpgrade.rate) * 95 / Intro.gameData[data.type][data.itemid].upgrades.last().rate}%;">
+                        style="width : ${(data.nextUpgrade.rate-data.currUpgrade.rate) * 95 / Intro.gameData[data.type][data.itemid].upgrades.last().rate}%;">
                   </div>
                   <div class="optionName"> ${Text.intro.upgrades.rate} </div>
                 </div>
-                <span class="towerText">
-                  ${data.upgrade.rate*100}
-                </span>
+                {if ( data.nextUpgrade != data.currUpgrade ) }
+                  <span class="towerText">
+                    ${data.nextUpgrade.rate*100}
+                  </span>
+                {/if}
             </div>
         </div>
       {/if}
@@ -327,9 +339,11 @@
           <div class="currUpgrade">
             ${Text.intro.upgrades[data.itemid][Intro.userData.metadata[data.type][data.itemid]['upgrades']-1]}
           </div>
-          <div class="newUpgrade">
-            ${Text.intro.upgrades[data.itemid][Intro.userData.metadata[data.type][data.itemid]['upgrades']]}
-          </div>
+          {if ( data.nextUpgrade != data.currentUpgrade ) }
+            <div class="newUpgrade">
+              ${Text.intro.upgrades[data.itemid][Intro.userData.metadata[data.type][data.itemid]['upgrades']]}
+            </div>
+          {/if}
         </div>
       {/if}
       <div class="image">
@@ -344,64 +358,68 @@
             {/if}
            />
         </div>
-        <div class="cost">
-            <div class="img">
-              <img src="${Loader.images.intro['market/coin.png'].getAttribute('data')}"></img>
-            </div>
-            <div class="value">
-              ${data.cost}  
-            </div>
-        </div>
-      </div>
-    </div>
-    <div class="actions">
-      <div class='rank'>
-        <span {if (data.rank[0] > data.exp)} "style="color:red;" {/if}>
-          ${Text.intro.marketPlace.requiredRank} :
-        </span>
-        <img src="${Loader.images.intro['ranks/'+data.rank[1]+'.png'].getAttribute('data')}"> </img>
-      </div>
-      <div class="action">
-          {if (!Intro.userData.metadata[data.type][data.itemid])}
-            {if ((data.cost > data.coins) || ( data.rank[0] > data.exp))}
-            <div  class="inactive">
-              <span> ${Text.intro.marketPlace.unlock} </span>
-            </div>
-            {else}
-            <div class="active">
-              <span class="clickableButton clickSound" itemid="${data.itemid}" 
-                    type="${data.type}" onclick="Intro.unlockItem(this);"> 
-                  ${Text.intro.marketPlace.unlock}
-              </span>
-            </div>
-            {/if}
-          {else}
-            {if (data.upgrade)}
-                {if (Intro.userData.metadata[data.type][data.itemid]['upgrades'] < 
-                         Intro.gameData[data.type][data.itemid]['upgrades'].length )}
-               
-                    {if ((data.cost > data.coins) || ( data.rank[0] > data.exp))}
-                      <div  class="inactive">
-                        <span> ${Text.intro.marketPlace.upgrade} </span>
-                      </div>
-                    {else}
-                      <div class="active">
-                        <span class="clickableButton clickSound" itemid="${data.itemid}" 
-                              type="${data.type}" onclick="Intro.upgradeItem(this);"> 
-                            ${Text.intro.marketPlace.upgrade}
-                        </span>
-                      </div>
-                    {/if}
-                {/if}
-            {else}
-                <div  class="inactive"></div>
-            {/if}
-          {/if}
-          <div class="addMoney" >
-            <img src="${Loader.images.intro['market/money.png'].getAttribute('data')}" > </img>
+        {if ( !( data.upgrade && (data.nextUpgrade == data.currUpgrade))  ) }
+          <div class="cost">
+              <div class="img">
+                <img src="${Loader.images.intro['market/coin.png'].getAttribute('data')}"></img>
+              </div>
+              <div class="value">
+                ${data.cost}  
+              </div>
           </div>
+        {/if}
       </div>
     </div>
+    {if ( !( data.upgrade && (data.nextUpgrade == data.currUpgrade))  ) }
+        <div class="actions">
+          <div class='rank'>
+            <span {if (data.rank[0] > data.exp)} "style="color:red;" {/if}>
+              ${Text.intro.marketPlace.requiredRank} :
+            </span>
+            <img src="${Loader.images.intro['ranks/'+data.rank[1]+'.png'].getAttribute('data')}"> </img>
+          </div>
+          <div class="action">
+              {if (!Intro.userData.metadata[data.type][data.itemid])}
+                {if ((data.cost > data.coins) || ( data.rank[0] > data.exp))}
+                <div  class="inactive">
+                  <span> ${Text.intro.marketPlace.unlock} </span>
+                </div>
+                {else}
+                <div class="active">
+                  <span class="clickableButton clickSound" itemid="${data.itemid}" 
+                        type="${data.type}" onclick="Intro.unlockItem(this);"> 
+                      ${Text.intro.marketPlace.unlock}
+                  </span>
+                </div>
+                {/if}
+              {else}
+                {if (data.upgrade)}
+                    {if (Intro.userData.metadata[data.type][data.itemid]['upgrades'] < 
+                             Intro.gameData[data.type][data.itemid]['upgrades'].length )}
+                   
+                        {if ((data.cost > data.coins) || ( data.rank[0] > data.exp))}
+                          <div  class="inactive">
+                            <span> ${Text.intro.marketPlace.upgrade} </span>
+                          </div>
+                        {else}
+                          <div class="active">
+                            <span class="clickableButton clickSound" itemid="${data.itemid}" 
+                                  type="${data.type}" onclick="Intro.upgradeItem(this);"> 
+                                ${Text.intro.marketPlace.upgrade}
+                            </span>
+                          </div>
+                        {/if}
+                    {/if}
+                {else}
+                    <div  class="inactive"></div>
+                {/if}
+              {/if}
+              <div class="addMoney" >
+                <img src="${Loader.images.intro['market/money.png'].getAttribute('data')}" > </img>
+              </div>
+          </div>
+        </div>
+    {/if}
 {if (data.upgrade)}
   </div>
 {/if}
@@ -527,6 +545,9 @@
       		            <img class="unlockImage"  
   		                      src="${Loader.images.intro['market/unlock.png'].getAttribute('data')}"/>
                     </div>
+    		            <img class="infoImage clickSound"  
+		                  src="${Loader.images.intro['market/info.png'].getAttribute('data')}"
+		                  type="${type}" itemid="${item}" onclick="Intro.showFloatBg(this)"/>
                   {else}
                     {if (Intro.userData.metadata[type][item]['upgrades'] < 
                          Intro.gameData[type][item]['upgrades'].length )}
@@ -540,10 +561,10 @@
         		                  src="${Loader.images.intro['market/unlock.png'].getAttribute('data')}"/>
                       </div>
                     {/if}
-                  {/if}
-  		            <img class="infoImage clickSound"  
+    		            <img class="infoImage clickSound"
 		                  src="${Loader.images.intro['market/info.png'].getAttribute('data')}"
-		                  type="${type}" itemid="${item}" onclick="Intro.showFloatBg(this)"/>
+		                  type="${type}" itemid="${item}" upgrade="true" onclick="Intro.showFloatBg(this)"/>
+                  {/if}
                 </div>
 		          </li>
             {/for}
