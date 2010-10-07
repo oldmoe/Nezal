@@ -30,6 +30,7 @@ var Game = Class.create({
 			this.scene = new CityDefenderScene(this.config,33,this.ctx,this.topCtx);
 			this.registerHandlers();
 		}
+		
 		if(Config.map)Map.bgGrid = Config.map
 		if(Config.mapEntry)Map.entry = Config.mapEntry
 		GhostTurret = new Turret(0, 0,this.scene, ghostTurretFeatures)
@@ -47,6 +48,21 @@ var Game = Class.create({
 					}
 		})
 		this.scene.start();
+	},
+	flip : function(map){
+		var mapFlipped = [];
+        for(var i=0; i< map[0].length; i++)
+        {
+            mapFlipped[i] = [];
+        }
+        for( var i=0; i< map.length; i++)
+        {
+            for(var j = 0 ; j < map[i].length; j++)
+            {
+                mapFlipped[j][i] = map[i][j];
+            }
+        }
+		return mapFlipped
 	},
 	prepareConfig : function(){
 		var inputNames = ["Belcher","Reaper","Exploder","Patriot"]
