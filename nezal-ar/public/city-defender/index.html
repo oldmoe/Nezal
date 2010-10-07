@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -19,7 +20,25 @@
 	<script src="js/all/game.js?t=l9twub" type="text/javascript"></script>
 </head>
 
+<<<<<<< HEAD:nezal-ar/public/city-defender/index.html
+<link type="text/css" href="css/all/intro.css?t=l9wj7m" rel="stylesheet" />
 
+<!-- <script src="http://connect.facebook.net/en_US/all.js"></script> -->
+
+<script src="http://connect.facebook.net/en_US/all.js"></script>
+<script src="js/all/base.js?t=l9iipa"></script>
+<script src="js/all/nezal.js?t=l9wcj5"></script>
+<script>
+    soundManager.url = 'swf/';
+    soundManager.flashVersion = 9; // optional: shiny features (default = 8)
+    soundManager.useFlashBlock = false; // optionally, enable when you're ready to dive in
+    // enable HTML5 audio support, if you're feeling adventurous.
+    soundManager.useHTML5Audio = false;
+</script>
+<script src="js/all/game.js?t=l9wddb" type="text/javascript"></script>
+=======
+
+>>>>>>> f08777bf42b5df5b1612a0d76e184f46a11b8d32:nezal-ar/public/city-defender/index.html
 <body>
 
 <iframe id ="iframe" src="#" style="display : none;"> 
@@ -38,7 +57,17 @@
     <img id="title" name="title.png"/>
     <img id="blank" name="blank.png"/>
     <img id="titleAr" name="title-ar.png"/>
+<<<<<<< HEAD:nezal-ar/public/city-defender/index.html
+	<div id="loadingBarEmpty">
+		<div id="loadingBarLeft"> </div>
+		<div id="loadingBarFill"> </div>
+		<div id="loadingBarRight"> </div>
+	</div>
+	<div id="fileName"> </div>
+	<div id="loadingPercentage"> </div>
+=======
     <img  name="loading-bar.gif" src="" style="left:321px;position:absolute;top:297px;width:28%;"/>
+>>>>>>> f08777bf42b5df5b1612a0d76e184f46a11b8d32:nezal-ar/public/city-defender/index.html
   </div>
 </div>
 
@@ -64,12 +93,23 @@
   
   <div id="gameStart" style="display: none;">
   </div>
-  <iframe id ="scores" src="" style = "width :757;height:150;display:none;"></iframe>
+  <iframe id ="scores" src="" style = "width :761px;height:150px;display:none;"></iframe>
 </div>
 <script>
 	function register(win, resources){
 		Loader.notify(win, resources)			
 	}
+<<<<<<< HEAD:nezal-ar/public/city-defender/index.html
+</script>
+</body>
+<script>		
+
+	development = false
+  FBConnect.init(function(){
+                      Intro.initialize();
+							$('scores').src = 'scores/friends.html?t=l9wcpu'
+                });
+=======
 	development = false
 	FBConnect.init(function(){
 		alert('done')	
@@ -79,6 +119,7 @@
 </script>
 </body>
 <script>		
+>>>>>>> f08777bf42b5df5b1612a0d76e184f46a11b8d32:nezal-ar/public/city-defender/index.html
 	var loadedProgress = 0
 	function onFinishProgress()
 	{
@@ -86,10 +127,31 @@
 	    if (loadedProgress==$$('#inProgress img').length)
 	        window.setTimeout(function(){$('pause').show()}, 100)
 	}
+	$$('#pause  #loadingBarEmpty').first().style.backgroundImage = "url('images/intro/loading_bar_background.png')"
+	$$('#pause  #loadingBarEmpty #loadingBarLeft').first().style.backgroundImage = "url('images/intro/loading_bar_left.png')"
+	$$('#pause  #loadingBarEmpty #loadingBarRight').first().style.backgroundImage = "url('images/intro/loading_bar_right.png')"
+	$$('#pause  #loadingBarEmpty #loadingBarFill').first().style.backgroundImage = "url('images/intro/loading_bar_middle.png')"
 	$(document).observe('dom:loaded',function(){
     	$$('#inProgress img').each(function(image){
   	      	image.onload = onFinishProgress;
       			image.src = "images/intro/"+image.getAttribute('name')
+<<<<<<< HEAD:nezal-ar/public/city-defender/index.html
+    			});		
+		
+		Loader.toLoad = [
+			'html_resources/user.html?t=l9lko4',
+			'html_resources/english.html?t=l9lko7',
+			'html_resources/arabic.html?t=l9lko5',
+			'html_resources/french.html?t=l9lko7',
+			'html_resources/intro.html?t=l9w01k',
+			function(){Loader.fire('intro')},
+			'html_resources/animations.html?t=l9w01l',
+			'html_resources/game.html?t=l9w01j',
+			'html_resources/background.html?t=l9w01m',
+			function(){Loader.fire('tutorial')},
+			'html_resources/nuke_boom.html?t=l9w01l',
+			function(){Loader.fire('game')}
+=======
     			});				
 		Loader.toLoad = [
 			'html_resources/animations.html?t=l9l0pg',
@@ -100,9 +162,14 @@
 			'html_resources/english.html?t=l9l0ph',
 			'html_resources/arabic.html?t=l9l0pg',
 			'html_resources/french.html?t=l9l0ph'
+>>>>>>> f08777bf42b5df5b1612a0d76e184f46a11b8d32:nezal-ar/public/city-defender/index.html
 		]
 		$('iframe').src = Loader.toLoad[0]
 	})
 </script>
+<<<<<<< HEAD:nezal-ar/public/city-defender/index.html
+<link type="text/css" href="css/game.css?t=l9vp8g" rel="stylesheet" />
+=======
 <link type="text/css" href="css/game.css?t=l9oq06" rel="stylesheet" />
+>>>>>>> f08777bf42b5df5b1612a0d76e184f46a11b8d32:nezal-ar/public/city-defender/index.html
 </html>

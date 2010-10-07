@@ -5,6 +5,15 @@ class CityDefender < Metadata
   WIN_EXP_FACTOR = (1.5/50)
   LOSE_EXP_FACTOR = (1.0/50)
   WIN_COIN_FACTOR = (1.0/300)
+  LIKE_COINS = 500
+  BOOKMARK_COINS = 500
+  INVITE_COINS = 50
+  
+  def self.init_game(game)
+    metadata = { 'towers' => {}, 'weapons' => {} , 'creeps' => {} }
+    game.metadata = self.encode(metadata)
+    game.save
+  end
   
   def self.init_game_profile(game_profile)
     game_data = self.decode(game_profile.game.metadata)
@@ -69,6 +78,7 @@ class CityDefender < Metadata
     user_camp_data
   end
   
+  # Needs a transaction
   def self.edit_user_campaign(user_campaign, data_encoded)
     data = self.decode(data_encoded)
     metadata = self.decode(user_campaign.metadata)
@@ -84,9 +94,7 @@ class CityDefender < Metadata
       user_campaign.score -= old_score 
       user_campaign.score += metadata['missions'][data['mission'] -1]['score']
       if (data['win'])
-        if(!metadata['missions'][data['mission']])
-          metadata['missions'][data['mission']] = { 'order' => data['mission'] + 1, 'score' => 0 }
-        end
+        metadata['missions'][data['mission']] ||= { 'order' => data['mission'] + 1, 'score' => 0 }
         user_campaign.profile.exp += ( data['score'] * WIN_EXP_FACTOR).round
         user_campaign.profile.user.coins += (data['score']*WIN_COIN_FACTOR).round
       else
@@ -102,6 +110,7 @@ class CityDefender < Metadata
     end
   end
   
+  # Needs a transaction
   def self.unlock(game_profile, data)
     game_data = self.decode(game_profile.game.metadata)
     profile_data = self.decode(game_profile.metadata)
@@ -117,6 +126,7 @@ class CityDefender < Metadata
     end
   end
   
+  # Needs a transaction
   def self.upgrade(game_profile, data)
     game_data = self.decode(game_profile.game.metadata)
     profile_data = self.decode(game_profile.metadata)
@@ -140,6 +150,30 @@ class CityDefender < Metadata
                                                 " ( upper_exp > #{game_profile.exp} OR upper_exp == -1 ) "  )
     game_profile.rank = ranks.first
     game_profile.save
+  end
+  
+  # Needs a transaction
+  def self.bookmark(profile)
+    profile.bookmarked = true
+    profile.user.coins += LIKE_COINS
+    profile.user.save
+    profile.save
+  end
+
+  # Needs a transaction  
+  def self.like(profile)
+    profile.like = true
+    profile.user.coins += BOOKMARK_COINS
+    profile.user.save
+    profile.save
+  end
+  
+  def self.reward_invitation(fb_id)
+    user = FbUser.where( 'fb_id' => fb_id ).first
+    if(user)
+      user.coins += INVITE_COINS
+      user.save
+    end
   end
   
 end

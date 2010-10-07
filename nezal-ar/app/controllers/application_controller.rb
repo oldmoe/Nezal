@@ -11,7 +11,7 @@ class ApplicationController < Sinatra::Base
       @app_configs = FB_CONFIGS::find('name', app_name)
     	if @app_configs && get_fb_session
     	  begin
-          @game = Game.where( 'name' =>app_name).first
+	        @game = Game.where( 'name' =>app_name).first
           @user = FbUser.where( 'fb_id' => @fb_uid ).first
           if(!@user)
             @user = FbUser.create('fb_id' => @fb_uid )
@@ -24,6 +24,11 @@ class ApplicationController < Sinatra::Base
             @game_profile.user= @user
             get_helper_klass.init_game_profile(@game_profile)
             @game_profile.save!()
+            puts params
+            puts params["inviter"]
+            if(params["inviter"])
+                get_helper_klass.reward_invitation(params["inviter"])
+            end
           end
         rescue Exception => e
           LOGGER.debug e
@@ -53,13 +58,13 @@ class ApplicationController < Sinatra::Base
       LOGGER.debug ">>>>>> Cookie - uid : #{@fb_uid}"
       LOGGER.debug ">>>>>> Cookie - session_key : #{@fb_session_key}"
 		  true
-	  elsif params[:fb_sig_session_key] && params[:fb_sig_user]
+	  elsif params[:fb_sig_session_key] && params[:fb_sig_user] && params['fb_sig_added'] == "1"
       @fb_uid = params[:fb_sig_user] 
       @fb_session_key = params[:fb_sig_session_key]
       LOGGER.debug ">>>>>> Params - uid : #{@fb_uid}"
       LOGGER.debug ">>>>>> Params - session_key : #{@fb_session_key}"
 		  true
-	  elsif params[:session_key] && params[:uid]
+	  elsif params[:session_key] && params[:uid] && params['fb_sig_added'] == "1"
       @fb_uid = params[:uid] 
       @fb_session_key = params[:session_key]
       LOGGER.debug ">>>>>> Our Params - uid : #{@fb_uid}"

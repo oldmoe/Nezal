@@ -24,8 +24,10 @@ class GamesController < ApplicationController
                       :exp => @game_profile.exp, 
                       :newbie => @game_profile.newbie,
                       :locale => @game_profile.locale, 
-                      :metadata => user_metadata
-                      },
+                      :bookmarked => @game_profile.bookmarked,
+                      :like => @game_profile.like,
+                      :metadata => user_metadata, 
+                    },
       :ranks => ranks
     }
     JSON.generate(data)
@@ -36,13 +38,14 @@ class GamesController < ApplicationController
     klass = get_helper_klass()
     user_metadata = klass.edit_game_profile(@game_profile, params['data'])
     user_metadata = klass.load_game_profile(@game_profile)
-    @user = FbUser.where(:fb_id => @user.fb_id).first
     data = {
-      :user_data => { :coins => @user.coins, 
+      :user_data => { :coins => @game_profile.user.coins, 
                       :rank => @game_profile.rank.name,
                       :exp => @game_profile.exp, 
                       :newbie => @game_profile.newbie,
                       :locale => @game_profile.locale, 
+                      :bookmarked => @game_profile.bookmarked,
+                      :like => @game_profile.like,
                       :metadata => user_metadata
                       }
     }
@@ -96,14 +99,31 @@ class GamesController < ApplicationController
     JSON.generate( {:user_data => {'exp' => @game_profile.exp, 'rank' => @game_profile.rank.name} })    
   end
   
-  # Change User to be nolonger a newbie
   post '/:game_name/users/coins' do
     @user.coins += params['coins'].to_i;
     @user.save
     JSON.generate( {:user_data => {'coins' => @user.coins}})
   end
-    
-  # Change User to be nolonger a newbie
+  
+  # User bookmarked the application
+  post '/:game_name/users/bookmark' do
+    if(!@game_profile.bookmarked)
+      klass = get_helper_klass()
+      klass.bookmark(@game_profile)
+    end
+    JSON.generate( {:user_data => {'coins' => @game_profile.user.coins}} )
+  end
+  
+  # User bookmarked the application
+  post '/:game_name/users/like' do
+    if(!@game_profile.like)
+      klass = get_helper_klass()
+      klass.like(@game_profile)
+    end
+    JSON.generate( {:user_data => {'coins' => @game_profile.user.coins}} )
+  end
+  
+  # Change User Locale
   post '/:game_name/users/locale' do
     @game_profile.locale = params['locale'];
     @game_profile.save
@@ -114,7 +134,6 @@ class GamesController < ApplicationController
     File.read(File.join( 'public', @app_configs["game_name"], 'index.html'))
   end
 
-	
   post '/:game_name/:camp_name/:userid/friendsranks' do 
 		response = {:top => []}
 		camp = Campaign.where(:game_id => @game.id, :path => params['camp_name']).first

@@ -115,8 +115,8 @@ var Intro = {
         loader.addResource(PathConfigs.gameTemplate);
         loader.addResource('metadata');
         loader.load(function(){
-			  $('introTemplates').innerHTML = loader.resources.get(PathConfigs.introTemplate);
-			  for(var template in Intro.templates){
+      			  $('introTemplates').innerHTML = loader.resources.get(PathConfigs.introTemplate);
+			        for(var template in Intro.templates){
             		  Intro.templates[template][1] = TrimPath.parseDOMTemplate(Intro.templates[template][0]);
               }
 			  //$("gameStart").innerHTML = loader.resources.get(PathConfigs.gameTemplate);
@@ -135,8 +135,8 @@ var Intro = {
               Intro.userData = data['user_data'];
               Intro.userData["metadata"] = JSON.parse(data['user_data']['metadata']);
               Intro.ranks = data['ranks'];
-			  Intro.doneLoading = true;
-			  Intro.start()
+  			      Intro.doneLoading = true;
+		  	      Intro.start()
 			  /*
               Loader.loadPage(GameConfigs.campaign, function(){
 				  
@@ -200,6 +200,12 @@ var Intro = {
 							Intro.displayTutorial();
                         }else{
                           Intro.show();
+                        }
+                        if(!Intro.userData.like)
+                        {
+                            FBDefender.isFan(function(){
+                                alert('congrates u earned 500 coins for liking us');
+                            })
                         }
                     });
                 });
@@ -290,9 +296,7 @@ var Intro = {
             index : 3,
             emptySpots : 5,
             onSelect : function(){
-                /* Get User Data : coins, unlocked towers, super weapons & upgrade
-                   Also should contain User last used tower, weapon set 
-                   TODO replace this with Ajax  call to get the data */
+                /* Get User Data : coins, unlocked towers, super weapons & upgrade */
                 var gameData = [];
                 Intro.toLabels( Intro.gameData, gameData)
                 data = { "gameData" : gameData,
