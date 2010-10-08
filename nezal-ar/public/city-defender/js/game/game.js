@@ -22,6 +22,7 @@ var Game = Class.create({
 			this.tutorial = new Tutorial(this.scene,this.tutorialCtx)
 			$('gameExit').hide()
 			$('gameReset').hide()
+			$$('#modalWindow #ok #rogerText').first().innerHTML = Text.game.controls.roger
 			$$('.sound').first().observe('click',Sounds.mute)
 			$$('.bookmark').first().observe('click', FBDefender.bookmark)	
 			$$('.like').first().hide()
