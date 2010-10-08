@@ -1244,3 +1244,8 @@ div.clickableButton:hover, span.clickableButton:hover
 #inProgress #fileName{
 	left:298px;
 }
+
+#scores {
+	overflow : hidden;
+	display : none;
+}
