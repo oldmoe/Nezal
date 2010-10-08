@@ -24,7 +24,9 @@ var Sounds = {
 	gameSounds : {},
 	channels : [],
 	maxChannels : 10,
+	muted : false,
 	mute : function(){
+		Sounds.muted = true
 		soundManager.mute()
 		$$('.sound').first().stopObserving('click')
 		$$('.sound').first().removeClassName('on')
@@ -33,6 +35,7 @@ var Sounds = {
 	},
 	
 	soundOn: function(){
+		Sounds.muted = false
 		soundManager.unmute()
 		$$('.sound').first().stopObserving('click')
 		$$('.sound').first().removeClassName('off')
@@ -69,37 +72,27 @@ var Sounds = {
 		Sounds.gameSounds.game[0].stop()
 	},
 	play : function(store, direct){
-		if(!store)return
-		if(direct){
-			store[0].play()
-			return 
-		} else {
-			this.garbageCollect();
-			if(Sounds.channels.length >= Sounds.channelsMax){
-				return
-			} else if(store[2] >= store[1]){ // max number of concurrent plays exhausted for this sound
-				return
+		try{
+			if(!store)return
+			if(Sounds.muted)return
+			if(direct){
+				store[0].play()
+				return 
 			} else {
-				Sounds.channels.push([store, new Date])
-				store[2]++
-				store[0].play()				
+				this.garbageCollect();
+				if(Sounds.channels.length >= Sounds.channelsMax){
+					return
+				} else if(store[2] >= store[1]){ // max number of concurrent plays exhausted for this sound
+					return
+				} else {
+					Sounds.channels.push([store, new Date])
+					store[2]++
+					store[0].play()				
+				}
 			}
+		}catch(e){
+			// some error we don't know about
 		}
-		/*
-		//if(!game.scene.sound) return
-		Sounds.checkFinishedAudio()
-		if(Sounds.channels.length == 5) return
-		if(direct){
-			store[0].load()
-			store[0].play()
-			return		
-		}
-		if(store.length > 0){
-			var audio = store.pop() 
-			Sounds.channels.push({audio : audio , store : store})
-			audio.play()
-		}
-		*/
 	},
 
 	checkFinishedAudio : function(){

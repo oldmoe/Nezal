@@ -15,7 +15,11 @@ var SuperWeapon = Class.create({
 		if(!this.active) return
 		try{
 			this.action()
-			this.clockEffect($$('#gameElements .superWeapons .'+this.type+' img').first(),this.cooldown)
+			if (typeof FlashCanvas != "undefined") {
+				this.normalEffect($$('#gameElements .superWeapons .'+this.type+' img').first(),this.cooldown)
+			}else{
+				this.clockEffect($$('#gameElements .superWeapons .'+this.type+' img').first(),this.cooldown)
+			}
 		}catch(e){
 		}
 	},
@@ -46,11 +50,32 @@ var SuperWeapon = Class.create({
 			this.scene.reactor.push(this.progressInterval, function(){self.progressTick()})
 		}		
 	},
+	
+	normalEffect : function(img, delay){
+		this.active = false
+		var image = img
+		var opacity = 0
+		image.setOpacity(opacity)
+		var self = this
+		function tick(){
+			opacity += (0.7 / (delay*1000/self.scene.reactor.delay))
+			image.setOpacity(opacity)
+			if(opacity >= 0.7){
+				image.setOpacity(1)	
+				self.active = true
+				return				
+			}
+			self.scene.push(1,tick)
+		}
+		tick()
+	},
+	
 	clockEffect: function(img, delay){
 		this.active = false
 		var image = img
 		var canvas = document.createElement('canvas')
 		canvas.width = image.width
+		canvas.id = "can1"
 		canvas.height = image.height
 		canvas.style.position  = 'absolute'
 		canvas.style.left  = '0px'
@@ -64,15 +89,17 @@ var SuperWeapon = Class.create({
 			ctx.save()
 			ctx.globalCompositeOperation = 'destination-out'
 			ctx.fillStyle = "white";
+			ctx.strokeStyle = "black"
 			ctx.translate(image.width/2, image.height/2)
 			ctx.rotate(-(Math.PI/180)*90)
 			ctx.beginPath();
 			ctx.arc(0, 0, (image.width > image.height ? image.width : image.height) + 5 , 0, (Math.PI/180)*angle, false);
 			ctx.lineTo(0, 0)
-			ctx.closePath ();
+			ctx.closePath();
 			ctx.fill()
+			ctx.stroke();
 			ctx.restore()
-			angle = angle + (360 / (delay*1000/50))
+			angle = angle + (360 / (delay*1000/self.scene.reactor.delay))
 			if(angle > 360){
 				// we are done
 				self.active = true
