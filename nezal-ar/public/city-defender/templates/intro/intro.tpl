@@ -525,8 +525,10 @@
 		            <img class="itemImage" 
 		                  src="${Loader.images.intro[type+'/'+itemConfig[item]['image']].getAttribute('data')}"> </img>
                 {if (!Intro.userData.metadata[type][item])}
-  		            <img class="lockImage"  
+                  <div class="lockImage">
+  		                <img 
 		                    src="${Loader.images.intro['market/lock.png'].getAttribute('data')}"> </img>
+                  </div>
                 {else}
                   <div class="upgradeLevel">
                       ${Intro.userData.metadata[type][item]['upgrades']}
