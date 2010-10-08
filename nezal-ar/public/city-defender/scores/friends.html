@@ -280,7 +280,6 @@
 			for(var j=0;j<response['close'].length;j++){
 				if(response['close'][j].id!=-1)actualClose.push(response['close'][j])
 			}
-			console.log(actualClose)
 			response['close'] = actualClose
 			return response
 		}
