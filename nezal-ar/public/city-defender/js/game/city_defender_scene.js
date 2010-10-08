@@ -225,12 +225,13 @@ var CityDefenderScene = Class.create(Scene, {
 		$$(".start").first().observe('click', function(){self.pause()})
 	},
 	renderPause: function(){
-		soundManager.mute()
+		Sounds.gameSounds.game[0].pause()
 		$$('#gameElements #gameMenu').first().show()
 		$('pauseWindow').show()	
 		Sounds.play(Sounds.gameSounds.pause)
 	},
 	renderResume: function(){
+		Sounds.gameSounds.game[0].resume()
 		$$('#gameElements #gameMenu').first().hide()
 		$('pauseWindow').hide()
 		soundManager.unmute()
