@@ -271,7 +271,6 @@
 					      });
 		}
 		function filterResponse(response){
-			console.log(response)
 			for(var i=0;i<response['top'].length;i++){
 				for(var j=0;j<response['close'].length;j++){
 					if(response['top'][i].id == response['close'][j].id)response['close'][j].id=-1
