@@ -225,12 +225,13 @@ var CityDefenderScene = Class.create(Scene, {
 		$$(".start").first().observe('click', function(){self.pause()})
 	},
 	renderPause: function(){
-		soundManager.mute()
+		Sounds.gameSounds.game[0].pause()
 		$$('#gameElements #gameMenu').first().show()
 		$('pauseWindow').show()	
 		Sounds.play(Sounds.gameSounds.pause)
 	},
 	renderResume: function(){
+		Sounds.gameSounds.game[0].resume()
 		$$('#gameElements #gameMenu').first().hide()
 		$('pauseWindow').hide()
 		soundManager.unmute()
@@ -269,18 +270,18 @@ var CityDefenderScene = Class.create(Scene, {
 			}else if(this.creeps.length == 0  &&this.waitingCreeps == 0 && this.config.waves.length > 0 && !this.wavePending && this.running){
 				this.waveNumber++
 				IncomingWaves.nextWave()
-				var score = 10*this.waveNumber*(25-Math.round((new Date()-this.startTime)/1000)) 
+				var score = this.waveNumber*(25-Math.round((new Date()-this.startTime)/1000)) 
 				if(score>0)
 				this.score+=score
 				this.startTime = new Date()
+				this.planeAttack = false
 				this.push(40, function(){this.sendWave(this.config.waves.pop())},this)
 				var oldMoney = this.money
 				this.money=Math.round(this.money*this.moneyMultiplier[this.config.level-1])
 				var anim = new MoneyAnimation(341,462,this.money-oldMoney)
 				anim.totalMovement = 90
 				var msg = "+"+(this.money-oldMoney) +"  Money"
-				//if(score>0)
-				msg+="<br/>Time bonus: +"+score+"   Score"
+				if(score>0)msg+="<br/>Time bonus: +"+score+"   Score"
 				anim.enlarge(msg)
 				this.objects.push(anim)
 				this.wavePending = true
@@ -312,7 +313,6 @@ var CityDefenderScene = Class.create(Scene, {
 		
 	},
 	end : function(state){
-		$('pause').show()
 		var self = game.scene
 		self.push(40,function(){
 		game.scene.running = false
@@ -336,6 +336,7 @@ var CityDefenderScene = Class.create(Scene, {
 						game.scene.push(60,function(){
 							Sounds.play(Sounds.gameSounds[state])
 							Sounds.gameSounds.game[0].togglePause()
+							$('pauseWindow').show()
 						})
 						game.scene.push(60,function(){self.displayStats()})
 						game.scene.push(80,function(){
@@ -360,6 +361,7 @@ var CityDefenderScene = Class.create(Scene, {
 			new Effect.SwitchOff('static');
 			new Effect.Appear("result", {delay : 3.0})
 			game.scene.push(60,function(){
+			$('pauseWindow').show()
 			Sounds.gameSounds.game[0].togglePause()
 			Sounds.play(Sounds.gameSounds[state])
 			})
@@ -395,13 +397,8 @@ var CityDefenderScene = Class.create(Scene, {
 			y = Map.height - 1
 		}
 		var self = this
-		var planeAttack = false
 		wave.each(function(creep){
 			var creepCat = eval(creep.category)
-			if(!planeAttack&&(creepCat == Plane || creepCat == RedPlane)){
-				Sounds.play(Sounds.gameSounds.plane)
-				planeAttack=true
-			}
 			for(var i=0; i < creep.count; i++){
 				self.creepsCount ++
 				var entry = Map.entry[Math.round(Math.random()*(Map.entry.length - 1))]
@@ -412,16 +409,18 @@ var CityDefenderScene = Class.create(Scene, {
 					self.issueCreep(creep, 
 							(theta == 90 || theta == 270) ? Math.round(Math.random()* (Map.width - 1)) : x,
 							(theta == 0 || theta == 180) ? (Math.round(Math.random()* (Map.height - 2)) + 1) : y, 
-							delay/self.reactor.delay)
+							delay/self.reactor.delay, i == (creep.count - 1))
 				}else{
-					self.issueCreep(creep,  entry[0], entry[1], delay/self.reactor.delay)
+					self.issueCreep(creep,  entry[0], entry[1], delay/self.reactor.delay, i == (creep.count - 1))
 				}
 				delay += 70*(32 / creepCat.prototype.speed) + 10//Math.ceil( 64 / Creep.speed)
 				self.waitingCreeps++;
 			}
+			/*
 			self.push((delay + (32 / creepCat.prototype.speed))/self.reactor.delay, function(){
 				self.wavePending = false;
 			})
+			*/
 		})
 	},
 	sendWaves : function(config){
@@ -437,7 +436,7 @@ var CityDefenderScene = Class.create(Scene, {
 			// game finished
 		}
 	},
-	issueCreep : function(creep, x , y, delay){
+	issueCreep : function(creep, x , y, delay, last){
 		var self = this
 		var creepCat = eval(creep.category)
 		this.push(delay, function()
@@ -446,6 +445,10 @@ var CityDefenderScene = Class.create(Scene, {
 				var obj = new creepCat(x, y,self,creep.values)
 				if(creepCat == Plane || creepCat == RedPlane){
 					self.addPlane(obj)
+					if(!self.planeAttack&&(creepCat == Plane || creepCat == RedPlane)){
+						Sounds.play(Sounds.gameSounds.plane)
+						self.planeAttack=true
+					}
 				}
 				else{
 					self.addCreep(obj)
@@ -453,7 +456,8 @@ var CityDefenderScene = Class.create(Scene, {
 				self.creepMutators.each(function(mutator){
 					mutator.action(obj)
 				})
-				self.waitingCreeps--		
+				self.waitingCreeps--
+				if(last) self.wavePending = false;
 			}catch(e){
 				console.log(e)
 			}
@@ -481,7 +485,7 @@ var CityDefenderScene = Class.create(Scene, {
 		this.selectedTower.upgrade()
 	},
 	updateMeters : function(tower){
-		if(tower.upgrades[tower.rank]){
+		if(tower && tower.upgrades[tower.rank]){
 			if(tower.upgrades[tower.rank].power)
 			$('powerMeter').style.borderRight = Math.ceil((tower.upgrades[tower.rank].power-tower.power)*60/450)+"px solid #FAC200"
 			if(tower.upgrades[tower.rank].rate)

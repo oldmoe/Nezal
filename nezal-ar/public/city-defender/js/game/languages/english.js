@@ -156,12 +156,6 @@ window.Text = {
         }
     },
     facebook : {
-        invite : {
-            inviteMsg : ' Check this game out ',
-            userPrompt : 'Invite your friends and earn 50 coins for each friend that start playing'
-        },
-        like : ' ',
-        bookmark : '',
         completeMession: [
               'courageously defended',
               'at',
@@ -336,13 +330,13 @@ window.Text = {
       'That\'s all you got?'
     ],
 	controls: {
-		exit : "exit",
-		reset : "reset"
+		exit : 'exit',
+		reset : 'reset'
 	},
 	promotion: {
-		msg1 : "Congratulations",
-		msg2 : "You have been promoted , you are now a ",
-		okButton : "Ok"
+		msg1 : 'Congratulations',
+		msg2 : 'You have been promoted , you are now a ',
+		okButton : 'Ok'
 	}
   }
 	

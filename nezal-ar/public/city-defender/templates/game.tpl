@@ -23,7 +23,7 @@
 					{else}
 						<h4 style="margin-left:8px;margin-top:7px;">$${tower.price}</h4>
 					{/if}
-				<h4>${tower.name}</h4>
+				<h4>${Text.intro.towers[tower.name].name}</h4>
 			<table>
 				<tr>
 					<td><div class='meter' id = 'powerMeter' style="width:${Math.round(60 * tower.power / 420)}px;backgroundColor:blue">${window.Text.game.towerInfo.power}</div>
@@ -80,8 +80,8 @@
 					</div>
 			</div>
 			<div id="canvasContainer" style="display:none">
-				<canvas id="gameBackground" width="736" height="480"></canvas>
-				<canvas id="gameForeground" width="736" height="480""></canvas>
+				<canvas id="gameBackground" width="736" height="480" style="position:absolute;top:0px;left:0px"></canvas>
+				<canvas id="gameForeground" width="736" height="480" style="position:absolute;top:0px;left:0px"></canvas>
 			</div>
 			<div class="status">
 				<div id="statusBarEmpty">
@@ -144,7 +144,7 @@
 				<div class="superWeaponsOff">
 				</div>			
 			</div>
-			<canvas id="droppingGround" width="672" height="480"></canvas>
+			<canvas id="droppingGround" width="672" height="480" style="position:absolute;top:0px;left:0px"></canvas>
 			<div id="static" style="display:none"></div>
 			<div id="result" style="display:none;"></div>
 			<textarea id='resultTemplate' style="display:none">

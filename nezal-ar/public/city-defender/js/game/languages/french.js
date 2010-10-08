@@ -339,9 +339,9 @@
 		reset : "remise"
 	},
 	promotion: {
-		msg1 : "Félicitations ",
-		msg2 : "Tu as eu une promotion; maintenant tu es ",
-		okButton : "Ok"
+		msg1 : 'Félicitations ',
+		msg2 : 'Tu as eu une promotion; maintenant tu es ',
+		okButton : 'Ok'
 	}
   }
 	
