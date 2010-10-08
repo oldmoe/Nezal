@@ -436,7 +436,7 @@ body{
 
 #gameElements  .sound.controls.off{
 	width: 40px;
-	top:38px;
+	top:35px;
 	background-image: url('../images/background/sound_off_button.png');				
 }
 
@@ -451,7 +451,6 @@ body{
 	top :75px;
 }
 #gameElements  .subscribe{
-	margin-left: 4px;
 	background-image: url('../images/background/subscribe_button.png');
 	top :80px;
 }

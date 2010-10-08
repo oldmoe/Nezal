@@ -482,7 +482,7 @@ var CityDefenderScene = Class.create(Scene, {
 		this.selectedTower.upgrade()
 	},
 	updateMeters : function(tower){
-		if(tower.upgrades[tower.rank]){
+		if(tower && tower.upgrades[tower.rank]){
 			if(tower.upgrades[tower.rank].power)
 			$('powerMeter').style.borderRight = Math.ceil((tower.upgrades[tower.rank].power-tower.power)*60/450)+"px solid #FAC200"
 			if(tower.upgrades[tower.rank].rate)
