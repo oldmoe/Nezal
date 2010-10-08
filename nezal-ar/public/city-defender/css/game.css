@@ -416,12 +416,14 @@ body{
 
 #gameElements .controls{
 	position:absolute;
-	height: 36px;
-	width: 36px;
+	height: 40px;
+	width: 40px;
 	margin-bottom: 4px;
 	opacity : 0.7;
 	z-index:101;
 	margin-left:3px;
+	background-repeat:no-repeat;
+
 }
 
 #gameElements .controls:hover{
