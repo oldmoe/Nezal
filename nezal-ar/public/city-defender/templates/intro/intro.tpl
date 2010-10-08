@@ -27,8 +27,8 @@
           <div  id="selectedLang" class="clickableButton clickSound" 
                 onclick="$$('#levelSelection #language')[0].toggle(); return false;">
             <img id="selected" src="${Loader.images.intro['language.png'].getAttribute('data')}"/>
-            <div style="position : relative; top : -33px" >
-              ${lang[1]}  
+            <div class="selectedLangContainer">
+                ${lang[1]}  
             </div>
           </div>
       {/if}
@@ -43,14 +43,14 @@
         {/if}
       {/for}
     </div>
-		<div id = "msg"> ${Text.intro.levelSelection.msg} </div>
+		<div id = "msg" class="msgSize"> ${Text.intro.levelSelection.msg} </div>
 		<div id="tutorial"> 
 		  <div style="width : 70%; display:inline-block; height:10px;"></div>
 		  <div class="clickableButton clickSound tutorialText" onclick="Intro.displayTutorial(); return false;">
   		  ${Text.intro.levelSelection.tutorial} 
 		  </div>
 	  </div>
-		<div id = "challengesText" class="title clickableButton clickSound"
+		<div id = "challengesText" class="title titleSize clickableButton clickSound"
 	       onclick="this.removeClassName('clickableButton');
           	      this.addClassName('clicked');
           	      if(this.hasClassName('clickSound'))
@@ -58,24 +58,24 @@
           	      this.removeClassName('clickSound');
           	      this.stopObserving('click');
           	      $$('#levelSelection #levels')[0].show(); return false;"> ${Text.intro.levelSelection.title} </div>
-    <div id="levels" style="display : none;">
-        <span id="easy" onclick="GameConfigs.level=1; Intro.next(); return false;" class="clickSound">
+    <div id="levels" style="display : none;" class="levels">
+        <span id="easy" onclick="GameConfigs.level=1; Intro.next(); return false;" class="levelSize clickSound">
           ${Text.intro.levelSelection.easy}
           <span style="font-size:14px;text-transform:lowercase;"> 1 </span>
           <span style="font-size:14px;text-transform:lowercase;"> ${Text.intro.levelSelection.score} </span>
         </span>
-        <span id="medium" onclick="GameConfigs.level=2; Intro.next(); return false;" class="clickSound">
+        <span id="medium" onclick="GameConfigs.level=2; Intro.next(); return false;" class="levelSize clickSound">
           ${Text.intro.levelSelection.medium}
           <span style="font-size:14px;text-transform:lowercase;"> 2 </span>
           <span style="font-size:14px;text-transform:lowercase;"> ${Text.intro.levelSelection.score} </span>
         </span>
-        <span id="hard" onclick="GameConfigs.level=3; Intro.next(); return false;" class="clickSound">
+        <span id="hard" onclick="GameConfigs.level=3; Intro.next(); return false;" class="levelSize clickSound">
           ${Text.intro.levelSelection.hard}
           <span style="font-size:14px;text-transform:lowercase;"> 3 </span>
           <span style="font-size:14px;text-transform:lowercase;"> ${Text.intro.levelSelection.score} </span>
         </span>
     </div>
-		<div id="extraMap" class="title clickableButton clickSound" style="display : none;"
+		<div id="extraMap" class="title titleSize clickableButton clickSound" style="display : none;"
 		      onclick="this.removeClassName('clickableButton');
           	      this.addClassName('clicked');
           	      if(this.hasClassName('clickSound'))
@@ -83,18 +83,18 @@
           	      this.removeClassName('clickSound');
           	      this.stopObserving('click');
           	      $$('#levelSelection #extraLevels')[0].show(); return false;"> ${Text.intro.levelSelection.extraMaps} </div>
-    <div id="extraLevels" style="display : none;">
-        <span id="easy" onclick="GameConfigs.level=1; Intro.next(); return false;" class="clickSound">
+    <div id="extraLevels" style="display : none;" class="levels">
+        <span id="easy" onclick="GameConfigs.level=1; Intro.next(); return false;" class="levelSize clickSound">
           ${Text.intro.levelSelection.easy}
           <span style="font-size:14px;text-transform:lowercase;"> 1 </span>
           <span style="font-size:14px;text-transform:lowercase;"> ${Text.intro.levelSelection.score} </span>
         </span>
-        <span id="medium" onclick="GameConfigs.level=2; Intro.next(); return false;" class="clickSound">
+        <span id="medium" onclick="GameConfigs.level=2; Intro.next(); return false;" class="levelSize clickSound">
           ${Text.intro.levelSelection.medium}
           <span style="font-size:14px;text-transform:lowercase;"> 2 </span>
           <span style="font-size:14px;text-transform:lowercase;"> ${Text.intro.levelSelection.score} </span>
         </span>
-        <span id="hard" onclick="GameConfigs.level=3; Intro.next(); return false;" class="clickSound">
+        <span id="hard" onclick="GameConfigs.level=3; Intro.next(); return false;" class="levelSize clickSound">
           ${Text.intro.levelSelection.hard}
           <span style="font-size:14px;text-transform:lowercase;"> 3 </span>
           <span style="font-size:14px;text-transform:lowercase;"> ${Text.intro.levelSelection.score} </span>
@@ -186,13 +186,13 @@
     <div id="cityName">
         ${city.name}
     </div>
-    <div id="cityDesc">
+    <div id="cityDesc" class="desc">
         ${city.summary}
     </div>
     <div id="cityImage">
         <img src="${Loader.challenges[GameConfigs.campaign]['images/flag.png'].getAttribute('data')}">
     </div>
-    <div id="fullDesc">
+    <div id="fullDesc" class="desc">
         ${city.description}    
     </div>
     <div id="cityMap">       
@@ -259,10 +259,10 @@
                 </span>
                 <div class="bar">
                   <div class="barRed" 
-                        style="width : ${data.currUpgrade.power * 95 / Intro.gameData[data.type][data.itemid].upgrades.last().power}%;">
+                        style="width : ${Math.round(data.currUpgrade.power * 100 / Intro.gameData[data.type][data.itemid].upgrades.last().power)}%;">
                   </div>
                   <div class="barYellow"
-                        style="width : ${(data.nextUpgrade.power-data.currUpgrade.power) * 95 / Intro.gameData[data.type][data.itemid].upgrades.last().power}%;">
+                        style="width : ${Math.round((data.nextUpgrade.power-data.currUpgrade.power) * 100 / Intro.gameData[data.type][data.itemid].upgrades.last().power)}%;">
                   </div>
                   <div class="optionName"> ${Text.intro.upgrades.power} </div>
                 </div>
@@ -278,10 +278,10 @@
                 </span>
                 <div class="bar">
                   <div class="barRed" 
-                        style="width : ${data.currUpgrade.range * 95 / Intro.gameData[data.type][data.itemid].upgrades.last().range}%;">
+                        style="width : ${Math.round(data.currUpgrade.range * 100 / Intro.gameData[data.type][data.itemid].upgrades.last().range)}%;">
                   </div>
                   <div class="barYellow"
-                        style="width : ${(data.nextUpgrade.range-data.currUpgrade.range) * 95 / Intro.gameData[data.type][data.itemid].upgrades.last().range}%;">
+                        style="width : ${Math.round((data.nextUpgrade.range-data.currUpgrade.range) * 100 / Intro.gameData[data.type][data.itemid].upgrades.last().range)}%;">
                   </div>
                   <div class="optionName"> ${Text.intro.upgrades.range} </div>
                 </div>
@@ -297,10 +297,10 @@
                 </span>
                 <div class="bar">
                   <div class="barRed" 
-                        style="width : ${data.currUpgrade.maxHp * 95 / Intro.gameData[data.type][data.itemid].upgrades.last().maxHp}%;">
+                        style="width : ${Math.round(data.currUpgrade.maxHp * 100 / Intro.gameData[data.type][data.itemid].upgrades.last().maxHp)}%;">
                   </div>
                   <div class="barYellow"
-                        style="width : ${(data.nextUpgrade.maxHp-data.currUpgrade.maxHp) * 95 / Intro.gameData[data.type][data.itemid].upgrades.last().maxHp}%;">
+                        style="width : ${Math.round((data.nextUpgrade.maxHp-data.currUpgrade.maxHp) * 100 / Intro.gameData[data.type][data.itemid].upgrades.last().maxHp)}%;">
                   </div>
                   <div class="optionName"> ${Text.intro.upgrades.maxHp} </div>
                 </div>
@@ -316,10 +316,10 @@
                 </span>
                 <div class="bar">
                   <div class="barRed" 
-                        style="width : ${data.currUpgrade.rate * 95 / Intro.gameData[data.type][data.itemid].upgrades.last().rate}%;">
+                        style="width : ${Math.round(data.currUpgrade.rate * 100 / Intro.gameData[data.type][data.itemid].upgrades.last().rate)}%;">
                   </div>
                   <div class="barYellow"
-                        style="width : ${(data.nextUpgrade.rate-data.currUpgrade.rate) * 95 / Intro.gameData[data.type][data.itemid].upgrades.last().rate}%;">
+                        style="width : ${Math.round((data.nextUpgrade.rate-data.currUpgrade.rate) * 100 / Intro.gameData[data.type][data.itemid].upgrades.last().rate)}%;">
                   </div>
                   <div class="optionName"> ${Text.intro.upgrades.rate} </div>
                 </div>
@@ -333,11 +333,11 @@
       {/if}
       {if (data.upgrade && data.type=='weapons')}
         <div class="upgradeInfo">
-          <div class="currUpgrade">
+          <div class="desc currUpgrade">
             ${Text.intro.upgrades[data.itemid][Intro.userData.metadata[data.type][data.itemid]['upgrades']-1]}
           </div>
           {if ( data.nextUpgrade != data.currentUpgrade ) }
-            <div class="newUpgrade">
+            <div class="desc newUpgrade">
               ${Text.intro.upgrades[data.itemid][Intro.userData.metadata[data.type][data.itemid]['upgrades']]}
             </div>
           {/if}
@@ -345,7 +345,7 @@
       {/if}
       <div class="image">
         <div>
-          <div style="width:90px; display : inline-block; height : 5px;"> </div>
+          <div style="width:88px; display : inline-block; height : 5px;"> </div>
           <div id="close" onclick="Intro.hideFloatBg();" class="clickSound">x</div>
         </div>
         <div class="skeleton">
@@ -445,6 +445,7 @@
           <span class="addText">
             ${Text.intro.marketPlace.add}
           </span>
+          <img src="${Loader.images.intro['market/money.png'].getAttribute('data')}" > </img>
           <span class="moneyText">
             ${Text.intro.marketPlace.money}
           </span>
@@ -475,12 +476,12 @@
         {else}
           <img src="${Loader.images.intro['back.png'].getAttribute('data')}"/>
         {/if}
-        <div style="width : 30px; height : 10px;display:inline-block;"></div>
+        <div style="width : 28px; height : 10px;display:inline-block;"></div>
         <div id="backText">
           ${Text.intro.marketPlace.back}
         </div>
       </div>
-      <div style="width : 450px; height : 10px;display:inline-block;"></div>
+      <div style="width : 448px; height : 10px;display:inline-block;"></div>
       <div id="ready" onclick="Intro.next();" class="buttonText clickableButton clickSound">
         {if ($('intro').getStyle('direction')=='rtl') }
           <img src="${Loader.images.intro['back.png'].getAttribute('data')}"/>
@@ -490,7 +491,7 @@
         <div id="readyText">
           ${Text.intro.marketPlace.ready}
         </div>
-        <div style="width : 30px; height : 10px;display:inline-block;"></div>
+        <div style="width : 28px; height : 10px;display:inline-block;"></div>
       </div>
     </div>
 </textarea>

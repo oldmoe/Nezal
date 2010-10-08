@@ -191,15 +191,15 @@ var Intro = {
                     loader.addResource('js/game/languages/'+GameConfigs.language+'.js');
                     loader.load(function(){
                         eval(loader.resources.get('js/game/languages/'+GameConfigs.language+'.js'));
-                        if(GameConfigs.language=="arabic")
-                          $('intro').style['direction'] = 'rtl';
-                        else
-                          $('intro').style['direction'] = 'ltr';
-						$('levelSelection').innerHTML = Intro.templates.levelSelection[1].process(); 
+                        Language.langsNames.each( function(lang){
+                            $('intro').removeClassName(lang[0]);
+                        })
+                        $('intro').addClassName(GameConfigs.language)
+            						$('levelSelection').innerHTML = Intro.templates.levelSelection[1].process(); 
                         if(Intro.userData.newbie){
-							Intro.displayTutorial();
+						              	Intro.displayTutorial();
                         }else{
-                          Intro.show();
+                            Intro.show();
                         }
                         if(!Intro.userData.like)
                         {

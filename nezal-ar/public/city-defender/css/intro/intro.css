@@ -14,8 +14,59 @@
   font-family: "Pakgirl";
   src: url("../fonts/30pakgirl_bold_TBS.ttf");
 }
-body {
-  font-family : Adlib, Mcs, Arial Black, Tahoma;
+#intro.arabic{
+  font-family : Adlib,Tahoma,Arial Black;
+  font-weight : bold;
+  direction : rtl;
+}
+#intro.english{
+  font-family : Adlib,Tahoma,Arial Black;
+  direction : ltr;
+}
+#intro.french{
+  font-family : Adlib,Tahoma,Arial Black;
+  direction : ltr;
+}
+#intro.arabic .buttonText
+{
+  font-family : Adlib, Arial Black, Tahoma;
+  text-transform : capitalize;
+  text-align:center;
+  font-size : 17px;
+}
+#intro.french .buttonText
+{
+  font-family : Adlib, Arial Black, Tahoma;
+  text-transform : capitalize;
+  text-align:center;
+  font-size : 14px;
+}
+#intro.english .buttonText
+{
+  font-family : Adlib, Arial Black, Tahoma;
+  text-transform : capitalize;
+  text-align:center;
+  font-size : 16px;
+}
+#intro .desc
+{
+  color:white;
+  font-family:verdana;
+  font-weight:bold;
+  line-height:140%;
+  text-shadow:1px 1px #000000;
+}
+#intro.arabic .desc
+{
+  font-size : 14px;
+}
+#intro.french .desc
+{
+  font-size : 13px;
+}
+#intro.english .desc
+{
+  font-size : 13px;
 }
 #invite {
   position : absolute;
@@ -48,7 +99,7 @@ body {
 }
 #inProgress #logo
 {
- left:175px;
+  left:175px;
   position:absolute;
   top:24px;
 }
@@ -77,7 +128,6 @@ body {
   height : 550px;
   position : absolute;
 }
-
 #intro #levelSelection, #cityInfo, #marketPlace
 {
   width : 100%;
@@ -89,13 +139,6 @@ body {
   left:150px;
   position:absolute;
   top:30px;
-}
-
-.buttonText
-{
-  font-family : Adlib, Arial Black, Tahoma;
-  text-transform : capitalize;
-  text-align:center;
 }
 #levelSelection #introText
 {
@@ -119,13 +162,13 @@ body {
 {
   left:314px;
   position:absolute;
-  top:245px;
+  top:250px;
 }
 #levelSelection #blank
 {
   left:247px;
   position:absolute;
-  top:234px;
+  top:240px;
 }
 #levelSelection #selectedLang
 {
@@ -134,11 +177,19 @@ body {
   height:42px;
   left:575px;
   position:absolute;
-  text-align:center;
   top:50px;
   width:105px;
   z-index:100;
 }
+#levelSelection .selectedLangContainer
+{
+  height:80%;
+  position:absolute;
+  top:0;
+  width:100%;
+  line-height:35px;
+}
+
 #levelSelection #language
 {
   -moz-border-radius:0px 0px 10px 10px;
@@ -157,22 +208,36 @@ body {
   text-align:center;
   top:80px;
   width:75px;
+  font-weight : normal;
 }
 #levelSelection #msg
 {
   color:wheat;
-  font-size:20px;
+  height:25px;
   left:150px;
+  line-height:25px;
   position:absolute;
   text-align:center;
   text-transform:capitalize;
-  top:310px;
+  top:316px;
   width:500px;
+}
+#intro.arabic #levelSelection .msgSize
+{
+  font-size:19px;
+}
+#intro.french #levelSelection .msgSize
+{
+  font-size:17px;
+}
+#intro.english #levelSelection .msgSize
+{
+  font-size:18px;
 }
 #levelSelection #tutorial
 {
   color:#820000;
-  font-size:24px;
+  font-size:23px;
   width:300px;
   left:50px;
   position:absolute;
@@ -187,10 +252,23 @@ body {
 #levelSelection .title 
 {
   color:#820000;
-  font-size:24px;
-  width:300px;
+  height:30px;
   left:245px;
+  line-height:30px;
   position:absolute;
+  width:300px;
+}
+#intro.arabic #levelSelection .titleSize
+{
+  font-size:27px;
+}
+#intro.french #levelSelection .titleSize
+{
+  font-size:25px;
+}
+#intro.english #levelSelection .titleSize
+{
+  font-size:26px;
 }
 
 #challengesText, #extraMap, #levelSelection{
@@ -204,35 +282,42 @@ body {
 
 #levelSelection #challengesText
 {
-  top:342px;
+  top:345px;
 }
 #levelSelection #extraMap
 {
   top:405px;
 }
-#levels
+.levels
 {
   color:wheat;
-  font-size:24px;
-  height:40px;
-  left:100px;
+  height:30px;
+  left:90px;
+  line-height:30px;
   position:absolute;
   text-align:center;
   text-transform:capitalize;
+  width:580px;
+}
+#levels
+{
   top:375px;
-  width:560px;
 }
 #extraLevels
 {
-  color:wheat;
-  font-size:24px;
-  height:40px;
-  left:100px;
-  position:absolute;
-  text-align:center;
-  text-transform:capitalize;
   top:435px;
-  width:560px;
+}
+#intro.arabic .levels .levelSize
+{
+  font-size:24px;
+}
+#intro.french .levels .levelSize
+{
+  font-size:22px;
+}
+#intro.english .levels .levelSize
+{
+  font-size:23px;
 }
 #levels #easy, #extraLevels #easy
 {
@@ -270,7 +355,7 @@ body {
 #campaign #paper
 {
   position: absolute;
-  top: 12px;
+  top: 0px;
   left: 0px;
 }
 #campaign #backContainer
@@ -289,11 +374,12 @@ body {
 #campaign #back .text
 { 
   color:#FAC200;
+  line-height:34px;
+  margin:0 33px;
   position:absolute;
   text-align:center;
-  top:12px;
+  top:6px;
   width:80px;
-  margin:0px 30px;
 }
 #campaign .camp-info
 {
@@ -307,27 +393,31 @@ body {
 {
   display:inline-block;
   height:200px;
-  margin:25px 20px;
+  margin:15px 19px;
   vertical-align:top;
   width:290px;
 }
 #campaign .name
 {
   color:#FAC200;
-  font-size:27px;
   padding-bottom:5px;
   text-transform:capitalize;
 }
+#intro.arabic .name
+{
+  font-size:28px;
+}
+#intro.english .name
+{
+  font-size:27px;
+}
+#intro.french .name
+{
+  font-size:27px;
+}
 #campaign .desc
 {
-  color:white;
-  font-family:verdana;
-  font-size:13px;
-  font-weight:bold;
-  line-height:140%;
-  text-shadow:1px 1px #000000;
 }
-
 #campaign #camp-map 
 {
   display:inline-block;
@@ -354,6 +444,7 @@ body {
   text-shadow:-2px -1px #000;
   top:140px;
   width:100%;
+  font-weight:normal;
 }
 #campaign .mission .missionName
 {
@@ -378,32 +469,32 @@ body {
 #mission #paper
 {
   position: absolute;
-  top: 12px;
+  top: 0px;
   left: 0px;
 }
 #mission #mapBackground
 {
   left:81px;
   position:absolute;
-  top:173px;
+  top:183px;
 }
 #mission #buble
 {
   left:166px;
   position:absolute;
-  top:40px;
+  top:50px;
 }
 #mission #character
 {
   left:70px;
   position:absolute;
-  top:35px;
+  top:45px;
 }
 #mission #creepBackground
 {
   left:50px;
   position:absolute;
-  top:407px;
+  top:413px;
 }
 #creeps-scroll ul li img {
   padding-top: 7px;
@@ -416,37 +507,33 @@ body {
 {
   color:#FF4102;
   font-weight:bold;
+  height:30px;
   left:235px;
+  line-height:30px;
   position:absolute;
   text-align:center;
   text-transform:uppercase;
-  top:65px;
+  top:75px;
   width:150px;
+}
+#intro.arabic #cityName
+{
+  font-size : 20px;
 }
 #mission #cityDesc
 {
   color:#550000;
-  font-size:13px;
   left:225px;
-  line-height:17l0%;
   position:absolute;
-  text-align:center;
-  top:90px;
+  top:105px;
   width:170px;
-  font-family:verdana;
-  font-weight:bold;
+  text-shadow : 0px 0px;
+  text-align:center;
 }
 #mission #fullDesc
 {
-  color:white;
-  font-family:verdana;
-  font-size:13px;
-  font-weight:bold;
-  left:405px;
-  line-height:140%;
   position:absolute;
-  text-align:justify;
-  text-shadow:-1px -1px #000000;
+  left:405px;
   top:245px;
   width:280px;
 }
@@ -456,7 +543,7 @@ body {
   left:420px;
   position:absolute;
   text-align:center;
-  top:45px;
+  top:55px;
   width:260px;
 }
 #mission #cityImage img
@@ -469,7 +556,7 @@ body {
   left:90px;
   overflow:hidden;
   position:absolute;
-  top:180px;
+  top:190px;
   width:220px;
 }
 #mission #cityMap img
@@ -482,26 +569,28 @@ body {
   height:116px;
   left:245px;
   position:absolute;
-  top:295px;
+  top:300px;
   width:160px;
 }
 #mission #accept
 {
   height:46px;
-  left:485px;
+  left:475px;
   position:absolute;
-  top:420px;
+  top:425px;
   width:90px;
   cursor : pointer;
 }
 #mission #accept .text
 {
   color:white;
+  height:100%;
+  left:0;
+  line-height:46px;
   position:absolute;
-  top:30%;
-  left:0px;
-  width : 100%;
   text-align:center;
+  top:0;
+  width:100%;
 }
 #mission #reject
 {
@@ -524,7 +613,7 @@ body {
   height:72px;
   left:30px;
   position:absolute;
-  top:408px;
+  top:413px;
   width:430px;
   direction:ltr;
 }
@@ -533,14 +622,6 @@ body {
   float:left;
   height:65px;
   width:101px;
-}
-#mission #creepBar
-{
-  height:28px;
-  left:72px;
-  position:absolute;
-  top:502px;
-  width:390px;
 }
 #mission #floatBg
 {
@@ -564,7 +645,7 @@ body {
   height:15px;
   left:40px;
   position:absolute;
-  top:390px;
+  top:395px;
   width:400px;
   z-index : 100;
 }
@@ -582,7 +663,7 @@ body {
 #mission #floatBg .content
 {
   height:120px;
-  margin:25px 40px;
+  margin:25px 39px;
   overflow:hidden;
   width:295px;
   display:inline-block;
@@ -595,10 +676,8 @@ body {
 {
   white-space:normal;
   word-wrap:break-word;
-  font-size : 12px;
-  line-height : 150%;
-  font-family:verdana;
-  font-weight:bold;
+  color : #FAC200;
+  font-size : 11px;
 }
 #mission #floatBg .spans
 {
@@ -606,15 +685,14 @@ body {
   height:100px;
   margin-top:10px;
   vertical-align:top;
-  width:70%;
-  text-align:justify;
+  width:65%;
 }
 #mission #floatBg .skeleton
 {
   display:inline-block;
   padding-top:30px;
   text-align:center;
-  width:25%;
+  width:28%;
   margin:0 5px;
 }
 
@@ -630,14 +708,14 @@ body {
 #marketPlace #paper
 {
   position: absolute;
-  top: 10px;
+  top: 0px;
   left: 0px;
 }
 #marketPlace #upperPart
 {
   left:73px;
   position:absolute;
-  top:35px;
+  top:42px;
   width:606px;
 }
 #marketPlace #upperPart .rank
@@ -656,12 +734,13 @@ body {
 }
 #marketPlace .rankText
 {
-  margin-top : 10px;
+  line-height:25px;
 }
 
 #marketPlace #upperPart .titleImg
 {
-  left:212px;
+  height:97px;
+  left:215px;
   position:absolute;
   top:12px;
 }
@@ -674,35 +753,49 @@ body {
   text-align:center;
   top:35px;
   width:75px;
+  font-weight : normal;
 }
 #marketPlace #upperPart .addMoney
 {
   color:#FAC200;
-  font-family:Adlib, Arial Black, Tahoma;
+  font-family:Adlib,Arial Black,Tahoma;
   font-size:15px;
-  left:423px;
+  left:428px;
   position:absolute;
   text-align:center;
-  top:76px;
+  top:68px;
   width:155px;
 }
 #marketPlace #upperPart .addText
 {
   display:inline-block;
+  line-height:30px;
   text-align:center;
-  width:46%;
+  vertical-align:top;
+  width:25%;
+}
+#intro.french #marketPlace #upperPart .addText
+{
+  width:34%;
+  font-size : 12px;
 }
 #marketPlace #upperPart .moneyText
 {
   display:inline-block;
-  width:50%;
+  height:30px;
+  line-height:30px;
+  vertical-align:top;
+}
+#intro.french #marketPlace #upperPart .moneyText
+{
+  font-size : 12px;
 }
 #marketPlace #weapons
 {
   font-size:14px;
   left:4px;
   position:absolute;
-  top:160px;
+  top:165px;
   text-align : center;
   direction : ltr;
 }
@@ -711,7 +804,7 @@ body {
   font-size:14px;
   left:4px;
   position:absolute;
-  top:320px;
+  top:323px;
   text-align : center;
   direction : ltr;
 }
@@ -741,6 +834,7 @@ body {
   padding-top:4px;
   float : left;
   width:60px;
+  font-weight : normal;
 }
 #marketPlace .upgradeLevel
 {
@@ -750,25 +844,23 @@ body {
   text-align:right;
   top:10px;
   width:105px;
+  font-weight : normal;
 }
 #marketPlace .qBoxImage
 {
   padding-top : 14px;
 }
-#marketPlace #towers .lockImage
+#marketPlace #weapons .lockImage, #marketPlace #towers .lockImage
 {
-  position:relative;
-  top:-25px;
-}
-#marketPlace #weapons .lockImage
-{
-  position:relative;
-  top:-30px;
+ display:inline-block;
+  margin-left:34px;
+  position:absolute;
+  top:50px;
 }
 #marketPlace #info
 {
   position:absolute;
-  top:65px;
+  top:70px;
   width:104px;
 }
 #marketPlace .infoImage
@@ -776,26 +868,30 @@ body {
   cursor:pointer;
   float:right;
   margin-right:3px;
-  margin-top:4px;
 }
 #marketPlace .unlockImage
 {
   position:relative;
-  top:-14px;
+  top:-26px;
 }
 
 #marketPlace .unlockText
 {
   color:white;
   cursor:pointer;
-  font-family:Adlib, Arial Black, Tahoma;
+  font-family:Adlib,Arial Black,Tahoma;
   font-size:14px;
-  left:4px;
+  left:1px;
   position:relative;
   text-align:center;
-  top:7px;
-  width:70px;
+  width:68px;
   z-index:100;
+  height : 24px;
+  line-height : 24px;
+}
+#intro.french #marketPlace .unlockText
+{
+  font-size:10px;
 }
 #marketPlace #ready, #marketPlace #back
 {
@@ -822,17 +918,21 @@ body {
 #marketPlace #backText, #marketPlace #readyText
 {
   display:inline-block;
+  height:32px;
+  line-height:32px;
   position:relative;
   text-align:center;
-  top:-31px;
+  top:-42px;
   width:80px;
 }
 #marketPlace .msg
 {
-  font-size:15px;
+  color:black;
+  font-size:16px;
+  height:17px;
+  line-height:17px;
   position:absolute;
   text-align:center;
-  color : black;
   top:146px;
   width:100%;
 }
@@ -883,6 +983,7 @@ div.clickableButton:hover, span.clickableButton:hover
   height:20px;
   vertical-align:top;
   width:20px;
+  font-weight : normal;
 }
 #marketPlace #floatBg .content
 {
@@ -895,8 +996,7 @@ div.clickableButton:hover, span.clickableButton:hover
 {
   display:inline-block;
   height:100%;
-  margin:10px 15px;
-  text-align:justify;
+  margin:10px 13px;
   width:70%;
 }
 #marketPlace #floatBg .content .image
@@ -919,6 +1019,7 @@ div.clickableButton:hover, span.clickableButton:hover
 {
   width: 100%;
   height : 24px;
+  font-weight : normal;
 }
 #marketPlace #floatBg .image .cost .img
 {
@@ -943,6 +1044,10 @@ div.clickableButton:hover, span.clickableButton:hover
   text-decoration:underline;
   text-transform:uppercase;
 }
+#intro.french #marketPlace #floatBg .name
+{
+  font-size:19px;
+}
 #marketPlace #floatBg .desc
 {
   font-size:15px;
@@ -950,7 +1055,11 @@ div.clickableButton:hover, span.clickableButton:hover
   line-height:130%;
   white-space:normal;
   word-wrap:break-word;
-  font-family:verdana;
+  color:#FAC200;
+}
+#intro.french #marketPlace #floatBg .desc
+{
+  font-size:14px;
 }
 #marketPlace #floatBg .actions
 {
@@ -1018,8 +1127,7 @@ div.clickableButton:hover, span.clickableButton:hover
   display:inline-block;
   font-size:10px;
   height:100%;
-  margin:0 10px;
-  text-align:justify;
+  margin:0 9px;
   vertical-align:top;
   width:35%;
 }
@@ -1032,15 +1140,22 @@ div.clickableButton:hover, span.clickableButton:hover
 }
 #marketPlace  #floatBg #upgrade .desc
 {
-  font-size : 11px;
+  font-size : 10px;
+  font-weight : bold;
+}
+#intro.arabic #marketPlace  #floatBg #upgrade .desc
+{
+  font-size : 12px;
+  font-weight : bold;
 }
 #marketPlace  #floatBg #upgrade .towerText
 {
   font-size:13px;
   padding-top:5px;
   vertical-align:top;
-  width:30px;
+  width:33px;
   display:inline-block;
+  font-weight : normal;
 }
 #marketPlace  #floatBg #upgrade .beforeText
 {
@@ -1049,7 +1164,7 @@ div.clickableButton:hover, span.clickableButton:hover
 #marketPlace  #floatBg #upgrade .parent
 {
   height:35px;
-  margin:0 5px;
+  margin:0px 0px;
 }
 #marketPlace  #floatBg #upgrade .bar
 {
@@ -1063,6 +1178,7 @@ div.clickableButton:hover, span.clickableButton:hover
   width : 70%;
   height : 100%;
   background : #ff4102;
+  margin:0 -4px;
 }
 #marketPlace  #floatBg #upgrade .barYellow
 {
@@ -1070,6 +1186,9 @@ div.clickableButton:hover, span.clickableButton:hover
   width : 25%;
   height : 100%;
   background : #fac200;
+}
+#marketPlace  #floatBg #upgrade .towerMargin
+{
   margin : 0px -5px;
 }
 #marketPlace  #floatBg #upgrade .optionName
@@ -1082,10 +1201,9 @@ div.clickableButton:hover, span.clickableButton:hover
 }
 #marketPlace  #floatBg #upgrade .currUpgrade, #marketPlace  #floatBg #upgrade .newUpgrade
 {
-  font-size:14px;
+  font-size:11px;
   height:55px;
   margin-bottom:15px;
-  text-align:justify;
 }
 #marketPlace  #floatBg #upgrade .currUpgrade
 {
@@ -1127,4 +1245,3 @@ div.clickableButton:hover, span.clickableButton:hover
 #inProgress #fileName{
 	left:298px;
 }
-	
