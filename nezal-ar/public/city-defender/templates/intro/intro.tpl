@@ -1,3 +1,26 @@
+<textarea id='congratesTemplate' style="display:none">
+  <div id="character">
+	  <img class="congratesBg" src="images/background/character.png"/>
+  </div>
+  <div class="content"> 
+	  <div class="msg">
+	    ${msg}
+	  </div>
+  </div>
+  <div class="ok">
+    <div style="display:inline-block; height : 10px; width : 140px;">
+    </div>
+    <div style="display:inline-block;" onclick="Intro.hideCongrates()" class="clickableButton clickSound">
+        {if ($('intro').getStyle('direction')=='ltr') }
+          <img src="${Loader.images.intro['ready.png'].getAttribute('data')}" style="width:80px;"/>
+        {else}
+          <img src="${Loader.images.intro['back.png'].getAttribute('data')}" style="width:80px;"/>
+        {/if}
+	    <div id='rogerText'>${Text.game.controls.roger}</div>
+    </div>
+  </div>
+</textarea>
+
 <textarea id='challengesTemplate' style="display:none">
     {for challenge in challenges}
     <div class="challenge" title="${challenge["campaign"]['path']}" id="challenge_${challenge["campaign"]['name']}">
