@@ -13,23 +13,27 @@ FBDefender = {
        FBConnect.invite(Text.facebook.invite.inviteMsg, Text.facebook.invite.userPrompt, FBDefender.gameName() );
     },
     
-    bookmark : function(callback){
+    bookmark : function(){
         FBConnect.bookmark(function(){
                   new Ajax.Request(  'users/bookmark' ,
                   {   method:'post', 
                       onSuccess : function(t, json){
                           var data = JSON.parse(t.responseText);
+                          var oldCoins = Intro.userData.coins
                           Intro.userData.coins = data['user_data'].coins;
+                          if(oldCoins != data['user_data'].coins)
+                          {
+                              Intro.userData.bookmarked = true;
+                              Intro.showBookmarkCongrates();
+                          }
                           if(Intro.currentPage == Intro.pages['marketPlace'].index && FBDefender.isMarket==true)
                               Intro.select('marketPlace');
-                          if(callback)
-                              callback();
                       }
                   });
         });
     },
     
-    isFan : function(callback){
+    isFan : function(){
         FBConnect.isFan(function(status){
                   if(status && status.page_id)
                   {
@@ -39,9 +43,10 @@ FBDefender = {
                               var data = JSON.parse(t.responseText);
                               var oldCoins = Intro.userData.coins
                               Intro.userData.coins = data['user_data'].coins;
-                              if(callback && oldCoins != data['user_data'].coins)
+                              if(oldCoins != data['user_data'].coins)
                               {
-                                  callback();
+                                  Intro.userData.like = true;
+                                  Intro.showLikeCongrates();
                               }
                               if(Intro.currentPage == Intro.pages['marketPlace'].index && FBDefender.isMarket==true)
                                   Intro.select('marketPlace');

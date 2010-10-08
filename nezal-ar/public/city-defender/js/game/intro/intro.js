@@ -90,6 +90,7 @@ var Intro = {
               "marketPlace"
             ],
     templates : {
+              congrates : [ "congratesTemplate", 0],
               challenges : [ "challengesTemplate", 0],
               levelSelection : [ "levelSelectionTemplate", 0],
               campaign : [ "campaignTemplate", 0],
@@ -193,8 +194,10 @@ var Intro = {
                         eval(loader.resources.get('js/game/languages/'+GameConfigs.language+'.js'));
                         Language.langsNames.each( function(lang){
                             $('intro').removeClassName(lang[0]);
+                            $('congrates').removeClassName(lang[0]);
                         })
                         $('intro').addClassName(GameConfigs.language)
+                        $('congrates').addClassName(GameConfigs.language)
             						$('levelSelection').innerHTML = Intro.templates.levelSelection[1].process(); 
                         if(Intro.userData.newbie){
 						              	Intro.displayTutorial();
@@ -203,9 +206,7 @@ var Intro = {
                         }
                         if(!Intro.userData.like)
                         {
-                            FBDefender.isFan(function(){
-                                alert('congrates u earned 500 coins for liking us');
-                            })
+                            FBDefender.isFan()
                         }
                     });
                 });
@@ -563,6 +564,24 @@ var Intro = {
         GameConfigs.superWeapons = weapons;
         GameConfigs.rank = Intro.userData.rank;
         GameConfigs.exp = Intro.userData.exp;
+    },
+    
+    showLikeCongrates : function(){
+      $('congrates').innerHTML = Intro.templates.congrates[1].process({ "msg" : Text.facebook.like });
+      $$('#congrates .clickSound').each(function(element){
+          element.observe('click', function(element){Sounds.play(Sounds.gameSounds.click)})
+      });
+      $('congrates').show()
+    },
+    showBookmarkCongrates : function(){
+      $('congrates').innerHTML = Intro.templates.congrates[1].process({ "msg" : Text.facebook.bookmark });
+      $$('#congrates .clickSound').each(function(element){
+          element.observe('click', function(element){Sounds.play(Sounds.gameSounds.click)})
+      });
+      $('congrates').show()
+    },
+    hideCongrates : function(){
+      $('congrates').hide()
     },
     
     showFloatBg : function(element){
