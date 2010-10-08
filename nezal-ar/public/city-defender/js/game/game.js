@@ -193,7 +193,7 @@ var Game = Class.create({
 				
 		$$('#gameElements .start').first().observe('click', function(){self.scene.startAttack()})
 		$('playAgain').observe('click',function(){
-			SoundsstopTrack()
+			Sounds.stopTrack()
 			game.reset()})
 		$('exit').observe('click', game.exit)
 		$('gameExit').observe('click', function(){

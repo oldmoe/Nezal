@@ -364,7 +364,7 @@ var CityDefenderScene = Class.create(Scene, {
 			new Effect.Appear("result", {delay : 3.0})
 			game.scene.push(60,function(){
 			$('pauseWindow').show()
-			Sounds.gameSounds.togglePauseTrack()
+			Sounds.togglePauseTrack()
 			Sounds.play(Sounds.gameSounds[state])
 			})
 			game.scene.push(60,function(){self.displayStats()})
