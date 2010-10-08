@@ -280,8 +280,7 @@ var CityDefenderScene = Class.create(Scene, {
 				var anim = new MoneyAnimation(341,462,this.money-oldMoney)
 				anim.totalMovement = 90
 				var msg = "+"+(this.money-oldMoney) +"  Money"
-				//if(score>0)
-				msg+="<br/>Time bonus: +"+score+"   Score"
+				if(score>0)msg+="<br/>Time bonus: +"+score+"   Score"
 				anim.enlarge(msg)
 				this.objects.push(anim)
 				this.wavePending = true
