@@ -122,7 +122,7 @@
 					</p>
 				</div>
 				<div class="sound controls on"></div>
-				<div class="like controls"></div>
+				<a href ="http://www.facebook.com/apps/application.php?id=122519734470004"><div class="like controls"></div></a>
 				<div class="bookmark controls"></div>
 					<textarea id='wavesTemplate' style='display:none'>
 						<div id="incomingWaves">

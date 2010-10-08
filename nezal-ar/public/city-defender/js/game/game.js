@@ -15,7 +15,7 @@ var Game = Class.create({
 		this.prepareConfig()
 		this.config = Nezal.clone_obj(Config)
 		this.config.waves.reverse()
-		$('scores').show()
+		$$('#game #scores').first().show()
 		if(Intro.userData.newbie){
 			$('modalWindow').show()
 			this.scene = new TutorialScene(this.config,40,this.ctx,this.topCtx);
@@ -25,7 +25,6 @@ var Game = Class.create({
 			$$('#modalWindow #ok #rogerText').first().innerHTML = Text.game.controls.roger
 			$$('.sound').first().observe('click',Sounds.mute)
 			$$('.bookmark').first().observe('click', FBDefender.bookmark)	
-			$$('.like').first().hide()
 		}
 		else{
 			this.scene = new CityDefenderScene(this.config,33,this.ctx,this.topCtx);
@@ -144,7 +143,7 @@ var Game = Class.create({
 		
 		var template = TrimPath.parseTemplate($('resultTemplate').value) 
 		$('result').innerHTML = template.process()
-		var img8 = Loader.images.background['character.png']
+		var img8 = Loader.images.intro['character.png']
 		$$('#modalWindow #character').first().appendChild(img8)
 		var img9 = document.createElement("IMG");
 		$$('#gameElements .superWeapons div').each(function(div){ 
@@ -172,6 +171,8 @@ var Game = Class.create({
 		$$('.rankName')[0].innerHTML = window.Text.game.ranks[Config.rank].abbr;
 		$('popup').appendChild(Loader.images.background['pop_up.png'])
 		$$('#popup #popupOk').first().appendChild(Loader.images.intro['mission/accept.png'])
+		if(Intro.userData.bookmarked)$$('.bookmark').first().hide()	
+		if(Intro.userData.like)$$('.like').first().hide()
 	},
 	
 	registerHandlers : function(){
@@ -203,7 +204,6 @@ var Game = Class.create({
 		$('gameResume').observe('click', function(){game.scene.resume()})	
 		$$('.sound').first().observe('click',Sounds.mute)
 		$$('.bookmark').first().observe('click', FBDefender.bookmark)	
-		$$('.like').first().hide()
 	},
 	reset : function(){
 		game.scene.reactor.stop()
