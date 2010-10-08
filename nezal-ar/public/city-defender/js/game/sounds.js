@@ -58,7 +58,7 @@ var Sounds = {
 	
 	play : function(store, direct){
 		if(!store)return
-		if(sounds.muted)return
+		if(Sounds.muted)return
 		if(direct){
 			store[0].play()
 			return 
