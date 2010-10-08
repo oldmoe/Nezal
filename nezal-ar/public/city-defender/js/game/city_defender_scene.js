@@ -312,7 +312,6 @@ var CityDefenderScene = Class.create(Scene, {
 		
 	},
 	end : function(state){
-		$('pause').show()
 		var self = game.scene
 		self.push(40,function(){
 		game.scene.running = false
@@ -336,6 +335,7 @@ var CityDefenderScene = Class.create(Scene, {
 						game.scene.push(60,function(){
 							Sounds.play(Sounds.gameSounds[state])
 							Sounds.gameSounds.game[0].togglePause()
+							$('pauseWindow').show()
 						})
 						game.scene.push(60,function(){self.displayStats()})
 						game.scene.push(80,function(){
@@ -360,6 +360,7 @@ var CityDefenderScene = Class.create(Scene, {
 			new Effect.SwitchOff('static');
 			new Effect.Appear("result", {delay : 3.0})
 			game.scene.push(60,function(){
+			$('pauseWindow').show()
 			Sounds.gameSounds.game[0].togglePause()
 			Sounds.play(Sounds.gameSounds[state])
 			})

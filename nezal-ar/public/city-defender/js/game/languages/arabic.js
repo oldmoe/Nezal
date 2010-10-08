@@ -156,10 +156,6 @@
         }
     },
     facebook : {
-        invite : {
-            inviteMsg : ' Check this game out ',
-            userPrompt : 'Invite your friends and earn 50 coins for each friend that start playing'
-        },
         completeMession: [
               'دافع بشجاعة عن',
               'في',
@@ -334,13 +330,13 @@
        'هذا كل مالديك؟!'
     ],
 	controls: {
-		exit : "خروج",
-		reset : "اعاده"
+		exit : 'خروج',
+		reset : 'اعاده'
 	},
 	promotion: {
-		msg1 : "مبروك",
-		msg2 : "لقد تم ترقيتك و اصبحت الان ",
-		okButton : "موافق"
+		msg1 : 'مبروك',
+		msg2 : 'لقد تم ترقيتك و اصبحت الان ',
+		okButton : 'موافق'
 	}
   
   }

@@ -23,7 +23,7 @@
 					{else}
 						<h4 style="margin-left:8px;margin-top:7px;">$${tower.price}</h4>
 					{/if}
-				<h4>${tower.name}</h4>
+				<h4>${Text.intro.towers[tower.name].name}</h4>
 			<table>
 				<tr>
 					<td><div class='meter' id = 'powerMeter' style="width:${Math.round(60 * tower.power / 420)}px;backgroundColor:blue">${window.Text.game.towerInfo.power}</div>
