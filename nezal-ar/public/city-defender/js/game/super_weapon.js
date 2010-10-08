@@ -172,7 +172,7 @@ var Nuke = Class.create(SuperWeapon, {
 			this.scene.objects.push(anim)
 			this.scene.rocketsLayer.attach(anim)
 		}
-		this.scene.push(20,startNuke,this)
+		this.scene.push(25,startNuke,this)
 	}
 })
 var Heal = Class.create(SuperWeapon, {

@@ -66,7 +66,7 @@
   
   <div id="gameStart" style="display: none;">
   </div>
-  <iframe id ="scores" src="" style = "width :760px;height:150px;display:none;"></iframe>
+  <iframe id ="scores" src="" style = "width :760px;height:150px;display:none;overflow:hidden;"></iframe>
 </div>
 <script>
 	function register(win, resources){
@@ -109,7 +109,7 @@
 			'<%=bust_cache('html_resources/game.html')%>',
 			'<%=bust_cache('html_resources/background.html')%>',
 			function(){Loader.fire('tutorial')},
-			'<%=bust_cache('html_resources/nuke_boom.html')%>',
+			'<%=bust_cache('html_resources/weapons.html')%>',
 			function(){Loader.fire('game')}
 		]
 		$('iframe').src = Loader.toLoad[0]

@@ -5,7 +5,7 @@
 				margin:0px;
 			}
 			#friends{
-				width : 761px;
+				width : 760px;
 				height: 113px;
 			}
 			
@@ -133,9 +133,11 @@
 						<div class="score" > ${friend.score}</div>
 						<img class='photo' src='http://graph.facebook.com/${friend.id}/picture' />	
 				{else}
+					<a href="#" onclick="window.parent.FBDefender.invite();return false;">
 					<img class='photo' src='images/q_mark.png' />				
 					<div class="name" >Add<br/>Friend</div>
-				{/if}			
+					</a>
+				{/if}
 			</div>
 			{if friend}
 				</a>
@@ -148,6 +150,9 @@
 	          <div id="friends-container" class="container">
 		          <ul id='friends-ul'>
     		        {for friend in friends }
+					{if friend}
+						<a href='http://www.facebook.com/profile.php?id=${friend.id}' target='fb_${friend.id}'>
+					{/if}
 					  <li class="friend">
 									  <img src="images/blank.png"/>
 										{if friend}
@@ -156,18 +161,26 @@
 											<img class='photo' src='http://graph.facebook.com/${friend.id}/picture' />	
 											<div class="score" > ${friend.score}</div>
 										{else}
+											<a href="#" onclick="window.parent.FBDefender.invite();return false;">
 											<img class='photo' src='images/q_mark.png' />				
 											<div class="name" >Add<br/>Friend</div>
+											</a>
 										{/if}			
     		          </li>
+					{if friend}
+						</a>
+					{/if}
+
 		            {/for}
 		          </ul>
 	          </div>
-						<div class = "friend" onclick="window.parent.FBDefender.invite();return false;">
+						<a href="#" onclick="window.parent.FBDefender.invite();return false;">
+						<div class = "friend">
 							<img src="images/blank.png" />
 							<img class='photo' src='images/q_mark.png' />				
 							<div class="name" >Add<br/>Friend</div>
 						</div>
+						</a>
 	          <div class="right">
               <img src="" />
 	          </div> 
