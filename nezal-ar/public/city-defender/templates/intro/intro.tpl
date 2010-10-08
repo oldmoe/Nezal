@@ -1,6 +1,6 @@
 <textarea id='congratesTemplate' style="display:none">
   <div id="character">
-	  <img class="congratesBg" src="images/background/character.png"/>
+	  <img class="congratesBg" src="${Loader.images.intro['character.png'].getAttribute('data')}"/>
   </div>
   <div class="content"> 
 	  <div class="msg">

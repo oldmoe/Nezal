@@ -21,7 +21,7 @@ FBDefender = {
                           var data = JSON.parse(t.responseText);
                           var oldCoins = Intro.userData.coins
                           Intro.userData.coins = data['user_data'].coins;
-                          if(callback && oldCoins != data['user_data'].coins)
+                          if(oldCoins != data['user_data'].coins)
                           {
                               Intro.userData.bookmarked = true;
                               Intro.showBookmarkCongrates();
@@ -33,7 +33,7 @@ FBDefender = {
         });
     },
     
-    isFan : function(callback){
+    isFan : function(){
         FBConnect.isFan(function(status){
                   if(status && status.page_id)
                   {
@@ -43,7 +43,7 @@ FBDefender = {
                               var data = JSON.parse(t.responseText);
                               var oldCoins = Intro.userData.coins
                               Intro.userData.coins = data['user_data'].coins;
-                              if(callback && oldCoins != data['user_data'].coins)
+                              if(oldCoins != data['user_data'].coins)
                               {
                                   Intro.userData.like = true;
                                   Intro.showLikeCongrates();
