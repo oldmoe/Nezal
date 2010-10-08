@@ -269,10 +269,11 @@ var CityDefenderScene = Class.create(Scene, {
 			}else if(this.creeps.length == 0  &&this.waitingCreeps == 0 && this.config.waves.length > 0 && !this.wavePending && this.running){
 				this.waveNumber++
 				IncomingWaves.nextWave()
-				var score = 10*this.waveNumber*(25-Math.round((new Date()-this.startTime)/1000)) 
+				var score = this.waveNumber*(25-Math.round((new Date()-this.startTime)/1000)) 
 				if(score>0)
 				this.score+=score
 				this.startTime = new Date()
+				this.planeAttack = false
 				this.push(40, function(){this.sendWave(this.config.waves.pop())},this)
 				var oldMoney = this.money
 				this.money=Math.round(this.money*this.moneyMultiplier[this.config.level-1])
@@ -396,13 +397,8 @@ var CityDefenderScene = Class.create(Scene, {
 			y = Map.height - 1
 		}
 		var self = this
-		var planeAttack = false
 		wave.each(function(creep){
 			var creepCat = eval(creep.category)
-			if(!planeAttack&&(creepCat == Plane || creepCat == RedPlane)){
-				Sounds.play(Sounds.gameSounds.plane)
-				planeAttack=true
-			}
 			for(var i=0; i < creep.count; i++){
 				self.creepsCount ++
 				var entry = Map.entry[Math.round(Math.random()*(Map.entry.length - 1))]
@@ -447,6 +443,10 @@ var CityDefenderScene = Class.create(Scene, {
 				var obj = new creepCat(x, y,self,creep.values)
 				if(creepCat == Plane || creepCat == RedPlane){
 					self.addPlane(obj)
+					if(!self.planeAttack&&(creepCat == Plane || creepCat == RedPlane)){
+						Sounds.play(Sounds.gameSounds.plane)
+						self.planeAttack=true
+					}
 				}
 				else{
 					self.addCreep(obj)
