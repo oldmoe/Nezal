@@ -199,7 +199,13 @@ window.Text = {
             'upgraded',
             'to gain massive tactical advantage on the battle.'
         ],
-        userPrompt : 'Tell your friends about your accomplishment and get 5 coins'
+        userPrompt : 'Tell your friends about your accomplishment and get 5 coins',
+		invite : {
+            inviteMsg : 'Are you eager enough to defend the Arab land? ',
+            userPrompt : 'invite your friends and earn 50 coins for each one who starts playing.'
+        },
+        like : ' Congratulations, you got 500 coins as a gift for liking us.',
+        bookmark : 'Congratulations, you got 500 coins as a gift for bookmarking us.'
     },
 	game : {
 		tutorial : {
@@ -331,7 +337,13 @@ window.Text = {
     ],
 	controls: {
 		exit : 'exit',
-		reset : 'reset'
+		reset : 'reset',
+		like : 'like',
+		bookmark : 'bookmark',
+		soundon : 'sound on',
+		soundoff: 'sound off',
+		level:'level',
+		roger:'roger'
 	},
 	promotion: {
 		msg1 : 'Congratulations',

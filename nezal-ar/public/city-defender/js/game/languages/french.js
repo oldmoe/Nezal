@@ -203,7 +203,13 @@
             'upgraded the',
             'to gain massive tactical advantage on the battle.'
         ],
-        userPrompt : 'Raconte tes accomplissements à tes amis et gagne 5 pièces de monnaie.'
+        userPrompt : 'Raconte tes accomplissements à tes amis et gagne 5 pièces de monnaie.',
+		invite : {
+            inviteMsg : 'Es-tu assez motivé pour défendre les terres arabes?',
+            userPrompt : 'Invite tes amis et gagne 50 pièces de monnaie par joueur.'
+        },
+        like : 'Félicitations, tu as gagné 500 pièces de monnaie pour avoir aimé notre jeu',
+        bookmark : 'Félicitations, tu as gagné 500 pièces de monnaie pour avoir ajouté notre signet.'
     },
 	game : {
 		tutorial : {
@@ -336,7 +342,13 @@
     ], 
 	controls: {
 		exit : "sortir",
-		reset : "remise"
+		reset : "remise",
+		like : 'J\'aime',
+		bookmark : 'Signet',
+		soundon : 'Son activé',
+		soundoff: 'Son desactivé',
+		level:'Niveau',
+		roger:'Entendu'
 	},
 	promotion: {
 		msg1 : 'Félicitations ',
