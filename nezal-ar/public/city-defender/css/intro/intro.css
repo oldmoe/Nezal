@@ -1050,16 +1050,16 @@ div.clickableButton:hover, span.clickableButton:hover
 }
 #marketPlace #floatBg .desc
 {
-  font-size:15px;
+  font-size:14px;
   font-weight:normal;
   line-height:130%;
   white-space:normal;
   word-wrap:break-word;
   color:#FAC200;
 }
-#intro.french #marketPlace #floatBg .desc
+#intro.arabic #marketPlace #floatBg .desc
 {
-  font-size:14px;
+  font-size:15px;
 }
 #marketPlace #floatBg .actions
 {
