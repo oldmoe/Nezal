@@ -219,7 +219,7 @@
 				msg2: '</br>Ton but sera d\'achever toutes les vagues d\'attaques venant de la part de l\'ennemie et de leur défendre de passer à travers ta ville.',
 				msg3: 'Tu peux toujours vérifier ton grade en haut à droite de la carte. </br>'
 		+'<br/> La barre d\'outils supérieure indique le progrès de ton grade, le nombre de vagues, ton score '
-		+'et le nombre d\'ennemie que tu dois esquiver et qui indique ta perte.</br>',
+		+'et le nombre d\'ennemie que tu dois esquiver et qui indique ta perte.<br/>',
 				msg4: 'Maintenant, il est temps de mettre en place quelques tours. Clique sur la tour Cracheur qui se trouve dans la boîte des tours.</br>'
 		+'Tu vas remarquer que les informations s\'affichent dans la boîte d\'infos.',
 				msg5: 'Clique ici pour placer la tour. ',
@@ -228,7 +228,7 @@
 				msg8: 'Clique sur la tour pour afficher ses capacités, la vendre ou l\'actualiser.',
 				msg9: 'Enfin, il y a un conseil que tu dois savoir avant de terminer ce stage. Les aéronefs ne respectent aucun itinéraire, ils survolent simplement TOUT.',
 				msg10:'C\'est bon, Soldat! Maintenant tu es prêt à défendre ta ville contre toute preuve d\'hostilité. Je suis certain que tu feras de ton mieux pour accomplir toutes les missions dont tu es chargé'
-		+'</br>N\'oublie pas de nous favoriser et de nous marquer pour avoir ta récompense. Bonne Chance!'
+		+'<br/>N\'oublie pas de nous favoriser et de nous marquer pour avoir ta récompense. Bonne Chance!'
 		},
 		upperBar : {
 			lives: 'Vies',

@@ -703,6 +703,19 @@ body{
   left : 300px;
   z-index : 202;
 }
+#modalWindow #ok img{
+	height:100%;
+	position:absolute;
+	width:185%;
+}
+#modalWindow #ok #rogerText{
+	color:gold;
+	padding:5px;
+	font-family:tahoma;
+	font-weight:bold;
+	position:absolute;
+	font-size:14px;
+}
 #popup
 {
 	position : absolute;

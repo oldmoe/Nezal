@@ -66,7 +66,8 @@
 					</div>
 				</div>
 				<div id = "ok">
-				<img src="images/background/ok.png"></img>
+					<img id="rogerImage" src="images/intro/ready.png"/>
+					<span id='rogerText'></span>
 				</div>
 			</div>
 			<div id= "pauseWindow" style="display:none">	</div>

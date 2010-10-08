@@ -197,7 +197,9 @@
 
 <script>
 		var friendsIds = null
+		var userID = 
 		FBConnect.init(function(){        
+			userID = FB.getSession().uid
 			var	query = FB.Data.query("SELECT uid FROM user WHERE is_app_user=1 and uid IN (SELECT uid2 FROM friend WHERE uid1 = {0})", FB.getSession().uid);
 			FB.Data.waitOn([query], function(){
 						friendsIds = query.value.collect(function(row){return Number(row.uid)}) 
@@ -223,8 +225,8 @@
 		}
 
 		function fillUsersData(response,callback){
-			getUserName(response['top'], function(){
-				response['top'].each(function(friend){    
+				getUserName(response['top'], function(){
+					response['top'].each(function(friend){    
 						getUserPhoto(friend)
 				})
 				if(response['top'].length<3) response['close'] =[]
@@ -252,6 +254,7 @@
 					parameters: { 'friends' : Object.toJSON(friendsIds).gsub(/\[/,"").gsub(/\]/,"") }, 
 					onSuccess : function(t){
 						var response = JSON.parse(t.responseText)
+						response = filterResponse(response)
 						fillUsersData(response,callback)
 					}
 				});
@@ -261,10 +264,24 @@
 							new Ajax.Request( url ,
 					     { method:'post',
 					            onSuccess : function(t){
-												var response = JSON.parse(t.responseText)
-												fillUsersData(response,callback)
+									var response = JSON.parse(t.responseText)
+									response = filterResponse(response)
+									fillUsersData(response,callback)
 					            }
 					      });
+		}
+		function filterResponse(response){
+			for(var i=0;i<response['top'].length;i++){
+				for(var j=0;j<response['close'].length;j++){
+					if(response['top'][i].id == response['close'][j].id)response['close'][j].id=-1
+				}
+			}
+			var actualClose = []
+			for(var j=0;j<response['close'].length;j++){
+				if(response['close'][j].id!=-1)actualClose.push(response['close'][j])
+			}
+			response['close'] = actualClose
+			return response
 		}
 		</script>		
 
@@ -276,17 +293,31 @@
                   'right' : 'images/right.png',
                   'right-disabled' :'images/right-disabled.png'
                   };
-				function prepareRanks(friends){
+				function prepareRanks(response){
+					var friends = response['close']
+					var top = response['top']
+					var inTop = false
 					if(!friends[0])return
-					var index = 0
-					var rank = 0
-					while(!friends[index]['rank']){
-						index ++
+					var mFriends = []
+					for(var i=0;i<top.length;i++){
+						if(top[i]&&top[i].id==userID)inTop = true
 					}
-					rank = friends[index]['rank']
-					for(var i=0;i<friends.length;i++){
-						if(friends[i])
-						friends[i]['rank'] = rank+i-index
+					if(inTop){
+						for(var i=0;i<friends.length;i++){
+							if(friends[i])
+							friends[i]['rank'] = 4+i
+						}
+					}else{
+						var index = 0
+						var rank = 0
+						while(!friends[index]['rank']){
+							index ++
+						}
+						rank = friends[index]['rank']
+						for(var i=0;i<friends.length;i++){
+							if(friends[i])
+							friends[i]['rank'] = rank+i-index
+						}
 					}
 					return index
 				}
@@ -299,7 +330,7 @@
 					$(div).removeClassName('active')
 				}
 				function renderResponse(response){
-					var activeIndex = prepareRanks(response['close'])			
+					var activeIndex = prepareRanks(response)			
 					$('container').innerHTML = template.process( {friends: response['close'], top_scorers :response['top'],top_ranks : ['1<sup>st</sup>', '2<sup>nd</sup>', '3<sup>rd</sup>']})
 					var friendsCarousel = new Carousel("friends-scroll", images);
 		           	friendsCarousel.displayCount = 3;
