@@ -24,7 +24,9 @@ var Sounds = {
 	gameSounds : {},
 	channels : [],
 	maxChannels : 10,
+	muted : false,
 	mute : function(){
+		Sounds.muted = true
 		soundManager.mute()
 		$$('.sound').first().stopObserving('click')
 		$$('.sound').first().removeClassName('on')
@@ -33,6 +35,7 @@ var Sounds = {
 	},
 	
 	soundOn: function(){
+		Sounds.muted = false
 		soundManager.unmute()
 		$$('.sound').first().stopObserving('click')
 		$$('.sound').first().removeClassName('off')
@@ -55,6 +58,7 @@ var Sounds = {
 	
 	play : function(store, direct){
 		if(!store)return
+		if(sounds.muted)return
 		if(direct){
 			store[0].play()
 			return 
