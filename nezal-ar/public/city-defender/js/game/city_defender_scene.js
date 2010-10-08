@@ -226,13 +226,13 @@ var CityDefenderScene = Class.create(Scene, {
 		$$(".start").first().observe('click', function(){self.pause()})
 	},
 	renderPause: function(){
-		Sounds.gameSounds.game[0].pause()
+		Sounds.pauseTrack()
 		$$('#gameElements #gameMenu').first().show()
 		$('pauseWindow').show()	
 		Sounds.play(Sounds.gameSounds.pause)
 	},
 	renderResume: function(){
-		Sounds.gameSounds.game[0].resume()
+		Sounds.resumeTrack()
 		$$('#gameElements #gameMenu').first().hide()
 		$('pauseWindow').hide()
 		soundManager.unmute()
@@ -337,7 +337,7 @@ var CityDefenderScene = Class.create(Scene, {
 						new Effect.Appear("result", {delay : 3.0})
 						game.scene.push(60,function(){
 							Sounds.play(Sounds.gameSounds[state])
-							Sounds.gameSounds.game[0].togglePause()
+							Sounds.togglePauseTrack()
 							$('pauseWindow').show()
 						})
 						game.scene.push(60,function(){self.displayStats()})
@@ -364,7 +364,7 @@ var CityDefenderScene = Class.create(Scene, {
 			new Effect.Appear("result", {delay : 3.0})
 			game.scene.push(60,function(){
 			$('pauseWindow').show()
-			Sounds.gameSounds.game[0].togglePause()
+			Sounds.gameSounds.togglePauseTrack()
 			Sounds.play(Sounds.gameSounds[state])
 			})
 			game.scene.push(60,function(){self.displayStats()})

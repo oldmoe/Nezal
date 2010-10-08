@@ -52,7 +52,22 @@ var Sounds = {
 		})
 		Sounds.channels = newChannels
 	},
-	
+	resumeTrack : function(){
+		if(!Sounds.gameSounds.game)return
+		Sounds.gameSounds.game[0].resume()
+	},
+	pauseTrack : function(){
+		if(!Sounds.gameSounds.game)return
+		Sounds.gameSounds.game[0].pause()
+	},
+	togglePauseTrack : function(){
+		if(!Sounds.gameSounds.game)return
+		Sounds.gameSounds.game[0].togglePause()
+	},
+	stopTrack : function(){
+		if(!Sounds.gameSounds.game)return
+		Sounds.gameSounds.game[0].stop()
+	},
 	play : function(store, direct){
 		if(!store)return
 		if(direct){

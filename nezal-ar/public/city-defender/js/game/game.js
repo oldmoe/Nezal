@@ -193,11 +193,11 @@ var Game = Class.create({
 				
 		$$('#gameElements .start').first().observe('click', function(){self.scene.startAttack()})
 		$('playAgain').observe('click',function(){
-			Sounds.gameSounds.game[0].stop()
+			SoundsstopTrack()
 			game.reset()})
 		$('exit').observe('click', game.exit)
 		$('gameExit').observe('click', function(){
-			Sounds.gameSounds.game[0].stop()
+			Sounds.stopTrack()
 			game.exit()})
 		$('gameReset').observe('click',function(){game.reset()})	
 		$('gameResume').observe('click', function(){game.scene.resume()})	
@@ -225,7 +225,7 @@ var Game = Class.create({
 	},
 	exit :function(){
 		$$('#gameElements #gameMenu').first().hide()
-		Sounds.gameSounds.game[0].togglePause()
+		Sounds.stopTrack()
 		game.scene.reactor.stop()
 		Intro.enablePauseScreen();
 		$('gameStart').hide()
@@ -280,7 +280,7 @@ function onFinish(){
 	window.setTimeout(function(){
 		$('gameElements').show();
 		$('canvasContainer').show();
-		Sounds.gameSounds.game[0].togglePause()
+		Sounds.togglePauseTrack()
 		$('static').show();
 		Effect.Fade('static',{duration: 1.0})
 	},100)

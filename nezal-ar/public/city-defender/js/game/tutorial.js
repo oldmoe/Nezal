@@ -106,7 +106,7 @@ var Tutorial = Class.create({
 		anim2.finish()
 		$('modalWindow').hide()
 		$$('#gameElements .start').first().stopObserving('click')
-		$$('#gameElements .startText').first().innerHTML = "Playing"
+		$$('#gameElements .startText').first().innerHTML = ""
 		this.scene.sendWaves(this.scene.config)
 	},
 	initiateSuperWeapon : function(){
