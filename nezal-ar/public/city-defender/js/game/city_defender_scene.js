@@ -39,7 +39,7 @@ var CityDefenderScene = Class.create(Scene, {
 		}else{
 			this.minExp = this.maxExp = 0
 		}
-		$$('.status').first().title = "XP :"+this.exp+"/"+(this.maxExp+1)
+		$$('.status').first().title = "XP: "+this.exp+"/"+(this.maxExp+1)
 		this.baseCtx = baseCtx;
 		this.upperCtx = upperCtx;
 		this.scenario = new Scenario(this)
@@ -50,6 +50,7 @@ var CityDefenderScene = Class.create(Scene, {
 		this.splash = new Splash(this, {count: 2, type:'splash'})
 		this.hyper = new Hyper(this, {count: 2, type:'hyper'})
 		this.templates = {}
+		this.coins=Intro.userData.coins
 		this.templates['towerInfo'] = TrimPath.parseTemplate($('towerInfoTemplate').value) 
 		this.templates['towerInfo'] = TrimPath.parseTemplate($('towerInfoTemplate').value) 
 		this.templates['stats'] = TrimPath.parseTemplate($('statsTemplate').value) 
@@ -239,6 +240,7 @@ var CityDefenderScene = Class.create(Scene, {
 	},
 	displayStats : function(){
 		$$('#score #scoreValue').first().innerHTML = this.score
+		$$('#coins #coinsValue').first().innerHTML = Intro.userData.coins - this.coins
 		//console.log(this.statsText)
 		if(this.statText){
 			if(this.statText.length == this.statTextIndex){
