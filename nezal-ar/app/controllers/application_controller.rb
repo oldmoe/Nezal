@@ -49,7 +49,8 @@ class ApplicationController < Sinatra::Base
   protected
     
   def get_fb_session
-	  LOGGER.debug "\n\n>>>>>>>>>>>>#{env}"
+	  LOGGER.debug	"\n\nehello I'm logging in\n\n\n"
+	  LOGGER.debug "\n\n>>>>>>>>>>>>#{env}\n\n\n"
 	  if env['rack.request.cookie_hash'] && 
 	        (fb_cookie = env['rack.request.cookie_hash']["fbs_#{@app_configs['id']}"] ||
            env['rack.request.cookie_hash']["fbs_#{@app_configs['key']}"])
