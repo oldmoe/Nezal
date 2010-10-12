@@ -114,4 +114,10 @@ class AdminController < ApplicationController
     klass.edit_campaign(@camp, params["data"])
     ''
   end
+  get '/:game_name/stats' do
+	game = Game.find_by_name(params[:game_name])
+	count = UserGameProfile.count(:conditions => "game_id = #{game.id}")
+	puts ">>>>#{count}"
+	 JSON.generate({'user count'=> count})
+  end
 end
