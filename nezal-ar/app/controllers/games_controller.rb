@@ -13,6 +13,9 @@ class GamesController < ApplicationController
   # get the game object metadata
   get '/:game_name/metadata' do 
     klass = get_helper_klass()
+    
+    puts ">>>>>>>>>>>>>>>>>>" + @game.inspect
+    
     game_metadata = klass.load(@game)
     user_metadata = klass.load_game_profile(@game_profile)
     ranks = {}
@@ -90,9 +93,31 @@ class GamesController < ApplicationController
     @game_profile.newbie = false;
     @game_profile.save
   end
+  
+  @@valid_gateways = ['195.58.177.2','195.58.177.3','195.58.177.4','195.58.177.5']
+  
+  # 0.1 => 1.5 EGP
+  # 1 => 7.5 EGP
+  # 2 => 16.5 EGP
+  @@packages = {"0.1" => 400, "1" => 2500, "2" => 7000}
+  
+  
+  get '/:game_name/daopay/confirmation' do
+    redirect payment_fault_redirection unless @@valid_gateways.include? request.ip    
+    @user.coins += @@packages[params["price"]]
+    @user.save
+    
+    erb :"#{@app_configs["game_name"]}/daopay_confirmation"
+  end
     
   get '/:game_name' do 
     File.read(File.join( 'public', @app_configs["game_name"], 'index.html'))
   end
-    
+  
+  protected
+  
+  def payment_fault_redirection
+    "/fb-games/#{@app_configs["game_name"]}/"
+  end
+  
 end
