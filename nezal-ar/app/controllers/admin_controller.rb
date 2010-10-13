@@ -118,7 +118,7 @@ class AdminController < ApplicationController
 	game = Game.find_by_name(params[:game_name])
 	totoalCount = UserGameProfile.count(:conditions => "game_id = #{game.id}")
 	newbieCount = UserGameProfile.count(:conditions => "game_id = #{game.id} AND newbie = 't'")
-	expneqz = UserGameProfile.count(:conditions => "game_id = #{game.id} AND exp != 0")
+	expneqz = UserGameProfile.count(:conditions => "game_id = #{game.id} AND exp = 0")
 	 return "user count = #{totoalCount} ||| newbieCount = #{newbieCount} ||| users exp not equal 0 = #{expneqz}"
   end
 end
