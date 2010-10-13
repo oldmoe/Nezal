@@ -116,8 +116,9 @@ class AdminController < ApplicationController
   end
   get '/:game_name/stats' do
 	game = Game.find_by_name(params[:game_name])
-	count = UserGameProfile.count(:conditions => "game_id = #{game.id}")
-	puts ">>>>#{count}"
-	 JSON.generate({'user count'=> count})
+	totoalCount = UserGameProfile.count(:conditions => "game_id = #{game.id}")
+	newbieCount = UserGameProfile.count(:conditions => "game_id = #{game.id} AND newbie = 't'")
+	expneqz = UserGameProfile.count(:conditions => "game_id = #{game.id} AND exp != 0")
+	 return "user count = #{totoalCount} ||| newbieCount = #{newbieCount} ||| users exp not equal 0 = #{expneqz}"
   end
 end
