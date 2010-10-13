@@ -2,141 +2,183 @@ var Tutorial = Class.create({
 	count: 0 ,
 	initialize: function(scene,ctx){
 		this.scene = scene
-		this.scene.money = 30
+		this.scene.money = 60
 		this.tutorialScene = new Scene(50)
 		this.tutorialLayer = new Layer(ctx);
 		this.tutorialLayer.clear = true
 		this.tutorialScene.layers.push(this.tutorialLayer)
+		var self =this
+		var arr = ['Splash','Heal','Hyper','Weak','Nuke']
 		this.tutorialScene.start()
-		this.content = $$('#modalWindow .content').first()
+		$$('#gameElements .superWeapons div').each(function(div){
+			div.hide()
+		})
+		this.content = $$('#modalWindow .innerContent').first()
 		this.ok = $$('#modalWindow #ok').first()
 		this.step1()
+	},
+	hide : function(){
+		$('modalWindow').hide()
 	},
 	step1 : function(){
 		$('modalWindow').show()
 		this.viewMessage(0)
 		var self = this
-		var next = false
-		function scroll(){
-			self.content.scrollTop +=2			
-			if(self.content.scrollTop<490&&!next)self.scene.push(100,scroll)
-		}
-		this.scene.push(50,scroll)
 		this.ok.observe('click',function(){
-		next = true
-		self.placeTower()
-		self.viewMessage(1)
-		self.ok.stopObserving('click')
-		/*
-			self.viewMessage(1);
 			self.ok.stopObserving('click')
+			self.viewMessage(1)
 			self.ok.observe('click',function(){
 				self.ok.stopObserving('click')
 				self.viewMessage(2)
 				self.ok.observe('click',function(){
-					self.ok.stopObserving('click')
 					self.viewMessage(3)
-					var anim = self.addArrowAnim(440,40)		
-					self.ok.observe('click',function(){
-						self.ok.stopObserving('click')
-						anim.finish()
-						self.viewMessage(4)
-						self.ok.observe('click',function(){
-							self.ok.stopObserving('click')
-							
-						})
-					})				
+					self.ok.stopObserving('click')
+					self.ok.observe('click',self.hide)
+					self.placeTower()
 				})
 			})
-			*/
 		})
 	},
 	viewMessage: function(num){
-		new Effect.Appear(this.content,{duration:0.5});
-		this.content.innerHTML = this.messages[num]
+		$('modalWindow').hide();	
+		Effect.Appear('modalWindow',{duration:0.5});
+		this.content.innerHTML = window.Text.game.tutorial['msg'+(num+1)]
 	},
 	
 	placeTower: function(){
+		this.ok.hide()
 		this.validate = GhostTurret.validate
-		GhostTurret.validate =function(x, y, tower){			
+		GhostTurret.validate =function(){			
 			GhostTurret.valid = true
-			if((x!=4||y!=4)){
+			if((this.xGrid!=5||this.yGrid!=4)){
 				GhostTurret.valid = false
 			}
 		}
-		var anim = this.addArrowAnim(490,130)
-		anim2 = this.addArrowAnim(490,400)
+		var anim = this.addArrowAnim(505,130)
+		anim2 = this.addArrowAnim(500,400)
 		var self = this
 		$$('.towers .Turret').invoke('observe','click', function(){self.step2(this,anim,anim2)})
 		
 	},
 	
 	step2 : function(div,anim,anim2){
+		$$('.towers .Turret').first().stopObserving('click')
+		$$('.towers .Turret').first().observe('click',function(){
+			GhostTurret.select(this)
+		})
+		$('modalWindow').show()
 		anim.finish()
 		anim2.finish()
 		GhostTurret.select(div)
 		var self = this
-		$('modalWindow').show()
 		self.ok.stopObserving('click')
-		self.viewMessage(2)					
+		self.ok.observe('click',self.hide)
+		self.viewMessage(4)					
 		anim.finish()					
-		anim = self.addVerticalArrowAnim(100,50)
-		$('droppingGround').observe('click',function(e){
-			var x = Math.floor(e.layerX/32)
-			var y = Math.floor(e.layerY/32)
+		anim = self.addVerticalArrowAnim(152,30)
+		self.droppingGroundClick = GhostTurret.droppingGroundClick
+		GhostTurret.droppingGroundClick = tutorialGroundClicked
+		function tutorialGroundClicked(e){
+			if(e.x){
+				var x = Math.floor(e.layerX/32)
+				var y = Math.floor(e.layerY/32)
+			}else{
+				var x = Math.floor(e.x/32)
+				var y = Math.floor(e.y/32)
+			}
 			GhostTurret.validate(x, y);
 			if(GhostTurret.valid){
+				anim2 = self.addVerticalArrowAnim(50,350)
+				GhostTurret.droppingGroundClick = self.droppingGroundClick
+				self.droppingGroundClick(e)
 				GhostTurret.validate = self.validate
 				anim.finish()
-				self.viewMessage(3)
+				self.viewMessage(5)
 			}
-		})
-		
-		$$('.towers .tower1').invoke('stopObserving','click')
-		$$('#gameElements .start').first().observe('click', function(){self.step3(anim)})
-		
-	},
-	step3 : function(anim){
-		if(this.count == 1){
-			var anim = this.addArrowAnim(440,150)
-			var self = this
-			this.scene.pause()
-			$('modalWindow').show()
-			this.viewMessage(4)
-			$$('#gameElements .superWeapons div').each(function(div){ 
-			if(div.className != ''){div.observe('click', function(){self.step4(div.className,anim)})}
-			})
-		} else{
-			anim.finish()
-			$('modalWindow').hide()
-			$$('#gameElements .start').first().stopObserving('click')
-			this.scene.startAttack()
-			this.count ++;
-			this.tutorialScene.push(10000,this.step3, this)
 		}
+		
+		$$('#gameElements .start').first().observe('click', function(){self.startAttack(anim,anim2)})
+		
 	},
-	step4 : function(weapon,anim){
+	startAttack : function(anim,anim2){
+		this.ok.show()
+		anim.finish()
+		anim2.finish()
 		$('modalWindow').hide()
-		this.scene.resume()
+		$$('#gameElements .start').first().stopObserving('click')
+		$$('#gameElements .startText').first().innerHTML = ""
+		this.scene.sendWaves(this.scene.config)
+	},
+	initiateSuperWeapon : function(){
+		var anim = this.addArrowAnim(440,130)
+		var self = this
+		this.scene.reactor.pause()
+		$('modalWindow').show()
+		this.viewMessage(6)
+		this.ok.hide()
+		$$('#gameElements .superWeapons .splash').first().show()
+		$$('#gameElements .superWeapons .splash').first().observe('click', function(){self.fireSuperWeapon("splash",anim)})
+	},
+	fireSuperWeapon : function(weapon,anim){
+		$('modalWindow').hide()
+		this.scene.reactor.resume()
 		anim.finish()
 		this.scene.fire(weapon)
-		$$('#gameElements .superWeapons div').each(function(div){ 
-			if(div.className != ''){div.stopObserving('click')}
-		})
-		this.scene.money = 120
-		this.viewMessage(11)
-		var self = this
-		$$('#gameElements .upgrades .upgrade.next').invoke('observe', 'click', function(){self.step5(anim)})	
-		$$('#gameElements .upgrades .upgradeItem').invoke('observe', 'click', Upgrades.select)
+		var self = this	
 		
 	},
-	step5 : function(anim){
-		anim.finish()
-		Upgrades.upgrade()
-		Intro.newbieNoMore(); 											//after tutorial is done
-		$$('#gameElements .upgrades .upgrade.next').invoke('stopObserving', 'click')	
-		$$('#gameElements .upgrades .upgradeItem').invoke('stopObserving', 'click')			
-
+	planesAttack : function (){
+		this.ok.show()
+		$('modalWindow').show()
+		var self = this
+		self.viewMessage(8)
+		self.scene.reactor.pause()
+		self.ok.stopObserving('click')
+		self.ok.observe('click',function(){self.scene.reactor.resume();self.hide()})
+	},
+	wishLuck : function (){
+		this.ok.show()
+		$('modalWindow').show()
+		var self = this
+		self.viewMessage(9)
+		self.scene.reactor.pause()
+		self.ok.stopObserving('click')
+		self.ok.observe('click',function(){
+			self.scene.reactor.pause()
+			//self.scene.promoteUser()
+			//$('popupClose').observe('click',function(){
+			//	$('popup').hide()
+				self.hide();Intro.newbieNoMore()
+				$("gameStart").innerHTML = Intro.templates['game'];
+			//})
+			//$('popupOk').observe('click',function(){
+			//	$('popup').hide()
+			//	self.hide();Intro.newbieNoMore()
+			//	$("gameStart").innerHTML = Intro.templates['game'];
+			//})
+			
+		})
+	},
+	upgradeTower : function (){
+		var self = this
+		self.scene.reactor.pause()
+		$('modalWindow').show()
+		self.ok.stopObserving('click')
+		self.ok.show()
+		self.ok.observe('click',function(){self.scene.reactor.resume();self.hide()})
+		self.viewMessage(7)
+	},
+	waveEffect : function (){
+		$('modalWindow').show()
+		var self = this
+		self.viewMessage(10)
+		self.scene.reactor.pause()
+		self.ok.stopObserving('click')
+		self.ok.observe('click',function(){
+			self.scene.reactor.resume();
+			self.hide()
+			self.scene.push(120,function (){game.tutorial.initiateSuperWeapon()})
+		})
 	},
 	addArrowAnim : function(x,y){
 		var anim = new ArrowAnimation(x, y)
@@ -150,19 +192,20 @@ var Tutorial = Class.create({
 		this.tutorialScene.objects.push(anim)
 		return anim
 	},
-	messages : ["</br></br></br></br></br>Welcome RANK NAME to the academy of defense.</br>"
+	messages : ["Welcome to the academy of defense.</br>"
 	+"</br>During this training period, you will get all the required information, and gain the basic skills that are needed to defend your city against any hostile activities. </br>"
-	+"</br></br>Your goal is to kill all coming waves of enemy units and prevent them from passing to your city </br>"
-	+"</br></br>You can always see your current rank at the top right of the map </br>"
-	+"</br></br>The upper bar indicates your rank progress, the wave number, your score in this game and the remaining enemy units to escape that indicate your loss</br>",
-	"</br></br>Now it is time to place some towers. Click on the Belcher tower in the towers box.</br>"
-	+"Notice that the tower information are now visible in the information box.",
-	"Click here to place the tower. ",
+	,"</br>Your goal is to kill all coming waves of enemy units and prevent them from passing to your city </br>",
+	"You can always see your current rank at the top right of the map </br>"
+	+"</br>The upper bar indicates your rank progress, the wave number, your score in this game and the remaining enemy units to escape that indicate your loss</br>",
+	"Now it is time to place some towers. Click on the Belcher tower in the towers box.</br>"
+	+"Notice that the tower information will be visible in the information box.",
+	"Click on the highlighted area to place the tower. ",
 	"Place more towers as long as you have enough gold. then press start to begin the battle",
 	"You can always use super weapons on demand. ",
-	"As a tower kills more enemy units, it gets auto promotion that makes it stronger.",
+	"click on a tower to see it's abilities, sell or upgrade it",
 	"Finally, there is an important hint you need to know before finishing this training. Air units do not respect any path, they simply fly over anything.",
-	"That is it soldier, you are now ready to defend your city against any hostile activities. I am sure you will do your best to complete all missions assigned to you.",
-	"Do not forget to like us and bookmark  us to get a nice reward. Good Luck."]
+	"That is it soldier, you are now ready to defend your city against any hostile activities. I am sure you will do your best to complete all missions assigned to you."
+	+"</br>Do not forget to like us and bookmark  us to get a nice reward. Good Luck.",
+	"After each wave enemies get stronger, so prepare yourself well"]
 	
 })

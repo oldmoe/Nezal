@@ -54,8 +54,21 @@ var NukeBoom = Class.create(Animation, {
 	dx : 640,
 	dy : 480,
 	initImages : function(){
-		this.frames = Loader.animations.nuke_boom
- 	}
+		this.frames = Loader.images.weapons
+ 	},
+	render : function(ctx){
+		var shadeImage = ""
+		if(this.currentFrame==1)shadeImage="1"
+		else if (this.currentFrame>=2 &&this.currentFrame<=4)shadeImage="2_4"
+		else if (this.currentFrame>=5 &&this.currentFrame<=9)shadeImage="5_9"
+		else if (this.currentFrame>=10 &&this.currentFrame<=14)shadeImage="10_14"
+		else if (this.currentFrame>=15 &&this.currentFrame<=16)shadeImage="15_16"
+		else if (this.currentFrame>=17 &&this.currentFrame<=20)shadeImage="17_20"
+		if(this.frames[this.currentFrame+'.png']){
+			ctx.drawImage(Loader.images.weapons[shadeImage+'_shade.png'], this.x-this.dx/2, this.y-this.dy/2)
+			ctx.drawImage(this.frames[this.currentFrame+'.png'], this.x-this.dx/2, this.y-this.dy/2)
+		}
+	}
 })
 
 var CoinsAnimation = Class.create(Animation, {
@@ -113,10 +126,12 @@ var WeakAnimation = Class.create(Animation, {
 		game.scene.creeps.each(function(creep){
 			ctx.drawImage(Loader.images.game['weak.png'], creep.x - 16, creep.y - 16)
 		})
-	},
+	}
 })
 var MoneyAnimation = Class.create(Animation, {
 	increment : 0,
+	step : 3,
+	totalMovement : 30,
 	initialize: function($super,x,y,money){
 		this.money = money
 		$super(x,y)
@@ -130,17 +145,23 @@ var MoneyAnimation = Class.create(Animation, {
 	    var divIdName = 'moneyAnimation';
 	    this.div.setAttribute('id',divIdName);
 		this.div.style.position = "absolute"
-		this.div.style.top = this.y
-		this.div.style.left = this.x
+		this.div.style.top = this.y+"px"
+		this.div.style.left = this.x+"px"
 		this.image = Loader.animations.coins[this.currentFrame+'.png']
 		this.parent.appendChild(this.div);
 		
 	},
+	enlarge : function(text){
+		this.step = 2
+		this.div.innerHTML = text
+		this.div.style.fontSize = "13px"
+	},
+	
 	tick : function(){
-		if(this.increment == 30)this.finish()
-			this.increment +=3
-			this.y-=3
-			this.div.style.top = this.y
+		if(this.increment == this.totalMovement)this.finish()
+			this.increment +=this.step
+			this.y-=this.step
+			this.div.style.top = this.y+"px"
 	},
 	finish : function($super){
 		$super()

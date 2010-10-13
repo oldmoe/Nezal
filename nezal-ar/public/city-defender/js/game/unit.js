@@ -72,5 +72,5 @@ var Unit = Class.create({
 	rate: 0.2, toFire: 0,
 	reloded: true,	fired: false,
 	power: 2.5, range: 2,
-	x: 0, y: 0, gridX: 0, gridY: 0,
+	x: 0, y: 0, gridX: 0, gridY: 0
 })

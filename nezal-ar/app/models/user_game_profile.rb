@@ -8,9 +8,7 @@ class UserGameProfile < ActiveRecord::Base
   validates_uniqueness_of :game_id, :scope => :user_id
   
   before_save do
-    puts "Inside Before save"
     if ( self.rank.nil? && self.game_id )
-      puts "Inside if"
       self.rank = Game.find(self.game_id).ranks.first(:order => :lower_exp)
     end
   end

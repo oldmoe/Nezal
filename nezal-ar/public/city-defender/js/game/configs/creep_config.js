@@ -7,36 +7,36 @@
       about creeps involved in the mission
 */
 var CreepConfig = {
-    "BlackTank" : { name : "A30 Avenger",
+    "BlackTank" : { 
                     image : 'black_tank.png', 
-                    skeleton : 'black_tank_skeleton.png',
-                    desc : "The A30 is a heavy armored tank, it is not easy to get destroyed as it survives in difficult situations." },
-    "RedTank" : { name : "M18 HellCat",
+                    skeleton : 'black_tank_skeleton.png'
+                  },
+    "RedTank" : { 
                   image : 'red_tank.png', 
-                  skeleton : 'red_tank_skeleton.png',
-                  desc : "The M18 is a gun motor carriage tank, it has high fire power that can cause mass destruction." },
-    "Tank" : {  name : "M48 Patton",
+                  skeleton : 'red_tank_skeleton.png'
+                },
+    "Tank" : {  
                   image : 'tank.png', 
-                  skeleton : 'tank_skeleton.png',
-                  desc : "The M48 is a medium gun tank, it is mainly used as a reinforcement unit. It is a primary tank during war." },                  
-    "TankI" : {  name : "M42 Duster",
+                  skeleton : 'tank_skeleton.png'
+              },                  
+    "TankI" : {  
                   image : 'tank_i.png', 
-                  skeleton : 'tank_i_skeleton.png',
-                  desc : "The M42 is a self-propelled medium tank, it acts as a basic main battle tank." },
-    "TankII" : {  name : "M41 Walker",
+                  skeleton : 'tank_i_skeleton.png'
+              },
+    "TankII" : {  
                   image : 'tank_ii.png', 
-                  skeleton : 'tank_ii_skeleton.png',
-                  desc : "The M41 is a light tank, it has an extremely high speed that makes it move faster than any other tank." },
-    "Humvee" : {  name : "Humveee",
+                  skeleton : 'tank_ii_skeleton.png'
+                },
+    "Humvee" : {  
                   image : 'humvee.png', 
-                  skeleton : 'humvee_skeleton.png',
-                  desc : "Humvee is a high mobility multipurpose wheeled vehicle, it is among the most capable all-terrain vehicles in the world." },
-    "RedPlane" : {  name : "F-22 Raptor",
+                  skeleton : 'humvee_skeleton.png'
+               },
+    "RedPlane" : {  
                     image : 'red_plane.png',
-                    skeleton : 'red_plane_skeleton.png',
-                    desc : "The F-22 is an air dominance fighter, It is widely regarded as the most advanced fighter in the world." },
-    "Plane" : {  name : "F-15 Eagle",
+                    skeleton : 'red_plane_skeleton.png'
+                 },
+    "Plane" : {  
                     image : 'plane.png',
-                    skeleton : 'plane_skeleton.png',
-                    desc : "The F-15 is an extremely maneuverable, tactical fighter designed to gain and maintain air superiority in combats." }
+                    skeleton : 'plane_skeleton.png'
+             }
 }

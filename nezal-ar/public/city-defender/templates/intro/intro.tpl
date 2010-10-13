@@ -1,3 +1,26 @@
+<textarea id='congratesTemplate' style="display:none">
+  <div id="character">
+	  <img class="congratesBg" src="${Loader.images.intro['character.png'].getAttribute('data')}"/>
+  </div>
+  <div class="content"> 
+	  <div class="msg">
+	    ${msg}
+	  </div>
+  </div>
+  <div class="ok">
+    <div style="display:inline-block; height : 10px; width : 140px;">
+    </div>
+    <div style="display:inline-block;" onclick="Intro.hideCongrates()" class="clickableButton clickSound">
+        {if ($('intro').getStyle('direction')=='ltr') }
+          <img src="${Loader.images.intro['ready.png'].getAttribute('data')}" style="width:80px;"/>
+        {else}
+          <img src="${Loader.images.intro['back.png'].getAttribute('data')}" style="width:80px;"/>
+        {/if}
+	    <div id='rogerText'>${Text.game.controls.roger}</div>
+    </div>
+  </div>
+</textarea>
+
 <textarea id='challengesTemplate' style="display:none">
     {for challenge in challenges}
     <div class="challenge" title="${challenge["campaign"]['path']}" id="challenge_${challenge["campaign"]['name']}">
@@ -13,64 +36,149 @@
     {/for}
 </textarea>
 
-
 <textarea id='levelSelectionTemplate' style="display:none">
-		<div id = "challengesText" style = "position : absolute;" > ${Text.intro.levelSelection.title} </div>
-    <img id="levelsBackground" src="${Loader.images.intro['level-selection.png'].src}"/>
-    <img id="gameName" src="${Loader.images[GameConfigs.language]['game-name.png'].src}" class="gameName"/>
-    <div id="levels">
-        <img id='levelsLinks' src="${Loader.images.intro['difficulty.png'].src}"/>
-        <div id="easy" onclick="GameConfigs.level=1; Intro.next(); return false;" class="clickSound">
+    <div id="background">
+      <img id="paper" src="${Loader.images.intro['paper.png'].getAttribute('data')}"/>
+      <img id="introText" src="${Loader.images.intro['text.png'].getAttribute('data')}"/>
+      <img id="logo" src="${Loader.images.intro['logo.png'].getAttribute('data')}"/>
+      <img id="title" src="${Loader.images.intro['title.png'].getAttribute('data')}"/>
+      <img id="blank" src="${Loader.images.intro['blank.png'].getAttribute('data')}"/>
+      <img id="titleAr" src="${Loader.images.intro['title-ar.png'].getAttribute('data')}"/>
+    </div>
+    {for lang in Language.langsNames}
+      {if (lang[0]==Language.userLanguage)}
+          <div  id="selectedLang" class="clickableButton clickSound" 
+                onclick="$$('#levelSelection #language')[0].toggle(); return false;">
+            <img id="selected" src="${Loader.images.intro['language.png'].getAttribute('data')}"/>
+            <div class="selectedLangContainer">
+                ${lang[1]}  
+            </div>
+          </div>
+      {/if}
+    {/for}
+    <div id="language" style="display:none;">
+      {for lang in Language.langsNames}
+        {if !(lang[0]==Language.userLanguage)}
+          <div style="height : 25px;" language="${lang[0]}" class="clickSound clickableButton"
+                onclick="Intro.selectLanguage(this)">
+            ${lang[1]}
+          </div>
+        {/if}
+      {/for}
+    </div>
+		<div id = "msg" class="msgSize"> ${Text.intro.levelSelection.msg} </div>
+		<div id="tutorial"> 
+		  <div style="width : 70%; display:inline-block; height:10px;"></div>
+		  <div class="clickableButton clickSound tutorialText" onclick="Intro.displayTutorial(); return false;">
+  		  ${Text.intro.levelSelection.tutorial} 
+		  </div>
+	  </div>
+		<div id = "challengesText" class="title titleSize clickableButton clickSound"
+	       onclick="this.removeClassName('clickableButton');
+          	      this.addClassName('clicked');
+          	      if(this.hasClassName('clickSound'))
+            	      Sounds.play(Sounds.gameSounds.click);
+          	      this.removeClassName('clickSound');
+          	      this.stopObserving('click');
+          	      $$('#levelSelection #levels')[0].show(); return false;"> ${Text.intro.levelSelection.title} </div>
+    <div id="levels" style="display : none;" class="levels">
+        <span id="easy" onclick="GameConfigs.level=1; Intro.next(); return false;" class="levelSize clickSound">
           ${Text.intro.levelSelection.easy}
-        </div>
-        <div id="medium" onclick="GameConfigs.level=2; Intro.next(); return false;" class="clickSound">
+          <span style="font-size:14px;text-transform:lowercase;"> 1 </span>
+          <span style="font-size:14px;text-transform:lowercase;"> ${Text.intro.levelSelection.score} </span>
+        </span>
+        <span id="medium" onclick="GameConfigs.level=2; Intro.next(); return false;" class="levelSize clickSound">
           ${Text.intro.levelSelection.medium}
-        </div>
-        <div id="hard" onclick="GameConfigs.level=3; Intro.next(); return false;" class="clickSound">
+          <span style="font-size:14px;text-transform:lowercase;"> 2 </span>
+          <span style="font-size:14px;text-transform:lowercase;"> ${Text.intro.levelSelection.score} </span>
+        </span>
+        <span id="hard" onclick="GameConfigs.level=3; Intro.next(); return false;" class="levelSize clickSound">
           ${Text.intro.levelSelection.hard}
-        </div>
+          <span style="font-size:14px;text-transform:lowercase;"> 3 </span>
+          <span style="font-size:14px;text-transform:lowercase;"> ${Text.intro.levelSelection.score} </span>
+        </span>
+    </div>
+		<div id="extraMap" class="title titleSize clickableButton clickSound" style="display : none;"
+		      onclick="this.removeClassName('clickableButton');
+          	      this.addClassName('clicked');
+          	      if(this.hasClassName('clickSound'))
+            	      Sounds.play(Sounds.gameSounds.click);
+          	      this.removeClassName('clickSound');
+          	      this.stopObserving('click');
+          	      $$('#levelSelection #extraLevels')[0].show(); return false;"> ${Text.intro.levelSelection.extraMaps} </div>
+    <div id="extraLevels" style="display : none;" class="levels">
+        <span id="easy" onclick="GameConfigs.level=1; Intro.next(); return false;" class="levelSize clickSound">
+          ${Text.intro.levelSelection.easy}
+          <span style="font-size:14px;text-transform:lowercase;"> 1 </span>
+          <span style="font-size:14px;text-transform:lowercase;"> ${Text.intro.levelSelection.score} </span>
+        </span>
+        <span id="medium" onclick="GameConfigs.level=2; Intro.next(); return false;" class="levelSize clickSound">
+          ${Text.intro.levelSelection.medium}
+          <span style="font-size:14px;text-transform:lowercase;"> 2 </span>
+          <span style="font-size:14px;text-transform:lowercase;"> ${Text.intro.levelSelection.score} </span>
+        </span>
+        <span id="hard" onclick="GameConfigs.level=3; Intro.next(); return false;" class="levelSize clickSound">
+          ${Text.intro.levelSelection.hard}
+          <span style="font-size:14px;text-transform:lowercase;"> 3 </span>
+          <span style="font-size:14px;text-transform:lowercase;"> ${Text.intro.levelSelection.score} </span>
+        </span>
     </div>
 </textarea>
 
 
 <textarea id='campaignTemplate' style="display:none">
-    <img id="campaign-bg" src="${Loader.images.intro['campaign/campaign-bg.png'].src}"/>
-    <div class="camp-details">
-      <div class="name">
-        ${camp['name']}
-      </div>
-      <div class="desc">
-        ${camp['description']}
-      </div>
+    <div id="background">
+      <img src="${Loader.images.intro['background.png'].getAttribute('data')}"/>
+      <img id="paper" src="${Loader.images.intro['paper.png'].getAttribute('data')}"/>
     </div>
-    <img id="camp-map" src="${Loader.challenges[GameConfigs.campaign]['images/camp-map.png'].src}"/>
+    <div class="camp-info">
+      <div class="camp-details">
+        <div class="name">
+          ${camp['name']}
+        </div>
+        <div class="desc">
+          ${camp['description']}
+        </div>
+      </div>
+      <img id="camp-map" src="${Loader.challenges[GameConfigs.campaign]['images/flag.png'].getAttribute('data')}"/>
+    </div>  
     <div id="missions">
-      {for mission in Intro.campaignInfo.camp_data.metadata }
-          {if (Intro.campaignInfo.user_data.metadata.missions[mission['order'] - 1]) }  
+      {for mission in Intro.campaignData.camp_data.metadata }
+          {if ( (Intro.campaignData.user_data.metadata.levels[(GameConfigs.level).toString()] >= mission['order']) && 
+                 (Intro.campaignData.user_data.metadata.missions[[mission.order]-1]) ) }  
             <div class="mission clickableButton">
               <div path="${mission['path']}" onclick="Intro.selectMission(this); Intro.next();" class="clickSound" >
                 <img id="${mission['path']}" 
-                   src="${Loader.challenges[GameConfigs.campaign]['images/'+mission.path+'/mission_active.png'].src}"/>
+                   src="${Loader.challenges[GameConfigs.campaign]['images/'+mission.path+'/mission_active.png'].getAttribute('data')}"/>
+              </div>
+              <div class="missionScore">
+                ${Intro.campaignData.user_data.metadata.missions[[mission.order]-1].score}
               </div>
               <div class="missionName">
-                ${mission['name']}
+                ${Intro.campaignData.missionsInfo[mission.path]['name']}
               </div>
             </div>
           {else}
             <div class="mission">
               <img id="${mission['path']}" 
-                 src="${Loader.challenges[GameConfigs.campaign]['images/'+mission.path+'/mission_inactive.png'].src}"/>
+                 src="${Loader.challenges[GameConfigs.campaign]['images/'+mission.path+'/mission_inactive.png'].getAttribute('data')}"/>
               <div class="missionName">
-                ${mission['name']}
+                ${Intro.campaignData.missionsInfo[mission.path]['name']}
               </div>
             </div>
           {/if}
       {/for}
     </div>
-    <div id="back" onclick="Intro.previous();" class="clickableButton clickSound">
-      <img src="${Loader.images.intro['back.png'].src}"/>
-      <div class="text buttonText">
-        Back
+    <div id="backContainer">
+      <div id="back" onclick="Intro.previous();" class="clickableButton clickSound">
+        {if ($('intro').getStyle('direction')=='rtl') }
+          <img src="${Loader.images.intro['ready.png'].getAttribute('data')}"/>
+        {else}
+          <img src="${Loader.images.intro['back.png'].getAttribute('data')}"/>
+        {/if}
+        <div class="text buttonText">
+            ${Text.intro.campaign.back}
+        </div>
       </div>
     </div>
 </textarea>
@@ -78,8 +186,6 @@
 
 <textarea id='missionTemplate' style="display:none">
     <div id="floatBg" style="display : none;">
-      <img src="${Loader.images.intro['mission/float-bg.png'].src}"></img>
-      <div id="close" onclick="Intro.hideFloatBg();" class="clickSound"></div>
       <div class="content"> 
         <div class="spans">
           <span class="name">   </span>
@@ -90,35 +196,43 @@
           <img src=""></img>
         </div>
       </div>
+      <div id="close" onclick="Intro.hideFloatBg();" class="clickSound"> X </div>
     </div>
-    <img id="missionBackground" src="${Loader.images.intro['mission/mission-bg.png'].src}"></img>
+    <div id="background">
+      <img src="${Loader.images.intro['background.png'].getAttribute('data')}"/>
+      <img id="paper" src="${Loader.images.intro['paper.png'].getAttribute('data')}"/>
+      <img id="character" src="${Loader.images.intro['mission/character.png'].getAttribute('data')}"/>
+      <img id="buble" src="${Loader.images.intro['mission/buble.png'].getAttribute('data')}"/>
+      <img id="mapBackground" src="${Loader.images.intro['mission/map.png'].getAttribute('data')}"/>
+      <img id="creepBackground" src="${Loader.images.intro['mission/creep.png'].getAttribute('data')}"/>
+    </div>
     <div id="cityName">
         ${city.name}
     </div>
-    <div id="cityDesc">
+    <div id="cityDesc" class="desc">
         ${city.summary}
     </div>
     <div id="cityImage">
-        <img src="${Loader.challenges[GameConfigs.campaign]['images/camp-map.png'].src}">
+        <img src="${Loader.challenges[GameConfigs.campaign]['images/flag.png'].getAttribute('data')}">
     </div>
-    <div id="fullDesc">
+    <div id="fullDesc" class="desc">
         ${city.description}    
     </div>
     <div id="cityMap">       
-      <img src="${Loader.challenges[GameConfigs.campaign]['images'+path+'/path.png'].src}"
+      <img src="${Loader.challenges[GameConfigs.campaign]['images'+path+'/path.png'].getAttribute('data')}"
            style="width:222px;">
     </div>
-    <div id="accept" onclick="Intro.next();" class="clickableButton clickSound">
-      <img src="${Loader.images.intro['mission/accept.png'].src}" >
+    <div id="accept" onclick="Intro.next();" class="clickableButton acceptSound">
+      <img src="${Loader.images.intro['mission/accept.png'].getAttribute('data')}" >
       <div class="text buttonText">
-        Accept
+        ${Text.intro.mission.accept}
       </div>
     </div>
-    <div id="reject" onclick="Intro.previous();" class="clickableButton clickSound">
-      <span style="color : #550000; font-size: 12px;">or</span> go back to campaign
+    <div id="reject" onclick="Intro.previous();" class="clickableButton rejectSound">
+      <span style="color : #550000; font-size: 12px;">${Text.intro.mission.or}</span> ${Text.intro.mission.goBack}
     </div>
     <div class="creepsHeadline">
-      Intelligence suggests that the enemy is sending these forces :
+      ${Text.intro.mission.msg}
     </div>
     <div id="creeps">
 	      <div id="creeps-scroll">
@@ -130,7 +244,7 @@
 		          <ul id='creeps-ul'>
     		        {for creep in city.creeps }
     		          <li creepid="${creep}" onclick="Intro.showFloatBg(this)" class="clickSound">
-    		            <img src="${Loader.images.intro['creeps/'+creepConfig[creep]['image']].src}" > </img>
+    		            <img src="${Loader.images.intro['creeps/'+creepConfig[creep]['image']].getAttribute('data')}" > </img>
     		          </li>
 		            {/for}
 		          </ul>
@@ -144,182 +258,346 @@
     <div id="creepBar">
     </div>
     <div id="stamp">
-      <img src="${Loader.images.intro[GameConfigs.language]['confidintial-stamp.png'].src}"> </img>
+      <img src="${Loader.images[GameConfigs.language]['confidintial-stamp.png'].getAttribute('data')}"> </img>
     </div>
 </textarea>
 
 
 <textarea id='marketItemDetailsTemplate' style="display:none">
-    <img src="images/intro/market/float-bg.png"></img>
-    <div id="close" onclick="Intro.hideFloatBg();" class="clickSound"></div>
+{if (data.upgrade)}
+  <div id="upgrade">
+{/if}
     <div class="content"> 
       <div class="spans">
-        <div class="name">  ${data.configs[data.itemid]['name']} </div>
+        <div class="name">  ${Text.intro[data.translateName][data.itemid]['name']} </div>
         <div class="desc">  
-          ${data.configs[data.itemid]['desc']} 
+          ${Text.intro[data.translateName][data.itemid]['desc']} 
         </div>
       </div>
-      <div class="image">
-        <div class="skeleton">
-          <img src="${Intro.images.path}${data.type}/${data.configs[data.itemid]['skeleton']}"></img>
-        </div>
-        <div class="cost">
-            <div class="img">
-              <img src="images/intro/market/coin.png"></img>
-            </div>
-            <div class="value">
-              ${data.cost}  
-            </div>
-        </div>
-      </div>
-    </div>
-    <div class="actions">
-      <div class='rank'>
-        <span {if (data.rank[0] > data.exp)} "style="color:red;" {/if}>
-          Required Rank : 
-        </span>
-        <img src="images/intro/ranks/${data.rank[1]}.png"> </img>
-      </div>
-      <div class="action  clickableButton">
-          {if ((!Intro.gameData[data.type][data.itemid]['unlocked']) && (Intro.userData.metadata[data.type].indexOf(data.itemid) < 0 ) )}
-            {if ((data.cost > data.coins) || ( data.rank[0] > data.exp))}
-              <span class="inactive"> unlock </span>
-              {if (data.cost > data.coins)}
-                <div class="addMoney" >
-                  <img src="images/intro/market/money.png" > </img>
+      {if (data.upgrade && data.type=='towers')}
+        <div class="upgradeInfo">
+            <div class="parent"> 
+                <span class="towerText beforeText">
+                  ${data.currUpgrade.power}
+                </span>
+                <div class="bar">
+                  <div class="barRed" 
+                        style="width : ${Math.round(data.currUpgrade.power * 100 / Intro.gameData[data.type][data.itemid].upgrades.last().power)}%;">
+                  </div>
+                  <div class="barYellow"
+                        style="width : ${Math.round((data.nextUpgrade.power-data.currUpgrade.power) * 100 / Intro.gameData[data.type][data.itemid].upgrades.last().power)}%;">
+                  </div>
+                  <div class="optionName"> ${Text.intro.upgrades.power} </div>
                 </div>
-              {/if}
-            {else}
-              <span class="active action clickSound" itemid="${data.itemid}" type="${data.type}" onclick="Intro.unlockItem(this);"> unlock </span>
-            {/if}
+                {if ( data.nextUpgrade != data.currUpgrade ) }
+                  <span class="towerText">
+                    ${data.nextUpgrade.power}
+                  </span>
+                {/if}
+            </div>
+            <div class="parent"> 
+                <span class="towerText beforeText">
+                  ${data.currUpgrade.range}
+                </span>
+                <div class="bar">
+                  <div class="barRed" 
+                        style="width : ${Math.round(data.currUpgrade.range * 100 / Intro.gameData[data.type][data.itemid].upgrades.last().range)}%;">
+                  </div>
+                  <div class="barYellow"
+                        style="width : ${Math.round((data.nextUpgrade.range-data.currUpgrade.range) * 100 / Intro.gameData[data.type][data.itemid].upgrades.last().range)}%;">
+                  </div>
+                  <div class="optionName"> ${Text.intro.upgrades.range} </div>
+                </div>
+                {if ( data.nextUpgrade != data.currUpgrade ) }
+                  <span class="towerText">
+                    ${data.nextUpgrade.range}
+                  </span>
+                {/if}
+            </div>
+            <div class="parent"> 
+                <span class="towerText beforeText">
+                  ${data.currUpgrade.maxHp}
+                </span>
+                <div class="bar">
+                  <div class="barRed" 
+                        style="width : ${Math.round(data.currUpgrade.maxHp * 100 / Intro.gameData[data.type][data.itemid].upgrades.last().maxHp)}%;">
+                  </div>
+                  <div class="barYellow"
+                        style="width : ${Math.round((data.nextUpgrade.maxHp-data.currUpgrade.maxHp) * 100 / Intro.gameData[data.type][data.itemid].upgrades.last().maxHp)}%;">
+                  </div>
+                  <div class="optionName"> ${Text.intro.upgrades.maxHp} </div>
+                </div>
+                {if ( data.nextUpgrade != data.currUpgrade ) }
+                  <span class="towerText">
+                    ${data.nextUpgrade.maxHp}
+                  </span>
+                {/if}
+            </div>
+            <div class="parent"> 
+                <span class="towerText beforeText">
+                  ${data.currUpgrade.rate*100}
+                </span>
+                <div class="bar">
+                  <div class="barRed" 
+                        style="width : ${Math.round(data.currUpgrade.rate * 100 / Intro.gameData[data.type][data.itemid].upgrades.last().rate)}%;">
+                  </div>
+                  <div class="barYellow"
+                        style="width : ${Math.round((data.nextUpgrade.rate-data.currUpgrade.rate) * 100 / Intro.gameData[data.type][data.itemid].upgrades.last().rate)}%;">
+                  </div>
+                  <div class="optionName"> ${Text.intro.upgrades.rate} </div>
+                </div>
+                {if ( data.nextUpgrade != data.currUpgrade ) }
+                  <span class="towerText">
+                    ${data.nextUpgrade.rate*100}
+                  </span>
+                {/if}
+            </div>
+        </div>
+      {/if}
+      {if (data.upgrade && data.type=='weapons')}
+        <div class="upgradeInfo">
+          <div class="desc currUpgrade">
+            ${Text.intro.upgrades[data.itemid][Intro.userData.metadata[data.type][data.itemid]['upgrades']-1]}
+          </div>
+          {if ( data.nextUpgrade != data.currentUpgrade ) }
+            <div class="desc newUpgrade">
+              ${Text.intro.upgrades[data.itemid][Intro.userData.metadata[data.type][data.itemid]['upgrades']]}
+            </div>
           {/if}
+        </div>
+      {/if}
+      <div class="image">
+        <div>
+          <div style="width:88px; display : inline-block; height : 5px;"> </div>
+          <div id="close" onclick="Intro.hideFloatBg();" class="clickSound">x</div>
+        </div>
+        <div class="skeleton">
+          <img src="${Loader.images.intro[data.type+'/'+data.configs[data.itemid]['skeleton']].getAttribute('data')}" 
+            {if (data.type=='weapons')}
+              style="padding-top : 20px;"
+            {/if}
+           />
+        </div>
+        {if ( !( data.upgrade && (data.nextUpgrade == data.currUpgrade))  ) }
+          <div class="cost">
+              <div class="img">
+                <img src="${Loader.images.intro['market/coin.png'].getAttribute('data')}"></img>
+              </div>
+              <div class="value">
+                ${data.cost}  
+              </div>
+          </div>
+        {/if}
       </div>
     </div>
+    {if ( !( data.upgrade && (data.nextUpgrade == data.currUpgrade))  ) }
+        <div class="actions">
+          <div class='rank'>
+            <span {if (data.rank[0] > data.exp)} "style="color:red;" {/if}>
+              ${Text.intro.marketPlace.requiredRank} :
+            </span>
+            <img src="${Loader.images.intro['ranks/'+data.rank[1]+'.png'].getAttribute('data')}"> </img>
+          </div>
+          <div class="action">
+              {if (!Intro.userData.metadata[data.type][data.itemid])}
+                {if ((data.cost > data.coins) || ( data.rank[0] > data.exp))}
+                <div  class="inactive">
+                  <span> ${Text.intro.marketPlace.unlock} </span>
+                </div>
+                {else}
+                <div class="active">
+                  <span class="clickableButton clickSound" itemid="${data.itemid}" 
+                        type="${data.type}" onclick="Intro.unlockItem(this);"> 
+                      ${Text.intro.marketPlace.unlock}
+                  </span>
+                </div>
+                {/if}
+              {else}
+                {if (data.upgrade)}
+                    {if (Intro.userData.metadata[data.type][data.itemid]['upgrades'] < 
+                             Intro.gameData[data.type][data.itemid]['upgrades'].length )}
+                   
+                        {if ((data.cost > data.coins) || ( data.rank[0] > data.exp))}
+                          <div  class="inactive">
+                            <span> ${Text.intro.marketPlace.upgrade} </span>
+                          </div>
+                        {else}
+                          <div class="active">
+                            <span class="clickableButton clickSound" itemid="${data.itemid}" 
+                                  type="${data.type}" onclick="Intro.upgradeItem(this);"> 
+                                ${Text.intro.marketPlace.upgrade}
+                            </span>
+                          </div>
+                        {/if}
+                    {/if}
+                {else}
+                    <div  class="inactive"></div>
+                {/if}
+              {/if}
+              <div class="addMoney" >
+                <img src="${Loader.images.intro['market/money.png'].getAttribute('data')}" > </img>
+              </div>
+          </div>
+        </div>
+    {/if}
+{if (data.upgrade)}
+  </div>
+{/if}
 </textarea>
-
-
-<textarea id='marketplaceTabsTemplate' style="display:none">
-    <div id="towersTab" class="towersTab clickSound" onclick="Intro.select('towers');">
-        <img {if (type=='towers') }
-                    src="${Loader.images.intro['market/tab-on.png'].src}" class="on"
-             {else}
-                    src="${Loader.images.intro['market/tab-off.png'].src}" class=""
-             {/if}/>
-        <div class="text">
-          Super Towers
-        </div>
-    </div>
-    <div id="weaponsTab" class="weaponsTab clickSound"   onclick="Intro.select('weapons');">
-        <img {if (type=='weapons') }
-                    src="${Loader.images.intro['market/tab-on.png'].src}" class="on"
-             {else}
-                    src="${Loader.images.intro['market/tab-off.png'].src}" class=""
-             {/if}/>
-        <div class="text">
-          Super Weapons
-        </div>
-    </div>
-    <div id="upgradesTab" class="upgradesTab clickSound"   onclick="Intro.select('upgrades');">
-        <img {if (type=='upgrades') }
-                 src="${Loader.images.intro['market/tab-on.png'].src}" class="on"
-             {else}
-                  src="${Loader.images.intro['market/tab-off.png'].src}" class="""
-             {/if}/>
-        <div class="text">
-          Super Upgrades
-        </div>
-    </div>
-</textarea>
-
 
 <textarea id='marketItemsTemplate' style="display:none">
-    <div id="marketTabs">
-    </div>
     <div id="floatBg" style="display : none;">
     </div>
-    <img src="images/intro/market/background.png"> </img>  
-    <div class="coins">
-        ${data.userData['coins']}
+    <div id="background">
+      <img src="${Loader.images.intro['background.png'].getAttribute('data')}"/>
+      <img id="paper" src="${Loader.images.intro['paper.png'].getAttribute('data')}"/>
     </div>
-    <div class="msg">
-        Select ${data['name']} to add them to your next mission army
-    </div>
-    <div id="${type}Display">
-      {for item in data.gameData[type] }
-      <div class="item">
-        <div itemid="${item}" class="clickable">
-          <div itemid="${item}" type="${type}" onclick="Intro.showFloatBg(this)" class="itemImage clickSound">
-            <img src="images/intro/${type}/${itemConfig[item]['image']}"></img>
+    <div id="upperPart">
+        <img src="${Loader.images.intro['market/upper.png'].getAttribute('data')}"/>
+        <div class="rank">
+          <img class="rankImg" src="${Loader.images.intro['ranks/'+Intro.userData.rank +'.png'].getAttribute('data')}"/>
+          <div class="rankText">
+            ${Text.game.ranks[data.userData['rank']]['abbr']}
           </div>
-          {if ((Intro.gameData[type][item]['unlocked'] == true) || (data.userData.metadata[type].indexOf(item) >= 0 ) )}
-            {if (data.userData.metadata.added[type].indexOf(item) < 0) }
-              <div class="action clickSound" itemid="${item}" type="${type}"  onclick="Intro.addItem(this);" style="height:20px;" >
-                <img   src="images/intro/market/add.png" > </img> 
-                <div class="text buttonText">
-                  Add
-                </div>
-              </div>
-            {/if}
-          {else}
-            <img src="images/intro/market/locked.png" class="label"> </img>   
-            <div class="action clickSound" itemid="${item}" type="${type}"  onclick="Intro.showFloatBg(this);" style="height:20px;" >
-              <img src="images/intro/market/unlock.png"> </img>
-              <div class="text buttonText">
-                unlock
-              </div>
-            </div>
-          {/if}
         </div>
-        <img src="images/intro/market/shown-lamp.png"> </img> 
-      </div>
-      {/for}
-      {for x in data.gameData.empty[type]}
-      <div class="item">
-        <div>
-          <img src="images/intro/market/q-box.png"></img>
+        <img class="titleImg" src="${Loader.images.intro['title.png'].getAttribute('data')}"/>
+        <div class="coins">
+          ${data.userData['coins']}
         </div>
-        <img src="images/intro/market/hidden-lamp.png"> </img> 
+        <div class="addMoney">
+          <span class="addText">
+            ${Text.intro.marketPlace.add}
+          </span>
+          <img src="${Loader.images.intro['market/money.png'].getAttribute('data')}" > </img>
+          <span class="moneyText">
+            ${Text.intro.marketPlace.money}
+          </span>
+        </div>
+    </div>
+    <div id="weapons">
+      <img  src="${Loader.images.intro['market/scroller.png'].getAttribute('data')}"/>
+      <div class="msg">
+          ${Text.intro.marketPlace.addWeapon}
       </div>
-      {/for}
-    </div>
-    <div class='background'>
-        {if type == 'towers'}
-          <img src="images/intro/market/added-towers.png"> </img>  
-        {else}
-          <img src="images/intro/market/added-items.png"> </img>  
-        {/if}
-    </div>
-    <div id="addedItems">
-      {for item in data.userData.metadata.added[type] }
-          <div  class="addedItem clickable" itemid="${item}" onmouseover="this.select('.action')[0].show();" onmouseout="this.select('.action')[0].hide();">
-            <div class="addedItemImg">
-                <img itemid="${item}" type="${type}" src="images/intro/${type}/${itemConfig[item]['smallImage']}" onclick="Intro.showFloatBg(this)" class="clickSound"></img>
-            </div>
-            <div class="action" style="display:none;">
-              <img itemid="${item}" type="${type}" src="images/intro/market/remove.png"  onclick="Intro.removeItem(this);" class="clickSound"> </img>
-            </div>
-          </div>
-      {/for}
-      {for item in data.userData.empty[type] }
-          <div  class="emptyItem">
-              <img src="images/intro/market/q-mark.png"></img>
-          </div>
-      {/for}
+      <div id="weaponsDisplay">
+      </div>
     </div>
     
-    <div id="back" onclick="Intro.previous();" class="buttonText clickableButton clickSound" >
-      <div id="backText">
-        Back
+    <div id="towers">
+      <img  src="${Loader.images.intro['market/scroller.png'].getAttribute('data')}"/>
+      <div class="msg">
+          ${Text.intro.marketPlace.addTower}
+      </div>
+      <div id="towersDisplay">
       </div>
     </div>
-    <div id="next" onclick="Intro.next();" class="buttonText clickableButton clickSound">
-      <div id="nextText">
-        Next
+    
+    <div id="actionContainer">
+      <div id="back" onclick="Intro.previous();" class="buttonText clickableButton clickSound" >
+        {if ($('intro').getStyle('direction')=='rtl') }
+          <img src="${Loader.images.intro['ready.png'].getAttribute('data')}"/>
+        {else}
+          <img src="${Loader.images.intro['back.png'].getAttribute('data')}"/>
+        {/if}
+        <div style="width : 28px; height : 10px;display:inline-block;"></div>
+        <div id="backText">
+          ${Text.intro.marketPlace.back}
+        </div>
+      </div>
+      <div style="width : 448px; height : 10px;display:inline-block;"></div>
+      <div id="ready" onclick="Intro.next();" class="buttonText clickableButton clickSound">
+        {if ($('intro').getStyle('direction')=='rtl') }
+          <img src="${Loader.images.intro['back.png'].getAttribute('data')}"/>
+        {else}
+          <img src="${Loader.images.intro['ready.png'].getAttribute('data')}"/>
+        {/if}
+        <div id="readyText">
+          ${Text.intro.marketPlace.ready}
+        </div>
+        <div style="width : 28px; height : 10px;display:inline-block;"></div>
       </div>
     </div>
-    <div id="finish" onclick="Intro.finish();" class="buttonText clickableButton clickSound">
-      <div id="finishText">
-        Finish
-      </div>
+</textarea>
+
+<textarea id='marketScrollerTemplate' style="display:none">
+    <div id="${type}-scroll">
+        <div class="left"><img src=""/></div> 
+        <div id="${type}-container" class="container">
+          <ul id="${type}-ul">
+		        {for item in data.gameData[type] }
+		          <li itemid="${item}" class="clickSound" 
+	                onmouseover="this.select('#info')[0].show();"
+	                onmouseout="this.select('#info')[0].hide();">
+                {if (!Intro.userData.metadata[type][item])}   
+		                <img class="coinImage" 
+		                      src="${Loader.images.intro['market/coin.png'].getAttribute('data')}"> </img>
+                    <div class="itemPrice">
+                        ${Intro.gameData[type][item].cost}
+                    </div>
+                {else}  
+                    {if (Intro.gameData[type][item]['upgrades'][Intro.userData.metadata[type][item]['upgrades']])}
+                    <img class="coinImage" 
+		                      src="${Loader.images.intro['market/coin.png'].getAttribute('data')}"> </img>
+                    <div class="itemPrice">
+                        ${Intro.gameData[type][item]['upgrades'][Intro.userData.metadata[type][item]['upgrades']].cost}
+                    </div>  
+                    {else}
+                    <div style="width:20px;height:23px;"></div>
+                    {/if}
+                {/if}
+		            <img class="itemImage" 
+		                  src="${Loader.images.intro[type+'/'+itemConfig[item]['image']].getAttribute('data')}"> </img>
+                {if (!Intro.userData.metadata[type][item])}
+                  <div class="lockImage">
+  		                <img 
+		                    src="${Loader.images.intro['market/lock.png'].getAttribute('data')}"> </img>
+                  </div>
+                {else}
+                  <div class="upgradeLevel">
+                      ${Intro.userData.metadata[type][item]['upgrades']}
+                  </div>
+                {/if}
+                <div id="info" style="display : none;">
+                  {if (!Intro.userData.metadata[type][item])}
+                    <div style="float:left; margin-left:5px;">
+                      <div class="unlockText clickSound" type="${type}" itemid="${item}"
+                            onclick="Intro.showFloatBg(this)">
+                          ${Text.intro.marketPlace.unlock}
+                      </div>
+      		            <img class="unlockImage"  
+  		                      src="${Loader.images.intro['market/unlock.png'].getAttribute('data')}"/>
+                    </div>
+    		            <img class="infoImage clickSound"  
+		                  src="${Loader.images.intro['market/info.png'].getAttribute('data')}"
+		                  type="${type}" itemid="${item}" onclick="Intro.showFloatBg(this)"/>
+                  {else}
+                    {if (Intro.userData.metadata[type][item]['upgrades'] < 
+                         Intro.gameData[type][item]['upgrades'].length )}
+                      <div style="float:left; margin-left:5px;">
+                        <div class="unlockText clickableButton clickSound" type="${type}"
+                            itemid="${item}" upgrade="true"
+                            onclick="Intro.showFloatBg(this)">
+                          ${Text.intro.marketPlace.upgrade}
+                        </div>
+        		            <img class="unlockImage"  
+        		                  src="${Loader.images.intro['market/unlock.png'].getAttribute('data')}"/>
+                      </div>
+                    {/if}
+    		            <img class="infoImage clickSound"
+		                  src="${Loader.images.intro['market/info.png'].getAttribute('data')}"
+		                  type="${type}" itemid="${item}" upgrade="true" onclick="Intro.showFloatBg(this)"/>
+                  {/if}
+                </div>
+		          </li>
+            {/for}
+		        {for item in data.gameData.empty[type] }  
+  		        <li>
+		            <img class="qBoxImage" 
+		                  src="${Loader.images.intro['market/q-box.png'].getAttribute('data')}"> </img>
+		          </li>
+		        {/for}
+          </ul>
+        </div>
+        <div class="right"><img src=""/></div> 
     </div>
 </textarea>

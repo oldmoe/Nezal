@@ -1,0 +1,1301 @@
+@font-face {
+  font-family: "Adlib";
+  src: url("../fonts/ADLIB.TTF");
+}
+@font-face {
+  font-family: "Mcs";
+  src: url("../fonts/MCS.TTF");
+}
+@font-face {
+  font-family: "Digital";
+  src: url("../fonts/DIGITAL.TTF");
+}
+@font-face {
+  font-family: "Pakgirl";
+  src: url("../fonts/30pakgirl_bold_TBS.ttf");
+}
+#intro.arabic{
+  font-family : Adlib,Tahoma,Arial Black;
+  font-weight : bold;
+  direction : rtl;
+}
+#intro.english{
+  font-family : Adlib,Tahoma,Arial Black;
+  direction : ltr;
+}
+#intro.french{
+  font-family : Adlib,Tahoma,Arial Black;
+  direction : ltr;
+}
+#intro.arabic .buttonText
+{
+  font-family : Adlib, Arial Black, Tahoma;
+  text-transform : capitalize;
+  text-align:center;
+  font-size : 17px;
+}
+#intro.french .buttonText
+{
+  font-family : Adlib, Arial Black, Tahoma;
+  text-transform : capitalize;
+  text-align:center;
+  font-size : 13px;
+}
+#intro.english .buttonText
+{
+  font-family : Adlib, Arial Black, Tahoma;
+  text-transform : capitalize;
+  text-align:center;
+  font-size : 16px;
+}
+#intro .desc
+{
+  color:white;
+  font-family:verdana;
+  font-weight:bold;
+  line-height:140%;
+  text-shadow:1px 1px #000000;
+}
+#intro.arabic .desc
+{
+  font-size : 14px;
+}
+#intro.french .desc
+{
+  font-size : 13px;
+}
+#intro.english .desc
+{
+  font-size : 13px;
+}
+#invite {
+  position : absolute;
+  top : 125px;
+  left : 55px;
+  z-index : 1001;
+  width : 650px;
+  height : 550px;
+  -moz-border-radius:8px 8px 8px 8px;
+  -webkit-border-radius: 8px 8px 8px 8px;
+  -khtml-border-radius: 8px 8px 8px 8px;
+  background:none repeat scroll 0 0 rgba(82, 82, 82, 0.698);
+}
+#pause
+{
+  position:absolute;
+  left:0;
+  top:0;
+  width : 760px;
+  height : 550px;
+  z-index:1000;
+}
+#pause #inProgress
+{
+  height:100%;
+  left:0;
+  position:absolute;
+  top:60px;
+  width:100%;
+}
+#inProgress #logo
+{
+  left:175px;
+  position:absolute;
+  top:24px;
+}
+#inProgress #title
+{
+  left:300px;
+  position:absolute;
+  top:142px;
+}
+#inProgress #titleAr
+{
+  left:314px;
+  position:absolute;
+  top:245px;
+}
+#inProgress #blank
+{
+  left:247px;
+  position:absolute;
+  top:234px;
+}
+#congrates.arabic{
+  font-family : Adlib,Tahoma,Arial Black;
+  font-weight : bold;
+  direction : rtl;
+}
+#congrates.english, #congrates.french{
+  font-family : Adlib,Tahoma,Arial Black;
+  font-weight : bold;
+  direction : ltr;
+}
+#congrates 
+{
+  position : absolute;
+  left : 180px;
+  top : 180px;
+  width : 400px;
+  height : 170px;
+  z-index:100;
+}
+#congrates .content
+{
+  font-family:verdana;
+  font-size:13px;
+  height:70px;
+  left:140px;
+  position:absolute;
+  top:35px;
+  width:220px;
+  font-weight : bold;
+}
+#congrates .ok
+{
+  height:30px;
+  left:135px;
+  position:absolute;
+  top:110px;
+  width:230px;
+}
+#congrates #rogerText
+{
+  color:#FFCA00;
+  font-family:verdana;
+  font-size:11px;
+  font-weight:bold;
+  height:22px;
+  line-height:22px;
+  position:absolute;
+  text-align:center;
+  top:5px;
+  width:50px;
+  margin : 0px 2px;
+}
+#intro
+{
+  width : 760px;
+  height : 550px;
+  position : absolute;
+}
+#intro #levelSelection, #cityInfo, #marketPlace
+{
+  width : 100%;
+  height : 100%;
+}
+
+#intro #levelSelection .gameName
+{
+  left:150px;
+  position:absolute;
+  top:30px;
+}
+#levelSelection #introText
+{
+  left:60px;
+  position:absolute;
+  top:30px;
+}
+#levelSelection #logo
+{
+ left:175px;
+  position:absolute;
+  top:24px;
+}
+#levelSelection #title
+{
+  left:300px;
+  position:absolute;
+  top:142px;
+}
+#levelSelection #titleAr
+{
+  left:314px;
+  position:absolute;
+  top:250px;
+}
+#levelSelection #blank
+{
+  left:247px;
+  position:absolute;
+  top:240px;
+}
+#levelSelection #selectedLang
+{
+  color:sienna;
+  font-size:16px;
+  height:42px;
+  left:575px;
+  position:absolute;
+  top:50px;
+  width:105px;
+  z-index:100;
+}
+#levelSelection .selectedLangContainer
+{
+  height:80%;
+  position:absolute;
+  top:0;
+  width:100%;
+  line-height:35px;
+}
+
+#levelSelection #language
+{
+  -moz-border-radius:0px 0px 10px 10px;
+  -webkit-border-radius: 0px 0px 10px 10px;
+  -khtml-border-radius: 0px 0px 10px 10px;
+  background:none repeat scroll 0 0 black;
+  color:white;
+  cursor:pointer;
+  direction:ltr;
+  font-size:14px;
+  height:57px;
+  left:590px;
+  opacity:0.6;
+  padding-top:15px;
+  position:absolute;
+  text-align:center;
+  top:80px;
+  width:75px;
+  font-weight : normal;
+}
+#levelSelection #msg
+{
+  color:wheat;
+  height:25px;
+  left:150px;
+  line-height:25px;
+  position:absolute;
+  text-align:center;
+  text-transform:capitalize;
+  top:316px;
+  width:500px;
+}
+#intro.arabic #levelSelection .msgSize
+{
+  font-size:19px;
+}
+#intro.french #levelSelection .msgSize
+{
+  font-size:17px;
+}
+#intro.english #levelSelection .msgSize
+{
+  font-size:18px;
+}
+#levelSelection #tutorial
+{
+  color:#820000;
+  font-size:23px;
+  width:300px;
+  left:50px;
+  position:absolute;
+  top:405px;
+  width : 660px;
+}
+#levelSelection .tutorialText
+{
+  display:inline-block; 
+  text-decoration:underline;
+}
+#levelSelection .title 
+{
+  color:#820000;
+  height:30px;
+  left:245px;
+  line-height:30px;
+  position:absolute;
+  width:300px;
+}
+#intro.arabic #levelSelection .titleSize
+{
+  font-size:27px;
+}
+#intro.french #levelSelection .titleSize
+{
+  font-size:25px;
+}
+#intro.english #levelSelection .titleSize
+{
+  font-size:26px;
+}
+
+#challengesText, #extraMap, #levelSelection{
+ /* text-shadow:-1px 2px 1px #000000; */
+}
+
+#challengesText:hover, #extraMap:hover, #levelSelection .clicked 
+{
+  color:#FAC200;
+}
+
+#levelSelection #challengesText
+{
+  top:345px;
+}
+#levelSelection #extraMap
+{
+  top:405px;
+}
+.levels
+{
+  color:wheat;
+  height:30px;
+  left:90px;
+  line-height:30px;
+  position:absolute;
+  text-align:center;
+  text-transform:capitalize;
+  width:580px;
+}
+#levels
+{
+  top:375px;
+}
+#extraLevels
+{
+  top:435px;
+}
+#intro.arabic .levels .levelSize
+{
+  font-size:24px;
+}
+#intro.french .levels .levelSize
+{
+  font-size:22px;
+}
+#intro.english .levels .levelSize
+{
+  font-size:23px;
+}
+#levels #easy, #extraLevels #easy
+{
+  height : 40%;
+  cursor : pointer;
+  display:inline-block;
+}
+#levels #medium, #extraLevels #medium
+{
+  width : 38%;
+  height : 40%;
+  cursor : pointer;
+  display:inline-block;
+}
+#levels #hard, #extraLevels #hard
+{
+  height : 40%;
+  cursor : pointer;
+  display:inline-block;
+}
+#levels span:hover, #extraLevels span:hover
+{
+  color : white;
+}
+
+/***************************
+  Css for the campaign page
+***************************/
+#campaign #background
+{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+#campaign #paper
+{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+#campaign #backContainer
+{
+  left:80px;
+  position:absolute;
+  top:482px;
+  width:585px;
+}
+#campaign #back
+{
+  cursor:pointer;
+  height:43px;
+  width:83px;
+}
+#campaign #back .text
+{ 
+  color:#FAC200;
+  line-height:34px;
+  margin:0 33px;
+  position:absolute;
+  text-align:center;
+  top:6px;
+  width:80px;
+}
+#campaign .camp-info
+{
+  left:70px;
+  position:absolute;
+  top:50px;
+  vertical-align:top;
+  width:605px;
+}
+#campaign .camp-details
+{
+  display:inline-block;
+  height:200px;
+  margin:15px 19px;
+  vertical-align:top;
+  width:290px;
+}
+#campaign .name
+{
+  color:#FAC200;
+  padding-bottom:5px;
+  text-transform:capitalize;
+}
+#intro.arabic .name
+{
+  font-size:28px;
+}
+#intro.english .name
+{
+  font-size:27px;
+}
+#intro.french .name
+{
+  font-size:27px;
+}
+#campaign .desc
+{
+}
+#campaign #camp-map 
+{
+  display:inline-block;
+  margin-top:15px;
+  width:270px;
+}
+#campaign #missions
+{
+  left:70px;
+  position:absolute;
+  top:280px;
+}
+#campaign .mission
+{
+  display:inline-block;
+  margin:0 9px;
+  position:relative;
+}
+#campaign .mission .missionScore
+{
+  position:absolute;
+  text-align:center;
+  color : white;
+  text-shadow:-2px -1px #000;
+  top:140px;
+  width:100%;
+  font-weight:normal;
+}
+#campaign .mission .missionName
+{
+  position:absolute;
+  text-align:center;
+  top:160px;
+  width:100%;
+}
+
+/***************************
+  Css for the mission page
+***************************/
+#mission
+{
+}
+#mission #background
+{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+#mission #paper
+{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+#mission #mapBackground
+{
+  left:81px;
+  position:absolute;
+  top:183px;
+}
+#mission #buble
+{
+  left:166px;
+  position:absolute;
+  top:50px;
+}
+#mission #character
+{
+  left:70px;
+  position:absolute;
+  top:45px;
+}
+#mission #creepBackground
+{
+  left:50px;
+  position:absolute;
+  top:413px;
+}
+#creeps-scroll ul li img {
+  padding-top: 7px;
+}
+#creeps-scroll ul li img:hover {
+  opacity: 0.7;
+  cursor : pointer;
+}
+#mission #cityName
+{
+  color:#FF4102;
+  font-weight:bold;
+  height:30px;
+  left:235px;
+  line-height:30px;
+  position:absolute;
+  text-align:center;
+  text-transform:uppercase;
+  top:75px;
+  width:150px;
+}
+#intro.arabic #cityName
+{
+  font-size : 20px;
+}
+#mission #cityDesc
+{
+  color:#550000;
+  left:225px;
+  position:absolute;
+  top:105px;
+  width:170px;
+  text-shadow : 0px 0px;
+  text-align:center;
+}
+#mission #fullDesc
+{
+  position:absolute;
+  left:405px;
+  top:225px;
+  width:285px;
+}
+#mission #cityImage
+{
+  height:200px;
+  left:420px;
+  position:absolute;
+  text-align:center;
+  top:55px;
+  width:260px;
+}
+#mission #cityImage img
+{
+  width : 100%;
+}
+#mission #cityMap
+{
+  height:164px;
+  left:90px;
+  overflow:hidden;
+  position:absolute;
+  top:190px;
+  width:220px;
+}
+#mission #cityMap img
+{
+  width:224px;  
+  height:169px;
+}
+#mission #stamp
+{
+  height:116px;
+  left:245px;
+  position:absolute;
+  top:300px;
+  width:160px;
+}
+#mission #accept
+{
+  height:46px;
+  left:475px;
+  position:absolute;
+  top:425px;
+  width:90px;
+  cursor : pointer;
+}
+#mission #accept .text
+{
+  color:white;
+  height:100%;
+  left:0;
+  line-height:46px;
+  position:absolute;
+  text-align:center;
+  top:0;
+  width:100%;
+}
+#mission #reject
+{
+  color:#FAC200;
+  cursor:pointer;
+  font-size:15px;
+  height:35px;
+  left:580px;
+  position:absolute;
+  top:440px;
+  width:100px;
+  text-shadow : 1px 1px #333333;
+}
+#mission #reject:hover
+{
+  text-decoration : underline;
+}
+#mission #creeps
+{
+  height:72px;
+  left:30px;
+  position:absolute;
+  top:413px;
+  width:430px;
+  direction:ltr;
+}
+#mission .creep
+{
+  float:left;
+  height:65px;
+  width:101px;
+}
+#mission #floatBg
+{
+  -moz-border-radius:10px 10px 10px 10px;
+  -webkit-border-radius: 10px 10px 10px 10px;
+  -khtml-border-radius: 10px 10px 10px 10px;
+  background:none repeat scroll 0 0 black;
+  opacity : 0.8;
+  width : 400px;
+  height : 170px;
+  position : absolute;
+  top : 245px;
+  left : 45px;
+  z-index : 200;
+  color : #FAC200;
+}
+#mission .creepsHeadline
+{
+  color:#550000;
+  font-size:13px;
+  height:15px;
+  left:40px;
+  position:absolute;
+  top:395px;
+  width:400px;
+  z-index : 100;
+}
+#mission #floatBg #close
+{
+  cursor:pointer;
+  display:inline-block;
+  font-family:PakGirl, Arial Black, Tahoma;
+  font-size:16px;
+  height:20px;
+  margin-top:9px;
+  vertical-align:top;
+  width:20px;
+}
+#mission #floatBg .content
+{
+  height:120px;
+  margin:25px 39px;
+  overflow:hidden;
+  width:295px;
+  display:inline-block;
+}
+#mission #floatBg .name
+{
+  font-size:19px;
+}
+#mission #floatBg .desc
+{
+  white-space:normal;
+  word-wrap:break-word;
+  color : #FAC200;
+  font-size : 11px;
+}
+#mission #floatBg .spans
+{
+  display:inline-block;
+  height:100px;
+  margin-top:10px;
+  vertical-align:top;
+  width:65%;
+}
+#mission #floatBg .skeleton
+{
+  display:inline-block;
+  padding-top:30px;
+  text-align:center;
+  width:28%;
+  margin:0 5px;
+}
+
+/***************************
+  Css for the marketplace page
+***************************/
+#marketPlace #background
+{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+#marketPlace #paper
+{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+#marketPlace #upperPart
+{
+  left:73px;
+  position:absolute;
+  top:42px;
+  width:606px;
+}
+#marketPlace #upperPart .rank
+{
+  color:#FAC200;
+  height:65px;
+  left:35px;
+  position:absolute;
+  text-align:center;
+  top:30px;
+  width:135px;
+}
+#marketPlace #upperPart .rankImg
+{
+  height : 35px;
+}
+#marketPlace .rankText
+{
+  line-height:25px;
+}
+
+#marketPlace #upperPart .titleImg
+{
+  height:97px;
+  left:215px;
+  position:absolute;
+  top:12px;
+}
+#marketPlace #upperPart .coins
+{
+  font-family:Digital, Verdana, Tahoma;
+  font-size:21px;
+  left:480px;
+  position:absolute;
+  text-align:center;
+  top:35px;
+  width:75px;
+  font-weight : normal;
+}
+#marketPlace #upperPart .addMoney
+{
+  color:#FAC200;
+  font-family:Adlib,Arial Black,Tahoma;
+  font-size:15px;
+  left:436px;
+  position:absolute;
+  text-align:center;
+  top:68px;
+  width:140px;
+}
+#marketPlace #upperPart .addText
+{
+  display:inline-block;
+  line-height:30px;
+  text-align:center;
+  vertical-align:top;
+  width:25%;
+}
+#intro.french #marketPlace #upperPart .addText
+{
+  width:36%;
+  font-size : 12px;
+}
+#marketPlace #upperPart .moneyText
+{
+  display:inline-block;
+  height:30px;
+  line-height:30px;
+  vertical-align:top;
+}
+#intro.french #marketPlace #upperPart .moneyText
+{
+  font-size : 12px;
+}
+#marketPlace #weapons
+{
+  font-size:14px;
+  left:4px;
+  position:absolute;
+  top:165px;
+  text-align : center;
+  direction : ltr;
+}
+#marketPlace #towers
+{
+  font-size:14px;
+  left:4px;
+  position:absolute;
+  top:323px;
+  text-align : center;
+  direction : ltr;
+}
+#marketPlace #weaponsDisplay, #marketPlace #towersDisplay
+{
+  height:100px;
+  left:70px;
+  position:absolute;
+  top:25px;
+  width:595px;
+}
+#marketPlace .itemImage
+{
+  position:relative;
+}
+#marketPlace .coinImage
+{
+  padding-left : 5px;
+  float : left;
+}
+#marketPlace .itemPrice
+{
+  color:#FAC200;
+  font-family:Adlib, Arial Black, Tahoma;
+  font-size:18px;
+  text-align:center;
+  padding-top:4px;
+  float : left;
+  width:60px;
+  font-weight : normal;
+}
+#marketPlace .upgradeLevel
+{
+  font-family:Adlib, Arial Black, Tahoma;
+  font-size:30px;
+  position:absolute;
+  text-align:right;
+  top:10px;
+  width:105px;
+  font-weight : normal;
+}
+#marketPlace .qBoxImage
+{
+  padding-top : 14px;
+}
+#marketPlace #weapons .lockImage, #marketPlace #towers .lockImage
+{
+  margin-left:34px;
+  position:absolute;
+  top:50px;
+}
+#marketPlace #info
+{
+  position:absolute;
+  top:70px;
+  width:104px;
+}
+#marketPlace .infoImage
+{
+  cursor:pointer;
+  float:right;
+  margin-right:3px;
+}
+#marketPlace .unlockImage
+{
+  position:relative;
+  top:-26px;
+}
+
+#marketPlace .unlockText
+{
+  color:white;
+  cursor:pointer;
+  font-family:Adlib,Arial Black,Tahoma;
+  font-size:14px;
+  left:1px;
+  position:relative;
+  text-align:center;
+  width:68px;
+  z-index:100;
+  height : 24px;
+  line-height : 24px;
+}
+#intro.french #marketPlace .unlockText
+{
+  font-size:9px;
+}
+#marketPlace #ready, #marketPlace #back
+{
+  width : 115px;
+  height : 45px;
+  cursor : pointer;
+  color : #FAC200;
+  display:inline-block;
+}
+#marketPlace #ready
+{
+  left : 595px;
+}
+#marketPlace #actionContainer
+{
+  position : absolute;
+  top : 482px;
+  width : 690px;
+  left:27px;
+  height : 45px;
+  cursor : pointer;
+  color : #FAC200;
+}
+#marketPlace #backText, #marketPlace #readyText
+{
+  display:inline-block;
+  height:32px;
+  line-height:32px;
+  position:relative;
+  text-align:center;
+  top:-42px;
+  width:80px;
+}
+#marketPlace .msg
+{
+  color:black;
+  font-size:16px;
+  height:17px;
+  line-height:17px;
+  position:absolute;
+  text-align:center;
+  top:146px;
+  width:100%;
+}
+#marketPlace .action .text
+{
+  color:white;
+  font-size:11px;
+  height:100%;
+  left:0;
+  line-height:180%;
+  position:absolute;
+  text-align:center;
+  top:0;
+  width:100%;
+}
+div.clickableButton, span.clickableButton
+{
+  opacity : 0.85;
+  cursor : pointer;
+}
+div.clickableButton:hover, span.clickableButton:hover
+{
+  opacity : 1;
+  cursor : pointer;
+}
+
+#marketPlace #floatBg
+{
+  -moz-border-radius:25px;
+  -webkit-border-radius: 25px;
+  -khtml-border-radius: 25px;
+  background:none repeat scroll 0 0 black;
+  color:#FAC200;
+  height:222px;
+  left:130px;
+  opacity:0.85;
+  position:absolute;
+  top:150px;
+  width:520px;
+  z-index:101;
+}
+#marketPlace #floatBg #close
+{
+  cursor:pointer;
+  display:inline-block;
+  font-family:PakGirl, Arial Black, Tahoma;
+  font-size:20px;
+  height:20px;
+  vertical-align:top;
+  width:20px;
+  font-weight : normal;
+}
+#marketPlace #floatBg .content
+{
+  display:inline-block;
+  height:150px;
+  margin:10px;
+  width:500px;
+}
+#marketPlace #floatBg .content .spans
+{
+  display:inline-block;
+  height:100%;
+  margin:10px 13px;
+  width:70%;
+}
+#marketPlace #floatBg .content .image
+{
+  display:inline-block;
+  text-align:center;
+  vertical-align:top;
+  width:23%;
+}
+#marketPlace #floatBg .content .image .skeleton
+{
+  height : 100px;
+  margin:5px 0;
+}
+#marketPlace #floatBg .content .image .cost img
+{
+  float : right;
+}
+#marketPlace #floatBg .image .cost
+{
+  width: 100%;
+  height : 24px;
+  font-weight : normal;
+}
+#marketPlace #floatBg .image .cost .img
+{
+  width: 30%;
+  margin-left : 4%;
+  float : left;
+}
+#marketPlace #floatBg .image .cost .value
+{
+  float:left;
+  font-family:Digital, Verdana, Tahoma;
+  font-size:26px;
+  margin-top:-6px;
+  text-align:center;
+  width:60%;
+}
+#marketPlace #floatBg .name
+{
+  font-size:20px;
+  font-weight:bold;
+  line-height:150%;
+  text-decoration:underline;
+  text-transform:uppercase;
+}
+#intro.french #marketPlace #floatBg .name
+{
+  font-size:19px;
+}
+#marketPlace #floatBg .desc
+{
+  font-size:14px;
+  font-weight:normal;
+  line-height:130%;
+  white-space:normal;
+  word-wrap:break-word;
+  color:#FAC200;
+}
+#intro.arabic #marketPlace #floatBg .desc
+{
+  font-size:15px;
+}
+#marketPlace #floatBg .actions
+{
+  height:30px;
+  margin:0 25px;
+  position:absolute;
+  top:170px;
+  width:470px;
+}
+#marketPlace #floatBg .actions .rank
+{
+  display:inline-block;
+  text-transform:capitalize;
+  vertical-align:top;
+  width:50%;
+}
+#marketPlace #floatBg .actions .rank span
+{
+  display:inline-block;
+  margin-top:12px;
+  vertical-align:top;
+}
+#marketPlace #floatBg .actions .rank img
+{
+  height:35px;
+}
+#marketPlace #floatBg .actions .action
+{
+  bottom:0;
+  cursor:pointer;
+  display:inline-block;
+  font-size:11px;
+  width:45%;
+}
+#marketPlace #floatBg .actions .action .active
+{
+  color:#FF4102;
+  font-size:19px;
+  display:inline-block;
+  padding-top:10px;
+  width : 78%;
+}
+#marketPlace #floatBg .actions .action .inactive
+{
+  color:silver;
+  font-size:19px; 
+  cursor : default; 
+  display:inline-block;
+  padding-top:10px;
+  width : 78%;
+}
+#marketPlace #floatBg .actions .addMoney
+{
+  bottom:0;
+  color:white;
+  cursor:pointer;
+  display:inline-block;
+  height:10px;
+  text-transform:capitalize;
+}
+
+
+#marketPlace #floatBg #upgrade .content .spans
+{
+  display:inline-block;
+  font-size:10px;
+  height:100%;
+  margin:0 9px;
+  vertical-align:top;
+  width:35%;
+}
+#marketPlace  #floatBg #upgrade .upgradeInfo
+{
+  display:inline-block;
+  height:80%;
+  margin-top:30px;
+  width:36%;
+}
+#marketPlace  #floatBg #upgrade .desc
+{
+  font-size : 10px;
+  font-weight : bold;
+}
+#intro.arabic #marketPlace  #floatBg #upgrade .desc
+{
+  font-size : 12px;
+  font-weight : bold;
+}
+#marketPlace  #floatBg #upgrade .towerText
+{
+  font-size:13px;
+  padding-top:5px;
+  vertical-align:top;
+  width:33px;
+  display:inline-block;
+  font-weight : normal;
+}
+#marketPlace  #floatBg #upgrade .beforeText
+{
+  color : #ff4102;
+}
+#marketPlace  #floatBg #upgrade .parent
+{
+  height:35px;
+  margin:0px 0px;
+}
+#marketPlace  #floatBg #upgrade .bar
+{
+  display:inline-block;
+  height:25px;
+  width:100px;
+}
+#marketPlace  #floatBg #upgrade .barRed
+{
+  display:inline-block;
+  width : 70%;
+  height : 25px;
+  background : #ff4102;
+  margin:0 -4px;
+}
+#marketPlace  #floatBg #upgrade .barYellow
+{
+  display:inline-block;
+  width : 25%;
+  height : 25px;
+  background : #fac200;
+}
+#marketPlace  #floatBg #upgrade .towerMargin
+{
+  margin : 0px -5px;
+}
+#marketPlace  #floatBg #upgrade .optionName
+{
+  position:relative;
+  text-align:center;
+  top:-25px;
+  width:100%;
+  color : white;
+}
+#marketPlace  #floatBg #upgrade .currUpgrade, #marketPlace  #floatBg #upgrade .newUpgrade
+{
+  font-size:11px;
+  height:55px;
+  margin-bottom:15px;
+}
+#marketPlace  #floatBg #upgrade .currUpgrade
+{
+  color:#ff4102;
+}
+#pause  #loadingBarEmpty{
+	height:10px;
+	left:324px;
+	position:absolute;
+	top:296px;
+	width:134px;
+}
+#pause  #loadingBarEmpty div{
+	height : 8px;
+	float : left;
+}
+
+#pause  #loadingBarEmpty #loadingBarRight{				
+	width : 2px;
+}
+
+#pause  #loadingBarEmpty #loadingBarFill{
+	background-repeat:repeat-x;				
+}
+
+#pause  #loadingBarEmpty #loadingBarLeft{
+	width : 2px;
+}
+#inProgress  #loadingPercentage, #inProgress #fileName{
+	font-family:tahoma;
+	font-size:x-small;
+	font-weight:bold;	
+	position:absolute;
+	top:318px
+}
+#inProgress  #loadingPercentage{
+	left:464px;
+}
+#inProgress #fileName{
+	left:298px;
+}
+
+#scores {
+	overflow : hidden;
+}

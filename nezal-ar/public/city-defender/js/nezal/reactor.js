@@ -12,6 +12,7 @@ var Reactor = Class.create({
 	},
 	
 	resume : function(){
+		if(this.running)return
 		this.running = true
 		this.tick()
 	},
