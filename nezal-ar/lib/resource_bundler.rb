@@ -142,6 +142,36 @@ def generateImageHTMLFile resourceDir,fileToWrite,id
 		end
 end
 
+def generateDumbImageHTMLFile resourceDir,fileToWrite,id
+	Dir.entries(resourceDir).each do |filename|
+		unless ['.', '..'].include? filename
+			if filename.include? '.png'
+				image_id = "images#"+id +"#"+filename
+				["animations", "intro", "challenges"].each do |folder|
+					if resourceDir.include? folder
+						found = false
+						dirs = []
+						resourceDir.split('/').each do |dir|
+							if folder == "intro"
+								found = true if dir == "images"
+							else
+								found = true if dir == folder
+							end
+							dirs << dir if found
+						end
+						dirs << filename
+						image_id = dirs.join('/')
+						image_id.sub!('/', '#').sub!('/', '#')							
+					end					
+				end
+				fileToWrite.puts "<img id='#{image_id}'  src='../#{image_id.gsub('#','/')}' />"
+			elsif File.directory? "#{resourceDir}/#{filename}"
+				generateDumbImageHTMLFile "#{resourceDir}/#{filename}",fileToWrite,id
+			end
+		end			
+	end
+end
+
 def generateSoundHTMLFile resourceDir,fileToWrite,type
 		Dir.entries(resourceDir).each do |filename|
 			unless ['.', '..'].include? filename
@@ -164,6 +194,9 @@ def generate_resources
 				wrap("#{@base}html_resources/#{resourceDir}.html") do |images|
 					generateImageHTMLFile("#{@base}images/#{resourceDir}",images,resourceDir)
 				end				
+				wrap_dumb("#{@base}html_resources/#{resourceDir}_dumb.html") do |images|
+					generateDumbImageHTMLFile("#{@base}images/#{resourceDir}",images,resourceDir)
+				end
 			end
 		end
 	end
@@ -173,6 +206,9 @@ def generate_resources
 		unless ['.', '..'].include? challenge
 			wrap("#{@base}html_resources/#{challenge}.html") do |challenges|
 				generateImageHTMLFile "#{@base}challenges/"+challenge,challenges,"challenges"
+			end
+			wrap_dumb("#{@base}html_resources/#{challenge}_dumb.html") do |challenges|
+				generateDumbImageHTMLFile "#{@base}challenges/"+challenge,challenges,"challenges"
 			end
 		end
 	end
@@ -192,6 +228,25 @@ def wrap(path)
 	file.puts("<html><body><div id='resources'><script>var resources = [")
 	yield file
 	file.puts("null];parent.register(window, resources)</script></div></body></html>")
+	file.rewind
+	data = file.read
+	original = File.read(path) rescue nil
+	if original == data
+		STDERR.puts " no changes found, skipping file"
+	else
+		File.open(path, 'w') do |f|
+			f.write(data)
+		end
+		STDERR.puts " DONE"
+	end
+end
+
+def wrap_dumb(path)
+	STDERR.print "Processing #{path.split('/').last} ... "
+	file = StringIO.new
+	file.puts("<html><head><script src='../js/base/prototype.js'></script></head><body><div id='resources'>")
+	yield file
+	file.puts("</div><script>document.observe('dom:loaded', function() { window.parent.register(window, $('resources').childElements(), true) });</script></body></html>")
 	file.rewind
 	data = file.read
 	original = File.read(path) rescue nil
