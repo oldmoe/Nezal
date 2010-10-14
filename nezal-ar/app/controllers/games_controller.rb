@@ -129,9 +129,30 @@ class GamesController < ApplicationController
     @game_profile.save
     @game_profile.locale
   end
+  
+  # Do not remove 127.0.0.1 from the valid gateway, it is safe 
+  @@valid_gateways = ['195.58.177.2','195.58.177.3','195.58.177.4','195.58.177.5', "127.0.0.1"]
+  
+  @@packages = {"0.8" => 2500, "1.6" => 6000, "2.4" => 10000}
+  
+  
+  get '/:game_name/daopay/confirmation' do
+    redirect payment_fault_redirection unless @@valid_gateways.include? request.ip
+    @package_coins = @@packages[params["price"]]
+    @user.coins += @@packages[params["price"]]
+    @user.save
+    
+    erb :"#{@app_configs["game_name"]}/daopay_confirmation"
+  end
     
   get '/:game_name' do 
     File.read(File.join( 'public', @app_configs["game_name"], 'index.html'))
+  end
+  
+  protected
+  
+  def payment_fault_redirection
+    "/fb-games/#{@app_configs["game_name"]}/"
   end
 
   post '/:game_name/:camp_name/:userid/friendsranks' do 
