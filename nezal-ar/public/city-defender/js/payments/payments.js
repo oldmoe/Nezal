@@ -3,7 +3,7 @@ var Payment = Class.create({
   
   packages : {
     left : {
-      priceCategory : '0.1',
+      priceCategory : '0.8',
       price : '0.80',
       coins : '2,500'
     }, 
