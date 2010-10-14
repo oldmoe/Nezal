@@ -236,7 +236,6 @@ var Intro = {
                 var loader = Intro.campLoader;
                 var campInfoPath = Intro.campPath() + "/camp.info";
                 var campMetadata = GameConfigs.campaign + "/metadata";
-				console.log(loader.resources)
 				loader.resources=new Hash()	
                 loader.addResource(campInfoPath);
                 loader.addResource(campMetadata);

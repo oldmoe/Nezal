@@ -50,6 +50,7 @@
 		  {/for}
 	  </div>
 	  <div id="extraLevels" style="display : none;" class="levels">
+		<div id="floatBgExtraLevel" >
 			<span id="easy" onclick="GameConfigs.level=1; Intro.next(); return false;" class="levelSize clickSound">
 			  ${Text.intro.levelSelection.easy}
 			  <span style="font-size:14px;text-transform:lowercase;"> 1 </span>
@@ -65,6 +66,7 @@
 			  <span style="font-size:14px;text-transform:lowercase;"> 3 </span>
 			  <span style="font-size:14px;text-transform:lowercase;"> ${Text.intro.levelSelection.score} </span>
 			</span>
+		</div>
 	 </div>
 </textarea>
 
@@ -124,6 +126,7 @@
           	      Intro.retrievePrevCampaigns(); return false;"> ${Text.intro.levelSelection.extraMaps} 
 		</div>
 	<div id="levels" style="display : none;" class="levels">
+			<div id="floatBgLevel">
 			<span id="easy" onclick="GameConfigs.level=1; Intro.next(); return false;" class="levelSize clickSound">
 			  ${Text.intro.levelSelection.easy}
 			  <span style="font-size:14px;text-transform:lowercase;"> 1 </span>
@@ -139,6 +142,7 @@
 			  <span style="font-size:14px;text-transform:lowercase;"> 3 </span>
 			  <span style="font-size:14px;text-transform:lowercase;"> ${Text.intro.levelSelection.score} </span>
 			</span>
+			</div>
 	 </div>
 </textarea>
 
