@@ -3,7 +3,9 @@
 
 var Loader = {
 
-  callbacks: {},
+	dumb : false,
+	
+	callbacks: {},
 
 	initialize: function (){
 		this.toLoad = ["animations.html", "intro.html", "user.html", "background.html",  "game.html", "english.html", "arabic.html", "french.html"]
@@ -31,18 +33,30 @@ var Loader = {
 	},
 	fileLoading :null,
 
-	notify : function(win, resources){
+	notify : function(win, resources, dumb){
 		if(Loader.toLoad[Loader.index])Loader.loaded[Loader.toLoad[Loader.index].split('.')[0]]=true
-		for(var i=0; i < resources.length-1 ;i++){	
-			var image = new Image
-			var resource = resources[i]
-			var id = resource[0]
-			var parts = id.split('#')
-			if(!Loader[parts[0]][parts[1]])Loader[parts[0]][parts[1]] = {}
-			image.setAttribute('data', resource[1])
-			image.src = resource[1]
-			//$('images').appendChild(image)
-			Loader[parts[0]][parts[1]][parts[2]] = image;
+		if(!dumb){
+			for(var i=0; i < resources.length-1 ;i++){	
+				var image = new Image
+				var resource = resources[i]
+				var id = resource[0]
+				var parts = id.split('#')
+				if(!Loader[parts[0]][parts[1]])Loader[parts[0]][parts[1]] = {}
+				image.setAttribute('data', resource[1])
+				image.src = resource[1]
+				Loader[parts[0]][parts[1]][parts[2]] = image;
+			}
+		}else{
+			for(var i=0; i < resources.length ;i++){	
+				var image = new Image
+				var resource = resources[i]
+				var id = resource.id
+				var parts = id.split('#')
+				if(!Loader[parts[0]][parts[1]])Loader[parts[0]][parts[1]] = {}
+				image.setAttribute('data', resource.src)
+				image.src = resource.src
+				Loader[parts[0]][parts[1]][parts[2]] = image;
+			}
 		}
 		if(Loader.toLoad[Loader.index+1] && Loader.toLoad[Loader.index+1].constructor == Function){
 			this.index++
@@ -66,11 +80,9 @@ var Loader = {
 				}
 			})
 			if(found){
-			//	setTimeout(function(){
-					this.index++
-					Intro.startFileLoading(Loader.toLoad[Loader.index].split('.')[0])
-					$('iframe').src = Loader.toLoad[Loader.index]
-			//	},6000)
+				this.index++
+				Intro.startFileLoading(Loader.toLoad[Loader.index].split('.')[0])
+				$('iframe').src = Loader.toLoad[Loader.index]
 			}
 		}
 		var callbackKey = win.document.URL.split('/').pop();
@@ -82,6 +94,7 @@ var Loader = {
 	},
 	
 	loadPage : function(page, callback){
+		page = Loader.dumb ? page + '_dumb' : page
 		this.callbacks[page+".html"] = callback;
 		$('pages').src = "html_resources/"+page+".html"
 	}	
