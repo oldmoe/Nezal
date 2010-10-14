@@ -820,6 +820,14 @@
   top:68px;
   width:140px;
 }
+#marketPlace #upperPart .addMoney img
+{
+  border: none;
+}
+.actions .action #addMoneyAnchor {
+  text-decoration: none;
+  color: #FAC200;
+}
 #marketPlace #upperPart .addText
 {
   display:inline-block;
@@ -1012,6 +1020,46 @@ div.clickableButton:hover, span.clickableButton:hover
   cursor : pointer;
 }
 
+#marketPlace #paymentFloatBg
+{
+  -moz-border-radius:25px;
+  -webkit-border-radius: 25px;
+  -khtml-border-radius: 25px;
+  background:none repeat scroll 0 0 black;
+  color:#FAC200;
+  height:335px;
+  left:73px;
+  position:absolute;
+  top:150px;
+  width:610px;
+  z-index:102;
+}
+
+#marketPlace #daopayFloatBg
+{
+  -moz-border-radius: 25px;
+  -webkit-border-radius: 25px;
+  -khtml-border-radius: 25px;
+  background: none repeat scroll 0 0 black;
+  color: #FAC200;
+  height: 478px;
+  left: 140px;
+  position: absolute;
+  top: 30px;
+  width: 500px;
+  z-index: 103;
+}
+
+#marketPlace #daopayFloatBg iframe {
+  border: none;
+  height: 440px;
+  position: absolute;
+  left: 30px;
+  top: 20px;
+  width: 440px;
+  
+}
+
 #marketPlace #floatBg
 {
   -moz-border-radius:25px;
@@ -1027,7 +1075,16 @@ div.clickableButton:hover, span.clickableButton:hover
   width:520px;
   z-index:101;
 }
-#marketPlace #floatBg #close
+#marketPlace #paymentFloatBg #paymentClose {
+  margin-left: 580px;
+  margin-top: 11px;
+}
+#marketPlace #daopayFloatBg #daopayClose {
+  margin-left: 474px;
+  margin-top: 10px;
+}
+
+#marketPlace #floatBg #close, #marketPlace #paymentFloatBg #paymentClose, #marketPlace #daopayFloatBg #daopayClose
 {
   cursor:pointer;
   display:inline-block;
@@ -1142,10 +1199,9 @@ div.clickableButton:hover, span.clickableButton:hover
 #marketPlace #floatBg .actions .action
 {
   bottom:0;
-  cursor:pointer;
   display:inline-block;
   font-size:11px;
-  width:45%;
+  width:231px;
 }
 #marketPlace #floatBg .actions .action .active
 {
@@ -1153,7 +1209,8 @@ div.clickableButton:hover, span.clickableButton:hover
   font-size:19px;
   display:inline-block;
   padding-top:10px;
-  width : 78%;
+  width : 81px;
+  text-align: center;
 }
 #marketPlace #floatBg .actions .action .inactive
 {
@@ -1162,7 +1219,8 @@ div.clickableButton:hover, span.clickableButton:hover
   cursor : default; 
   display:inline-block;
   padding-top:10px;
-  width : 78%;
+  width : 81px;
+  text-align: center;
 }
 #marketPlace #floatBg .actions .addMoney
 {

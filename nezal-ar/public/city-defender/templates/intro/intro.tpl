@@ -204,7 +204,6 @@
     </div>
 </textarea>
 
-
 <textarea id='missionTemplate' style="display:none">
     <div id="floatBg" style="display : none;">
       <div class="content"> 
@@ -219,6 +218,7 @@
       </div>
       <div id="close" onclick="Intro.hideFloatBg();" class="clickSound"> X </div>
     </div>
+    
     <div id="background">
       <img src="${Loader.images.intro['background.png'].getAttribute('data')}"/>
       <img id="paper" src="${Loader.images.intro['paper.png'].getAttribute('data')}"/>
@@ -455,9 +455,13 @@
                     <div  class="inactive"></div>
                 {/if}
               {/if}
-              <div class="addMoney" >
-                <img src="${Loader.images.intro['market/money.png'].getAttribute('data')}" > </img>
-              </div>
+              <span style="margin:0 44px;"></span>
+              <a id="addMoneyAnchor" class="clickSound" href="javascript:void(0);" onclick="//Intro.showPaymentBg();">
+                <div class="addMoney" >
+                  <img src="${Loader.images.intro['market/money.png'].getAttribute('data')}" > </img>
+                </div>
+              </a>
+              
           </div>
         </div>
     {/if}
@@ -466,9 +470,89 @@
 {/if}
 </textarea>
 
+<textarea id="payment-options-template" style="display:none;">
+  <a href="javascript:void(0);" class="pay clickSound" id="middle-selection">
+    <div>
+      <img id="daopay-logo" src="${Loader.images.payments['daopay_logo.png'].getAttribute('data')}"></img>
+      <span id="daopay-description">
+        ${Text.payments['daopay']['description']}
+      </span>
+      <span id="daopay-command">
+      </span>
+    </div>
+  </a>
+  <a href="javascript:void(0);" class="pay clickSound" id="top-left-selection">
+    <span class="package-info package-price">
+      ${payment.packages['left']['price']} EUR
+    </span>
+    <span class="package-info package-coins">
+      ${payment.packages['left']['coins']} ${Text.game.result.coins}
+    </span>
+  </a>
+  <a href="javascript:void(0);" class="pay clickSound" id="top-middle-selection">
+    <span id="best-value" class="package-info">
+      Best value
+    </span>
+    <span id="middle-package-price" class="package-info">
+      ${payment.packages['middle']['price']} EUR
+    </span>
+    <span id="middle-package-coins" class="package-info">
+      ${payment.packages['middle']['coins']} ${Text.game.result.coins}
+    </span>
+  </a>
+  <a href="javascript:void(0);" class="pay clickSound" id="top-right-selection">
+    <span class="package-info package-price">
+      ${payment.packages['right']['price']} EUR
+    </span>
+    <span class="package-info package-coins">
+      ${payment.packages['right']['coins']} ${Text.game.result.coins}
+    </span>
+  </a>
+</textarea>
+
+<textarea id='daopay-close-template' style="display:none">
+  <div id="daopayClose" onclick="Intro.hideDaopayBg();" class="clickSound"> X </div>
+</textarea>
+
+<textarea id='payment-success' style="display:none">
+  <div id="paymentSuccessModalWindow">
+    <img id="paymentSuccessCharacter" src="${Loader.images.intro['character.png'].getAttribute('data')}"/>
+    <div class="content">
+    </div>
+    <div id="paymentSuccessImage">
+      <img src="${Loader.images.intro['market/money.png'].getAttribute('data')}" />
+    </div>
+    <div id="paymentSuccessOk" onclick="Intro.hidePaymentSuccess();" class="clickSound">
+      <img src="images/intro/ready.png"/>
+      <span id='paymentOkText'>OK</span>
+    </div>
+  </div>
+</textarea>
+
 <textarea id='marketItemsTemplate' style="display:none">
     <div id="floatBg" style="display : none;">
     </div>
+    
+    <div id="paymentSuccessContainer" style="display : none;">
+    </div>
+    
+    <div id="daopayFloatBg" style="display : none;">
+      
+    </div>
+    
+    <div id="paymentFloatBg" style="display : none;">
+      <div class="pay">
+        <img id="pay-left-image" src="${Loader.images.payments['pay_left.png'].getAttribute('data')}" />
+        <img id="pay-middle-image" src="${Loader.images.payments['pay_middle.png'].getAttribute('data')}" />
+        <img id="pay-right-image" src="${Loader.images.payments['pay_right.png'].getAttribute('data')}" />
+      </div>
+      
+      <div id="payments-container">
+      </div>
+      
+      <div id="paymentClose" onclick="Intro.hidePaymentBg();" class="clickSound"> X </div>
+    </div>
+    
     <div id="background">
       <img src="${Loader.images.intro['background.png'].getAttribute('data')}"/>
       <img id="paper" src="${Loader.images.intro['paper.png'].getAttribute('data')}"/>
@@ -485,15 +569,17 @@
         <div class="coins">
           ${data.userData['coins']}
         </div>
-        <div class="addMoney">
-          <span class="addText">
-            ${Text.intro.marketPlace.add}
-          </span>
-          <img src="${Loader.images.intro['market/money.png'].getAttribute('data')}" > </img>
-          <span class="moneyText">
-            ${Text.intro.marketPlace.money}
-          </span>
-        </div>
+        <a class="clickSound" href="javascript:void(0);" onclick="//Intro.showPaymentBg();">
+          <div class="addMoney">
+            <span class="addText">
+              ${Text.intro.marketPlace.add}
+            </span>
+            <img src="${Loader.images.intro['market/money.png'].getAttribute('data')}" > </img>
+            <span class="moneyText">
+              ${Text.intro.marketPlace.money}
+            </span>
+          </div>
+        </a>
     </div>
     <div id="weapons">
       <img  src="${Loader.images.intro['market/scroller.png'].getAttribute('data')}"/>

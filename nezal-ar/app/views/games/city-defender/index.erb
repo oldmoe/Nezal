@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta http-equiv="X-UA-Compatible" content="chrome=1">
 	<meta http-equiv="Content-Type" content="text/html;" charset="utf-8">
 	<link type="text/css" href="<%=bust_cache('css/all/intro.css')%>" rel="stylesheet" />
+  <link type="text/css" href="<%=bust_cache('css/all/payments.css')%>" rel="stylesheet" />
 	<!--[if IE]>
 		<script src="swf/flashcanvas.js"></script>
 	<![endif]-->
 	<script src="http://connect.facebook.net/en_US/all.js"></script>
 	<script src="<%=bust_cache('js/all/base.js')%>"></script>
 	<script src="<%=bust_cache('js/all/nezal.js')%>"></script>
+  <script src="<%=bust_cache('js/all/payments.js')%>"></script>
 	<script>
 		soundManager.url = 'swf/';
 		soundManager.flashVersion = 9; // optional: shiny features (default = 8)
@@ -79,6 +82,12 @@
 	}
 </script>
 </body>
+<!--[if lt IE 8]>
+	<script>
+		window.location='statics/unsupported_browser.html' 
+	</script>
+<![endif]-->
+
 <!--[if IE]>
 	<script>
 		Loader.dumb = true
@@ -87,6 +96,7 @@
 			'<%=bust_cache('html_resources/english_dumb.html')%>',
 			'<%=bust_cache('html_resources/arabic_dumb.html')%>',
 			'<%=bust_cache('html_resources/french_dumb.html')%>',
+      '<%=bust_cache('html_resources/payments_dumb.html')%>',
 			'<%=bust_cache('html_resources/intro_dumb.html')%>',
 			function(){Loader.fire('intro')},
 			'<%=bust_cache('html_resources/animations_dumb.html')%>',
@@ -101,9 +111,8 @@
 <script>		
 	development = false
 	FBConnect.init(function(){
-                      Intro.initialize();
-							
-                });
+        Intro.initialize();							
+    });
 	var loadedProgress = 0
 	function onFinishProgress()
 	{
@@ -126,6 +135,7 @@
 				'<%=bust_cache('html_resources/english.html')%>',
 				'<%=bust_cache('html_resources/arabic.html')%>',
 				'<%=bust_cache('html_resources/french.html')%>',
+        '<%=bust_cache('html_resources/payments.html')%>',
 				'<%=bust_cache('html_resources/intro.html')%>',
 				function(){Loader.fire('intro')},
 				'<%=bust_cache('html_resources/animations.html')%>',
@@ -138,6 +148,7 @@
 		}
 		$('iframe').src = Loader.toLoad[0]
 	})
+  payment = new Payment();
 </script>
 <link type="text/css" href="<%=bust_cache('css/game.css')%>" rel="stylesheet" />
 </html>
