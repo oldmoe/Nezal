@@ -1,6 +1,12 @@
 ﻿window.Text = {
 	gameName: 'درع العرب',
 	towers : '',
+  payments : {
+    daopay : {
+      description : 'ادفع عن طريق الموبايل بسرعة وسهولة وأمان وبدون الحاجة إلى بطاقة ائتمان',
+      packageCommand : 'ادفع *price* EUR وأحصل على *reward* من النقود'
+    }
+  },
 	superWeapons : '',
     intro : {
         levelSelection : {

@@ -1,6 +1,12 @@
 ﻿window.Text = {
 	gameName: 'Défenseur du monde arabe',
 	towers : 'tour',
+  payments : {
+    daopay : {
+      description : 'Pay with your mobile. It is fast, secure and easy. No credit card required!',
+      packageCommand : 'Pay *price* EUR and get *reward* coins'
+    }
+  },
 	superWeapons : 'Armes fatales',
     intro : {
         levelSelection : {

@@ -1,6 +1,12 @@
 window.Text = {
 	gameName: 'Defender of Arabia',
 	towers : 'tower',
+  payments : {
+    daopay : {
+      description : 'Pay with your mobile. It is fast, secure and easy. No credit card required!',
+      packageCommand : 'Pay *price* EUR and get *reward* coins'
+    }
+  },
 	superWeapons : 'Super Weapon',
     intro : {
         levelSelection : {
@@ -74,7 +80,7 @@ window.Text = {
             },
             Weak : {  
                 name : 'Weak',
-                desc :  'Reduce all units\’ health points over time.'
+                desc :  'Reduce all units\ï¿½ healthï¿½pointsï¿½over time.'
             },
             Hyper : { 
                 name : 'Hyper',
@@ -86,7 +92,7 @@ window.Text = {
             },
             Heal : {  
                 name : 'Heal',
-                desc : 'Restores a percentage of all your towers health points.' 
+                desc : 'Restores a percentage of all your towers healthï¿½points.' 
             }
         },
         towers : {
