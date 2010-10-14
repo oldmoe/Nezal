@@ -702,6 +702,39 @@ var Intro = {
         $('gameStart').show();
         $("intro").hide();    
 				onFinish()
-	  }
-	
+	  },
+    showPaymentBg: function(){
+      $('payments-container').innerHTML = TrimPath.parseTemplate($('payment-options-template').value).process();
+      payment.activateMiddlePackage();
+      $('paymentFloatBg').show();
+    },
+    hidePaymentBg: function(){
+      $('paymentFloatBg').hide();
+    },
+    
+    showDaopayBg: function(url){
+      $('daopayFloatBg').show();
+      $('daopayFloatBg').innerHTML = "<iframe src=" + url + "></iframe>";
+      $('daopayFloatBg').innerHTML += TrimPath.parseTemplate($('daopay-close-template').value).process();
+      $$('#daopayClose.clickSound').each(function(element){
+        element.observe('click', function(element){Sounds.play(Sounds.gameSounds.click)})
+      });
+    },
+    hideDaopayBg: function(){
+      $('daopayFloatBg').hide();
+    },
+    
+    paymentSuccess: function(coins){
+      this.hideDaopayBg();
+      $('paymentSuccessContainer').innerHTML = TrimPath.parseTemplate($('payment-success').value).process();
+      $('paymentSuccessOk').observe('click', function(element){Sounds.play(Sounds.gameSounds.click)});
+      $$('#paymentSuccessModalWindow .content')[0].innerHTML = "+ " + coins
+      $('paymentSuccessContainer').show();
+      
+      Intro.userData.coins += Number(coins);
+      $$('#upperPart .coins')[0].innerHTML = Intro.userData.coins;
+    },
+    hidePaymentSuccess: function(){
+      $('paymentSuccessContainer').hide();
+    }
 }

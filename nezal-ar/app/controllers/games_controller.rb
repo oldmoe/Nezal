@@ -130,16 +130,15 @@ class GamesController < ApplicationController
     @game_profile.locale
   end
   
-  @@valid_gateways = ['195.58.177.2','195.58.177.3','195.58.177.4','195.58.177.5']
+  # Do not remove 127.0.0.1 from the valid gateway, it is safe 
+  @@valid_gateways = ['195.58.177.2','195.58.177.3','195.58.177.4','195.58.177.5', "127.0.0.1"]
   
-  # 0.1 => 1.5 EGP
-  # 1 => 7.5 EGP
-  # 2 => 16.5 EGP
-  @@packages = {"0.1" => 400, "1" => 2500, "2" => 7000}
+  @@packages = {"0.1" => 2500, "1.6" => 6000, "2.4" => 10000}
   
   
   get '/:game_name/daopay/confirmation' do
-    redirect payment_fault_redirection unless @@valid_gateways.include? request.ip    
+    redirect payment_fault_redirection unless @@valid_gateways.include? request.ip
+    @package_coins = @@packages[params["price"]]
     @user.coins += @@packages[params["price"]]
     @user.save
     

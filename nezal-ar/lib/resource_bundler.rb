@@ -60,9 +60,9 @@ load Dir.pwd + '/lib/jsmin.rb'
 }
 
 def bundle
-	[['base','js'], ['nezal','js'], ['game', 'js'], ['intro', 'css']].each do |folder|
+	[['base','js'], ['nezal','js'], ['game', 'js'], ['intro', 'css'],['payments', 'js'],['payments', 'css']].each do |folder|
 		STDERR.print "Processing #{folder.join('.')} ... "
-		if folder[0] != 'nezal'
+		if folder[0] != 'nezal' && folder[0] != 'payments'
 			file = Sprockets::Secretary.new(
 				:source_files => @files[folder[0]].collect{|name| "#{@base}#{folder[1]}/#{folder[0]}/#{name}"}
 			)
