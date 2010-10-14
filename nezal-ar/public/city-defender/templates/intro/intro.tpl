@@ -20,7 +20,6 @@
     </div>
   </div>
 </textarea>
-
 <textarea id='challengesTemplate' style="display:none">
     {for challenge in challenges}
     <div class="challenge" title="${challenge["campaign"]['path']}" id="challenge_${challenge["campaign"]['name']}">
@@ -35,6 +34,40 @@
     </div>
     {/for}
 </textarea>
+
+<textarea id='prevChallengesTemplate' style="display:none">
+      <img id="paper" src="${Loader.images.intro['paper.png'].getAttribute('data')}"/>
+	  <ul id="campaigns">
+		  {for camp in campaigns}
+			<li id="prevCampaign">
+				<a href='#' onclick="
+				GameConfigs.campaign='${camp.path}';
+				$('extraLevels').show()
+				return false;">
+					<img src='challenges/${camp.path}/images/flag.png' />${camp['name']}
+				</a>
+			</li>
+		  {/for}
+	  </div>
+	  <div id="extraLevels" style="display : none;" class="levels">
+			<span id="easy" onclick="GameConfigs.level=1; Intro.next(); return false;" class="levelSize clickSound">
+			  ${Text.intro.levelSelection.easy}
+			  <span style="font-size:14px;text-transform:lowercase;"> 1 </span>
+			  <span style="font-size:14px;text-transform:lowercase;"> ${Text.intro.levelSelection.score} </span>
+			</span>
+			<span id="medium" onclick="GameConfigs.level=2; Intro.next(); return false;" class="levelSize clickSound">
+			  ${Text.intro.levelSelection.medium}
+			  <span style="font-size:14px;text-transform:lowercase;"> 2 </span>
+			  <span style="font-size:14px;text-transform:lowercase;"> ${Text.intro.levelSelection.score} </span>
+			</span>
+			<span id="hard" onclick="GameConfigs.level=3; Intro.next(); return false;" class="levelSize clickSound">
+			  ${Text.intro.levelSelection.hard}
+			  <span style="font-size:14px;text-transform:lowercase;"> 3 </span>
+			  <span style="font-size:14px;text-transform:lowercase;"> ${Text.intro.levelSelection.score} </span>
+			</span>
+	 </div>
+</textarea>
+
 
 <textarea id='levelSelectionTemplate' style="display:none">
     <div id="background">
@@ -80,49 +113,33 @@
             	      Sounds.play(Sounds.gameSounds.click);
           	      this.removeClassName('clickSound');
           	      this.stopObserving('click');
-          	      $$('#levelSelection #levels')[0].show(); return false;"> ${Text.intro.levelSelection.title} </div>
-    <div id="levels" style="display : none;" class="levels">
-        <span id="easy" onclick="GameConfigs.level=1; Intro.next(); return false;" class="levelSize clickSound">
-          ${Text.intro.levelSelection.easy}
-          <span style="font-size:14px;text-transform:lowercase;"> 1 </span>
-          <span style="font-size:14px;text-transform:lowercase;"> ${Text.intro.levelSelection.score} </span>
-        </span>
-        <span id="medium" onclick="GameConfigs.level=2; Intro.next(); return false;" class="levelSize clickSound">
-          ${Text.intro.levelSelection.medium}
-          <span style="font-size:14px;text-transform:lowercase;"> 2 </span>
-          <span style="font-size:14px;text-transform:lowercase;"> ${Text.intro.levelSelection.score} </span>
-        </span>
-        <span id="hard" onclick="GameConfigs.level=3; Intro.next(); return false;" class="levelSize clickSound">
-          ${Text.intro.levelSelection.hard}
-          <span style="font-size:14px;text-transform:lowercase;"> 3 </span>
-          <span style="font-size:14px;text-transform:lowercase;"> ${Text.intro.levelSelection.score} </span>
-        </span>
-    </div>
-		<div id="extraMap" class="title titleSize clickableButton clickSound" style="display : none;"
+          	      $$('#levels')[0].show(); return false;"> ${Text.intro.levelSelection.title} </div>
+		<div id="extraMap" class="title titleSize clickableButton clickSound" "
 		      onclick="this.removeClassName('clickableButton');
           	      this.addClassName('clicked');
           	      if(this.hasClassName('clickSound'))
             	      Sounds.play(Sounds.gameSounds.click);
           	      this.removeClassName('clickSound');
           	      this.stopObserving('click');
-          	      $$('#levelSelection #extraLevels')[0].show(); return false;"> ${Text.intro.levelSelection.extraMaps} </div>
-    <div id="extraLevels" style="display : none;" class="levels">
-        <span id="easy" onclick="GameConfigs.level=1; Intro.next(); return false;" class="levelSize clickSound">
-          ${Text.intro.levelSelection.easy}
-          <span style="font-size:14px;text-transform:lowercase;"> 1 </span>
-          <span style="font-size:14px;text-transform:lowercase;"> ${Text.intro.levelSelection.score} </span>
-        </span>
-        <span id="medium" onclick="GameConfigs.level=2; Intro.next(); return false;" class="levelSize clickSound">
-          ${Text.intro.levelSelection.medium}
-          <span style="font-size:14px;text-transform:lowercase;"> 2 </span>
-          <span style="font-size:14px;text-transform:lowercase;"> ${Text.intro.levelSelection.score} </span>
-        </span>
-        <span id="hard" onclick="GameConfigs.level=3; Intro.next(); return false;" class="levelSize clickSound">
-          ${Text.intro.levelSelection.hard}
-          <span style="font-size:14px;text-transform:lowercase;"> 3 </span>
-          <span style="font-size:14px;text-transform:lowercase;"> ${Text.intro.levelSelection.score} </span>
-        </span>
-    </div>
+          	      Intro.retrievePrevCampaigns(); return false;"> ${Text.intro.levelSelection.extraMaps} 
+		</div>
+	<div id="levels" style="display : none;" class="levels">
+			<span id="easy" onclick="GameConfigs.level=1; Intro.next(); return false;" class="levelSize clickSound">
+			  ${Text.intro.levelSelection.easy}
+			  <span style="font-size:14px;text-transform:lowercase;"> 1 </span>
+			  <span style="font-size:14px;text-transform:lowercase;"> ${Text.intro.levelSelection.score} </span>
+			</span>
+			<span id="medium" onclick="GameConfigs.level=2; Intro.next(); return false;" class="levelSize clickSound">
+			  ${Text.intro.levelSelection.medium}
+			  <span style="font-size:14px;text-transform:lowercase;"> 2 </span>
+			  <span style="font-size:14px;text-transform:lowercase;"> ${Text.intro.levelSelection.score} </span>
+			</span>
+			<span id="hard" onclick="GameConfigs.level=3; Intro.next(); return false;" class="levelSize clickSound">
+			  ${Text.intro.levelSelection.hard}
+			  <span style="font-size:14px;text-transform:lowercase;"> 3 </span>
+			  <span style="font-size:14px;text-transform:lowercase;"> ${Text.intro.levelSelection.score} </span>
+			</span>
+	 </div>
 </textarea>
 
 

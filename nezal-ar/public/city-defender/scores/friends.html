@@ -136,7 +136,7 @@
 				{else}
 					<a href="#" onclick="window.parent.FBDefender.invite();return false;">
 					<img class='photo' src='images/q_mark.png' />				
-					<div class="name" >Add<br/>Friend</div>
+					<div class="name" class="addFriend">Add <br/>Friend</div>
 					</a>
 				{/if}
 			</div>
@@ -164,7 +164,7 @@
 										{else}
 											<a href="#" onclick="window.parent.FBDefender.invite();return false;">
 											<img class='photo' src='images/q_mark.png' />				
-											<div class="name" >Add<br/>Friend</div>
+											<div class="name" class="addFriend">Add <br/>Friend</div>
 											</a>
 										{/if}			
     		          </li>
@@ -179,7 +179,7 @@
 						<div class = "friend">
 							<img src="images/blank.png" />
 							<img class='photo' src='images/q_mark.png' />				
-							<div class="name" >Add<br/>Friend</div>
+							<div class="name" class="addFriend">Add <br/>Friend</div>
 						</div>
 						</a>
 	          <div class="right">
@@ -197,13 +197,15 @@
 
 <script>
 		var friendsIds = null
-		var userID = 
+		var userID = null
+		var currCamp = null
 		FBConnect.init(function(){        
 			userID = FB.getSession().uid
 			var	query = FB.Data.query("SELECT uid FROM user WHERE is_app_user=1 and uid IN (SELECT uid2 FROM friend WHERE uid1 = {0})", FB.getSession().uid);
 			FB.Data.waitOn([query], function(){
 						friendsIds = query.value.collect(function(row){return Number(row.uid)}) 
 						friendsIds.push(Number(FB.getSession().uid))	
+						currCamp = window.parent.GameConfigs.currentCampaign
 						viewFriendsRanks()
 					})
 				});
@@ -248,7 +250,7 @@
 					});
 		}
 		function getFriendsRanks(callback){
-			var url = '../tunisia/'+FB.getSession().uid+'/friendsranks'
+			var url = '../'+currCamp+'/'+FB.getSession().uid+'/friendsranks'
 				new Ajax.Request( url ,{ 	
 					method:'post',
 					parameters: { 'friends' : Object.toJSON(friendsIds).gsub(/\[/,"").gsub(/\]/,"") }, 
@@ -260,7 +262,7 @@
 				});
 		}
 		function getWorldRanks(callback){
-				var url = '../tunisia/'+FB.getSession().uid+'/worldranks'
+				var url = '../'+currCamp+'/'+FB.getSession().uid+'/worldranks'
 							new Ajax.Request( url ,
 					     { method:'post',
 					            onSuccess : function(t){

@@ -19,7 +19,7 @@
 			</div>
 			<div id="towerData">
 			{if tower.healthSprite !=null }
-					<div id = "sellTower" onmousedown = "game.scene.sellSelectedTower()"><h4>${window.Text.game.towerInfo.sell}</h4><hr/>$${Math.round(tower.price*0.75*tower.hp/tower.maxHp)}</div>
+					<div id = "sellTower" onmousedown = "game.scene.sellSelectedTower()"><h4>${window.Text.game.towerInfo.sell}</h4><hr/><div id="sellValue">$${Math.round(tower.price*0.75*tower.hp/tower.maxHp)}</div></div>
 					{else}
 						<h4 style="margin-left:8px;margin-top:7px;">$${tower.price}</h4>
 					{/if}
@@ -94,6 +94,13 @@
 				<div id="lives" class="lives">0</div>
 				<div id="waves" class="waves">0/0</div>					
 			</div>
+			<div id="snapshotWindow" style="display:none;">
+				<img id="snapshot" src =""/>
+				<div id="save">save</div>
+				<div id="share">share</div>
+				<div id="close"></div>
+				<img id="background" src =""/>
+			</div>
 			<div id="gameElements" style="display:none">
 				<div id='gameMenu' style="display:none;">
 					<div id="gameResume" class="button"><div class='buttonTextContainer'><div id="resumeText" class='buttonText'>Resume</div></div></div>
@@ -104,12 +111,11 @@
 					0
 				</div>
 				<div class="fps"></div>
-				
 			  <div class="rank" id="rank">
 			    <img src=""/>
 			  </div>
 			  <div class="rankName" id = "rankName">${Config.rank}</div>
-				
+				<div id="exp"></div>
 				<div class="start">	<div class = "startText"> </div></div>
 				<div class="towers">
 				
@@ -124,6 +130,7 @@
 				<div class="sound controls on"></div>
 				<a href ="http://www.facebook.com/apps/application.php?id=122519734470004" target="122519734470004"><div class="like controls"></div></a>
 				<div class="bookmark controls"></div>
+				<div class="snapshot controls"></div>
 					<textarea id='wavesTemplate' style='display:none'>
 						<div id="incomingWaves">
 						{for wave in Config.waves}
@@ -139,7 +146,7 @@
 				</textarea>
 				<div id =container>	
 				</div>
-
+				
 				<div class="superWeapons">
 				</div>
 				<div class="superWeaponsOff">
@@ -151,6 +158,7 @@
 			<textarea id='resultTemplate' style="display:none">
 					<img src="${Loader.images.intro['paper.png'].getAttribute('data')}"/>
 					<img id="resultCoin" src="${Loader.images.background['coin.png'].getAttribute('data')}"/>
+					<div id="replay" onclick="game.scene.replayScene()">REPLAY GAME</div>
 					<div id="coins">
 						<div id="coinsWord">${Text.game.result.coins}</div>
 						<div id="coinsValue">0</div>

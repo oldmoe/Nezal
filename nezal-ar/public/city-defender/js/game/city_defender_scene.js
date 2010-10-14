@@ -8,7 +8,7 @@ var CityDefenderScene = Class.create(Scene, {
 	splashCount :2,
 	hyperCount : 2,
 	promoted : true,
-	initialize : function($super,config,delay,baseCtx,upperCtx){
+	initialize : function($super,config,delay,baseCtx,upperCtx,replay){
 		this.creeps = []
 		this.turrets = []
 		this.objects = []
@@ -25,6 +25,19 @@ var CityDefenderScene = Class.create(Scene, {
 		}
 		this.waveNumber = 1
 		$super(delay);
+		if(!replay){
+			this.randomizer = new Randomizer()
+			this.replayEvents = []
+			this.startTick = 0
+			this.replay = false
+		}else{
+			this.replay = true			
+			this.randomizer = new Randomizer(replay.randoms)
+			for(var i=0;i<replay.replayEvents.length;i++){
+				var event = replay.replayEvents[i]
+				this.pushReplayEvent(event[0] - replay.startTick, event[1], event[2])
+			}
+		}
 		this.config = Nezal.clone_obj(config)
 		this.usedWeapons = {}
 		var self = this;
@@ -40,6 +53,7 @@ var CityDefenderScene = Class.create(Scene, {
 			this.minExp = this.maxExp = 0
 		}
 		$$('.status').first().title = "XP: "+this.exp+"/"+(this.maxExp+1)
+		$$('#gameElements #exp').first().innerHTML = "XP "+this.exp+"/"+(this.maxExp+1)
 		this.baseCtx = baseCtx;
 		this.upperCtx = upperCtx;
 		this.scenario = new Scenario(this)
@@ -62,9 +76,9 @@ var CityDefenderScene = Class.create(Scene, {
 		this.creepsLayer = new Layer(this.upperCtx);
 		this.creepsLayer.clear = true
 		this.layers.push(this.creepsLayer);
-		this.basesLayer = new Layer(this.baseCtx)
-		this.rangesLayer = new Layer(this.baseCtx)
-		this.rangesLayer.clear = true
+		this.basesLayer = new Layer(this.upperCtx)
+		this.rangesLayer = new Layer(this.upperCtx)
+		//this.rangesLayer.clear = true
 		this.towerCannonLayer = new Layer(this.upperCtx)
 		this.rocketsLayer = new Layer(this.upperCtx)
 		this.towerHealthLayer = new Layer(this.upperCtx)
@@ -86,11 +100,18 @@ var CityDefenderScene = Class.create(Scene, {
 
 		return this
 	},
-	addTurret : function(turret){
+	addTurret : function(klass, x, y){
+		if(!this.replay){
+			this.replayEvents.push([this.reactor.ticks, 'addTurret', [klass, x, y]])
+		}
+		Sounds.play(Sounds.gameSounds.correct_tower)
+		var turret = new klass(x, y, this)
 		this.towerMutators.each(function(mutator){
 				mutator.action(turret)
 		})
 		this.turrets.push(turret)
+		this.stats.towersCreated++
+		this.money -= turret.price
 		Map.grid[turret.gridX][turret.gridY].tower = turret
 		this.rangesLayer.attach(turret.rangeSprite)
 		this.basesLayer.attach(turret.baseSprite)
@@ -165,19 +186,19 @@ var CityDefenderScene = Class.create(Scene, {
 			this.minExp = this.maxExp	
 			this.maxExp = this.maxExp*2
 		}
-		$('statusBarFill').style.width = ((this.currentExp-this.minExp)/(this.maxExp-this.minExp))*100+"%"
+		$('statusBarFill').style.width = Math.max(((this.currentExp-this.minExp)/(this.maxExp-this.minExp))*100-4,0)+"%"
 		$('money').innerHTML = this.money;
 		$('lives').innerHTML = window.Text.game.upperBar.lives+" "+Math.max(this.maxEscaped - this.escaped,0);
 		$('score').innerHTML = window.Text.game.upperBar.score+" "+this.score;
 		var self = this
 		$('waves').innerHTML = window.Text.game.upperBar.wave+" "+this.wave +'/'+this.wavesCount;
-			
-			$('towerInfo').show()
-			$('towerInfo').innerHTML = this.templates['towerInfo'].process({tower: this.selectedTower})
-			if(this.selectedTower && this.selectedTower.healthSprite){
-				$('upgradeTower').observe('mouseenter',function(){self.updateMeters(self.selectedTower)}).observe('mouseover',function(){self.updateMeters(self.selectedTower)})
+		$('towerInfo').show()
+		if(this.selectedTower && this.selectedTower.healthSprite){
+			//$('upgradeTower').observe('mouseenter',function(){self.updateMeters(self.selectedTower)}).observe('mouseover',function(){self.updateMeters(self.selectedTower)})
+			if(this.selectedTowerHp !=this.selectedTower.hp){
+				$$('#towerInfo #sellValue').first().innerHTML = "$"+Math.round(this.selectedTower.price*0.75*this.selectedTower.hp/this.selectedTower.maxHp)+""
 			}
-			
+		}			
 		var self = this
 		this.push(15, function(){self.renderData()})
 	},
@@ -200,12 +221,22 @@ var CityDefenderScene = Class.create(Scene, {
 	},
 	fire : function(name){
 		try{
+			if(!this.replay){
+				this.replayEvents.push([this.reactor.ticks, "fire", [name]])
+			}
 			this[name].fire()
-			this.usedWeapons[name.capitalize()] ++;
 		}catch(e){
 		}	
 	},
+	
+	doFire : function(name){
+	},
+	
 	startAttack : function(){
+		if(!this.replay){
+			this.startTick = this.reactor.ticks
+			this.replayEvents.push([this.startTick, 'startAttack'])
+		}
 		this.sendWaves(this.config)
 		this.renderStartAttack()
 	},
@@ -232,10 +263,9 @@ var CityDefenderScene = Class.create(Scene, {
 		Sounds.play(Sounds.gameSounds.pause)
 	},
 	renderResume: function(){
-		Sounds.resumeTrack()
+		Sounds.togglePauseTrack()
 		$$('#gameElements #gameMenu').first().hide()
 		$('pauseWindow').hide()
-		soundManager.unmute()
 		Sounds.play(Sounds.gameSounds.pause)
 	},
 	displayStats : function(){
@@ -337,7 +367,7 @@ var CityDefenderScene = Class.create(Scene, {
 						new Effect.Appear("result", {delay : 3.0})
 						game.scene.push(60,function(){
 							Sounds.play(Sounds.gameSounds[state])
-							Sounds.togglePauseTrack()
+							Sounds.stopTrack()
 							$('pauseWindow').show()
 						})
 						game.scene.push(60,function(){self.displayStats()})
@@ -364,7 +394,7 @@ var CityDefenderScene = Class.create(Scene, {
 			new Effect.Appear("result", {delay : 3.0})
 			game.scene.push(60,function(){
 			$('pauseWindow').show()
-			Sounds.togglePauseTrack()
+			Sounds.stopTrack()
 			Sounds.play(Sounds.gameSounds[state])
 			})
 			game.scene.push(60,function(){self.displayStats()})
@@ -403,14 +433,14 @@ var CityDefenderScene = Class.create(Scene, {
 			var creepCat = eval(creep.category)
 			for(var i=0; i < creep.count; i++){
 				self.creepsCount ++
-				var entry = Map.entry[Math.round(Math.random()*(Map.entry.length - 1))]
+				var entry = Map.entry[Math.round(self.randomizer.next()*(Map.entry.length - 1))]
 				if(creepCat == Plane || creepCat == RedPlane){
 					var arr = [0,90,180,270]
 					theta = arr[0]
 					creep.theta = theta
 					self.issueCreep(creep, 
-							(theta == 90 || theta == 270) ? Math.round(Math.random()* (Map.width - 1)) : x,
-							(theta == 0 || theta == 180) ? (Math.round(Math.random()* (Map.height - 2)) + 1) : y, 
+							(theta == 90 || theta == 270) ? Math.round(self.randomizer.next()* (Map.width - 1)) : x,
+							(theta == 0 || theta == 180) ? (Math.round(self.randomizer.next()* (Map.height - 2)) + 1) : y, 
 							delay/self.reactor.delay, i == (creep.count - 1))
 				}else{
 					self.issueCreep(creep,  entry[0], entry[1], delay/self.reactor.delay, i == (creep.count - 1))
@@ -430,7 +460,7 @@ var CityDefenderScene = Class.create(Scene, {
 		this.playing = true;
 		this.wave = 0
 		this.startTime = new Date()
-		var wave = config.waves.pop()
+		var wave = config.waves.pop()	
 		if(wave){
 			this.sendWave(wave);
 			this.wavePending = true
@@ -466,27 +496,92 @@ var CityDefenderScene = Class.create(Scene, {
 		})
 	},
 	uploadScore : function(win,callback){
-		// Upload Score code goes here
-		  var currRank = Config.rank;
-			onSuccess = function() {
-			    //Here we make the rank 
-		      $$('#rank img')[0].src = "images/intro/ranks/" + Config.rank + ".png";
-		      $$('.rankName')[0].innerHTML = window.Text.game.ranks[Config.rank].abbr;
-		      callback();
-		  }
-		  Intro.sendScore(this.score, win, onSuccess);
+		if(this.replay) game.exit()
+		else{
+			// Upload Score code goes here
+			  var currRank = Config.rank;
+				onSuccess = function() {
+					//Here we make the rank 
+				  $$('#rank img')[0].src = "images/intro/ranks/" + Config.rank + ".png";
+				  $$('.rankName')[0].innerHTML = window.Text.game.ranks[Config.rank].abbr;
+				  callback();
+			  }
+			  Intro.sendScore(this.score, win, onSuccess);
+		 }
+	},
+	
+	selectTower : function(x, y){
+		if(!this.replay) this.replayEvents.push([this.reactor.ticks, 'selectTower', [x, y]])
+		if(this.selectedTower){
+			if(this.selectedTower.rangeSprite){
+				this.selectedTower.rangeSprite.visible = false
+			}
+		}
+		this.selectedTower = Map.grid[x][y].tower
+		this.selectedTowerHp = Map.grid[x][y].tower.hp
+		this.selectedTower.rangeSprite.visible = true
+		this.processTowerInfoTemplate()
+	},
+	processTowerInfoTemplate : function(){
+		$('towerInfo').innerHTML = this.templates['towerInfo'].process({tower: this.selectedTower})
+		this.updateMeters()
 	},
 	sellSelectedTower: function(){
+		if(!this.replay){this.replayEvents.push([this.reactor.ticks, "sellSelectedTower"])}
 		this.money +=Math.round(this.selectedTower.price*0.75*this.selectedTower.hp/this.selectedTower.maxHp)
 		Map.grid[this.selectedTower.gridX][this.selectedTower.gridY].tower = null
 		this.selectedTower.destroySprites()
 		this.selectedTower = null
 		Sounds.play(Sounds.gameSounds.click)
 	},
-	upgradeSelectedTower: function(){
-		this.selectedTower.upgrade()
+	takeSnapShot : function(type){
+		try{
+			 this.reactor.pause()
+			 var tmpCanvas = document.createElement('canvas');
+			 tmpCanvas.setAttribute('id','snap')
+			 var img = new Image
+			 img.src = $('gameForeground').toDataURL("image/png");
+			 img.onload = function(){
+				 $('snapshotWindow').show()
+				 var backgroundImg = Loader.challenges[Config.campaign]['images/'+Config.missionPath+'/path.png']
+				 var tmpCanvas = document.createElement('canvas');
+				 tmpCanvas.width = backgroundImg.width
+				 tmpCanvas.height = backgroundImg.height
+				 var ctx= tmpCanvas.getContext('2d')
+				 ctx.drawImage(backgroundImg,0,0)
+				 ctx.drawImage(img,0,0)
+			     //console.log(img)
+				 var data = tmpCanvas.toDataURL("image/png")
+				 $$('#snapshotWindow #snapshot')[0].setAttribute('data' , data);
+				 $$('#snapshotWindow #snapshot')[0].src = data
+				 $('snapshotWindow').show()
+				 //$('canvasContainer').appendChild(tmpCanvas)
+			 }
+		 }catch(e){
+			console.log(e)
+		 }
 	},
-	updateMeters : function(tower){
+	shareSnapshot : function(){
+		 FBDefender.publishSnapshot($$('#snapshotWindow #snapshot')[0].getAttribute('data'))
+		 $('snapshotWindow').hide()
+		this.reactor.resume()
+	},
+	saveSnapshot : function(){
+		$('snapshotWindow').hide()
+		document.location.href = strData = $$('#snapshotWindow #snapshot')[0].src.replace("image/png","image/octet-stream")
+		this.reactor.resume()
+	},
+	closeSnapshot : function(){
+		$('snapshotWindow').hide()
+		this.reactor.resume()
+	},
+	upgradeSelectedTower: function(){
+		if(!this.replay){this.replayEvents.push([this.reactor.ticks, "upgradeSelectedTower"])}
+		this.selectedTower.upgrade()
+		this.processTowerInfoTemplate()
+	},
+	updateMeters : function(){
+		var tower = this.selectedTower
 		if(tower && tower.upgrades[tower.rank]){
 			if(tower.upgrades[tower.rank].power)
 			$('powerMeter').style.borderRight = Math.ceil((tower.upgrades[tower.rank].power-tower.power)*60/450)+"px solid #FAC200"
@@ -499,6 +594,23 @@ var CityDefenderScene = Class.create(Scene, {
 			}
 		}
 	},
+	
+	replayScene : function(){
+		game.reset({startTick : this.startTick, replayEvents : this.replayEvents, randoms : this.randomizer.randoms})
+	},
+	
+	pushReplayEvent : function(ticks, method, params){
+		var self = this
+		if(ticks < 0) ticks = 0
+		self.reactor.push(ticks, function(){
+			if(params){
+				self[method].apply(self, params)
+			}else{
+				self[method]()
+			}
+		})
+	},
+	
 	resetScene : function(){
 		this.creeps.invoke('destroySprites')
 		this.creeps = []
@@ -509,6 +621,7 @@ var CityDefenderScene = Class.create(Scene, {
 		this.objects.invoke('finish')
 		this.objects=[]
 	},
+	
 	waitingCreeps : 0,
 	wavePending : false,
 	escaped: 0,
@@ -519,9 +632,9 @@ var CityDefenderScene = Class.create(Scene, {
 	delay : 25,
 	fps : 0,
 	score: 0,
-	moneyMultiplier: [1.2,1.1,1.05],
-	creepMultiplier: [1.05,1.1,1.15],
-	creepPowerMultiplier: [1.1,1.15,1.2],
+	moneyMultiplier: [1.2,1.1,1.1],
+   creepMultiplier: [1.05,1.1,1.2],
+   creepPowerMultiplier: [1.05,1.1,1.15],
 	wave : 0,
 	sound : true,
 	wavesCount : 0,

@@ -146,7 +146,8 @@ var Weak = Class.create(SuperWeapon, {
 	action : function(){
 		Sounds.play(Sounds.superWeapons.weak,true)
 		var anim = new WeakAnimation()
-		this.scene.scenario.notify({name:"superWeaponsWeak", method: false, unit:this.scene.creeps.random()})
+		var randomUnit = this.scene.creeps[Math.round(this.scene.randomizer.next()*(this.scene.creeps.length-1))]
+		this.scene.scenario.notify({name:"superWeaponsWeak", method: false, unit:randomUnit})
 		this.scene.objects.push(anim)
 		this.scene.rocketsLayer.attach(anim)
 		var self = this

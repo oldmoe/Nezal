@@ -20,6 +20,7 @@ var Reactor = Class.create({
 	stop : function(){
 		this.running = false;
 		this.events = []
+		this.ticks = 0
 	},
 	
 	run : function(callback){

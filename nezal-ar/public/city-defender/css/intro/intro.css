@@ -108,6 +108,7 @@
   left:300px;
   position:absolute;
   top:142px;
+  z-index:1;
 }
 #inProgress #titleAr
 {
@@ -208,6 +209,7 @@
   left:300px;
   position:absolute;
   top:142px;
+  z-index:1;
 }
 #levelSelection #titleAr
 {
@@ -1357,3 +1359,41 @@ div.clickableButton:hover, span.clickableButton:hover
 #scores {
 	overflow : hidden;
 }
+#previousCampaigns #paper{
+	position:absolute;
+}
+#previousCampaigns ul{	
+	font-size:24px;
+	width: 540px;
+	position: absolute;
+	left:100px;
+	top:100px;
+}
+
+#previousCampaigns ul li{
+	float:left;
+	list-style-type : none;
+	width: 270px;
+}
+
+#previousCampaigns ul li a{
+	text-decoration : none;
+	border : none;
+	color: black;
+}
+
+#previousCampaigns ul li a:hover{
+	color: white;
+}
+
+#previousCampaigns ul li img{
+	width :32px;
+	margin-right: 10px;
+	vertical-align: top;
+	border: none;
+}
+
+#previousCampaigns #campaigns #prevCampaign{
+	cursor:pointer;
+}
+

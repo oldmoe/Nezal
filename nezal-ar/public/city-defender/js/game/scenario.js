@@ -11,7 +11,7 @@ var Scenario = Class.create({
 	},
 	notify : function(event){
 		if(event.unit && (event.unit.constructor==Plane||event.unit.constructor==RedPlane))return
-		var x = Math.random()
+		var x = this.scene.randomizer.next()
 		if((x<0.1&&event.unit)||(event.name!="creepEnteredTower"&&event.name!="creepEntered"&&event.name!="towerDestroyedCreep")){
 			event['tick']=0
 			event['created'] = false
@@ -39,7 +39,7 @@ var Scenario = Class.create({
 						if(event.unit.parent == "creep") baloonNum = 1
 						event.unit.createBaloon(baloonNum)
 						event.created = true
-						event.unit.baloon.text.innerHTML = window.Text.game[event.name].random()
+						event.unit.baloon.text.innerHTML = window.Text.game[event.name][Math.round(this.scene.randomizer.next()*(Text.game[event.name].length-1))]
 						if(event.method)this[event.name]()
 					}
 				}					

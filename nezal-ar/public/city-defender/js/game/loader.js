@@ -19,9 +19,11 @@ var Loader = {
 			Intro.start(); 
 		}},
 		tutorial : {loaded : false, onLoad : null},
-		game : {loaded : false, onLoad : function(){
+		game : {loaded : false, onLoad : null},
+		/*
+		function(){
 			Loader.loadPage(GameConfigs.campaign, function(){Loader.fire('challenge')})
-		}},
+		}}*/
 		challenge : {loaded : false, onLoad : null}
 	},
 	loaded :{},

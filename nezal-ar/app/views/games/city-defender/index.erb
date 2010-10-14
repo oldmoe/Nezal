@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta http-equiv="X-UA-Compatible" content="chrome=1">
 	<meta http-equiv="Content-Type" content="text/html;" charset="utf-8">
 	<link type="text/css" href="<%=bust_cache('css/all/intro.css')%>" rel="stylesheet" />
   <link type="text/css" href="<%=bust_cache('css/all/payments.css')%>" rel="stylesheet" />
@@ -53,6 +54,9 @@
     
     <div id="levelSelection" style="display : none; text-align:center;">
     </div>
+	
+	 <div id="previousCampaigns" style="display : none;">
+    </div>
 
     <div id="campaign" style="display : none;">
     </div>
@@ -78,6 +82,12 @@
 	}
 </script>
 </body>
+<!--[if lt IE 8]>
+	<script>
+		window.location='statics/unsupported_browser.html' 
+	</script>
+<![endif]-->
+
 <!--[if IE]>
 	<script>
 		Loader.dumb = true
@@ -101,9 +111,8 @@
 <script>		
 	development = false
 	FBConnect.init(function(){
-                      Intro.initialize();
-							$('scores').src = '<%=bust_cache('scores/friends.html')%>'
-                });
+        Intro.initialize();							
+    });
 	var loadedProgress = 0
 	function onFinishProgress()
 	{

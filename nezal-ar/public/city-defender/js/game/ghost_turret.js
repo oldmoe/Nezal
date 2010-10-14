@@ -18,6 +18,7 @@ var ghostTurretFeatures = {
 			this.valid = false;
 		}
 	},
+	
 	droppingGroundClick : function(e){
 		var x=0,y=0
 		var self = GhostTurret
@@ -28,28 +29,17 @@ var ghostTurretFeatures = {
 		self.validate();
 		if(self.valid&&self.selected){
 			self.selected = true
-			Sounds.play(Sounds.gameSounds.correct_tower)
-			var turret = new self.tower(Math.floor(x/32), Math.floor(y/32),game.scene)
-			game.scene.towerMutators.each(function(mutator){
-				mutator.action(turret)
-			})
-			game.scene.addTurret(turret)
-			game.scene.stats.towersCreated++
-			game.scene.money -= self.tower.prototype.price
+			game.scene.addTurret(self.tower, Math.floor(x/32), Math.floor(y/32))
 		}
 		else if (Map.grid[self.xGrid][self.yGrid].tower){
 			self.selected = false
-			if(game.scene.selectedTower){
-				if(game.scene.selectedTower.rangeSprite){
-					game.scene.selectedTower.rangeSprite.visible = false
-				}
-			}
-			game.scene.selectedTower = Map.grid[self.xGrid][self.yGrid].tower
-			game.scene.selectedTower.rangeSprite.visible = true
+			game.scene.selectTower(self.xGrid, self.yGrid)
 		}
 		else{
 				Sounds.play(Sounds.gameSounds.wrong_tower)
 		}
+		if(game.scene.selectedTower)
+		game.scene.processTowerInfoTemplate()
 	},
 	select : function(div){
 		$('droppingGround').stopObserving("mouseenter")
@@ -93,6 +83,8 @@ var ghostTurretFeatures = {
 			self.isIn = false
 			this.stopObserving("mousemove").stopObserving("click")
 		}).addClassName('turret')
+		if(game.scene.selectedTower)
+		game.scene.processTowerInfoTemplate()
 	},
 	showInfo : function(){
 	},

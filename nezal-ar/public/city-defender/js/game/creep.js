@@ -97,7 +97,9 @@ var Creep = Class.create(Unit, {
 					move = true
 				}else{
 					// we need to rotate now, which direction ?
-					this.direction = bottom - top
+					var b = bottom > 1 ? 0 : bottom
+					var t = top > 1 ? 0 : top
+					this.direction = b - t
 					this.rotating = true
 					this.oldTheta = this.rotation
 					this.oldSpeed = this.speed

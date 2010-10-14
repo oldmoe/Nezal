@@ -138,7 +138,10 @@ var Turret = Class.create(Unit, {
 		this.cannonSprite.destroy()
 		this.healthSprite.destroy()
 		this.rankSprite.destroy()
-		if(this.scene.selectedTower&&this.scene.selectedTower.gridX == this.gridX && this.scene.selectedTower.gridY == this.gridY)this.scene.selectedTower = null
+		if(this.scene.selectedTower&&this.scene.selectedTower.gridX == this.gridX && this.scene.selectedTower.gridY == this.gridY){
+			this.scene.selectedTower = null
+			$('towerInfo').innerHTML = ""
+		}
 		if(this.baloon)this.baloon.destroy()
 		this.rangeSprite.destroy()
 	}
