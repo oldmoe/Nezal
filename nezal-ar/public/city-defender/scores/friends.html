@@ -136,7 +136,7 @@
 				{else}
 					<a href="#" onclick="window.parent.FBDefender.invite();return false;">
 					<img class='photo' src='images/q_mark.png' />				
-					<div class="name" class="addFriend">Add friend <br/>& get 50 coins</div>
+					<div class="name" class="addFriend">Add <br/>Friend</div>
 					</a>
 				{/if}
 			</div>
@@ -164,7 +164,7 @@
 										{else}
 											<a href="#" onclick="window.parent.FBDefender.invite();return false;">
 											<img class='photo' src='images/q_mark.png' />				
-											<div class="name" class="addFriend">Add friend <br/>& get 50 coins</div>
+											<div class="name" class="addFriend">Add <br/>Friend</div>
 											</a>
 										{/if}			
     		          </li>
@@ -179,7 +179,7 @@
 						<div class = "friend">
 							<img src="images/blank.png" />
 							<img class='photo' src='images/q_mark.png' />				
-							<div class="name" class="addFriend">Add friend <br/>& get 50 coins</div>
+							<div class="name" class="addFriend">Add <br/>Friend</div>
 						</div>
 						</a>
 	          <div class="right">
@@ -205,7 +205,7 @@
 			FB.Data.waitOn([query], function(){
 						friendsIds = query.value.collect(function(row){return Number(row.uid)}) 
 						friendsIds.push(Number(FB.getSession().uid))	
-						currCamp = window.parent.GameConfigs.campaign
+						currCamp = window.parent.GameConfigs.currentCampaign
 						viewFriendsRanks()
 					})
 				});

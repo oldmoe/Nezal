@@ -19,7 +19,7 @@ require Dir.pwd + '/app/models/game'
 
 def generate_campaigns
 	game = Game.find_by_name(@game_name)
-	campaigns = Campaign.select(:name, :path).where(:game_id => game.id).order(:created_at).all.collect{|c|{name:c.name, path:c.path}}.reverse
+	campaigns = Campaign.select(:name, :path).where(:game_id => game.id).order(:created_at,:id).all.collect{|c|{name:c.name, path:c.path}}.reverse
 	campaigns.shift
 	current = JSON.generate(campaigns)
 	path = @base + "/statics/campaigns.json"
@@ -30,3 +30,4 @@ def generate_campaigns
 		end
 	end
 end
+generate_campaigns
