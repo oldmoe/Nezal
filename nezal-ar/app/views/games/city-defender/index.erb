@@ -51,6 +51,9 @@
     
     <div id="levelSelection" style="display : none; text-align:center;">
     </div>
+	
+	 <div id="previousCampaigns" style="display : none;">
+    </div>
 
     <div id="campaign" style="display : none;">
     </div>
@@ -81,7 +84,7 @@
 	development = false
   FBConnect.init(function(){
                       Intro.initialize();
-							$('scores').src = '<%=bust_cache('scores/friends.html')%>'
+							
                 });
 	var loadedProgress = 0
 	function onFinishProgress()
