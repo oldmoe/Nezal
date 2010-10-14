@@ -133,7 +133,7 @@ class GamesController < ApplicationController
   # Do not remove 127.0.0.1 from the valid gateway, it is safe 
   @@valid_gateways = ['195.58.177.2','195.58.177.3','195.58.177.4','195.58.177.5', "127.0.0.1"]
   
-  @@packages = {"0.1" => 2500, "1.6" => 6000, "2.4" => 10000}
+  @@packages = {"0.8" => 2500, "1.6" => 6000, "2.4" => 10000}
   
   
   get '/:game_name/daopay/confirmation' do
