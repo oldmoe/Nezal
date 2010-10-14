@@ -71,15 +71,33 @@
   <iframe id ="scores" src="" style = "width :760px;height:150px;display:none;overflow:hidden;"></iframe>
 </div>
 <script>
-	function register(win, resources){
-		Loader.notify(win, resources)			
+	function register(win, resources, dumb){
+		Loader.notify(win, resources, dumb)			
 	}
 </script>
 </body>
+<!--[if IE]>
+	<script>
+		Loader.dumb = true
+		Loader.toLoad = [
+			'<%=bust_cache('html_resources/user_dumb.html')%>',
+			'<%=bust_cache('html_resources/english_dumb.html')%>',
+			'<%=bust_cache('html_resources/arabic_dumb.html')%>',
+			'<%=bust_cache('html_resources/french_dumb.html')%>',
+			'<%=bust_cache('html_resources/intro_dumb.html')%>',
+			function(){Loader.fire('intro')},
+			'<%=bust_cache('html_resources/animations_dumb.html')%>',
+			'<%=bust_cache('html_resources/game_dumb.html')%>',
+			'<%=bust_cache('html_resources/background_dumb.html')%>',
+			function(){Loader.fire('tutorial')},
+			'<%=bust_cache('html_resources/weapons_dumb.html')%>',
+			function(){Loader.fire('game')}
+		]
+	</script>
+<![endif]-->
 <script>		
-
 	development = false
-  FBConnect.init(function(){
+	FBConnect.init(function(){
                       Intro.initialize();
 							$('scores').src = '<%=bust_cache('scores/friends.html')%>'
                 });
@@ -99,21 +117,22 @@
   	      	image.onload = onFinishProgress;
       			image.src = "images/intro/"+image.getAttribute('name')
     			});		
-		
-		Loader.toLoad = [
-			'<%=bust_cache('html_resources/user.html')%>',
-			'<%=bust_cache('html_resources/english.html')%>',
-			'<%=bust_cache('html_resources/arabic.html')%>',
-			'<%=bust_cache('html_resources/french.html')%>',
-			'<%=bust_cache('html_resources/intro.html')%>',
-			function(){Loader.fire('intro')},
-			'<%=bust_cache('html_resources/animations.html')%>',
-			'<%=bust_cache('html_resources/game.html')%>',
-			'<%=bust_cache('html_resources/background.html')%>',
-			function(){Loader.fire('tutorial')},
-			'<%=bust_cache('html_resources/weapons.html')%>',
-			function(){Loader.fire('game')}
-		]
+		if(!Loader.dumb){
+			Loader.toLoad = [
+				'<%=bust_cache('html_resources/user.html')%>',
+				'<%=bust_cache('html_resources/english.html')%>',
+				'<%=bust_cache('html_resources/arabic.html')%>',
+				'<%=bust_cache('html_resources/french.html')%>',
+				'<%=bust_cache('html_resources/intro.html')%>',
+				function(){Loader.fire('intro')},
+				'<%=bust_cache('html_resources/animations.html')%>',
+				'<%=bust_cache('html_resources/game.html')%>',
+				'<%=bust_cache('html_resources/background.html')%>',
+				function(){Loader.fire('tutorial')},
+				'<%=bust_cache('html_resources/weapons.html')%>',
+				function(){Loader.fire('game')}
+			]
+		}
 		$('iframe').src = Loader.toLoad[0]
 	})
 </script>
