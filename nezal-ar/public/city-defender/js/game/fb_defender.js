@@ -200,6 +200,22 @@ FBDefender = {
                   FBDefender.isMarket = false;
                   FBConnect.publish(attachment, Text.facebook.userPrompt, actionLinks, FBDefender.onPublishSuccess)
         } );
+    },
+	publishSnapshot : function(img){
+			
+		var post = ""
+		post += "--kkkk\r\nContent-Disposition: form-data; name=\"file\"; filename=\"file1.png\"\r\n"
+		post += "Content-Type: image/png\r\n"
+		post += "Content-Transfer-Encoding: base64\r\n\r\n"
+		post += img
+		var request = {
+			'Content-type' : "multipart/form-data; boundary=--kkkk",
+			body : post
+		}
+		var values = {message:'the caption',filename:'image.png',image:img}
+		FB.api('/'+FBConnect.session.uid+'/photos?access_token='+FBConnect.session.access_token,function(){alert(1)},values,'post')
+		//FB.api('/'+FBConnect.session.uid+'/photos',function(){alert(1)},values,'post')
     }
+	
   
 }

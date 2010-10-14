@@ -1,4 +1,4 @@
-require 'json'
+﻿require 'json'
 
 class CityDefender < Metadata
   
@@ -7,7 +7,7 @@ class CityDefender < Metadata
   WIN_COIN_FACTOR = (1.0/300)
   LIKE_COINS = 500
   BOOKMARK_COINS = 500
-  INVITE_COINS = 50
+  INVITE_COINS = 100
   
   def self.init_game(game)
     metadata = { 'towers' => {}, 'weapons' => {} , 'creeps' => {} }

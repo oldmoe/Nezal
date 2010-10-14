@@ -123,7 +123,8 @@ var Intro = {
 			  //$("gameStart").innerHTML = loader.resources.get(PathConfigs.gameTemplate);
               $("gameStart").innerHTML = Intro.templates['game'] = loader.resources.get(PathConfigs.gameTemplate);
               var data = JSON.parse(loader.resources.get('metadata'));
-              GameConfigs.campaign = data['game_data']['current_campaign'];
+              GameConfigs.currentCampaign = data['game_data']['current_campaign'];			  
+			  GameConfigs.campaign = data['game_data']['current_campaign'];
               Intro.gameData = JSON.parse(data['game_data']['metadata']);
               for(var i in Intro.gameData.towers)
               {
@@ -136,8 +137,9 @@ var Intro = {
               Intro.userData = data['user_data'];
               Intro.userData["metadata"] = JSON.parse(data['user_data']['metadata']);
               Intro.ranks = data['ranks'];
-  			      Intro.doneLoading = true;
-		  	      Intro.start()
+  			  Intro.doneLoading = true;
+		  	  Intro.start()
+			  $('scores').src = 'scores/friends.html'
 			  /*
               Loader.loadPage(GameConfigs.campaign, function(){
 				  
@@ -146,7 +148,16 @@ var Intro = {
 			  */
           });
     },
-
+	retrievePrevCampaigns : function(){
+		new Ajax.Request( 'statics/campaigns.json', {method:'get',
+			onSuccess: function(t){
+				Intro.prevCampaigns = JSON.parse(t.responseText)
+				$('previousCampaigns').innerHTML = TrimPath.parseTemplate($('prevChallengesTemplate').value).process({campaigns:Intro.prevCampaigns})
+				$('levelSelection').hide()
+				$('previousCampaigns').show()
+			}
+		});
+	},
     retrieveData: function( callback){
         new Ajax.Request( 'metadata', {method:'get',
             onSuccess: function(t){
@@ -200,12 +211,11 @@ var Intro = {
                         $('congrates').addClassName(GameConfigs.language)
             						$('levelSelection').innerHTML = Intro.templates.levelSelection[1].process(); 
                         if(Intro.userData.newbie){
-						              	Intro.displayTutorial();
+						    Intro.displayTutorial();
                         }else{
                             Intro.show();
                         }
-                        if(!Intro.userData.like)
-                        {
+                        if(!Intro.userData.like){
                             FBDefender.isFan()
                         }
                     });
@@ -214,18 +224,20 @@ var Intro = {
         },
         campaign : {
             index : 1,
-			onSelect : function(){
-				if(Loader.events.challenge.loaded){
-					Intro.pages.campaign.doOnSelect()
-				}else{
-					Intro.enablePauseScreen();
-					Loader.events.challenge.onLoad = Intro.pages.campaign.doOnSelect
-				}
+			onSelect : function(campaign){
+				$('previousCampaigns').hide()
+				if(campaign)GameConfigs.campaign = campaign.name
+				Intro.enablePauseScreen();
+				GameConfigs.level=3
+				Loader.events.challenge = { loaded : false, onLoad :  Intro.pages.campaign.doOnSelect}
+				Loader.loadPage(GameConfigs.campaign, function(){Loader.fire('challenge')})	
 			},
             doOnSelect : function() {
                 var loader = Intro.campLoader;
                 var campInfoPath = Intro.campPath() + "/camp.info";
-                var campMetadata = GameConfigs.campaign + "/metadata";                
+                var campMetadata = GameConfigs.campaign + "/metadata";
+				console.log(loader.resources)
+				loader.resources=new Hash()	
                 loader.addResource(campInfoPath);
                 loader.addResource(campMetadata);
                 loader.load(function(){
@@ -598,7 +610,7 @@ var Intro = {
 	startFileLoading : function(fileName){
 		//	if(!Intro.fileLoading){
 			Intro.fileLoading=true
-			$$('#pause #fileName').first().innerHTML = "Loading resource "+fileName.split('?')[0].split('/')[1] + "....."
+			$$('#pause #fileName').first().innerHTML = "Loading "+fileName.split('?')[0].split('/')[1] + "....."
 			Intro.enableProgressbar(0,100,fileName)
 		//}
 	},
@@ -664,12 +676,12 @@ var Intro = {
         Intro.enablePauseScreen();
         Intro.nextPageIndex = Intro.currentPage + 1;
         var callback = function() {
-                                    if(Intro.nextPageIndex == Intro.sequence.length )
-                                        Intro.finish();
-                                    else{
-                                        Intro.pages[Intro.sequence[Intro.currentPage + 1]].onSelect();
-																				}
-                                }
+			if(Intro.nextPageIndex == Intro.sequence.length )
+				Intro.finish();
+			else{
+				Intro.pages[Intro.sequence[Intro.currentPage + 1]].onSelect();
+														}
+		}
         callback();
 	  },
 	  

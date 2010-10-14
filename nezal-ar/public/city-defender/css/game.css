@@ -113,7 +113,7 @@ body{
 
 #gameElements .rank{
 	position:absolute;
-	top:14px;
+	top:2px;
 	left:650px;
 	width:100px;
 	height:60px;
@@ -123,12 +123,24 @@ body{
 	position:absolute;
 	font-family: AdLib, Arial Black, Tahoma;
 	color: orange;
-	top: 64px;
+	top: 54px;
 	left:650px;
 	width:100px;
 	height:40px;
 	text-align: center;
   text-transform : uppercase;
+}
+#gameElements #exp {
+	color:orange;
+	font-family:AdLib,Arial Black,Tahoma;
+	font-size:12px;
+	height:40px;
+	left:650px;
+	position:absolute;
+	text-align:center;
+	text-transform:uppercase;
+	top:72px;
+	width:105px;
 }
 
 #gameElements .start{
@@ -423,7 +435,6 @@ body{
 	z-index:101;
 	margin-left:3px;
 	background-repeat:no-repeat;
-
 }
 
 #gameElements .controls:hover{
@@ -439,6 +450,7 @@ body{
 #gameElements  .sound.controls.off{
 	width: 40px;
 	top:35px;
+	background:none;
 	background-image: url('../images/background/sound_off_button.png');				
 }
 
@@ -452,12 +464,46 @@ body{
 	background-image: url('../images/background/bookmark_button.png');
 	top :75px;
 }
-#gameElements  .subscribe{
+#gameElements  .snapshot{
 	background-image: url('../images/background/subscribe_button.png');
-	top :80px;
+	top :159px;
+}
+#snapshotWindow{
+	z-index:300;
+	position:absolute;
+	top:100px;
+	left:117px;
+}
+#snapshotWindow #snapshot{
+	border:5px solid white;
+	left:53px;
+	position:absolute;
+	top:27px;
+	width:326px;
+
+}
+#snapshotWindow #share,#save{
+	background-color:orange;
+	height:25px;
+	left:443px;
+	position:absolute;
+	width:61px;
+	cursor:pointer;
 }
 
-
+#snapshotWindow #share{
+	top:207px;
+}
+#snapshotWindow #save{
+	top:109px;
+}
+#snapshotWindow #close{
+	height:30px;
+	left:523px;
+	position:absolute;
+	top:10px;
+	width:30px;
+}
 .status {
 	color:white;
 	font-family:verdana;
@@ -707,6 +753,7 @@ body{
 	height:100%;
 	position:absolute;
 	width:185%;
+	cursor:pointer;
 }
 #modalWindow #ok #rogerText{
 	color:gold;

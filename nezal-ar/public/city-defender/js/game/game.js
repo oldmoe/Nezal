@@ -8,7 +8,7 @@ var Game = Class.create({
 	initialize : function(delay){
 	},
 	
-	start : function(){
+	start : function(replay){
 		Map.init();
 		if(Intro.userData.newbie)Config = tutorialConfig
 		else Config = GameConfigs
@@ -27,8 +27,8 @@ var Game = Class.create({
 			$$('.bookmark').first().observe('click', FBDefender.bookmark)	
 		}
 		else{
-			this.scene = new CityDefenderScene(this.config,33,this.ctx,this.topCtx);
-			this.registerHandlers();
+			this.scene = new CityDefenderScene(this.config,33,this.ctx,this.topCtx, replay);
+			if(!replay)this.registerHandlers();
 		}
 		if(Config.map)Map.bgGrid = Config.map
 		if(Config.mapEntry)Map.entry = Config.mapEntry
@@ -169,10 +169,12 @@ var Game = Class.create({
 		//Here we make the rank 
 		$$('#rank img')[0].src = "images/intro/ranks/" + Config.rank + ".png";
 		$$('.rankName')[0].innerHTML = window.Text.game.ranks[Config.rank].abbr;
+		$$('#snapshotWindow #background')[0].src=Loader.images.background['pop_up.png'].getAttribute('data')
 		$('popup').appendChild(Loader.images.background['pop_up.png'])
 		$$('#popup #popupOk').first().appendChild(Loader.images.intro['mission/accept.png'])
 		if(Intro.userData.bookmarked)$$('.bookmark').first().hide()	
 		if(Intro.userData.like)$$('.like').first().hide()
+		if(Sounds.muted)Sounds.mute()
 	},
 	
 	registerHandlers : function(){
@@ -198,14 +200,18 @@ var Game = Class.create({
 			game.reset()})
 		$('exit').observe('click', game.exit)
 		$('gameExit').observe('click', function(){
-			Sounds.stopTrack()
 			game.exit()})
 		$('gameReset').observe('click',function(){game.reset()})	
 		$('gameResume').observe('click', function(){game.scene.resume()})	
 		$$('.sound').first().observe('click',Sounds.mute)
-		$$('.bookmark').first().observe('click', FBDefender.bookmark)	
+		$$('.bookmark').first().observe('click', FBDefender.bookmark)
+		$$('.snapshot').first().observe('click',function(){game.scene.takeSnapShot()})
+		$$('.snapshot').first().hide()
+		$$('#snapshotWindow #save').first().observe('click',function(){game.scene.saveSnapshot()})
+		$$('#snapshotWindow #share').first().observe('click',function(){game.scene.shareSnapshot()})
+		$$('#snapshotWindow #close').first().observe('click',function(){game.scene.closeSnapshot()})
 	},
-	reset : function(){
+	reset : function(replay){
 		game.scene.reactor.stop()
 		game.scene.resetScene()
 		$$('#gameElements #gameMenu').first().hide()
@@ -216,22 +222,24 @@ var Game = Class.create({
 		$$('#gameElements .start').first().removeClassName('paused')
 		$('stats').innerHTML = ''
 		game.unRegisterHandlers()
+		Sounds.togglePauseTrack()
 		$('droppingGround').removeClassName('off')	
 		$('result').hide()
 		$$('#gameElements .superWeapons div').each(function(div){ 
 			if(div.className != ''){div.stopObserving('click')}
 		})
-		game.start()	
+		game.start(replay)	
 	},
+	
+	
 	exit :function(){
 		$$('#gameElements #gameMenu').first().hide()
 		Sounds.stopTrack()
-		game.scene.reactor.stop()
 		Intro.enablePauseScreen();
 		$('gameStart').hide()
 		$("gameStart").innerHTML = Intro.templates['game'];
 		Intro.replay();	
-		onFinish()
+		//onFinish()
 	},
 	unRegisterHandlers : function(){	
 		$$('.towers div').invoke('stopObserving','click')
