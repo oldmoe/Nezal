@@ -228,7 +228,6 @@ var Intro = {
 				$('previousCampaigns').hide()
 				if(campaign)GameConfigs.campaign = campaign.name
 				Intro.enablePauseScreen();
-				GameConfigs.level=3
 				Loader.events.challenge = { loaded : false, onLoad :  Intro.pages.campaign.doOnSelect}
 				Loader.loadPage(GameConfigs.campaign, function(){Loader.fire('challenge')})	
 			},

@@ -50,24 +50,34 @@
 		  {/for}
 	  </div>
 	  <div id="extraLevels" style="display : none;" class="levels">
-		<div id="floatBgExtraLevel" >
-			<span id="easy" onclick="GameConfigs.level=1; Intro.next(); return false;" class="levelSize clickSound">
-			  ${Text.intro.levelSelection.easy}
-			  <span style="font-size:14px;text-transform:lowercase;"> 1 </span>
-			  <span style="font-size:14px;text-transform:lowercase;"> ${Text.intro.levelSelection.score} </span>
-			</span>
-			<span id="medium" onclick="GameConfigs.level=2; Intro.next(); return false;" class="levelSize clickSound">
-			  ${Text.intro.levelSelection.medium}
-			  <span style="font-size:14px;text-transform:lowercase;"> 2 </span>
-			  <span style="font-size:14px;text-transform:lowercase;"> ${Text.intro.levelSelection.score} </span>
-			</span>
-			<span id="hard" onclick="GameConfigs.level=3; Intro.next(); return false;" class="levelSize clickSound">
-			  ${Text.intro.levelSelection.hard}
-			  <span style="font-size:14px;text-transform:lowercase;"> 3 </span>
-			  <span style="font-size:14px;text-transform:lowercase;"> ${Text.intro.levelSelection.score} </span>
-			</span>
+			<div id="floatBgLevel" >
+				<div id="close" onclick="$('extraLevels').hide()">x</div>
+				<a id="easy" href='javascript:void(0);' onclick="GameConfigs.level=1; Intro.next(); return false;" class="difficultyItem clickSound">
+					<img src="${Loader.images.intro['levels/easy_icon.png'].getAttribute('data')}"/>
+					<div class="scoreEffect">
+						<span class="scoreMultiplier">1x</span>
+						<span class="scoreWord">score</span>
+					</div>
+					<img class="difficultyLevel" src="${Loader.images[GameConfigs.language]['easy.png'].getAttribute('data')}"/>
+				</a>
+				<a id="medium" href='javascript:void(0);' onclick="GameConfigs.level=2; Intro.next(); return false;" class="difficultyItem clickSound" >
+					<img src="${Loader.images.intro['levels/medium_icon.png'].getAttribute('data')}"/>
+					<div class="scoreEffect">
+						<span class="scoreMultiplier">2x</span>
+						<span class="scoreWord">score</span>
+					</div>
+					<img class="difficultyLevel" src="${Loader.images[GameConfigs.language]['medium.png'].getAttribute('data')}"/>
+				</a>
+				<a id="hard" href='javascript:void(0);' onclick="GameConfigs.level=3; Intro.next(); return false;" class="difficultyItem clickSound">
+					<img src="${Loader.images.intro['levels/hard_icon.png'].getAttribute('data')}"/>
+					<div class="scoreEffect">
+						<span class="scoreMultiplier">3x</span>
+						<span class="scoreWord">score</span>
+					</div>
+					<img class="difficultyLevel" src="${Loader.images[GameConfigs.language]['hard.png'].getAttribute('data')}"/>
+				</a>
+			</div>
 		</div>
-	 </div>
 </textarea>
 
 
@@ -116,7 +126,7 @@
           	      this.removeClassName('clickSound');
           	      this.stopObserving('click');
           	      $$('#levels')[0].show(); return false;"> ${Text.intro.levelSelection.title} </div>
-		<div id="extraMap" class="title titleSize clickableButton clickSound" "
+		<div id="extraMap" class="title titleSize clickableButton clickSound" 
 		      onclick="this.removeClassName('clickableButton');
           	      this.addClassName('clicked');
           	      if(this.hasClassName('clickSound'))
@@ -125,27 +135,66 @@
           	      this.stopObserving('click');
           	      Intro.retrievePrevCampaigns(); return false;"> ${Text.intro.levelSelection.extraMaps} 
 		</div>
-	<div id="levels" style="display : none;" class="levels">
-			<div id="floatBgLevel">
-			<span id="easy" onclick="GameConfigs.level=1; Intro.next(); return false;" class="levelSize clickSound">
-			  ${Text.intro.levelSelection.easy}
-			  <span style="font-size:14px;text-transform:lowercase;"> 1 </span>
-			  <span style="font-size:14px;text-transform:lowercase;"> ${Text.intro.levelSelection.score} </span>
-			</span>
-			<span id="medium" onclick="GameConfigs.level=2; Intro.next(); return false;" class="levelSize clickSound">
-			  ${Text.intro.levelSelection.medium}
-			  <span style="font-size:14px;text-transform:lowercase;"> 2 </span>
-			  <span style="font-size:14px;text-transform:lowercase;"> ${Text.intro.levelSelection.score} </span>
-			</span>
-			<span id="hard" onclick="GameConfigs.level=3; Intro.next(); return false;" class="levelSize clickSound">
-			  ${Text.intro.levelSelection.hard}
-			  <span style="font-size:14px;text-transform:lowercase;"> 3 </span>
-			  <span style="font-size:14px;text-transform:lowercase;"> ${Text.intro.levelSelection.score} </span>
-			</span>
+		<div id="levels" style="display : none;" class="levels">
+			<div id="floatBgLevel" >
+				<div id="close" onclick="$('levels').hide()">x</div>
+				<a id="easy" href='javascript:void(0);' onclick="GameConfigs.level=1; Intro.next(); return false;" class="difficultyItem clickSound">
+					<img src="${Loader.images.intro['levels/easy_icon.png'].getAttribute('data')}"/>
+					<div class="scoreEffect">
+						<span class="scoreMultiplier">1x</span>
+						<span class="scoreWord">score</span>
+					</div>
+					<img class="difficultyLevel" src="${Loader.images[GameConfigs.language]['easy.png'].getAttribute('data')}"/>
+				</a>
+				<a id="medium" href='javascript:void(0);' onclick="GameConfigs.level=2; Intro.next(); return false;" class="difficultyItem clickSound" >
+					<img src="${Loader.images.intro['levels/medium_icon.png'].getAttribute('data')}"/>
+					<div class="scoreEffect">
+						<span class="scoreMultiplier">2x</span>
+						<span class="scoreWord">score</span>
+					</div>
+					<img class="difficultyLevel" src="${Loader.images[GameConfigs.language]['medium.png'].getAttribute('data')}"/>
+				</a>
+				<a id="hard" href='javascript:void(0);' onclick="GameConfigs.level=3; Intro.next(); return false;" class="difficultyItem clickSound">
+					<img src="${Loader.images.intro['levels/hard_icon.png'].getAttribute('data')}"/>
+					<div class="scoreEffect">
+						<span class="scoreMultiplier">3x</span>
+						<span class="scoreWord">score</span>
+					</div>
+					<img class="difficultyLevel" src="${Loader.images[GameConfigs.language]['hard.png'].getAttribute('data')}"/>
+				</a>
 			</div>
-	 </div>
+		</div>
 </textarea>
-
+<textarea id='difficultyTemplate' style="display:none">
+	<div id="levels">
+			<div id="floatBgLevel" >
+				<a id="easy" href='javascript:void(0);' onclick="GameConfigs.level=1; Intro.next(); return false;" class="difficultyItem clickSound">
+					<img src="images/intro/levels/easy_icon.png"/>
+					<div class="scoreEffect">
+						<span class="scoreMultiplier">1x</span>
+						<span class="scoreWord">score</span>
+					</div>
+					<img class="difficultyLevel" src="images/english/easy.png"/>
+				</a>
+				<a id="medium" href='javascript:void(0);' onclick="GameConfigs.level=2; Intro.next(); return false;" class="difficultyItem clickSound" >
+					<img src="images/intro/levels/medium_icon.png"/>
+					<div class="scoreEffect">
+						<span class="scoreMultiplier">2x</span>
+						<span class="scoreWord">score</span>
+					</div>
+					<img class="difficultyLevel" src="images/english/medium.png"/>
+				</a>
+				<a id="hard" href='javascript:void(0);' onclick="GameConfigs.level=3; Intro.next(); return false;" class="difficultyItem clickSound">
+					<img src="images/intro/levels/hard_icon.png"/>
+					<div class="scoreEffect">
+						<span class="scoreMultiplier">3x</span>
+						<span class="scoreWord">score</span>
+					</div>
+					<img class="difficultyLevel" src="images/english/hard.png"/>
+				</a>
+			</div>
+		</div>
+</textarea>
 
 <textarea id='campaignTemplate' style="display:none">
     <div id="background">

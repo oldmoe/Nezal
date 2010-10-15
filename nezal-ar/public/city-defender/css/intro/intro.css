@@ -343,58 +343,28 @@
 }
 .levels
 {
-  color:wheat;
-  height:30px;
-  left:90px;
-  line-height:30px;
+  left:48px;
   position:absolute;
-  text-align:center;
+  width : 570px;
+  height : 330px;
+  text-align:left;
   text-transform:capitalize;
-  width:580px;
 }
-#levels
+#levels,#extraLevels
 {
-  top:375px;
+  top:127px;
 }
-#extraLevels
-{
-  top:435px;
+#floatBgLevel #close{
+	cursor:pointer;
+	display:inline-block;
+	font-family:PakGirl, Arial Black, Tahoma;
+	font-size:16px;
+	height:20px;
+	margin-top:9px;
+	vertical-align:top;
+	width:20px;
 }
-#intro.arabic .levels .levelSize
-{
-  font-size:24px;
-}
-#intro.french .levels .levelSize
-{
-  font-size:22px;
-}
-#intro.english .levels .levelSize
-{
-  font-size:23px;
-}
-#levels #easy, #extraLevels #easy
-{
-  height : 40%;
-  cursor : pointer;
-  display:inline-block;
-}
-#levels #medium, #extraLevels #medium
-{
-  width : 38%;
-  height : 40%;
-  cursor : pointer;
-  display:inline-block;
-}
-#levels #hard, #extraLevels #hard
-{
-  height : 40%;
-  cursor : pointer;
-  display:inline-block;
-}
-#levels span:hover, #extraLevels span:hover
-{
-  color : white;
-}
+
 
 /***************************
   Css for the campaign page
@@ -1397,4 +1367,55 @@ div.clickableButton:hover, span.clickableButton:hover
 #previousCampaigns #campaigns #prevCampaign{
 	cursor:pointer;
 }
-
+.levels #floatBgLevel{
+	-moz-border-radius:10px 10px 10px 10px;
+	  -webkit-border-radius: 10px 10px 10px 10px;
+	  -khtml-border-radius: 10px 10px 10px 10px;
+	  background:none repeat scroll 0 0 black;
+	  opacity : 0.9;
+	  width : 570px;
+	  height : 330px;
+	  position : absolute;				
+	  left : 45px;
+	  z-index : 200;
+	  color : #FF6600;
+}
+.levels #floatBgLevel .difficultyItem{
+	color:#FF6600;
+	float:left;
+	height:210px;
+	margin-left:31px;
+	margin-top:37px;
+	padding-top:14px;
+	position:relative;
+	text-decoration:none;
+	width:150px;
+}
+.levels #floatBgLevel .difficultyItem img{
+	border:none;
+}
+.difficultyItem:hover{
+	-moz-border-radius:25px;
+	-webkit-border-radius: 25px;
+	-khtml-border-radius: 25px;
+	background-color:#FFFF99;
+}
+#floatBgLevel .difficultyItem .scoreEffect{
+	font-family:verdana;
+	font-weight:bold;
+	left:96px;
+	margin-left:0;
+	position:absolute;
+	top:109px;
+	width:59px;
+}
+#floatBgLevel .difficultyItem .scoreEffect .scoreMultiplier{
+	margin-left:12px;
+}
+#floatBgLevel .difficultyItem .difficultyLevel{
+	margin-left:20px;
+	margin-top:24px;
+}
+#floatBgLevel #medium .difficultyLevel{
+	margin-left:7px;
+}

@@ -113,7 +113,7 @@ body{
 
 #gameElements .rank{
 	position:absolute;
-	top:2px;
+	top:17px;
 	left:650px;
 	width:100px;
 	height:60px;
@@ -123,7 +123,7 @@ body{
 	position:absolute;
 	font-family: AdLib, Arial Black, Tahoma;
 	color: orange;
-	top: 54px;
+	top: 70px;
 	left:650px;
 	width:100px;
 	height:40px;
@@ -139,7 +139,7 @@ body{
 	position:absolute;
 	text-align:center;
 	text-transform:uppercase;
-	top:72px;
+	top:3px;
 	width:105px;
 }
 
