@@ -83,7 +83,8 @@
 			</div>
 		</div>
 		<div id="backContainer">
-			<div id="back" onclick="Intro.showLevelSelection()" class="clickableButton clickSound">
+			<div id="back" onclick="Intro.showLevelSelection();
+			Sounds.play(Sounds.gameSounds.click);" class="clickableButton clickSound">
 			{if ($('intro').getStyle('direction')=='rtl') }
 				<img src="${Loader.images.intro['ready.png'].getAttribute('data')}"/>
 			{else}
@@ -137,6 +138,7 @@
 		<div id = "challengesText" class="title titleSize clickableButton clickSound"
 	       onclick="if(this.hasClassName('clickSound'))
             	      Sounds.play(Sounds.gameSounds.click);
+					  GameConfigs.campaign = GameConfigs.currentCampaign;
           	      $$('#levels')[0].show(); return false;"> ${Text.intro.levelSelection.title} </div>
 		<div id="extraMap" class="title titleSize clickableButton clickSound" 
 		      onclick="if(this.hasClassName('clickSound'))
