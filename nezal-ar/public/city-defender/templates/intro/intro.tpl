@@ -36,19 +36,24 @@
 </textarea>
 
 <textarea id='prevChallengesTemplate' style="display:none">
+	<div id="background">
+	  <img src="${Loader.images.intro['background.png'].getAttribute('data')}"/>
       <img id="paper" src="${Loader.images.intro['paper.png'].getAttribute('data')}"/>
+	 </div>
+    </div>
 	  <ul id="campaigns">
 		  {for camp in campaigns}
 			<li id="prevCampaign">
 				<a href='#' onclick="
 				GameConfigs.campaign='${camp.path}';
+				Sounds.play(Sounds.gameSounds.click)
 				$('extraLevels').show()
 				return false;">
 					<img src='challenges/${camp.path}/images/flag.png' />${camp['name']}
 				</a>
 			</li>
 		  {/for}
-	  </div>
+	  </ul>
 	  <div id="extraLevels" style="display : none;" class="levels">
 			<div id="floatBgLevel" >
 				<div id="close" onclick="$('extraLevels').hide()">x</div>
@@ -78,6 +83,18 @@
 				</a>
 			</div>
 		</div>
+		<div id="backContainer">
+			<div id="back" onclick="Intro.showLevelSelection()" class="clickableButton clickSound">
+			{if ($('intro').getStyle('direction')=='rtl') }
+				<img src="${Loader.images.intro['ready.png'].getAttribute('data')}"/>
+			{else}
+				<img src="${Loader.images.intro['back.png'].getAttribute('data')}"/>
+			{/if}
+			<div class="text buttonText">
+				${Text.intro.campaign.back}
+			</div>
+      </div>
+    </div>
 </textarea>
 
 
@@ -119,20 +136,12 @@
 		  </div>
 	  </div>
 		<div id = "challengesText" class="title titleSize clickableButton clickSound"
-	       onclick="this.removeClassName('clickableButton');
-          	      this.addClassName('clicked');
-          	      if(this.hasClassName('clickSound'))
+	       onclick="if(this.hasClassName('clickSound'))
             	      Sounds.play(Sounds.gameSounds.click);
-          	      this.removeClassName('clickSound');
-          	      this.stopObserving('click');
           	      $$('#levels')[0].show(); return false;"> ${Text.intro.levelSelection.title} </div>
 		<div id="extraMap" class="title titleSize clickableButton clickSound" 
-		      onclick="this.removeClassName('clickableButton');
-          	      this.addClassName('clicked');
-          	      if(this.hasClassName('clickSound'))
+		      onclick="if(this.hasClassName('clickSound'))
             	      Sounds.play(Sounds.gameSounds.click);
-          	      this.removeClassName('clickSound');
-          	      this.stopObserving('click');
           	      Intro.retrievePrevCampaigns(); return false;"> ${Text.intro.levelSelection.extraMaps} 
 		</div>
 		<div id="levels" style="display : none;" class="levels">

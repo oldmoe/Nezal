@@ -369,32 +369,32 @@
 /***************************
   Css for the campaign page
 ***************************/
-#campaign #background
+#campaign #background,#previousCampaigns #background
 {
   position: absolute;
   top: 0px;
   left: 0px;
 }
-#campaign #paper
+#campaign #paper,#previousCampaigns #paper
 {
   position: absolute;
   top: 0px;
   left: 0px;
 }
-#campaign #backContainer
+#campaign #backContainer,#previousCampaigns #backContainer
 {
   left:80px;
   position:absolute;
   top:482px;
   width:585px;
 }
-#campaign #back
+#campaign #back,#previousCampaigns #back
 {
   cursor:pointer;
   height:43px;
   width:83px;
 }
-#campaign #back .text
+#campaign #back .text,#previousCampaigns #back .text
 { 
   color:#FAC200;
   line-height:34px;
@@ -1372,7 +1372,6 @@ div.clickableButton:hover, span.clickableButton:hover
 	  -webkit-border-radius: 10px 10px 10px 10px;
 	  -khtml-border-radius: 10px 10px 10px 10px;
 	  background:none repeat scroll 0 0 black;
-	  opacity : 0.9;
 	  width : 570px;
 	  height : 330px;
 	  position : absolute;				
@@ -1381,7 +1380,7 @@ div.clickableButton:hover, span.clickableButton:hover
 	  color : #FF6600;
 }
 .levels #floatBgLevel .difficultyItem{
-	color:#FF6600;
+	color:#FF9100;
 	float:left;
 	height:210px;
 	margin-left:31px;

@@ -205,11 +205,12 @@
 			FB.Data.waitOn([query], function(){
 						friendsIds = query.value.collect(function(row){return Number(row.uid)}) 
 						friendsIds.push(Number(FB.getSession().uid))	
+						if(window.parent.GameConfigs)
 						currCamp = window.parent.GameConfigs.currentCampaign
+						else currCamp="tunisia"
 						viewFriendsRanks()
 					})
 				});
-
 		function getUserName(users,callback){
 			var ids = users.collect(function(user){return user.id})
 			var	query2 = FB.Data.query("SELECT name,uid FROM user WHERE uid IN ({0})", ids);

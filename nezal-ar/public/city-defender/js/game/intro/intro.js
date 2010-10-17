@@ -704,7 +704,11 @@ var Intro = {
 	  replay: function(){  
         Intro.select('campaign');
 	  },
-	  
+	  showLevelSelection: function(){
+		$('previousCampaigns').hide()
+		$('levelSelection').innerHTML = Intro.templates.levelSelection[1].process(); 
+		$('levelSelection').show()		
+	  },
 	  finish: function(){
 	      Intro.setupGameConfigs();
         city_defender_start();
@@ -746,5 +750,5 @@ var Intro = {
     },
     hidePaymentSuccess: function(){
       $('paymentSuccessContainer').hide();
-    }
+    },
 }
