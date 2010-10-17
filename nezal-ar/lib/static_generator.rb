@@ -15,7 +15,7 @@ require Dir.pwd + '/app/models/game'
 
 @base = Dir.pwd + "/public/city-defender/"
 
-@game_name = ARGV[1]
+@game_name = ENV['app']
 unless @game_name
 	@game_name =  ENV['env'] == 'production' ? "defenderofarabia" : "local-city-defender"
 end 
