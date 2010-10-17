@@ -49,9 +49,9 @@ class ApplicationController < Sinatra::Base
   protected
     
   def get_fb_session
-	  LOGGER.debug	"\n\nehello I'm logging in\n\n\n"
-	  LOGGER.debug "\n\n>>>>>>>>>>>>#{env}\n\n\n"
+	  LOGGER.debug env.inspect
 	  if env['rack.request.cookie_hash'] && 
+		LOGGER.debug "found cookie hash"
 	        (fb_cookie = env['rack.request.cookie_hash']["fbs_#{@app_configs['id']}"] ||
            env['rack.request.cookie_hash']["fbs_#{@app_configs['key']}"])
 		  cookie = CGI::parse(fb_cookie)
@@ -61,12 +61,14 @@ class ApplicationController < Sinatra::Base
       LOGGER.debug ">>>>>> Cookie - session_key : #{@fb_session_key}"
 		  true
 	  elsif params[:fb_sig_session_key] && params[:fb_sig_user] && params['fb_sig_added'] == "1"
+		LOGGER.debug "fb_sig_user"
       @fb_uid = params[:fb_sig_user] 
       @fb_session_key = params[:fb_sig_session_key]
       LOGGER.debug ">>>>>> Params - uid : #{@fb_uid}"
       LOGGER.debug ">>>>>> Params - session_key : #{@fb_session_key}"
 		  true
 	  elsif params[:session_key] && params[:uid] && params['fb_sig_added'] == "1"
+	  LOGGER.debug "fb_sig added and uid"
       @fb_uid = params[:uid] 
       @fb_session_key = params[:session_key]
       LOGGER.debug ">>>>>> Our Params - uid : #{@fb_uid}"
