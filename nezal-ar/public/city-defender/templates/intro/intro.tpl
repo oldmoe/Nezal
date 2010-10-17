@@ -49,7 +49,7 @@
 				Sounds.play(Sounds.gameSounds.click)
 				$('extraLevels').show()
 				return false;">
-					<img src='challenges/${camp.path}/images/flag.png' />${camp['name']}
+					<img src='challenges/${camp.path}/images/flag_small.png' />${camp['name']}
 				</a>
 			</li>
 		  {/for}
@@ -61,7 +61,7 @@
 					<img src="${Loader.images.intro['levels/easy_icon.png'].getAttribute('data')}"/>
 					<div class="scoreEffect">
 						<span class="scoreMultiplier">1x</span>
-						<span class="scoreWord">score</span>
+						<span class="scoreWord">${Text.game.upperBar.score}</span>
 					</div>
 					<img class="difficultyLevel" src="${Loader.images[GameConfigs.language]['easy.png'].getAttribute('data')}"/>
 				</a>
@@ -69,7 +69,7 @@
 					<img src="${Loader.images.intro['levels/medium_icon.png'].getAttribute('data')}"/>
 					<div class="scoreEffect">
 						<span class="scoreMultiplier">2x</span>
-						<span class="scoreWord">score</span>
+						<span class="scoreWord">${Text.game.upperBar.score}</span>
 					</div>
 					<img class="difficultyLevel" src="${Loader.images[GameConfigs.language]['medium.png'].getAttribute('data')}"/>
 				</a>
@@ -77,7 +77,7 @@
 					<img src="${Loader.images.intro['levels/hard_icon.png'].getAttribute('data')}"/>
 					<div class="scoreEffect">
 						<span class="scoreMultiplier">3x</span>
-						<span class="scoreWord">score</span>
+						<span class="scoreWord">${Text.game.upperBar.score}</span>
 					</div>
 					<img class="difficultyLevel" src="${Loader.images[GameConfigs.language]['hard.png'].getAttribute('data')}"/>
 				</a>
@@ -151,7 +151,7 @@
 					<img src="${Loader.images.intro['levels/easy_icon.png'].getAttribute('data')}"/>
 					<div class="scoreEffect">
 						<span class="scoreMultiplier">1x</span>
-						<span class="scoreWord">score</span>
+						<span class="scoreWord">${Text.game.upperBar.score}</span>
 					</div>
 					<img class="difficultyLevel" src="${Loader.images[GameConfigs.language]['easy.png'].getAttribute('data')}"/>
 				</a>
@@ -159,7 +159,7 @@
 					<img src="${Loader.images.intro['levels/medium_icon.png'].getAttribute('data')}"/>
 					<div class="scoreEffect">
 						<span class="scoreMultiplier">2x</span>
-						<span class="scoreWord">score</span>
+						<span class="scoreWord">${Text.game.upperBar.score}</span>
 					</div>
 					<img class="difficultyLevel" src="${Loader.images[GameConfigs.language]['medium.png'].getAttribute('data')}"/>
 				</a>
@@ -167,7 +167,7 @@
 					<img src="${Loader.images.intro['levels/hard_icon.png'].getAttribute('data')}"/>
 					<div class="scoreEffect">
 						<span class="scoreMultiplier">3x</span>
-						<span class="scoreWord">score</span>
+						<span class="scoreWord">${Text.game.upperBar.score}</span>
 					</div>
 					<img class="difficultyLevel" src="${Loader.images[GameConfigs.language]['hard.png'].getAttribute('data')}"/>
 				</a>
