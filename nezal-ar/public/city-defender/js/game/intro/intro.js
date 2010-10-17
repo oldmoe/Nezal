@@ -607,6 +607,7 @@ var Intro = {
     },
 	startFileLoading : function(fileName){
 		//	if(!Intro.fileLoading){
+			fileName.replace("_dumb","")
 			Intro.fileLoading=true
 			$$('#pause #fileName').first().innerHTML = "Loading "+fileName.split('?')[0].split('/')[1] + "....."
 			Intro.enableProgressbar(0,100,fileName)
