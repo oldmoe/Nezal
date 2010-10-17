@@ -349,6 +349,7 @@
   height : 330px;
   text-align:left;
   text-transform:capitalize;
+  z-index:1000;
 }
 #levels,#extraLevels
 {
