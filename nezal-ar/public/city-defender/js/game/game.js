@@ -288,7 +288,7 @@ function onFinish(){
 	window.setTimeout(function(){
 		$('gameElements').show();
 		$('canvasContainer').show();
-		Sounds.togglePauseTrack()
+		Sounds.resumeTrack()
 		$('static').show();
 		Effect.Fade('static',{duration: 1.0})
 	},100)
