@@ -1335,14 +1335,16 @@ div.clickableButton:hover, span.clickableButton:hover
 }
 #previousCampaigns ul{	
 	font-size:24px;
-	width: 540px;
-	position: absolute;
-	left:100px;
-	top:100px;
+	height:300px;
+	margin-left:100px;
+	margin-right:100px;
+	margin-top:105px;
+	position:relative;
+	width:540px;
+	z-index:1000;
 }
 
 #previousCampaigns ul li{
-	float:left;
 	list-style-type : none;
 	width: 270px;
 }
@@ -1359,8 +1361,8 @@ div.clickableButton:hover, span.clickableButton:hover
 
 #previousCampaigns ul li img{
 	width :32px;
-	margin-right: 10px;
-	vertical-align: top;
+	margin: 10px;
+	vertical-align: middle;
 	border: none;
 }
 

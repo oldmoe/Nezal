@@ -40,7 +40,6 @@
 	  <img src="${Loader.images.intro['background.png'].getAttribute('data')}"/>
       <img id="paper" src="${Loader.images.intro['paper.png'].getAttribute('data')}"/>
 	 </div>
-    </div>
 	  <ul id="campaigns">
 		  {for camp in campaigns}
 			<li id="prevCampaign">
@@ -49,7 +48,7 @@
 				Sounds.play(Sounds.gameSounds.click)
 				$('extraLevels').show()
 				return false;">
-					<img src='challenges/${camp.path}/images/flag_small.png' />${camp['name']}
+					<img src='challenges/${camp.path}/images/flag_small.png'/>${camp['name_'+GameConfigs.language].replace("\"","").replace("\"","")}
 				</a>
 			</li>
 		  {/for}

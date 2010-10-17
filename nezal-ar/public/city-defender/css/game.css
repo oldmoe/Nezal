@@ -748,6 +748,7 @@ body{
   top : 120px;
   left : 300px;
   z-index : 202;
+  cursor:pointer;
 }
 #modalWindow #ok img{
 	height:100%;

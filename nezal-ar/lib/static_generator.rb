@@ -1,3 +1,4 @@
+# coding: utf-8
 require 'active_record'
 require 'yajl'
 
@@ -25,6 +26,11 @@ def generate_campaigns
 	game = Game.find_by_name(@game_name)
 	campaigns = Campaign.select(:name, :path).where(:game_id => game.id).order(:created_at,:id).all.collect{|c|{name:c.name, path:c.path}}.reverse
 	campaigns.shift
+	campaigns.each do |campaign|
+		['english', 'arabic', 'french'].each do |lang|
+			campaign["name_#{lang}"] = File.read("#{@base}challenges/#{campaign[:path]}/#{lang}/camp.info").split(",")[0].split(":")[1].strip
+		end
+	end
 	current = Yajl.dump(campaigns)
 	path = @base + "/statics/campaigns.json"
 	original = File.read(path) rescue nil

@@ -25,6 +25,7 @@ var Game = Class.create({
 			$$('#modalWindow #ok #rogerText').first().innerHTML = Text.game.controls.roger
 			$$('.sound').first().observe('click',Sounds.mute)
 			$$('.bookmark').first().observe('click', FBDefender.bookmark)	
+			$$('.snapshot').first().hide()
 		}
 		else{
 			this.scene = new CityDefenderScene(this.config,33,this.ctx,this.topCtx, replay);

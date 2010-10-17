@@ -112,6 +112,17 @@
 			.inactive{
 				background-image:url('images/button_inactive.png');
 			}
+			.coinsWon{
+				color:orange;
+				display:block;
+				font-size:18px;
+				font-weight:bold;
+				margin-left:10px;
+			}
+			.coinsWon img{
+				float:right;
+				margin-right:8px;
+			}
 			
 
 		</style>
@@ -136,7 +147,7 @@
 				{else}
 					<a href="#" onclick="window.parent.FBDefender.invite();return false;">
 					<img class='photo' src='images/q_mark.png' />				
-					<div class="name" class="addFriend">Add <br/>Friend</div>
+					<div class="name" class="addFriend"><span>Add Friend</span><span class="coinsWon"> +200 <img src="../images/intro/market/money.png"/></span></div>
 					</a>
 				{/if}
 			</div>
@@ -164,7 +175,7 @@
 										{else}
 											<a href="#" onclick="window.parent.FBDefender.invite();return false;">
 											<img class='photo' src='images/q_mark.png' />				
-											<div class="name" class="addFriend">Add <br/>Friend</div>
+											<div class="name" class="addFriend"><span>Add Friend</span><span class="coinsWon"> +200 <img src="../images/intro/market/money.png"/></span></div>
 											</a>
 										{/if}			
     		          </li>
@@ -179,7 +190,7 @@
 						<div class = "friend">
 							<img src="images/blank.png" />
 							<img class='photo' src='images/q_mark.png' />				
-							<div class="name" class="addFriend">Add <br/>Friend</div>
+							<div class="name" class="addFriend"><span>Add Friend</span><span class="coinsWon"> +200 <img src="../images/intro/market/money.png"/></span></div>
 						</div>
 						</a>
 	          <div class="right">
