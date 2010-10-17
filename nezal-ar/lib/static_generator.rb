@@ -15,7 +15,11 @@ require Dir.pwd + '/app/models/game'
 
 @base = Dir.pwd + "/public/city-defender/"
 
-@game_name = ENV['env'] == 'production' ? "defenderofarabia" : "local-city-defender"
+@game_name = ARGV[1]
+unless @game_name
+	@game_name =  ENV['env'] == 'production' ? "defenderofarabia" : "local-city-defender"
+end 
+STDERR.puts "Generating campaign list for #{@game_name}"
 
 def generate_campaigns
 	game = Game.find_by_name(@game_name)

@@ -2,6 +2,7 @@ require 'active_record'
 require 'logger'
 require 'yaml'
 load Dir.pwd + '/lib/resource_bundler.rb'
+load Dir.pwd + '/lib/static_generator.rb'
 
 namespace :db do
   
@@ -33,6 +34,11 @@ namespace :deploy do
 		generate_resources
 		render
     end
+	
+	desc "Bundle static resources, those should not be cacheable from the server"
+	task :generate do
+		generate_campaigns
+	end
 	
 end
 
