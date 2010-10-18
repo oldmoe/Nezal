@@ -226,6 +226,7 @@ var Intro = {
             index : 1,
 			onSelect : function(campaign){
 				$('previousCampaigns').hide()
+				$$('.levels').each(function(div){div.hide()})
 				if(campaign)GameConfigs.campaign = campaign.name
 				Intro.enablePauseScreen();
 				Loader.events.challenge = {loaded : false, onLoad :  Intro.pages.campaign.doOnSelect}
