@@ -198,7 +198,16 @@ var CityDefenderScene = Class.create(Scene, {
 			if(this.selectedTowerHp !=this.selectedTower.hp){
 				$$('#towerInfo #sellValue').first().innerHTML = "$"+Math.round(this.selectedTower.price*0.75*this.selectedTower.hp/this.selectedTower.maxHp)+""
 			}
-		}			
+		}
+		var tower = this.selectedTower
+		if(tower && !tower.statechange && tower.upgrades[tower.rank] && tower.upgrades[tower.rank].price <= this.money){
+			tower.statechange = true
+			tower.upgradable = true
+		}
+		if(this.selectedTower && this.selectedTower.statechange){
+			this.selectedTower.statechange = false
+			this.processTowerInfoTemplate()
+		}
 		var self = this
 		this.push(15, function(){self.renderData()})
 	},
@@ -578,6 +587,11 @@ var CityDefenderScene = Class.create(Scene, {
 	upgradeSelectedTower: function(){
 		if(!this.replay){this.replayEvents.push([this.reactor.ticks, "upgradeSelectedTower"])}
 		this.selectedTower.upgrade()
+		var tower = this.selectedTower
+		if(tower && !tower.statechange && tower.upgrades[tower.rank] && tower.upgrades[tower.rank].price > this.money){
+			tower.statechange = true
+			tower.upgradable = false
+		}
 		this.processTowerInfoTemplate()
 	},
 	updateMeters : function(){
