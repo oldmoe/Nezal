@@ -2,7 +2,7 @@ var Turret = Class.create(Unit, {
 	theta :0,
 	cannonTheta : 0,
 	rank : 0,
-	stateChange : true,
+	stateChange : false,
 	upgradable :true,
 	maxRank :3,
 	fireSound : Sounds.turret.fire,
