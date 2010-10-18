@@ -11,7 +11,8 @@
     contactUsTrigger : 'contact us',
     contactUsFormTitle : 'Explain your issue :',
     contactUsFormSend : 'Send',
-    contactUsFormPostSubmission : 'We will revise your issue soon. Thanks you for your patience.'
+    contactUsFormPostSubmissionSuccess : 'We will revise your issue soon. Thanks you for your patience.',
+    contactUsFormPostSubmissionFailure : 'Your issue is not posted successfully, please try again later.'
   },
 	superWeapons : 'Armes fatales',
     intro : {
@@ -214,7 +215,7 @@
         userPrompt : 'Raconte tes accomplissements à tes amis et gagne 5 pièces de monnaie.',
 		invite : {
             inviteMsg : 'Es-tu assez motivé pour défendre les terres arabes?',
-            userPrompt : 'Invite tes amis et gagne 100 pièces de monnaie par joueur.'
+            userPrompt : 'Invite tes amis et gagne 200 pièces de monnaie par joueur.'
         },
         like : 'Félicitations, tu as gagné 500 pièces de monnaie pour avoir aimé notre jeu',
         bookmark : 'Félicitations, tu as gagné 500 pièces de monnaie pour avoir ajouté notre signet.'

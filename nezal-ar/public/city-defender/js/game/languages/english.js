@@ -11,7 +11,8 @@ window.Text = {
     contactUsTrigger : 'contact us',
     contactUsFormTitle : 'Explain your issue :',
     contactUsFormSend : 'Send',
-    contactUsFormPostSubmission : 'We will revise your issue soon. Thanks you for your patience.'
+    contactUsFormPostSubmissionSuccess : 'We will revise your issue soon. Thanks you for your patience.',
+    contactUsFormPostSubmissionFailure : 'Your issue is not posted successfully, please try again later.'
   },
 	superWeapons : 'Super Weapon',
     intro : {
@@ -214,7 +215,7 @@ window.Text = {
         userPrompt : 'Tell your friends about your accomplishment and get 5 coins',
 		invite : {
             inviteMsg : 'Are you eager enough to defend the Arab land? ',
-            userPrompt : 'invite your friends and earn 100 coins for each one who starts playing.'
+            userPrompt : 'invite your friends and earn 200 coins for each one who starts playing.'
         },
         like : ' Congratulations, you got 500 coins as a gift for liking us.',
         bookmark : 'Congratulations, you got 500 coins as a gift for bookmarking us.'

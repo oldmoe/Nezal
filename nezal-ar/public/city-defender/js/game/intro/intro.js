@@ -139,7 +139,7 @@ var Intro = {
               Intro.ranks = data['ranks'];
   			  Intro.doneLoading = true;
 		  	  Intro.start()
-			  $('scores').src = 'scores/friends.html'
+			  $('scores').src = 'scores/friends.html?session_key='+FBConnect.session.session_key
 			  /*
               Loader.loadPage(GameConfigs.campaign, function(){
 				  
@@ -226,10 +226,11 @@ var Intro = {
             index : 1,
 			onSelect : function(campaign){
 				$('previousCampaigns').hide()
+				$$('.levels').each(function(div){div.hide()})
 				if(campaign)GameConfigs.campaign = campaign.name
 				Intro.enablePauseScreen();
-				Loader.events.challenge = { loaded : false, onLoad :  Intro.pages.campaign.doOnSelect}
-				Loader.loadPage(GameConfigs.campaign, function(){Loader.fire('challenge')})	
+				Loader.events.challenge = {loaded : false, onLoad :  Intro.pages.campaign.doOnSelect}
+				Loader.loadPage(GameConfigs.campaign, function(){Loader.fire('challenge')})
 			},
             doOnSelect : function() {
                 var loader = Intro.campLoader;
@@ -607,6 +608,7 @@ var Intro = {
     },
 	startFileLoading : function(fileName){
 		//	if(!Intro.fileLoading){
+			fileName = fileName.replace("_dumb","")
 			Intro.fileLoading=true
 			$$('#pause #fileName').first().innerHTML = "Loading "+fileName.split('?')[0].split('/')[1] + "....."
 			Intro.enableProgressbar(0,100,fileName)
@@ -704,7 +706,11 @@ var Intro = {
 	  replay: function(){  
         Intro.select('campaign');
 	  },
-	  
+	  showLevelSelection: function(){
+		$('previousCampaigns').hide()
+		$('levelSelection').innerHTML = Intro.templates.levelSelection[1].process(); 
+		$('levelSelection').show()		
+	  },
 	  finish: function(){
 	      Intro.setupGameConfigs();
         city_defender_start();
@@ -747,14 +753,20 @@ var Intro = {
     },
     showContactUsForm : function(){
       var self = this;
+      $('contactUsFloatBg').innerHTML = TrimPath.parseTemplate($('contactUsTemplate').value).process();
       $('contactUsFloatBg').show();
     },
     submitContactUsForm : function(){
          $('contact-us-form').request({
-            onFailure: function() { /** **/ },
+            onFailure: function(t) {
+              $('contact-us-post-submission').update(Text.payments.contactUsFormPostSubmissionFailure);
+            },
             onSuccess: function(t) {
-              $('contact-us-message').update(Text.payments.contactUsFormPostSubmission);
-              self.hideContactUsBg();
+              $('contact-us-post-submission').update(Text.payments.contactUsFormPostSubmissionSuccess);
+              //self.hideContactUsBg();
+            },
+            onComplete: function(t){
+              $('contact-us-form').remove();
             }
           });
     },

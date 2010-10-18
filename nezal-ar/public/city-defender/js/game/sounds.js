@@ -57,7 +57,7 @@ var Sounds = {
 	},
 	resumeTrack : function(){
 		if(!Sounds.gameSounds.game||Sounds.muted)return
-		Sounds.gameSounds.game[0].resume()
+		Sounds.gameSounds.game[0].play()
 	},
 	pauseTrack : function(){
 		if(!Sounds.gameSounds.game||Sounds.muted)return

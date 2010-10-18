@@ -36,19 +36,23 @@
 </textarea>
 
 <textarea id='prevChallengesTemplate' style="display:none">
+	<div id="background">
+	  <img src="${Loader.images.intro['background.png'].getAttribute('data')}"/>
       <img id="paper" src="${Loader.images.intro['paper.png'].getAttribute('data')}"/>
+	 </div>
 	  <ul id="campaigns">
 		  {for camp in campaigns}
 			<li id="prevCampaign">
 				<a href='#' onclick="
 				GameConfigs.campaign='${camp.path}';
+				Sounds.play(Sounds.gameSounds.click)
 				$('extraLevels').show()
 				return false;">
-					<img src='challenges/${camp.path}/images/flag.png' />${camp['name']}
+					<img src='challenges/${camp.path}/images/flag_small.png'/>${camp['name_'+GameConfigs.language].replace("\"","").replace("\"","")}
 				</a>
 			</li>
 		  {/for}
-	  </div>
+	  </ul>
 	  <div id="extraLevels" style="display : none;" class="levels">
 			<div id="floatBgLevel" >
 				<div id="close" onclick="$('extraLevels').hide()">x</div>
@@ -56,7 +60,7 @@
 					<img src="${Loader.images.intro['levels/easy_icon.png'].getAttribute('data')}"/>
 					<div class="scoreEffect">
 						<span class="scoreMultiplier">1x</span>
-						<span class="scoreWord">score</span>
+						<span class="scoreWord">${Text.game.upperBar.score}</span>
 					</div>
 					<img class="difficultyLevel" src="${Loader.images[GameConfigs.language]['easy.png'].getAttribute('data')}"/>
 				</a>
@@ -64,7 +68,7 @@
 					<img src="${Loader.images.intro['levels/medium_icon.png'].getAttribute('data')}"/>
 					<div class="scoreEffect">
 						<span class="scoreMultiplier">2x</span>
-						<span class="scoreWord">score</span>
+						<span class="scoreWord">${Text.game.upperBar.score}</span>
 					</div>
 					<img class="difficultyLevel" src="${Loader.images[GameConfigs.language]['medium.png'].getAttribute('data')}"/>
 				</a>
@@ -72,12 +76,25 @@
 					<img src="${Loader.images.intro['levels/hard_icon.png'].getAttribute('data')}"/>
 					<div class="scoreEffect">
 						<span class="scoreMultiplier">3x</span>
-						<span class="scoreWord">score</span>
+						<span class="scoreWord">${Text.game.upperBar.score}</span>
 					</div>
 					<img class="difficultyLevel" src="${Loader.images[GameConfigs.language]['hard.png'].getAttribute('data')}"/>
 				</a>
 			</div>
 		</div>
+		<div id="backContainer">
+			<div id="back" onclick="Intro.showLevelSelection();
+			Sounds.play(Sounds.gameSounds.click);" class="clickableButton clickSound">
+			{if ($('intro').getStyle('direction')=='rtl') }
+				<img src="${Loader.images.intro['ready.png'].getAttribute('data')}"/>
+			{else}
+				<img src="${Loader.images.intro['back.png'].getAttribute('data')}"/>
+			{/if}
+			<div class="text buttonText">
+				${Text.intro.campaign.back}
+			</div>
+      </div>
+    </div>
 </textarea>
 
 
@@ -119,20 +136,13 @@
 		  </div>
 	  </div>
 		<div id = "challengesText" class="title titleSize clickableButton clickSound"
-	       onclick="this.removeClassName('clickableButton');
-          	      this.addClassName('clicked');
-          	      if(this.hasClassName('clickSound'))
+	       onclick="if(this.hasClassName('clickSound'))
             	      Sounds.play(Sounds.gameSounds.click);
-          	      this.removeClassName('clickSound');
-          	      this.stopObserving('click');
+					  GameConfigs.campaign = GameConfigs.currentCampaign;
           	      $$('#levels')[0].show(); return false;"> ${Text.intro.levelSelection.title} </div>
 		<div id="extraMap" class="title titleSize clickableButton clickSound" 
-		      onclick="this.removeClassName('clickableButton');
-          	      this.addClassName('clicked');
-          	      if(this.hasClassName('clickSound'))
+		      onclick="if(this.hasClassName('clickSound'))
             	      Sounds.play(Sounds.gameSounds.click);
-          	      this.removeClassName('clickSound');
-          	      this.stopObserving('click');
           	      Intro.retrievePrevCampaigns(); return false;"> ${Text.intro.levelSelection.extraMaps} 
 		</div>
 		<div id="levels" style="display : none;" class="levels">
@@ -142,7 +152,7 @@
 					<img src="${Loader.images.intro['levels/easy_icon.png'].getAttribute('data')}"/>
 					<div class="scoreEffect">
 						<span class="scoreMultiplier">1x</span>
-						<span class="scoreWord">score</span>
+						<span class="scoreWord">${Text.game.upperBar.score}</span>
 					</div>
 					<img class="difficultyLevel" src="${Loader.images[GameConfigs.language]['easy.png'].getAttribute('data')}"/>
 				</a>
@@ -150,7 +160,7 @@
 					<img src="${Loader.images.intro['levels/medium_icon.png'].getAttribute('data')}"/>
 					<div class="scoreEffect">
 						<span class="scoreMultiplier">2x</span>
-						<span class="scoreWord">score</span>
+						<span class="scoreWord">${Text.game.upperBar.score}</span>
 					</div>
 					<img class="difficultyLevel" src="${Loader.images[GameConfigs.language]['medium.png'].getAttribute('data')}"/>
 				</a>
@@ -158,7 +168,7 @@
 					<img src="${Loader.images.intro['levels/hard_icon.png'].getAttribute('data')}"/>
 					<div class="scoreEffect">
 						<span class="scoreMultiplier">3x</span>
-						<span class="scoreWord">score</span>
+						<span class="scoreWord">${Text.game.upperBar.score}</span>
 					</div>
 					<img class="difficultyLevel" src="${Loader.images[GameConfigs.language]['hard.png'].getAttribute('data')}"/>
 				</a>
@@ -578,6 +588,18 @@
   </div>
 </textarea>
 
+<textarea id='contactUsTemplate' style="display:none">
+  <div id="contactUsClose" onclick="Intro.hideContactUsBg();" class="clickSound"> X </div>
+  <span id="contact-us-post-submission"></span>
+  <form id="contact-us-form" method="POST" action="payment_issues">
+    <span id="contact-us-form-title">${Text.payments.contactUsFormTitle}</span>
+    <br/>
+    ${'<'}textarea name="body">${'<'}/textarea>
+    <span onclick="Intro.submitContactUsForm();" id="contact-us-submit-button-text">${Text.payments.contactUsFormSend}</span>
+    <img onclick="Intro.submitContactUsForm();" id="contact-us-submit-button" src="${Loader.images.intro['mission/accept.png'].getAttribute('data')}" />
+  </form>
+</textarea>
+
 <textarea id='marketItemsTemplate' style="display:none">
     <div id="floatBg" style="display : none;">
     </div>
@@ -586,14 +608,6 @@
     </div>
     
     <div id="contactUsFloatBg" style="display: none;">
-      <div id="contactUsClose" onclick="Intro.hideContactUsBg();" class="clickSound"> X </div>
-      <form id="contact-us-form" method="POST" action="payment_issues">
-        <span id="contact-us-form-title">${Text.payments.contactUsFormTitle}</span>
-        <br/>
-        ${'<'}textarea name="body">${'<'}/textarea>
-        <span onclick="Intro.submitContactUsForm();" id="contact-us-submit-button-text">${Text.payments.contactUsFormSend}</span>
-        <img onclick="Intro.submitContactUsForm();" id="contact-us-submit-button" src="${Loader.images.intro['mission/accept.png'].getAttribute('data')}" />
-      </form>
     </div>
   
     <div id="paymentFloatBg" style="display : none;">

@@ -11,7 +11,8 @@
     contactUsTrigger : 'contact us',
     contactUsFormTitle : 'Explain your issue :',
     contactUsFormSend : 'Send',
-    contactUsFormPostSubmission : 'We will revise your issue soon. Thanks you for your patience.'
+    contactUsFormPostSubmissionSuccess : 'We will revise your issue soon. Thanks you for your patience.',
+    contactUsFormPostSubmissionFailure : 'Your issue is not posted successfully, please try again later.'
   },
 	superWeapons : '',
     intro : {
@@ -214,7 +215,7 @@
         userPrompt : 'أخبر اصدقائك عن انجازك وأحصل على 5 نقود',
 		invite : {
             inviteMsg : 'هل انت شجاع بما فيه الكفاية للدفاع عن اراضى العرب ؟ ',
-            userPrompt : 'ادع اصدقاؤك و اكسب 100 من النقود لكل صديق يبدأ اللعب'
+            userPrompt : 'ادع اصدقاؤك و اكسب 200 من النقود لكل صديق يبدأ اللعب'
         },
         like : '.مبروك ، لقد كسبت 500 من النقود الاعجابك بنا',
         bookmark : 'مبروك، لقد كسبت 500 من النقود كهدية الاضافتك لنا الى قائمة اشاراتك'

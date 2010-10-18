@@ -60,8 +60,19 @@ var FBConnect = {
 			      if (response.session) {
 			          FBConnect.session = response.session;
 			          Ajax.Responders.register({
-				          onCreate: function(req) {					
-					        req.url += (req.url.include('?') ? '&' : '?') + Object.toQueryString(FBConnect.session)
+				          onCreate: function(req) {
+							var inviter = ''
+							var search = window.location.search
+							if(search){
+								search = search.split('?')[1]
+								if(search){
+									search = search.split('&').find(function(pair){ return pair.include('inviter')})
+										if(search){
+											inviter = search
+										}
+									}
+							}
+					        req.url += (req.url.include('?') ? '&' : '?') + Object.toQueryString(FBConnect.session) + '&' + inviter
 					        return true
 				          }
 			          });

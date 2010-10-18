@@ -158,7 +158,7 @@
 			<textarea id='resultTemplate' style="display:none">
 					<img src="${Loader.images.intro['paper.png'].getAttribute('data')}"/>
 					<img id="resultCoin" src="${Loader.images.background['coin.png'].getAttribute('data')}"/>
-					<div id="replay" onclick="game.scene.replayScene()">REPLAY GAME</div>
+					<div id="replay" onclick="game.scene.replayScene()" style="display:none;"></div>
 					<div id="coins">
 						<div id="coinsWord">${Text.game.result.coins}</div>
 						<div id="coinsValue">0</div>
