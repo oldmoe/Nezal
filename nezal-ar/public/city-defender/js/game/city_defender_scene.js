@@ -126,7 +126,7 @@ var CityDefenderScene = Class.create(Scene, {
 		//creep.rate+=0.1
 		creep.maxHp = creep.maxHp/2
 		creep.hp = creep.maxHp
-		creep.price=creep.price+0.25*this.waveNumber
+		creep.price=creep.price*Math.pow(1.1,this.waveNumber)
 		this.scenario.notify({name:"creepEntered", method: false, unit:creep})
 		if(this.turrets[0])this.scenario.notify({name:"creepEnteredTower", method: false, unit:this.turrets[0]})
 		creep.hp = Math.round(creep.hp*Math.pow(this.creepMultiplier[this.config.level-1],this.waveNumber))
@@ -146,7 +146,7 @@ var CityDefenderScene = Class.create(Scene, {
 	//	plane.rate+=0.1
 		plane.maxHp = plane.maxHp/2
 		plane.hp = plane.maxHp
-		plane.price=plane.price+0.25*this.waveNumber
+		plane.price=plane.price*Math.pow(1.1,this.waveNumber)
 		plane.hp = Math.round(plane.hp*Math.pow(this.creepMultiplier[this.config.level-1],this.waveNumber))
 		plane.power = Math.round(plane.power*Math.pow(this.creepPowerMultiplier[this.config.level-1],this.waveNumber))
 		plane.maxHp = plane.hp
@@ -632,7 +632,7 @@ var CityDefenderScene = Class.create(Scene, {
 	delay : 25,
 	fps : 0,
 	score: 0,
-	moneyMultiplier: [1.2,1.1,1.1],
+	moneyMultiplier: [1.1,1.1,1.1],
    creepMultiplier: [1.05,1.12,1.17],
    creepPowerMultiplier: [1.05,1.1,1.15],
 	wave : 0,

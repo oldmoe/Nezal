@@ -139,7 +139,7 @@ var Intro = {
               Intro.ranks = data['ranks'];
   			  Intro.doneLoading = true;
 		  	  Intro.start()
-			  $('scores').src = 'scores/friends.html?session_key='+FBConnect.session.session_key
+			  $('scores').src = 'scores/friends.html?'+Object.toQueryString(FBConnect.session)
 			  /*
               Loader.loadPage(GameConfigs.campaign, function(){
 				  
