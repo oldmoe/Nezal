@@ -5,7 +5,13 @@
     daopay : {
       description : 'Pay with your mobile. It is fast, secure and easy. No credit card required!',
       packageCommand : 'Pay *price* EUR and get *reward* coins'
-    }
+    },
+    success : 'Congratulations, you have successfully purchased *coins* coins',
+    contactUsMessage : 'For any issue, please',
+    contactUsTrigger : 'contact us',
+    contactUsFormTitle : 'Explain your issue :',
+    contactUsFormSend : 'Send',
+    contactUsFormPostSubmission : 'We will revise your issue soon. Thanks you for your patience.'
   },
 	superWeapons : 'Armes fatales',
     intro : {

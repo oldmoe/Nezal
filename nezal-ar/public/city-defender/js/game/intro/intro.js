@@ -715,6 +715,9 @@ var Intro = {
 	  },
     showPaymentBg: function(){
       $('payments-container').innerHTML = TrimPath.parseTemplate($('payment-options-template').value).process();
+      $$('#payments-container .clickSound').each(function(element){
+        element.stopObserving('click');
+      });
       payment.activateMiddlePackage();
       $('paymentFloatBg').show();
     },
@@ -722,29 +725,40 @@ var Intro = {
       $('paymentFloatBg').hide();
     },
     
-    showDaopayBg: function(url){
-      $('daopayFloatBg').show();
-      $('daopayFloatBg').innerHTML = "<iframe src=" + url + "></iframe>";
-      $('daopayFloatBg').innerHTML += TrimPath.parseTemplate($('daopay-close-template').value).process();
-      $$('#daopayClose.clickSound').each(function(element){
-        element.observe('click', function(element){Sounds.play(Sounds.gameSounds.click)})
-      });
-    },
-    hideDaopayBg: function(){
-      $('daopayFloatBg').hide();
-    },
-    
     paymentSuccess: function(coins){
-      this.hideDaopayBg();
-      $('paymentSuccessContainer').innerHTML = TrimPath.parseTemplate($('payment-success').value).process();
+      $('paymentSuccessContainer').innerHTML = TrimPath.parseTemplate($('payment-success').value).process({'coins' : coins});
       $('paymentSuccessOk').observe('click', function(element){Sounds.play(Sounds.gameSounds.click)});
-      $$('#paymentSuccessModalWindow .content')[0].innerHTML = "+ " + coins
+      //$$('#paymentSuccessModalWindow .content')[0].innerHTML = "+ " + coins
       $('paymentSuccessContainer').show();
       
       Intro.userData.coins += Number(coins);
       $$('#upperPart .coins')[0].innerHTML = Intro.userData.coins;
+      
+      Sounds.play(Sounds.gameSounds.add_money)
+      
+      var goldAnimationRepitition = 5;
+      setInterval(function(){
+        $$('#upperPart .coins')[0].style.color = ["black", "gold"][goldAnimationRepitition%2]
+        goldAnimationRepitition--;
+      }, 500);
     },
     hidePaymentSuccess: function(){
       $('paymentSuccessContainer').hide();
+    },
+    showContactUsForm : function(){
+      var self = this;
+      $('contactUsFloatBg').show();
+    },
+    submitContactUsForm : function(){
+         $('contact-us-form').request({
+            onFailure: function() { /** **/ },
+            onSuccess: function(t) {
+              $('contact-us-message').update(Text.payments.contactUsFormPostSubmission);
+              self.hideContactUsBg();
+            }
+          });
+    },
+    hideContactUsBg: function(){
+      $('contactUsFloatBg').hide();
     }
 }

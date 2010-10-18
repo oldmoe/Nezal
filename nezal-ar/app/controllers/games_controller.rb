@@ -177,5 +177,9 @@ class GamesController < ApplicationController
 			response[:top].push( {'id'=> top_scorers[index]['fb_user'],'score'=> top_scorers[index]['score']})			
 		end
 	  JSON.generate(response)
-  end 
-end
+	end
+
+  post '/:game_name/payment_issues' do
+    Message.create!( { :body => params["body"], :type => 'payment_issue', :profile => @game_profile } )
+  end
+ end

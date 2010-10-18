@@ -24,7 +24,8 @@ var Payment = Class.create({
     
     var eventCallback = function(element){
       //document.location.href = "http://daopay.com/payment/?appcode=62070&price=" + priceCategory;
-      Intro.showDaopayBg("http://daopay.com/pay/?appcode=62070&price=" + priceCategory);
+      //Intro.showDaopayBg("http://daopay.com/pay/?appcode=62070&price=" + priceCategory);
+      window.open("http://daopay.com/pay/?appcode=62070&price=" + priceCategory, "Daopay Payment", "width=400,height=550");
     }
     
     this.stopObservingEvents();

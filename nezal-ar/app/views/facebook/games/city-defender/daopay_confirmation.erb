@@ -4,7 +4,8 @@
   </head>
   <body>
     <script>
-      Intro.paymentSuccess("<%= @package_coins %>");
+      window.opener.Intro.paymentSuccess("<%= @package_coins %>");
+      window.close();
     </script>
   </body>
 </html>
