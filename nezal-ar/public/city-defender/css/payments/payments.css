@@ -37,22 +37,26 @@ a.pay {
 }
 
 .package-price {
-  margin-left: 41px;
+  margin-left: 35px;
+  margin-right: 35px;
   margin-top: 14px;
 }
 
 .package-coins {
-  margin-left: 32px;
+  margin-left: 20px;
+  margin-right: 20px;
   margin-top: 16px;
 }
 
 #middle-package-price {
-  margin-left: 41px;
+  margin-left: 35px;
+  margin-right: 35px;
   margin-top: 18px;
 }
 
 #middle-package-coins {
-  margin-left: 32px;
+  margin-left: 22px;
+  margin-right: 22px;
   margin-top: 16px;
 }
 
@@ -129,9 +133,9 @@ a img {
 }
 #paymentSuccessModalWindow .content
 {
-  font-size:27px; 
-  width : 115px;
-  height : 105px;
+  font-size:17px; 
+  width : 235px;
+  height : 55px;
   position : absolute;
   top : 60px;
   left : 145px;
@@ -148,9 +152,9 @@ a img {
   z-index : 3002;
 }
 #paymentSuccessModalWindow #paymentSuccessImage {
-  left: 256px;
+  left: 225px;
   position: absolute;
-  top: 58px;
+  top: 20px;
   z-index: 3002;
 }
 #paymentSuccessModalWindow #paymentSuccessOk img{
@@ -161,10 +165,24 @@ a img {
 }
 #paymentSuccessModalWindow #paymentSuccessOk #paymentOkText{
   color:gold;
+  margin-right: 33px;
   padding:5px 0 5px 13px;
   font-family:tahoma;
   font-weight:bold;
   position:absolute;
   font-size:14px;
   cursor: pointer;
+}
+
+#contact-us-message {
+  bottom: 10px;
+  left: 160px;
+  position: absolute;
+  color: white;
+}
+#contact-us-trigger {
+  color: gold;
+}
+#contact-us-post-submission {
+  margin-left: 25px;
 }

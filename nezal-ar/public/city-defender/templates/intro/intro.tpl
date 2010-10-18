@@ -515,7 +515,7 @@
                 {/if}
               {/if}
               <span style="margin:0 44px;"></span>
-              <a id="addMoneyAnchor" class="clickSound" href="javascript:void(0);" onclick="//Intro.showPaymentBg();">
+              <a id="addMoneyAnchor" class="clickSound" href="javascript:void(0);" onclick="Intro.showPaymentBg();">
                 <div class="addMoney" >
                   <img src="${Loader.images.intro['market/money.png'].getAttribute('data')}" > </img>
                 </div>
@@ -550,7 +550,6 @@
   </a>
   <a href="javascript:void(0);" class="pay clickSound" id="top-middle-selection">
     <span id="best-value" class="package-info">
-      Best value
     </span>
     <span id="middle-package-price" class="package-info">
       ${payment.packages['middle']['price']} EUR
@@ -567,16 +566,17 @@
       ${payment.packages['right']['coins']} ${Text.game.result.coins}
     </span>
   </a>
-</textarea>
+  <div id="contact-us-message"> ${Text.payments.contactUsMessage}
+    <a class="clickSound" href="javascript:void(0);" id="contact-us-trigger" onclick="Intro.showContactUsForm();"> ${Text.payments.contactUsTrigger} </a> 
+  </div>
 
-<textarea id='daopay-close-template' style="display:none">
-  <div id="daopayClose" onclick="Intro.hideDaopayBg();" class="clickSound"> X </div>
 </textarea>
 
 <textarea id='payment-success' style="display:none">
   <div id="paymentSuccessModalWindow">
     <img id="paymentSuccessCharacter" src="${Loader.images.intro['character.png'].getAttribute('data')}"/>
     <div class="content">
+      ${Text.payments.success.replace('*coins*', coins)}
     </div>
     <div id="paymentSuccessImage">
       <img src="${Loader.images.intro['market/money.png'].getAttribute('data')}" />
@@ -588,6 +588,18 @@
   </div>
 </textarea>
 
+<textarea id='contactUsTemplate' style="display:none">
+  <div id="contactUsClose" onclick="Intro.hideContactUsBg();" class="clickSound"> X </div>
+  <span id="contact-us-post-submission"></span>
+  <form id="contact-us-form" method="POST" action="payment_issues">
+    <span id="contact-us-form-title">${Text.payments.contactUsFormTitle}</span>
+    <br/>
+    ${'<'}textarea name="body">${'<'}/textarea>
+    <span onclick="Intro.submitContactUsForm();" id="contact-us-submit-button-text">${Text.payments.contactUsFormSend}</span>
+    <img onclick="Intro.submitContactUsForm();" id="contact-us-submit-button" src="${Loader.images.intro['mission/accept.png'].getAttribute('data')}" />
+  </form>
+</textarea>
+
 <textarea id='marketItemsTemplate' style="display:none">
     <div id="floatBg" style="display : none;">
     </div>
@@ -595,10 +607,9 @@
     <div id="paymentSuccessContainer" style="display : none;">
     </div>
     
-    <div id="daopayFloatBg" style="display : none;">
-      
+    <div id="contactUsFloatBg" style="display: none;">
     </div>
-    
+  
     <div id="paymentFloatBg" style="display : none;">
       <div class="pay">
         <img id="pay-left-image" src="${Loader.images.payments['pay_left.png'].getAttribute('data')}" />
@@ -628,7 +639,7 @@
         <div class="coins">
           ${data.userData['coins']}
         </div>
-        <a class="clickSound" href="javascript:void(0);" onclick="//Intro.showPaymentBg();">
+        <a class="clickSound" href="javascript:void(0);" onclick="Intro.showPaymentBg();">
           <div class="addMoney">
             <span class="addText">
               ${Text.intro.marketPlace.add}

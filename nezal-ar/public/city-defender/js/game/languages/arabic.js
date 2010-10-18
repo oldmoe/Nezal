@@ -5,7 +5,14 @@
     daopay : {
       description : 'ادفع عن طريق الموبايل بسرعة وسهولة وأمان وبدون الحاجة إلى بطاقة ائتمان',
       packageCommand : 'ادفع *price* EUR وأحصل على *reward* من النقود'
-    }
+    },
+    success : 'مبروك, لقد قمت بشراء *coins* من النقود بنجاح',
+    contactUsMessage : 'For any issue, please',
+    contactUsTrigger : 'contact us',
+    contactUsFormTitle : 'Explain your issue :',
+    contactUsFormSend : 'Send',
+    contactUsFormPostSubmissionSuccess : 'We will revise your issue soon. Thanks you for your patience.',
+    contactUsFormPostSubmissionFailure : 'Your issue is not posted successfully, please try again later.'
   },
 	superWeapons : '',
     intro : {
