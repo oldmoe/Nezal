@@ -712,7 +712,15 @@ var Intro = {
 		$('levelSelection').show()		
 	  },
 	  finish: function(){
-	      Intro.setupGameConfigs();
+		if(Loader.events.game.loaded){
+		  Intro.doFinish();
+		}else{
+		  Loader.events.game.onLoad = function(){Intro.doFinish()}
+		}
+	  },
+	  
+	  doFinish : function(){
+	    Intro.setupGameConfigs();
         city_defender_start();
         Intro.disablePauseScreen();
         $('gameStart').show();
