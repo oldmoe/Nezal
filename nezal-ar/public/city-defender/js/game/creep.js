@@ -220,7 +220,7 @@ var Creep = Class.create(Unit, {
 		this.destroySprites()
 		var moneyAnim = new MoneyAnimation(this.x-10,this.y-5,Math.floor(this.price))
 		this.scene.objects.push(moneyAnim)
-		this.scene.money += Math.floor(this.price);
+		this.scene.money += Math.round(this.price);
 		this.scene.stats.creepsDestroyed++
 		this.scene.score += Math.round(this.maxHp/20)*this.scene.config.level
 	},

@@ -214,6 +214,7 @@
 			userID = FB.getSession().uid
 			var	query = FB.Data.query("SELECT uid FROM user WHERE is_app_user=1 and uid IN (SELECT uid2 FROM friend WHERE uid1 = {0})", FB.getSession().uid);
 			FB.Data.waitOn([query], function(){
+						if(!query.value.length)query.value=[]
 						friendsIds = query.value.collect(function(row){return Number(row.uid)}) 
 						friendsIds.push(Number(FB.getSession().uid))	
 						if(window.parent.GameConfigs)
@@ -226,6 +227,7 @@
 			var ids = users.collect(function(user){return user.id})
 			var	query2 = FB.Data.query("SELECT name,uid FROM user WHERE uid IN ({0})", ids);
 			FB.Data.waitOn([query2], function(){
+				if(!query2.value.length)query2.value=[]
 				query2.value.each(function(row,i){
 					users[i].name = row.name
 				})
