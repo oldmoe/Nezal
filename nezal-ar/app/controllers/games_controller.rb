@@ -141,10 +141,9 @@ class GamesController < ApplicationController
     @package_coins = @@packages[params["price"]]
     @user.coins += @@packages[params["price"]]
     @user.save
-    
+	payment = Payment.create!({:profile_id=>@game_profile.id,:price=>params['price']})
     erb :"#{@app_configs["game_name"]}/daopay_confirmation"
   end
-    
   get '/:game_name' do 
     File.read(File.join( 'public', @app_configs["game_name"], 'index.html'))
   end
