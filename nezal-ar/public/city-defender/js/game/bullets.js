@@ -2,7 +2,7 @@ var Turret = Class.create(Unit, {
 	theta :0,
 	cannonTheta : 0,
 	rank : 0,
-	stateChange : true,
+	stateChange : false,
 	upgradable :true,
 	maxRank :3,
 	fireSound : Sounds.turret.fire,
@@ -26,7 +26,7 @@ var Turret = Class.create(Unit, {
 	
 	upgrade : function(){
 		if(this.rank == this.maxRank) return		
-		if(!this.upgradable)Sounds.play(Sounds.gameSounds.click)
+		if(this.upgradable)Sounds.play(Sounds.gameSounds.click)
 		var upgrade = this.upgrades[this.rank] // this is the next rank (base 1 array)
 		if(this.scene.money < upgrade.price) return false
 		this.rank += 1

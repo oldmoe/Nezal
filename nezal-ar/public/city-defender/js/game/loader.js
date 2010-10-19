@@ -34,7 +34,7 @@ var Loader = {
 	fileLoading :null,
 
 	notify : function(win, resources, dumb){
-		if(Loader.toLoad[Loader.index])Loader.loaded[Loader.toLoad[Loader.index].split('.')[0]]=true
+		if(Loader.toLoad[Loader.index]&&Loader.toLoad[Loader.index].split)Loader.loaded[Loader.toLoad[Loader.index].split('.')[0]]=true
 		if(!dumb){
 			for(var i=0; i < resources.length-1 ;i++){	
 				var image = new Image
