@@ -180,6 +180,6 @@ class GamesController < ApplicationController
 	end
 
   post '/:game_name/payment_issues' do
-    Message.create!!!!( { :body => params["body"], "type" => 'payment_issue', :profile_id => @game_profile.id } )
+    Message.create!( { :body => params["body"], "type" => 'payment_issue', :profile_id => @game_profile.id } )
   end
  end
