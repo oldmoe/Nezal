@@ -595,8 +595,10 @@
     <span id="contact-us-form-title">${Text.payments.contactUsFormTitle}</span>
     <br/>
     ${'<'}textarea name="body">${'<'}/textarea>
-    <span onclick="Intro.submitContactUsForm();" id="contact-us-submit-button-text">${Text.payments.contactUsFormSend}</span>
-    <img onclick="Intro.submitContactUsForm();" id="contact-us-submit-button" src="${Loader.images.intro['mission/accept.png'].getAttribute('data')}" />
+    <div id="contact-us-submit-container">
+      <span onclick="Intro.submitContactUsForm();" id="contact-us-submit-button-text">${Text.payments.contactUsFormSend}</span>
+      <img onclick="Intro.submitContactUsForm();" id="contact-us-submit-button" src="${Loader.images.intro['mission/accept.png'].getAttribute('data')}" />
+    </div>
   </form>
 </textarea>
 

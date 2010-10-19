@@ -184,5 +184,6 @@ a img {
   color: gold;
 }
 #contact-us-post-submission {
+  display: block;
   margin-left: 25px;
 }
