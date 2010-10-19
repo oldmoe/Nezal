@@ -5,50 +5,54 @@ pause : "pause"
 }
 
 var Game = Class.create({
+	started : false,
 	initialize : function(delay){
 	},
 	
 	start : function(replay){
-		Map.init();
-		if(Intro.userData.newbie)Config = tutorialConfig
-		else Config = GameConfigs
-		this.prepareConfig()
-		this.config = Nezal.clone_obj(Config)
-		this.config.waves.reverse()
-		$$('#game #scores').first().show()
-		if(Intro.userData.newbie){
-			$('modalWindow').show()
-			this.scene = new TutorialScene(this.config,40,this.ctx,this.topCtx);
-			this.tutorial = new Tutorial(this.scene,this.tutorialCtx)
-			$('gameExit').hide()
-			$('gameReset').hide()
-			$$('#modalWindow #ok #rogerText').first().innerHTML = Text.game.controls.roger
-			$$('.sound').first().observe('click',Sounds.mute)
-			$$('.bookmark').first().observe('click', FBDefender.bookmark)	
-			$$('.snapshot').first().hide()
-		}
-		else{
-			this.scene = new CityDefenderScene(this.config,33,this.ctx,this.topCtx, replay);
-			if(!replay)this.registerHandlers();
-		}
-		if(Config.map)Map.bgGrid = Config.map
-		if(Config.mapEntry)Map.entry = Config.mapEntry
-		GhostTurret = new Turret(0, 0,this.scene, ghostTurretFeatures)
-		$$('.startText').first().innerHTML = window.Text.game.gameState.start
-		$('pauseWindow').hide()	
-		$$('#gameReset #resetText').first().innerHTML = window.Text.game.controls.reset
-		$$('#gameExit #exitText').first().innerHTML = window.Text.game.controls.exit
-		$$('#gameResume #resumeText').first().innerHTML = window.Text.game.gameState.resume
-		var arr = ['Splash','Heal','Hyper','Weak','Nuke']
-				arr.each(function(weapon){
-					if(Config.superWeapons.indexOf(weapon)==-1){
-						game.scene[weapon.toLowerCase()].deactivate()
-					}
-					else{
-						game.scene[weapon.toLowerCase()].end()
-					}
-		})
-		this.scene.start();
+		if(!game.started){
+			game.started = true
+			Map.init();
+			if(Intro.userData.newbie)Config = tutorialConfig
+			else Config = GameConfigs
+			this.prepareConfig()
+			this.config = Nezal.clone_obj(Config)
+			this.config.waves.reverse()
+			$$('#game #scores').first().show()
+			if(Intro.userData.newbie){
+				$('modalWindow').show()
+				this.scene = new TutorialScene(this.config,40,this.ctx,this.topCtx);
+				this.tutorial = new Tutorial(this.scene,this.tutorialCtx)
+				$('gameExit').hide()
+				$('gameReset').hide()
+				$$('#modalWindow #ok #rogerText').first().innerHTML = Text.game.controls.roger
+				$$('.sound').first().observe('click',Sounds.mute)
+				$$('.bookmark').first().observe('click', FBDefender.bookmark)	
+				$$('.snapshot').first().hide()
+			}
+			else{
+				this.scene = new CityDefenderScene(this.config,33,this.ctx,this.topCtx, replay);
+				if(!replay)this.registerHandlers();
+			}
+			if(Config.map)Map.bgGrid = Config.map
+			if(Config.mapEntry)Map.entry = Config.mapEntry
+			GhostTurret = new Turret(0, 0,this.scene, ghostTurretFeatures)
+			$$('.startText').first().innerHTML = window.Text.game.gameState.start
+			$('pauseWindow').hide()	
+			$$('#gameReset #resetText').first().innerHTML = window.Text.game.controls.reset
+			$$('#gameExit #exitText').first().innerHTML = window.Text.game.controls.exit
+			$$('#gameResume #resumeText').first().innerHTML = window.Text.game.gameState.resume
+			var arr = ['Splash','Heal','Hyper','Weak','Nuke']
+					arr.each(function(weapon){
+						if(Config.superWeapons.indexOf(weapon)==-1){
+							game.scene[weapon.toLowerCase()].deactivate()
+						}
+						else{
+							game.scene[weapon.toLowerCase()].end()
+						}
+			})
+			this.scene.start();
+		}	
 	},
 	flip : function(map){
 		var mapFlipped = [];
@@ -213,6 +217,7 @@ var Game = Class.create({
 		$$('#snapshotWindow #close').first().observe('click',function(){game.scene.closeSnapshot()})
 	},
 	reset : function(replay){
+		game.started = false
 		game.scene.reactor.stop()
 		game.scene.resetScene()
 		$$('#gameElements #gameMenu').first().hide()
@@ -229,16 +234,18 @@ var Game = Class.create({
 		$$('#gameElements .superWeapons div').each(function(div){ 
 			if(div.className != ''){div.stopObserving('click')}
 		})
-		game.start(replay)	
+		game.start(replay)
 	},
 	
 	
 	exit :function(){
+		game.started = false
 		$$('#gameElements #gameMenu').first().hide()
 		Sounds.stopTrack()
 		Intro.enablePauseScreen();
-		$('gameStart').hide()
 		$("gameStart").innerHTML = Intro.templates['game'];
+		game.scene.reactor.stop()
+		$('gameStart').hide()
 		Intro.replay();	
 		//onFinish()
 	},
