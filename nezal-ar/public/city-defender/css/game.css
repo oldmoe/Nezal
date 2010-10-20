@@ -2,7 +2,16 @@ body{
 	padding : 0px;
 	margin : 0px;
 }
-
+*{
+	-moz-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;
+}
+textarea{
+  -moz-user-select: auto;
+  -khtml-user-select: auto;
+  user-select: auto;
+}
 #gameContainer{
 	/*-webkit-transform: rotate(90deg);
 	-moz-transform: scale(0.8)*/
@@ -11,7 +20,7 @@ body{
 #gameContainer {
 	padding-top: 0px;
 	position : relative;
-	width : 760px;
+	width : 462px;
 	height: 550px;
 	bottom: 0px;
 	/*margin-left:auto;
@@ -39,7 +48,7 @@ body{
 	font-family : verdana;
 	color : #fff;
 	vertical-align:middle;
-	z-index : 101;
+	z-index : 500;
 }
 #result .statusDiv
 {
@@ -63,33 +72,7 @@ body{
 {
   margin-left : 10px;
 }
-#result #stats{
-	position: absolute;
-	width: 250px;
-	left:185px;
-	top: 300px;
-	height: 120px;
-	z-index:200
-}
 
-#result #exit{
-	cursor : pointer;
-	position: absolute;
-	width: 115px;
-	height: 60px;
-	left:558px;
-	top: 410px;
-	z-index:4;
-}
-#result #playAgain{
-	cursor : pointer;
-	position: absolute;
-	width: 115px;
-	height: 60px;
-	left:63px;
-	top: 410px;
-	z-index:4;
-}
 #splashScreen{
 	width : 760px;
 	height: 550px;
@@ -135,7 +118,7 @@ body{
 
 #gameElements .rank{
 	position:absolute;
-	top:40px;
+	top:17px;
 	left:650px;
 	width:100px;
 	height:60px;
@@ -143,14 +126,26 @@ body{
 
 #gameElements .rankName{
 	position:absolute;
-	font-family: AdLib;
+	font-family: AdLib, Arial Black, Tahoma;
 	color: orange;
-	top: 25px;
+	top: 70px;
 	left:650px;
 	width:100px;
 	height:40px;
 	text-align: center;
   text-transform : uppercase;
+}
+#gameElements #exp {
+	color:orange;
+	font-family:AdLib,Arial Black,Tahoma;
+	font-size:12px;
+	height:40px;
+	left:650px;
+	position:absolute;
+	text-align:center;
+	text-transform:uppercase;
+	top:3px;
+	width:105px;
 }
 
 #gameElements .start{
@@ -159,30 +154,23 @@ body{
 	left:0px;
 	width:155px;
 	height:82px;
-	z-index:300;
 }
 
-#gameElements .startText{
-	position:absolute;
-	top:30px;
+#gameElements .startText {
+	-moz-user-select:none;
+	color:white;
+	cursor:pointer;
+	font-family:AdLib, Arial Black, Tahoma;
+	font-size:23px;
+	height:30px;
 	left:0px;
+	margin-top:7%;
+	position:absolute;
+	text-align:center;
+	text-shadow:2px 2px 1px #000000;
+	top:25px;
 	width:155px;
-	height:80px;
-	z-index:2;
-	font-family:AdLib;
-	font-size: 30;
-	text-align: center;
-	color: white;
-	margin-top:2%;
-	cursor : pointer;
-	text-shadow: #000 2px 2px 1px;
-	vertical-align:center;
-	-moz-user-select: none;
-   -khtml-user-select: none;
-    user-select: none;
-	z-index:301;        
 }
-
 
 #gameElements .towers{
 	position : absolute;
@@ -198,68 +186,89 @@ body{
 	height:43px;
 	margin-right: 3px;
 	margin-bottom: 2px;
-	background-image: url('../images/background/mystry_button.png');			
+	background-image: url('../images/background/mystry_button.png')	
 }
-#gameElements .towerInfo{
-	-moz-border-radius:5px 5px 5px 5px;
-	-webkit-border-radius:5px 5px 5px 5px;
-	-o-border-radius:5px 5px 5px 5px;
-	border-radius:5px 5px 5px 5px;
+#gameElements .towerInfo {
+	background-image: url('../images/background/monitor.png');
 	background-color:black;
-	border:2px solid gray;
 	color:white;
 	font-family:verdana;
 	font-size:10px;
-	height:180px;
+	height:186px;
 	left:642px;
-	padding:4px 4px 4px 8px;
+	padding:2px;
 	position:absolute;
 	top:354px;
-	width:98px;
+	width:113px;
 }
-#gameElements #upgradeTower:hover{
-	background-color:grey;	
-}
+
 #gameElements #sellTower:hover{
 	background-color:grey;	
 }
+
+#gameElements hr{
+ border : 1px sold orange;
+	margin :1px;
+}
+
+#gameElements #maxUpgrade{
+ padding-top : 10px;
+ opacity :0.5;
+}
 #gameElements #sellTower{
- width : 50;
+	width : 50px;
 	-moz-border-radius:5px 5px 5px 5px;
 	-webkit-border-radius:5px 5px 5px 5px;
 	-o-border-radius:5px 5px 5px 5px;
 	border-radius:5px 5px 5px 5px;
-	background-color:black;
-	border:2px solid gray;
+	border:1px solid white;
+	margin-left:4px;
+	margin-top:6px;
 	color:white;
 	cursor: pointer;
-	font-family:verdana;
-	font-size:10px;
-	padding : 5px;
 	text-align : center;
+	font-family:Helvetica;
+	font-size:12px;
+	font-weight : bold;
 }
 
 
-#gameElements #upgradeTower{
- width : 70;
-	-moz-border-radius:5px 5px 5px 5px;
-	-webkit-border-radius:5px 5px 5px 5px;
-	-o-border-radius:5px 5px 5px 5px;
-	border-radius:5px 5px 5px 5px;
-	background-color:black;
-	border:2px solid gray;
+
+#gameElements #upgradeTower {
+	color:black;
+	cursor:pointer;
+	font-family:Helvetica;
+	font-size:12px;
+	font-weight:bold;
+	height:37px;
+	margin-left:5px;
+	margin-top:7px;
+	position:absolute;
+	text-align:center;
+	width:87%;
+	z-index:10;
+}
+#gameElements #upgradeTower #upgradeWord{
 	color:white;
-	cursor: pointer;
-	font-family:verdana;
-	font-size:10px;
-	padding : 5px;
-	text-align : center;
+	font-family:tahoma;
+	font-size:12px;
+	font-weight:bold;
+	text-align:center;
+	margin:0;
+}
+#towerData #upgradeImg{
+	position:absolute;
+	margin-left:1px;
+	margin-top:7px;
 }
 #gameElements .towerInfo table {
 	border:medium none;
-	margin:12px 0 0;
 	padding:0;
-	width:65px;
+	width:69px;
+	margin:3px 0px 3px 0px;
+}
+#gameElements .towerInfo #diagramRank{
+	padding-left : 35px;
 }
 
 #gameElements .towerInfo th{
@@ -282,16 +291,17 @@ body{
 	margin:0;
 	text-align:left;
 	width:90px;
+	background-color: black;
 }
 
 #gameElements .towerInfo td .meter{
-	background-color:blue;
+	background-color: #003A7E;
 	padding-left:2px;
 	float:left;
 }
 
 #gameElements .towerInfo td .meterExtension{
-	background-color:red;
+	background-color:FAC200;
 	padding-left:2px;
 	float:left;
 	width:0px;
@@ -303,24 +313,23 @@ body{
 
 #gameElements .towerInfo tr:nth-child(odd)    { color : #fc0; }
 
-#gameElements .towerInfo h4{
-	margin:0px;
-	margin-top : 4px;
-	margin-bottom: 0px;
-	font-size : 12px;
-	color: #fc0;
+#gameElements .towerInfo h4 {
+	color:#FFCC00;
+	font-size:14px;
+	margin:2px 2px 0 2px;
+	font-family:helvetica;
 }
 
 #money{
   color:white;
-  font-family:Digital;
-  font-size:15px;
+  font-family:Digital, Arial Black, Tahoma;
+  font-size:18px;
   font-weight:bold;
   height:20px;
   left:672px;
   text-align:center;
   text-shadow:-1px 1px black;
-  top:93px;
+  top:91px;
   width:79px;
   position:absolute;
 }
@@ -420,84 +429,154 @@ body{
 	height: 56px;
 }
 
+
+
 #gameElements .controls{
 	position:absolute;
-	top:5px;
-	left:5px;
-	width:50px;
-	height:200px;
-	z-index : 101;
-}
-
-#gameElements .controls div{
-	height: 36px;
-	width: 36px;
+	height: 40px;
+	width: 40px;
 	margin-bottom: 4px;
 	opacity : 0.7;
+	z-index:101;
+	margin-left:3px;
+	background-repeat:no-repeat;
 }
 
-#gameElements .controls div:hover{
+#gameElements .controls:hover{
 	opacity : 1.0;
 }
 
-#gameElements .controls .sound.on{
+#gameElements  .sound.controls.on{
 	width: 40px;
-	margin-left: 3px;
-	background-image: url('../images/background/sound_on_button.png');			
+	background-image: url('../images/background/sound_on_button.png');		
+	top:35px
 }
 
-#gameElements .controls .sound.off{
-	width: 35;
-	margin-left: 6px;
+#gameElements  .sound.controls.off{
+	width: 40px;
+	top:35px;
+	background:none;
 	background-image: url('../images/background/sound_off_button.png');				
 }
 
-#gameElements .controls .like{
+#gameElements .like{
 	width: 40px;
 	background-image: url('../images/background/like_button.png');			
+	top:117px;
 }
 
-#gameElements .controls .bookmark{
-	margin-left: 4px;
-	background-image: url('../images/background/bookmark_button.png');			
+#gameElements  .bookmark{
+	background-image: url('../images/background/bookmark_button.png');
+	top :75px;
+}
+#gameElements  .snapshot{
+	background-image: url('../images/background/subscribe_button.png');
+	top :159px;
+}
+#snapshotWindow{
+	z-index:300;
+	position:absolute;
+	top:100px;
+	left:117px;
+}
+#snapshotWindow #snapshot{
+	border:5px solid white;
+	left:53px;
+	position:absolute;
+	top:27px;
+	width:326px;
+
+}
+#snapshotWindow #share,#save{
+	background-color:orange;
+	height:25px;
+	left:443px;
+	position:absolute;
+	width:61px;
+	cursor:pointer;
 }
 
-#gameElements .status{
-	position: absolute;
-	top:-1px;
-	left:160px;
-	width:365px;
+#snapshotWindow #share{
+	top:207px;
+}
+#snapshotWindow #save{
+	top:109px;
+}
+#snapshotWindow #close{
+	height:30px;
+	left:523px;
+	position:absolute;
+	top:10px;
+	width:30px;
+}
+.status {
+	color:white;
+	font-family:verdana;
+	font-size:14px;
+	font-weight:bold;
 	height:28px;
-	font-family: verdana;
-	font-size: 14px;
-	font-weight: bold;
-	color: white;
-	background-image: url('../images/background/status_bar.png');				
-	/*opacity : 0.8;*/
+	left:115px;
+	position:absolute;
+	top:0px;
+	width:365px;
+	z-index:300;
+	width:450px;
+	cursor:default;
+}
+ .status #statusBarEmpty{
+	background-image:url("../images/background/filling_bar_background.png");
+	background-repeat:no-repeat;
+	height:27px;
+	left:-3px;
+	padding:1px;
+	position:absolute;
+	top:0px;
+	width:450px;		
 }
 
-#gameElements .status .score{
+.status #statusBarEmpty div{
+	height : 23px;
+	float : left;
+}
+
+.status #statusBarEmpty #statusBarRight{
+	background-image: url('../images/background/filling_bar_right.png');				
+	width : 7px;
+}
+
+.status #statusBarEmpty #statusBarFill{
+	background-image: url('../images/background/filling_bar_middle.png');
+	background-repeat:repeat-x;				
+}
+
+.status #statusBarEmpty #statusBarLeft{
+	background-image: url('../images/background/filling_bar_left.png');
+	width : 7px;
+}
+
+
+.status .score{
 	position:absolute;
-	left:190px;
+	left:187px;
 	top: 1px;
-	width:78px;
+	width:130px;
 	height:13px;
 }
 
-#gameElements .status .lives{
+.status .lives{
 	position:absolute;
-	left:315px;
+	left:354px;
 	top: 1px;
-	width:40px;
+	width:80px;
 	height:13px;
 }
 
-#gameElements .status .waves{
+ .status .waves{
 	position:absolute;
-	left:55px;
 	top: 1px;
-	width:40px;
+	width:150px;
 	height:13px;
+	left:15px
 }
 
 
@@ -525,12 +604,14 @@ body{
 #canvasContainer{
 	width:736px;
 	height: auto;
-	position: relative;
+	position: absolute;
+	top: 0px;
+	left: 0px;
 	visibility:hidden;
 	
 }
 
-#gameContainer canvas.off{
+#gameContainer .off{
 	background : black;
 }
 
@@ -542,19 +623,19 @@ body{
 	background-image: url('../images/background/snow.gif');
 }
 
-#gameContainer canvas#gameForeground{
+#gameContainer #gameForeground{
 	position :absolute;	
 	top : 0px;
 	left: 0px;
 	
 }
-#gameContainer canvas#gameBackground{
+#gameContainer #gameBackground{
 	position :absolute;	
 	top : 0px;
 	left: 0px;
 }
 
-#gameContainer canvas#droppingGround{
+#gameContainer #droppingGround{
 	position :absolute;	
 	top : 0px;
 	left: 0px;
@@ -609,10 +690,6 @@ body{
 	top : 2px;
 }
 
-canvas.turret{
-	/*cursor : none*/
-}
-
 #unitData {
 	padding: 4px;
 	background: #ee9;
@@ -651,13 +728,22 @@ canvas.turret{
 }
 #modalWindow .content
 {
+  font-size:13px;	
   width : 245px;
   height : 105px;
   position : absolute;
   top : 10px;
-  left : 110px;
+  left : 125px;
   z-index : 201;
-  font-family: AdLib;
+  font-family: AdLib, Arial Black, Tahoma;
+}
+#modalWindow .innerContent{
+  width : 245px;
+  height : 105px;
+  vertical-align:middle;
+  display:table-cell;
+  font-family:Tahoma;
+  font-weight:bold;
 }
 #modalWindow #ok
 {
@@ -667,85 +753,290 @@ canvas.turret{
   top : 120px;
   left : 300px;
   z-index : 202;
+  cursor:pointer;
+}
+#modalWindow #ok img{
+	height:100%;
+	position:absolute;
+	width:185%;
+	cursor:pointer;
+}
+#modalWindow #ok #rogerText{
+	color:gold;
+	padding:5px;
+	font-family:tahoma;
+	font-weight:bold;
+	position:absolute;
+	font-size:14px;
 }
 #popup
 {
 	position : absolute;
-	top : 100;
-	left : 90;
-	width : 585;
-	height : 350;
-	z-index : 303;
+	top : 100px;
+	left : 90px;
+	width : 585px;
+	height : 350px;
+	z-index : 600;
 	opacity : 1;
 }
 #popup #congratsContent
 {
 	position : absolute;
-	top : 20;
-	left : 30;
-	width : 390;
-	height : 50;
+	top : 20px;
+	left : 50px;
+	width : 390px;
+	height : 50px;
 	color : orange;
-	font-size : 30;
+	font-size : 30px;
 	text-shadow: #000 2px 2px 1px;
 }
 #popup #promotedContent
 {
 	position : absolute;
-	top : 90;
-	left : 30;
-	width : 390;
-	height : 100;
-	font-family: AdLib;
-	font-size : 20;
+	top : 90px;
+	left : 50px;
+	width : 390px;
+	height : 100px;
+	font-family: AdLib, Arial Black, Tahoma;
+	font-size : 20px;
 	color : white;
 	text-align: center;
 }
 #popup #rankImg
 {
 	position : absolute;
-	top : 40;
-	left : 430;
-	width : 172;
-	height : 148;
+	top : 40px;
+	left : 430px;
+	width : 172px;
+	height : 148px;
 }
 #popup #popupClose
 {
 	position : absolute;
-	width : 30;
-	height : 30;
-	left : 523;
-	top : 10;
+	width : 30px;
+	height : 30px;
+	left : 523px;
+	top : 10px;
 }
 #popup #popupOk
 {
 	position : absolute;
-	width : 30;
-	height : 30;
-	left : 440;
-	top : 250;
+	width : 30px;
+	height : 30px;
+	left : 440px;
+	top : 250px;
 	cursor:pointer;
 }
 #popup #popupOk .text
 {
   color:white;
   position:absolute;
-  top:15px;
-  left:25px;
+  top:13px;
+  left:30px;
   width : 100%;
   text-align:center;
 }
 #pauseeWindow
 {
 position:"absolute";
-	width: 760;
-	height:550;
+	width: 760px;
+	height:550px;
 	z-index:300;
 }
 #gameElements #moneyAnimation
 {
-	color : gold;
+	color : #FF6600;
 	font-size : 12px;
 	font-weight : bold;
+}
+#container{
+	left : 165px;
+	top : 485px;
+	width: 462px;
+	height: 62px;
+	position : absolute;
+	overflow : hidden;
+}
+#incomingWaves{
+	position : absolute;
+}
+#incomingWaves div.wave {
+	background-color:#082245;
+	border : 2px solid #082245;
+	float:right;
+	height:30px;
+	margin:13px 1px 1px;
+	width:148px;
+}
+#incomingWaves div.active {
+	background-color:#003A7E;
+	border : 2px solid #003A7E;
+}
+#incomingWaves div.passed {
+}
+#incomingWaves div.wave div.creep{
+	float:right;
+	height:38;
+}
+#incomingWaves div.wave div.creep img{
+	height: 24px;		
+	margin-top:3px;
+}
+#scores{
+	width :757px;	
+	height:150px;
+	border:none;	
+	position: absolute;
+	top : 550px;
+}
+#planeSilhouette{
+	position:absolute;
+	top:91px;
+	left:14px;
+}
+#tankSilhouette{
+	position:absolute;
+	top:63px;
+	left:14px;
+}
+#result img{
+	position: absolute;
+}
+#result #winClouds,#result #loseClouds{
+	position: absolute;
+	top: 45px;
+	left: 60px;
+}
+#result #winCenter{
+	left:277px;
+	top:114px;
+	z-index:2;
+}
+#result #twoCannons{
+	left:166px;
+	top:45px;
+	z-index:0;
+}
+#result #loseCenter{
+	top: 40px;
+	left:225px;
+	z-index:2
+}
+#result #resultBlank{
+	left:236px;
+	top:250px;
+	z-index:1;
+}
+#result #resultCoin {
+	left:73px;
+	top:250px;
+	z-index:2;
+}
+#result #coins,#result #score{
+	position:absolute;
+	top:252px;
+	color:#e91;
+	font-size:27px;
+	font-family:Adlib, Arial Black, Tahoma;
+	text-shadow: #000 2px 2px 1px;
+}
+#result #coins{
+	left:113px;
+}
+#result #score{
+	left:585px;
+}
+#result #resultText{
+	position:absolute;
+	-moz-border-radius:20px;
+	-webkit-border-radius:20px;
+	-o-border-radius:20px;
+	border-radius:20px;
+	top:324px;
+	left:194px;
+	width :358px; 
+	height: 136px;
+	border :5px solid #FF4102;
+	background-color : #01060d;
+	white-space: pre-wrap;       /* css-3 */
+	white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+	white-space: -pre-wrap;      /* Opera 4-6 */
+	white-space: -o-pre-wrap;    /* Opera 7 */
+	word-wrap: break-word;  
+	opacity : 0.78;
+}
+#result #stats{
+	width :358px; 
+	height: 136px;
+	white-space: pre-wrap;       /* css-3 */
+	white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+	white-space: -pre-wrap;      /* Opera 4-6 */
+	white-space: -o-pre-wrap;    /* Opera 7 */
+	word-wrap: break-word;  
+	font-size:15px;
+	font-weight:bold;
+	left:6px;
+	position:absolute;
+	top:0px
+}
+#result #exit,#result #playAgain{
+	position:absolute;
+	color:white;
+	text-shadow: #000 2px 2px 1px;
+	top:375px;
+	font-family:Pakgirl, Arial Black, Tahoma;
+	cursor:pointer;
+}
+#result #exit:hover,#result #playAgain:hover{
+	color:red;
+}
+#result #exit{
+	left:585px;
+	font-size:16px;
+	width:20px;
+}
+#result #playAgain{
+	left:100px;
+	font-size: 16px;
+	width:20px;
+}
+#pauseWindow{
+	z-index : 299;
+	width :760px;
+	height :550px; 
+	position :absolute;
+	background-color :white;
+	opacity:0.7;
+}
+
+#gameElements .buttonTextContainer {
+	position:absolute;
+}
+
+#gameElements  .buttonText {
+	display:table-cell;
+	font-size:20px;
+	font-weight:bold;
+	height:50px;
+	text-align:center;
+	top:5px;
+	vertical-align:middle;
+	width:166px;
+}
+
+#gameElements #gameMenu {
+	width:200px;
+	padding-left:12px;
+	padding-top:5px;
+	height:238px;
+	position : absolute;
+	left: 236px;
+	top:96px;
+	z-index:301;
+}
+
+#gameElements #gameMenu .button {
+	margin: 5px;
+	cursor: pointer;
 }
 

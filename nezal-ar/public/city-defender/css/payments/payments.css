@@ -1,0 +1,189 @@
+.pay, .pay img {
+  position: absolute;
+  top: 17px;
+  left: 8px;
+}
+
+a.pay {
+  text-decoration: none;
+}
+
+#daopay-logo {
+  width: 150px;
+  height: 60px;
+  margin: -1px 2px 10px 13px;
+}
+
+#daopay-description {
+  float: right;
+  margin-top: 20px;
+  margin-right : 20px;
+  width: 377px;
+  color: #1b793e;
+  font-family: Verdana;
+  font-size: 19px;
+}
+
+#daopay-command {
+  float: right;
+  margin-top: 20px;
+  margin-right : 20px;
+  width: 377px;
+  color: #1b793e;
+  font-family: adlib;
+  color: black;
+  text-decoration: underline;
+  font-size: 19px;
+}
+
+.package-price {
+  margin-left: 35px;
+  margin-right: 35px;
+  margin-top: 14px;
+}
+
+.package-coins {
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 16px;
+}
+
+#middle-package-price {
+  margin-left: 35px;
+  margin-right: 35px;
+  margin-top: 18px;
+}
+
+#middle-package-coins {
+  margin-left: 22px;
+  margin-right: 22px;
+  margin-top: 16px;
+}
+
+.package-info {
+  color: white;
+  font-family : adlib;
+  display: block;
+}
+
+#best-value {
+  -moz-transform: rotate(45deg);
+  font-size: 8px;
+  position: absolute;
+  left: 107px;
+  top: 13px;
+}
+
+#middle-selection {
+  /*background-color: blue;*/
+  top: 150px;
+  left: 16px;
+  width: 574px;
+  height: 142px;
+  z-index: 1002;
+}
+
+#top-middle-selection {
+  top: 34px;
+  left: 226px;
+  width: 152px;
+  height: 115px;
+  z-index: 1002;
+}
+
+#top-left-selection {
+  top: 34px;
+  left: 54px;
+  width: 153px;
+  height: 115px;
+  z-index: 1002;
+}
+
+#top-right-selection {
+  top: 34px;
+  left: 392px;
+  width: 152px;
+  height: 115px;
+  z-index: 1002;
+}
+
+a img {
+  border: none;
+}
+
+
+
+#paymentSuccessModalWindow
+{
+  width : 400px;
+  height : 170px;
+  position : absolute;
+  top : 235px;
+  left : 165px;
+  z-index : 3001;
+}
+#paymentSuccessModalWindow #paymentSuccessCharacter
+{
+  width : 400px;
+  height : 170px;
+  position : absolute;
+  top : 0px;
+  left : 0px;
+  z-index : 3001;
+}
+#paymentSuccessModalWindow .content
+{
+  font-size:17px; 
+  width : 235px;
+  height : 55px;
+  position : absolute;
+  top : 60px;
+  left : 145px;
+  z-index : 3001;
+  font-family: AdLib, Arial Black, Tahoma;
+}
+#paymentSuccessModalWindow #paymentSuccessOk
+{
+  width : 68px;
+  height : 30px;
+  position : absolute;
+  top : 120px;
+  left : 300px;
+  z-index : 3002;
+}
+#paymentSuccessModalWindow #paymentSuccessImage {
+  left: 225px;
+  position: absolute;
+  top: 20px;
+  z-index: 3002;
+}
+#paymentSuccessModalWindow #paymentSuccessOk img{
+  height: 100%;
+  position: absolute;
+  width: 70px;
+  cursor: pointer;
+}
+#paymentSuccessModalWindow #paymentSuccessOk #paymentOkText{
+  color:gold;
+  margin-right: 33px;
+  padding:5px 0 5px 13px;
+  font-family:tahoma;
+  font-weight:bold;
+  position:absolute;
+  font-size:14px;
+  cursor: pointer;
+}
+
+#contact-us-message {
+  bottom: 10px;
+  left: 160px;
+  position: absolute;
+  color: white;
+}
+#contact-us-trigger {
+  color: gold;
+}
+#contact-us-post-submission {
+  display: block;
+  margin-left: 25px;
+}

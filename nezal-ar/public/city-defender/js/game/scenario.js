@@ -10,8 +10,9 @@ var Scenario = Class.create({
 		this.formScenario()
 	},
 	notify : function(event){
-		var x = Math.random()
-		if(x<0.1&&event.unit){
+		if(event.unit && (event.unit.constructor==Plane||event.unit.constructor==RedPlane))return
+		var x = this.scene.randomizer.next()
+		if((x<0.1&&event.unit)||(event.name!="creepEnteredTower"&&event.name!="creepEntered"&&event.name!="towerDestroyedCreep")){
 			event['tick']=0
 			event['created'] = false
 			event['finished'] = false
@@ -30,7 +31,7 @@ var Scenario = Class.create({
 				if(event.created)
 					event.tick++
 				else{
-					if(event.unit.baloon){
+					if(event.unit&&event.unit.baloon){
 						event.finished = true
 					}
 					else if(event.unit&&!event.unit.dead){
@@ -38,7 +39,7 @@ var Scenario = Class.create({
 						if(event.unit.parent == "creep") baloonNum = 1
 						event.unit.createBaloon(baloonNum)
 						event.created = true
-						event.unit.baloon.text.innerHTML = this.scenario[event.name].random()
+						event.unit.baloon.text.innerHTML = window.Text.game[event.name][Math.round(this.scene.randomizer.next()*(Text.game[event.name].length-1))]
 						if(event.method)this[event.name]()
 					}
 				}					
@@ -55,7 +56,7 @@ var Scenario = Class.create({
 		}
 		this.events = arr
 		var self = this
-		this.scene.push(500, function(){ self._speak() })
+		this.scene.push(10, function(){ self._speak() })
 		}catch(e){
 			console.log(e)
 		}
@@ -74,7 +75,7 @@ var Scenario = Class.create({
 		this.scenario['creepEntered'] = ["Born to destroy!!","ATTAAACK!!", "RUN THEM OVER!!", "CRUSH THEM!"]
 		this.scenario['creepEnteredTower'] = ["BRING IT ON!!","HOLD!!", "STAND YOUR GROUND!!", "That's all you got?"]
 
-	},
+	}
 
 	
 })

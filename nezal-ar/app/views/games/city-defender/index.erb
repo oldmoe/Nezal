@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="chrome=1">
+	<meta http-equiv="Content-Type" content="text/html;" charset="utf-8">
+	<link type="text/css" href="<%=bust_cache('css/all/intro.css')%>" rel="stylesheet" />
+  <link type="text/css" href="<%=bust_cache('css/all/payments.css')%>" rel="stylesheet" />
+	<!--[if IE]>
+		<script src="swf/flashcanvas.js"></script>
+	<![endif]-->
+	<script src="http://connect.facebook.net/en_US/all.js"></script>
+	<script src="<%=bust_cache('js/all/base.js')%>"></script>
+	<script src="<%=bust_cache('js/all/nezal.js')%>"></script>
+  <script src="<%=bust_cache('js/all/payments.js')%>"></script>
+	<script>
+		soundManager.url = 'swf/';
+		soundManager.flashVersion = 9; // optional: shiny features (default = 8)
+		soundManager.useFlashBlock = false; // optionally, enable when you're ready to dive in
+		// enable HTML5 audio support, if you're feeling adventurous.
+		soundManager.useHTML5Audio = false;
+	</script>
+	<script src="<%=bust_cache('js/all/game.js')%>" type="text/javascript"></script>
+</head>
+<body>
+
+<iframe id ="iframe" src="#" style="display : none;"></iframe>
+<iframe id="pages" src="#" style="display : none;"></iframe>
+<div id ="images"></div>
+<div id="pause" style="display : none;">
+  <div style="width:100%; height:100%; background:white;"> </div>
+  <div style="color : FloralWhite; font-family : Digital;"> </div>
+  <div style="color : FloralWhite; font-family : PakGirl;"> </div>
+  <div style="color : FloralWhite; font-family : Alpine;"> </div>
+  <div style="color : FloralWhite; font-family : Adlib;"> </div>
+  <div id="inProgress" style="width:500px;">
+    <img id="logo" name="logo.png"/>
+    <img id="title" name="title.png"/>
+    <img id="blank" name="blank.png"/>
+    <img id="titleAr" name="title-ar.png"/>
+	<div id="loadingBarEmpty">
+		<div id="loadingBarLeft"> </div>
+		<div id="loadingBarFill"> </div>
+		<div id="loadingBarRight"> </div>
+	</div>
+	<div id="fileName"> </div>
+	<div id="loadingPercentage"> </div>
+  </div>
+</div>
+
+<div id="game">
+  <div id="congrates" style="display : none;">
+  </div>
+  <div id="intro">
+    
+    <div id="levelSelection" style="display : none; text-align:center;">
+    </div>
+	
+	 <div id="previousCampaigns" style="display : none;">
+    </div>
+
+    <div id="campaign" style="display : none;">
+    </div>
+    
+    <div id="mission" style="display : none;">
+    </div>
+
+    <div id="marketPlace" style="display : none;">
+    </div>
+
+  </div>
+  
+  <div id='introTemplates' style="display : none;">
+  </div>
+  
+  <div id="gameStart" style="display: none;">
+  </div>
+  <iframe id ="scores" src="" style = "width :760px;height:150px;display:none;overflow:hidden;"></iframe>
+</div>
+<script>
+	function register(win, resources, dumb){
+		Loader.notify(win, resources, dumb)			
+	}
+</script>
+</body>
+<!--[if lt IE 8]>
+	<script>
+		window.location='statics/unsupported_browser.html' 
+	</script>
+<![endif]-->
+
+<!--[if IE]>
+	<script>
+		Loader.dumb = true
+		Loader.toLoad = [
+			'<%=bust_cache('html_resources/user_dumb.html')%>',
+			'<%=bust_cache('html_resources/english_dumb.html')%>',
+			'<%=bust_cache('html_resources/arabic_dumb.html')%>',
+			'<%=bust_cache('html_resources/french_dumb.html')%>',
+      '<%=bust_cache('html_resources/payments_dumb.html')%>',
+			'<%=bust_cache('html_resources/intro_dumb.html')%>',
+			function(){Loader.fire('intro')},
+			'<%=bust_cache('html_resources/animations_dumb.html')%>',
+			'<%=bust_cache('html_resources/game_dumb.html')%>',
+			'<%=bust_cache('html_resources/background_dumb.html')%>',
+			function(){Loader.fire('tutorial')},
+			'<%=bust_cache('html_resources/weapons_dumb.html')%>',
+			function(){Loader.fire('game')}
+		]
+	</script>
+<![endif]-->
+<script>		
+	development = false
+	FBConnect.init(function(){
+        Intro.initialize();							
+    });
+	var loadedProgress = 0
+	function onFinishProgress()
+	{
+	    loadedProgress++;
+	    if (loadedProgress==$$('#inProgress img').length)
+	        window.setTimeout(function(){$('pause').show()}, 100)
+	}
+	$$('#pause  #loadingBarEmpty').first().style.backgroundImage = "url('images/intro/loading_bar_background.png')"
+	$$('#pause  #loadingBarEmpty #loadingBarLeft').first().style.backgroundImage = "url('images/intro/loading_bar_left.png')"
+	$$('#pause  #loadingBarEmpty #loadingBarRight').first().style.backgroundImage = "url('images/intro/loading_bar_right.png')"
+	$$('#pause  #loadingBarEmpty #loadingBarFill').first().style.backgroundImage = "url('images/intro/loading_bar_middle.png')"
+	$(document).observe('dom:loaded',function(){
+    	$$('#inProgress img').each(function(image){
+  	      	image.onload = onFinishProgress;
+      			image.src = "images/intro/"+image.getAttribute('name')
+    			});		
+		if(!Loader.dumb){
+			Loader.toLoad = [
+				'<%=bust_cache('html_resources/user.html')%>',
+				'<%=bust_cache('html_resources/english.html')%>',
+				'<%=bust_cache('html_resources/arabic.html')%>',
+				'<%=bust_cache('html_resources/french.html')%>',
+        '<%=bust_cache('html_resources/payments.html')%>',
+				'<%=bust_cache('html_resources/intro.html')%>',
+				function(){Loader.fire('intro')},
+				'<%=bust_cache('html_resources/animations.html')%>',
+				'<%=bust_cache('html_resources/game.html')%>',
+				'<%=bust_cache('html_resources/background.html')%>',
+				function(){Loader.fire('tutorial')},
+				'<%=bust_cache('html_resources/weapons.html')%>',
+				function(){Loader.fire('game')}
+			]
+		}
+		$('iframe').src = Loader.toLoad[0]
+	})
+  payment = new Payment();
+</script>
+<link type="text/css" href="<%=bust_cache('css/game.css')%>" rel="stylesheet" />
+</html>

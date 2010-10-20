@@ -7,9 +7,10 @@ var Creep = Class.create(Unit, {
 	hp : 100, maxHp : 100,
 	speed :4, price : 4,
 	evading : false, direction : 0,
-	rate : 0.2, power: 2.0,
+	rate : 0.1, power: 1.0,
 	cannonDisplacement : [-4, 0],
 	turningPoint : [0, 0],
+	range : 1,
 	initialize : function($super,x,y,scene,extension){
 		$super(x,y,scene,extension)
 		Map.grid[x][y].push(this)
@@ -83,19 +84,22 @@ var Creep = Class.create(Unit, {
 			var values = this.topBottomValues()
 			var top = values[0]
 			var bottom = values[1]
-			if(top == 0 && bottom == 0){
+			if(top != 1 && bottom != 1){
 				move = true
 				this.turningPoint = [0, 0]
 			}else{
 				if(this.turningPoint[0] == 0 && this.turningPoint[1] == 0){
 					this.turningPoint = [this.x, this.y]
+					//move = true
 				}else if(bottom == 1 && (this.shouldNotTurn(this.bottom)) ){
 					move = true
 				}else if(top == 1 && (this.shouldNotTurn(this.top)) ){
 					move = true
 				}else{
 					// we need to rotate now, which direction ?
-					this.direction = bottom - top
+					var b = bottom > 1 ? 0 : bottom
+					var t = top > 1 ? 0 : top
+					this.direction = b - t
 					this.rotating = true
 					this.oldTheta = this.rotation
 					this.oldSpeed = this.speed
@@ -108,11 +112,13 @@ var Creep = Class.create(Unit, {
 						return a[0] - b[0];
 					})[0][1]
 					this.speed = this.speeds[this.index]
+					this.rotation+= this.direction * this.angles[this.index]
+					this.x += this.speed * Math.cos(this.rotation * Math.PI / 180 );
+					this.y += this.speed * Math.sin(this.rotation * Math.PI / 180 );
 				}
 			}
 		}else{		
 			this.rotation+= this.direction * this.angles[this.index]
-			move = false;
 			this.x += this.speed * Math.cos(this.rotation * Math.PI / 180 );
 			this.y += this.speed * Math.sin(this.rotation * Math.PI / 180 );
 			if(Math.abs(this.rotation - this.oldTheta) >= 90){
@@ -124,7 +130,6 @@ var Creep = Class.create(Unit, {
 				this.x = Math.round((this.x/4))*4
 				this.y = Math.round((this.y/4))*4
 				this.turningPoint = [0, 0]
-				//move = true
 			}
 		}
 		if(move){
@@ -213,9 +218,11 @@ var Creep = Class.create(Unit, {
 		this.scene.towerHealthLayer.attach(anim)
 		this.scene.objects.push(anim)
 		this.destroySprites()
-		this.scene.money += Math.floor(this.price);
+		var moneyAnim = new MoneyAnimation(this.x-10,this.y-5,Math.floor(this.price))
+		this.scene.objects.push(moneyAnim)
+		this.scene.money += Math.round(this.price);
 		this.scene.stats.creepsDestroyed++
-		this.scene.score += this.maxHp
+		this.scene.score += Math.round(this.maxHp/20)*this.scene.config.level
 	},
 	destroySprites : function(){
 		var cell = Map.grid[this.gridX][this.gridY];
