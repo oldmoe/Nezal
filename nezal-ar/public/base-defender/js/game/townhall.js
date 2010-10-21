@@ -19,24 +19,23 @@ var Townhall = Class.create({
     
   },
   
+  /** This should return if we need to off the building mood or no*/
   build : function(x, y){
-    if ( this.isValidToBuild(x,y) ) {
-      /*
-     new Ajax.Request('metadata', {
-     method : 'post',
-     parameters: { 'data' : Object.toJSON(
-     { 'event' :'upgrade',
-     'building' : 'townhall',
-     'coords' : {'x' : null, 'y' : null} })
-     },
-     onSuccess: function(response) {
-     gameStatus = JSON.parse(response.responseText)
-     }
-     });*/
-    }
+    var self = this;
+    
+    var xBlock = this.game.scene.xBlock() + x;
+    var yBlock = this.game.scene.yBlock() + y;
+    this.coords['x'] = xBlock;
+    this.coords['y'] = yBlock;
+    
+    return this.isValidToBuild(xBlock,yBlock) && this.game.upgradeBuilding(this.name, this.coords);
   },
   
   isValidToBuild : function(x,y){
+    if(this.game.disableJsValidation)
+      return true;
+      
+      
     /****************************** Validating workers **************************************/
     if( this.game.idleWorkers == 0 ){
       alert("Cannot build townhall, all your workers are busy!");
@@ -65,9 +64,7 @@ var Townhall = Class.create({
     /****************************************************************************************/
    
     /****************************** Validating location **************************************/
-   console.log("this.game.scene.map[x][y] : " + this.game.scene.map[x][y]);
-   console.log('this.game.scene.landmarks["grass"] : ' + this.game.scene.landmarks.get("grass"));
-    if(this.game.scene.map[x][y] != this.game.scene.landmarks.get("grass")){
+    if(this.game.scene.map[y][x] != this.game.scene.landmarks.get("grass")){
       alert(this.name + " can be built on grass only!");
       return false;
     }
@@ -77,6 +74,18 @@ var Townhall = Class.create({
   },
   
   render : function(){
+    if( this.level == 0 && !this.inProgress ) return;
     
+    var blockSize = this.game.scene.navigation.blockSize;
+    var x = this.coords['x'] * blockSize - this.game.scene.x;
+    var y = this.coords['y'] * blockSize - this.game.scene.y;
+    
+    console.log("in render => x : " + x + ", y : " + y);
+    
+    if (this.inProgress) {
+      this.game.scene.buildingsLayer.ctx.drawImage(Loader.images.buildings['progress.png'], x, y );
+    } else {
+      this.game.scene.buildingsLayer.ctx.drawImage(Loader.images.buildings[this.name + '.png'], x, y);
+    }
   }
 });

@@ -9,27 +9,47 @@ class BaseDefender < Metadata
     "mine" => BD::Mine 
   }
   
+  def self.land_marks
+    {
+      "grass" => 0,
+      "water" => 1,
+      "rock" => 2,
+      "iron" => 3
+    }
+  end
+  
   def self.load_game_profile(user_game_profile)
+    #reading a -maybe- attached error message from the object and porting it to the metadata!
+    if(user_game_profile['error'])
+      origin = self.decode(user_game_profile.metadata)
+      origin['error'] = user_game_profile['error']
+      user_game_profile.metadata = self.encode(origin)
+    end
     user_game_profile.metadata || "{}"
   end
   
   def self.edit_game_profile(user_game_profile, data)
     data = self.decode(data)
     if data['event'] == 'upgrade'
-      upgrade_building(user_game_profile, data)
+      validation = upgrade_building(user_game_profile, data)
+      
+      puts "!!!@!@!@!@!!@" + validation.to_s
+      
+      user_game_profile['error'] = validation['error'] unless validation['valid'] 
     end
     user_game_profile.metadata || "{}"
   end
   
   # {'building' : 'townhall', 'coords' : {'x':'', 'y':''} }
-  def upgrade_building(user_game_profile, data)
+  def self.upgrade_building(user_game_profile, data)
     profile_data = self.decode(user_game_profile.metadata)
     
     building = data['building']
     if(profile_data[building]['level'] == 0)
-      @@building_modules[building].build(profile_data)
+      validation = @@building_modules[building].build(user_game_profile, data['coords'])
+      return validation
     else
-      @@building_modules[building].upgrade(prodile_data)
+      @@building_modules[building].upgrade(user_game_profile)
     end
   end
   

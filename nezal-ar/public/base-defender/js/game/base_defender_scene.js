@@ -1,4 +1,5 @@
 var BaseDefenderScene = Class.create(Scene, {
+  game: null,
   x: 0,
   y: 0,
   width : 760,
@@ -10,8 +11,9 @@ var BaseDefenderScene = Class.create(Scene, {
   textures : [],  
   navigation : null,
   
-  initialize : function($super){
+  initialize : function($super, game){
     $super();
+    this.game = game;
     var self = this;
     this.landmarks.each(function(x,y){
       self.textures.push(x[0] + ".png");
@@ -19,7 +21,26 @@ var BaseDefenderScene = Class.create(Scene, {
     this.navigation = new Navigation(this);
   },
   
+  xBlock : function(){
+    return Math.floor(this.x / this.navigation.blockSize);
+  },
+  
+  yBlock : function(){
+    return Math.floor(this.y / this.navigation.blockSize);
+  },
+  
   render : function(){
+    this._clearCanvas(this.buildingsLayer);
+    this._clearCanvas(this.groundLayer);
+    this._RenderMap();
+    this._RenderBuildings();
+  },
+  
+  _RenderBuildings : function(){
+    this.game.townhall.render();
+  },
+  
+  _RenderMap : function(){
     var nav = this.navigation
     
     var mapX = Math.floor(this.x / nav.blockSize);
@@ -38,9 +59,14 @@ var BaseDefenderScene = Class.create(Scene, {
         var blockTexture = Loader.images.textures[this.textures[this.map[j+mapY][i+mapX]]];
         //console.log(i+mapX);
         this.groundLayer.ctx.drawImage(blockTexture, i*nav.blockSize-diffX, j*nav.blockSize-diffY)
-        this.groundLayer.ctx.strokeRect(i*nav.blockSize-diffX, j*nav.blockSize-diffY, 32, 32)
+        //this.groundLayer.ctx.strokeRect(i*nav.blockSize-diffX, j*nav.blockSize-diffY, 32, 32)
       }
     }
+  },
+  
+  //This function assumes that the layer is full, covering the whole game scene
+  _clearCanvas : function(layer){
+    layer.ctx.clearRect(0, 0, this.width, this.height);
   }
   
 });

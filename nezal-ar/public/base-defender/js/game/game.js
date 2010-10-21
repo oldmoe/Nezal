@@ -1,4 +1,5 @@
 var Game = Class.create({
+  disableJsValidation: true,
   network : null,
   gameStatus : null,
   scene : null,
@@ -16,7 +17,7 @@ var Game = Class.create({
   
   initialize : function(){
     this.network = new Network();
-    this.scene = new BaseDefenderScene();
+    this.scene = new BaseDefenderScene(this);
     this.buildingMode = new BuildingMode(this);
   },
   
@@ -29,19 +30,8 @@ var Game = Class.create({
     thisScene.layers.push(thisScene.buildingsLayer);
     
     this.gameStatus = this.network.initializeGame();
-    this.user = new User(this);
-    this.workers = this.user.data.workers;
-    this.idleWorkers = this.user.data.idle_workers;
-    this.rock = this.user.data.rock;
-    this.iron = this.user.data.iron;
     this.data = JSON.parse(this.gameStatus.game_data.metadata);
-    
-    this.townhall = new Townhall(this);
-    this.tutorial = new Tutorial(this);
-    
-    thisScene.map = this.user.data["map"];
-    thisScene.navigation.blocks.vertical = thisScene.map.length;
-    thisScene.navigation.blocks.horizontal = thisScene.map[0].length;
+    this.reflectStatusChange();
     
     var buildingImages = this.buildingMode.buildings.collect(function(building){
       return building + ".png";
@@ -55,5 +45,27 @@ var Game = Class.create({
     //Just triggering a null move to disable the top and left navigation triggers
     this.scene.navigation.move(0,0);
     
+  },
+  
+  upgradeBuilding : function(name, coords){
+    var response = this.network.upgradeBuilding(name, coords);
+    this.gameStatus = response['gameStatus'];
+    this.reflectStatusChange();
+    this.scene.render();
+    return response['upgradeDone']
+  },
+  reflectStatusChange : function(){
+    this.user = new User(this);
+    this.workers = this.user.data.workers;
+    this.idleWorkers = this.user.data.idle_workers;
+    this.rock = this.user.data.rock;
+    this.iron = this.user.data.iron;
+    
+    this.townhall = new Townhall(this);
+    this.tutorial = new Tutorial(this);
+    
+    this.scene.map = this.user.data["map"];
+    this.scene.navigation.blocks.vertical = this.scene.map.length;
+    this.scene.navigation.blocks.horizontal = this.scene.map[0].length;
   }
 });

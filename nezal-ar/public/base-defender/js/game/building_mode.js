@@ -10,27 +10,27 @@ var BuildingMode = Class.create({
     this.game = game;
     var self = this;
     $('canvasContainer').observe('click', function(mouse){
-      console.log(self);
       if(!self.isOn) return ;
 
+      //Our map is the reverse of these :)
       var x = mouse.pointerX();
       var y = mouse.pointerY();
       
       var blockX = Math.floor(x / game.scene.navigation.blockSize);
-      var blockX = Math.floor(y / game.scene.navigation.blockSize);
+      var blockY = Math.floor(y / game.scene.navigation.blockSize);
 
-      self.selectedBuilding.build(blockX, blockX);
-
-      self.callback();
-      
-      self.off();
+      if (self.selectedBuilding.build(blockX, blockY)) {
+        self.game.scene.render();
+        self.callback();
+        self.off();
+      }
     });
   },
   
-  on : function(buildingClass, callback){
+  on : function(building, callback){
     this.isOn = true;
     this.callback = callback;
-    this.selectedBuilding = buildingClass;
+    this.selectedBuilding = building;
   },
   
   off : function(){
