@@ -45,10 +45,14 @@
 					<div id = "upgradeTower" onmousedown = "game.scene.upgradeSelectedTower()">${window.Text.game.towerInfo.upgrade}
 						<span id="upgradeWord" style="color:white;display:block;">$${tower.upgrades[tower.rank].price}&nbsp; &nbsp;Level ${tower.rank+1} </span>
 					</div>
-					<img id="upgradeImg" src="${Loader.images.background['upgrade_button.png'].getAttribute('data')}" onmousedown = "game.scene.upgradeSelectedTower()"/>
+						{if tower.upgradable}
+							<img id="upgradeImg" src="${Loader.images.background['upgrade_button.png'].getAttribute('data')}" onmousedown = "game.scene.upgradeSelectedTower()"/>
+						{else}
+							<img id="upgradeImg" src="${Loader.images.background['upgrade_button_off.png'].getAttribute('data')}"/>
+						{/if}
 					{else}
 					<div id = "upgradeTower" >
-						<div id = "maxUpgrade" style = "paddingTop:10px bgcolor="grey"">Max upgrade</div>
+						<div id = "maxUpgrade" style = "paddingTop:10px bgcolor="grey">Max upgrade</div>
 					</div>
 					<img id="upgradeImg" src="${Loader.images.background['upgrade_button_off.png'].getAttribute('data')}"/>
 					{/if}

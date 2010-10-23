@@ -22,20 +22,18 @@ var Payment = Class.create({
   activatePackage : function(priceCategory, position){
     var self = this;
     
-    var eventCallback = function(element){
-      //document.location.href = "http://daopay.com/payment/?appcode=62070&price=" + priceCategory;
-      Intro.showDaopayBg("http://daopay.com/pay/?appcode=62070&price=" + priceCategory);
-    }
-    
     this.stopObservingEvents();
     
     //reattaching navigation sounds
     $$('#payments-container .clickSound').each(function(element){
-      element.observe('click', function(element){Sounds.play(Sounds.gameSounds.click)})
+      element.observe('click', function(){Sounds.play(Sounds.gameSounds.click)})
     });
     
-    $('top-' + position + '-selection').observe("click", eventCallback );
-    $('middle-selection').observe("click", eventCallback );
+	[$('top-' + position + '-selection'), $('middle-selection')].invoke("observe", "click", function(){
+      //document.location.href = "http://daopay.com/payment/?appcode=62070&price=" + priceCategory;
+      //Intro.showDaopayBg("http://daopay.com/pay/?appcode=62070&price=" + priceCategory);
+      window.open("http://daopay.com/pay/?appcode=62070&price=" + priceCategory, null, "width=400,height=550");
+    });
     
     this.positions.without(position).each(function(element){
       $('top-' + element + '-selection').observe("click", function(){

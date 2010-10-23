@@ -1006,6 +1006,22 @@ div.clickableButton:hover, span.clickableButton:hover
   z-index:102;
 }
 
+#marketPlace #contactUsFloatBg
+{
+  -moz-border-radius:25px;
+  -webkit-border-radius: 25px;
+  -khtml-border-radius: 25px;
+  background:none repeat scroll 0 0 black;
+  color:#FAC200;
+  height:335px;
+  left:73px;
+  position:absolute;
+  top:150px;
+  width:610px;
+  z-index:103;
+  direction: ltr;
+}
+
 #marketPlace #daopayFloatBg
 {
   -moz-border-radius: 25px;
@@ -1050,12 +1066,46 @@ div.clickableButton:hover, span.clickableButton:hover
   margin-left: 580px;
   margin-top: 11px;
 }
-#marketPlace #daopayFloatBg #daopayClose {
-  margin-left: 474px;
+#marketPlace #contactUsClose {
+  margin-left: 585px;
   margin-top: 10px;
 }
 
-#marketPlace #floatBg #close, #marketPlace #paymentFloatBg #paymentClose, #marketPlace #daopayFloatBg #daopayClose
+#contact-us-form-title {
+  margin-left: 30px;
+}
+
+#contactUsFloatBg form textarea {
+  height: 200px;
+  width: 550px;
+  margin-left: 30px;
+  -webkit-user-select: normal;
+}
+
+#contact-us-submit-button {
+  right: 24px;
+  top: 6px;
+  cursor: pointer;
+  position: absolute;
+}
+
+#contact-us-submit-container {
+  position: relative;
+  height: 60px;
+}
+
+#contact-us-submit-button-text {
+  position: absolute;
+  top: 21px;
+  right: 47px;
+  margin-left: 515px;
+  z-index: 1;
+  cursor: pointer;
+}
+
+#marketPlace #floatBg #close, 
+#marketPlace #paymentFloatBg #paymentClose, 
+#marketPlace #contactUsFloatBg #contactUsClose
 {
   cursor:pointer;
   display:inline-block;

@@ -141,10 +141,9 @@ class GamesController < ApplicationController
     @package_coins = @@packages[params["price"]]
     @user.coins += @@packages[params["price"]]
     @user.save
-    
+	payment = Payment.create!({:profile_id=>@game_profile.id,:price=>params['price']})
     erb :"#{@app_configs["game_name"]}/daopay_confirmation"
   end
-    
   get '/:game_name' do 
     File.read(File.join( 'public', @app_configs["game_name"], 'index.html'))
   end
@@ -177,5 +176,9 @@ class GamesController < ApplicationController
 			response[:top].push( {'id'=> top_scorers[index]['fb_user'],'score'=> top_scorers[index]['score']})			
 		end
 	  JSON.generate(response)
-  end 
-end
+	end
+
+  post '/:game_name/payment_issues' do
+    Message.create!( { :body => params["body"], "type" => 'payment_issue', :profile_id => @game_profile.id } )
+  end
+ end

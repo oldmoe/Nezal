@@ -38,6 +38,7 @@ var TutorialScene = Class.create(CityDefenderScene, {
 		$super(wave)
 	},
 	end : function (status){
+		game.started = false
 		game.tutorial.wishLuck()
 		Sounds.gameSounds.game[0].togglePause()
 	},
