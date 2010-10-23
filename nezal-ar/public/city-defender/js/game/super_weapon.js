@@ -28,6 +28,9 @@ var SuperWeapon = Class.create({
 		if (canvas.length>0){
 			$$('#gameElements .superWeapons .'+this.type)[0].removeChild(canvas[0])
 		}
+		if (typeof FlashCanvas != "undefined") {
+			$$('#gameElements .superWeapons .'+this.type+' img').first().setOpacity(1)
+		}
 	},
 	render : function(){
 	},
