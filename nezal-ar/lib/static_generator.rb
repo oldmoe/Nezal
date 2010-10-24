@@ -18,13 +18,14 @@ require Dir.pwd + '/app/models/game'
 
 @game_name = ENV['app']
 unless @game_name
-	@game_name =  ENV['env'] == 'production' ? "defenderofarabia" : "local-city-defender"
+	@game_name =  ENV['env'] == 'production' ? "defenderofarabia" : "ie-city-defender"
 end 
 STDERR.puts "Generating campaign list for #{@game_name}"
 
 def generate_campaigns
 	game = Game.find_by_name(@game_name)
-	campaigns = Campaign.select(:name, :path).where(:game_id => game.id).order(:created_at,:id).all.collect{|c|{name:c.name, path:c.path}}.reverse
+	campaigns = Campaign.select(:name, :path).where(:game_id => game.id).order(:id).all.collect{|c|{name:c.name, path:c.path}}.reverse
+	puts campaigns.inspect
 	campaigns.shift
 	campaigns.each do |campaign|
 		['english', 'arabic', 'french'].each do |lang|
@@ -40,3 +41,4 @@ def generate_campaigns
 		end
 	end
 end
+generate_campaigns
