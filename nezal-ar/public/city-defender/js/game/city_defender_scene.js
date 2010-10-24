@@ -505,18 +505,18 @@ var CityDefenderScene = Class.create(Scene, {
 		})
 	},
 	uploadScore : function(win,callback){
-		if(this.replay) game.exit()
-		else{
-			// Upload Score code goes here
-			  var currRank = Config.rank;
-				onSuccess = function() {
-					//Here we make the rank 
-				  $$('#rank img')[0].src = "images/intro/ranks/" + Config.rank + ".png";
-				  $$('.rankName')[0].innerHTML = window.Text.game.ranks[Config.rank].abbr;
-				  callback();
-			  }
-			  Intro.sendScore(this.score, win, onSuccess);
-		 }
+			if(this.replay) game.exit()
+			else{
+				// Upload Score code goes here
+				  var currRank = Config.rank;
+					onSuccess = function() {
+						//Here we make the rank 
+					  $$('#rank img')[0].src = "images/intro/ranks/" + Config.rank + ".png";
+					  $$('.rankName')[0].innerHTML = window.Text.game.ranks[Config.rank].abbr;
+					  callback();
+				  }
+				  Intro.sendScore(this.score, win, onSuccess);
+			 }
 	},
 	
 	selectTower : function(x, y){

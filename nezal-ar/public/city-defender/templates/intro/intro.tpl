@@ -577,6 +577,8 @@
     <img id="paymentSuccessCharacter" src="${Loader.images.intro['character.png'].getAttribute('data')}"/>
     <div class="content">
       ${Text.payments.success.replace('*coins*', coins)}
+	  <br/><br/>
+	  <span style="color:red">${Text.payments.makeSure}</span>
     </div>
     <div id="paymentSuccessImage">
       <img src="${Loader.images.intro['market/money.png'].getAttribute('data')}" />

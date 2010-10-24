@@ -57,6 +57,7 @@ FBDefender = {
     },
     
     onPublishSuccess : function(){
+		/*
         new Ajax.Request(  'users/coins' ,
         {   method:'post', 
             parameters: { 'coins' : 5 },
@@ -67,6 +68,7 @@ FBDefender = {
                     Intro.select('marketPlace');
             }
         });
+		*/
     },
 
     publishMissionCompletion : function(mission){

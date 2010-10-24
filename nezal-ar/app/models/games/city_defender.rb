@@ -7,7 +7,7 @@ class CityDefender < Metadata
   WIN_COIN_FACTOR = (1.0/300)
   LIKE_COINS = 500
   BOOKMARK_COINS = 500
-  INVITE_COINS = 100
+  INVITE_COINS = 200
   
   def self.init_game(game)
     metadata = { 'towers' => {}, 'weapons' => {} , 'creeps' => {} }
@@ -86,14 +86,18 @@ class CityDefender < Metadata
     if metadata['missions'][data['mission'] -1]
       old_score = metadata['missions'][data['mission'] -1]['score']
       metadata['missions'][data['mission'] -1]['score'] = 
-                                                  if metadata['missions'][data['mission'] -1]['score'] > data['score']
-                                                    metadata['missions'][data['mission'] -1]['score']
-                                                  else
-                                                    old_score = metadata['missions'][data['mission'] -1]['score']
-                                                    data['score']
-                                                  end
-      user_campaign.score -= old_score 
-      user_campaign.score += metadata['missions'][data['mission'] -1]['score']
+		  if metadata['missions'][data['mission'] -1]['score'] > data['score']
+			metadata['missions'][data['mission'] -1]['score']
+		  else
+			old_score = metadata['missions'][data['mission'] -1]['score']
+			data['score']
+		  end
+	  if metadata['missions'][data['mission'] -1]['score'] < 100000											
+		user_campaign.score -= old_score 
+		user_campaign.score += metadata['missions'][data['mission'] -1]['score']
+	  else 
+		puts ">>>>>>>CHEATER<<<<<<<<"
+	  end
       puts "======================================================"
       puts data['level']
       puts metadata['levels']

@@ -11,6 +11,7 @@
     contactUsTrigger : 'contact us',
     contactUsFormTitle : 'Explain your issue :',
     contactUsFormSend : 'Send',
+	makeSure :'تأكد من انتهاء المكالمه',
     contactUsFormPostSubmissionSuccess : 'We will revise your issue soon. Thanks you for your patience.',
     contactUsFormPostSubmissionFailure : 'Your issue is not posted successfully, please try again later.'
   },
@@ -212,7 +213,7 @@
             'طور',
             'ليحصل على ميزة اضافية في المعارك'
         ],
-        userPrompt : 'أخبر اصدقائك عن انجازك وأحصل على 5 نقود',
+        userPrompt : 'أخبر اصدقائك عن انجازك ',
 		invite : {
             inviteMsg : 'هل انت شجاع بما فيه الكفاية للدفاع عن اراضى العرب ؟ ',
             userPrompt : 'ادع اصدقاؤك و اكسب 200 من النقود لكل صديق يبدأ اللعب'
