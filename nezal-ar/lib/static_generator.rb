@@ -41,4 +41,3 @@ def generate_campaigns
 		end
 	end
 end
-generate_campaigns
