@@ -164,7 +164,7 @@ def generateDumbImageHTMLFile resourceDir,fileToWrite,id
 						image_id.sub!('/', '#').sub!('/', '#')							
 					end					
 				end
-				src = "../#{resourceDir.include? "animations" ? 'images/' : ''}#{image_id.gsub('#','/')}"
+				src = "../#{(resourceDir.include?"animations")? 'images/' : ''}#{image_id.gsub('#','/')}"
 				fileToWrite.puts "<img id='#{image_id}'  src='#{src}' />"
 			elsif File.directory? "#{resourceDir}/#{filename}"
 				generateDumbImageHTMLFile "#{resourceDir}/#{filename}",fileToWrite,id
