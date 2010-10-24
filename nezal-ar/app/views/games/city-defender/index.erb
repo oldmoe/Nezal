@@ -74,7 +74,7 @@
   
   <div id="gameStart" style="display: none;">
   </div>
-  <iframe id ="scores" src="" style = "width :760px;height:150px;display:none;overflow:hidden;"></iframe>
+  <iframe id ="scores" src="" style = "width :760px;height:150px;display:block;overflow:hidden;border:none;" frameborder=0 ></iframe>
 </div>
 <script>
 	function register(win, resources, dumb){
@@ -110,9 +110,6 @@
 <![endif]-->
 <script>		
 	development = false
-	FBConnect.init(function(){
-        Intro.initialize();							
-    });
 	var loadedProgress = 0
 	function onFinishProgress()
 	{
@@ -125,6 +122,9 @@
 	$$('#pause  #loadingBarEmpty #loadingBarRight').first().style.backgroundImage = "url('images/intro/loading_bar_right.png')"
 	$$('#pause  #loadingBarEmpty #loadingBarFill').first().style.backgroundImage = "url('images/intro/loading_bar_middle.png')"
 	$(document).observe('dom:loaded',function(){
+		FBConnect.init(function(){
+			Intro.initialize();							
+		});
     	$$('#inProgress img').each(function(image){
   	      	image.onload = onFinishProgress;
       			image.src = "images/intro/"+image.getAttribute('name')
