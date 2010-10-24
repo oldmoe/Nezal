@@ -527,6 +527,11 @@ var CityDefenderScene = Class.create(Scene, {
 			}
 		}
 		this.selectedTower = Map.grid[x][y].tower
+		var tower = this.selectedTower
+		if(tower && !tower.statechange && tower.upgrades[tower.rank] && tower.upgrades[tower.rank].price > this.money){
+			tower.statechange = true
+			tower.upgradable = false
+		}
 		this.selectedTowerHp = Map.grid[x][y].tower.hp
 		this.selectedTower.rangeSprite.visible = true
 		this.processTowerInfoTemplate()
