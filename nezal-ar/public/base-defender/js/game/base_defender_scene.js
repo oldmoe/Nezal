@@ -8,6 +8,7 @@ var BaseDefenderScene = Class.create(Scene, {
   buildingsLayer : null,
   map : [],
   landmarks : new Hash({"grass" : 0, "water" : 1, "rock" : 2, "iron" : 3}),
+  icons : ["worker.png", "iron.png", "rock.png"],
   textures : [],  
   navigation : null,
   
@@ -34,6 +35,8 @@ var BaseDefenderScene = Class.create(Scene, {
     this._clearCanvas(this.groundLayer);
     this._RenderMap();
     this._RenderBuildings();
+    
+    this._RenderGamePanel();
   },
   
   _RenderBuildings : function(){
@@ -67,6 +70,12 @@ var BaseDefenderScene = Class.create(Scene, {
   //This function assumes that the layer is full, covering the whole game scene
   _clearCanvas : function(layer){
     layer.ctx.clearRect(0, 0, this.width, this.height);
+  },
+  
+  _RenderGamePanel : function(){
+    $('rock-amount').innerHTML = this.game.resources.rock;
+    $('iron-amount').innerHTML = this.game.resources.iron;
+    $('workers-amount').innerHTML = this.game.idleWorkers + ' / ' + this.game.workers;
   }
   
 });

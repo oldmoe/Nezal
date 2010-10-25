@@ -31,5 +31,14 @@ var Network = Class.create({
       }
     });
     return {'upgradeDone' : upgradeDone, 'gameStatus' : gameStatus};
+  },
+  fetchTemplate : function(path, callBack){
+    new Ajax.Request(path, {
+      method : 'get',
+      asynchronous : false,
+      onSuccess: function(response) {
+        callBack(response.responseText);
+      }
+    })
   }
 });

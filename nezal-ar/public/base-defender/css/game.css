@@ -63,3 +63,11 @@ body{
   top : 530px;
   left : 0;
 }
+#building-remaining-time {
+  background-color : red;
+  color : gold;
+  font-size : 11px;
+  height : 15px;
+  position : absolute;
+  width : auto;
+}

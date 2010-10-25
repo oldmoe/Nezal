@@ -6,11 +6,11 @@ var Townhall = Class.create({
   startedBuildingAt : null,
   coords : {x : null, y : null},
   //This will store the specs and upgrade costs of different townhall levels
-  townhallBluePrints : null,
+  bluePrints : null,
   
   initialize : function(game){
     this.game = game;
-    this.townhallBluePrints = this.game.data.buildings.townhall;
+    this.bluePrints = this.game.data.buildings.townhall;
     var townhall_json = this.game.user.data.townhall;
     this.level = townhall_json.level;
     this.coords = townhall_json.coords;
@@ -21,8 +21,6 @@ var Townhall = Class.create({
   
   /** This should return if we need to off the building mood or no*/
   build : function(x, y){
-    var self = this;
-    
     var xBlock = this.game.scene.xBlock() + x;
     var yBlock = this.game.scene.yBlock() + y;
     this.coords['x'] = xBlock;
@@ -44,8 +42,8 @@ var Townhall = Class.create({
     /****************************************************************************************/
     
     /****************************** Validating resources **************************************/
-    var neededRock = this.townhallBluePrints.levels[1].rock - this.game.rock;
-    var neededIron = this.townhallBluePrints.levels[1].iron - this.game.iron;
+    var neededRock = this.bluePrints.levels[1].rock - this.game.resources.rock;
+    var neededIron = this.bluePrints.levels[1].iron - this.game.resources.iron;
     
     if( neededRock > 0 && neededIron > 0 ){
       alert("Not enough resources, you need more "+ neededRock +" rock and "+ neededIron + " iron");
@@ -73,7 +71,19 @@ var Townhall = Class.create({
    return true;
   },
   
+  upgradeRemainingTime : function(){
+    if(this.inProgress){
+      var since = new Date(this.startedBuildingAt * 1000).getTime();
+      var now = new Date().getTime();
+      var required = this.bluePrints['levels'][this.level+1]['time'];
+      return required - Math.ceil((now - since)/1000);
+    }else{
+      return 0;
+    }
+  },
+  
   render : function(){
+    var self = this;
     if( this.level == 0 && !this.inProgress ) return;
     
     var blockSize = this.game.scene.navigation.blockSize;
@@ -84,6 +94,33 @@ var Townhall = Class.create({
     
     if (this.inProgress) {
       this.game.scene.buildingsLayer.ctx.drawImage(Loader.images.buildings['progress.png'], x, y );
+      $('building-remaining-time').style['top'] = (y - 15) + "px";
+      $('building-remaining-time').style['left'] = (x - 20) + "px";
+      $('building-remaining-time').show();
+      
+      var reactorCallback = function(){
+        var remainingTime = self.upgradeRemainingTime();
+        if( remainingTime > 0 ){
+          var remainingText = remainingTime + " Seconds";
+          $('building-remaining-time').innerHTML = self.game.templatesManager.buildingRemainingTime(remainingText);
+          self.game.reactor.push(0, reactorCallback);
+        }else{
+          //Adding a delay before calling the server to overcome time precision errors
+          if (!self.noMore) {
+            self.noMore = true
+            self.game.reactor.push(2, function(){
+              self.noMore = false
+              $('building-remaining-time').hide();
+              self.game.reInitialize(function(){
+                self.game.scene.render();
+              });
+            });
+          }
+        }
+      }
+      
+      this.game.reactor.push(0, reactorCallback);
+      
     } else {
       this.game.scene.buildingsLayer.ctx.drawImage(Loader.images.buildings[this.name + '.png'], x, y);
     }

@@ -1,5 +1,7 @@
 var Game = Class.create({
   disableJsValidation: true,
+  templatesManager : null,
+  reactor : null,
   network : null,
   gameStatus : null,
   scene : null,
@@ -29,9 +31,11 @@ var Game = Class.create({
     thisScene.buildingsLayer = new Layer($('gameForeground').getContext('2d'));
     thisScene.layers.push(thisScene.buildingsLayer);
     
-    this.gameStatus = this.network.initializeGame();
-    this.data = JSON.parse(this.gameStatus.game_data.metadata);
-    this.reflectStatusChange();
+    this.templatesManager = new TemplatesManager(this.network);
+    this.reactor = new Reactor(500);
+    this.reactor.run();
+    
+    this.reInitialize();
     
     var buildingImages = this.buildingMode.buildings.collect(function(building){
       return building + ".png";
@@ -47,19 +51,27 @@ var Game = Class.create({
     
   },
   
+  reInitialize : function(callback){
+    this.gameStatus = this.network.initializeGame();
+    this.data = JSON.parse(this.gameStatus.game_data.metadata);
+    
+    this.reflectStatusChange();
+    
+    if(callback) callback();
+  },
+  
   upgradeBuilding : function(name, coords){
     var response = this.network.upgradeBuilding(name, coords);
     this.gameStatus = response['gameStatus'];
     this.reflectStatusChange();
-    this.scene.render();
     return response['upgradeDone']
   },
   reflectStatusChange : function(){
     this.user = new User(this);
     this.workers = this.user.data.workers;
     this.idleWorkers = this.user.data.idle_workers;
-    this.rock = this.user.data.rock;
-    this.iron = this.user.data.iron;
+    this.resources.rock = this.user.data.rock;
+    this.resources.iron = this.user.data.iron;
     
     this.townhall = new Townhall(this);
     this.tutorial = new Tutorial(this);

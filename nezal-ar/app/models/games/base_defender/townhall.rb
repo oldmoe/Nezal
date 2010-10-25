@@ -9,21 +9,19 @@ module BD
       validation = validateBuilding(user_profile_metadata, game_metadata, coords)
       return validation if validation['valid'] == false
       
-      #####################################################################
-      #####################################################################
-      #####################################################################
-      #####################################################################
-      #####################################################################
-      #####################################################################
-      #####################################################################
-      #####################################################################
-      #####################################################################
-      #####################################################################
-      ####### START CODING HEREREREREREE ######
-      #####################################################################
-      #####################################################################
-      #####################################################################
+      user_profile_metadata['idle_workers'] -= 1
+      user_profile_metadata[@@name]['startedBuildingAt'] = Time.now.utc.to_i
+      user_profile_metadata[@@name]['inProgress'] = true
       
+      user_profile_metadata[@@name]['coords'] = coords
+      
+      user_profile_metadata['rock'] -= game_metadata['buildings'][@@name]['levels']['1']['rock']
+      user_profile_metadata['iron'] -= game_metadata['buildings'][@@name]['levels']['1']['iron']
+      
+      user_game_profile.metadata = BaseDefender.encode(user_profile_metadata)
+      user_game_profile.save
+      
+      return validation
     end
     
     def self.validateBuilding(user_profile_metadata, game_metadata, coords)

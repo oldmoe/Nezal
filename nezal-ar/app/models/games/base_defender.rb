@@ -18,6 +18,26 @@ class BaseDefender < Metadata
     }
   end
   
+  def self.calculate_jobs(user_game_profile)
+    metadata = JSON.parse(user_game_profile.metadata)
+    game_metadata = JSON.parse(user_game_profile.game.metadata)
+    if( metadata['townhall']['inProgress'] )
+      since = metadata['townhall']['startedBuildingAt']
+      now = Time.now.utc.to_i
+      townhall_next_level = metadata['townhall']['level']+1
+      required = game_metadata['buildings']['townhall']['levels'][townhall_next_level.to_s]['time']
+      remaining = required - (now - since)
+      if( remaining <= 0 )
+        metadata['townhall']['level'] += 1
+        metadata['townhall']['inProgress'] = false
+        metadata['townhall']['startedBuildingAt'] = nil
+        metadata['idle_workers'] += 1
+        user_game_profile.metadata = self.encode(metadata)
+        user_game_profile.save
+      end
+    end
+  end
+  
   def self.load_game_profile(user_game_profile)
     #reading a -maybe- attached error message from the object and porting it to the metadata!
     if(user_game_profile['error'])
@@ -25,6 +45,9 @@ class BaseDefender < Metadata
       origin['error'] = user_game_profile['error']
       user_game_profile.metadata = self.encode(origin)
     end
+    
+    calculate_jobs user_game_profile
+    
     user_game_profile.metadata || "{}"
   end
   

@@ -6,6 +6,7 @@
     <script src="js/facebook.js" type="text/javascript"></script>
     
     <link type="text/css" href="css/game.css" rel="stylesheet" />
+    <link type="text/css" href="css/game_panel.css" rel="stylesheet" />
 
     
 		<meta http-equiv="Content-Type" charset="utf-8">
@@ -23,15 +24,34 @@
       <div class="navigation-trigger" id="right-navigation-trigger"></div>
       <div class="navigation-trigger" id="down-navigation-trigger"></div>
       
+      <div id="game-panel">
+        <div class="panel-element">
+          <img src="images/textures/rock.png"></img>
+          <span id="rock-amount" class="element-amount"></span>
+        </div>
+        
+        <div class="panel-element">
+          <img src="images/textures/iron.png"></img>
+          <span id="iron-amount" class="element-amount"></span>
+        </div>
+        
+        <div class="panel-element">
+          <img src="images/icons/worker.png"></img>
+          <span title="Idle Workers / Total Workers" id="workers-amount" class="element-amount"></span>
+        </div>
+      </div>
+      
+      <div id="building-remaining-time" style="display:none;"></div>
+      
       <button id="establish-town-hall" style="display:none;"> Establish your town </button>
     </div>
     
+    <script src="js/base/template.js"></script>
     <script src="js/nezal/loader.js"></script>
     <script src="js/nezal/nezal.js"></script>
     <script src="js/nezal/layer.js"></script>
     <script src="js/nezal/scene.js"></script>
     <script src="js/nezal/reactor.js"></script>
-    <script src="js/nezal/sprite.js"></script>
     <script src="js/game/network.js"></script>
     <script src="js/game/navigation.js"></script>
     <script src="js/game/base_defender_scene.js"></script>
@@ -40,6 +60,7 @@
     <script src="js/game/townhall.js"></script>
     <script src="js/game/user.js"></script>
     <script src="js/game/building_mode.js"></script>
+    <script src="js/game/templates_manager.js"></script>
     <script>
       var game = null;
       FBConnect.init(function(){
