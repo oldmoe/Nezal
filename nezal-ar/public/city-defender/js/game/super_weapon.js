@@ -234,7 +234,7 @@ var Hyper = Class.create(SuperWeapon, {
 	unHyper : function(){
 		var self = this
 		self.scene.turrets.each(function(tower){
-			tower.rate /= 2;
+			tower.rate /= self.factor1;
 		});
 		var index = -1
 		this.scene.towerMutators.splice(index, 1)
