@@ -8,23 +8,8 @@ var BuildingMode = Class.create({
   
   initialize : function(game){
     this.game = game;
-    var self = this;
-    $('canvasContainer').observe('click', function(mouse){
-      if(!self.isOn) return ;
-
-      //Our map is the reverse of these :)
-      var x = mouse.pointerX();
-      var y = mouse.pointerY();
-      
-      var blockX = Math.floor(x / game.scene.navigation.blockSize);
-      var blockY = Math.floor(y / game.scene.navigation.blockSize);
-
-      if (self.selectedBuilding.build(blockX, blockY)) {
-        self.game.scene.render();
-        self.callback();
-        self.off();
-      }
-    });
+    this._AttachCanvasClickListener();
+    this._AttachBuildingPanelCloseListeners();
   },
   
   on : function(building, callback){
@@ -35,5 +20,50 @@ var BuildingMode = Class.create({
   
   off : function(){
     this.isOn = false;
+  },
+  
+  _AttachCanvasClickListener : function(){
+    var self = this;
+    $('canvasContainer').observe('click', function(mouse){
+      var x = mouse.pointerX();
+      var y = mouse.pointerY();
+      
+      var blockX = Math.floor(x / game.scene.navigation.blockSize);
+      var blockY = Math.floor(y / game.scene.navigation.blockSize);
+      if(self.isOn) 
+        self._AttachModeOnListener(blockX, blockY);
+      else
+        self._AttachModeOffListener(blockX, blockY);
+    });
+  },
+  
+  _AttachModeOffListener : function(blockX, blockY){
+    var selectedBuilding = this.game.scene.lookupLocation(blockX, blockY);
+    if(selectedBuilding){
+      selectedBuilding.renderPanel();
+      $('building-panel').show();
+    }
+  },
+  
+  _AttachModeOnListener : function(blockX, blockY){
+    if (this.selectedBuilding.build(blockX, blockY)) {
+      this.game.scene.render();
+      this.callback();
+      this.off();
+    }
+  },
+  _AttachBuildingPanelCloseListeners : function(){
+    var self = this;
+    var closeCallback = function(){
+      $('building-panel').hide();
+      self.game.selectedBuildingPanel.selectedBuilding = null;
+    }
+    
+    $('close-building-panel').observe('click', closeCallback);
+    document.observe('keydown', function(event){
+      if (event.keyCode == Event.KEY_ESC) {
+        closeCallback();
+      }
+    });
   }
 });

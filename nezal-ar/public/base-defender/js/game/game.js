@@ -1,6 +1,7 @@
 var Game = Class.create({
   disableJsValidation: true,
   templatesManager : null,
+  selectedBuildingPanel : null,
   reactor : null,
   network : null,
   gameStatus : null,
@@ -14,7 +15,8 @@ var Game = Class.create({
   idleWorkers : null,
   resources : {
     rock : 0,
-    iron : 0
+    iron : 0,
+    coins : 0
   },
   
   initialize : function(){
@@ -72,6 +74,7 @@ var Game = Class.create({
     this.idleWorkers = this.user.data.idle_workers;
     this.resources.rock = this.user.data.rock;
     this.resources.iron = this.user.data.iron;
+    this.resources.coins = this.user.data.iron;
     
     this.townhall = new Townhall(this);
     this.tutorial = new Tutorial(this);

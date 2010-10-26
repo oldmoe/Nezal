@@ -14,5 +14,9 @@ var TemplatesManager = Class.create({
   
   buildingRemainingTime : function(time){
     return TrimPath.processDOMTemplate("building-remaining-time-template", {'remainingTime' : time});
+  },
+  
+  townhallPanel : function(townhallName, buildingInProgress){
+    return TrimPath.processDOMTemplate("townhall-panel-template", {'townhallName' : townhallName, 'buildingInProgress' : buildingInProgress});
   }
 });

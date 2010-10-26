@@ -11,6 +11,15 @@ var BaseDefenderScene = Class.create(Scene, {
   icons : ["worker.png", "iron.png", "rock.png"],
   textures : [],  
   navigation : null,
+  _LocationLookup : {},
+  
+  registerLocation : function(blockX, blockY, building){
+    this._LocationLookup[blockX + "" + blockY] = building;
+  },
+  
+  lookupLocation : function(blockX, blockY){
+    return this._LocationLookup[blockX + "" + blockY];
+  },
   
   initialize : function($super, game){
     $super();
@@ -59,9 +68,15 @@ var BaseDefenderScene = Class.create(Scene, {
     
     for(var j=0; j < sceneSeenYBlocks; j++){
       for(var i = 0; i < sceneSeenXBlocks + 1; i++){
-        var blockTexture = Loader.images.textures[this.textures[this.map[j+mapY][i+mapX]]];
+        var textureIndex = this.map[j+mapY][i+mapX];
+        var textureImageName = this.textures[textureIndex];
+        var blockTexture = Loader.images.textures[textureImageName];
         //console.log(i+mapX);
+        if(this.landmarks.get('iron') == textureIndex || this.landmarks.get('rock') == textureIndex)
+          this.groundLayer.ctx.drawImage(Loader.images.textures['grass.png'], i*nav.blockSize-diffX, j*nav.blockSize-diffY)
+          
         this.groundLayer.ctx.drawImage(blockTexture, i*nav.blockSize-diffX, j*nav.blockSize-diffY)
+        
         //this.groundLayer.ctx.strokeRect(i*nav.blockSize-diffX, j*nav.blockSize-diffY, 32, 32)
       }
     }
@@ -76,6 +91,7 @@ var BaseDefenderScene = Class.create(Scene, {
     $('rock-amount').innerHTML = this.game.resources.rock;
     $('iron-amount').innerHTML = this.game.resources.iron;
     $('workers-amount').innerHTML = this.game.idleWorkers + ' / ' + this.game.workers;
+    $('coins-amount').innerHTML = this.game.user.coins;
   }
   
 });

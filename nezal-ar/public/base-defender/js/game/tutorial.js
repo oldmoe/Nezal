@@ -16,8 +16,7 @@ var Tutorial = Class.create({
     $('establish-town-hall').observe('click', function(){
       $('establish-town-hall').innerHTML = "Place your base on the map!";
       game.buildingMode.on(self.game.townhall, function(){
-        $('establish-town-hall').innerHTML = "Townhall placed!!";
-        $('establish-town-hall').disabled = "disabled";
+        $('establish-town-hall').hide();
       });
     });
   }

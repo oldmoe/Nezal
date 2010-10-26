@@ -14,6 +14,7 @@ var Townhall = Class.create({
     var townhall_json = this.game.user.data.townhall;
     this.level = townhall_json.level;
     this.coords = townhall_json.coords;
+    this.game.scene.registerLocation(this.coords['x'], this.coords['y'], this);
     this.inProgress = townhall_json.inProgress;
     this.startedBuildingAt = townhall_json.startedBuildingAt;
     
@@ -124,5 +125,16 @@ var Townhall = Class.create({
     } else {
       this.game.scene.buildingsLayer.ctx.drawImage(Loader.images.buildings[this.name + '.png'], x, y);
     }
+    
+    if( this.game.selectedBuildingPanel != null && this.game.selectedBuildingPanel.selectedBuilding.name == this.name ){
+      this.renderPanel();
+    }
+  },
+  
+  renderPanel : function(){
+    var self = this;
+    this.game.selectedBuildingPanel = new BuildingPanel(this, function(){
+      return self.game.templatesManager.townhallPanel(self.name, self.inProgress);
+    });
   }
 });
