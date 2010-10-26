@@ -1,0 +1,27 @@
+#game-panel {
+  position: absolute;
+  right: 25px;
+  top: 25px;
+  width: 120px;
+  height: 200px;
+  background-color: gold;
+  -moz-border-radius : 10px;
+  -webkit-border-radius : 10px;
+  -o-border-radius : 10px;
+  border-radius : 10px;
+}
+.panel-element {
+  margin-left: 10px;
+  margin-top: 5px;
+  height: 37px;
+}
+.panel-element img {
+  float: left;
+}
+.panel-element .element-amount {
+  display: block;
+  float: left;
+  height: 30px;
+  margin-top: 5px;
+  margin-left: 5px;
+}

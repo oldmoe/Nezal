@@ -1,0 +1,35 @@
+<!-- Note that every template id is appended by "-template" when the templateManager.js load this file -->
+
+<textarea id="building-remaining-time">
+  <span class="">${remainingTime}</span>
+</textarea>
+
+<textarea id="townhall-panel">
+  <div id="townhall-presentation">
+    <span>Townhall</span>
+    <img src="images/buildings/townhall.png"></img>
+  </div>
+  {if buildingInProgress}
+    <span class="building-in-progress">Building in progress</span>
+  {else}
+    <div id="townhall-functions">
+      <div id="townhall-hire-worker">
+        <span style="font-size: 14px;">Hire A Worker</span><button style="margin-left: 5px;">+</button>
+        <span>for</span>
+        <span>20</span>
+        <img style="width: 19px;" src="images/icons/coins.png">
+      </div>
+      <div id="townhall-build-new-building">
+        <div class="townhall-new-building">
+          <img src="images/buildings/quarry.png"></img>
+          <span>Quarry</span>
+        </div>
+        
+        <div class="townhall-new-building">
+          <img src="images/buildings/mine.png"></img>
+          <span class="new-building-name">Mine</span>
+        </div>
+      </div>
+    </div>
+  {/if}
+</textarea>

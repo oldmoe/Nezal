@@ -1,0 +1,73 @@
+body{
+	padding : 0px;
+	margin : 0px;
+}
+
+
+#gameContainer {
+	padding-top: 0px;
+	position : relative;
+	width : 760px;
+	height: 550px;
+	bottom: 0px;
+	/*margin-left:auto;
+	margin-right:auto;*/
+	font-family : verdana;
+}
+
+#gameContainer canvas#gameForeground{
+	position :absolute;	
+	top : 0px;
+	left: 0px;
+}
+
+.navigation-trigger {
+  position : absolute;
+  background-color : green;
+  cursor : pointer;
+}
+
+.navigation-trigger:hover {
+  background-color : red;
+}
+
+.navigation-trigger.limit-reached {
+  background-color : gray;
+  cursor : default;
+}
+
+#left-navigation-trigger {
+  width : 20px;
+  height : 550px;
+  top : 0;
+  left : 0;
+}
+
+#right-navigation-trigger {
+  width : 20px;
+  height : 550px;
+  top : 0;
+  left : 740px;
+}
+
+#up-navigation-trigger {
+  width : 760px;
+  height : 20px;
+  top : 0;
+  left : 0;
+}
+
+#down-navigation-trigger {
+  width : 760px;
+  height : 20px;
+  top : 530px;
+  left : 0;
+}
+#building-remaining-time {
+  background-color : red;
+  color : gold;
+  font-size : 11px;
+  height : 15px;
+  position : absolute;
+  width : auto;
+}
