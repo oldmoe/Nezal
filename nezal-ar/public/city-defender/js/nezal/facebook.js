@@ -1,6 +1,7 @@
 var FBConnect = {
 
     appIds : {
+				'ie-city-defender' : "149722381737500",
         		'local-city-defender' : "110196392331352",
         		'city-defender' : "107418339291733",
         		'defenderofarabia' : "122519734470004"
