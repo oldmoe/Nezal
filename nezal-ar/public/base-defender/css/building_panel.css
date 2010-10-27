@@ -9,6 +9,7 @@
   width : 400px;
   height : 100px;
   background-color: gold;
+  opacity : 0.92;
 }
 #close-building-panel {
   float: right;

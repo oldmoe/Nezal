@@ -90,7 +90,7 @@ var BaseDefenderScene = Class.create(Scene, {
   _RenderGamePanel : function(){
     $('rock-amount').innerHTML = this.game.resources.rock;
     $('iron-amount').innerHTML = this.game.resources.iron;
-    $('workers-amount').innerHTML = this.game.idleWorkers + ' / ' + this.game.workers;
+    $('workers-amount').innerHTML = this.game.workerFactory.idleWorkers + ' / ' + this.game.workerFactory.workers;
     $('coins-amount').innerHTML = this.game.user.coins;
   }
   

@@ -8,6 +8,7 @@
     <link type="text/css" href="css/game.css" rel="stylesheet" />
     <link type="text/css" href="css/game_panel.css" rel="stylesheet" />
     <link type="text/css" href="css/building_panel.css" rel="stylesheet" />
+    <link type="text/css" href="css/tutorial.css" rel="stylesheet" />
 
     
 		<meta http-equiv="Content-Type" charset="utf-8">
@@ -48,12 +49,16 @@
       </div>
       
       <div id="building-remaining-time" style="display:none;"></div>
+      
       <div id="building-panel" style="display:none;">
         <div id="building-panel-contents"></div>
         <div id="close-building-panel">X</div>
       </div>
       
-      <button id="establish-town-hall" style="display:none;"> Establish your town </button>
+      <div id="establish-townhall-container" style="display:none;">
+        <span>Establish your town</span>
+        <img id="establish-townhall" src="images/buildings/townhall.png"></img>
+      </div>
     </div>
     
     <script src="js/base/template.js"></script>
@@ -72,6 +77,8 @@
     <script src="js/game/building_mode.js"></script>
     <script src="js/game/templates_manager.js"></script>
     <script src="js/game/building_panel.js"></script>
+    <script src="js/game/worker.js"></script>
+    <script src="js/game/worker_factory.js"></script>
     <script>
       var game = null;
       FBConnect.init(function(){

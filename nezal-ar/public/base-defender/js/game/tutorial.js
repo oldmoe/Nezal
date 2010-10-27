@@ -12,11 +12,11 @@ var Tutorial = Class.create({
     }
   },
   buildTownhall : function(){
-    $('establish-town-hall').show();
-    $('establish-town-hall').observe('click', function(){
-      $('establish-town-hall').innerHTML = "Place your base on the map!";
+    $('establish-townhall-container').show();
+    $('establish-townhall').observe('click', function(){
+      $('establish-townhall-container').hide();
       game.buildingMode.on(self.game.townhall, function(){
-        $('establish-town-hall').hide();
+        //$('establish-townhall').hide();
       });
     });
   }

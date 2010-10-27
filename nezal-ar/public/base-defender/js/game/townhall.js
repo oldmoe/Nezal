@@ -36,7 +36,7 @@ var Townhall = Class.create({
       
       
     /****************************** Validating workers **************************************/
-    if( this.game.idleWorkers == 0 ){
+    if( this.game.workerFactory.idleWorkers == 0 ){
       alert("Cannot build townhall, all your workers are busy!");
       return false;
     }
@@ -91,7 +91,7 @@ var Townhall = Class.create({
     var x = this.coords['x'] * blockSize - this.game.scene.x;
     var y = this.coords['y'] * blockSize - this.game.scene.y;
     
-    console.log("in render => x : " + x + ", y : " + y);
+    //console.log("in render => x : " + x + ", y : " + y);
     
     if (this.inProgress) {
       this.game.scene.buildingsLayer.ctx.drawImage(Loader.images.buildings['progress.png'], x, y );
@@ -134,7 +134,7 @@ var Townhall = Class.create({
   renderPanel : function(){
     var self = this;
     this.game.selectedBuildingPanel = new BuildingPanel(this, function(){
-      return self.game.templatesManager.townhallPanel(self.name, self.inProgress);
+      return self.game.templatesManager.townhallPanel(self.name, self.inProgress, this.game.workerFactory.nextWorkerCost());
     });
   }
 });

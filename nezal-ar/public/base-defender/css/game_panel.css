@@ -9,6 +9,7 @@
   -webkit-border-radius : 10px;
   -o-border-radius : 10px;
   border-radius : 10px;
+  opacity : 0.92;
 }
 .panel-element {
   margin-left: 10px;
