@@ -3,12 +3,14 @@ var Townhall = Class.create({
   name : "townhall",
   level : null,
   inProgress : null,
-  startedBuildingAt : null,
+  remainingBuildTime : null,
+  _LoadTime : null,
   coords : {x : null, y : null},
   //This will store the specs and upgrade costs of different townhall levels
   bluePrints : null,
   
   initialize : function(game){
+    this._LoadTime = new Date().getTime();
     this.game = game;
     this.bluePrints = this.game.data.buildings.townhall;
     var townhall_json = this.game.user.data.townhall;
@@ -17,7 +19,7 @@ var Townhall = Class.create({
     this.game.scene.registerLocation(this.coords['x'], this.coords['y'], this);
     this.inProgress = townhall_json.inProgress;
     this.startedBuildingAt = townhall_json.startedBuildingAt;
-    
+    this.remainingBuildTime = townhall_json.remainingTime;
   },
   
   /** This should return if we need to off the building mood or no*/
@@ -74,10 +76,11 @@ var Townhall = Class.create({
   
   upgradeRemainingTime : function(){
     if(this.inProgress){
-      var since = new Date(this.startedBuildingAt * 1000).getTime();
+      /*var since = new Date(this.startedBuildingAt * 1000).getTime();
       var now = new Date().getTime();
       var required = this.bluePrints['levels'][this.level+1]['time'];
-      return required - Math.ceil((now - since)/1000);
+      return required - Math.ceil((now - since)/1000);*/
+     return this.remainingBuildTime - Math.ceil((new Date().getTime() - this._LoadTime)/1000);
     }else{
       return 0;
     }

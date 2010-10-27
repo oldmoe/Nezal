@@ -34,6 +34,9 @@ class BaseDefender < Metadata
         metadata['idle_workers'] += 1
         user_game_profile.metadata = self.encode(metadata)
         user_game_profile.save
+      else
+        metadata['townhall']['remainingTime'] = remaining
+        user_game_profile.metadata = self.encode(metadata)
       end
     end
   end
