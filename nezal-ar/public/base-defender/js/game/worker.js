@@ -1,0 +1,3 @@
+var Worker = Class.create({
+
+});

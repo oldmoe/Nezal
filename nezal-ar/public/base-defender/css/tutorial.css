@@ -1,0 +1,32 @@
+#establish-townhall-container {
+  -moz-border-radius : 20px;
+  -webkit-border-radius : 20px;
+  -o-border-radius : 20px;
+  border-radius : 20px;
+  background-color : black;
+  height : 200px;
+  left : 200px;
+  position : absolute;
+  top : 100px;
+  width : 300px;
+}
+
+#establish-townhall-container span {
+  color : white;
+  display : block;
+  margin-left : 50px;
+  margin-top : 20px;
+}
+
+#establish-townhall-container img {
+  -moz-border-radius : 10px;
+  -webkit-border-radius : 10px;
+  -o-border-radius : 10px;
+  border-radius : 10px;
+  background-color : wheat;
+  cursor : pointer;
+  margin-left : 120px;
+  margin-top : 30px;
+  padding : 9px;
+  width : 42px;
+}
