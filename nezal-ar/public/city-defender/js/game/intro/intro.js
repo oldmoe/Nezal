@@ -74,7 +74,8 @@ var Config = GameConfigs;
 
 var PathConfigs = {
   introTemplate : "templates/intro/intro.tpl",
-  gameTemplate : "templates/game.tpl"
+  gameTemplate : "templates/game.tpl",
+  playerProgressTemplate : "templates/playerProgress.tpl",
 }
 
 var Intro = {
@@ -114,12 +115,14 @@ var Intro = {
         var loader = new ResourceLoader();
         loader.addResource(PathConfigs.introTemplate);
         loader.addResource(PathConfigs.gameTemplate);
+        loader.addResource(PathConfigs.playerProgressTemplate);
         loader.addResource('metadata');
         loader.load(function(){
       			  $('introTemplates').innerHTML = loader.resources.get(PathConfigs.introTemplate);
-			        for(var template in Intro.templates){
+			      for(var template in Intro.templates){
             		  Intro.templates[template][1] = TrimPath.parseDOMTemplate(Intro.templates[template][0]);
-              }
+				  }
+				  Intro.templates.playerProgress = loader.resources.get(PathConfigs.playerProgressTemplate)
 			  //$("gameStart").innerHTML = loader.resources.get(PathConfigs.gameTemplate);
               $("gameStart").innerHTML = Intro.templates['game'] = loader.resources.get(PathConfigs.gameTemplate);
               var data = JSON.parse(loader.resources.get('metadata'));
@@ -139,6 +142,7 @@ var Intro = {
               Intro.ranks = data['ranks'];
   			  Intro.doneLoading = true;
 		  	  Intro.start()
+			  $("playerProgress").innerHTML = TrimPath.parseTemplate(Intro.templates.playerProgress).process();
 			  $('scores').src = 'scores/friends.html?'+Object.toQueryString(FBConnect.session)
 			  /*
               Loader.loadPage(GameConfigs.campaign, function(){
@@ -584,6 +588,13 @@ var Intro = {
       });
       $('congrates').show()
     },
+    showSubscribeCongrates : function(){
+      $('congrates').innerHTML = Intro.templates.congrates[1].process({ "msg" : Text.facebook.subscribe });
+      $$('#congrates .clickSound').each(function(element){
+          element.observe('click', function(element){Sounds.play(Sounds.gameSounds.click)})
+      });
+      $('congrates').show()
+    },
     showBookmarkCongrates : function(){
       $('congrates').innerHTML = Intro.templates.congrates[1].process({ "msg" : Text.facebook.bookmark });
       $$('#congrates .clickSound').each(function(element){
@@ -671,18 +682,19 @@ var Intro = {
         $("intro").style['cursor'] = 'auto';
     },
 
-	  next: function(current){
-	      Intro.disabled = false;
+	  next: function(currentIndex){
+		Intro.disabled = false;
         Intro.enablePauseScreen();
-        Intro.nextPageIndex = Intro.currentPage + 1;
-        var callback = function() {
-			if(Intro.nextPageIndex == Intro.sequence.length )
-				Intro.finish();
-			else{
-				Intro.pages[Intro.sequence[Intro.currentPage + 1]].onSelect();
-														}
+        if(currentIndex != null){
+			Intro.nextPageIndex = currentIndex
+		}else{
+			Intro.nextPageIndex = Intro.currentPage + 1;
+        }
+		if(Intro.nextPageIndex == Intro.sequence.length ){
+			Intro.finish();
+		}else{
+			Intro.pages[Intro.sequence[Intro.nextPageIndex]].onSelect();
 		}
-        callback();
 	  },
 	  
 	  previous: function(current){

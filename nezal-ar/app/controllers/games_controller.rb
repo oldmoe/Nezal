@@ -25,6 +25,7 @@ class GamesController < ApplicationController
                       :newbie => @game_profile.newbie,
                       :locale => @game_profile.locale, 
                       :bookmarked => @game_profile.bookmarked,
+                      :subscribed => @game_profile.subscribed,
                       :like => @game_profile.like,
                       :metadata => user_metadata, 
                     },
@@ -45,7 +46,8 @@ class GamesController < ApplicationController
                       :newbie => @game_profile.newbie,
                       :locale => @game_profile.locale, 
                       :bookmarked => @game_profile.bookmarked,
-                      :like => @game_profile.like,
+                      :subscribed => @game_profile.subscribed,
+					  :like => @game_profile.like,
                       :metadata => user_metadata
                       }
     }
@@ -114,7 +116,7 @@ class GamesController < ApplicationController
     JSON.generate( {:user_data => {'coins' => @game_profile.user.coins}} )
   end
   
-  # User bookmarked the application
+  # User likes the application
   post '/:game_name/users/like' do
     if(!@game_profile.like)
       klass = get_helper_klass()
@@ -123,6 +125,15 @@ class GamesController < ApplicationController
     JSON.generate( {:user_data => {'coins' => @game_profile.user.coins}} )
   end
   
+  # User subscribed to the application
+  post '/:game_name/users/subscribe' do
+    if(!@game_profile.subscribed)
+      klass = get_helper_klass()
+      klass.subscribe(@game_profile)
+    end
+    JSON.generate( {:user_data => {'coins' => @game_profile.user.coins}} )
+  end
+
   # Change User Locale
   post '/:game_name/users/locale' do
     @game_profile.locale = params['locale'];

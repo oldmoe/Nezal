@@ -7,7 +7,8 @@ class CityDefender < Metadata
   WIN_COIN_FACTOR = (1.0/300)
   LIKE_COINS = 500
   BOOKMARK_COINS = 500
-  INVITE_COINS = 200
+  SUBSCRIBE_COINS = 500
+  INVITE_COINS = 500
   
   def self.init_game(game)
     metadata = { 'towers' => {}, 'weapons' => {} , 'creeps' => {} }
@@ -168,7 +169,7 @@ class CityDefender < Metadata
   # Needs a transaction
   def self.bookmark(profile)
     profile.bookmarked = true
-    profile.user.coins += LIKE_COINS
+    profile.user.coins += BOOKMARK_COINS
     profile.user.save
     profile.save
   end
@@ -176,11 +177,19 @@ class CityDefender < Metadata
   # Needs a transaction  
   def self.like(profile)
     profile.like = true
-    profile.user.coins += BOOKMARK_COINS
+    profile.user.coins += LIKE_COINS
     profile.user.save
     profile.save
   end
   
+  # Needs a transaction  
+  def self.subscribe(profile)
+    profile.subscribed = true
+    profile.user.coins += SUBSCRIBE_COINS
+    profile.user.save
+    profile.save
+  end
+
   def self.reward_invitation(fb_id)
     user = FbUser.where( 'fb_id' => fb_id ).first
     if(user)

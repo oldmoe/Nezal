@@ -219,7 +219,8 @@ window.Text = {
             userPrompt : 'invite your friends and earn 200 coins for each one who starts playing.'
         },
         like : ' Congratulations, you got 500 coins as a gift for liking us.',
-        bookmark : 'Congratulations, you got 500 coins as a gift for bookmarking us.'
+        bookmark : 'Congratulations, you got 500 coins as a gift for bookmarking us.',
+        subscribe : 'Congratulations, you got 500 coins as a gift for subscribing with us.'
     },
 	game : {
 		tutorial : {

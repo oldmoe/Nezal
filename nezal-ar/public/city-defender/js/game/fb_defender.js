@@ -32,6 +32,26 @@ FBDefender = {
                   });
         });
     },
+	
+	subscribe : function(){
+        FBConnect.subscribe(function(){
+                  new Ajax.Request(  'users/subscribe' ,
+                  {   method:'post', 
+                      onSuccess : function(t, json){
+                          var data = JSON.parse(t.responseText);
+                          var oldCoins = Intro.userData.coins
+                          Intro.userData.coins = data['user_data'].coins;
+                          if(oldCoins != data['user_data'].coins)
+                          {
+                              Intro.userData.subscribed = true;
+                              Intro.showSubscribeCongrates();
+                          }
+                          if(Intro.currentPage == Intro.pages['marketPlace'].index && FBDefender.isMarket==true)
+                              Intro.select('marketPlace');
+                      }
+                  });
+        });
+	},
     
     isFan : function(){
         FBConnect.isFan(function(status){
