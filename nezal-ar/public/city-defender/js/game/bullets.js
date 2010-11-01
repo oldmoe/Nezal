@@ -81,6 +81,13 @@ var Turret = Class.create(Unit, {
 		this.rankSprite.currentFrame = this.rank %4;
 		if(this.baloon)this.baloon.moveTo(this.x,this.y-70);
 		this.rangeSprite.range = this.range
+		this.baseSprite.moveTo(this.x,this.y)
+		this.baseSprite.moveTo(this.x,this.y)
+		this.cannonSprite.moveTo(this.x,this.y)
+		this.rankSprite.moveTo(this.x+50, this.y-5)
+		this.healthSprite.moveTo(this.x,this.y)
+		this.rangeSprite.moveTo(this.x,this.y)
+
 	},
 	changeFireState: function(){
 		if(this.fired){

@@ -27,7 +27,7 @@ var Game = Class.create({
 				$('gameReset').hide()
 				$$('#modalWindow #ok #rogerText').first().innerHTML = Text.game.controls.roger
 				$$('.sound').first().observe('click',Sounds.mute)
-				$$('.bookmark').first().observe('click', FBDefender.bookmark)	
+				$$('.music').first().observe('click',Sounds.switchmusic)
 				$$('.snapshot').first().hide()
 			}
 			else{
@@ -177,8 +177,6 @@ var Game = Class.create({
 		$$('#snapshotWindow #background')[0].src=Loader.images.background['pop_up.png'].getAttribute('data')
 		$('popup').appendChild(Loader.images.background['pop_up.png'])
 		$$('#popup #popupOk').first().appendChild(Loader.images.intro['mission/accept.png'])
-		if(Intro.userData.bookmarked)$$('.bookmark').first().hide()	
-		if(Intro.userData.like)$$('.like').first().hide()
 		if(Sounds.muted)Sounds.mute()
 	},
 	
@@ -209,7 +207,7 @@ var Game = Class.create({
 		$('gameReset').observe('click',function(){game.reset()})	
 		$('gameResume').observe('click', function(){game.scene.resume()})	
 		$$('.sound').first().observe('click',Sounds.mute)
-		$$('.bookmark').first().observe('click', FBDefender.bookmark)
+		$$('.music').first().observe('click',Sounds.switchmusic)
 		$$('.snapshot').first().observe('click',function(){game.scene.takeSnapShot()})
 		$$('.snapshot').first().hide()
 		$$('#snapshotWindow #save').first().observe('click',function(){game.scene.saveSnapshot()})
@@ -260,8 +258,8 @@ var Game = Class.create({
 		$('gameExit').stopObserving('click')	
 		$('gameReset').stopObserving('click')	
 		$('gameResume').stopObserving('click')	
-		$$('.bookmark').first().stopObserving('click')	
 		$$('.sound').first().stopObserving('click')
+		$$('.music').first().stopObserving('click')
 	}
 });
 

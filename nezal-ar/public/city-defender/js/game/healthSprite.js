@@ -16,9 +16,9 @@ var HealthSprite = Class.create(Sprite, {
 		}
 		ctx.translate(Math.round(this.x), Math.round(this.y))
 		ctx.fillStyle = 'red'
-		ctx.fillRect(-16, -22, 32, 3)
+		ctx.fillRect(-15, -22, 30, 3)
 		ctx.fillStyle = 'green'
-		ctx.fillRect(-16, -22, 32 * this.hp / this.maxHp, 3 )
+		ctx.fillRect(-15, -22, 30 * this.hp / this.maxHp, 3 )
 		ctx.restore()
 	}
 	

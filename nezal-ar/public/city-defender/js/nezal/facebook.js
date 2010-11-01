@@ -153,7 +153,7 @@ var FBConnect = {
 	subscribe : function(callback){
         FB.ui({ method: 'auth.login', perms:'email' },  
               function(response) {
-                  if(response.perms.indexOf('email') > -1)
+                  if(response.perms && response.perms.indexOf('email') > -1)
                       callback();
               });
     }, 

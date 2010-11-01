@@ -84,7 +84,6 @@
 {
   position:absolute;
   left:0;
-  top:0;
   width : 760px;
   height : 550px;
   z-index:1000;
@@ -567,7 +566,7 @@
   left:420px;
   position:absolute;
   text-align:center;
-  top:55px;
+  top:38px;
   width:260px;
 }
 #mission #cityImage img
@@ -1470,4 +1469,70 @@ div.clickableButton:hover, span.clickableButton:hover
 }
 #floatBgLevel #medium .difficultyLevel{
 	/*margin-left:7px;*/
+}
+#playerProgress .item{
+	float:left;
+	position:relative;
+	margin-right:46px;
+	margin-top:12px;
+}
+#playerProgress .item img{
+	margin-left:12px;
+	float:left;
+}
+#playerProgress .item .tick{
+	left:45px;
+	position:absolute;
+}
+#playerProgress .item .iteminfo{
+	width:50px;
+	float:left;
+}
+#playerProgress .item a{
+	color:yellowGreen;
+}
+#playerProgress .logo{
+	float:left;
+	margin-right:60px;
+}
+#playerProgress #progressBarEmpty {
+	position:absolute;
+	top:10px;
+	width:720px;
+}
+#playerProgress #progressBarEmpty #progressBarFill{
+	background:url("../../images/intro/bar.png") repeat scroll 0 0 transparent;
+	height:33px;
+	padding-top:1px;
+	position:absolute;
+	left:7px;
+	top:10px;
+	z-index:1;
+}
+#playerProgress #progressBarEmpty #bgImage{
+	position:absolute;
+	width:730px;
+}
+#playerProgress #progressItems{
+	position:absolute;
+	color:white;
+	z-index:1;
+}
+#playerProgress #progressItems .logo img{
+	width:112px;
+}
+#game{
+	position:relative;
+}
+#playerProgress{
+	margin-left:10px;
+	height:66px;
+}
+#playerProgress #playerProgressIframeContainer{
+	background-color:white;
+	height:34px;
+	opacity:0.9;
+	position:absolute;
+	top:76px;
+	z-index:1;
 }

@@ -2,6 +2,7 @@ var CityDefenderScene = Class.create(Scene, {
 	fistCreep : false,
 	startGame : false,
 	firstHit : false,
+	upgraded : false,
 	nukeCount : 2,
 	healCount : 2,
 	weakCount : 2,
@@ -97,7 +98,6 @@ var CityDefenderScene = Class.create(Scene, {
 		})
 		this.renderData()
 		this.checkStatus()
-
 		return this
 	},
 	addTurret : function(klass, x, y){
@@ -162,9 +162,7 @@ var CityDefenderScene = Class.create(Scene, {
 		if(this.skipFrames == 0){
 			var startTime = new Date
 			$super()
-			if(GhostTurret && GhostTurret.selected && GhostTurret.isIn){
-				GhostTurret.render(this.upperCtx)
-			}
+			GhostTurret.render(this.upperCtx)
 			if (typeof FlashCanvas != "undefined") {
 				if(game.ctx.ready)game.ctx._myPostCommands();
 				if(game.topCtx.ready)game.topCtx._myPostCommands();
@@ -325,11 +323,28 @@ var CityDefenderScene = Class.create(Scene, {
 				if(score>0)msg+="<br/>Time bonus: +"+score+"   Score"
 				anim.enlarge(msg)
 				this.objects.push(anim)
+				if(this.waveNumber == 2&&!this.upgraded){
+					this.showUpgradeMsg("dude upgrade")
+				}
+				if(this.waveNumber == 2&&this.turrets.length==0){
+					this.showUpgradeMsg("dude build")
+				}
 				this.wavePending = true
 			}
 		}	
 		var self = this
 		this.push(2,function(){self.checkStatus()})
+	},
+	showHintMsg : function(msg){
+		$('modalWindow').show()
+		$$('#modalWindow .content .innerContent')[0].innerHTML = msg
+		$$('#modalWindow #ok .rogerText')[0].innerHTML = "Roger"
+		this.reactor.pause()
+		var self = this
+		$$('#modalWindow #ok')[0].observe('click',function(){
+			$('modalWindow').hide()
+			self.reactor.resume()
+		})
 	},
 	promoteUser : function(win){
 		Sounds.play(Sounds.gameSounds.rank_promotion)
@@ -590,6 +605,7 @@ var CityDefenderScene = Class.create(Scene, {
 		this.reactor.resume()
 	},
 	upgradeSelectedTower: function(){
+		this.upgraded = true
 		if(!this.replay){this.replayEvents.push([this.reactor.ticks, "upgradeSelectedTower"])}
 		this.selectedTower.upgrade()
 		var tower = this.selectedTower

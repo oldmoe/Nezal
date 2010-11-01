@@ -25,6 +25,7 @@ var Sounds = {
 	channels : [],
 	maxChannels : 10,
 	muted : false,
+	musicOn : true,
 	mute : function(){
 		Sounds.muted = true
 		soundManager.mute()
@@ -41,6 +42,21 @@ var Sounds = {
 		$$('.sound').first().removeClassName('off')
 		$$('.sound').first().addClassName('on')
 		$$('.sound').first().observe('click',Sounds.mute)
+	},
+	
+	switchmusic : function(){
+		if(Sounds.musicOn){
+			Sounds.musicOn = false
+			Sounds.stopTrack()
+			$$('.music').first().removeClassName('on')
+			$$('.music').first().addClassName('off')
+		}
+		else{
+			Sounds.musicOn = true
+			Sounds.resumeTrack()
+			$$('.music').first().removeClassName('off')
+			$$('.music').first().addClassName('on')
+		}
 	},
 	
 	garbageCollect : function(){

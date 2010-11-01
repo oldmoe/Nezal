@@ -76,6 +76,14 @@ var ghostTurretFeatures = {
 				self.y = y
 				self.xGrid = Math.floor(x/32)
 				self.yGrid = Math.floor(y/32)
+				if(Map.grid[self.xGrid]&&Map.grid[self.xGrid][self.yGrid]&&Map.grid[self.xGrid][self.yGrid].tower){
+					self.hoverXgrid = self.xGrid
+					self.hoverYGrid = self.yGrid
+					self.towerHovered = true
+				}
+				else{
+					self.towerHovered = false
+				}
 				self.tower = towerCategory
 				self.validate()
 			}).observe("click",function(e){GhostTurret.droppingGroundClick(e)})
@@ -94,27 +102,33 @@ var ghostTurretFeatures = {
 	render : function(ctx){
 		ctx.save()		
 		ctx.translate(Map.transform(this.x)-Map.pitch, Map.transform(this.y))
-		ctx.drawImage(this.images.base[0], 0, 0)		
-		if(this.images.cannon){
-			ctx.drawImage(this.images.cannon[0], 0, 0)
+		if(this.towerHovered){
+			ctx.drawImage(Loader.images.game['hover_effect.png'],25,-3)
 		}else{
-			ctx.drawImage(this.images.pad[0], 0, 0)
-			ctx.drawImage(this.images.rocket[0], 0, 0)
-		}		
-		if(this.valid){
-			ctx.fillStyle = 'rgba(255,255,255,0.5)'
-			ctx.beginPath();
-			ctx.arc(Map.pitch+16, Map.pitch-16, (this.range * Map.pitch) + (Map.pitch/2), 0, Math.PI*2, false)
-			ctx.closePath();
-			ctx.fill();
-		}else{
-			ctx.fillStyle = 'rgba(255,0,0,0.0)'
-			ctx.beginPath();
-			ctx.arc(0, 0, 128, 0, Math.PI*2, false)
-			ctx.closePath();
-			ctx.fill();
-			ctx.fillStyle = 'rgba(255,0,0,0.9)'
-			ctx.fillRect(32,0, 32, 32)
+			if(GhostTurret && GhostTurret.selected && GhostTurret.isIn){
+			ctx.drawImage(this.images.base[0], 0, 0)		
+			if(this.images.cannon){
+				ctx.drawImage(this.images.cannon[0], 0, 0)
+			}else{
+				ctx.drawImage(this.images.pad[0], 0, 0)
+				ctx.drawImage(this.images.rocket[0], 0, 0)
+			}		
+			if(this.valid){
+				ctx.fillStyle = 'rgba(255,255,255,0.5)'
+				ctx.beginPath();
+				ctx.arc(Map.pitch+16, Map.pitch-16, (this.range * Map.pitch) + (Map.pitch/2), 0, Math.PI*2, false)
+				ctx.closePath();
+				ctx.fill();
+			}else{
+				ctx.fillStyle = 'rgba(255,0,0,0.0)'
+				ctx.beginPath();
+				ctx.arc(0, 0, 128, 0, Math.PI*2, false)
+				ctx.closePath();
+				ctx.fill();
+				ctx.fillStyle = 'rgba(255,0,0,0.9)'
+				ctx.fillRect(32,0, 32, 32)
+				}
+			}
 		}
 		ctx.restore();		
 	}

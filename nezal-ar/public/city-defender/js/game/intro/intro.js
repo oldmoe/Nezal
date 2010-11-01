@@ -43,9 +43,11 @@ var ResourceLoader = Class.create( {
             function(resource){
                 if(!resource[1])
                 {
+					
                     new Ajax.Request( resource[0], {method:'get',
                                                       onSuccess: function(t){
                                                           self.resources.set(resource[0], t.responseText);
+														 // console.log(resource[0],t.responseText)
                                                           self.loadedCount ++;
                                                           if(self.loadedCount == self.resources.keys().length)
                                                           {
@@ -143,6 +145,7 @@ var Intro = {
   			  Intro.doneLoading = true;
 		  	  Intro.start()
 			  $("playerProgress").innerHTML = TrimPath.parseTemplate(Intro.templates.playerProgress).process();
+			  Intro.setPlayerProgressWidth()
 			  $('scores').src = 'scores/friends.html?'+Object.toQueryString(FBConnect.session)
 			  /*
               Loader.loadPage(GameConfigs.campaign, function(){
@@ -152,6 +155,19 @@ var Intro = {
 			  */
           });
     },
+	setPlayerProgressWidth : function(){
+		var percentages = [33,54,75,96]
+		var index=0;
+		if(Intro.userData.bookmarked&&Intro.userData.like&&Intro.userData.subscribed){
+			$("playerProgress").hide();
+			index=3
+		}else if(Intro.userData.bookmarked&&Intro.userData.like){
+			index=2
+		}else if(Intro.userData.bookmarked){
+			index=1
+		}
+		$$('#playerProgress #progressBarEmpty #progressBarFill')[0].style.width = percentages[index]+"%"
+	},
 	retrievePrevCampaigns : function(){
 		new Ajax.Request( 'statics/campaigns.json', {method:'get',
 			onSuccess: function(t){
@@ -256,8 +272,9 @@ var Intro = {
 					missionLoader.load( function(){
 						Intro.campaignData.camp_data.metadata.each(function(mission){
 						   var missionPath = Intro.campPath() + "/" + mission['path'] + "/mission.info"; 
-						   Intro.campaignData.missionsInfo[mission['path']] = 
+						   Intro.campaignData.missionsInfo[mission['path']] = 						   
 								JSON.parse(missionLoader.resources.get(missionPath));
+								
 						});
 						$('campaign').innerHTML = 
 						  Intro.templates.campaign[1].process({"camp":Intro.campaignData.campaignInfo}); 
