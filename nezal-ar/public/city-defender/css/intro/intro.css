@@ -1534,5 +1534,5 @@ div.clickableButton:hover, span.clickableButton:hover
 	opacity:0.9;
 	position:absolute;
 	top:76px;
-	z-index:1;
+	z-index:1000;
 }
