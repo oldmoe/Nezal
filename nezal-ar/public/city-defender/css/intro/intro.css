@@ -1476,6 +1476,9 @@ div.clickableButton:hover, span.clickableButton:hover
 	margin-right:42px;
 	margin-top:12px;
 }
+#playerProgress .installed{
+	margin-right:26px;
+}
 #playerProgress .item img{
 	margin-left:12px;
 	float:left;
@@ -1488,12 +1491,22 @@ div.clickableButton:hover, span.clickableButton:hover
 	width:50px;
 	float:left;
 }
+#playerProgress .bookmark .iteminfo{
+	width:66px;
+}
 #playerProgress .item a{
 	color:yellowGreen;
 }
 #playerProgress .logo{
 	float:left;
 	margin-right:60px;
+}
+#playerProgress .item .moneyImg{
+	margin-left:30px;
+	margin-top:-24px;
+}
+#playerProgress .bookmark.tick {
+	left:54px;
 }
 #playerProgress #progressBarEmpty {
 	position:absolute;

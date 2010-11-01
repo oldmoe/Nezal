@@ -216,7 +216,7 @@
         userPrompt : 'Raconte tes accomplissements à tes amis.',
 		invite : {
             inviteMsg : 'Es-tu assez motivé pour défendre les terres arabes?',
-            userPrompt : 'Invite tes amis et gagne 200 pièces de monnaie par joueur.'
+            userPrompt : 'Invite tes amis et gagne 500 pièces de monnaie par joueur.'
         },
         like : 'Félicitations, tu as gagné 500 pièces de monnaie pour avoir aimé notre jeu',
         bookmark : 'Félicitations, tu as gagné 500 pièces de monnaie pour avoir ajouté notre signet.',

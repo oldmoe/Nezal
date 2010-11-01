@@ -144,7 +144,7 @@ var Intro = {
               Intro.ranks = data['ranks'];
   			  Intro.doneLoading = true;
 		  	  Intro.start()
-			  $("playerProgress").innerHTML = TrimPath.parseTemplate(Intro.templates.playerProgress).process();
+			  Intro.processPlayerProgress()
 			  Intro.setPlayerProgressWidth()
 			  $('scores').src = 'scores/friends.html?'+Object.toQueryString(FBConnect.session)
 			  /*
@@ -155,6 +155,9 @@ var Intro = {
 			  */
           });
     },
+	processPlayerProgress : function(){
+		$("playerProgress").innerHTML = TrimPath.parseTemplate(Intro.templates.playerProgress).process();
+	},
 	setPlayerProgressWidth : function(){
 		var percentages = [33,54,75,96]
 		var index=0;
