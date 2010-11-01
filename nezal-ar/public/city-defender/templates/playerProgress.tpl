@@ -24,7 +24,7 @@
 				{if Intro.userData.bookmarked}
 					Bookmarked
 				{else}
-					<a href='#' onclick="FBDefender.bookmark();Intro.userData.bookmarked=true;Intro.processPlayerProgress()">Bookmark
+					<a href='#' onclick="FBDefender.bookmark();">Bookmark
 				{/if}
 			</div>
 			<div class='price'>500 <img class="moneyImg" src="images/intro/market/money.png"></div>
@@ -42,8 +42,7 @@
 				{if Intro.userData.like}
 					Liked
 				{else}
-					<a href='#' onclick="$('playerProgressIframe').src='http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.facebook.com%2Fapps%2Fapplication.php%3Fid%3D'+FBConnect.appIds[FBConnect.url()]+'&layout=standard&show_faces=true&width=450&action=like&colorscheme=light&height=80';$('playerProgressIframeContainer').show();Intro.userData.like=true;
-					Intro.processPlayerProgress()"
+					<a href='#' onclick="$('playerProgressIframe').src='http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.facebook.com%2Fapps%2Fapplication.php%3Fid%3D'+FBConnect.appIds[FBConnect.url()]+'&layout=standard&show_faces=true&width=450&action=like&colorscheme=light&height=80';$('playerProgressIframeContainer').show();"
 				>Like
 				{/if}
 			<div class='price'>500 <img class="moneyImg" src="images/intro/market/money.png"></div>
@@ -60,7 +59,7 @@
 				{if Intro.userData.subscribed}
 					Subscribed
 				{else}
-					<a href='#' onclick="FBDefender.subscribe();Intro.userData.subscribe=true;Intro.processPlayerProgress()">Subscribe
+					<a href='#' onclick="FBDefender.subscribe();">Subscribe
 				{/if}
 			<div class='price'>500 <img class="moneyImg" src="images/intro/market/money.png"></div>
 		</div>
