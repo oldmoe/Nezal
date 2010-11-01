@@ -324,10 +324,10 @@ var CityDefenderScene = Class.create(Scene, {
 				anim.enlarge(msg)
 				this.objects.push(anim)
 				if(this.waveNumber == 2&&!this.upgraded){
-					this.showUpgradeMsg("dude upgrade")
+					this.showUpgradeMsg("Be careful, you should upgrade your towers because enemies will grow stronger")
 				}
 				if(this.waveNumber == 2&&this.turrets.length==0){
-					this.showUpgradeMsg("dude build")
+					this.showUpgradeMsg("Be careful, you ")
 				}
 				this.wavePending = true
 			}

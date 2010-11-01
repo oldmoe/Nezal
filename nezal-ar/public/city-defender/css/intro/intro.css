@@ -1472,41 +1472,54 @@ div.clickableButton:hover, span.clickableButton:hover
 }
 #playerProgress .item{
 	float:left;
-	position:relative;
-	margin-right:42px;
+	margin-right:8px;
 	margin-top:12px;
-}
-#playerProgress .installed{
-	margin-right:26px;
+	position:relative;
+	width:139px;
+	font-family:verdana;
+	font-size:16px;
+	font-weight:bold;
+	margin-top:16px;
 }
 #playerProgress .item img{
-	margin-left:12px;
-	float:left;
+	float:right;
 }
 #playerProgress .item .tick{
-	left:45px;
 	position:absolute;
+	right:0;
+	display:block;
 }
 #playerProgress .item .iteminfo{
-	width:50px;
 	float:left;
-}
-#playerProgress .bookmark .iteminfo{
-	width:66px;
+	font-family:verdana;
+	font-size:14px;
+	font-weight:bolder;
+	margin-top:3px;
+	width:84px;
+	text-align:center;
 }
 #playerProgress .item a{
-	color:yellowGreen;
+	color:white;
+	font-size:13px;
+	text-decoration:none;
 }
 #playerProgress .logo{
 	float:left;
-	margin-right:60px;
+	margin-right:20px;
+}
+#playerProgress #progressItems .logo img{
+	width:124px;
+	margin-top:1px;
 }
 #playerProgress .item .moneyImg{
-	margin-left:30px;
-	margin-top:-24px;
 }
-#playerProgress .bookmark .tick {
-	left:54px;
+#playerProgress .item .price{
+	color:yellow;
+	width:65px;
+}
+
+#playerProgress .item .titleInstalled{
+	margin-top:8px;
 }
 #playerProgress #progressBarEmpty {
 	position:absolute;
@@ -1531,9 +1544,6 @@ div.clickableButton:hover, span.clickableButton:hover
 	color:white;
 	z-index:1;
 }
-#playerProgress #progressItems .logo img{
-	width:112px;
-}
 #game{
 	position:relative;
 }
@@ -1542,10 +1552,28 @@ div.clickableButton:hover, span.clickableButton:hover
 	height:66px;
 }
 #playerProgress #playerProgressIframeContainer{
+	-moz-border-radius:5px 5px 5px 5px;
+	-webkit-border-radius:5px 5px 5px 5px;
+	-o-border-radius:5px 5px 5px 5px;
+	-ms-border-radius:5px 5px 5px 5px;
+	border-radius:5px 5px 5px 5px;
 	background-color:white;
-	height:34px;
+	border:1px solid black;
+	color:black;
+	height:100px;
+	left:125px;
 	opacity:0.9;
 	position:absolute;
 	top:76px;
 	z-index:1000;
+}
+#playerProgress #playerProgressIframeContainer .close{
+	cursor:pointer;
+	float:right;
+	font-family:Adlib;
+	margin-right:5px;
+	margin-top:5px;
+}
+#playerProgress #playerProgressIframeContainer iframe{
+	margin:10px;
 }

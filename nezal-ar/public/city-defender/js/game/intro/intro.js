@@ -159,7 +159,7 @@ var Intro = {
 		$("playerProgress").innerHTML = TrimPath.parseTemplate(Intro.templates.playerProgress).process();
 	},
 	setPlayerProgressWidth : function(){
-		var percentages = [33,54,75,96]
+		var percentages = [34,55,75,96]
 		var index=0;
 		if(Intro.userData.bookmarked&&Intro.userData.like&&Intro.userData.subscribed){
 			$("playerProgress").hide();
@@ -233,6 +233,9 @@ var Intro = {
                         $('intro').addClassName(GameConfigs.language)
                         $('congrates').addClassName(GameConfigs.language)
             						$('levelSelection').innerHTML = Intro.templates.levelSelection[1].process(); 
+									$$('.languageSelector').each(function(div){
+										div.observe('click', function(){Intro.selectLanguage(this)})
+									})
                         if(Intro.userData.newbie){
 						    Intro.displayTutorial();
                         }else{
@@ -438,7 +441,7 @@ var Intro = {
     
     selectLanguage : function(element)
     {
-      var lang=element.getAttribute('language')
+	  var lang=element.getAttribute('language')
       Intro.enablePauseScreen();
       Language.select(lang, function(){
           Intro.userData.locale = Language.userLanguage;

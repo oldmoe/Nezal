@@ -196,12 +196,7 @@ var FBConnect = {
 /*          var size = FB.UIServer.Methods['fbml.dialog'].size;
           FB.UIServer.Methods['fbml.dialog'].size.height = 500;*/
           
-    },
-	
-	
-	
-	
-
+    }
 }
 
 

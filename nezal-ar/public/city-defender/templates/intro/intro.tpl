@@ -121,8 +121,7 @@
     <div id="language" style="display:none;">
       {for lang in Language.langsNames}
         {if !(lang[0]==Language.userLanguage)}
-          <div style="height : 25px;" language="${lang[0]}" class="clickSound clickableButton"
-                onclick="Intro.selectLanguage(this)">
+          <div style="height : 25px;" language="${lang[0]}" class="clickSound clickableButton languageSelector">
             ${lang[1]}
           </div>
         {/if}
