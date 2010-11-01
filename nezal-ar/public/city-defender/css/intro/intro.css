@@ -1473,7 +1473,7 @@ div.clickableButton:hover, span.clickableButton:hover
 #playerProgress .item{
 	float:left;
 	position:relative;
-	margin-right:46px;
+	margin-right:42px;
 	margin-top:12px;
 }
 #playerProgress .item img{
