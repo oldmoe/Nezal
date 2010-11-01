@@ -39,7 +39,7 @@ var Map = {
 		//bgctx.drawImage(bg, 0, 0)
 	},
 	value : function(x, y){
-		return Map.bgGrid[Math.floor( x / Map.pitch)][Math.floor( y / Map.pitch)]
+		return Map.bgGrid[Math.floor( Math.abs(x) / Map.pitch)][Math.floor( Math.abs(y) / Map.pitch)]
 	},
 	findTile : function(x, y){
 		return [Math.floor(x/this.pitch),Math.floor(y/this.pitch)]
