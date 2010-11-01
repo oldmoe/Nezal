@@ -1505,7 +1505,7 @@ div.clickableButton:hover, span.clickableButton:hover
 	margin-left:30px;
 	margin-top:-24px;
 }
-#playerProgress .bookmark.tick {
+#playerProgress .bookmark .tick {
 	left:54px;
 }
 #playerProgress #progressBarEmpty {
