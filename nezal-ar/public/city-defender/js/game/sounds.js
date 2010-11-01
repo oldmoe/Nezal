@@ -72,7 +72,7 @@ var Sounds = {
 		Sounds.channels = newChannels
 	},
 	resumeTrack : function(){
-		if(!Sounds.gameSounds.game||Sounds.muted)return
+		if(!Sounds.gameSounds.game||Sounds.muted||!Sounds.musicOn)return
 		Sounds.gameSounds.game[0].play()
 	},
 	pauseTrack : function(){
@@ -80,7 +80,7 @@ var Sounds = {
 		Sounds.gameSounds.game[0].pause()
 	},
 	togglePauseTrack : function(){
-		if(!Sounds.gameSounds.game||Sounds.muted)return
+		if(!Sounds.gameSounds.game||Sounds.muted||!Sounds.musicOn)return
 		Sounds.gameSounds.game[0].togglePause()
 	},
 	stopTrack : function(){

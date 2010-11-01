@@ -449,12 +449,12 @@ textarea{
 #gameElements  .sound.controls.on{
 	width: 40px;
 	background-image: url('../images/intro/sound_on.png');		
-	top:35px
+	top:7px
 }
 
 #gameElements  .sound.controls.off{
 	width: 40px;
-	top:35px;
+	top:7px;
 	background:none;
 	background-image: url('../images/intro/sound_off.png');				
 }
@@ -462,13 +462,13 @@ textarea{
 #gameElements .music.controls.on{
 	width: 40px;
 	background-image: url('../images/intro/music_on.png');			
-	top:89px;
+	top:48px;
 }
 #gameElements  .music.controls.off{
 	width: 40px;
 	background:none;
 	background-image: url('../images/intro/music_off.png');			
-	top:89px;
+	top:48px;
 }
 
 #gameElements  .bookmark{
