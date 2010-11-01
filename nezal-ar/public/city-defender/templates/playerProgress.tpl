@@ -1,5 +1,5 @@
 <div id='playerProgressIframeContainer' style='display:none'>
-	<div class="close" onclick="$('playerProgressIframeContainer').hide()">X</div>
+	<div class="close" onclick="$('playerProgressIframeContainer').hide();FBDefender.isFan()">X</div>
 	<iframe id="playerProgressIframe"  scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:80px;" allowTransparency="true"></iframe>
 </div>
 <div id="progressBarEmpty">

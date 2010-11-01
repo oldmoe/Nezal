@@ -25,6 +25,7 @@ FBDefender = {
                           {
                               Intro.userData.bookmarked = true;
                               Intro.showBookmarkCongrates();
+							  Intro.processPlayerProgress()
                           }
                           if(Intro.currentPage == Intro.pages['marketPlace'].index && FBDefender.isMarket==true)
                               Intro.select('marketPlace');
@@ -45,6 +46,7 @@ FBDefender = {
                           {
                               Intro.userData.subscribed = true;
                               Intro.showSubscribeCongrates();
+							  Intro.processPlayerProgress()
                           }
                           if(Intro.currentPage == Intro.pages['marketPlace'].index && FBDefender.isMarket==true)
                               Intro.select('marketPlace');
@@ -67,6 +69,7 @@ FBDefender = {
                               {
                                   Intro.userData.like = true;
                                   Intro.showLikeCongrates();
+								  Intro.processPlayerProgress()
                               }
                               if(Intro.currentPage == Intro.pages['marketPlace'].index && FBDefender.isMarket==true)
                                   Intro.select('marketPlace');

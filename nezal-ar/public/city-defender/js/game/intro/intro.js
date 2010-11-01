@@ -145,7 +145,6 @@ var Intro = {
   			  Intro.doneLoading = true;
 		  	  Intro.start()
 			  Intro.processPlayerProgress()
-			  Intro.setPlayerProgressWidth()
 			  $('scores').src = 'scores/friends.html?'+Object.toQueryString(FBConnect.session)
 			  /*
               Loader.loadPage(GameConfigs.campaign, function(){
@@ -157,6 +156,7 @@ var Intro = {
     },
 	processPlayerProgress : function(){
 		$("playerProgress").innerHTML = TrimPath.parseTemplate(Intro.templates.playerProgress).process();
+		Intro.setPlayerProgressWidth()
 	},
 	setPlayerProgressWidth : function(){
 		var percentages = [34,55,75,96]
@@ -283,7 +283,7 @@ var Intro = {
 								
 						});
 						$('campaign').innerHTML = 
-						  Intro.templates.campaign[1].process({"camp":Intro.campaignData.campaignInfo}); 
+						 Intro.templates.campaign[1].process({"camp":Intro.campaignData.campaignInfo}); 
 						Intro.show();
 						$('intro').show();
 						Intro.disablePauseScreen();
