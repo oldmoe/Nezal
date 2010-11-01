@@ -323,11 +323,11 @@ var CityDefenderScene = Class.create(Scene, {
 				if(score>0)msg+="<br/>Time bonus: +"+score+"   Score"
 				anim.enlarge(msg)
 				this.objects.push(anim)
-				if(this.waveNumber == 2&&!this.upgraded){
-					this.showUpgradeMsg("Be careful, you should upgrade your towers because enemies will grow stronger")
+				if(this.waveNumber == 3&&!this.upgraded){
+					this.showHintMsg("Be careful, you should upgrade your towers because enemies will grow stronger")
 				}
 				if(this.waveNumber == 2&&this.turrets.length==0){
-					this.showUpgradeMsg("Be careful, you ")
+					this.showHintMsg("Be careful, you ")
 				}
 				this.wavePending = true
 			}
@@ -338,7 +338,7 @@ var CityDefenderScene = Class.create(Scene, {
 	showHintMsg : function(msg){
 		$('modalWindow').show()
 		$$('#modalWindow .content .innerContent')[0].innerHTML = msg
-		$$('#modalWindow #ok .rogerText')[0].innerHTML = "Roger"
+		$$('#modalWindow #ok #rogerText')[0].innerHTML = "Roger"
 		this.reactor.pause()
 		var self = this
 		$$('#modalWindow #ok')[0].observe('click',function(){
