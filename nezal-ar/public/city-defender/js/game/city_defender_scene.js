@@ -338,6 +338,7 @@ var CityDefenderScene = Class.create(Scene, {
 	showHintMsg : function(msg){
 		$('modalWindow').show()
 		$$('#modalWindow .content .innerContent')[0].innerHTML = msg
+		$$('#modalWindow #ok')[0].show()
 		$$('#modalWindow #ok #rogerText')[0].innerHTML = "Roger"
 		this.reactor.pause()
 		var self = this
