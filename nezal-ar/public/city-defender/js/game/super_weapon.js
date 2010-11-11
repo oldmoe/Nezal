@@ -15,32 +15,31 @@ var SuperWeapon = Class.create({
 		if(!this.active) return
 		try{
 			this.action()
-			if (typeof FlashCanvas != "undefined") {
-				this.normalEffect($$('#gameElements .superWeapons .'+this.type+' img').first(),this.cooldown)
-			}else{
-				this.clockEffect($$('#gameElements .superWeapons .'+this.type+' img').first(),this.cooldown)
-			}
+      if(window.document){
+			  if (typeof FlashCanvas != "undefined") {
+				  this.normalEffect($$('#gameElements .superWeapons .'+this.type+' img').first(),this.cooldown)
+			  }else{
+				  this.clockEffect($$('#gameElements .superWeapons .'+this.type+' img').first(),this.cooldown)
+			  }
+      }
 		}catch(e){
 		}
 	},
 	end : function(){
-		var canvas = $$('#gameElements .superWeapons .'+this.type+' canvas')
-		if (canvas.length>0){
-			$$('#gameElements .superWeapons .'+this.type)[0].removeChild(canvas[0])
-		}
-		if (typeof FlashCanvas != "undefined") {
-			$$('#gameElements .superWeapons .'+this.type+' img').first().setOpacity(1)
-		}
+    if(window.document){
+		  var canvas = $$('#gameElements .superWeapons .'+this.type+' canvas')
+		  if (canvas.length>0){
+			  $$('#gameElements .superWeapons .'+this.type)[0].removeChild(canvas[0])
+		  }
+		  if (typeof FlashCanvas != "undefined") {
+			  $$('#gameElements .superWeapons .'+this.type+' img').first().setOpacity(1)
+		  }
+    }
 	},
 	render : function(){
 	},
 	
 	action : function(){
-	},
-	
-	activate : function(){
-		this.active = true
-		this.renderActivate()
 	},
 	
 	progressTick : function(){
@@ -115,44 +114,19 @@ var SuperWeapon = Class.create({
 		tick()
 		
 	},
-
-	notify : function(progress){
-			
-	},
-	
-	deactivate : function(){
-		this.active = false
-		this.renderDeactivate()
-	},
-	
-	renderActivate : function(){
-		var div = $$('#gameElements .superWeapons div.'+this.type)[0]
-		div.setOpacity(div.getOpacity() + 0.05)
-		if(div.getOpacity() == 0.7){
-		var self = this
-		div.observe('click', function(){self.scene.fire(div.className)})
-		div.setOpacity(1)
-		}else{
-			var self = this
-			this.scene.push(this.progressInterval, function(){self.activate()})
-		}
-	},
-	renderDeactivate : function(){
-		var div = $$('#gameElements .superWeapons div.'+this.type)[0]
-		div.stopObserving('click')
-		div.setOpacity(0);
-	}
 	
 })
 
 var Weak = Class.create(SuperWeapon, {
 	action : function(){
-		Sounds.play(Sounds.superWeapons.weak,true)
-		var anim = new WeakAnimation()
-		var randomUnit = this.scene.creeps[Math.round(this.scene.randomizer.next()*(this.scene.creeps.length-1))]
-		this.scene.scenario.notify({name:"superWeaponsWeak", method: false, unit:randomUnit})
-		this.scene.objects.push(anim)
-		this.scene.rocketsLayer.attach(anim)
+    if(window.document){
+	  	Sounds.play(Sounds.superWeapons.weak,true)
+		  var anim = new WeakAnimation()
+		  var randomUnit = this.scene.creeps[Math.round(this.scene.randomizer.next()*(this.scene.creeps.length-1))]
+		  this.scene.scenario.notify({name:"superWeaponsWeak", method: false, unit:randomUnit})
+		  this.scene.objects.push(anim)
+		  this.scene.rocketsLayer.attach(anim)
+    }
 		var self = this
 		this.weak(0)
 	},
@@ -162,7 +136,7 @@ var Weak = Class.create(SuperWeapon, {
 		count++
 		var self = this
 		if(count < self.factor2){ this.scene.push(20, function(){self.weak(count);}) }
-		else self.unWeak()
+		else if(window.document)self.unWeak()
 	},
 	unWeak : function(){
 		var index = -1
@@ -187,7 +161,7 @@ var Splash = Class.create(SuperWeapon, {
 		this.scene.creeps.sort(function(a,b){
 			return b.hp - a.hp
 		}).slice(0,self.factor2).each(function(creep){
-		self.scene.rockets.push(new PatriotRocket(0, 0, self.scene, {theta: 0, targetUnit : creep, x : x, y : y, power: creep.maxHp*self.factor1, speed: 15}))
+		self.scene.addPatriotRocket(new PatriotRocket(0, 0, self.scene, {theta: 0, targetUnit : creep, x : x, y : y, power: creep.maxHp*self.factor1, speed: 15}))
 		})
 	}
 })
@@ -199,9 +173,11 @@ var Nuke = Class.create(SuperWeapon, {
 			this.scene.creeps.each(function(creep){
 				creep.takeHit(Math.round(creep.maxHp * 1));
 			})
-			var anim = new NukeBoom(320, 240)
-			this.scene.objects.push(anim)
-			this.scene.rocketsLayer.attach(anim)
+      if(window.document){
+			  var anim = new NukeBoom(320, 240)
+			  this.scene.objects.push(anim)
+			  this.scene.rocketsLayer.attach(anim)
+      }
 		}
 		this.scene.push(25,startNuke,this)
 	}
@@ -209,13 +185,16 @@ var Nuke = Class.create(SuperWeapon, {
 var Heal = Class.create(SuperWeapon, {
 	action : function(){
 		this.scene.scenario.notify({name:"superWeaponsHeal", method: false, unit:this.scene.turrets.random()})
-		Sounds.play(Sounds.superWeapons.heal,true)
+		
 		var self = this
 		self.scene.turrets.each(function(tower){
 			tower.hp = Math.min(tower.maxHp,tower.hp+tower.maxHp*self.factor1)
-			var anim = new HealAnimation(tower.x, tower.y - 43)
-			self.scene.objects.push(anim)
-			self.scene.rocketsLayer.attach(anim)
+      if(window.document){
+        Sounds.play(Sounds.superWeapons.heal,true)
+			  var anim = new HealAnimation(tower.x, tower.y - 43)
+			  self.scene.objects.push(anim)
+			  self.scene.rocketsLayer.attach(anim)
+      }
 		})
 	}
 })
@@ -266,5 +245,4 @@ var Hyper = Class.create(SuperWeapon, {
 		var index = -1
 		this.scene.towerMutators.splice(index, 1)
 	}
-
 })

@@ -18,7 +18,7 @@
 			{/if}
 			</div>
 			<div id="towerData">
-			{if tower.healthSprite !=null }
+			{if tower.display !=null }
 					<div id = "sellTower" onmousedown = "game.scene.sellSelectedTower()"><h4>${window.Text.game.towerInfo.sell}</h4><hr/><div id="sellValue">$${Math.round(tower.price*0.75*tower.hp/tower.maxHp)}</div></div>
 					{else}
 						<h4 style="margin-left:8px;margin-top:7px;">$${tower.price}</h4>
@@ -40,7 +40,7 @@
 					<td><div class='meter' id = 'rangeMeter' style="width:${Math.round(60 * tower.range / 6)}px;backgroundColor:blue">${window.Text.game.towerInfo.range}</div></td>
 				</tr>
 			</table>
-				{if tower.healthSprite !=null }
+				{if tower.display !=null }
 					{if tower.rank < tower.maxRank}
 					<div id = "upgradeTower" onmousedown = "game.scene.upgradeSelectedTower()">${window.Text.game.towerInfo.upgrade}
 						<span id="upgradeWord" style="color:white;display:block;">$${tower.upgrades[tower.rank].price}&nbsp; &nbsp;Level ${tower.rank+1} </span>

@@ -70,6 +70,7 @@
 				{if Intro.userData.subscribed}
 				<div class='titleInstalled'>
 					Subscribed
+				</div>
 				{else}
 					<a href='#' onclick="FBDefender.subscribe();">Subscribe
 					<div class='price'>+500 <img class="moneyImg" src="images/intro/market/coin.png"></div>

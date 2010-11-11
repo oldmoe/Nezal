@@ -25,7 +25,7 @@ class GamesController < ApplicationController
                       :newbie => @game_profile.newbie,
                       :locale => @game_profile.locale, 
                       :bookmarked => @game_profile.bookmarked,
-                      :subscribed => @game_profile.subscribed,
+					  :subscribed => @game_profile.subscribed,
                       :like => @game_profile.like,
                       :metadata => user_metadata, 
                     },
@@ -46,8 +46,7 @@ class GamesController < ApplicationController
                       :newbie => @game_profile.newbie,
                       :locale => @game_profile.locale, 
                       :bookmarked => @game_profile.bookmarked,
-                      :subscribed => @game_profile.subscribed,
-					  :like => @game_profile.like,
+                      :like => @game_profile.like,
                       :metadata => user_metadata
                       }
     }
@@ -102,12 +101,12 @@ class GamesController < ApplicationController
   end
   
   post '/:game_name/users/coins' do
-    @user.coins += params['coins'].to_i;
-    @user.save
-    JSON.generate( {:user_data => {'coins' => @user.coins}})
+   # @user.coins += params['coins'].to_i;
+   # @user.save
+   # JSON.generate( {:user_data => {'coins' => @user.coins}})
   end
   
-  # User bookmarked the application
+ # User bookmarked the application
   post '/:game_name/users/bookmark' do
     if(!@game_profile.bookmarked)
       klass = get_helper_klass()
@@ -133,7 +132,6 @@ class GamesController < ApplicationController
     end
     JSON.generate( {:user_data => {'coins' => @game_profile.user.coins}} )
   end
-
   # Change User Locale
   post '/:game_name/users/locale' do
     @game_profile.locale = params['locale'];
@@ -155,10 +153,30 @@ class GamesController < ApplicationController
 	payment = Payment.create!({:profile_id=>@game_profile.id,:price=>params['price']})
     erb :"#{@app_configs["game_name"]}/daopay_confirmation"
   end
+
   get '/:game_name' do 
     File.read(File.join( 'public', @app_configs["game_name"], 'index.html'))
   end
-  
+
+  # Get the required campaign / mission info
+  # also load the replay data
+  # package them all as json and send over the wire  
+  get '/:game_name/replays/:id' do     
+    replay = Replay.where(:id => params[:id]).first
+    klass = get_helper_klass()
+    data = {
+        :replay => replay.replay,
+        :level => replay.level,
+        :mission_name => replay.mission_name,
+        :user_metadata => replay.profile.metadata,
+        :game_metadata => klass.load_game(@game),
+        :campaign_metadata => Campaign.where(:path => replay.camp_name).first.metadata,
+        :camp_name => replay.camp_name
+    }
+    data.to_json
+  end
+
+
   protected
   
   def payment_fault_redirection
@@ -191,5 +209,9 @@ class GamesController < ApplicationController
 
   post '/:game_name/payment_issues' do
     Message.create!( { :body => params["body"], "type" => 'payment_issue', :profile_id => @game_profile.id } )
+  end
+
+  post '/:game_name/replay' do
+     replay = Replay.create!({:profile_id=>@game_profile.id,:game_id=>@game.id,:level=>params['level'],:replay=>params['replay'],:score=>params['score'], :camp_name=>params['camp_name'],:mission_name=>params['mission_name']})
   end
  end

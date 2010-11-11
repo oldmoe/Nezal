@@ -5,12 +5,15 @@ var Sprite = Class.create({
 	h : 0,
 	transitionX: 0,
 	transitionY: 0,
+  shiftX: 0,
+  shiftY: 0,
 	rotation : 0,
 	visible : true,
 	layer : null,
 	
-	initialize : function(images, properties){
+	initialize : function(images, owner, properties){
 		this.images = images
+		this.owner = owner
 		Object.extend(this, properties)
 		if(images[0]){
 			if(!this.w) this.w = images[0].width
@@ -19,7 +22,7 @@ var Sprite = Class.create({
 		this.currentFrame = 0
 		this.draw = true
 	},
-		
+	
 	moveTo : function(x, y){
 		this.x = x
 		this.y = y
@@ -42,10 +45,13 @@ var Sprite = Class.create({
 	},
 
 	render : function(ctx){
+		if(this.owner.dead){
+			return this.destroy()
+		}
 		if(!this.visible) return
 		ctx.save()
-		ctx.translate(this.x, this.y)
-		if(this.rotation != 0){
+		ctx.translate(this.owner.x+this.shiftX, this.owner.y+this.shiftY)
+		if(this.rotation != 0&&this.rotation<360){
 			ctx.rotate(this.rotation)
 		}
 		if(this.draw&&this.images[this.currentFrame])ctx.drawImage(this.images[this.currentFrame],-48+this.transitionX,-16+this.transitionY)

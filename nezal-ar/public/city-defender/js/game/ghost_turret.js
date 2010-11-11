@@ -29,7 +29,7 @@ var ghostTurretFeatures = {
 		self.validate();
 		if(self.valid&&self.selected){
 			self.selected = true
-			game.scene.addTurret(self.tower, Math.floor(x/32), Math.floor(y/32))
+			game.scene.addTurret(self.towerName, Math.floor(x/32), Math.floor(y/32))
 		}
 		else if (Map.grid[self.xGrid][self.yGrid].tower){
 			self.selected = false
@@ -44,19 +44,18 @@ var ghostTurretFeatures = {
 	select : function(div){
 		$('droppingGround').stopObserving("mouseenter")
 		var self = GhostTurret
-		if(game.scene.selectedTower){
- 			if(game.scene.selectedTower.rangeSprite){
-				game.scene.selectedTower.rangeSprite.visible = false
-			}
+		if(game.scene.selectedTower&&game.scene.selectedTower.display){
+				game.scene.selectedTower.display.rangeSprite.visible = false
 		}
 
 		var tower = game.config.towers.find(function(tower){return tower == div.className})
-		
+		self.towerName = tower
 		if(tower == null){ 	return; }
 		var towerCategory = eval(tower)
+		var towerDisplay = eval(tower+"Display")
 		game.scene.selectedTower = towerCategory.prototype
-		self.images = towerCategory.prototype.images
-		self.initImages = towerCategory.prototype.initImages
+		self.images = towerDisplay.prototype.images
+		self.initImages = towerDisplay.prototype.initImages
 		self.range = towerCategory.prototype.range
 		self.initImages(1)
 		self.selected = true;
@@ -70,8 +69,8 @@ var ghostTurretFeatures = {
 			self.y = y
 			this.observe("mousemove", function(e){
 				var x=0,y=0
-				if(e.layerX){x = e.layerX;y = e.layerY}					//other than opera
-				else{x=e.x;y=e.y}										//opera
+				if(e.layerX){x = e.layerX;y = e.layerY} //other than opera
+				else{x=e.x;y=e.y} //opera
 				self.x = x
 				self.y = y
 				self.xGrid = Math.floor(x/32)
@@ -79,8 +78,8 @@ var ghostTurretFeatures = {
 				if(Map.grid[self.xGrid]&&Map.grid[self.xGrid][self.yGrid]&&Map.grid[self.xGrid][self.yGrid].tower){
 					self.hoverXgrid = self.xGrid
 					self.hoverYGrid = self.yGrid
-					self.towerHovered = true
-				}
+						self.towerHovered = true
+					}
 				else{
 					self.towerHovered = false
 				}
@@ -100,36 +99,36 @@ var ghostTurretFeatures = {
 		this.ctx.clearRect(0,0, this.canvas.width, this.canvas.height)
 	},
 	render : function(ctx){
-		ctx.save()		
+		ctx.save()
 		ctx.translate(Map.transform(this.x)-Map.pitch, Map.transform(this.y))
 		if(this.towerHovered){
 			ctx.drawImage(Loader.images.game['hover_effect.png'],25,-3)
 		}else{
 			if(GhostTurret && GhostTurret.selected && GhostTurret.isIn){
-			ctx.drawImage(this.images.base[0], 0, 0)		
-			if(this.images.cannon){
-				ctx.drawImage(this.images.cannon[0], 0, 0)
-			}else{
-				ctx.drawImage(this.images.pad[0], 0, 0)
-				ctx.drawImage(this.images.rocket[0], 0, 0)
-			}		
-			if(this.valid){
-				ctx.fillStyle = 'rgba(255,255,255,0.5)'
-				ctx.beginPath();
-				ctx.arc(Map.pitch+16, Map.pitch-16, (this.range * Map.pitch) + (Map.pitch/2), 0, Math.PI*2, false)
-				ctx.closePath();
-				ctx.fill();
-			}else{
-				ctx.fillStyle = 'rgba(255,0,0,0.0)'
-				ctx.beginPath();
-				ctx.arc(0, 0, 128, 0, Math.PI*2, false)
-				ctx.closePath();
-				ctx.fill();
-				ctx.fillStyle = 'rgba(255,0,0,0.9)'
-				ctx.fillRect(32,0, 32, 32)
+				ctx.drawImage(this.images.base[0], 0, 0)
+				if(this.images.cannon){
+					ctx.drawImage(this.images.cannon[0], 0, 0)
+				}else{
+					ctx.drawImage(this.images.pad[0], 0, 0)
+					ctx.drawImage(this.images.rocket[0], 0, 0)
+				}
+				if(this.valid){
+					ctx.fillStyle = 'rgba(255,255,255,0.5)'
+					ctx.beginPath();
+					ctx.arc(Map.pitch+16, Map.pitch-16, (this.range * Map.pitch) + (Map.pitch/2), 0, Math.PI*2, false)
+					ctx.closePath();
+					ctx.fill();
+				}else{
+					ctx.fillStyle = 'rgba(255,0,0,0.0)'
+					ctx.beginPath();
+					ctx.arc(0, 0, 128, 0, Math.PI*2, false)
+					ctx.closePath();
+					ctx.fill();
+					ctx.fillStyle = 'rgba(255,0,0,0.9)'
+					ctx.fillRect(32,0, 32, 32)
 				}
 			}
 		}
-		ctx.restore();		
+		ctx.restore(); 
 	}
 }			

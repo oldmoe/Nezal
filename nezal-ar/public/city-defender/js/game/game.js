@@ -11,6 +11,8 @@ var Game = Class.create({
 	
 	start : function(replay){
 		if(!game.started){
+      Config.ranks = Intro.ranks
+      Config.coins = Intro.userData.coins
 			game.started = true
 			Map.init();
 			if(Intro.userData.newbie)Config = tutorialConfig
@@ -31,8 +33,12 @@ var Game = Class.create({
 				$$('.snapshot').first().hide()
 			}
 			else{
-				this.scene = new CityDefenderScene(this.config,33,this.ctx,this.topCtx, replay);
-				if(!replay)this.registerHandlers();
+			   if(!replay){this.scene = new DisplayScene(this.config,33,this.ctx,this.topCtx, replay);
+						   this.registerHandlers();
+				}
+				else{
+						 this.scene= new DisplayScene(this.config,33,this.ctx,this.topCtx, replay);
+				}
 			}
 			if(Config.map)Map.bgGrid = Config.map
 			if(Config.mapEntry)Map.entry = Config.mapEntry
@@ -216,6 +222,7 @@ var Game = Class.create({
 	},
 	reset : function(replay){
 		game.started = false
+		game.scene.displays = []
 		game.scene.reactor.stop()
 		game.scene.resetScene()
 		$$('#gameElements #gameMenu').first().hide()

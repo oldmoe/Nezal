@@ -137,17 +137,20 @@
 		<div id = "challengesText" class="title titleSize clickableButton clickSound"
 	       onclick="if(this.hasClassName('clickSound'))
             	      Sounds.play(Sounds.gameSounds.click);
+					  _gaq.push(['_trackEvent', 'Game Type', 'Weekly challenge', navigator.userAgent]);
 					  GameConfigs.campaign = GameConfigs.currentCampaign;
           	      $$('#levels')[0].show(); return false;"> ${Text.intro.levelSelection.title} </div>
 		<div id="extraMap" class="title titleSize clickableButton clickSound" 
 		      onclick="if(this.hasClassName('clickSound'))
             	      Sounds.play(Sounds.gameSounds.click);
+					  _gaq.push(['_trackEvent', 'Game Type', 'Weekly challenge', navigator.userAgent]);
           	      Intro.retrievePrevCampaigns(); return false;"> ${Text.intro.levelSelection.extraMaps} 
 		</div>
 		<div id="levels" style="display : none;" class="levels">
 			<div id="floatBgLevel" >
 				<div id="close" onclick="$('levels').hide()">x</div>
-				<a id="easy" href='javascript:void(0);' onclick="GameConfigs.level=1; Intro.next(); return false;" class="difficultyItem clickSound">
+				<a id="easy" href='javascript:void(0);' onclick="GameConfigs.level=1; Intro.next();
+				return false;" class="difficultyItem clickSound">
 					<img src="${Loader.images.intro['levels/easy_icon.png'].getAttribute('data')}"/>
 					<div class="scoreEffect">
 						<span class="scoreMultiplier">1x</span>

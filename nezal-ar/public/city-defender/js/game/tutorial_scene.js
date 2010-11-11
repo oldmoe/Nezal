@@ -44,7 +44,5 @@ var TutorialScene = Class.create(CityDefenderScene, {
 	},
 	uploadScore : function(win,callback){
 		callback()
-	},
-	showHintMsg : function(msg){
 	}
 })

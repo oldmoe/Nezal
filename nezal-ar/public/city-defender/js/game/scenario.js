@@ -7,24 +7,22 @@ var Scenario = Class.create({
 	firstTick : 0,
 	initialize : function(scene){
 		this.scene = scene
-		this.formScenario()
 	},
 	notify : function(event){
-		if(event.unit && (event.unit.constructor==Plane||event.unit.constructor==RedPlane))return
-		var x = this.scene.randomizer.next()
-		if((x<0.1&&event.unit)||(event.name!="creepEnteredTower"&&event.name!="creepEntered"&&event.name!="towerDestroyedCreep")){
-			event['tick']=0
-			event['created'] = false
-			event['finished'] = false
-			this.events.push(event)
-			this.eventNames[event.name] = true
-		}
+	  if(event.unit && (!event.unit.display||event.unit.constructor==Plane||event.unit.constructor==RedPlane))return
+	  var x = this.scene.randomizer.next()
+	  if((x<0.1&&event.unit)||(event.name!="creepEnteredTower"&&event.name!="creepEntered"&&event.name!="towerDestroyedCreep")){
+		  event['tick']=0
+		  event['created'] = false
+		  event['finished'] = false
+		  this.events.push(event)
+		  this.eventNames[event.name] = true
+	  }
 	},
 	start : function(){
 		this._speak()
 	},
 	_speak : function(){
-		try{
 		for(var i = 0; i<this.events.size();i++){
 			var event = this.events[i]
 			if(event.tick < 4){
@@ -34,17 +32,18 @@ var Scenario = Class.create({
 					if(event.unit&&event.unit.baloon){
 						event.finished = true
 					}
-					else if(event.unit&&!event.unit.dead){
+					else if(event.unit.display&&event.unit&&!event.unit.dead){
 						var baloonNum = 2
 						if(event.unit.parent == "creep") baloonNum = 1
-						event.unit.createBaloon(baloonNum)
+						event.unit.display.createBaloon(baloonNum)
 						event.created = true
-						event.unit.baloon.text.innerHTML = window.Text.game[event.name][Math.round(this.scene.randomizer.next()*(Text.game[event.name].length-1))]
+						event.unit.display.baloon.text.innerHTML = window.Text.game[event.name][Math.round(this.scene.randomizer.next()*(Text.game[event.name].length-1))]
 						if(event.method)this[event.name]()
 					}
 				}					
 			}else{
-				if(event.unit&&!event.unit.dead&&event.unit.baloon)event.unit.destroyBaloon()
+				console.log('destroying baloon')
+				if(event.unit&&!event.unit.dead&&event.unit.display.baloon)event.unit.display.destroyBaloon()
 				event.finished = true
 			}
 		}
@@ -56,10 +55,7 @@ var Scenario = Class.create({
 		}
 		this.events = arr
 		var self = this
-		this.scene.push(10, function(){ self._speak() })
-		}catch(e){
-			console.log(e)
-		}
+		this.scene.reactor.push(10, function(){ self._speak() })
 	},
 
 	formScenario : function(){
