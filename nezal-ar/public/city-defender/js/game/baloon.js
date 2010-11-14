@@ -28,7 +28,7 @@ var Baloon = Class.create(Sprite,{
 		this.parent.appendChild(this.div);
 	},
 	render : function(ctx){
-		if(this.owner.dead){
+		if(!this.owner || this.owner.dead){
 				return this.destroy()
 		}
 		this.div.style.left = this.owner.x+"px"
@@ -36,8 +36,8 @@ var Baloon = Class.create(Sprite,{
 	},
 
 	destroy : function ($super){
-		$super()
 		if(this.div)
 		this.parent.removeChild(this.div)
+		$super()
 	}
 })

@@ -361,5 +361,9 @@ var DisplayScene = Class.create(CityDefenderScene, {
   sellSelectedTower : function($super){
         $super()
     		Sounds.play(Sounds.gameSounds.click)
+  },
+  resetScene : function($super){
+	$super()
+	this.render()
   }
 })
