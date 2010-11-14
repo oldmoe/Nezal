@@ -129,13 +129,25 @@ var PlaneDisplay = Class.create(UnitDisplay,{
   update : function(){
     if(this.owner.fired){
 			this.cannonSprite.currentFrame = 1
-		}else{
-			this.cannonSprite.currentFrame = 0
-		}
+	}else{
+		this.cannonSprite.currentFrame = 0
+	}
+	if(this.owner.killed){
+          var anim = new CreepBoom(this.owner.x, this.owner.y)
+          this.owner.scene.rankLayer.attach(anim)
+          this.owner.scene.objects.push(anim)
+          Sounds.play(Sounds.boom.unit)
+     }
+  },
+  finish : function(){
+      var anim = new CreepBoom(this.x, this.y)
+	  this.owner.scene.rankLayer.attach(anim)
+	  this.owner.scene.objects.push(anim)    
+	  Sounds.play(Sounds.boom.unit)
   }
 })
 
-var RedPlaneDisplay = Class.create(UnitDisplay,{
+var RedPlaneDisplay = Class.create(PlaneDisplay,{
   initImages : function(){
 		this.images = {
 			base : Loader.images.game['red_air_craft.png'],
