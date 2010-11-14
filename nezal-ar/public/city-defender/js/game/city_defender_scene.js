@@ -187,7 +187,7 @@ var CityDefenderScene = Class.create(Scene, {
 	end : function(state){
     this.reactor.stop()
     this.running = false
-    this.storeReplay()
+    //this.storeReplay()
     return this.score
 	},
   start : function(){
