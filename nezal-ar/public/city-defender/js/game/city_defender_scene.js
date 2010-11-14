@@ -161,7 +161,7 @@ var CityDefenderScene = Class.create(Scene, {
     	this.waveNumber++
 		var score = this.waveNumber*(25-Math.round((this.reactor.ticks-this.startTime)*this.reactor.delay/1000)) 
 		if(score>0)
-		//this.score+=score
+		this.score+=score
 		this.startTime = this.reactor.ticks
 		this.planeAttack = false
 		this.push(40, function(){this.sendWave(this.config.waves.pop())},this)

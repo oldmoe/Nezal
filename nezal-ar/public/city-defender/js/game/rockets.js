@@ -41,7 +41,7 @@ var Patriot = Class.create(Turret, {
 	type: 'Patriot',
 	firing_turn : 0,
 	canHitFlying: true,
-	canHitGround: true,
+	canHitGround: false,
 	cssClass : 'patriot',
 	hp:1200, power:40, rate:0.3, price: 60, range: 4,maxHp: 1200,
 	upgrades : [{maxHp: 1450, power:50, price: 12},
