@@ -49,7 +49,9 @@ var BaseDefenderScene = Class.create(Scene, {
   },
   
   _RenderBuildings : function(){
-    this.game.townhall.render();
+    BuildingFactory.RegistryIterator(function(building){
+      building.render();
+    })
   },
   
   _RenderMap : function(){

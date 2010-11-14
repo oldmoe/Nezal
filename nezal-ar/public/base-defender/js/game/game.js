@@ -1,5 +1,5 @@
 var Game = Class.create({
-  disableJsValidation: true,
+  disableJsValidation: false,
   templatesManager : null,
   selectedBuildingPanel : null,
   workerFactory : null,
@@ -11,7 +11,9 @@ var Game = Class.create({
   user : null,
   tutorial : null,
   buildingMode : null,
-  townhall : null,
+  townhallFactory : null,
+  quarryFactory : null,
+  mineFactory : null,
   resources : {
     rock : 0,
     iron : 0
@@ -60,19 +62,21 @@ var Game = Class.create({
     if(callback) callback();
   },
   
-  upgradeBuilding : function(name, coords){
-    var response = this.network.upgradeBuilding(name, coords);
-    this.gameStatus = response['gameStatus'];
+  updateGameStatus : function(gameStatus){
+    this.gameStatus = gameStatus;
     this.reflectStatusChange();
-    return response['upgradeDone']
+    this.scene.render();
   },
+  
   reflectStatusChange : function(){
     this.user = new User(this);
     this.workerFactory = new WorkerFactory(this);
     this.resources.rock = this.user.data.rock;
     this.resources.iron = this.user.data.iron;
     
-    this.townhall = new Townhall(this);
+    this.townhallFactory = new TownhallFactory(this);
+    this.quarryFactory = new QuarryFactory(this);
+    this.mineFactory = new MineFactory(this);
     this.tutorial = new Tutorial(this);
     
     this.scene.map = this.user.data["map"];

@@ -2,12 +2,21 @@ require "json"
 require_all "#{Dir.pwd}/app/models/games/base_defender/"
 
 class BaseDefender < Metadata
-  
+  @@speed_factor = 2
   @@building_modules = {
     "townhall" => BD::Townhall, 
     "quarry" => BD::Quarry,
-    "mine" => BD::Mine 
+    "mine" => BD::Mine
   }
+  @@game_metadata = nil
+  
+  def self.adjusted_game_metadata
+    @@game_metadata
+  end
+  
+  def self.new_building_specs 
+    {'level' => 0, 'coords' => {'x' => nil, 'y' => nil}}
+  end
   
   def self.land_marks
     {
@@ -18,27 +27,63 @@ class BaseDefender < Metadata
     }
   end
   
+  def self.convert_location( location )
+    @@adjustment_size = 4
+    if location.class == String
+      parts = location.split(/:/)
+      return parts[0].to_i, parts[1].to_i
+    else
+      x = location['x']
+      y = location['y']
+      return x.to_s.rjust( @@adjustment_size, '0' ) + ':' + y.to_s.rjust( @@adjustment_size, '0' )
+    end
+  end
+  
   def self.calculate_jobs(user_game_profile)
     metadata = JSON.parse(user_game_profile.metadata)
-    game_metadata = JSON.parse(user_game_profile.game.metadata)
-    if( metadata['townhall']['inProgress'] )
-      since = metadata['townhall']['startedBuildingAt']
-      now = Time.now.utc.to_i
-      townhall_next_level = metadata['townhall']['level']+1
-      required = game_metadata['buildings']['townhall']['levels'][townhall_next_level.to_s]['time']
-      remaining = required - (now - since)
-      if( remaining <= 0 )
-        metadata['townhall']['level'] += 1
-        metadata['townhall']['inProgress'] = false
-        metadata['townhall']['startedBuildingAt'] = nil
-        metadata['idle_workers'] += 1
-        user_game_profile.metadata = self.encode(metadata)
-        user_game_profile.save
-      else
-        metadata['townhall']['remainingTime'] = remaining
-        user_game_profile.metadata = self.encode(metadata)
+    @@building_modules.keys.each do |building|
+      if( metadata[building].present? )
+        metadata[building].keys.each do |building_instance_coords|
+          if(metadata[building][building_instance_coords]['inProgress'])
+            calculate_building_job(user_game_profile, metadata, metadata[building][building_instance_coords], @@game_metadata['buildings'][building] )
+          end
+        end
       end
     end
+  end
+  
+  def self.calculate_building_job(user_game_profile, metadata, building, blue_prints )
+    puts "<><><><><><><<><><><><><><><"
+    since = building['startedBuildingAt']
+    now = Time.now.utc.to_i
+    next_level = building['level'] + 1
+    required = blue_prints['levels'][next_level.to_s]['time']
+    remaining = required - (now - since)
+    if( remaining <= 0 )
+      building['level'] += 1
+      building['inProgress'] = false
+      building['startedBuildingAt'] = nil
+      metadata['idle_workers'] += 1
+      user_game_profile.metadata = self.encode(metadata)
+      user_game_profile.save
+    else
+      building['remainingTime'] = remaining
+      user_game_profile.metadata = self.encode(metadata)
+    end
+  end
+  
+  def self.initialize_game_metadata( user_game_profile )
+    game_metadata = self.decode(user_game_profile.game.metadata)
+    
+    #Applying Speed Factor!
+    @@building_modules.keys.each do |building_name|
+      building_levels = game_metadata['buildings'][building_name]['levels']
+      building_levels.keys.each do |level|
+        building_levels[level]['time'] = building_levels[level]['time'] / @@speed_factor
+      end
+    end
+    
+    game_metadata
   end
   
   def self.load_game_profile(user_game_profile)
@@ -49,8 +94,8 @@ class BaseDefender < Metadata
       user_game_profile.metadata = self.encode(origin)
     end
     
+    @@game_metadata = initialize_game_metadata user_game_profile
     calculate_jobs user_game_profile
-    
     user_game_profile.metadata || "{}"
   end
   
@@ -58,32 +103,41 @@ class BaseDefender < Metadata
     data = self.decode(data)
     if data['event'] == 'upgrade'
       validation = upgrade_building(user_game_profile, data)
-      
-      puts "!!!@!@!@!@!!@" + validation.to_s
-      
-      user_game_profile['error'] = validation['error'] unless validation['valid'] 
+    else data['event'] == 'buy_worker'
+      validation = buy_worker(user_game_profile)
     end
+    user_game_profile['error'] = validation['error'] unless validation['valid']
     user_game_profile.metadata || "{}"
+  end
+  
+  def self.buy_worker(user_game_profile)
+    return BD::WorkerFactory.buy_worker(user_game_profile);
   end
   
   # {'building' : 'townhall', 'coords' : {'x':'', 'y':''} }
   def self.upgrade_building(user_game_profile, data)
-    profile_data = self.decode(user_game_profile.metadata)
     
     building = data['building']
-    if(profile_data[building]['level'] == 0)
-      validation = @@building_modules[building].build(user_game_profile, data['coords'])
+    profile_data = self.decode(user_game_profile.metadata)
+    
+    name = data['building']
+    building = profile_data[name]
+    location_hash = convert_location(data['coords'])
+    if building.nil? || building[building].nil?
+      validation = @@building_modules[name].build(user_game_profile, data['coords'])
       return validation
     else
-      @@building_modules[building].upgrade(user_game_profile)
+      validation = @@building_modules[name].upgrade(user_game_profile, data['coords'])
+      return validation
     end
+    
   end
   
   def self.init_game_profile(user_game_profile)
     user_game_profile.metadata= self.encode(
-                  {'townhall' => {'level' => 0, 'coords' => {'x' => nil, 'y' => nil}},
-                   'mines' => [],
-                   'quarries' => [],
+                  {'townhall' => nil,
+                   'mine' => nil,
+                   'quarry' => nil,
                    'workers' => 1,
                    'idle_workers' => 1,
                    'rock' => 100,

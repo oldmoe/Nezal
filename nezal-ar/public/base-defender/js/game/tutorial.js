@@ -6,7 +6,7 @@ var Tutorial = Class.create({
     var self = this;
     
     if (game.user.newbie) {
-      if(game.townhall.level == 0 && !game.townhall.inProgress){
+      if(!game.townhallFactory.townhall){
         this.buildTownhall();
       }
     }
@@ -15,7 +15,7 @@ var Tutorial = Class.create({
     $('establish-townhall-container').show();
     $('establish-townhall').observe('click', function(){
       $('establish-townhall-container').hide();
-      game.buildingMode.on(self.game.townhall, function(){
+      game.buildingMode.on(self.game.townhallFactory.newTownhall(), function(){
         //$('establish-townhall').hide();
       });
     });

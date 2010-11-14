@@ -11,25 +11,37 @@ var WorkerFactory = Class.create({
   },
   
   nextWorkerCost : function(){
-    this.recruitmentPlans
+    return this.recruitmentPlans[this.workers + 1].coins;
   },
   
-  attachHireEvent : function(eventTrigger){
+  attachHireTrigger : function(){
     var self = this;
-    eventTrigger.observe('click', function(){
-      self.buyWorker();
-    })
+    var trigger = $('buy_worker_trigger');
+    
+    //This is needed because the panel may be activated while the building is in progress
+    //and the trigger will not exist
+    if (trigger) {
+      trigger.observe('click', function(){
+        self.buyWorker();
+      });
+    }
   },
   
   buyWorker : function(){
     if(this._ValidateBuyWorker()){
-      
+      var response = this.game.network.buyWorker();
+      this.game.updateGameStatus(response['gameStatus']);
     }
   },
   
   _ValidateBuyWorker : function(){
     if(this.game.disableJsValidation) return true;
-    
-    if(this.game.user.coins){}
+    if (this.game.user.coins >= this.nextWorkerCost()) {
+      return true;
+    } else {
+      var remainingRequiredCoins = this.nextWorkerCost() - this.game.user.coins;
+      alert("Not enough coins, you need " + remainingRequiredCoins + " more coins!");
+      return false;
+    }
   }
 });

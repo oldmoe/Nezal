@@ -4,5 +4,5 @@ var BuildingPanel = Class.create({
   initialize : function(buidling, templater){
     this.selectedBuilding = buidling;
     $('building-panel-contents').innerHTML = templater();
-  }
+  },
 })

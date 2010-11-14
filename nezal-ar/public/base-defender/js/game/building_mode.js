@@ -47,7 +47,6 @@ var BuildingMode = Class.create({
   
   _AttachModeOnListener : function(blockX, blockY){
     if (this.selectedBuilding.build(blockX, blockY)) {
-      this.game.scene.render();
       this.callback();
       this.off();
     }
@@ -56,7 +55,7 @@ var BuildingMode = Class.create({
     var self = this;
     var closeCallback = function(){
       $('building-panel').hide();
-      self.game.selectedBuildingPanel.selectedBuilding = null;
+      self.game.selectedBuildingPanel = null;
     }
     
     $('close-building-panel').observe('click', closeCallback);

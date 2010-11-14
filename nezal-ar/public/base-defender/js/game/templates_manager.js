@@ -16,7 +16,8 @@ var TemplatesManager = Class.create({
     return TrimPath.processDOMTemplate("building-remaining-time-template", {'remainingTime' : time});
   },
   
-  townhallPanel : function(townhallName, buildingInProgress){
-    return TrimPath.processDOMTemplate("townhall-panel-template", {'townhallName' : townhallName, 'buildingInProgress' : buildingInProgress});
+  //TODO change the function params to JSON
+  townhallPanel : function(townhallName, buildingInProgress, coins){
+    return TrimPath.processDOMTemplate("townhall-panel-template", {'townhallName' : townhallName, 'buildingInProgress' : buildingInProgress, 'coins' : coins});
   }
 });

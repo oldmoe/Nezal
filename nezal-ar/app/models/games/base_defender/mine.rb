@@ -1,10 +1,7 @@
 module BD
-  module Mine
-    def self.build(user_game_profile)
-    end
-  
-    def self.upgrade(user_game_profile)
-    end
+  class Mine < Building
+    @name = "mine"
+    @can_be_built_on = "iron"
     
   end
 end
