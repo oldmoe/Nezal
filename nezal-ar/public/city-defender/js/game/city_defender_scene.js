@@ -139,7 +139,7 @@ var CityDefenderScene = Class.create(Scene, {
 			this.replayEvents.push([this.startTick, 'startAttack'])
 		}
 		this.sendWaves(this.config)
-    this.checkStatus()
+		this.checkStatus()
 	},
 	checkStatus: function(){
 		var self = this
@@ -151,7 +151,7 @@ var CityDefenderScene = Class.create(Scene, {
 				this.uploadScore(true,function(){self.end("win");})                    		                                           
 				return
 			}else if(this.creeps.length == 0  &&this.waitingCreeps == 0 && this.config.waves.length > 0 && !this.wavePending && this.running){
-        this.advanceWave()
+				this.advanceWave()
 			}
 		}	
 		var self = this
@@ -159,13 +159,13 @@ var CityDefenderScene = Class.create(Scene, {
 	},
   advanceWave : function(){
     	this.waveNumber++
-			var score = this.waveNumber*(25-Math.round((this.reactor.ticks-this.startTime)*this.reactor.delay/1000)) 
-			if(score>0)
-			//this.score+=score
-			this.startTime = this.reactor.ticks
-			this.planeAttack = false
-			this.push(40, function(){this.sendWave(this.config.waves.pop())},this)
-			this.money=Math.round(this.money*this.moneyMultiplier[this.config.level-1])
+		var score = this.waveNumber*(25-Math.round((this.reactor.ticks-this.startTime)*this.reactor.delay/1000)) 
+		if(score>0)
+		//this.score+=score
+		this.startTime = this.reactor.ticks
+		this.planeAttack = false
+		this.push(40, function(){this.sendWave(this.config.waves.pop())},this)
+		this.money=Math.round(this.money*this.moneyMultiplier[this.config.level-1])
     	this.wavePending = true
   },
 	uploadScore : function(win,callback){

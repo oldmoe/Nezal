@@ -32,7 +32,7 @@ var Scenario = Class.create({
 					if(event.unit&&event.unit.baloon){
 						event.finished = true
 					}
-					else if(event.unit.display&&event.unit&&!event.unit.dead){
+					else if(event.unit && event.unit.display&&!event.unit.dead){
 						var baloonNum = 2
 						if(event.unit.parent == "creep") baloonNum = 1
 						event.unit.display.createBaloon(baloonNum)
@@ -42,7 +42,6 @@ var Scenario = Class.create({
 					}
 				}					
 			}else{
-				console.log('destroying baloon')
 				if(event.unit&&!event.unit.dead&&event.unit.display.baloon)event.unit.display.destroyBaloon()
 				event.finished = true
 			}

@@ -52,7 +52,7 @@ game.splash = function(){
 	game.scene.creeps.sort(function(a,b){
 		return b.hp - a.hp
 	}).slice(0,10).each(function(creep){
-		game.scene.objects.push(new PatriotRocket(0, 0,  {theta: 0, targetUnit : creep, x : x, y : y, power: 2000, speed: 15}))
+		game.scene.addPatriotRocket(new PatriotRocket(0, 0,  {theta: 0, targetUnit : creep, x : x, y : y, power: 2000, speed: 15}))
 	})
 }
 

@@ -108,6 +108,7 @@ var Tutorial = Class.create({
 		$$('#gameElements .start').first().stopObserving('click')
 		$$('#gameElements .startText').first().innerHTML = ""
 		this.scene.sendWaves(this.scene.config)
+		this.scene.checkStatus()
 	},
 	initiateSuperWeapon : function(){
 		var anim = this.addArrowAnim(440,130)

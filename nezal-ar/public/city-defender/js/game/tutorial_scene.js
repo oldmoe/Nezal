@@ -1,6 +1,6 @@
-var TutorialScene = Class.create(CityDefenderScene, {
-	initialize : function($super,config,delay,baseCtx,upperCtx){
-		$super(config,delay,baseCtx,upperCtx)
+var TutorialScene = Class.create(DisplayScene, {
+	initialize : function($super,config,delay,baseCtx,upperCtx,replay){
+		$super(config,delay,baseCtx,upperCtx,replay)
 		this.splash.factor1 = 1;
 		$$('#gameElements .superWeapons div').each(function(div){ 
 	//			div.hide()

@@ -114,6 +114,28 @@ var SuperWeapon = Class.create({
 		tick()
 		
 	},
+	deactivate : function(){
+		this.active = false
+		this.renderDeactivate()
+	},
+
+	renderActivate : function(){
+		var div = $$('#gameElements .superWeapons div.'+this.type)[0]
+		div.setOpacity(div.getOpacity() + 0.05)
+		if(div.getOpacity() == 0.7){
+			var self = this
+			div.observe('click', function(){self.scene.fire(div.className)})
+			div.setOpacity(1)
+		}else{
+			var self = this
+			this.scene.push(this.progressInterval, function(){self.activate()})
+		}
+		},
+renderDeactivate : function(){
+var div = $$('#gameElements .superWeapons div.'+this.type)[0]
+div.stopObserving('click')
+div.setOpacity(0);
+}
 	
 })
 

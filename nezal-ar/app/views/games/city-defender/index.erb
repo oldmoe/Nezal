@@ -197,11 +197,11 @@
                             $("gameStart").innerHTML = t.responseText
                             $('iframe').src=Loader.loadPage(Config.campaign,
                             function(){
-                                  city_defender_start();
+                                  city_defender_start(data.replay);
                                   $('pause').hide()
                                   $('gameStart').show();
                                   $("intro").hide();    
-				                          onFinish()
+				                  onFinish()
                             })            
                         }
                    })  

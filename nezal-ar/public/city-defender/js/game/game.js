@@ -23,7 +23,7 @@ var Game = Class.create({
 			$$('#game #scores').first().show()
 			if(Intro.userData.newbie){
 				$('modalWindow').show()
-				this.scene = new TutorialScene(this.config,40,this.ctx,this.topCtx);
+				this.scene = new TutorialScene(this.config,33,this.ctx,this.topCtx, replay);
 				this.tutorial = new Tutorial(this.scene,this.tutorialCtx)
 				$('gameExit').hide()
 				$('gameReset').hide()
@@ -36,8 +36,11 @@ var Game = Class.create({
 			   if(!replay){this.scene = new DisplayScene(this.config,33,this.ctx,this.topCtx, replay);
 						   this.registerHandlers();
 				}
-				else{
+				else if(Nezal.replay){
 						 this.scene= new DisplayScene(this.config,33,this.ctx,this.topCtx, replay);
+				}
+				else{
+					this.scene= new CityDefenderScene(this.config,33,replay);
 				}
 			}
 			if(Config.map)Map.bgGrid = Config.map
@@ -83,7 +86,10 @@ var Game = Class.create({
 			var ind = Config.towers.indexOf(inputNames[i])
 			if(ind!=-1){
 				Config.towers[ind] = replacement[i]
-				var values = Intro.gameData.towers[inputNames[i]].upgrades
+				var values = null
+				if(Nezal.replay)
+						values = JSON.parse(Intro.gameData.towers[inputNames[i]].upgrades)
+				else  values = Intro.gameData.towers[inputNames[i]].upgrades
 				var upgrades = []
 				upgradeValues.each(function(upgradeValue){
 						eval(replacement[i]).prototype[upgradeValue] = values[0][upgradeValue]
@@ -271,7 +277,7 @@ var Game = Class.create({
 });
 
 var game = new Game()
-function city_defender_start(){
+function city_defender_start(replay){
 		$$("canvas").each(function(canvas){
 			canvas.width = Map.width * Map.pitch
 			canvas.height = Map.height * Map.pitch
@@ -291,7 +297,7 @@ function city_defender_start(){
 		game.canvas = fg
 		game.ctx = fg.getContext('2d')
 		game.topCtx = top.getContext('2d')
-		game.start();
+		game.start(replay);
 		Upgrades.selectDefault();
 		
 }

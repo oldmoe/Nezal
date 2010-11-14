@@ -98,9 +98,7 @@ var DisplayScene = Class.create(CityDefenderScene, {
 		if(this.skipFrames == 0){
 			var startTime = new Date
 			$super()
-			if(GhostTurret && GhostTurret.selected && GhostTurret.isIn){
-				GhostTurret.render(this.upperCtx)
-			}
+			GhostTurret.render(this.upperCtx)
 			if (typeof FlashCanvas != "undefined") {
 				if(game.ctx.ready)game.ctx._myPostCommands();
 				if(game.topCtx.ready)game.topCtx._myPostCommands();
@@ -337,19 +335,19 @@ var DisplayScene = Class.create(CityDefenderScene, {
 		this.selectedTower.display.rangeSprite.visible = true
 		this.processTowerInfoTemplate()
 	},
-  advanceWave : function($super){
-    var oldMoney=this.money
-    var oldScore=this.score
-    $super()
-    var score = this.score-oldScore
-    var anim = new MoneyAnimation(341,462,this.money-oldMoney)
-  	anim.totalMovement = 90
-  	var msg = "+"+(this.money-oldMoney) +"  Money"
-  	if(score>0)msg+="<br/>Time bonus: +"+score+"   Score"
-  	anim.enlarge(msg)
-  	this.objects.push(anim)
-    IncomingWaves.nextWave()
-  },
+	advanceWave : function($super){
+		var oldMoney=this.money
+		var oldScore=this.score
+		$super()
+		var score = this.score-oldScore
+		var anim = new MoneyAnimation(341,462,this.money-oldMoney)
+		anim.totalMovement = 90
+		var msg = "+"+(this.money-oldMoney) +"  Money"
+		if(score>0)msg+="<br/>Time bonus: +"+score+"   Score"
+		anim.enlarge(msg)
+		this.objects.push(anim)
+		IncomingWaves.nextWave()
+	 },
 	upgradeSelectedTower : function($super){
     if(this.selectedTower.upgradable)Sounds.play(Sounds.gameSounds.click)
 		$super()

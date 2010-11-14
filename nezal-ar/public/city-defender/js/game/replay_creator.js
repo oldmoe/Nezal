@@ -52,9 +52,10 @@ var GameReplay = {
     window={}
     Config = {}
     var game = GameReplay.prepareConfig(result,level,gameMetadata,userMetadata)
+	Config.waves = Config.waves.reverse()
     GameReplay.assignConfig(game)
     development = true
-    Map.bgGrid = GameReplay.flipMap(Config.map)
+    Map.bgGrid = Config.map
     Map.entry = Config.mapEntry
     Map.init()
     this.scene = new CityDefenderScene(Config,33,replay) 
@@ -98,10 +99,11 @@ var GameReplay = {
       Config.weaponUpgrades = weaponUpgrades;
       Config.superWeapons = weapons;
       Config.level = level
-      Config.waves = mission.waves.reverse()
+      Config.waves = mission.waves
       Config.exp = 0
       Config.coins = 0
       Config.map = mission.map
+	  Config.map = GameReplay.flipMap(Config.map)
       Config.mapEntry = mission.mapEntry
      return replayGame;
   } 
