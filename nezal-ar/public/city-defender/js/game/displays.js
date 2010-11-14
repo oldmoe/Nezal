@@ -40,7 +40,12 @@ var CreepDisplay = Class.create(UnitDisplay, {
           this.owner.scene.rankLayer.attach(anim)
           this.owner.scene.objects.push(anim)
           Sounds.play(Sounds.boom.unit)
-     }
+		  var anim = new CoinsAnimation(this.owner.x, this.owner.y - 40)
+		  this.owner.scene.towerHealthLayer.attach(anim)
+		  this.owner.scene.objects.push(anim)
+		  var moneyAnim = new MoneyAnimation(this.owner.x-10,this.owner.y-5,Math.floor(this.owner.price))
+		  this.owner.scene.objects.push(moneyAnim)
+		}
 	},
   finish : function(){
       var anim = new CreepBoom(this.x, this.y)
@@ -137,7 +142,13 @@ var PlaneDisplay = Class.create(UnitDisplay,{
           this.owner.scene.rankLayer.attach(anim)
           this.owner.scene.objects.push(anim)
           Sounds.play(Sounds.boom.unit)
-     }
+		  var anim = new CoinsAnimation(this.owner.x, this.owner.y - 40)
+		  this.owner.scene.towerHealthLayer.attach(anim)
+		  this.owner.scene.objects.push(anim)
+		  var moneyAnim = new MoneyAnimation(this.owner.x-10,this.owner.y-5,Math.floor(this.owner.price))
+		  this.owner.scene.objects.push(moneyAnim)
+		}
+	 
   },
   finish : function(){
       var anim = new CreepBoom(this.x, this.y)

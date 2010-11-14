@@ -169,12 +169,8 @@ var Creep = Class.create(Unit, {
 		}
 	},
 	die : function(){
-	//  var anim = new CoinsAnimation(this.x, this.y - 40)
-	//	this.scene.towerHealthLayer.attach(anim)
-	//	this.scene.objects.push(anim)
 		this.destroy()
-	//	var moneyAnim = new MoneyAnimation(this.x-10,this.y-5,Math.floor(this.price))
-	//	this.scene.objects.push(moneyAnim)
+		this.killed = true
 		this.scene.money += Math.round(this.price);
 		this.scene.stats.creepsDestroyed++
 		this.scene.score += Math.round(this.maxHp/20)*this.scene.config.level
