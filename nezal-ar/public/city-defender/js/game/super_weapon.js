@@ -255,7 +255,7 @@ var Hyper = Class.create(SuperWeapon, {
 			}
 		})
 		var self = this
-		this.scene.push(2, function(){self.hyperEffect(ticks+2,flip+1);})
+		this.scene.push(2, function(){self.hyperEffect(ticks+2,flip+1)})
 	},
 	unHyper : function(){
 		var self = this
