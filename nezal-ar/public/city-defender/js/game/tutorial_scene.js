@@ -1,11 +1,11 @@
 var TutorialScene = Class.create(DisplayScene, {
 	initialize : function($super,config,delay,baseCtx,upperCtx,replay){
 		$super(config,delay,baseCtx,upperCtx,replay)
+		_gaq.push(['_trackEvent', 'Tutorial', 'started tutorial', navigator.userAgent]);
 		this.splash.factor1 = 1;
 		$$('#gameElements .superWeapons div').each(function(div){ 
 	//			div.hide()
 		})
-		
 	},
 	addCreep : function($super,creep){
 		if (this.waveNumber == 2){
@@ -41,6 +41,7 @@ var TutorialScene = Class.create(DisplayScene, {
 		game.started = false
 		game.tutorial.wishLuck()
 		Sounds.gameSounds.game[0].togglePause()
+		_gaq.push(['_trackEvent', 'Tutorial', 'Finished tutorial', navigator.userAgent]);
 	},
 	uploadScore : function(win,callback){
 		callback()

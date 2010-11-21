@@ -250,17 +250,17 @@ var RocketLauncherDisplay = Class.create(TurretDisplay,{
 		this.images.rocket = [Loader.images.game['exploder_rocket.png']],
 		this.images.ranks = [null,Loader.images.game['rank_1.png'], Loader.images.game['rank_2.png'], Loader.images.game['rank_3.png']]
 	},
-  update : function(){
-	if(this.fired){
-      Sounds.play(Sounds.turret.patriotLaunch)
-    }
-	if(this.owner.reloaded){
-		this.rocketSprite.draw = true		
+	update : function(){
+		if(this.fired){
+		  Sounds.play(Sounds.turret.patriotLaunch)
+		}
+		if(this.owner.reloaded){
+			this.rocketSprite.draw = true		
+		}
+		else this.rocketSprite.draw = false		
+		this.cannonSprite.rotation = Nezal.degToRad(this.owner.cannonTheta)
+		this.rocketSprite.rotation = Nezal.degToRad(this.owner.cannonTheta)
 	}
-	else this.rocketSprite.draw = false		
-	this.cannonSprite.rotation = Nezal.degToRad(this.owner.cannonTheta)
-	this.rocketSprite.rotation = Nezal.degToRad(this.owner.cannonTheta)
-  }
 })
 var PatriotDisplay = Class.create(TurretDisplay,{
 	initImages: function(rank){
