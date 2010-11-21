@@ -233,8 +233,7 @@ var DisplayScene = Class.create(CityDefenderScene, {
 		}
 	},
 	end : function($super,state){
-  this.storeReplay()
-	var self = game.scene
+		var self = game.scene
 		self.push(40,function(){
 			game.scene.running = false
 			$("result").addClassName(state);

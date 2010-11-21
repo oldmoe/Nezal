@@ -176,8 +176,8 @@ var TurretDisplay = Class.create(UnitDisplay,{
 		this.baseSprite = new Sprite(this.images.base,owner)
 		if(this.images.cannon)this.cannonSprite = new Sprite(this.images.cannon.concat(this.images.fire),owner)
 		this.rankSprite = new Sprite(this.images.ranks,owner)
-    this.rankSprite.shiftX=50;
-     this.rankSprite.shiftY=-5;
+		this.rankSprite.shiftX=50;
+		this.rankSprite.shiftY=-5;
 		this.healthSprite = new HealthSprite(owner)
 	},
 	initImages : function(rank){
@@ -189,22 +189,22 @@ var TurretDisplay = Class.create(UnitDisplay,{
 	},
 	update : function(){
 		if(this.owner.killed){
-      var anim = new CreepBoom(this.owner.x, this.owner.y)
-      this.owner.scene.rankLayer.attach(anim)
-      this.owner.scene.objects.push(anim)
-      Sounds.play(Sounds.boom.unit)
-     }
+		  var anim = new CreepBoom(this.owner.x, this.owner.y)
+		  this.owner.scene.rankLayer.attach(anim)
+		  this.owner.scene.objects.push(anim)
+		  Sounds.play(Sounds.boom.unit)
+		 }
 		this.cannonSprite.rotation = Nezal.degToRad(this.owner.cannonTheta)
-		if(this.owner.fired){
-      Sounds.play(this.fireSound)
+	   if(this.owner.fired){
+			Sounds.play(this.fireSound)
 			this.cannonSprite.currentFrame = 1
 		}
 		else{
 			this.cannonSprite.currentFrame = 0
 		}
-		this.rankSprite.currentFrame = this.owner.rank %4;
 	},
 	upgrade : function(){
+		this.rankSprite.currentFrame = this.owner.rank %4;
 		if(this.owner.rank==4)this.initImages(2)
 		else if(this.owner.rank==8)this.initImages(3)
 		this.baseSprite.images = this.images.base
@@ -219,15 +219,14 @@ var DoubleTurretDisplay = Class.create(TurretDisplay,{
 		this.images.fire = [Loader.images.game['reaper_'+rank+'_inaction_right.png'],Loader.images.game['reaper_'+rank+'_inaction_left.png']]	
 	},
 	update : function(){
-		this.cannonSprite.rotation = Nezal.degToRad(this.owner.cannonTheta)
-		if(this.owner.fired){
+		if(this.owner.fired){	
       Sounds.play(this.fireSound)		
 			this.cannonSprite.currentFrame = this.owner.firing_turn+1
 		}
 		else{
 			this.cannonSprite.currentFrame = 0
 		}
-		this.rankSprite.currentFrame = this.owner.rank %4;
+		this.cannonSprite.rotation = Nezal.degToRad(this.owner.cannonTheta)
 	},
 })
 var RocketLauncherDisplay = Class.create(TurretDisplay,{
@@ -240,8 +239,8 @@ var RocketLauncherDisplay = Class.create(TurretDisplay,{
 		this.rocketSprite = new Sprite(this.images.rocket,owner)
 		if(this.images.cannon)this.cannonSprite = new Sprite(this.images.cannon.concat(this.images.fire),owner)
 		this.rankSprite = new Sprite(this.images.ranks,owner)
-    this.rankSprite.shiftX=50;
-     this.rankSprite.shiftY=-5;
+		this.rankSprite.shiftX=50;
+		this.rankSprite.shiftY=-5;
 		this.healthSprite = new HealthSprite(owner)
 	},
 	initImages : function(rank){
@@ -252,13 +251,15 @@ var RocketLauncherDisplay = Class.create(TurretDisplay,{
 		this.images.ranks = [null,Loader.images.game['rank_1.png'], Loader.images.game['rank_2.png'], Loader.images.game['rank_3.png']]
 	},
   update : function(){
-		if(this.fired){
+	if(this.fired){
       Sounds.play(Sounds.turret.patriotLaunch)
     }
-		if(this.owner.reloaded){
-			this.rocketSprite.draw = true		
-		}
-		else this.rocketSprite.draw = false		
+	if(this.owner.reloaded){
+		this.rocketSprite.draw = true		
+	}
+	else this.rocketSprite.draw = false		
+	this.cannonSprite.rotation = Nezal.degToRad(this.owner.cannonTheta)
+	this.rocketSprite.rotation = Nezal.degToRad(this.owner.cannonTheta)
   }
 })
 var PatriotDisplay = Class.create(TurretDisplay,{
@@ -271,12 +272,12 @@ var PatriotDisplay = Class.create(TurretDisplay,{
 	},
   update : function(){
     if(this.owner.fired){
-      this.cannonSprite.currentFrame = this.owner.firing_turn+1
-      Sounds.play(Sounds.turret.patriotLaunch)
+       this.cannonSprite.currentFrame = this.owner.firing_turn+1
+       Sounds.play(Sounds.turret.patriotLaunch)
     }else{
-			this.cannonSprite.currentFrame = 0		
-		}
-	
+	   this.cannonSprite.currentFrame = 0		
+	}
+	this.cannonSprite.rotation = Nezal.degToRad(this.owner.cannonTheta)
   }
 })
 var RocketDisplay = Class.create(CanvasDisplay,{

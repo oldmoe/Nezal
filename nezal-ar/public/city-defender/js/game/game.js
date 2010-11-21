@@ -229,7 +229,6 @@ var Game = Class.create({
 	reset : function(replay){
 		game.started = false
 		game.scene.displays = []
-		game.scene.reactor.stop()
 		game.scene.resetScene()
 		$$('#gameElements #gameMenu').first().hide()
 		$('pauseWindow').hide()
@@ -245,6 +244,7 @@ var Game = Class.create({
 		$$('#gameElements .superWeapons div').each(function(div){ 
 			if(div.className != ''){div.stopObserving('click')}
 		})
+		game.scene.reactor.stop()
 		game.start(replay)
 	},
 	

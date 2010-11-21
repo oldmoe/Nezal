@@ -216,7 +216,7 @@ window.Text = {
         userPrompt : 'Tell your friends about your accomplishment',
 		invite : {
             inviteMsg : 'Are you eager enough to defend the Arab land? ',
-            userPrompt : 'invite your friends and earn 200 coins for each one who starts playing.'
+            userPrompt : 'invite your friends and earn 500 coins for each one who starts playing.'
         },
         like : ' Congratulations, you got 500 coins as a gift for liking us.',
         bookmark : 'Congratulations, you got 500 coins as a gift for bookmarking us.',
