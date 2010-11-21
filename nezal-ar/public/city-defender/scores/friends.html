@@ -246,7 +246,7 @@
 					friendsIds = query.value.collect(function(row){return Number(row.uid)}) 
 					friendsIds.push(Number(FB.getSession().uid))	
 					if(window.parent.GameConfigs)
-					currCamp = window.parent.GameConfigs.currentCampaign
+					currCamp = window.parent.GameConfigs.campaign
 					else currCamp="tunisia"
 					viewFriendsRanks()
 				})

@@ -146,6 +146,7 @@ var Intro = {
 		  	  Intro.start()
 			  Intro.processPlayerProgress()
 			  $('scores').src = 'scores/friends.html?'+Object.toQueryString(FBConnect.session)
+			  //$('scores').contentDocument.location.reload(true)
 			  /*
               Loader.loadPage(GameConfigs.campaign, function(){
 				  
@@ -289,6 +290,7 @@ var Intro = {
 						Intro.disablePauseScreen();
 						$('gameStart').hide();
 					});
+					$('scores').src = 'scores/friends.html?'+Object.toQueryString(FBConnect.session)
 				});
             }
         },
