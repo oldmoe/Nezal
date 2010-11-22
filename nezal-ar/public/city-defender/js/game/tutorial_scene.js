@@ -24,16 +24,19 @@ var TutorialScene = Class.create(DisplayScene, {
 		
 		}
 		else if (this.waveNumber == 2){
+			_gaq.push(['_trackEvent', 'Tutorial', 'completed wave 1', navigator.userAgent]);
 			this.push(120,function (){game.tutorial.initiateSuperWeapon()})
 		}
 		else if (this.waveNumber == 3){
+			_gaq.push(['_trackEvent', 'Tutorial', 'completed wave 2', navigator.userAgent]);
 			game.tutorial.upgradeTower()	
 		}
 		else if (this.waveNumber == 4){
+			_gaq.push(['_trackEvent', 'Tutorial', 'completed wave 3', navigator.userAgent]);
 			game.tutorial.planesAttack()
 		}
 		else if (this.waveNumber == 5){
-
+			
 		}
 		$super(wave)
 	},
@@ -45,5 +48,8 @@ var TutorialScene = Class.create(DisplayScene, {
 	},
 	uploadScore : function(win,callback){
 		callback()
+	},
+	
+	showHintMsg : function(msg){
 	}
 })

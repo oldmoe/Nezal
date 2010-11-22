@@ -143,7 +143,7 @@
 		<div id="extraMap" class="title titleSize clickableButton clickSound" 
 		      onclick="if(this.hasClassName('clickSound'))
             	      Sounds.play(Sounds.gameSounds.click);
-					  _gaq.push(['_trackEvent', 'Game Type', 'Weekly challenge', navigator.userAgent]);
+					  _gaq.push(['_trackEvent', 'Game Type', 'Previous Campaigns', navigator.userAgent]);
           	      Intro.retrievePrevCampaigns(); return false;"> ${Text.intro.levelSelection.extraMaps} 
 		</div>
 		<div id="levels" style="display : none;" class="levels">

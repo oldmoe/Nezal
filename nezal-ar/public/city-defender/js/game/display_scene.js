@@ -4,6 +4,7 @@ var DisplayScene = Class.create(CityDefenderScene, {
 		this.templates = {}
 		this.baseCtx = baseCtx;
 		this.upperCtx = upperCtx;
+		this.upgraded = false
 		$$('.status').first().title = "XP: "+this.exp+"/"+(this.maxExp+1)
 		$$('#gameElements #exp').first().innerHTML = "XP "+this.exp+"/"+(this.maxExp+1)
 		this.templates['towerInfo'] = TrimPath.parseTemplate($('towerInfoTemplate').value) 
@@ -344,12 +345,30 @@ var DisplayScene = Class.create(CityDefenderScene, {
 		anim.totalMovement = 90
 		var msg = "+"+(this.money-oldMoney) +"  Money"
 		if(score>0)msg+="<br/>Time bonus: +"+score+"   Score"
+		if(this.waveNumber == 3&&!this.upgraded){
+			this.showHintMsg("Be careful, you should upgrade your towers because enemies will grow stronger")
+		}
 		anim.enlarge(msg)
 		this.objects.push(anim)
 		IncomingWaves.nextWave()
 	 },
+	 showHintMsg : function(msg){
+		$('modalWindow').show()
+		$$('#modalWindow .content .innerContent')[0].innerHTML = msg
+		$$('#modalWindow #ok')[0].show()
+		$$('#modalWindow #ok #rogerText')[0].innerHTML = "Roger"
+		this.reactor.pause()
+		var self = this
+		$$('#modalWindow #ok')[0].observe('click',function(){
+			$('modalWindow').hide()
+			self.reactor.resume()
+		})
+	},
+
 	upgradeSelectedTower : function($super){
-    if(this.selectedTower.upgradable)Sounds.play(Sounds.gameSounds.click)
+		if(!this.upgraded) _gaq.push(['_trackEvent', 'GamePlay', 'upgraded', navigator.userAgent]);
+		this.upgraded = true
+		if(this.selectedTower.upgradable)Sounds.play(Sounds.gameSounds.click)
 		$super()
 		this.selectedTower.display.upgrade()
 		this.processTowerInfoTemplate()

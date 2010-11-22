@@ -88,6 +88,7 @@ var Tutorial = Class.create({
 			}
 			GhostTurret.validate(x, y);
 			if(GhostTurret.valid){
+				_gaq.push(['_trackEvent', 'Tutorial', 'tower placed', navigator.userAgent]);
 				anim2 = self.addVerticalArrowAnim(50,350)
 				GhostTurret.droppingGroundClick = self.droppingGroundClick
 				self.droppingGroundClick(e)
