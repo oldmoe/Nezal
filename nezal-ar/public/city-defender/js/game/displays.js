@@ -43,7 +43,7 @@ var CreepDisplay = Class.create(UnitDisplay, {
 		  var anim = new CoinsAnimation(this.owner.x, this.owner.y - 40)
 		  this.owner.scene.towerHealthLayer.attach(anim)
 		  this.owner.scene.objects.push(anim)
-		  var moneyAnim = new MoneyAnimation(this.owner.x-10,this.owner.y-5,Math.floor(this.owner.price))
+		  var moneyAnim = new MoneyAnimation(this.owner.x-10,this.owner.y-5,Math.round(this.owner.price))
 		  this.owner.scene.objects.push(moneyAnim)
 		}
 	},
