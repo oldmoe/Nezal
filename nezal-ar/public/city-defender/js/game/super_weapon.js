@@ -131,11 +131,11 @@ var SuperWeapon = Class.create({
 			this.scene.push(this.progressInterval, function(){self.activate()})
 		}
 		},
-renderDeactivate : function(){
-var div = $$('#gameElements .superWeapons div.'+this.type)[0]
-div.stopObserving('click')
-div.setOpacity(0);
-}
+	renderDeactivate : function(){
+	var div = $$('#gameElements .superWeapons div.'+this.type)[0]
+	div.stopObserving('click')
+	div.setOpacity(0);
+	}
 	
 })
 
@@ -147,7 +147,7 @@ var Weak = Class.create(SuperWeapon, {
 		  var randomUnit = this.scene.creeps[Math.round(this.scene.randomizer.next()*(this.scene.creeps.length-1))]
 		  this.scene.scenario.notify({name:"superWeaponsWeak", method: false, unit:randomUnit})
 		  this.scene.objects.push(anim)
-		  this.scene.rocketsLayer.attach(anim)
+		  this.scene.rankLayer.attach(anim)
     }
 		var self = this
 		this.weak(0)
