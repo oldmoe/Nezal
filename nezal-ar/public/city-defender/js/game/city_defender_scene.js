@@ -63,7 +63,7 @@ var CityDefenderScene = Class.create(Scene, {
 	init : function(){
 	},
 	addTurret : function(klass_name, x, y){
-    var klass = eval(klass_name)
+		var klass = eval(klass_name)
 		if(!this.replay){
 			this.replayEvents.push([this.reactor.ticks, 'addTurret', [klass_name, x, y]])
 		}
@@ -124,10 +124,10 @@ var CityDefenderScene = Class.create(Scene, {
 		return newArr
 	},
 	fire : function(name){
-			if(!this.replay){
-				this.replayEvents.push([this.reactor.ticks, "fire", [name]])
-			}
-			this[name].fire()
+		if(!this.replay){
+			this.replayEvents.push([this.reactor.ticks, "fire", [name]])
+		}
+		this[name].fire()
 	},
 	
 	doFire : function(name){
@@ -359,7 +359,7 @@ var CityDefenderScene = Class.create(Scene, {
 		this.objects.invoke('finish')
 		this.objects=[]
 	},
-  selectTower : function(x, y){
+	selectTower : function(x, y){
 		if(!this.replay) this.replayEvents.push([this.reactor.ticks, 'selectTower', [x, y]])
 		this.selectedTower = Map.grid[x][y].tower
 		var tower = this.selectedTower
@@ -380,8 +380,8 @@ var CityDefenderScene = Class.create(Scene, {
 	fps : 0,
 	score: 0,
 	moneyMultiplier: [1.1,1.1,1.1],
-   creepMultiplier: [1.05,1.13,1.17],
-   creepPowerMultiplier: [1.05,1.1,1.15],
+	creepMultiplier: [1.05,1.13,1.17],
+	creepPowerMultiplier: [1.05,1.1,1.15],
 	wave : 0,
 	sound : true,
 	wavesCount : 0,
