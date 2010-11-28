@@ -19,5 +19,15 @@ var TemplatesManager = Class.create({
   //TODO change the function params to JSON
   townhallPanel : function(townhallName, buildingInProgress, coins){
     return TrimPath.processDOMTemplate("townhall-panel-template", {'townhallName' : townhallName, 'buildingInProgress' : buildingInProgress, 'coins' : coins});
+  },
+
+  //TODO change the function params to JSON
+  resourceBuildingPanel : function(building){
+    return TrimPath.processDOMTemplate(building.name + "-panel-template", {'building' : building});
+  },
+  
+  //TODO change the function params to JSON
+  resourceAmountInGamePanel : function(amount, resourcePerMinute){
+    return TrimPath.processDOMTemplate("resource-amount-display-template", {'amount' : amount, 'resourcePerMinute' : resourcePerMinute});
   }
 });

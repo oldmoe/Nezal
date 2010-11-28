@@ -1,5 +1,5 @@
 module BD
-  class Mine < Building
+  class Mine < ResourceBuilding
     @name = "mine"
     @can_be_built_on = "iron"
     

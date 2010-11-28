@@ -1,3 +1,3 @@
-var Mine = Class.create(Building, {
+var Mine = Class.create(ResourceBuilding, {
   
 });

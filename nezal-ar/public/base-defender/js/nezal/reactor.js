@@ -8,23 +8,23 @@ var Reactor = Class.create({
 	},
 	
 	pause : function(){
-		this.running = false
+		this.running = false;
 	},
-	
+  
 	resume : function(){
-		this.running = true
-		this.tick()
+		this.running = true;
+		this.tick();
 	},
 	
 	stop : function(){
 		this.running = false;
-		this.events = []
+		this.events = [];
 	},
 	
 	run : function(callback){
-		this.running = true
-		if(callback) callback()
-		this.tick()
+		this.running = true;
+		if(callback) callback();
+		this.tick();
 	},
 	
 	tick : function(){
@@ -32,7 +32,7 @@ var Reactor = Class.create({
 		var self = this	
 		var toFire = []
 		try{
-			var event = this.events.last()
+			var event = this.events.last();
 			while(event && event[0] <= this.ticks){
 				var length = this.events.length - 1
 				toFire.push(this.events.pop())
@@ -46,7 +46,7 @@ var Reactor = Class.create({
 				}
 			})
 		}catch(e){
-			console.log(e)
+			//console.log(e)
 			//alert('inside reactor : '+ e)
 		}
 		this.ticks++
@@ -60,6 +60,17 @@ var Reactor = Class.create({
 			else h = m;
 		return this.events[h] && this.events[h][0] != ticks ? insert ? h : -1 : h;
 	},
+  
+  pushPeriodical : function(ticks, func, callback){
+    var self = this;
+    var newFunc = function(){
+      if(!self.running) return
+      func();
+      self.push(ticks, newFunc);
+    };
+    self.push(ticks, newFunc);
+    if(callback) callback();
+  },
 	
 	push : function(ticks, func, callback){
 		var delay = this.ticks + ticks

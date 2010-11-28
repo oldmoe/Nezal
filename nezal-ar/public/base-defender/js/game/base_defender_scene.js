@@ -45,7 +45,7 @@ var BaseDefenderScene = Class.create(Scene, {
     this._RenderMap();
     this._RenderBuildings();
     
-    this._RenderGamePanel();
+    this.renderGamePanel();
   },
   
   _RenderBuildings : function(){
@@ -89,9 +89,9 @@ var BaseDefenderScene = Class.create(Scene, {
     layer.ctx.clearRect(0, 0, this.width, this.height);
   },
   
-  _RenderGamePanel : function(){
-    $('rock-amount').innerHTML = this.game.resources.rock;
-    $('iron-amount').innerHTML = this.game.resources.iron;
+  renderGamePanel : function(){
+    $('rock-amount').innerHTML = this.game.templatesManager.resourceAmountInGamePanel(this.game.resources.rock, this.game.quarryFactory.rockPerMinute);
+    $('iron-amount').innerHTML = this.game.templatesManager.resourceAmountInGamePanel(this.game.resources.iron, this.game.mineFactory.ironPerMinute);
     $('workers-amount').innerHTML = this.game.workerFactory.idleWorkers + ' / ' + this.game.workerFactory.workers;
     $('coins-amount').innerHTML = this.game.user.coins;
   }

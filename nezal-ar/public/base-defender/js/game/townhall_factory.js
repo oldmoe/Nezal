@@ -3,6 +3,7 @@ var TownhallFactory = Class.create(BuildingFactory, {
   name : "townhall",
   canBeBuiltOn : "grass",
   buildingClass : Townhall,
+  factoryRegistry : {},
   
   initialize : function($super, game){
     $super(game);

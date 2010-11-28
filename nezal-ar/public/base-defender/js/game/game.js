@@ -34,8 +34,6 @@ var Game = Class.create({
     thisScene.layers.push(thisScene.buildingsLayer);
     
     this.templatesManager = new TemplatesManager(this.network);
-    this.reactor = new Reactor(500);
-    this.reactor.run();
     
     this.reInitialize();
     
@@ -55,7 +53,7 @@ var Game = Class.create({
   
   reInitialize : function(callback){
     this.gameStatus = this.network.initializeGame();
-    this.data = JSON.parse(this.gameStatus.game_data.metadata);
+    this.data = this.gameStatus.game_data.metadata;
     
     this.reflectStatusChange();
     
@@ -69,6 +67,10 @@ var Game = Class.create({
   },
   
   reflectStatusChange : function(){
+    if(this.reactor) this.reactor.stop();
+    this.reactor = new Reactor(500);
+    this.reactor.run();
+    
     this.user = new User(this);
     this.workerFactory = new WorkerFactory(this);
     this.resources.rock = this.user.data.rock;

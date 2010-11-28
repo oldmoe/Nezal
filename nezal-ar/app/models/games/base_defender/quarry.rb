@@ -1,5 +1,5 @@
 module BD
-  class Quarry < Building
+  class Quarry < ResourceBuilding
     @name = "quarry"
     @can_be_built_on = "rock"
     

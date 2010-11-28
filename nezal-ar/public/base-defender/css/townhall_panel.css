@@ -1,0 +1,25 @@
+#townhall-hire-worker {
+  border-bottom: 1px solid;
+}
+.townhall-new-building {
+  float: left;
+  cursor: pointer;
+  margin-right: 5px;
+}
+.townhall-new-building img {
+  -moz-border-radius : 5px;
+  -webkit-border-radius : 5px;
+  -o-border-radius : 5px;
+  border-radius : 5px;
+  background-color: antiqueWhite;
+  float: none;
+  margin: 3px 5px 0 0;
+  padding: 5px;
+}
+.townhall-new-building span {
+  display: block;
+  font-size: 10px;
+  margin-left: 3px;
+  font-weight: bold;
+  line-height: 8px;
+}

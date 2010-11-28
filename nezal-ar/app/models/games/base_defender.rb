@@ -1,5 +1,5 @@
 require "json"
-require_all "#{Dir.pwd}/app/models/games/base_defender/"
+#require_all "#{Dir.pwd}/app/models/games/base_defender/"
 
 class BaseDefender < Metadata
   @@speed_factor = 2
@@ -72,18 +72,23 @@ class BaseDefender < Metadata
     end
   end
   
-  def self.initialize_game_metadata( user_game_profile )
-    game_metadata = self.decode(user_game_profile.game.metadata)
+  def self.initialize_game_metadata( game )
+    game_metadata = self.decode(game.metadata)
     
     #Applying Speed Factor!
     @@building_modules.keys.each do |building_name|
       building_levels = game_metadata['buildings'][building_name]['levels']
       building_levels.keys.each do |level|
-        building_levels[level]['time'] = building_levels[level]['time'] / @@speed_factor
+        building_levels[level]['time'] /= @@speed_factor
+        building_levels[level]['unit_per_worker_minute'] *= @@speed_factor if building_levels[level]['unit_per_worker_minute']
       end
     end
     
     game_metadata
+  end
+  
+  def self.load_game(game)
+    @@game_metadata = initialize_game_metadata game || "{}"
   end
   
   def self.load_game_profile(user_game_profile)
@@ -94,7 +99,7 @@ class BaseDefender < Metadata
       user_game_profile.metadata = self.encode(origin)
     end
     
-    @@game_metadata = initialize_game_metadata user_game_profile
+    @@game_metadata = initialize_game_metadata user_game_profile.game
     calculate_jobs user_game_profile
     user_game_profile.metadata || "{}"
   end
@@ -103,15 +108,30 @@ class BaseDefender < Metadata
     data = self.decode(data)
     if data['event'] == 'upgrade'
       validation = upgrade_building(user_game_profile, data)
-    else data['event'] == 'buy_worker'
+    elsif data['event'] == 'buy_worker'
       validation = buy_worker(user_game_profile)
+    elsif data['event'] == 'assign_worker'
+      validation = assign_worker(user_game_profile, data)
+    elsif data['event'] == 'neighbours'
+      return neighbours(user_game_profile).to_s
     end
     user_game_profile['error'] = validation['error'] unless validation['valid']
     user_game_profile.metadata || "{}"
   end
   
+  def self.neighbours(user_game_profile)
+    all_game_profiles = UserGameProfile.find_all_by_game_id(user_game_profile.game.id).collect{|profile| profile.user_id}
+    return all_game_profiles - [user_game_profile.user.id]
+  end
+  
   def self.buy_worker(user_game_profile)
     return BD::WorkerFactory.buy_worker(user_game_profile);
+  end
+  
+  # {'building' : 'mine', 'coords' : {'x':'', 'y':''} }
+  def self.assign_worker(user_game_profile, data)
+    name = data['building']
+    return @@building_modules[name].assign_worker(user_game_profile, data['coords'])
   end
   
   # {'building' : 'townhall', 'coords' : {'x':'', 'y':''} }
@@ -122,7 +142,6 @@ class BaseDefender < Metadata
     
     name = data['building']
     building = profile_data[name]
-    location_hash = convert_location(data['coords'])
     if building.nil? || building[building].nil?
       validation = @@building_modules[name].build(user_game_profile, data['coords'])
       return validation

@@ -11,7 +11,7 @@ var Townhall = Class.create(Building, {
   
   _AttachNewBuildingsTriggers : function(){
     var thisGame = this.game;
-    if ($('townhall-build-new-building')) {
+    if ($$('.building-functions').any()) {
       $('build-quarry').observe('click', function(){
         thisGame.buildingMode.on(thisGame.quarryFactory.newQuarry(), function(){});
       });

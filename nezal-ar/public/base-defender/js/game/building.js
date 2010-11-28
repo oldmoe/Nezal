@@ -5,6 +5,7 @@ var Building = Class.create({
   remainingBuildTime : null,
   _LoadTime : null,
   coords : {x : null, y : null},
+  currentLevelBluePrints : null,
   
   initialize : function(factory, buildingSpecs){
     this.name = factory.name;
@@ -17,6 +18,7 @@ var Building = Class.create({
     this.game.scene.registerLocation(this.coords['x'], this.coords['y'], this);
     this.inProgress = buildingSpecs.inProgress;
     this.remainingBuildTime = buildingSpecs.remainingTime;
+    this.currentLevelBluePrints = this.factory.bluePrints['levels'][this.level];
   },
   
   /** This should return if we need to off the building mood or no*/
@@ -128,10 +130,6 @@ var Building = Class.create({
     /****************************************************************************************/
    
     /****************************** Validating location **************************************/
-   
-    console.log("this.canBeBuiltOn : " + this.canBeBuiltOn);
-    console.log("this.game.scene.map[y][x] : " + this.game.scene.map[y][x]);
-    console.log("this.game.scene.landmarks.get(this.canBeBuiltOn) : " + this.game.scene.landmarks.get(this.canBeBuiltOn));
    
     if(this.game.scene.map[y][x] != this.game.scene.landmarks.get(this.canBeBuiltOn)){
       alert(this.name + " can be built on " + this.canBeBuiltOn + " only!");

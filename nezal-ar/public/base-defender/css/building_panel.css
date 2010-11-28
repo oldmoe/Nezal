@@ -20,7 +20,7 @@
   right: 4px;
   top: 0;
 }
-#townhall-presentation {
+.building-presentation {
   border-right : 1px solid;
   height : 80px;
   margin-top : 5px;
@@ -29,53 +29,31 @@
   float : left;
 }
 
-#townhall-presentation span{
+.building-presentation span{
   display : block;
   float : none;
   font-family : fantasy;
   font-size : 15px;
   font-weight : bold;
-  margin-left : 5px;
+  text-align : center;
 }
 
-#townhall-presentation img{
+.building-presentation img{
   float : left;
   height : 40px;
   margin-left : 15px;
   margin-top : 0;
   width : 40px;
 }
-#townhall-functions {
+.building-functions {
   float : left;
   height : 90px;
   margin : 5px;
   width : 295px;
 }
 
-#townhall-hire-worker {
-  border-bottom: 1px solid;
-}
-.townhall-new-building {
-  float: left;
-  cursor: pointer;
-  margin-right: 5px;
-}
-.townhall-new-building img {
-  -moz-border-radius : 5px;
-  -webkit-border-radius : 5px;
-  -o-border-radius : 5px;
-  border-radius : 5px;
-  background-color: antiqueWhite;
-  float: none;
-  margin: 3px 5px 0 0;
-  padding: 5px;
-}
-.townhall-new-building span {
-  display: block;
-  font-size: 10px;
-  margin-left: 3px;
-  font-weight: bold;
-  line-height: 8px;
+.building-functions span {
+  font-size: 14px;
 }
 
 .building-in-progress {

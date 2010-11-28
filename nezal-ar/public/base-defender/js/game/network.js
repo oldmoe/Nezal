@@ -30,12 +30,20 @@ var Network = Class.create({
     return {'done' : done, 'gameStatus' : gameStatus};
   },
   
+  neighbourEmpires : function(){
+    return this.contactTheBoss({ 'event' :'neighbours' });
+  },
+  
   upgradeBuilding : function(name, coords){
     return this.contactTheBoss({ 'event' :'upgrade', 'building' : name, 'coords' : coords });
   },
   
   buyWorker : function(){
     return this.contactTheBoss({ 'event' :'buy_worker'});
+  },
+  
+  assignWorker : function(name, coords){
+    return this.contactTheBoss({ 'event' :'assign_worker', 'building' : name, 'coords' : coords });
   },
   
   fetchTemplate : function(path, callBack){

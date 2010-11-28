@@ -1,3 +1,3 @@
-var Quarry = Class.create(Building, {
+var Quarry = Class.create(ResourceBuilding, {
   
 });

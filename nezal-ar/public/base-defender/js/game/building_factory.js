@@ -4,7 +4,6 @@ var BuildingFactory = Class.create({
   bluePrints : null,
   maximumNubmer : null,
   newBuildingSpecs : {'level' : 0, 'coords' : {'x' : null, 'y' : null}},
-  factoryRegistry : {},
   
   initialize : function(game){
     
@@ -16,7 +15,6 @@ var BuildingFactory = Class.create({
     
     if( this.game.user.data[this.name] ){
       
-      //I know this will loop only once, as we can only have one townhall
       for( var buildingInstanceCoords in game.user.data[this.name] ){
         this.factoryRegistrar( buildingInstanceCoords, new this.buildingClass(this, this.game.user.data[this.name][buildingInstanceCoords]) );
       }
