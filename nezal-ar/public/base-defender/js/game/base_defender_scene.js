@@ -90,10 +90,23 @@ var BaseDefenderScene = Class.create(Scene, {
   },
   
   renderGamePanel : function(){
-    $('rock-amount').innerHTML = this.game.templatesManager.resourceAmountInGamePanel(this.game.resources.rock, this.game.quarryFactory.rockPerMinute);
-    $('iron-amount').innerHTML = this.game.templatesManager.resourceAmountInGamePanel(this.game.resources.iron, this.game.mineFactory.ironPerMinute);
+    var rock = this._FormatResourceDisplay(this.game.resources.rock);
+    var iron = this._FormatResourceDisplay(this.game.resources.iron);
+    $('rock-amount').innerHTML = this.game.templatesManager.resourceAmountInGamePanel(rock, this.game.quarryFactory.rockPerMinute);
+    $('iron-amount').innerHTML = this.game.templatesManager.resourceAmountInGamePanel(iron, this.game.mineFactory.ironPerMinute);
     $('workers-amount').innerHTML = this.game.workerFactory.idleWorkers + ' / ' + this.game.workerFactory.workers;
     $('coins-amount').innerHTML = this.game.user.coins;
+  },
+  
+  _FormatResourceDisplay : function(amount){
+    var amount = Math.floor(amount) + "";
+    var part = amount.length % 3;
+    var splits = [];
+    if(part != 0) splits = [amount.substr(0, part)];
+    for(var i=part; i<amount.length; i+=3){
+        splits.push( amount.substr(i, 3) );
+    }
+    return splits.join(",");
   }
   
 });

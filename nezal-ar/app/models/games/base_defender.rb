@@ -2,12 +2,15 @@ require "json"
 #require_all "#{Dir.pwd}/app/models/games/base_defender/"
 
 class BaseDefender < Metadata
-  @@speed_factor = 2
-  @@building_modules = {
-    "townhall" => BD::Townhall, 
+  @@speed_factor = 3
+  @@resource_building_modules = {
     "quarry" => BD::Quarry,
     "mine" => BD::Mine
   }
+  @@building_modules = {
+    "townhall" => BD::Townhall 
+  }.merge @@resource_building_modules
+  
   @@game_metadata = nil
   
   def self.adjusted_game_metadata
@@ -40,20 +43,67 @@ class BaseDefender < Metadata
   end
   
   def self.calculate_jobs(user_game_profile)
-    metadata = JSON.parse(user_game_profile.metadata)
+    user_game_profile.metadata = JSON.parse(user_game_profile.metadata)
+    
+    building_jobs user_game_profile
+    resource_collection_jobs user_game_profile
+  
+    user_game_profile.metadata['last_loaded'] = Time.now.utc.to_i
+    user_game_profile.metadata = self.encode(user_game_profile.metadata)
+    user_game_profile.save
+  end
+  
+  def self.resource_collection_jobs(user_game_profile)
+    metadata = user_game_profile.metadata
+    
+    if metadata['last_loaded'].nil?
+      return
+    end
+    
+    resources_collected = {}
+    now = Time.now.utc.to_i
+    seconds_passed_since_last_load = now - metadata['last_loaded']
+    @@resource_building_modules.keys.each do |resource_building_name|
+      if( metadata[resource_building_name].present? )
+        resource_building_module = @@building_modules[resource_building_name]
+        resource_building = metadata[resource_building_name]
+        resource_building.keys.each do |building_instance_coords|
+          resource_building_instance = resource_building[building_instance_coords]
+          if( resource_building_instance['assigned_workers'].present? && resource_building_instance['assigned_workers'] > 0 )
+            puts "$$$$$$$$$$$$$$$$$$$$$$$$"
+            resource_building_level = resource_building_instance['level']
+            assigned_workers = resource_building_instance['assigned_workers']
+            unit_per_worker_minute = @@game_metadata['buildings'][resource_building_name]['levels'][resource_building_level.to_s]['unit_per_worker_minute']
+            total_per_minute = unit_per_worker_minute * assigned_workers
+            collect = resource_building_module.collects
+            resources_collected[collect] = 0 if resources_collected[collect].nil?
+            resources_collected[collect] += ((total_per_minute/60.0) * seconds_passed_since_last_load).round
+          end
+        end
+      end
+    end
+    
+    resources_collected.keys.each do |resource|
+      metadata[resource] += resources_collected[resource]
+    end
+    
+  end
+  
+  def self.building_jobs(user_game_profile)
+    metadata = user_game_profile.metadata
     @@building_modules.keys.each do |building|
       if( metadata[building].present? )
         metadata[building].keys.each do |building_instance_coords|
           if(metadata[building][building_instance_coords]['inProgress'])
-            calculate_building_job(user_game_profile, metadata, metadata[building][building_instance_coords], @@game_metadata['buildings'][building] )
+            building_job(user_game_profile, metadata[building][building_instance_coords], @@game_metadata['buildings'][building] )
           end
         end
       end
     end
   end
   
-  def self.calculate_building_job(user_game_profile, metadata, building, blue_prints )
-    puts "<><><><><><><<><><><><><><><"
+  def self.building_job(user_game_profile, building, blue_prints )
+    metadata = user_game_profile.metadata
     since = building['startedBuildingAt']
     now = Time.now.utc.to_i
     next_level = building['level'] + 1
@@ -64,11 +114,8 @@ class BaseDefender < Metadata
       building['inProgress'] = false
       building['startedBuildingAt'] = nil
       metadata['idle_workers'] += 1
-      user_game_profile.metadata = self.encode(metadata)
-      user_game_profile.save
     else
       building['remainingTime'] = remaining
-      user_game_profile.metadata = self.encode(metadata)
     end
   end
   

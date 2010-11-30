@@ -1,5 +1,9 @@
 module BD
   class ResourceBuilding < Building
+    def self.collects
+      @collect
+    end
+    
     def self.assign_worker(user_game_profile, coords)
       user_profile_metadata = JSON.parse(user_game_profile.metadata)
       location_hash = BaseDefender.convert_location(coords)
