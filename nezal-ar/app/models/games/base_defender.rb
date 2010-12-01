@@ -56,6 +56,7 @@ class BaseDefender < Metadata
   def self.resource_collection_jobs(user_game_profile)
     metadata = user_game_profile.metadata
     
+    #This is the case in the first load of user profile
     if metadata['last_loaded'].nil?
       return
     end
@@ -63,21 +64,25 @@ class BaseDefender < Metadata
     resources_collected = {}
     now = Time.now.utc.to_i
     seconds_passed_since_last_load = now - metadata['last_loaded']
+    
+    #Looping on every resource building module
     @@resource_building_modules.keys.each do |resource_building_name|
+      #Checking if the user have built this type of building or not yet
       if( metadata[resource_building_name].present? )
         resource_building_module = @@building_modules[resource_building_name]
         resource_building = metadata[resource_building_name]
+        #Looping on every resource building instance
         resource_building.keys.each do |building_instance_coords|
           resource_building_instance = resource_building[building_instance_coords]
+          #Checking if there is any worker assigned to the building
           if( resource_building_instance['assigned_workers'].present? && resource_building_instance['assigned_workers'] > 0 )
-            puts "$$$$$$$$$$$$$$$$$$$$$$$$"
             resource_building_level = resource_building_instance['level']
             assigned_workers = resource_building_instance['assigned_workers']
             unit_per_worker_minute = @@game_metadata['buildings'][resource_building_name]['levels'][resource_building_level.to_s]['unit_per_worker_minute']
             total_per_minute = unit_per_worker_minute * assigned_workers
-            collect = resource_building_module.collects
-            resources_collected[collect] = 0 if resources_collected[collect].nil?
-            resources_collected[collect] += ((total_per_minute/60.0) * seconds_passed_since_last_load).round
+            collects = resource_building_module.collects
+            resources_collected[collects] = 0 if resources_collected[collects].nil?
+            resources_collected[collects] += ((total_per_minute/60.0) * seconds_passed_since_last_load).round
           end
         end
       end

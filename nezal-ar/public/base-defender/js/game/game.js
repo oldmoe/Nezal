@@ -84,5 +84,9 @@ var Game = Class.create({
     this.scene.map = this.user.data["map"];
     this.scene.navigation.blocks.vertical = this.scene.map.length;
     this.scene.navigation.blocks.horizontal = this.scene.map[0].length;
+  },
+  
+  loadUserEmpire : function(user_id){
+    this.updateGameStatus( this.network.neighbourEmpire(user_id) );
   }
 });
