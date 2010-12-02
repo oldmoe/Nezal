@@ -42,7 +42,7 @@ FBDefender = {
         });
     },
 	
-	subscribe : function(){
+  	subscribe : function(){
         FBConnect.subscribe(function(){
                   new Ajax.Request(  'users/subscribe' ,
                   {   method:'post', 
@@ -61,7 +61,7 @@ FBDefender = {
                       }
                   });
         });
-	},
+	  },
     
     isFan : function(){
         FBConnect.isFan(function(status){

@@ -28,7 +28,11 @@ var KConnect = {
                 KConnect.KON.services.showSignInBox();
             }
         });
-    }
+    },
+    
+	  getUsersInfo : function(ids, result, callback){
+			if(callback)callback()
+	  },
   
 }
 

@@ -23,7 +23,7 @@
 	<body>
 	  <div id="gameContainer">
 	    
-      <div id="friends" style="position: absolute; top: 555px; left: 300px; width: 160px;">
+      <div id="friends" style="position: absolute; top: 555px; left: 30px; width: 700px;">
         <div>Map View</div>
       </div>
       
@@ -101,7 +101,8 @@
     <script>
   	$(document).observe('dom:loaded',function(){
       game = null;
-      KConnect.init(function(){
+      serviceProvider = KConnect
+      serviceProvider.init(function(){
         game = new Game();
         console.log(game)
         game.start();

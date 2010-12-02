@@ -31,6 +31,18 @@ var FBConnect = {
         FBConnect.callback();
 	  },
 	  
+	  getUsersInfo : function(ids, result, callback){
+			var	query2 = FB.Data.query("SELECT name,uid FROM user WHERE uid IN ({0})", ids);
+			FB.Data.waitOn([query2], function(){
+				if(!query2.value.length) 
+				  query2.value=[]
+				query2.value.each(function(row){
+					result[row.uid].name = row.name
+				})
+				if(callback)callback()
+			})
+	  },
+	  
     init : function( successCallback ) {
         FBConnect.location = window.location.toString();
         var fbRoot = document.createElement('div');

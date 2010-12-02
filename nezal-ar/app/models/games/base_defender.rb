@@ -46,9 +46,8 @@ class BaseDefender < Metadata
                     }
       }
     elsif data['request'] == 'friends'
-      result = UserGameProfile.where('game_id'=> profile.game.id).select('user_id').collect{|p|p.user_id}
+      result = UserGameProfile.where('game_id'=> profile.game.id).all.collect{|p| { :user_id => p.user_id, :service_id => p.user.service_id } }
     end
-    
     return JSON.generate(result);
   end
   

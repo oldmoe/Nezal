@@ -38,11 +38,24 @@ var Game = Class.create({
     //The below code needs rewrite///
     var self = this;
     var mapView = "<div>Map View</div>";
-    var freindIDs = this.network.neighbourIDs();
-    freindIDs.each(function(friendID){
-      mapView += self.templatesManager.freindRecord(friendID);
-    });
-    $('friends').innerHTML = mapView;
+    var friendIDs = this.network.neighbourIDs();
+    var mapping = {};
+    var ids = []
+    friendIDs.each(function(user, index){
+                  mapping[user["service_id"]] = { "index" : index };
+                  ids[index]= user["service_id"]
+                })
+    // getUsersInfo takes array of service_ids & a hash of service_ids to fill with retrieved names
+		serviceProvider.getUsersInfo(ids, mapping , function(){
+                                            friendIDs.each(function(friendID, i){
+                                              if(mapping[friendID["service_id"]].name)
+                                                friendID["name"] = mapping[friendID["service_id"]].name
+                                              else
+                                                friendID["name"] = friendID["service_id"]
+                                              mapView += self.templatesManager.friendRecord(friendID["user_id"], friendID["name"]);
+                                            });
+                                            $('friends').innerHTML = mapView;
+                                        });
     //////////////////////////////////
     
     this.reInitialize();
