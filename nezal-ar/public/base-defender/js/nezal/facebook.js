@@ -3,7 +3,9 @@ var FBConnect = {
     appIds : {
         		'local-city-defender' : "110196392331352",
         		'city-defender' : "107418339291733",
-        		'defenderofarabia' : "122519734470004"
+        		'defenderofarabia' : "122519734470004",
+        		'local-base-defender' : "156711934356799",
+        		'base-defender' : "111103738948774"
 	  },
 	  
     channelPath : "xd_receiver.html",
