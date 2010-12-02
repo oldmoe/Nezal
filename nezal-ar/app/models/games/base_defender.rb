@@ -46,7 +46,7 @@ class BaseDefender < Metadata
                     }
       }
     elsif data['request'] == 'friends'
-      
+      result = UserGameProfile.where('game_id'=> 5).select('user_id').collect{|p|p.user_id}
     end
     
     return JSON.generate(result);

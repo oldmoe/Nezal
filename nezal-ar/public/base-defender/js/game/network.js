@@ -39,8 +39,21 @@ var Network = Class.create({
       onSuccess: function(response) {
         userData = JSON.parse(response.responseText).user_data;
       }
-    })
+    });
     return userData;
+  },
+  
+  neighbourIDs : function(){
+    var IDs = [];
+    new Ajax.Request('generic', {
+      method : 'get',
+      asynchronous : false,
+      parameters: { 'data' : Object.toJSON({'request' : 'friends'})},
+      onSuccess: function(response) {
+        IDs = JSON.parse(response.responseText);
+      }
+    });
+    return IDs;
   },
   
   upgradeBuilding : function(name, coords){

@@ -29,5 +29,9 @@ var TemplatesManager = Class.create({
   //TODO change the function params to JSON
   resourceAmountInGamePanel : function(amount, resourcePerMinute){
     return TrimPath.processDOMTemplate("resource-amount-display-template", {'amount' : amount, 'resourcePerMinute' : resourcePerMinute});
+  },
+  
+  freindRecord : function(friendId){
+    return TrimPath.processDOMTemplate("friend-record-template", {'friendId' : friendId});
   }
 });

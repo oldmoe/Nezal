@@ -35,6 +35,16 @@ var Game = Class.create({
     
     this.templatesManager = new TemplatesManager(this.network);
     
+    //The below code needs rewrite///
+    var self = this;
+    var mapView = "<div>Map View</div>";
+    var freindIDs = this.network.neighbourIDs();
+    freindIDs.each(function(friendID){
+      mapView += self.templatesManager.freindRecord(friendID);
+    });
+    $('friends').innerHTML = mapView;
+    //////////////////////////////////
+    
     this.reInitialize();
     
     var buildingImages = this.buildingMode.buildings.collect(function(building){
