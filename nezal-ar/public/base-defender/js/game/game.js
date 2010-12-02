@@ -76,6 +76,7 @@ var Game = Class.create({
     this.resources.rock = this.user.data.rock;
     this.resources.iron = this.user.data.iron;
     
+    BuildingFactory._GlobalRegistry = {};
     this.townhallFactory = new TownhallFactory(this);
     this.quarryFactory = new QuarryFactory(this);
     this.mineFactory = new MineFactory(this);
@@ -87,6 +88,7 @@ var Game = Class.create({
   },
   
   loadUserEmpire : function(user_id){
-    this.updateGameStatus( this.network.neighbourEmpire(user_id) );
+    this.gameStatus.user_data = this.network.neighbourEmpire(user_id);
+    this.updateGameStatus( this.gameStatus );
   }
 });

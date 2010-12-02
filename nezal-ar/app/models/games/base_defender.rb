@@ -31,7 +31,6 @@ class BaseDefender < Metadata
   end
   
   def self.process_request (profile, data)
-    puts "$$$$$$$$$$$$$$$ >>>>>>>>>>>>>" + data
     data = self.decode(data)
     result = {}
     if data['request'] == 'neighbour_empire'
@@ -46,8 +45,11 @@ class BaseDefender < Metadata
                       :metadata => neighbour_user_profile.metadata
                     }
       }
+    elsif data['request'] == 'friends'
+      
     end
-    return result
+    
+    return JSON.generate(result);
   end
   
   def self.convert_location( location )
