@@ -23,7 +23,7 @@ class UserGameProfileTest < MiniTest::Unit::TestCase
     game.ranks << rank
     game.save!
     # Create the user
-    user = FbUser.create!('fb_id' => "fdddddddvcvcddd")
+    user = User.create!('service_id' => "fdddddddvcvcddd")
     # Assert no null fields accepted
     assert_raises(ActiveRecord::StatementInvalid) {UserGameProfile.create!(:game_id => game.id)}
     assert_raises(ActiveRecord::StatementInvalid) {UserGameProfile.create!(:user_id => 1)}
@@ -50,11 +50,11 @@ class UserGameProfileTest < MiniTest::Unit::TestCase
     game.ranks << rank
     game.save!
     # Create the user
-    user = FbUser.create!('fb_id' => "fdddddddvcvcddd")
+    user = User.create!('service_id' => "fdddddddvcvcddd")
     # Create a game_profile
     profile = UserGameProfile.create(:game_id => game.id, :user_id => user.id)
     # Create a user campaign
-    user_camp = UserCampaign.new(:fb_user => user.fb_id )
+    user_camp = UserCampaign.new(:user_service_id => user.service_id )
     user_camp.campaign = campaign
     profile.user_campaigns << user_camp
     assert_equal profile.id, user_camp.profile_id

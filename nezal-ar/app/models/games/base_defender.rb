@@ -30,6 +30,26 @@ class BaseDefender < Metadata
     }
   end
   
+  def self.process_request (profile, data)
+    puts "$$$$$$$$$$$$$$$ >>>>>>>>>>>>>" + data
+    data = self.decode(data)
+    result = {}
+    if data['request'] == 'neighbour_empire'
+      user_id = data['user_id']
+      neighbour_user_profile = UserGameProfile.where('game_id'=> profile.game.id, 'user_id'=> user_id).first
+      load_game_profile( neighbour_user_profile )
+      result = { 
+      :user_data => { :rank => neighbour_user_profile.rank.name,
+                      :exp => neighbour_user_profile.exp, 
+                      :newbie => neighbour_user_profile.newbie,
+                      :locale => neighbour_user_profile.locale, 
+                      :metadata => neighbour_user_profile.metadata
+                    }
+      }
+    end
+    return result
+  end
+  
   def self.convert_location( location )
     @@adjustment_size = 4
     if location.class == String

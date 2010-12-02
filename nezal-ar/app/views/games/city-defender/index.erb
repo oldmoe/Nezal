@@ -9,6 +9,7 @@
 		<script src="swf/flashcanvas.js"></script>
 	<![endif]-->
 	<script src="http://connect.facebook.net/en_US/all.js"></script>
+	<script type="text/javascript" src="http://www.kongregate.com/javascripts/kongregate_api.js"></script>
 	<script src="<%=bust_cache('js/all/base.js')%>"></script>
 	<script src="<%=bust_cache('js/all/nezal.js')%>"></script>
   <script src="<%=bust_cache('js/all/payments.js')%>"></script>
@@ -110,9 +111,6 @@
 <![endif]-->
 <script>		
 	development = false
-	FBConnect.init(function(){
-        Intro.initialize();							
-    });
 	var loadedProgress = 0
 	function onFinishProgress()
 	{
@@ -125,6 +123,11 @@
 	$$('#pause  #loadingBarEmpty #loadingBarRight').first().style.backgroundImage = "url('images/intro/loading_bar_right.png')"
 	$$('#pause  #loadingBarEmpty #loadingBarFill').first().style.backgroundImage = "url('images/intro/loading_bar_middle.png')"
 	$(document).observe('dom:loaded',function(){
+		  <% if @service_provider=='fb' %>
+        FBDefender.init();
+      <% elsif @service_provider=='k' %>
+        KDefender.init();
+      <% end %>
     	$$('#inProgress img').each(function(image){
   	      	image.onload = onFinishProgress;
       			image.src = "images/intro/"+image.getAttribute('name')

@@ -56,6 +56,9 @@ class Metadata
     user_campaign.metadata || "{}"
   end
   
+  def self.process_request(profile, data)
+  end
+  
   def self.bookmark(profile)
   end
   

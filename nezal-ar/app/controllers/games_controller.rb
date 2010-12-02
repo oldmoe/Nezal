@@ -57,9 +57,9 @@ class GamesController < ApplicationController
     klass = get_helper_klass()
     camp = Campaign.where(:game_id => @game.id, :path => params['camp_path']).first
     camp_metadata = klass.load_campaign(camp)
-    user_camp = UserCampaign.where( 'fb_user' => @user.fb_id, 'campaign_id'=> camp.id).first
+    user_camp = UserCampaign.where( 'user_id' => @user.id, 'campaign_id'=> camp.id).first
     if !user_camp
-      user_camp = UserCampaign.new(:profile_id => @game_profile.id, 'campaign_id'=> camp.id, 'fb_user' => @user.fb_id)
+      user_camp = UserCampaign.new(:profile_id => @game_profile.id, 'campaign_id'=> camp.id, 'user_id' => @user.id)
       klass.init_user_campaign(user_camp)
     end
     user_camp_metadata = klass.load_user_campaign(user_camp)
@@ -74,7 +74,7 @@ class GamesController < ApplicationController
   post '/:game_name/:camp_path/metadata' do 
     klass = get_helper_klass()
     camp = Campaign.where(:game_id => @game.id, :path => params['camp_path']).first
-    user_camp = UserCampaign.where( 'fb_user' => @user.fb_id, 'campaign_id'=> camp.id ).first
+    user_camp = UserCampaign.where( 'user_id' => @user.id, 'campaign_id'=> camp.id ).first
     klass.edit_user_campaign(user_camp, params['data'])
     user_camp_metadata = klass.load_user_campaign(user_camp)
     data = {
@@ -86,6 +86,12 @@ class GamesController < ApplicationController
                    }
     }
     JSON.generate(data)
+  end
+  
+  get '/:game_name/generic' do
+    klass = get_helper_klass()
+    result = klass.process_request(@game_profile, params['data'])
+    return result
   end
   
   # Change User to be nolonger a newbie
@@ -100,12 +106,12 @@ class GamesController < ApplicationController
   end
   
   post '/:game_name/users/coins' do
-    @user.coins += params['coins'].to_i;
-    @user.save
-    JSON.generate( {:user_data => {'coins' => @user.coins}})
+   # @user.coins += params['coins'].to_i;
+   # @user.save
+   # JSON.generate( {:user_data => {'coins' => @user.coins}})
   end
   
-  # User bookmarked the application
+ # User bookmarked the application
   post '/:game_name/users/bookmark' do
     if(!@game_profile.bookmarked)
       klass = get_helper_klass()
@@ -114,7 +120,7 @@ class GamesController < ApplicationController
     JSON.generate( {:user_data => {'coins' => @game_profile.user.coins}} )
   end
   
-  # User bookmarked the application
+  # User likes the application
   post '/:game_name/users/like' do
     if(!@game_profile.like)
       klass = get_helper_klass()
@@ -123,6 +129,14 @@ class GamesController < ApplicationController
     JSON.generate( {:user_data => {'coins' => @game_profile.user.coins}} )
   end
   
+  # User subscribed to the application
+  post '/:game_name/users/subscribe' do
+    if(!@game_profile.subscribed)
+      klass = get_helper_klass()
+      klass.subscribe(@game_profile)
+    end
+    JSON.generate( {:user_data => {'coins' => @game_profile.user.coins}} )
+  end
   # Change User Locale
   post '/:game_name/users/locale' do
     @game_profile.locale = params['locale'];
@@ -144,10 +158,31 @@ class GamesController < ApplicationController
 	payment = Payment.create!({:profile_id=>@game_profile.id,:price=>params['price']})
     erb :"#{@app_configs["game_name"]}/daopay_confirmation"
   end
-  get '/:game_name' do 
-    File.read(File.join( 'public', @app_configs["game_name"], 'index.html'))
-  end
   
+  get '/:game_name' do 
+    puts  params
+    File.read(File.join( 'public', @app_configs["game_name"], @service_provider + '-' + 'index.html'))
+  end
+
+  # Get the required campaign / mission info
+  # also load the replay data
+  # package them all as json and send over the wire  
+  get '/:game_name/replays/:id' do     
+    replay = Replay.where(:id => params[:id]).first
+    klass = get_helper_klass()
+    data = {
+        :replay => replay.replay,
+        :level => replay.level,
+        :mission_name => replay.mission_name,
+        :user_metadata => replay.profile.metadata,
+        :game_metadata => klass.load_game(@game),
+        :campaign_metadata => Campaign.where(:path => replay.camp_name).first.metadata,
+        :camp_name => replay.camp_name
+    }
+    data.to_json
+  end
+
+
   protected
   
   def payment_fault_redirection
@@ -158,10 +193,10 @@ class GamesController < ApplicationController
 		response = {:top => []}
 		camp = Campaign.where(:game_id => @game.id, :path => params['camp_name']).first
 		result = @user.ranking camp.id,params['friends']
-		response[:close] = result[:previous].collect{|uc| {:id => uc[:fb_user], :score => uc[:score] } } + [{:id => result[:user_camp][:fb_user], :score => result[:user_camp][:score], :rank => result[:rank]}]+ result[:next].collect{|uc| {:id => uc[:fb_user], :score => uc[:score] } }
-		top_scorers = FbUser.top_scorers camp.id,params['friends']
+		response[:close] = result[:previous].collect{|uc| {:id => uc[:user_service_id], :score => uc[:score] } } + [{:id => result[:user_camp][:user_service_id], :score => result[:user_camp][:score], :rank => result[:rank]}]+ result[:next].collect{|uc| {:id => uc[:user_service_id], :score => uc[:score] } }
+		top_scorers = @user.top_scorers camp.id camp.id, params['friends']
 		top_scorers.each_with_index do |item,index|
-			response[:top].push( {'id'=> top_scorers[index]['fb_user'],'score'=> top_scorers[index]['score']})			
+			response[:top].push( {'id'=> top_scorers[index]['user_service_id'],'score'=> top_scorers[index]['score']})			
 		end
 		return  JSON.generate(response)
   end 
@@ -170,10 +205,10 @@ class GamesController < ApplicationController
 		response = {:top => []}
 		camp = Campaign.where(:game_id => @game.id, :path => params['camp_name']).first
 		result = @user.ranking camp.id
-		response[:close] = result[:previous].collect{|uc| {:id => uc[:fb_user], :score => uc[:score] } } + [{:id => result[:user_camp][:fb_user], :score => result[:user_camp][:score], :rank => result[:rank]}]+ result[:next].collect{|uc| {:id => uc[:fb_user], :score => uc[:score] } }
-		top_scorers = FbUser.top_scorers camp.id
+		response[:close] = result[:previous].collect{|uc| {:id => uc[:user_service_id], :score => uc[:score] } } + [{:id => result[:user_camp][:user_service_id], :score => result[:user_camp][:score], :rank => result[:rank]}]+ result[:next].collect{|uc| {:id => uc[:user_service_id], :score => uc[:score] } }
+		top_scorers = @user.top_scorers camp.id
 		top_scorers.each_with_index do |item,index|
-			response[:top].push( {'id'=> top_scorers[index]['fb_user'],'score'=> top_scorers[index]['score']})			
+			response[:top].push( {'id'=> top_scorers[index]['user_service_id'],'score'=> top_scorers[index]['score']})			
 		end
 	  JSON.generate(response)
 	end
@@ -181,4 +216,9 @@ class GamesController < ApplicationController
   post '/:game_name/payment_issues' do
     Message.create!( { :body => params["body"], "type" => 'payment_issue', :profile_id => @game_profile.id } )
   end
- end
+
+  post '/:game_name/replay' do
+     replay = Replay.create!({:profile_id=>@game_profile.id,:game_id=>@game.id,:level=>params['level'],:replay=>params['replay'],:score=>params['score'], :camp_name=>params['camp_name'],:mission_name=>params['mission_name']})
+  end
+  
+end

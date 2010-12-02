@@ -12,7 +12,7 @@ class IndexesTest < MiniTest::Unit::TestCase
   
   def create_recs
     UserCampaign.destroy_all
-    FbUser.destroy_all  
+    User.destroy_all  
     Game.destroy_all
     # Create 20 games
     (1..10).each do |i|
@@ -26,10 +26,10 @@ class IndexesTest < MiniTest::Unit::TestCase
     end
     # Create 10000 users with profile in each game
     (1..1000).each do |i|
-      user = FbUser.create!('fb_id' => i.to_s)
+      user = User.create!('service_id' => i.to_s)
     end
     games = Game.find(:all)
-    users = FbUser.find(:all)
+    users = User.find(:all)
     games.each do |game|
       users.each do |user|
         # Create a game_profile
@@ -40,12 +40,12 @@ class IndexesTest < MiniTest::Unit::TestCase
     profiles.each do |profile|
       # Create a game_profile
       UserCampaign.create(:profile_id => profile.id, :campaign_id => profile.game.campaigns.first().id,
-                           :score => profile.id - profile.id%2 , :fb_user => profile.user.fb_id )
+                           :score => profile.id - profile.id%2 , :user_service_id => profile.user.service_id )
     end
   end
   
   def destory_recs
-    FbUser.destroy_all  
+    User.destroy_all  
     Game.destroy_all
   end
   
@@ -58,7 +58,7 @@ class IndexesTest < MiniTest::Unit::TestCase
     create_recs
 #=end
     puts "============= Test User Game Profile Index ====================="
-    user = FbUser.first()
+    user = User.first()
     puts "Using INDEXED BY statement: "
     t = (Time.now.to_f * 10000).to_i
     records = UserGameProfile.find_by_sql( 'SELECT * FROM user_game_profiles indexed by index_user_game_profiles_on_user_id WHERE user_id = ' +
