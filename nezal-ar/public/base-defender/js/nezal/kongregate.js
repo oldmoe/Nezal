@@ -6,7 +6,10 @@ var KConnect = {
         // Load the API
         kongregateAPI.loadAPI( function (){
             // Set the global kongregate API object
-            KConnect.KON = kongregateAPI.getAPI();
+            if(KConnect.KON == null)
+            {
+                KConnect.KON = kongregateAPI.getAPI();
+            }
             KConnect.KON.services.connect();
             var isGuest = KConnect.KON.services.isGuest();
             if ( isGuest == false ) {
@@ -21,6 +24,7 @@ var KConnect = {
                 });
                 callback();
             }else{
+                KConnect.KON.services.addEventListener("login", KDefender.init);
                 KConnect.KON.services.showSignInBox();
             }
         });

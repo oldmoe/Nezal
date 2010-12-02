@@ -1,9 +1,10 @@
 KDefender = {
 
     init : function(){
-        KConnect.init(function(){
-                        Intro.initialize();
-                      });
+      KConnect.init(function(){
+        game = new Game();
+        game.start();
+      });
     }	
   
 }
