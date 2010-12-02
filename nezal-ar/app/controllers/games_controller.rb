@@ -163,6 +163,10 @@ class GamesController < ApplicationController
     puts  params
     File.read(File.join( 'public', @app_configs["game_name"], @service_provider + '-' + 'index.html'))
   end
+  get '/:game_name/' do 
+    puts  params
+    File.read(File.join( 'public', @app_configs["game_name"], @service_provider + '-' + 'index.html'))
+  end
 
   # Get the required campaign / mission info
   # also load the replay data
