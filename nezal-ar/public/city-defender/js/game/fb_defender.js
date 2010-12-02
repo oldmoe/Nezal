@@ -1,4 +1,11 @@
 FBDefender = {
+
+    init : function(){
+      FBConnect.init(function(){
+                      Intro.initialize();
+//        							$('scores').src = 'scores/friends.html?t=l9z73c'
+                      });
+    },
     
     imagesUrl : 'http://studio.nezal.com/fb-games/city-defender/images/',
     
@@ -11,6 +18,7 @@ FBDefender = {
     
     invite : function(){
        FBConnect.invite(Text.facebook.invite.inviteMsg, Text.facebook.invite.userPrompt, FBDefender.gameName() );
+	    _gaq.push(['_trackEvent', 'Social', 'Invite', navigator.userAgent]);
     },
     
     bookmark : function(){
@@ -18,6 +26,7 @@ FBDefender = {
                   new Ajax.Request(  'users/bookmark' ,
                   {   method:'post', 
                       onSuccess : function(t, json){
+						  _gaq.push(['_trackEvent', 'Social', 'Bookmark', navigator.userAgent]);
                           var data = JSON.parse(t.responseText);
                           var oldCoins = Intro.userData.coins
                           Intro.userData.coins = data['user_data'].coins;
@@ -32,6 +41,27 @@ FBDefender = {
                   });
         });
     },
+	
+	subscribe : function(){
+        FBConnect.subscribe(function(){
+                  new Ajax.Request(  'users/subscribe' ,
+                  {   method:'post', 
+                      onSuccess : function(t, json){
+						  _gaq.push(['_trackEvent', 'Social', 'Subscribe', navigator.userAgent]);
+                          var data = JSON.parse(t.responseText);
+                          var oldCoins = Intro.userData.coins
+                          Intro.userData.coins = data['user_data'].coins;
+                          if(oldCoins != data['user_data'].coins)
+                          {
+                              Intro.userData.subscribed = true;
+                              Intro.showSubscribeCongrates();
+                          }
+                          if(Intro.currentPage == Intro.pages['marketPlace'].index && FBDefender.isMarket==true)
+                              Intro.select('marketPlace');
+                      }
+                  });
+        });
+	},
     
     isFan : function(){
         FBConnect.isFan(function(status){
@@ -40,6 +70,7 @@ FBDefender = {
                       new Ajax.Request(  'users/like' ,
                       {   method:'post', 
                           onSuccess : function(t, json){
+							_gaq.push(['_trackEvent', 'Social', 'Like', navigator.userAgent]);
                               var data = JSON.parse(t.responseText);
                               var oldCoins = Intro.userData.coins
                               Intro.userData.coins = data['user_data'].coins;
@@ -57,6 +88,7 @@ FBDefender = {
     },
     
     onPublishSuccess : function(){
+		/*
         new Ajax.Request(  'users/coins' ,
         {   method:'post', 
             parameters: { 'coins' : 5 },
@@ -67,9 +99,11 @@ FBDefender = {
                     Intro.select('marketPlace');
             }
         });
+		*/
     },
-
+	
     publishMissionCompletion : function(mission){
+		_gaq.push(['_trackEvent', 'Publish', 'Mission complection', navigator.userAgent]);
         FBConnect.getUserInfo( function(){
                   var loc = "http://apps.facebook.com/" + FBConnect.url() + "/";
                   var attachment =  {
@@ -92,6 +126,7 @@ FBDefender = {
     },
 
     publishCampaignCompletion : function(campaign){
+		_gaq.push(['_trackEvent', 'Publish', 'Campaign completion', navigator.userAgent]);
         FBConnect.getUserInfo( function(){
                   var loc = "http://apps.facebook.com/" + FBConnect.url() + "/";
                   var attachment =  {
@@ -114,6 +149,7 @@ FBDefender = {
     },
       
     publishRankPromotion : function(info){
+		_gaq.push(['_trackEvent', 'Publish', 'Promotion', navigator.userAgent]);
         FBConnect.getUserInfo( function(){
                   var loc = "http://apps.facebook.com/" + FBConnect.url() + "/";
                   var attachment =  {
@@ -137,6 +173,7 @@ FBDefender = {
     },
     
     publishUnlockedItem : function(info){
+		_gaq.push(['_trackEvent', 'Publish', 'Unlock Item', navigator.userAgent]);
         FBConnect.getUserInfo( function(){
                   var loc = "http://apps.facebook.com/" + FBConnect.url() + "/";
                   var attachment =  {
@@ -158,6 +195,7 @@ FBDefender = {
     },
 
     publishUpgradedItem : function(info){
+		_gaq.push(['_trackEvent', 'Publish', 'upgrade item', navigator.userAgent]);
         FBConnect.getUserInfo( function(){
                   var loc = "http://apps.facebook.com/" + FBConnect.url() + "/";
                   var attachment =  {

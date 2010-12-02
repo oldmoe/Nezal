@@ -7,6 +7,8 @@ load Dir.pwd + '/lib/jsmin.rb'
 
 @base = Dir.pwd + "/public/city-defender/"
 
+@service_providers = [ 'fb', 'k' ]
+
 @files = {
 	'base' => [
 		"prototype.js",
@@ -17,6 +19,7 @@ load Dir.pwd + '/lib/jsmin.rb'
 
 	'game' => [
 		"fb_defender.js",
+		"k_defender.js",
 		"configs/creep_config.js",
 		"configs/tower_config.js",
 		"configs/super_weapon_config.js",
@@ -101,9 +104,13 @@ end
 def render
 	STDERR.print "Processing index.html ... "
 	template = ERB.new(File.read(Dir.pwd + '/app/views/games/city-defender/index.erb'))
-	result = template.result(binding)
-	File.open("#{@base}index.html", "w") do |file|
-		file.write(result)
+	@service_provider = nil
+  @service_providers.each do | provider |
+  	@service_provider = provider 
+  	result = template.result(binding)
+  	File.open("#{@base}#{@service_provider}-index.html", "w") do |file|
+	  	file.write(result)
+  	end
 	end
 	STDERR.puts " DONE"
 end
