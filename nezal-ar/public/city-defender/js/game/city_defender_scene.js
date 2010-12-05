@@ -215,7 +215,7 @@ var CityDefenderScene = Class.create(Scene, {
 			x = 0
 		}else if(entry[0] == Map.width - 1){
 			theta = 180
-			x = map.width - 1
+			x = Map.width - 1
 		}else if(entry[1] == 0){
 			theta = 90
 			y = 0	

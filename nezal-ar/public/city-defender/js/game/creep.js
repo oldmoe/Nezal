@@ -27,8 +27,8 @@ var Creep = Class.create(Unit, {
 			this.bottom = this.x - Map.entry[0][0] * Map.pitch
 		}else if(x == (Map.width - 1)){			
 			this.rotation = 180
-			this.top = Map.entry[1][1] * Map.pitch - this.y					
-			this.bottom = this.y - (Map.entry[0][1]+1) * Map.pitch
+			this.bottom = this.y - Map.entry[0][1] * Map.pitch
+			this.top = (Map.entry[1][1] + 1) * Map.pitch- this.y
 		}else if(y == Map.height - 1){
 			this.rotation = 270
 			this.top = this.x - Map.entry[0][0] * Map.pitch
@@ -97,6 +97,7 @@ var Creep = Class.create(Unit, {
 					this.x += this.speed * Math.cos(this.rotation * Math.PI / 180 );
 					this.y += this.speed * Math.sin(this.rotation * Math.PI / 180 );
 				}
+				return 0
 			}
 		}else{		
 			this.rotation+= this.direction * this.angles[this.index]
