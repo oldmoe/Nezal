@@ -97,7 +97,6 @@ var Creep = Class.create(Unit, {
 					this.x += this.speed * Math.cos(this.rotation * Math.PI / 180 );
 					this.y += this.speed * Math.sin(this.rotation * Math.PI / 180 );
 				}
-				return 0
 			}
 		}else{		
 			this.rotation+= this.direction * this.angles[this.index]
