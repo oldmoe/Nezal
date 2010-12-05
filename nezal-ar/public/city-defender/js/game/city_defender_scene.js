@@ -261,11 +261,14 @@ var CityDefenderScene = Class.create(Scene, {
 		var creepCat = eval(creep.category)
 		this.push(delay, function()
 		{
-				var obj = new creepCat(x, y,self,creep.values)
+				var obj = null 
+				
 				if(creepCat == Plane || creepCat == RedPlane){
+					obj = new creepCat(0, y,self,creep.values)
 					self.addPlane(obj)
 				}
 				else{
+					obj = new creepCat(x, y,self,creep.values)
 					self.addCreep(obj)
 				}
 				self.creepMutators.each(function(mutator){
