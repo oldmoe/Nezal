@@ -15,7 +15,7 @@ var KConnect = {
             if ( isGuest == false ) {
                 var uid = KConnect.KON.services.getUserId();
                 var authToken = KConnect.KON.services.getGameAuthToken();
-                console.log(uid, authToken)
+                //console.log(uid, authToken)
                 Ajax.Responders.register({
                     onCreate: function(req) {
 		                    req.url += (req.url.include('?') ? '&' : '?') + Object.toQueryString( {'uid' : uid, 'session_key' :authToken })

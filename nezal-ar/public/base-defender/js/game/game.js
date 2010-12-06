@@ -117,9 +117,6 @@ var Game = Class.create({
     this.gameStatus.user_data = this.network.neighbourEmpire(user_id);
     this.neighborGame = true;
     this.updateGameStatus( this.gameStatus );
-    this.scene.hideGamePanel();
-    if(this.selectedBuildingPanel){
-      this.selectedBuildingPanel.hide();
-    }
+    this.scene.adjustNeighborScene();
   }
 });

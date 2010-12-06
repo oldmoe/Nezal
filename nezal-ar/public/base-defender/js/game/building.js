@@ -61,32 +61,35 @@ var Building = Class.create({
     
     if (this.inProgress) {
       this.game.scene.buildingsLayer.ctx.drawImage(Loader.images.buildings['progress.png'], x, y );
-      $('building-remaining-time').style['top'] = (y - 15) + "px";
-      $('building-remaining-time').style['left'] = (x - 20) + "px";
-      $('building-remaining-time').show();
-      
-      var reactorCallback = function(){
-        var remainingTime = self.upgradeRemainingTime();
-        if( remainingTime > 0 ){
-          var remainingText = remainingTime + " Seconds";
-          $('building-remaining-time').innerHTML = self.game.templatesManager.buildingRemainingTime(remainingText);
-          self.game.reactor.push(0, reactorCallback);
-        }else{
-          //Adding a delay before calling the server to overcome time precision errors
-          if (!self.noMore) {
-            self.noMore = true
-            self.game.reactor.push(2, function(){
-              self.noMore = false
-              $('building-remaining-time').hide();
-              self.game.reInitialize(function(){
-                self.game.scene.render();
+      if (!this.game.neighborGame) {
+        $('building-remaining-time').style['top'] = (y - 15) + "px";
+        $('building-remaining-time').style['left'] = (x - 20) + "px";
+        $('building-remaining-time').show();
+        
+        var reactorCallback = function(){
+          var remainingTime = self.upgradeRemainingTime();
+          if (remainingTime > 0) {
+            var remainingText = remainingTime + " Seconds";
+            $('building-remaining-time').innerHTML = self.game.templatesManager.buildingRemainingTime(remainingText);
+            self.game.reactor.push(0, reactorCallback);
+          }
+          else {
+            //Adding a delay before calling the server to overcome time precision errors
+            if (!self.noMore) {
+              self.noMore = true
+              self.game.reactor.push(2, function(){
+                self.noMore = false
+                $('building-remaining-time').hide();
+                self.game.reInitialize(function(){
+                  self.game.scene.render();
+                });
               });
-            });
+            }
           }
         }
+        
+        this.game.reactor.push(0, reactorCallback);
       }
-      
-      this.game.reactor.push(0, reactorCallback);
       
     } else {
       this.game.scene.buildingsLayer.ctx.drawImage(Loader.images.buildings[this.name + '.png'], x, y);

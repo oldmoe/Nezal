@@ -89,8 +89,12 @@ var BaseDefenderScene = Class.create(Scene, {
     layer.ctx.clearRect(0, 0, this.width, this.height);
   },
   
-  hideGamePanel : function(){
+  adjustNeighborScene : function(){
     $('game-panel').hide();
+    if(this.game.selectedBuildingPanel){
+      this.game.selectedBuildingPanel.hide();
+    }
+    $('building-remaining-time').hide();
   },
   
   renderGamePanel : function(){
