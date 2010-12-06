@@ -103,9 +103,10 @@
       game = null;
       serviceProvider = KConnect
       serviceProvider.init(function(){
-        game = new Game();
-        console.log(game)
-        game.start();
+        try {
+          game = new Game();
+          game.start();
+        }catch(e){}
       });
     })
     </script>

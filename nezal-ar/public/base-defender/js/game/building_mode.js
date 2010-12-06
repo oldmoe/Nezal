@@ -25,19 +25,23 @@ var BuildingMode = Class.create({
   _AttachCanvasClickListener : function(){
     var self = this;
     $('canvasContainer').observe('click', function(mouse){
+      if(self.game.neighborGame)
+        return;
+      
       var x = mouse.pointerX();
       var y = mouse.pointerY();
       
       var blockX = Math.floor(x / game.scene.navigation.blockSize);
       var blockY = Math.floor(y / game.scene.navigation.blockSize);
+        
       if(self.isOn) 
-        self._AttachModeOnListener(blockX, blockY);
+        self._ModeOnAction(blockX, blockY);
       else
-        self._AttachModeOffListener(blockX, blockY);
+        self._ModeOffAction(blockX, blockY);
     });
   },
   
-  _AttachModeOffListener : function(blockX, blockY){
+  _ModeOffAction : function(blockX, blockY){
     var selectedBuilding = this.game.scene.lookupLocation(blockX, blockY);
     if(selectedBuilding){
       selectedBuilding.renderPanel();
@@ -45,7 +49,7 @@ var BuildingMode = Class.create({
     }
   },
   
-  _AttachModeOnListener : function(blockX, blockY){
+  _ModeOnAction : function(blockX, blockY){
     if (this.selectedBuilding.build(blockX, blockY)) {
       this.callback();
       this.off();

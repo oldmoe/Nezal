@@ -35,7 +35,7 @@ var Network = Class.create({
     new Ajax.Request('generic', {
       method : 'get',
       asynchronous : false,
-      parameters: { 'data' : Object.toJSON({'user_id' : user_id, 'request' : 'neighbour_empire'})},
+      parameters: { 'data' : Object.toJSON({'user_id' : user_id, 'request' : 'neighbor_empire'})},
       onSuccess: function(response) {
         userData = JSON.parse(response.responseText).user_data;
       }

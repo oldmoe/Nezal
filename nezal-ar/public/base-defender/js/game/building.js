@@ -92,7 +92,7 @@ var Building = Class.create({
       this.game.scene.buildingsLayer.ctx.drawImage(Loader.images.buildings[this.name + '.png'], x, y);
     }
     
-    if( this.game.selectedBuildingPanel != null && this.game.selectedBuildingPanel.selectedBuilding.name == this.name ){
+    if( !this.game.neighborGame && this.game.selectedBuildingPanel != null && this.game.selectedBuildingPanel.selectedBuilding.name == this.name ){
       this.renderPanel();
     }
   },

@@ -89,9 +89,15 @@ var BaseDefenderScene = Class.create(Scene, {
     layer.ctx.clearRect(0, 0, this.width, this.height);
   },
   
+  hideGamePanel : function(){
+    $('game-panel').hide();
+  },
+  
   renderGamePanel : function(){
+    if(this.game.neighborGame) return;
     var rock = this._FormatResourceDisplay(this.game.resources.rock);
     var iron = this._FormatResourceDisplay(this.game.resources.iron);
+    $('game-panel').show();
     $('rock-amount').innerHTML = this.game.templatesManager.resourceAmountInGamePanel(rock, this.game.quarryFactory.rockPerMinute);
     $('iron-amount').innerHTML = this.game.templatesManager.resourceAmountInGamePanel(iron, this.game.mineFactory.ironPerMinute);
     $('workers-amount').innerHTML = this.game.workerFactory.idleWorkers + ' / ' + this.game.workerFactory.workers;

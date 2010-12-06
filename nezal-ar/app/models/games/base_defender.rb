@@ -13,6 +13,10 @@ class BaseDefender < Metadata
   
   @@game_metadata = nil
   
+  def self.building_modules
+    @@building_modules
+  end
+  
   def self.adjusted_game_metadata
     @@game_metadata
   end
@@ -33,20 +37,10 @@ class BaseDefender < Metadata
   def self.process_request (profile, data)
     data = self.decode(data)
     result = {}
-    if data['request'] == 'neighbour_empire'
-      user_id = data['user_id']
-      neighbour_user_profile = UserGameProfile.where('game_id'=> profile.game.id, 'user_id'=> user_id).first
-      load_game_profile( neighbour_user_profile )
-      result = { 
-      :user_data => { :rank => neighbour_user_profile.rank.name,
-                      :exp => neighbour_user_profile.exp, 
-                      :newbie => neighbour_user_profile.newbie,
-                      :locale => neighbour_user_profile.locale, 
-                      :metadata => neighbour_user_profile.metadata
-                    }
-      }
+    if data['request'] == 'neighbor_empire'
+      result = BD::Neighbor.neighbor_empire(profile, data)
     elsif data['request'] == 'friends'
-      result = UserGameProfile.where('game_id'=> profile.game.id).all.collect{|p| { :user_id => p.user_id, :service_id => p.user.service_id } }
+      result = BD::Neighbor.friends(profile)
     end
     return JSON.generate(result);
   end
@@ -185,16 +179,9 @@ class BaseDefender < Metadata
       validation = buy_worker(user_game_profile)
     elsif data['event'] == 'assign_worker'
       validation = assign_worker(user_game_profile, data)
-    elsif data['event'] == 'neighbours'
-      return neighbours(user_game_profile).to_s
     end
     user_game_profile['error'] = validation['error'] unless validation['valid']
     user_game_profile.metadata || "{}"
-  end
-  
-  def self.neighbours(user_game_profile)
-    all_game_profiles = UserGameProfile.find_all_by_game_id(user_game_profile.game.id).collect{|profile| profile.user_id}
-    return all_game_profiles - [user_game_profile.user.id]
   end
   
   def self.buy_worker(user_game_profile)

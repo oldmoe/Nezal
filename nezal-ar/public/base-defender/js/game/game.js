@@ -14,6 +14,7 @@ var Game = Class.create({
   townhallFactory : null,
   quarryFactory : null,
   mineFactory : null,
+  neighborGame : null,
   resources : {
     rock : 0,
     iron : 0
@@ -22,7 +23,6 @@ var Game = Class.create({
   initialize : function(){
     this.network = new Network();
     this.scene = new BaseDefenderScene(this);
-    this.buildingMode = new BuildingMode(this);
   },
   
   start : function(){
@@ -38,6 +38,7 @@ var Game = Class.create({
     //The below code needs rewrite///
     var self = this;
     var mapView = "<div>Map View</div>";
+    mapView += '<a style="font-size: 13px;" href="Javascript:game.reInitialize(function(){game.scene.render()})">Go Home!</a>'
     var friendIDs = this.network.neighbourIDs();
     var mapping = {};
     var ids = []
@@ -75,6 +76,7 @@ var Game = Class.create({
   },
   
   reInitialize : function(callback){
+    this.neighborGame = false;
     this.gameStatus = this.network.initializeGame();
     this.data = this.gameStatus.game_data.metadata;
     
@@ -94,6 +96,7 @@ var Game = Class.create({
     this.reactor = new Reactor(500);
     this.reactor.run();
     
+    this.buildingMode = new BuildingMode(this);
     this.user = new User(this);
     this.workerFactory = new WorkerFactory(this);
     this.resources.rock = this.user.data.rock;
@@ -112,6 +115,11 @@ var Game = Class.create({
   
   loadUserEmpire : function(user_id){
     this.gameStatus.user_data = this.network.neighbourEmpire(user_id);
+    this.neighborGame = true;
     this.updateGameStatus( this.gameStatus );
+    this.scene.hideGamePanel();
+    if(this.selectedBuildingPanel){
+      this.selectedBuildingPanel.hide();
+    }
   }
 });

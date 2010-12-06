@@ -98,8 +98,10 @@
       var game = null;
       serviceProvider = FBConnect
       serviceProvider.init(function(){
-        game = new Game();
-        game.start();
+        try {
+          game = new Game();
+          game.start();
+        } catch(e){}
       });
     </script>
 	</body>
