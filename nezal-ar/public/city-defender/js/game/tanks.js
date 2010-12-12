@@ -40,5 +40,5 @@ var RedTank = Class.create(Creep,{
   name : 'RedTank',
   price : 3,
   power : 2,
-  hp : 125, maxHp : 125
+  hp : 150, maxHp : 150
 })
