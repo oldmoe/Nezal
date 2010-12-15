@@ -1,0 +1,25 @@
+.notification_message_container {
+  -moz-border-radius : 20px;
+  -webkit-border-radius : 20px;
+  -o-border-radius : 20px;
+  border-radius : 20px;
+  background-color : black;
+  height : 200px;
+  left : 200px;
+  position : absolute;
+  top : 100px;
+  width : 300px;
+}
+
+.notification_message_container span {
+  color : white;
+  display : block;
+  margin-left : 50px;
+  margin-top : 20px;
+}
+
+.notification_message_container button.notification_ok {
+  position : absolute;
+  left : 125px;
+  top : 155px;
+}

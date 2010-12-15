@@ -33,5 +33,9 @@ var TemplatesManager = Class.create({
   
   friendRecord : function(friendId, friendName){
     return TrimPath.processDOMTemplate("friend-record-template", {'friendId' : friendId, 'friendName' : friendName});
+  },
+  
+  notification : function(text, id){
+    return TrimPath.processDOMTemplate("notification-template", {'notification_message' : text, 'id' : id});
   }
 });

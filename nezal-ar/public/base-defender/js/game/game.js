@@ -106,6 +106,8 @@ var Game = Class.create({
     this.townhallFactory = new TownhallFactory(this);
     this.quarryFactory = new QuarryFactory(this);
     this.mineFactory = new MineFactory(this);
+    
+    new Notification(this).showAll();
     this.tutorial = new Tutorial(this);
     
     this.scene.map = this.user.data["map"];

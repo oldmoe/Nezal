@@ -182,6 +182,8 @@ class BaseDefender < Metadata
       validation = buy_worker(user_game_profile)
     elsif data['event'] == 'assign_worker'
       validation = assign_worker(user_game_profile, data)
+    elsif data['event'] == 'notification_ack'
+      validation = Notification.delete({:profile => user_game_profile, :id => data['id']})
     end
     user_game_profile['error'] = validation['error'] unless validation['valid']
     user_game_profile.metadata || "{}"

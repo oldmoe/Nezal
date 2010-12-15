@@ -56,6 +56,10 @@ var Network = Class.create({
     return IDs;
   },
   
+  notificationAck : function(id){
+    this.contactTheBoss({ 'event' :'notification_ack', 'id' : id });
+  },
+  
   upgradeBuilding : function(name, coords){
     return this.contactTheBoss({ 'event' :'upgrade', 'building' : name, 'coords' : coords });
   },
