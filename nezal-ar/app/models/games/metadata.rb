@@ -55,6 +55,20 @@ class Metadata
   def self.load_user_campaign(user_campaign)
     user_campaign.metadata || "{}"
   end
+
+  def self.init_quest(quest)
+    quest.metadata = "{}"
+    quest.save
+  end
+
+  def self.edit_quest(quest, data)
+    quest.metadata = data
+    quest.save
+  end
+  
+  def self.load_quest(quest)
+    quest.metadata    
+  end
   
   def self.process_request(profile, data)
   end

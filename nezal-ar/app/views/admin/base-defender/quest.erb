@@ -1,0 +1,36 @@
+<script type='text/javascript'>
+var Quest = {
+    conditions : {},
+    rewards : {},
+
+    init : function()
+    {
+        Quest.conditions = <%=@quest.metadata%>.conditions;
+        Quest.rewards = <%=@quest.metadata%>.rewards;
+    }
+}
+Quest.init();
+</script>
+
+<div id="game">
+
+  <div id="backLink"> 
+    <a href="/<%=AdminController::ADMIN_URL%>/<%=@quest.game[:name]%>/quests">
+      Back
+    </a>
+  </div>
+
+  <div id="game_name">
+    <%=@quest.game.name%> : 
+    <span id="quest_name" class="title" style="color :  DarkOliveGreen;">
+      <%=@quest.name%> 
+    </span>
+  </div>
+
+  <div id="conditions">
+    <div class="form_row">
+        <input type="submit" value="save" class="submit" onclick="CampaignData.saveMission(); return false;"/>
+    </div>
+  </div>
+
+</div>

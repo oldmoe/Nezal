@@ -4,6 +4,7 @@ class Game < ActiveRecord::Base
 
   has_many   :ranks, :dependent => :destroy, :autosave => true
   has_many   :campaigns, :dependent => :destroy, :autosave => true
+  has_many   :quests, :dependent => :destroy, :autosave => true
   belongs_to    :current_campaign, :class_name => "Campaign", :foreign_key => "current_campaign_id",  :autosave => false
  
   before_validation do

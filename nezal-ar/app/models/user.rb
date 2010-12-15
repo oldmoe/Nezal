@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   def top_scorers(camp_id, user_service_ids = [], limit = 3)
     conditions = " campaign_id = #{camp_id} AND service_type = #{self.service_type} "    
     if user_service_ids && !(user_service_ids.empty?)
-      ids = User.all(:conditions => " service_id IN (#{user_service_ids}) ").collect { |user| user.id }.to_s.sub('[', '').sub(']', '')
+      ids = User.all(:conditions => " service_id IN (#{user_service_ids}) ").collect { |user| user.id }.join(',')
       conditions += " AND user_id IN (#{ids}) "
     end
     UserCampaign.all( :conditions => conditions, :limit => limit, :order=> 'user_campaigns.score DESC, user_campaigns.user_id' )

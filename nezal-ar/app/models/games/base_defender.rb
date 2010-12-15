@@ -157,7 +157,15 @@ class BaseDefender < Metadata
   def self.load_game(game)
     @@game_metadata = initialize_game_metadata game || "{}"
   end
+
+  def self.init_quest(quest)
+    BD::Quest::init_quest(quest)
+  end
   
+  def self.edit_quest(quest, data)
+    BD::Quest::edit_quest(quest, data)
+  end
+
   def self.load_game_profile(user_game_profile)
     #reading a -maybe- attached error message from the object and porting it to the metadata!
     if(user_game_profile['error'])
@@ -168,6 +176,7 @@ class BaseDefender < Metadata
     
     @@game_metadata = initialize_game_metadata user_game_profile.game
     calculate_jobs user_game_profile
+    BD::Quest::assess_user_quests user_game_profile
     user_game_profile.metadata || "{}"
   end
   

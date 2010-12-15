@@ -16,7 +16,6 @@ use	Rack::MethodOverride
 use Rack::Static, :urls => [ "/stylesheets", "/javascripts", "/favicon.ico", "/game_images", "/html/facebook"], :root => "public"  
 
 router = Rack::Router.new(nil) do |r|
-
   app_configs = {}
   FB_CONFIGS::each { | app_config | app_configs[app_config[1]['name']] = app_config[1]['game_name'] }
   app_configs.each_pair do | app, game_name|

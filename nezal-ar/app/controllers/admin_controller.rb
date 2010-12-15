@@ -1,4 +1,4 @@
-class AdminController < ApplicationController 
+class AdminController < ApplicationController
   
   ADMIN_URL = "nezal-admin"
 
@@ -6,17 +6,19 @@ class AdminController < ApplicationController
   
   set :views, ::File.dirname(::File.dirname(__FILE__)) +  '/views/admin'
 
-  get '' do 
-    @games = Game.all()
-    erb :index , {:layout => :app}
-  end
-  
+  # Serve the add new game page
   get '/new' do
     erb :new , {:layout => :app}
   end
-  
+
+  # View list of all games in Database
+  get '/' do 
+    @games = Game.all()
+    erb :index , {:layout => :app}
+  end
+
   # Add a new Game
-  post '' do
+  post '/' do
     @game = Game.create({:name => params["name"], :description => params["description"]})
     @app_configs = FB_CONFIGS::find('name', @game.name)
     helper = ActiveSupport::Inflector.camelize(@app_configs['game_name'].sub("-", "_"))
@@ -24,15 +26,33 @@ class AdminController < ApplicationController
     klass.init_game(@game)
     redirect "/#{ADMIN_URL}/#{@game.name}"
   end
-
+  
+  # Serve the show.erb to display game details { Ranks, Campaigns .. doesnt include the metadata}
   get '/:game_name' do 
-    Game.all().each do |game|  
-      if game.name == params[:game_name]     
-        @game = game  
-      end
-    end
+    @game = Game.where(:name => params["game_name"]).first
     @game.campaigns.each { |campaign| puts campaign }
     erb :show , {:layout => :app}
+  end
+
+  # Serve the game metadata edit page
+  get '/:game_name/metadata/edit' do 
+    @game = Game.find_by_name(params[:game_name])
+    erb "#{@app_configs['game_name']}/show".to_sym , {:layout => :app}
+  end
+  
+  # Serve the game object metadata
+  get '/:game_name/metadata' do 
+    @game = Game.find_by_name(params[:game_name])
+    klass = self.get_helper_klass
+    klass.load_game(@game)
+  end
+  
+  # Edit game metadata 
+  put '/:game_name/metadata' do 
+    @game = Game.find_by_name(params[:game_name])
+    klass = self.get_helper_klass
+    klass.edit_game(@game, params["data"])
+    ''
   end
 
   # Add rank to a game 
@@ -51,6 +71,14 @@ class AdminController < ApplicationController
     redirect "/#{ADMIN_URL}/#{@game.name}"
   end
 
+  # Set current campaign
+  post '/:game_id/current-campaign' do 
+    @game = Game.find(params[:game_id])
+    @game.current_campaign= Campaign.find(params[:current_campaign])
+    @game.save
+    redirect "/#{ADMIN_URL}/#{@game[:name]}"
+  end
+
   # Add campaign to a game 
   post '/:game_id/campaigns' do
     @game = Game.find(params[:game_id])
@@ -66,59 +94,90 @@ class AdminController < ApplicationController
     @game.save
     redirect "/#{ADMIN_URL}/#{@game.name}"
   end
-  
-  # Set current campaign
-  post '/:game_id/current-campaign' do 
-    @game = Game.find(params[:game_id])
-    @game.current_campaign= Campaign.find(params[:current_campaign])
-    @game.save
-    redirect "/#{ADMIN_URL}/#{@game[:name]}"
-  end
-  
-  # This should be moved to a separate helper 
-  # But for now we put it here till we figure out what urls belong to helpers
-  # and what urls belong to main AdminController
-  get '/:game_name/metadata/edit' do 
-    @game = Game.find_by_name(params[:game_name])
-    erb "#{@app_configs['game_name']}/show".to_sym , {:layout => :app}
-  end
-  
-  # get the game object metadata
-  get '/:game_name/metadata' do 
-    @game = Game.find_by_name(params[:game_name])
-    klass = self.get_helper_klass
-    klass.load_game(@game)
-  end
-  
-  put '/:game_name/metadata' do 
-    @game = Game.find_by_name(params[:game_name])
-    klass = self.get_helper_klass
-    klass.edit_game(@game, params["data"])
-    ''
-  end
-  
-  get '/:game_name/:camp_id/metadata/edit' do 
+
+  # Serve the campaign metadata edit page
+  get '/:game_name/campaigns/:camp_id/metadata/edit' do 
     @camp = Campaign.find(params["camp_id"])
     erb "#{@app_configs['game_name']}/campaign".to_sym , {:layout => :app}
   end
   
-  # get the game object metadata
-  get '/:game_name/:camp_id/metadata' do 
+  # Serve the campaign object metadata
+  get '/:game_name/campaigns/:camp_id/metadata' do 
     @camp = Campaign.find(params["camp_id"])
-    @camp.metadata
+    klass = self.get_helper_klass
+    klass.load_campaign(@camp)
   end
   
-  put '/:game_name/:camp_id/metadata' do 
+  # Edit campaign metadata 
+  put '/:game_name/campaigns/:camp_id/metadata' do 
     @camp = Campaign.find(params["camp_id"])
     klass = self.get_helper_klass
     klass.edit_campaign(@camp, params["data"])
     ''
   end
-  get '/:game_name/stats' do
-	game = Game.find_by_name(params[:game_name])
-	totoalCount = UserGameProfile.count(:conditions => "game_id = #{game.id}")
-	newbieCount = UserGameProfile.count(:conditions => "game_id = #{game.id} AND newbie = 't'")
-	expneqz = UserGameProfile.count(:conditions => "game_id = #{game.id} AND exp = 0")
-	 return "user count = #{totoalCount} ||| newbieCount = #{newbieCount} ||| users exp not equal 0 = #{expneqz}"
+
+  ######################################################################
+  # Game Quests Requests
+  # View list of Quests, Edit Quest page, Add, Remove, Retrieve and Save metadata
+  ######################################################################  
+  # Serve game quests list display page 
+  get '/:game_name/quests' do
+    @game = Game.where(:name => params["game_name"]).first
+    erb :quests , {:layout => :app}
   end
+
+  # Add a quest to a game 
+  post '/:game_name/quests' do
+    @game = Game.where(:name => params["game_name"]).first
+    parent = if params["parent"] && !(params["parent"].empty?)
+              params["parent"]
+            else
+              nil
+            end
+    quest = Quest.new({:name => params["name"], :primal => params["primary"], :parent => parent})
+    klass = self.get_helper_klass
+    klass.init_quest(quest)
+    @game.quests << quest
+    @game.save
+    quest.save
+    redirect "/#{ADMIN_URL}/#{@game[:name]}/quests"
+  end
+  
+  # Delete a quest
+  put '/:game_name/quests/:quest_id' do
+    @game = Game.where(:name => params["game_name"]).first
+    @game.quests.delete(@game.quests.find(params[:quest_id]))
+    @game.save
+    redirect "/#{ADMIN_URL}/#{@game.name}/quests"
+  end
+
+  # Serve the quest metadata edit page
+  get '/:game_name/quests/:quest_id/metadata/edit' do 
+    @quest = Quest.find(params["quest_id"])
+    erb "#{@app_configs['game_name']}/quest".to_sym , {:layout => :app}
+  end
+  
+  # Serve the quest object metadata
+  get '/:game_name/quests/:quest_id/metadata' do 
+    @quest = Quest.find(params["quest_id"])
+    klass = self.get_helper_klass
+    klass.load_quest(@quest)
+  end
+  
+  # Edit Quest metadata 
+  put '/:game_name/quests/:quest_id/metadata' do 
+    @quest = Quest.find(params["quest_id"])
+    klass = self.get_helper_klass
+    klass.edit_quest(@quest, params["data"])
+    ''
+  end
+
+  get '/:game_name/stats' do
+	  game = Game.find_by_name(params[:game_name])
+	  totoalCount = UserGameProfile.count(:conditions => "game_id = #{game.id}")
+	  newbieCount = UserGameProfile.count(:conditions => "game_id = #{game.id} AND newbie = 't'")
+    expneqz = UserGameProfile.count(:conditions => "game_id = #{game.id} AND exp = 0")
+    return "user count = #{totoalCount} ||| newbieCount = #{newbieCount} ||| users exp equal 0 = #{expneqz}"
+  end
+
 end
