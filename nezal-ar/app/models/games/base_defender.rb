@@ -111,18 +111,18 @@ class BaseDefender < Metadata
   
   def self.building_jobs(user_game_profile)
     metadata = user_game_profile.metadata
-    @@building_modules.keys.each do |building|
-      if( metadata[building].present? )
-        metadata[building].keys.each do |building_instance_coords|
-          if(metadata[building][building_instance_coords]['inProgress'])
-            building_job(user_game_profile, metadata[building][building_instance_coords], @@game_metadata['buildings'][building] )
+    @@building_modules.keys.each do |building_name|
+      if( metadata[building_name].present? )
+        metadata[building_name].keys.each do |building_instance_coords|
+          if(metadata[building_name][building_instance_coords]['inProgress'])
+            building_job(user_game_profile, metadata[building_name][building_instance_coords], building_name , @@game_metadata['buildings'][building_name] )
           end
         end
       end
     end
   end
   
-  def self.building_job(user_game_profile, building, blue_prints )
+  def self.building_job(user_game_profile, building, building_name, blue_prints )
     metadata = user_game_profile.metadata
     since = building['startedBuildingAt']
     now = Time.now.utc.to_i
@@ -134,6 +134,9 @@ class BaseDefender < Metadata
       building['inProgress'] = false
       building['startedBuildingAt'] = nil
       metadata['idle_workers'] += 1
+      
+      Notification.new( {:metadata => metadata, :notification_text => building_name + " construction is completed!"} )
+      
     else
       building['remainingTime'] = remaining
     end
@@ -188,6 +191,8 @@ class BaseDefender < Metadata
       validation = buy_worker(user_game_profile)
     elsif data['event'] == 'assign_worker'
       validation = assign_worker(user_game_profile, data)
+    elsif data['event'] == 'notification_ack'
+      validation = Notification.delete({:profile => user_game_profile, :id => data['id']})
     end
     user_game_profile['error'] = validation['error'] unless validation['valid']
     user_game_profile.metadata || "{}"
@@ -230,6 +235,7 @@ class BaseDefender < Metadata
                    'idle_workers' => 1,
                    'rock' => 100,
                    'iron' => 100,
+                   'notifications' => {'id_generator' => 0, 'queue' => []},
                    'map' => [
                               [0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
                               [0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
