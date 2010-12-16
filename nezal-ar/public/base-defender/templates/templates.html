@@ -91,3 +91,11 @@
     <button id="${id}" class="notification_ok">OK</button>
   </div>
 </textarea>
+
+<textarea id="quests-list">
+  {for quest in questsList}
+    <div class="quest" onclick="alert('${quest['desc']}')">
+        ${quest['name']}
+    </div>
+  {/for}
+</textarea>

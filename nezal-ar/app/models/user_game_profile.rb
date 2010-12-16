@@ -12,5 +12,13 @@ class UserGameProfile < ActiveRecord::Base
       self.rank = Game.find(self.game_id).ranks.first(:order => :lower_exp)
     end
   end
+
+  after_save do 
+    @decoded_metadata = nil
+  end
   
+  def decoded_metadata 
+    @decoded_metadata ||= Metadata.decode(self.metadata)
+  end
+
 end

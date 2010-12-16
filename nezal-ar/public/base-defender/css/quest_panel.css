@@ -1,0 +1,26 @@
+#quest-panel {
+  position: absolute;
+  right: 25px;
+  top: 240px;
+  width: 160px;
+  height: 170px;
+  background-color: gold;
+  -moz-border-radius : 10px;
+  -webkit-border-radius : 10px;
+  -o-border-radius : 10px;
+  border-radius : 10px;
+  opacity : 0.82;
+  font-size: 13px;
+}
+.title {
+  padding : 15px 15px 5px 15px;
+  font-weight: bold;
+  text-align: center;
+}
+.quest {
+  font-weight: normal;
+  margin: 8px;
+  cursor : pointer;
+  text-align : left;
+  padding-left : 8px;
+}

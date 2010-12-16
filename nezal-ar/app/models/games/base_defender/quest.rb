@@ -18,10 +18,9 @@ module BD
     #                    Then the user is assigned the next quest and rewarded with the quest rewards as described above.
     def self.edit_quest(quest, data)
       quest_data = Metadata.decode(data)
-      quest_metadata = Metadata.decode(quest.metadata)
-      quest_metadata ||= { :conditions => {}, :rewards => {} }
-      quest_data.each_pair { |key, val| quest_metadata[key] = val }
-      quest.metadata = Metadata.encode(quest_metadata)
+      quest.decoded_metadata ||= { :conditions => {}, :rewards => {} }
+      quest_data.each_pair { |key, val| quest.decoded_metadata[key] = val }
+      quest.metadata = Metadata.encode(quest.decoded_metadata)
       quest.save
     end
 
@@ -32,12 +31,12 @@ module BD
 
     def self.assess_user_quests(user_game_profile)
       # Decode metadata, initialize the user quest hash if not fount
-      metadata = Metadata.decode(user_game_profile.metadata)
+      metadata = user_game_profile.decoded_metadata
       metadata['quests'] ||= {'primal' => [], 'current' => [], 'conquered' => []}
       # Pass by the current quests, check for conquered ones, reward them & move them to conquered ones 
       metadata['quests']['current'].each do |id|
         quest = ::Quest.where(:id => id).first
-        if self.conquered?(metadata, quest)
+        if quest && self.conquered?(metadata, quest)
           # Reward, move to conquered
           metadata['quests']['conquered'] << id
           metadata['quests']['current'].delete(id)
@@ -76,13 +75,39 @@ module BD
           metadata['quests']['conquered'].delete(id) if (quests && quests.length > 0)
         end
       end
+      ################ This should be removed after we move texts to locales ################
+      metadata['quests']['descriptions'] = {}
+      metadata['quests']['current'].each do | id |
+        quest = ::Quest.where(:id=>id).first
+        if quest
+          metadata['quests']['descriptions'][id] = {}
+          metadata['quests']['descriptions'][id]['name'] = quest.name
+          quest_metadata = quest.decoded_metadata
+          metadata['quests']['descriptions'][id]['desc'] = ""
+          quest_metadata['conditions'].each_pair do | item, conditions |
+            if CONDITIONS[:buildings][item]
+              metadata['quests']['descriptions'][id]['desc'] =  metadata['quests']['descriptions'][id]['desc'] +
+                                                            "Set up " + item + " with following specifications"
+              conditions.each_pair do | cond, cond_val|
+                metadata['quests']['descriptions'][id]['desc'] =  metadata['quests']['descriptions'][id]['desc'] + ", " +
+                                                              cond + " : " + cond_val.to_s
+              end
+              metadata['quests']['descriptions'][id]['desc'] =  metadata['quests']['descriptions'][id]['desc'] + ". "
+            elsif CONDITIONS[:resources].index(item)
+              metadata['quests']['descriptions'][id]['desc'] =  metadata['quests']['descriptions'][id]['desc'] + 
+                                                            "Gather up to " + conditions.to_s + " " +  item + ". "
+            end
+          end
+        end
+      end
+      #######################################################################################
       user_game_profile.metadata = Metadata.encode(metadata)
       user_game_profile.save
     end
 
     def self.conquered?(metadata, quest)
       conquered = true
-      quest_metadata = Metadata.decode(quest.metadata)
+      quest_metadata = quest.decoded_metadata
       quest_metadata['conditions'].each_pair do | item, conditions |
         if CONDITIONS[:buildings][item]
           if metadata[item]
@@ -104,14 +129,16 @@ module BD
           conquered = false if metadata[item] < conditions 
         end
         break unless conquered
-      end
+      end 
       conquered
     end
 
     def self.reward(user_game_profile, quest)
       quest_metadata = Metadata.decode(quest.metadata)
-      puts quest_metadata
-      if quest_metadata['rewards']['exp'] 
+      Notification.new( {:metadata => user_game_profile.decoded_metadata,
+                         :notification_text => quest.name + " Quest Conquered! You ve earned #{quest_metadata['rewards']['coins']} coins" + 
+                                                            " & #{quest_metadata['rewards']['exp']} experience points" } )
+      if quest_metadata['rewards']['exp']
         user_game_profile.exp += quest_metadata['rewards']['exp']
       end
       if quest_metadata['rewards']['coins'] 

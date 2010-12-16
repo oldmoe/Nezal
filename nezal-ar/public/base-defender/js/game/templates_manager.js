@@ -37,5 +37,10 @@ var TemplatesManager = Class.create({
   
   notification : function(text, id){
     return TrimPath.processDOMTemplate("notification-template", {'notification_message' : text, 'id' : id});
+  },
+
+  questsList : function(questsList){
+    return TrimPath.processDOMTemplate("quests-list-template", {'questsList' : questsList});
   }
+
 });

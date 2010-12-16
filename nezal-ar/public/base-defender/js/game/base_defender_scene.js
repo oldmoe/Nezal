@@ -46,6 +46,7 @@ var BaseDefenderScene = Class.create(Scene, {
     this._RenderBuildings();
     
     this.renderGamePanel();
+    this.renderQuestPanel();
   },
   
   _RenderBuildings : function(){
@@ -91,6 +92,7 @@ var BaseDefenderScene = Class.create(Scene, {
   
   adjustNeighborScene : function(){
     $('game-panel').hide();
+    $('quest-panel').hide();
     if(this.game.selectedBuildingPanel){
       this.game.selectedBuildingPanel.hide();
     }
@@ -106,6 +108,12 @@ var BaseDefenderScene = Class.create(Scene, {
     $('iron-amount').innerHTML = this.game.templatesManager.resourceAmountInGamePanel(iron, this.game.mineFactory.ironPerMinute);
     $('workers-amount').innerHTML = this.game.workerFactory.idleWorkers + ' / ' + this.game.workerFactory.workers;
     $('coins-amount').innerHTML = this.game.user.coins;
+  },
+
+  renderQuestPanel : function(){
+    if(this.game.neighborGame) return;
+    $('quest-panel').show();
+    $('quests-list').innerHTML = this.game.templatesManager.questsList(game.user.data.quests.descriptions);
   },
   
   _FormatResourceDisplay : function(amount){
