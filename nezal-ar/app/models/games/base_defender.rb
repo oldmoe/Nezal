@@ -195,6 +195,7 @@ class BaseDefender < Metadata
       validation = Notification.delete({:profile => user_game_profile, :id => data['id']})
     end
     user_game_profile['error'] = validation['error'] unless validation['valid']
+    BD::Quest::assess_user_quests user_game_profile
     user_game_profile.metadata || "{}"
   end
   

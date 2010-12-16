@@ -14,8 +14,10 @@
 .notification_message_container span {
   color : white;
   display : block;
-  margin-left : 50px;
-  margin-top : 20px;
+  font-size: 15px;
+  line-height: 150%;
+  margin: 25px auto auto;
+  width: 75%;
 }
 
 .notification_message_container button.notification_ok {

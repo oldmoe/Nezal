@@ -21,7 +21,7 @@ var Notification = Class.create({
     $$('.notification_ok').each(function(button){
       button.observe('click', function(){
         self.game.network.notificationAck( this.id );
-        $("" + this.id).parentNode.hide();
+        this.parentNode.remove();
       });
     });
   }

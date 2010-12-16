@@ -87,7 +87,7 @@ module BD
           quest_metadata['conditions'].each_pair do | item, conditions |
             if CONDITIONS[:buildings][item]
               metadata['quests']['descriptions'][id]['desc'] =  metadata['quests']['descriptions'][id]['desc'] +
-                                                            "Set up " + item + " with following specifications"
+                                                            "Obtain " + item + " with following specifications"
               conditions.each_pair do | cond, cond_val|
                 metadata['quests']['descriptions'][id]['desc'] =  metadata['quests']['descriptions'][id]['desc'] + ", " +
                                                               cond + " : " + cond_val.to_s
@@ -95,7 +95,7 @@ module BD
               metadata['quests']['descriptions'][id]['desc'] =  metadata['quests']['descriptions'][id]['desc'] + ". "
             elsif CONDITIONS[:resources].index(item)
               metadata['quests']['descriptions'][id]['desc'] =  metadata['quests']['descriptions'][id]['desc'] + 
-                                                            "Gather up to " + conditions.to_s + " " +  item + ". "
+                                                            "Obtain up to " + conditions.to_s + " " +  item + ". "
             end
           end
         end
@@ -114,7 +114,7 @@ module BD
             metadata[item].each_pair do |key, value|
               condition_met = true
               conditions.each_pair do |cond, cond_val|
-                if value[cond] < cond_val
+                if value[cond].nil? || (value[cond] && value[cond] < cond_val)
                   condition_met = false 
                   break
                 end
