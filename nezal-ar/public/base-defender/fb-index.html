@@ -24,14 +24,10 @@
         <div>Map View</div>
       </div>
       
-      <div id="canvasContainer">
-        <canvas id="gameBackground" width="760" height="550"></canvas>
-        <canvas id="gameForeground" width="760" height="550"></canvas>
-      </div>
-      <div class="navigation-trigger" id="left-navigation-trigger"></div>
-      <div class="navigation-trigger" id="up-navigation-trigger"></div>
-      <div class="navigation-trigger" id="right-navigation-trigger"></div>
-      <div class="navigation-trigger" id="down-navigation-trigger"></div>
+  	  <div id="gameSceneContainer">
+    		<div id="gameCanvas"></div>
+    		<div id="clickCanvas"></div>
+	    </div>
       
       <div id="game-panel">
         <div class="panel-element">
@@ -74,9 +70,22 @@
     <script src="js/nezal/layer.js"></script>
     <script src="js/nezal/scene.js"></script>
     <script src="js/nezal/reactor.js"></script>
+	
+    <script src="js/nezal/sprite.js"></script>
+	
     <script src="js/game/network.js"></script>
     <script src="js/game/navigation.js"></script>
     <script src="js/game/base_defender_scene.js"></script>
+	
+		<script src="js/game/isometric/util.js"></script>
+		<script src="js/game/isometric/astar.js"></script>
+		<script src="js/game/isometric/map.js"></script>
+		<script src="js/game/isometric/unit.js"></script>
+		<script src="js/game/isometric/dom_sprite.js"></script>
+		<script src="js/game/isometric/display_unit.js"></script>
+		
+		<script src="js/game/displays/display.js"></script>
+	
     <script src="js/game/game.js"></script>
     <script src="js/game/tutorial.js"></script>
     <script src="js/game/building.js"></script>
@@ -96,6 +105,7 @@
     <script src="js/game/quarry_factory.js"></script>
     <script src="js/game/townhall_factory.js"></script>
     <script src="js/game/notification.js"></script>
+    <script src="js/game/game_panel.js"></script>
     <script>
       var game = null;
       serviceProvider = FBConnect

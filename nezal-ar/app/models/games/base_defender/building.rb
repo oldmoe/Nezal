@@ -51,16 +51,16 @@ module BD
                   'error' => "Not enough resources, you need more " + neededIron + " rock"}
         end
         
-        #validating location
-        puts "user_profile_metadata['map'][coords['x']][coords['y']] : " + user_profile_metadata['map'][coords['x']][coords['y']].to_s
-        puts "BaseDefender.land_marks[@can_be_built_on] : " + BaseDefender.land_marks[@can_be_built_on].to_s
-        puts "coords['x'] : " + coords['x'].to_s
-        puts "coords['y'] : " + coords['y'].to_s
-        
-        if(user_profile_metadata['map'][coords['y']][coords['x']] != BaseDefender.land_marks[@can_be_built_on])
-          return {'valid' => false,
-                  'error' => @name + " can be built on "+ @can_be_built_on +" only!"}
-        end
+        #validating location # to be reconsidered  after server Map implementation
+#        puts "user_profile_metadata['map'][coords['x']][coords['y']] : " + user_profile_metadata['map'][coords['x']][coords['y']].to_s
+#        puts "BaseDefender.land_marks[@can_be_built_on] : " + BaseDefender.land_marks[@can_be_built_on].to_s
+#        puts "coords['x'] : " + coords['x'].to_s
+#        puts "coords['y'] : " + coords['y'].to_s
+#        
+#        if(user_profile_metadata['map'][coords['y']][coords['x']] != BaseDefender.land_marks[@can_be_built_on])
+#          return {'valid' => false,
+#                  'error' => @name + " can be built on "+ @can_be_built_on +" only!"}
+#        end
         
         return {'valid' => true, 'error' => ''}
       end

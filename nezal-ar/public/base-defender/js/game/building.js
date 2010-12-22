@@ -15,16 +15,13 @@ var Building = Class.create({
     this._LoadTime = new Date().getTime();
     this.level = buildingSpecs.level;
     this.coords = buildingSpecs.coords;
-    this.game.scene.registerLocation(this.coords['x'], this.coords['y'], this);
     this.inProgress = buildingSpecs.inProgress;
     this.remainingBuildTime = buildingSpecs.remainingTime;
     this.currentLevelBluePrints = this.factory.bluePrints['levels'][this.level];
   },
   
   /** This should return if we need to off the building mood or no*/
-  build : function(x, y){
-    var xBlock = this.game.scene.xBlock() + x;
-    var yBlock = this.game.scene.yBlock() + y;
+  build : function(xBlock, yBlock){
     this.coords['x'] = xBlock;
     this.coords['y'] = yBlock;
     
@@ -35,10 +32,6 @@ var Building = Class.create({
     }else{
       return false;
     }
-  },
-  
-  isValidToBuild : function(x, y){
-    throw "Not Implemented";
   },
   
   upgradeRemainingTime : function(){
@@ -53,14 +46,10 @@ var Building = Class.create({
     var self = this;
     if( this.level == 0 && !this.inProgress ) return;
     
-    var blockSize = this.game.scene.navigation.blockSize;
-    var x = this.coords['x'] * blockSize - this.game.scene.x;
-    var y = this.coords['y'] * blockSize - this.game.scene.y;
-    
-    //console.log("in render => x : " + x + ", y : " + y);
+    var x = this.coords['x']
+    var y = this.coords['y']
     
     if (this.inProgress) {
-      this.game.scene.buildingsLayer.ctx.drawImage(Loader.images.buildings['progress.png'], x, y );
       if (!this.game.neighborGame) {
         $('building-remaining-time').style['top'] = (y - 15) + "px";
         $('building-remaining-time').style['left'] = (x - 20) + "px";
@@ -80,9 +69,7 @@ var Building = Class.create({
               self.game.reactor.push(2, function(){
                 self.noMore = false
                 $('building-remaining-time').hide();
-                self.game.reInitialize(function(){
-                  self.game.scene.render();
-                });
+                self.game.reInitialize();
               });
             }
           }
@@ -91,8 +78,6 @@ var Building = Class.create({
         this.game.reactor.push(0, reactorCallback);
       }
       
-    } else {
-      this.game.scene.buildingsLayer.ctx.drawImage(Loader.images.buildings[this.name + '.png'], x, y);
     }
     
     if( !this.game.neighborGame && this.game.selectedBuildingPanel != null && this.game.selectedBuildingPanel.selectedBuilding.name == this.name ){
@@ -133,9 +118,16 @@ var Building = Class.create({
     /****************************************************************************************/
    
     /****************************** Validating location **************************************/
-   
-    if(this.game.scene.map[y][x] != this.game.scene.landmarks.get(this.canBeBuiltOn)){
+   	var mapCoords = this.game.scene.map.tileValue(x,y);
+		var map = this.game.scene.map;
+		var cond1 = map.grid[mapCoords[0]][mapCoords[1]].terrainType == this.game.scene.landmarks.get(this.canBeBuiltOn);
+		var cond2 = map.addElement(this)
+    if(!cond1){
       alert(this.name + " can be built on " + this.canBeBuiltOn + " only!");
+      return false;
+    }
+		if(!cond2){
+      alert("this location is occupied by another building");
       return false;
     }
     /******************************************************************************************/

@@ -1,84 +1,40 @@
-
-//rendering all layers
-var _Render = {
-	renderInitialize : function(){
-		this.layers = []
-		this.objects = []
-		return this
-	},
-	renderInit : null,
-	render : function(){
-		this.layers.invoke('render')
-		return this
-	},
-	renderStart : null,
-	renderPause : null,
-	renderResume : null,
-	renderReset : null,
-	renderFinsih : null,
-	renderToggleSound : null
-}
-
-var Scene = Class.create(_Render, {
+var Scene = Class.create({
 	//initializes the delay of the reactor
-	initialize : function(delay){
-		this.running = false
-		this.delay = delay || 50
-		this.reactor = new Reactor(this.delay)
-		this.renderInitialize()
+	initialize : function(game){
+		this.game = game;
+		this.reactor = game.reactor;
+		this.objects = [];
+		this.renderStores = {};
+		this.start();
 	},
 
 	init : function(){
 	},
 	
-	//pushes an event to the reactor
-	push : function(delay, func, callback){
-		this.reactor.push(Math.round(delay/this.delay), func, callback)
-		return this
-	},
 	//runs the reactor , starts _tick function and then render the start
 	start : function(){
-		this.running = true
 		this.init()
-		this.reactor.run()
 		var self = this
-		this.push(1, function(){self._tick()})
-		//this.renderStart()
-		return this
-	},
-	pause : function(){
-		this.running = false
-		this.reactor.pause()
-		this.renderPause()
-		return this
-	},
-	renderPause : function(){
-	
-	},
-	resume : function(){
-		this.running = true
-		this.reactor.resume()
-		this.renderResume()
-		return this
-	},
-	renderResume : function(){
-	
-	},
-	reset : function(){
-		this.running = false
-		this.reactor.stop()
-		this.renderReset()
+		this.reactor.push(0, function(){self._tick()})
 		return this
 	},
 	
-	finish : Nezal.notImplemented('Game#finish'),
+	push : function(object){
+		var self = this
+		this.reactor.push(0, function(){self.objects.push(object)})
+	},
+	
+	remove : function(object){
+		var self = this
+		this.reactor.push(0, function(){self.objects.remove(object)})
+	},
 	
 	tick : function(){
 		try{
 			var remainingObjects = []
 			var self = this
 			this.objects.each(function(object){
-				if(!object.dead){
+				if(!object.finished){
 					object.tick()
 					remainingObjects.push(object)
 				}
@@ -89,23 +45,38 @@ var Scene = Class.create(_Render, {
 	},
 	//moves objects in the scene 
 	_tick : function(){
-		if(!this.running) return
 		this.tick()
 		this.render()
 		var self = this
-		this.push(this.delay, function(){self._tick()})
+		this.reactor.push(0, function(){self._tick()})
 	},
+
+	createRenderLoop : function(name, delay){
+		this.renderStores[name] = {delay : delay, tick: this.reactor.ticks, objects : []}
+	},
+
+	pushToRenderLoop : function(name, object){
+		var self = this
+		this.reactor.push(0, function(){self.renderStores[name].objects.push(object)})
+	},
+	
+	removeFromRenderLoop : function(name, object){
+		var self = this
+		this.reactor.push(0, function(){self.renderStores[name].objects.remove(object)})
+	},
+
 	render : function(){
 		try{
-			this.layers.invoke('render');
+			for(var storeIndex in this.renderStores){
+				var store = this.renderStores[storeIndex]
+				if(this.reactor.ticks >= store.tick + store.delay ){
+					store.tick = this.reactor.ticks
+					store.objects.invoke('render')
+				}
+			}
 		}catch(x){
 			console.log(x)
 		}
-	},
-	toggleSound : function(){
-		Game.sound = !Game.sound
-		this.renderToggleSound(Game.sound)
-		return this
 	}
 	
 })
