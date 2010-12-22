@@ -16,7 +16,9 @@ var ResourceBuilding = Class.create(Building, {
   },
 	
 	tick : function(){
-		this.game.resources[this.factory.canBeBuiltOn] += this.totalPerTick;
+		if (this.state == this.states.NORMAL) {
+			this.game.resources[this.factory.canBeBuiltOn] += this.totalPerTick;
+		}
 		return this;
 	},
   

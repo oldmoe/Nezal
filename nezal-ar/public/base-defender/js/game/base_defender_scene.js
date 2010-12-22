@@ -27,9 +27,15 @@ var BaseDefenderScene = Class.create(Scene, {
 		this.pushToRenderLoop('animations', object)
 	},
 	
+	removeAnimation : function(animation){
+		animation.destroy()
+		this.removeFromRenderLoop("animations",animation)	
+	},
+	
 	pushInfoDisplay : function(object){
 		this.pushToRenderLoop('info', object)		
 	},
+	
 	//ex {'i' : 5, 'j' : 6}
 	renderDisplayUnit : function(coords, terrainType){
 		var textureImageName = this.textures[terrainType];

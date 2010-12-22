@@ -1,6 +1,15 @@
 module BD
   class Building
+    @@states = { 
+                 'NOT_PLACED' => 0,
+                 'UNDER_CONSTRUCTION' => 1,
+                 'UPGRADING' => 2,
+                 'NORMAL' => 3 
+                }
     class << self
+      def states
+        @@states
+      end
       def build(user_game_profile, coords)
         user_profile_metadata = JSON.parse(user_game_profile.metadata)
         game_metadata = BaseDefender.adjusted_game_metadata
@@ -13,7 +22,7 @@ module BD
         user_profile_metadata[@name] = {} if user_profile_metadata[@name].nil?
         user_profile_metadata[@name][location_hash] = BaseDefender.new_building_specs
         user_profile_metadata[@name][location_hash]['startedBuildingAt'] = Time.now.utc.to_i
-        user_profile_metadata[@name][location_hash]['inProgress'] = true
+        user_profile_metadata[@name][location_hash]['state'] = states['UNDER_CONSTRUCTION']
         
         user_profile_metadata[@name][location_hash]['coords'] = coords
         

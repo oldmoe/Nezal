@@ -29,17 +29,42 @@ var BuildingDisplay = Class.create(Display, {
 	
   initialize : function($super,owner,properties){
 		$super(owner,properties)
-		this.owner = owner;
-		this.img = Loader.images.buildings[owner.name+'.png'];
-		var self = this;
+		this.owner = owner
+		this.img = Loader.images.buildings[this.owner.name+'.png'];
+		this.invalidImg =  Loader.images.buildings[this.owner.name+'_invalid.png'];
 		this.mapTiles =[];
-		Object.extend(this.owner, this);
+		this.sprite = new DomSprite(owner,this.img);
+		//this.invalideBuildingSprite = new DomSprite(owner,this.img);
+		Object.extend(this.owner,this);
+		this.render();
 	},
-	renderSprites : function(){
-		this.sprite = new DomSprite(this.owner,this.img);
+	
+	stateChanged : function(){
+		switch(this.owner.state){
+			case this.owner.states.NOT_PLACED:
+				this.sprite.setOpacity(0.5);
+				break;
+			case this.owner.states.UNDER_CONSTRUCTION:
+				this.sprite.setOpacity(0.5);
+				break;
+			case this.owner.states.UPGRADING:
+				this.sprite.setOpacity(0.5);
+				break;
+			case this.owner.states.NORMAL:	
+				this.sprite.setOpacity(1);
+				break;
+		}		
+	},
+	
+	render : function(){
 		this.sprite.render();
-		this.owner.render();
+	},
+	
+	destroy : function(){
+		console.log(this)
+		this.sprite.destroy()
 	}
+	
 });
 
 var TownhallDisplay = Class.create(BuildingDisplay, {

@@ -12,20 +12,20 @@ var DomSprite = Class.create(Sprite, {
 		this.shadeImg = shadeImg
 		this.owner = owner
 		this.div.style.zIndex = this.owner.y + this.owner.zdim
-		if (this.owner.inProgress) {
-			var progressImg = Loader.images.buildings['progress.png']
-			progressImg.style.marginTop = this.owner.imgHeight/2 +"px"
-			progressImg.style.marginLeft = this.owner.imgWidth/2 +"px"
-			this.div.appendChild(progressImg)
-		}
-		else {
-			this.div.appendChild(this.img)
-		}
+		this.div.appendChild(this.img)
 		this.div.style.width = this.owner.imgWidth
 		this.div.style.height = this.owner.imgHeight
 		Object.extend(this, properties)
 		this.currentAnimationFrame = 0
 		this.currentDirectionFrame = 0
+	},
+	
+	setStyle : function(style){
+		this.div.setStyle(style)
+	},
+	
+	setOpacity : function(opacity){
+		this.div.setOpacity(opacity)
 	},
 	
 	show : function(){
@@ -58,7 +58,6 @@ var DomSprite = Class.create(Sprite, {
 	
 	destroy : function(){
 		console.log('called')
-		layer = null
 		if(this.div.parentNode){
 			this.div = $(this.div.parentNode.removeChild(this.div))
 		}

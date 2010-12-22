@@ -3,7 +3,7 @@ var BuildingFactory = Class.create({
   //This will store the specs and upgrade costs of different building levels
   bluePrints : null,
   maximumNubmer : null,
-  newBuildingSpecs : {'level' : 0, 'coords' : {'x' : null, 'y' : null}},
+  newBuildingSpecs : {'state' : Building.prototype.states.NOT_PLACED, 'level' : 0, 'coords' : {'x' : null, 'y' : null}},
   buildingClass : null,
 	buildingDisplayClass :null,
 	
@@ -23,16 +23,16 @@ var BuildingFactory = Class.create({
 				
         this.factoryRegistrar( buildingInstanceCoords,building);
 				var display = new this.buildingDisplayClass(building, this.bluePrints.display);
-				display.renderSprites();
+				this.game.scene.pushAnimation(display);
 				this.game.scene.map.addElement(display);
-				
       }
     }
   },
   
   newBuilding : function(){
 		var building = new this.buildingClass(this, this.newBuildingSpecs);
-		new this.buildingDisplayClass(building, this.bluePrints.display);
+		var display = new this.buildingDisplayClass(building, this.bluePrints.display)
+		this.game.scene.pushAnimation(building);
     return building;
 		
   },

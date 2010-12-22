@@ -15,11 +15,24 @@ var BuildingMode = Class.create({
   on : function(building, callback){
     this.isOn = true;
     this.callback = callback;
+		if(this.selectedBuilding)this.game.scene.removeAnimation(this.selectedBuilding)
     this.selectedBuilding = building;
+		this._AttachMouseMoveEvent();
   },
+	
+	_AttachMouseMoveEvent : function(){
+		var self = this;
+		$('clickCanvas').observe('mousemove', function(mouse){
+			var mapCoords = Map.getRealCoords(mouse.pointerX(), mouse.pointerY());
+			self.selectedBuilding.coords.x = mapCoords.x;
+			self.selectedBuilding.coords.y = mapCoords.y;
+		});
+	},
   
   off : function(){
     this.isOn = false;
+		
+		$('clickCanvas').stopObserving('mousemove');
   },
   
   _AttachCanvasClickListener : function(){
@@ -31,7 +44,6 @@ var BuildingMode = Class.create({
       var x = mouse.pointerX();
       var y = mouse.pointerY();
 	  	var mapCoords =  Map.getRealCoords(x,y)
-	  	console.log(x,y,Map.tileValue(x,y))
       if(self.isOn) 
         self._ModeOnAction(mapCoords.x, mapCoords.y);
       else
