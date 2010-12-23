@@ -33,9 +33,9 @@ var BuildingDisplay = Class.create(Display, {
 		this.img = Loader.images.buildings[this.owner.name+'.png'];
 		this.invalidImg =  Loader.images.buildings[this.owner.name+'_invalid.png'];
 		this.mapTiles =[];
+		Object.extend(this.owner,this);
 		this.sprite = new DomSprite(owner,this.img);
 		//this.invalideBuildingSprite = new DomSprite(owner,this.img);
-		Object.extend(this.owner,this);
 		this.render();
 	},
 	
@@ -68,7 +68,15 @@ var BuildingDisplay = Class.create(Display, {
 });
 
 var TownhallDisplay = Class.create(BuildingDisplay, {
-	
+		frameDuration : 3,
+		frameDurationCounter : 2,
+		render : function(){
+			this.frameDurationCounter = (this.frameDurationCounter + 1) % (this.frameDuration +1)
+			if(this.frameDuration == this.frameDurationCounter){
+				this.sprite.currentAnimationFrame = (this.sprite.currentAnimationFrame + 1) % this.sprite.noOfAnimationFrames 
+				this.sprite.render();
+			}
+		}	
 });
 
 var MineDisplay = Class.create(BuildingDisplay, {

@@ -13,11 +13,14 @@ var DomSprite = Class.create(Sprite, {
 		this.owner = owner
 		this.div.style.zIndex = this.owner.y + this.owner.zdim
 		this.div.appendChild(this.img)
-		this.div.style.width = this.owner.imgWidth
-		this.div.style.height = this.owner.imgHeight
+		console.log(this.owner.imgWidth,this.owner.imgHeight, "here")
+		this.div.style.width = this.owner.imgWidth + "px"
+		this.div.style.height = this.owner.imgHeight + "px"
 		Object.extend(this, properties)
 		this.currentAnimationFrame = 0
 		this.currentDirectionFrame = 0
+		this.noOfAnimationFrames = this.img.height/this.owner.imgHeight
+		this.noOfDirections = 8
 	},
 	
 	setStyle : function(style){
@@ -45,11 +48,10 @@ var DomSprite = Class.create(Sprite, {
 			if(this.owner.dead){
 				return this.destroy()
 			}
-			
 			this.div.style.left = this.owner.coords.x -Math.round(this.owner.imgWidth/2) + "px"
 			this.div.style.top = this.owner.coords.y -Math.round(this.owner.imgHeight/2) + "px"
-			this.img.style.marginTop = -this.owner.imgHeight*this.owner.angle  + "px"
-			this.img.style.marginLeft = -this.currentAnimationFrame * this.owner.imgWidth + "px"
+			this.img.style.marginLeft = -this.owner.imgWidth*this.owner.angle  + "px"
+			this.img.style.marginTop = -this.currentAnimationFrame * this.owner.imgHeight + "px"
 			this.div.style.zIndex = this.owner.coords.y
 		}catch(e){
 			console.log('Sprite#render: ',e)
