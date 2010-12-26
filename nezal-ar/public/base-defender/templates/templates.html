@@ -83,7 +83,11 @@
     {/if}
 </textarea>
 <textarea id="friend-record">
-  <a style="font-size: 13px;" href="Javascript:game.loadUserEmpire(${friendId})">${friendName}</a>
+  <li title='Visit' class='friend' onclick="Javascript:game.loadUserEmpire(${friendId})">
+    <img src="images/friends/1st_blank.png" />
+    <img class='photo' src='http://graph.facebook.com/${serviceId}/picture' />	
+    <div class='name' >${friendName.split(' ')[0]}</div>
+  </li>
 </textarea>
 <textarea id="notification">
   <div class="notification_message_container">

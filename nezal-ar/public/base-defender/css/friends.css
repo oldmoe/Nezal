@@ -1,0 +1,94 @@
+#mapView {
+  position: absolute;
+  top: 555px;
+  left: 0px;
+  width: 760px;
+  height : 140px;
+}
+
+#friends 
+{
+  position : absolute;
+  left : 20px;
+}
+#friends div,img,ul{
+	float :left;	
+	border:none;
+}
+
+#friends-container {
+	width : 309px;
+	overflow: hidden;
+	height : 113px;
+}
+#friends-ul{
+	width : 2000px;
+	height :113px;			
+}
+#friends .right, .left{
+	margin-top : 20px;
+}
+#friends-ul {
+	margin : 0px;
+	padding : 0px;
+}
+#friends li {
+	float : left;
+	list-style : none;			
+}
+
+
+#friends .friend{
+	position : relative;
+	float : left;
+	width:95px;
+	margin : 4px;
+  cursor : pointer;
+}
+#friends .friend .photo{
+	position : absolute;
+	left : 12px;
+	top : 12px;
+	width : 44px;
+	height : 44px;
+}
+#friends .friend .name{
+    color: white;
+    font-family: helvetica;
+    font-size: 14px;
+    font-weight: bold;
+    position: absolute;
+    text-align: center;
+    text-decoration: none;
+    top: 65px;
+    width: 100%;
+}
+
+#home 
+{
+  position : absolute;
+  right : 20px;
+  width : 100px;
+	margin : 4px;
+  cursor : pointer;
+}
+#home .photo{
+	position : absolute;
+	left : 18px;
+	top : 18px;
+	width : 32px;
+	height : 32px;
+}
+#home .name{
+    color: white;
+    font-family: helvetica;
+    font-size: 14px;
+    font-weight: bold;
+    position: absolute;
+    top: 65px;
+    left : 0px;
+    text-align: center;
+    text-decoration: none;
+    width: 100%;
+
+}

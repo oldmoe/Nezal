@@ -37,8 +37,7 @@ var Game = Class.create({
     
     //The below code needs rewrite///
     var self = this;
-    var mapView = "<div>Map View</div>";
-    mapView += '<a style="font-size: 13px;" href="Javascript:game.reInitialize(function(){game.scene.render()})">Go Home!</a>'
+    var mapView = ""
     var friendIDs = this.network.neighbourIDs();
     var mapping = {};
     var ids = []
@@ -53,9 +52,18 @@ var Game = Class.create({
                                                 friendID["name"] = mapping[friendID["service_id"]].name
                                               else
                                                 friendID["name"] = friendID["service_id"]
-                                              mapView += self.templatesManager.friendRecord(friendID["user_id"], friendID["name"]);
+                                              mapView += self.templatesManager.friendRecord(friendID["user_id"], friendID["service_id"], friendID["name"]);
                                             });
-                                            $('friends').innerHTML = mapView;
+                                            $('friends-ul').innerHTML = mapView;
+	                                          var images = {
+                                                        'left' : 'images/friends/left.png',
+                                                        'left-disabled' : 'images/friends/left-disabled.png',
+                                                        'right' : 'images/friends/right.png',
+                                                        'right-disabled' :'images/friends/right-disabled.png'
+                                                        };
+                                            var friendsCarousel = null;
+	                                          friendsCarousel = new Carousel("friends", images, 3);
+	                                          friendsCarousel.checkButtons();
                                         });
     //////////////////////////////////
     
@@ -106,8 +114,8 @@ var Game = Class.create({
     this.townhallFactory = new TownhallFactory(this);
     this.quarryFactory = new QuarryFactory(this);
     this.mineFactory = new MineFactory(this);
-    
-    new Notification(this).showAll();
+    if(!this.neighborGame)
+      new Notification(this).showAll();
     this.tutorial = new Tutorial(this);
     
     this.scene.map = this.user.data["map"];

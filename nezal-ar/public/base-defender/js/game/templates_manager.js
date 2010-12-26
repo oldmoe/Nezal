@@ -31,8 +31,8 @@ var TemplatesManager = Class.create({
     return TrimPath.processDOMTemplate("resource-amount-display-template", {'amount' : amount, 'resourcePerMinute' : resourcePerMinute});
   },
   
-  friendRecord : function(friendId, friendName){
-    return TrimPath.processDOMTemplate("friend-record-template", {'friendId' : friendId, 'friendName' : friendName});
+  friendRecord : function(friendId, serviceId, friendName){
+    return TrimPath.processDOMTemplate("friend-record-template", {'friendId' : friendId, 'serviceId' : serviceId, 'friendName' : friendName});
   },
   
   notification : function(text, id){
