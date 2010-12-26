@@ -11,9 +11,6 @@ class ApplicationController < Sinatra::Base
   before do 
     app_name = env['PATH_INFO'].split('/')[1]
     @service_provider = env['SCRIPT_NAME'].split('/')[1].split('-')[0]
-    LOGGER.debug "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-    LOGGER.debug env['PATH_INFO']
-    LOGGER.debug "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
     if app_name
       @app_configs = FB_CONFIGS::find('name', app_name)
       @app_configs ||= K_CONFIGS::find('name', app_name)

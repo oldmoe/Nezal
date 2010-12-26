@@ -5,20 +5,18 @@ module BD
     end
     
     def self.assign_worker(user_game_profile, coords)
-      user_profile_metadata = JSON.parse(user_game_profile.metadata)
       location_hash = BaseDefender.convert_location(coords)
       game_metadata = BaseDefender.adjusted_game_metadata
       
-      validation = validate_worker_assignment(user_profile_metadata, game_metadata, location_hash)
+      validation = validate_worker_assignment(user_game_profile.metadata, game_metadata, location_hash)
       return validation if validation['valid'] == false
       
-      current_level = user_profile_metadata[@name][location_hash]['level'].to_s
-      assigned_workers = user_profile_metadata[@name][location_hash]['assigned_workers'] || 0
+      current_level = user_game_profile.metadata[@name][location_hash]['level'].to_s
+      assigned_workers = user_game_profile.metadata[@name][location_hash]['assigned_workers'] || 0
       
-      user_profile_metadata['idle_workers'] -= 1
-      user_profile_metadata[@name][location_hash]['assigned_workers'] = assigned_workers + 1
+      user_game_profile.metadata['idle_workers'] -= 1
+      user_game_profile.metadata[@name][location_hash]['assigned_workers'] = assigned_workers + 1
       
-      user_game_profile.metadata = BaseDefender.encode(user_profile_metadata)
       user_game_profile.save
       
       return validation

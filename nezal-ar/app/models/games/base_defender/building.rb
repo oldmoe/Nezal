@@ -2,25 +2,23 @@ module BD
   class Building
     class << self
       def build(user_game_profile, coords)
-        user_profile_metadata = JSON.parse(user_game_profile.metadata)
         game_metadata = BaseDefender.adjusted_game_metadata
         location_hash = BaseDefender.convert_location(coords)
         
-        validation = validateBuilding(user_profile_metadata, game_metadata, coords)
+        validation = validateBuilding(user_game_profile.metadata, game_metadata, coords)
         return validation if validation['valid'] == false
         
-        user_profile_metadata['idle_workers'] -= 1
-        user_profile_metadata[@name] = {} if user_profile_metadata[@name].nil?
-        user_profile_metadata[@name][location_hash] = BaseDefender.new_building_specs
-        user_profile_metadata[@name][location_hash]['startedBuildingAt'] = Time.now.utc.to_i
-        user_profile_metadata[@name][location_hash]['inProgress'] = true
+        user_game_profile.metadata['idle_workers'] -= 1
+        user_game_profile.metadata[@name] = {} if user_game_profile.metadata[@name].nil?
+        user_game_profile.metadata[@name][location_hash] = BaseDefender.new_building_specs
+        user_game_profile.metadata[@name][location_hash]['startedBuildingAt'] = Time.now.utc.to_i
+        user_game_profile.metadata[@name][location_hash]['inProgress'] = true
         
-        user_profile_metadata[@name][location_hash]['coords'] = coords
+        user_game_profile.metadata[@name][location_hash]['coords'] = coords
         
-        user_profile_metadata['rock'] -= game_metadata['buildings'][@name]['levels']['1']['rock']
-        user_profile_metadata['iron'] -= game_metadata['buildings'][@name]['levels']['1']['iron']
+        user_game_profile.metadata['rock'] -= game_metadata['buildings'][@name]['levels']['1']['rock']
+        user_game_profile.metadata['iron'] -= game_metadata['buildings'][@name]['levels']['1']['iron']
         
-        user_game_profile.metadata = BaseDefender.encode(user_profile_metadata)
         user_game_profile.save
         
         return validation

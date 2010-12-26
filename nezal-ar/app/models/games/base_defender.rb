@@ -57,35 +57,29 @@ class BaseDefender < Metadata
     end
   end
   
-  def self.calculate_jobs(user_game_profile)
-    user_game_profile.metadata = JSON.parse(user_game_profile.metadata)
-    
+  def self.calculate_jobs(user_game_profile)    
     building_jobs user_game_profile
     resource_collection_jobs user_game_profile
-  
     user_game_profile.metadata['last_loaded'] = Time.now.utc.to_i
-    user_game_profile.metadata = self.encode(user_game_profile.metadata)
     user_game_profile.save
   end
   
   def self.resource_collection_jobs(user_game_profile)
-    metadata = user_game_profile.metadata
-    
     #This is the case in the first load of user profile
-    if metadata['last_loaded'].nil?
+    if user_game_profile.metadata['last_loaded'].nil?
       return
     end
-    
+   
     resources_collected = {}
     now = Time.now.utc.to_i
-    seconds_passed_since_last_load = now - metadata['last_loaded']
+    seconds_passed_since_last_load = now - user_game_profile.metadata['last_loaded']
     
     #Looping on every resource building module
     @@resource_building_modules.keys.each do |resource_building_name|
       #Checking if the user have built this type of building or not yet
-      if( metadata[resource_building_name].present? )
+      if( user_game_profile.metadata[resource_building_name].present? )
         resource_building_module = @@building_modules[resource_building_name]
-        resource_building = metadata[resource_building_name]
+        resource_building = user_game_profile.metadata[resource_building_name]
         #Looping on every resource building instance
         resource_building.keys.each do |building_instance_coords|
           resource_building_instance = resource_building[building_instance_coords]
@@ -104,7 +98,7 @@ class BaseDefender < Metadata
     end
     
     resources_collected.keys.each do |resource|
-      metadata[resource] += resources_collected[resource]
+      user_game_profile.metadata[resource] += resources_collected[resource]
     end
     
   end
@@ -143,22 +137,19 @@ class BaseDefender < Metadata
   end
   
   def self.initialize_game_metadata( game )
-    game_metadata = self.decode(game.metadata)
-    
     #Applying Speed Factor!
     @@building_modules.keys.each do |building_name|
-      building_levels = game_metadata['buildings'][building_name]['levels']
+      building_levels = game.metadata['buildings'][building_name]['levels']
       building_levels.keys.each do |level|
         building_levels[level]['time'] /= @@speed_factor
         building_levels[level]['unit_per_worker_minute'] *= @@speed_factor if building_levels[level]['unit_per_worker_minute']
       end
     end
-    
-    game_metadata
+    game.metadata
   end
   
   def self.load_game(game)
-    @@game_metadata = initialize_game_metadata game || "{}"
+    @@game_metadata = initialize_game_metadata game || {}
   end
 
   def self.init_quest(quest)
@@ -172,15 +163,17 @@ class BaseDefender < Metadata
   def self.load_game_profile(user_game_profile)
     #reading a -maybe- attached error message from the object and porting it to the metadata!
     if(user_game_profile['error'])
-      origin = self.decode(user_game_profile.metadata)
+      origin = user_game_profile.metadata
       origin['error'] = user_game_profile['error']
-      user_game_profile.metadata = self.encode(origin)
+      user_game_profile.metadata= origin
     end
     
     @@game_metadata = initialize_game_metadata user_game_profile.game
     calculate_jobs user_game_profile
     BD::Quest::assess_user_quests user_game_profile
-    user_game_profile.metadata || "{}"
+    #### TODO We need to check why they need the stringified one 
+    #### and see what we gonna do about that
+    user_game_profile.metadata || {}
   end
   
   def self.edit_game_profile(user_game_profile, data)
@@ -196,7 +189,9 @@ class BaseDefender < Metadata
     end
     user_game_profile['error'] = validation['error'] unless validation['valid']
     BD::Quest::assess_user_quests user_game_profile
-    user_game_profile.metadata || "{}"
+    #### TODO We need to check why they need the stringified one 
+    #### and see what we gonna do about that
+    user_game_profile.metadata || {}
   end
   
   def self.buy_worker(user_game_profile)
@@ -213,10 +208,9 @@ class BaseDefender < Metadata
   def self.upgrade_building(user_game_profile, data)
     
     building = data['building']
-    profile_data = self.decode(user_game_profile.metadata)
     
     name = data['building']
-    building = profile_data[name]
+    building = user_game_profile.metadata[name]
     if building.nil? || building[building].nil?
       validation = @@building_modules[name].build(user_game_profile, data['coords'])
       return validation
@@ -228,7 +222,7 @@ class BaseDefender < Metadata
   end
   
   def self.init_game_profile(user_game_profile)
-    user_game_profile.metadata= self.encode(
+    user_game_profile.metadata= 
                   {'townhall' => nil,
                    'mine' => nil,
                    'quarry' => nil,
@@ -275,6 +269,6 @@ class BaseDefender < Metadata
                               [0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
                               [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
                             ]
-                  })
+                  }
   end
 end

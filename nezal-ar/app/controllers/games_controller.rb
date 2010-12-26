@@ -160,11 +160,9 @@ class GamesController < ApplicationController
   end
   
   get '/:game_name' do 
-    puts  params
     File.read(File.join( 'public', @app_configs["game_name"], @service_provider + '-' + 'index.html'))
   end
-  get '/:game_name/' do 
-    puts  params
+  get '/:game_name/' do
     File.read(File.join( 'public', @app_configs["game_name"], @service_provider + '-' + 'index.html'))
   end
 

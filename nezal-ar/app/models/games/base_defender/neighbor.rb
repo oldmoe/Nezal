@@ -25,8 +25,6 @@ module BD
       
       #This will only leave in the metadata all building with their levels and either if it is in progress or not
       def protect_neighbor_data(metadata)
-        
-        metadata = BaseDefender.decode(metadata)
         protected_metadata = {}
         protected_metadata['map'] = metadata['map']
         building_modules = BaseDefender.building_modules
@@ -46,7 +44,7 @@ module BD
             end
           end
         end
-        BaseDefender.encode(protected_metadata)
+        protected_metadata
         
       end
       

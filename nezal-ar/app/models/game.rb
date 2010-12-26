@@ -1,5 +1,7 @@
 class Game < ActiveRecord::Base
-  
+
+  include MetadataManager  
+
   attr_accessible :name, :description
 
   has_many   :ranks, :dependent => :destroy, :autosave => true

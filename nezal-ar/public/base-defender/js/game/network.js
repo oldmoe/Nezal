@@ -20,7 +20,7 @@ var Network = Class.create({
       parameters: { 'data' : Object.toJSON(params)},
       onSuccess: function(response) {
         gameStatus = JSON.parse(response.responseText);
-        userProfile = JSON.parse(gameStatus.user_data.metadata);
+        userProfile = gameStatus.user_data.metadata;
         if (userProfile['error']) {
           alert("The server refused to do your action, what have you did?, ya la2eem ;), message : " + userProfile['error']);
           done = false;
