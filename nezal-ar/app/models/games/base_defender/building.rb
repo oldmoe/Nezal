@@ -1,6 +1,15 @@
 module BD
   class Building
+    @@states = { 
+                 'NOT_PLACED' => 0,
+                 'UNDER_CONSTRUCTION' => 1,
+                 'UPGRADING' => 2,
+                 'NORMAL' => 3 
+                }
     class << self
+      def states
+        @@states
+      end
       def build(user_game_profile, coords)
         game_metadata = BaseDefender.adjusted_game_metadata
         location_hash = BaseDefender.convert_location(coords)
@@ -12,8 +21,7 @@ module BD
         user_game_profile.metadata[@name] = {} if user_game_profile.metadata[@name].nil?
         user_game_profile.metadata[@name][location_hash] = BaseDefender.new_building_specs
         user_game_profile.metadata[@name][location_hash]['startedBuildingAt'] = Time.now.utc.to_i
-        user_game_profile.metadata[@name][location_hash]['inProgress'] = true
-        
+        user_game_profile.metadata[@name][location_hash]['state'] = states['UNDER_CONSTRUCTION']
         user_game_profile.metadata[@name][location_hash]['coords'] = coords
         
         user_game_profile.metadata['rock'] -= game_metadata['buildings'][@name]['levels']['1']['rock']
@@ -49,16 +57,16 @@ module BD
                   'error' => "Not enough resources, you need more " + neededIron + " rock"}
         end
         
-        #validating location
-        puts "user_profile_metadata['map'][coords['x']][coords['y']] : " + user_profile_metadata['map'][coords['x']][coords['y']].to_s
-        puts "BaseDefender.land_marks[@can_be_built_on] : " + BaseDefender.land_marks[@can_be_built_on].to_s
-        puts "coords['x'] : " + coords['x'].to_s
-        puts "coords['y'] : " + coords['y'].to_s
-        
-        if(user_profile_metadata['map'][coords['y']][coords['x']] != BaseDefender.land_marks[@can_be_built_on])
-          return {'valid' => false,
-                  'error' => @name + " can be built on "+ @can_be_built_on +" only!"}
-        end
+        #validating location # to be reconsidered  after server Map implementation
+#        puts "user_profile_metadata['map'][coords['x']][coords['y']] : " + user_profile_metadata['map'][coords['x']][coords['y']].to_s
+#        puts "BaseDefender.land_marks[@can_be_built_on] : " + BaseDefender.land_marks[@can_be_built_on].to_s
+#        puts "coords['x'] : " + coords['x'].to_s
+#        puts "coords['y'] : " + coords['y'].to_s
+#        
+#        if(user_profile_metadata['map'][coords['y']][coords['x']] != BaseDefender.land_marks[@can_be_built_on])
+#          return {'valid' => false,
+#                  'error' => @name + " can be built on "+ @can_be_built_on +" only!"}
+#        end
         
         return {'valid' => true, 'error' => ''}
       end

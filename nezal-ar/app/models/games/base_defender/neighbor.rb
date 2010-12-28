@@ -39,7 +39,7 @@ module BD
               building_instance = building[building_instance_coords]
               protected_metadata[building_name][building_instance_coords] = {}
               protected_metadata[building_name][building_instance_coords]['level'] = building_instance['level']
-              protected_metadata[building_name][building_instance_coords]['inProgress'] = building_instance['inProgress']
+              protected_metadata[building_name][building_instance_coords]['state'] = building_instance['state']
               protected_metadata[building_name][building_instance_coords]['coords'] = building_instance['coords']
             end
           end

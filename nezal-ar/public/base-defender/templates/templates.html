@@ -5,8 +5,9 @@
 <textarea id="townhall-panel">
     <div class="building-presentation">
         <span>Townhall</span>
-        <img src="images/buildings/townhall.png">
-        </img>
+        <div class="building-presentation-crop">
+          <img src="images/buildings/townhall.png"></img>
+        </div>
     </div>{if buildingInProgress}<span class="building-in-progress">Building in progress</span>
     {else}
     <div class="building-functions">
@@ -21,11 +22,11 @@
         </div>
         <div id="townhall-build-new-building">
             <div id="build-quarry" class="townhall-new-building">
-                <img src="images/buildings/quarry.png">
+                <img class="icon" src="images/buildings/quarry.png">
                 </img><span>Quarry</span>
             </div>
             <div id="build-mine" class="townhall-new-building">
-                <img src="images/buildings/mine.png">
+                <img class="icon" src="images/buildings/mine.png">
                 </img><span class="new-building-name">Mine</span>
             </div>
         </div>
@@ -39,7 +40,7 @@
         <img src="images/buildings/mine.png">
         </img>
     </div>
-    {if building.inProgress}
+    {if building.inProgress()}
     <span class="building-in-progress">Building in progress</span>
     {else}
     <div class="building-functions">
@@ -66,7 +67,7 @@
         <img src="images/buildings/quarry.png">
         </img>
     </div>
-    {if building.inProgress}
+    {if building.inProgress()}
     <span class="building-in-progress">Building in progress</span>
     {else}
     <div class="building-functions">
@@ -82,6 +83,7 @@
     </div>
     {/if}
 </textarea>
+
 <textarea id="friend-record">
   <li title='Visit' class='friend' onclick="Javascript:game.loadUserEmpire(${friendId})">
     <img src="images/friends/1st_blank.png" />
@@ -104,4 +106,12 @@
         ${quest['name']}
     </div>
   {/for}
+</textarea>
+
+<textarea style="display:none;" id='progress'>
+     <div class='progressBarContainer'>
+       <div class='progressBar'>
+       </div>
+     </div>
+     <div class='progressTime'></div>
 </textarea>

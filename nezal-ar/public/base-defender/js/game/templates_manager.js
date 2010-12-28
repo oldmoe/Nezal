@@ -41,6 +41,10 @@ var TemplatesManager = Class.create({
 
   questsList : function(questsList){
     return TrimPath.processDOMTemplate("quests-list-template", {'questsList' : questsList});
+  },
+    
+  progress : function(){
+    return TrimPath.processDOMTemplate("progress-template");
   }
 
 });

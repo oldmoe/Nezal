@@ -46,7 +46,7 @@ var Reactor = Class.create({
 				}
 			})
 		}catch(e){
-			//console.log(e)
+			console.log(e)
 			//alert('inside reactor : '+ e)
 		}
 		this.ticks++
@@ -75,6 +75,10 @@ var Reactor = Class.create({
 	push : function(ticks, func, callback){
 		var delay = this.ticks + ticks
 		this.events.splice(this._eventIndex(delay, true), 0, [delay, func, callback])
+	},
+	
+	everySeconds : function(seconds){
+		return Math.round(seconds * 1000 / this.delay);
 	}
 	
 })

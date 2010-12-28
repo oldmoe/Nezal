@@ -15,42 +15,53 @@ var BuildingMode = Class.create({
   on : function(building, callback){
     this.isOn = true;
     this.callback = callback;
+		if(this.selectedBuilding)this.game.scene.removeAnimation(this.selectedBuilding)
     this.selectedBuilding = building;
+		this._AttachMouseMoveEvent();
   },
+	
+	_AttachMouseMoveEvent : function(){
+		var self = this;
+		$('clickCanvas').observe('mousemove', function(mouse){
+			var mapCoords = Map.getRealCoords(mouse.pointerX(), mouse.pointerY());
+    	self.selectedBuilding.coords.x = mapCoords.x;
+			self.selectedBuilding.coords.y = mapCoords.y;
+      self.selectedBuilding.render()
+		});
+	},
   
   off : function(){
     this.isOn = false;
+		
+		$('clickCanvas').stopObserving('mousemove');
   },
   
   _AttachCanvasClickListener : function(){
     var self = this;
-    $('canvasContainer').observe('click', function(mouse){
+    $('clickCanvas').observe('click', function(mouse){
       if(self.game.neighborGame)
         return;
       
       var x = mouse.pointerX();
       var y = mouse.pointerY();
-      
-      var blockX = Math.floor(x / game.scene.navigation.blockSize);
-      var blockY = Math.floor(y / game.scene.navigation.blockSize);
-        
+	  	var mapCoords =  Map.getRealCoords(x,y)
       if(self.isOn) 
-        self._ModeOnAction(blockX, blockY);
+        self._ModeOnAction(mapCoords.x, mapCoords.y);
       else
-        self._ModeOffAction(blockX, blockY);
+        self._ModeOffAction(mapCoords.x, mapCoords.y);
     });
   },
   
-  _ModeOffAction : function(blockX, blockY){
-    var selectedBuilding = this.game.scene.lookupLocation(blockX, blockY);
+  _ModeOffAction : function(x, y){
+    var selectedBuilding = this.game.scene.map.lookupLocation(x, y);
     if(selectedBuilding){
       selectedBuilding.renderPanel();
       $('building-panel').show();
     }
   },
   
-  _ModeOnAction : function(blockX, blockY){
-    if (this.selectedBuilding.build(blockX, blockY)) {
+  _ModeOnAction : function(x, y){
+    if (this.selectedBuilding.build(x, y)) {
       this.callback();
       this.off();
     }

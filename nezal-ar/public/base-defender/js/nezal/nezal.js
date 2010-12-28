@@ -43,3 +43,7 @@ var Nezal = {
 Array.prototype.random = function(){
 	return this[Math.floor(Math.random()*(this.length-1))]
 }
+
+Array.prototype.remove = function(element){
+	return this.splice(this.indexOf(element), 1)
+}
