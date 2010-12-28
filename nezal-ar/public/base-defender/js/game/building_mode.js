@@ -24,8 +24,9 @@ var BuildingMode = Class.create({
 		var self = this;
 		$('clickCanvas').observe('mousemove', function(mouse){
 			var mapCoords = Map.getRealCoords(mouse.pointerX(), mouse.pointerY());
-			self.selectedBuilding.coords.x = mapCoords.x;
+    	self.selectedBuilding.coords.x = mapCoords.x;
 			self.selectedBuilding.coords.y = mapCoords.y;
+      self.selectedBuilding.render()
 		});
 	},
   

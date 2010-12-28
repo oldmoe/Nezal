@@ -1,13 +1,14 @@
 var Display = Class.create({
   xdim :0,
-	ydim:0,
-	zdim:0,
-	imgWidth:0,
-	imgHeight:0,
-	moving : false ,
+	ydim :0,
+	zdim :0,
+	imgWidth :0,
+	imgHeight :0,
+	moving : false,
 	rotating : false,
-	targetAngle :0,
+	targetAngle : 0,
 	angle : 0,
+  animated : true,
 	initialize : function(owner,properties){
 		Object.extend(this,properties)
 		this.owner = owner
@@ -34,29 +35,40 @@ var BuildingDisplay = Class.create(Display, {
 		this.invalidImg =  Loader.images.buildings[this.owner.name+'_invalid.png'];
 		this.mapTiles =[];
 		Object.extend(this.owner,this);
-		this.sprite = new DomSprite(owner,this.img);
-		//this.invalideBuildingSprite = new DomSprite(owner,this.img);
+		this.sprite = owner.sprite = new DomSprite(owner,this.img);
+    //this.invalideBuildingSprite = new DomSprite(owner,this.img);
 		this.render();
+    this.manageStateChange();
 	},
 	
-	stateChanged : function(){
-		switch(this.owner.state){
-			case this.owner.states.NOT_PLACED:
-				this.sprite.setOpacity(0.5);
-				break;
-			case this.owner.states.UNDER_CONSTRUCTION:
-				this.sprite.setOpacity(0.5);
-				break;
-			case this.owner.states.UPGRADING:
-				this.sprite.setOpacity(0.5);
-				break;
-			case this.owner.states.NORMAL:	
-				this.sprite.setOpacity(1);
-				break;
-		}		
-	},
-	
+  manageStateChange : function(){
+    var self = this;
+    this.owner.stateNotifications[this.owner.states.NOT_PLACED].push(function(){
+      self.sprite.setOpacity(0.5);
+      self.sprite.animated = false;
+    });
+    this.owner.stateNotifications[this.owner.states.UNDER_CONSTRUCTION].push(function(){
+      var neededTime = self.owner.nextLevelBluePrints.time;
+      var elapsed = self.owner.elapsedTime();
+      self.progressDisplay = new ProgressDisplay(neededTime, elapsed);
+      self.sprite.setOpacity(0.5);
+      self.sprite.animated = false
+    });
+    this.owner.stateNotifications[this.owner.states.UPGRADING].push(function(){
+      self.sprite.setOpacity(0.5);
+      self.sprite.animated = false
+    });
+    this.owner.stateNotifications[this.owner.states.NORMAL].push(function(){
+      self.sprite.setOpacity(1);
+      self.sprite.animated = true
+    });
+  },
+  	
 	render : function(){
+    if (this.owner.state == this.owner.states.UNDER_CONSTRUCTION) {
+      this.progressDisplay.elapsed = this.owner.elapsedTime();
+      this.progressDisplay.render();
+    }
 		this.sprite.render();
 	},
 	
@@ -68,15 +80,20 @@ var BuildingDisplay = Class.create(Display, {
 });
 
 var TownhallDisplay = Class.create(BuildingDisplay, {
-		frameDuration : 3,
+		frameDuration : 4,
 		frameDurationCounter : 2,
-		render : function(){
-			this.frameDurationCounter = (this.frameDurationCounter + 1) % (this.frameDuration +1)
-			if(this.frameDuration == this.frameDurationCounter){
-				this.sprite.currentAnimationFrame = (this.sprite.currentAnimationFrame + 1) % this.sprite.noOfAnimationFrames 
-				this.sprite.render();
-			}
-		}	
+		render : function($super){
+      $super();
+			if (!this.sprite.animated) {
+        this.sprite.currentAnimationFrame = 0
+      }
+      else {
+        this.frameDurationCounter = (this.frameDurationCounter + 1) % (this.frameDuration + 1);
+        if (this.frameDuration == this.frameDurationCounter) {
+          this.sprite.currentAnimationFrame = (this.sprite.currentAnimationFrame + 1) % this.sprite.noOfAnimationFrames;
+        }
+      }
+		}
 });
 
 var MineDisplay = Class.create(BuildingDisplay, {

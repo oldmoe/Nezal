@@ -11,6 +11,7 @@
     <link type="text/css" href="css/townhall_panel.css" rel="stylesheet" />
     <link type="text/css" href="css/tutorial.css" rel="stylesheet" />
     <link type="text/css" href="css/notifications.css" rel="stylesheet" />
+    <link type="text/css" href="css/progress.css" rel="stylesheet" />
 
     
 		<meta http-equiv="Content-Type" charset="utf-8">
@@ -60,7 +61,9 @@
       
       <div id="establish-townhall-container" style="display:none;">
         <span>Establish your town</span>
-        <img id="establish-townhall" src="images/buildings/townhall.png"></img>
+        <div id="establish-townhall">
+          <img id="establish-townhall-img" src="images/buildings/townhall.png"></img>
+        </div>
       </div>
     </div>
     
@@ -84,8 +87,6 @@
 		<script src="js/game/isometric/dom_sprite.js"></script>
 		<script src="js/game/isometric/display_unit.js"></script>
 		
-		<script src="js/game/displays/display.js"></script>
-	
     <script src="js/game/game.js"></script>
     <script src="js/game/tutorial.js"></script>
     <script src="js/game/building.js"></script>
@@ -106,6 +107,10 @@
     <script src="js/game/townhall_factory.js"></script>
     <script src="js/game/notification.js"></script>
     <script src="js/game/game_panel.js"></script>
+    
+    <script src="js/game/displays/display.js"></script>
+    <script src="js/game/displays/progress_display.js"></script>
+    
     <script>
       var game = null;
       serviceProvider = FBConnect

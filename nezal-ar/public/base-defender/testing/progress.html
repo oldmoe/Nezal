@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <script src="../js/base/prototype.js"></script>
+    <script src="../js/nezal/reactor.js"></script>
+    <script src="../js/game/displays/progress_display.js"></script>
+    <script src="../js/base/template.js"></script>
+    <style>
+      .progressContainer {
+        position : absolute;
+        width : 100px;
+        height : 16px;
+      }
+      .progressTime {
+        font-family : verdana;
+        font-weight : bold;
+        font-size : 10px;
+        position : absolute;
+        width: 100%;
+        text-align : center;
+        padding-top : 1px;
+        height : 14px;
+        color : white;
+      }
+      .progressBarContainer {
+        -moz-border-radius: 4px;
+        background-color: #999;
+        position : absolute;
+        width: 96px;
+        height: 12px;
+        border : 2px solid black;
+        -moz-border-radius : 4px;        
+      }
+      .progressBar {
+        width: 30%;
+        height: 12px;        
+        -moz-border-radius : 2px;
+        background-color : #06f;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea style="display:none;" id='progress-template'>
+         <div class='progressBarContainer'>
+           <div class='progressBar'>
+           </div>
+         </div>
+         <div class='progressTime'></div>
+    </textarea>
+  </body>
+</html>

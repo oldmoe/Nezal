@@ -29,6 +29,11 @@
   float : left;
 }
 
+.building-presentation .building-presentation-crop{
+  height : 70px;
+  overflow : hidden;
+}
+
 .building-presentation span{
   display : block;
   float : none;
@@ -36,13 +41,14 @@
   font-size : 15px;
   font-weight : bold;
   text-align : center;
+  line-height : 8px;
 }
 
 .building-presentation img{
   float : left;
-  height : 60px;
   margin-left : 15px;
   margin-top : 0;
+  width : 55px;
 }
 .building-functions {
   float : left;

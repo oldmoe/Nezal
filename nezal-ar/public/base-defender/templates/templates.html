@@ -5,8 +5,9 @@
 <textarea id="townhall-panel">
     <div class="building-presentation">
         <span>Townhall</span>
-        <img src="images/buildings/townhall.png">
-        </img>
+        <div class="building-presentation-crop">
+          <img src="images/buildings/townhall.png"></img>
+        </div>
     </div>{if buildingInProgress}<span class="building-in-progress">Building in progress</span>
     {else}
     <div class="building-functions">
@@ -90,4 +91,11 @@
     <span>${notification_message}</span>
     <button id="${id}" class="notification_ok">OK</button>
   </div>
+</textarea>
+<textarea style="display:none;" id='progress'>
+     <div class='progressBarContainer'>
+       <div class='progressBar'>
+       </div>
+     </div>
+     <div class='progressTime'></div>
 </textarea>

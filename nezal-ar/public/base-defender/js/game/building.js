@@ -5,6 +5,7 @@ var Building = Class.create({
   _LoadTime : null,
   coords : {x : null, y : null},
   currentLevelBluePrints : null,
+  nextLevelBluePrints : null,
   state : 0,
 	states : {NOT_PLACED : 0, UNDER_CONSTRUCTION : 1, UPGRADING : 2, NORMAL : 3},
   initialize : function(factory, buildingSpecs){
@@ -15,10 +16,32 @@ var Building = Class.create({
     this._LoadTime = new Date().getTime();
     this.level = buildingSpecs.level;
     this.coords = buildingSpecs.coords;
-		this.state = buildingSpecs.state;
     this.remainingBuildTime = buildingSpecs.remainingTime;
     this.currentLevelBluePrints = this.factory.bluePrints['levels'][this.level];
+    this.nextLevelBluePrints = this.factory.bluePrints['levels'][this.level+1];
+    this.initialState = buildingSpecs.state;
+    this.stateNotifications = {};
+    for(var state in this.states){
+      this.stateNotifications[this.states[state]] = [];  
+    }
   },
+  
+  init : function(){
+    this.setState(this.initialState);
+    return this;    
+  },
+  
+  stateChanged : function(){
+  },
+  
+  setState : function(newState){
+    this.state = newState;
+    console.log(x = this.stateNotifications)
+    console.log(this.stateNotifications)
+    this.stateNotifications[newState].each(function(fn){fn()})
+  },
+  
+  
   
   /** This should return if we need to off the building mood or no*/
   build : function(xBlock, yBlock){
@@ -38,9 +61,9 @@ var Building = Class.create({
     return this.state == this.states.UNDER_CONSTRUCTION || this.state == this.states.UPGRADING;		
 	},
 	
-  upgradeRemainingTime : function(){
+  elapsedTime : function(){
     if(this.inProgress()){
-     return this.remainingBuildTime - Math.ceil((new Date().getTime() - this._LoadTime)/1000);
+     return this.nextLevelBluePrints.time - ( this.remainingBuildTime - Math.ceil((new Date().getTime() - this._LoadTime)/1000) );
     }else{
       return 0;
     }

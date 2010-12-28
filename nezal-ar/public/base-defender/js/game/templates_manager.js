@@ -37,5 +37,9 @@ var TemplatesManager = Class.create({
   
   notification : function(text, id){
     return TrimPath.processDOMTemplate("notification-template", {'notification_message' : text, 'id' : id});
+  },
+  
+  progress : function(){
+    return TrimPath.processDOMTemplate("progress-template");
   }
 });

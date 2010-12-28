@@ -13,7 +13,6 @@ var DomSprite = Class.create(Sprite, {
 		this.owner = owner
 		this.div.style.zIndex = this.owner.y + this.owner.zdim
 		this.div.appendChild(this.img)
-		console.log(this.owner.imgWidth,this.owner.imgHeight, "here")
 		this.div.style.width = this.owner.imgWidth + "px"
 		this.div.style.height = this.owner.imgHeight + "px"
 		Object.extend(this, properties)
@@ -59,7 +58,6 @@ var DomSprite = Class.create(Sprite, {
 	},
 	
 	destroy : function(){
-		console.log('called')
 		if(this.div.parentNode){
 			this.div = $(this.div.parentNode.removeChild(this.div))
 		}
