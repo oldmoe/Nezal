@@ -33,7 +33,7 @@ var Game = Class.create({
 			
       //The below code needs rewrite///			
   		var mapView = ""
-      var friendIDs = this.network.neighbourIDs();
+      var friendIDs = self.network.neighbourIDs();
       var mapping = {};
       var ids = []
       friendIDs.each(function(user, index){

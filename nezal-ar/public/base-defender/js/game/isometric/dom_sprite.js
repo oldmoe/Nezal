@@ -4,7 +4,7 @@ var DomSprite = Class.create(Sprite, {
 	transitionX : 0,
 	transitionY : 0,
 	rotated : false,
-	initialize : function(owner,img,shadeImg, properties){
+	initialize : function(owner,img,shadeImg, properties){this.render();
 		this.div = $(document.createElement('DIV'))
 		$('gameCanvas').appendChild(this.div)
 		this.div.addClassName('DomSprite')

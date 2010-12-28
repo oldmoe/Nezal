@@ -1,6 +1,6 @@
 var QuarryFactory = Class.create(ResourceBuildingFactory, {
   name : "quarry",
-  canBeBuiltOn : "rock",
+  canBeBuiltOn : "grass",
   buildingClass : Quarry,
   factoryRegistry : {},
   rockPerMinute : 0,

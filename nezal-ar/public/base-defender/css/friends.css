@@ -11,7 +11,7 @@
   position : absolute;
   left : 20px;
 }
-#friends div,img,ul{
+#friends div, #friends  img, #friends ul{
 	float :left;	
 	border:none;
 }
@@ -73,12 +73,18 @@
   cursor : pointer;
 }
 #home .photo{
-	position : absolute;
-	left : 18px;
-	top : 18px;
 	width : 32px;
-	height : 32px;
 }
+
+#home .photoContainer{
+  height: 40px;
+  left: 18px;
+  overflow: hidden;
+  position: absolute;
+  top: 12px;
+  width: 32px;
+}
+
 #home .name{
     color: white;
     font-family: helvetica;
