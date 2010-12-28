@@ -134,7 +134,11 @@ module BD
                          :notification_text => quest.name + " Quest Conquered! You ve earned #{quest.metadata['rewards']['coins']} coins" + 
                                                             " & #{quest.metadata['rewards']['exp']} experience points" } )
       if quest.metadata['rewards']['exp']
-        user_game_profile.exp += quest.metadata['rewards']['exp']
+        
+        puts user_game_profile.exp.class
+        puts quest.metadata['rewards']['exp'].class
+        
+        user_game_profile.exp = user_game_profile.exp.to_i + quest.metadata['rewards']['exp']
       end
       if quest.metadata['rewards']['coins'] 
         user_game_profile.user.coins += quest.metadata['rewards']['coins']

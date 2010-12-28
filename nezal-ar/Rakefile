@@ -1,8 +1,12 @@
 require 'active_record'
 require 'logger'
 require 'yaml'
+
+load Dir.pwd + '/app/models/metadata_manager.rb'
 load Dir.pwd + '/lib/resource_bundler.rb'
 load Dir.pwd + '/lib/static_generator.rb'
+
+
 
 namespace :db do
   
