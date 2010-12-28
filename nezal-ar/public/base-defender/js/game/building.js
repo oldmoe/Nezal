@@ -24,6 +24,7 @@ var Building = Class.create({
     for(var state in this.states){
       this.stateNotifications[this.states[state]] = [];  
     }
+    this.game.scene.push(this);
   },
   
   init : function(){
@@ -31,13 +32,24 @@ var Building = Class.create({
     return this;    
   },
   
+  tick : function(){
+    var self = this;
+    if (this.state == this.states.UNDER_CONSTRUCTION) {
+      console.log(this.elapsedTime(), this.nextLevelBluePrints.time);
+      if( this.elapsedTime() >= this.nextLevelBluePrints.time) {
+        var delayRequest = this.game.scene.reactor.everySeconds(2);
+        self.game.scene.reactor.push(delayRequest, function(){
+          self.game.reInitialize();
+        });
+      }
+    }
+  },
+  
   stateChanged : function(){
   },
   
   setState : function(newState){
     this.state = newState;
-    console.log(x = this.stateNotifications)
-    console.log(this.stateNotifications)
     this.stateNotifications[newState].each(function(fn){fn()})
   },
   

@@ -2,28 +2,38 @@
  * @author michaelyoussef
  */
 var ProgressDisplay = Class.create({
-  initialize : function(time, elapsed){
+  initialize : function(time, top, left){
     this.time = time;
-    this.elapsed = elapsed || 0
+    this.elapsed = 0
     this.html = TrimPath.processDOMTemplate("progress-template");
     var div = document.createElement('DIV')
     div.innerHTML = this.html;
     div.addClassName('progressContainer')
-    this.div = $(document.body.appendChild(div));
+    this.div = $($('gameCanvas').appendChild(div));
+    this.div.setStyle({top:top+"px", left:left+"px"});
     this.timeContainer = this.div.down('.progressTime')
     this.progressBar = this.div.down('.progressBar')
   },
   
-  render : function(){
-    this.progressBar.setStyle({width:this.width()});
-    this.timeContainer.innerHTML = this.timeRemaining();
-    if( this.elaspsed >= this.time) {
-      
+  render : function(elapsed){
+    if (this.elapsed < this.time) {
+      this.elapsed = elapsed;
+      this.progressBar.setStyle({
+        width: this.width()
+      });
+      this.timeContainer.innerHTML = this.timeRemaining();
+    }
+  },
+  
+  destroy : function(){
+    if(this.div.parentNode){
+      this.div = $(this.div.parentNode.removeChild(this.div))
     }
   },
   
   width : function(){
-   return Math.round((this.elapsed / this.time)*100) + '%' 
+    var width = Math.round((this.elapsed / this.time)*100);
+    return width >= 100 ? 100+'%' : width+'%' 
   },
   
   timeRemaining : function(){

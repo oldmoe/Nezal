@@ -48,9 +48,9 @@ var BuildingDisplay = Class.create(Display, {
       self.sprite.animated = false;
     });
     this.owner.stateNotifications[this.owner.states.UNDER_CONSTRUCTION].push(function(){
-      var neededTime = self.owner.nextLevelBluePrints.time;
-      var elapsed = self.owner.elapsedTime();
-      self.progressDisplay = new ProgressDisplay(neededTime, elapsed);
+      var top = self.owner.coords.y - self.zdim - self.ydim/2;
+      var left = self.owner.coords.x - self.xdim;
+      self.progressDisplay = new ProgressDisplay( self.owner.nextLevelBluePrints.time, top, left );
       self.sprite.setOpacity(0.5);
       self.sprite.animated = false
     });
@@ -66,14 +66,12 @@ var BuildingDisplay = Class.create(Display, {
   	
 	render : function(){
     if (this.owner.state == this.owner.states.UNDER_CONSTRUCTION) {
-      this.progressDisplay.elapsed = this.owner.elapsedTime();
-      this.progressDisplay.render();
+      this.progressDisplay.render( this.owner.elapsedTime() );
     }
 		this.sprite.render();
 	},
 	
 	destroy : function(){
-		console.log(this)
 		this.sprite.destroy()
 	}
 	

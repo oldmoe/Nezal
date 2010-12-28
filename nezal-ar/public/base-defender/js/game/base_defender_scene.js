@@ -20,7 +20,7 @@ var BaseDefenderScene = Class.create(Scene, {
 		this.map.init(this);
 		this.createRenderLoop('animations', 1);
 		this.createRenderLoop('info', this.reactor.everySeconds(1));
-		this.pushInfoDisplay(this.panel)
+		this.pushInfoDisplay(this.panel);
   },
 	
 	pushAnimation : function(object){

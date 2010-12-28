@@ -12,10 +12,10 @@ var ResourceBuilding = Class.create(Building, {
 			this.unitPerWorkerTick = (this.unitPerWorkerMinute / (60)) * (this.game.reactor.delay / 1000);
 			this.totalPerTick = this.unitPerWorkerTick * this.assignedWorkers
     }
-		this.game.scene.push(this);
   },
 	
-	tick : function(){
+	tick : function($super){
+    $super();
 		if (this.state == this.states.NORMAL) {
 			this.game.resources[this.factory.canBeBuiltOn] += this.totalPerTick;
 		}
