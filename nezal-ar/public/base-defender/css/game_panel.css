@@ -39,6 +39,14 @@
 	width: 49px;
 }
 
+#idleWorkersGameElement {
+	color : #f23d00
+}
+
+#totalWorkersGameElement {
+	color : white;
+}
+
 #coins-amount {
 	font-family: Lds;
 	font-size: 19px;
