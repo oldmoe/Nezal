@@ -24,6 +24,28 @@
 	</head>
 	<body>
 	  <div id="gameContainer">
+	  	<div class="gameElement" id="coins_game_element">
+	  		<img src="images/game_elements/coins.png" />
+				<span id="coins-amount" ></span>
+	  	</div>
+			<div class="gameElement" id="workers_game_element">
+				<img src="images/game_elements/workers.png" />
+				<span id="workers-amount" ></span>
+			</div>
+			<div class="gameElement" id="lumber_game_element">
+				<img src="images/game_elements/lumber.png" />
+				<span id="lumber-amount" ></span>
+			</div>
+			<div class="gameElement" id="rock_game_element">
+				<img src="images/game_elements/rock.png" />
+				<span id="rock-amount" ></span>
+			</div>
+			<div class="gameElement" id="xp_bar">
+				<img src="images/game_elements/xp_bar.png" />
+			</div>
+			<div class="gameElement" id="monitor">
+				<img src="images/game_elements/monitor.png" />
+			</div>
 	    
       <div id="mapView">
         <div id="friends">
@@ -51,28 +73,6 @@
     		<div id="gameCanvas"></div>
 	    </div>
       
-      <div id="game-panel">
-        <div class="panel-element">
-          <img src="images/textures/rock.png"></img>
-          <span id="rock-amount" class="element-amount"></span>
-        </div>
-        
-        <div class="panel-element">
-          <img src="images/textures/lumber.png"></img>
-          <span id="lumber-amount" class="element-amount"></span>
-        </div>
-        
-        <div class="panel-element">
-          <img src="images/icons/worker.png"></img>
-          <span title="Idle Workers / Total Workers" id="workers-amount" class="element-amount"></span>
-        </div>
-        
-        <div class="panel-element">
-          <img src="images/icons/coins.png"></img>
-          <span id="coins-amount" class="element-amount"></span>
-        </div>
-      </div>
-
       <div id="quest-panel" style="display:none;">
         <div class="title">
           <span id="coins-amount" class="element-amount" style="padding-top: 10px;width: 90%;">

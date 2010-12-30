@@ -14,7 +14,7 @@ var Navigation = Class.create({
 											top: 0,
 											left: 0,
 											display: "none",
-											backgroundColor: "red",
+											//backgroundColor: "red",
 											opacity: 0.5
 			});
 			document.body.appendChild(this.dragDiv);
