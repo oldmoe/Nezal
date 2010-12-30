@@ -58,8 +58,8 @@ var BuildingDisplay = Class.create(Display, {
 			self.sprites.invalid.hide();
     });
     this.owner.stateNotifications[this.owner.states.UNDER_CONSTRUCTION].push(function(){
-      var top = self.owner.coords.y - self.zdim - self.ydim/2;
-      var left = self.owner.coords.x - self.xdim;
+      var top =  self.owner.coords.y -Math.round(self.imgHeight/2)
+      var left =  self.owner.coords.x -Math.round(self.imgWidth/2);
       self.progressDisplay = new ProgressDisplay( self.owner.nextLevelBluePrints.time, top, left, self.owner.coords.y );
       self.sprites.building.setOpacity(0.5);
       self.sprites.building.animated = false;

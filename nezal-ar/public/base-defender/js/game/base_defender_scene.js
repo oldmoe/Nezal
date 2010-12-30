@@ -20,7 +20,6 @@ var BaseDefenderScene = Class.create(Scene, {
 		this.createRenderLoop('animations', 1);
 		this.createRenderLoop('info', this.reactor.everySeconds(1));
 		this.pushInfoDisplay(this.gamePanel);
-    this.pushInfoDisplay(this.questPanel);
 		//BAD CODE : this needs to be created in game engine not game logic
 		this.buildingPanelDisplay = new BuildingPanelDisplay(this.game);
 

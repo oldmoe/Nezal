@@ -116,7 +116,7 @@ var Building = Class.create({
     var neededLumber = this.factory.bluePrints.levels[1].lumber - this.game.resources.lumber;
     
     if( neededRock > 0 && neededLumber > 0 ){
-      alert("Not enough resources, you need more "+ neededRock +" rock and "+ neededLumber + " iron");
+      alert("Not enough resources, you need more "+ neededRock +" rock and "+ neededLumber + " lumber");
       return false;
     }
     

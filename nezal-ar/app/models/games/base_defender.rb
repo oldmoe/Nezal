@@ -2,7 +2,7 @@ require "json"
 #require_all "#{Dir.pwd}/app/models/games/base_defender/"
 
 class BaseDefender < Metadata
-  @@speed_factor = 3
+  @@speed_factor = 1
   @@resource_building_modules = {
     "quarry" => BD::Quarry,
     "lumbermill" => BD::Lumbermill
