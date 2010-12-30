@@ -100,6 +100,32 @@
 
 
 
+
+#interaction #msg #congratesMsg .okButtonWrapper {
+  top: 120px;
+}
+#interaction #msg #congratesMsg .alignDiv {
+  width : 64%;
+}
+#interaction #msg #congratesMsg .msg {
+  display: inline-block;
+  position: relative;
+  top: 35px;
+}
+#interaction #msg #congratesMsg .text {
+  color: #683502;
+  font-size: 18px;
+  padding-top : 5px;
+  position: absolute;
+  width: 280px;
+}
+#interaction #msg #congratesMsg .header{
+  color: #F23D00;
+  font-size: 24px;
+}
+
+
+
 #interaction #questDisplay {
   height: 385px;
   left: 80px;

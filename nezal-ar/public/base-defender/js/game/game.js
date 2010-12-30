@@ -105,16 +105,17 @@ var Game = Class.create({
     this.workerFactory = new WorkerFactory(this);
     this.resources.rock = this.user.data.rock;
     this.resources.iron = this.user.data.iron;
-    
+
     BuildingFactory._GlobalRegistry = {};
     this.townhallFactory = new TownhallFactory(this);
     this.quarryFactory = new QuarryFactory(this);
     this.mineFactory = new MineFactory(this);
     this.questsManager = new QuestsManager(this);
     this.buildingsManager = new BuildingsManager(this);
+    this.tutorial = new Tutorial(this);
+    this.tutorial.fire();
 /*    if(!this.neighborGame)
       new Notification(this).showAll();*/
-    this.tutorial = new Tutorial(this);
   },
   
   loadUserEmpire : function(user_id){

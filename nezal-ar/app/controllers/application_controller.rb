@@ -19,7 +19,7 @@ class ApplicationController < Sinatra::Base
 	        @game = Game.where( 'name'=>app_name ).first
 			    @user = User.where( 'service_type'=>Service::PROVIDERS[@service_provider], 'service_id'=>@service_id ).first
 			    if(!@user)
-				    @user = User.create( 'service_type'=>Service::PROVIDERS[@service_provider], 'service_id'=>@service_id )
+				    @user = User.create( 'service_type'=>Service::PROVIDERS[@service_provider], 'service_id'=>@service_id, 'coins'=>0 )
 			    end
 			    @game_profile = UserGameProfile.where('game_id'=>@game.id, 'user_id'=>@user.id).first
 			    if !(@game_profile)

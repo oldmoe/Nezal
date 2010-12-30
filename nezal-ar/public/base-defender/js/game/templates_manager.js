@@ -53,7 +53,10 @@ var TemplatesManager = Class.create({
   welcome : function(userName){
     return TrimPath.processDOMTemplate("welcome-template", {'userName' : userName});
   },
- 
+  congrates : function(msg){
+    return TrimPath.processDOMTemplate("congrates-template", {'msg' : msg});
+  },
+
   quest : function(quest){
     return TrimPath.processDOMTemplate("quest-template", {'quest' : quest});
   },

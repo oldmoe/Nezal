@@ -3,6 +3,7 @@ class Notification
     metadata = options[:metadata]
     metadata['notifications']['id_generator'] += 1
     notification = {}
+    notification['type'] = options[:notification_type]
     notification['text'] = options[:notification_text]
     notification['id'] = metadata['notifications']['id_generator']
     notification['time'] = Time.now.utc.to_i

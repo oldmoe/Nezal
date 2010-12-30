@@ -19,9 +19,7 @@ var BuildingsManager = Class.create({
   },
   
   build : function(building){
-      game.buildingMode.on(self.game.townhallFactory.newTownhall(), function(){
-    
-      });
+    this.game.buildingMode.on(this.game[building + 'Factory'].newBuilding(), function(){});
   }
 
 })
