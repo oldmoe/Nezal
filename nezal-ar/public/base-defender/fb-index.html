@@ -9,7 +9,9 @@
     
     <link type="text/css" href="css/game.css" rel="stylesheet" />
     <link type="text/css" href="css/game_panel.css" rel="stylesheet" />
-    <link type="text/css" href="css/quest_panel.css" rel="stylesheet" />
+    <link type="text/css" href="css/quests_panel.css" rel="stylesheet" />
+    <link type="text/css" href="css/quests.css" rel="stylesheet" />
+    <link type="text/css" href="css/buildings.css" rel="stylesheet" />
     <link type="text/css" href="css/building_panel.css" rel="stylesheet" />
     <link type="text/css" href="css/townhall_panel.css" rel="stylesheet" />
     <link type="text/css" href="css/tutorial.css" rel="stylesheet" />
@@ -72,10 +74,9 @@
         </div>
       </div>
 
-      <div id="quest-panel" >
+      <div id="quest-panel" style="display:none;">
         <div class="title">
-          <span id="coins-amount" class="element-amount" 
-                style="padding-top: 10px;width: 90%;">
+          <span id="coins-amount" class="element-amount" style="padding-top: 10px;width: 90%;">
            Quests 
           </span>
         </div>
@@ -94,6 +95,15 @@
         <span>Establish your town</span>
         <div id="establish-townhall">
           <img id="establish-townhall-img" src="images/buildings/townhall.png"></img>
+        </div>
+      </div>
+
+      <div id="interaction">
+        <div id="msg" > </div>
+        <div id="questDisplay" style="display:none;"> </div>
+        <div id="buildingDisplay" style="display:none;"> </div>
+        <div id=hand style="display:none;position:absolute;">
+          <img src="images/quests/cursor.png"></img>
         </div>
       </div>
     </div>
@@ -138,7 +148,8 @@
     <script src="js/game/townhall_factory.js"></script>
     <script src="js/game/notification.js"></script>
     <script src="js/game/game_panel.js"></script>
-    <script src="js/game/quest_panel.js"></script>
+    <script src="js/game/quests_manager.js"></script>
+    <script src="js/game/buildings_manager.js"></script>
     <script src="js/game/displays/display.js"></script>
     <script src="js/game/displays/progress_display.js"></script>
     

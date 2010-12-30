@@ -1,0 +1,148 @@
+<!-- Note that every template id is appended by "-template" when the templateManager.js load this file -->
+<textarea id="quests-list">
+  {for quest in questsList}
+    <div class="quest" questId="${quest_index}" onclick="game.scene.questsManager.displayQuest(${quest_index});">
+        ${quest['name']}
+    </div>
+  {/for}
+</textarea>
+
+<textarea style="display:none;" id='welcome'>
+  <div id='welcomeMsg'>
+    <img class="background" src="${Loader.images.quests['msgBg.png'].src}"/>
+    <div class="okButtonWrapper">
+      <div class="alignDiv"> </div>
+      <div class="okButton" onclick="$('msg').hide(); game.tutorial.checkMandatoryQuests();">
+        <img class="okImage" src="${Loader.images.quests['button.png'].src}"/>
+        <div class="okText"> OK </div>
+      </div>
+    </div>
+    <div class="text">
+      <span> Welcome </span>
+      <span  class="name">${userName}</span>
+      <span>,</span>
+      <div> I will help you to get started on your base.</div>
+    </div>
+  </div>
+</textarea>
+
+<textarea style="display:none;" id='quest'>
+  <div id='questScreen'>
+    <div class="title">
+      <img class="background" src="${Loader.images.quests['questBg.png'].src}"/>
+      <span class="text"> ${quest.title} </span>
+    </div>
+    <div class="conditions">
+      {for condition in quest.conditions}
+        <div class="condition">          
+          <div class="image">
+            <div class="alignDiv" style="width:30px;"></div>
+            <img src="${Loader.images.icons[condition_index+'.png'].src}"/>        
+          </div>
+          <div class="desc">
+            <span class="text"> ${quest['conditionMsgs'][condition_index]} </span>
+          </div>
+          <img class="background" src="${Loader.images.quests['questBg.png'].src}"/>
+        </div>
+      {/for}
+    </div>
+    <div class="descriptionWrapper">
+      <div class="description">
+        <div class="wedge">
+          <div class="alignDiv" style="width:10px;"></div>
+          <img  src="${Loader.images.quests['wedge.png'].src}"/>
+        </div>
+        <div class="bubble">
+          <img src="${Loader.images.quests['bubble.png'].src}"/>
+          <span class="bubbleText"> ${quest.description} </span>
+        </div>
+      </div>
+      <div class="okButtonWrapper">
+        <div class="alignDiv"> </div>
+        <div class="okButton" onclick="$('questDisplay').hide();">
+          <img class="okImage" src="${Loader.images.quests['button.png'].src}"/>
+          <div class="okText"> OK </div>
+        </div>
+      </div>
+      <img class="background" src="${Loader.images.quests['questBg.png'].src}"/>
+    </div>
+  </div>
+</textarea>
+
+<textarea style="display:none;" id='congrates'>
+  <div id='congratesMsg'>
+    <img class="wedge" src="${Loader.images.quests['wedge.png'].src}"/>
+    <img class="background" src="${Loader.images.quests['background.png'].src}"/>
+    <div class="okButton">
+      <img class="okImage" src="${Loader.images.quests['button.png'].src}"/>
+      <div class="okText"> OK </div>
+    </div>
+    <div class="text">
+      <span> ${quest.congratesMsg} </span>
+    </div>
+  </div>
+</textarea>
+
+
+<textarea style="display:none;" id='build-button'>
+  <div class="buildButton">
+    <div class="okButtonWrapper">
+      <div class="alignDiv"> </div>
+      <div class="okButton" onclick="$('questDisplay').hide(); game.buildingsManager.displayBuildingsPanel();">
+        <img class="okImage" src="${Loader.images.quests['button.png'].src}"/>
+        <div class="okText"> build </div>
+      </div>
+    </div>
+  </div>
+</textarea>
+<textarea style="display:none;" id='buildings-panel'>
+  <div id='buildingsPanel'>
+    <div class="buildings">
+      {for building in buildings}
+        <div id="${building_index}" class="item">      
+          <div  class="itemData" onclick="$('buildingDisplay').hide();game.buildingsManager.build('${building_index}')">  
+            <div class="name">
+              ${building_index}  
+            </div>
+            <div class="image">
+              <img src="${Loader.images.icons[building_index+'.png'].src}"/>
+            </div>
+            <div class="cost">
+              <div class="text"> 
+                {if building['iron']}
+                  ${building['iron']}
+                {else}
+                  0
+                {/if}
+              </div>
+              <div class="text"> 
+                {if building['rock']}
+                  ${building['rock']}
+                {else}
+                  0
+                {/if}
+              </div>
+              <div class="text"> 
+                {if building['coins']}
+                  ${building['coins']}
+                {else}
+                  0
+                {/if}
+              </div>
+            </div>
+          </div>
+          <img class="background" src="${Loader.images.quests['activeCell.png'].src}"/>
+        </div>
+      {/for}
+      {for building in [1,2,3,4,5]}
+        <div class="item">        
+          <div class="itemData">  
+          </div>  
+          <img class="background" src="${Loader.images.quests['activeCell.png'].src}"/>
+        </div>
+      {/for}
+    </div>
+    <img class="background" src="${Loader.images.quests['buildingPanelBg.png'].src}"/>
+  </div>
+</textarea>
+

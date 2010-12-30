@@ -96,6 +96,7 @@ var FBConnect = {
                     FB.XFBML.parse();
                 }
 			          FBConnect.getUser();
+			          FBConnect.getUserInfo(function(){});
             }else{
                 /* He is either not logged in or doesnt have the application added 
                  * First case he is not logged in : status = unknown

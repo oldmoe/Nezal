@@ -44,7 +44,7 @@ class AdminController < ApplicationController
   get '/:game_name/metadata' do 
     @game = Game.find_by_name(params[:game_name])
     klass = self.get_helper_klass
-    klass.load_game(@game)
+    Metadata.encode(klass.load_game(@game))
   end
   
   # Edit game metadata 
@@ -105,7 +105,7 @@ class AdminController < ApplicationController
   get '/:game_name/campaigns/:camp_id/metadata' do 
     @camp = Campaign.find(params["camp_id"])
     klass = self.get_helper_klass
-    klass.load_campaign(@camp)
+    Metadata.encode(klass.load_campaign(@camp))
   end
   
   # Edit campaign metadata 
@@ -161,7 +161,7 @@ class AdminController < ApplicationController
   get '/:game_name/quests/:quest_id/metadata' do 
     @quest = Quest.find(params["quest_id"])
     klass = self.get_helper_klass
-    klass.load_quest(@quest)
+    Metadata.encode(klass.load_quest(@quest))
   end
   
   # Edit Quest metadata 

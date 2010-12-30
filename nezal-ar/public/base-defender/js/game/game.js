@@ -72,12 +72,14 @@ var Game = Class.create({
       return building + "_outline.png";
     });
 		var buildingModeImages = ['2x2_invalid.png', '2x2_base.png'];
+		var questsImages = ["msgBg.png", "wedge.png", "button.png", "bubble.png", "questBg.png", "buildingPanelBg.png", "activeCell.png", "inactiveCell.png"];
+    var iconsImages = ["townhall.png", "quarry.png", "mine.png", "iron.png", "rock.png"];
     new Loader().load([{images : BaseDefenderScene.prototype.textures, path: 'images/textures/', store: 'textures'},
                        {images : buildingImages, path: 'images/buildings/', store: 'buildings'},
 											 {images : buildingModeImages, path: 'images/buildings/', store: 'buildingModes'},
+											 {images : questsImages, path: 'images/quests/', store: 'quests'},
 											 {images : buildingOutlineImages, path: 'images/buildings/outlines/', store: 'buildingOutlines'}],
-      {onFinish : loaderFinishCallback
-    });
+      {onFinish : loaderFinishCallback});
 	
   },
   
@@ -113,11 +115,14 @@ var Game = Class.create({
     this.townhallFactory = new TownhallFactory(this);
     this.quarryFactory = new QuarryFactory(this);
     this.lumbermillFactory = new LumbermillFactory(this);
+		this.questsManager = new QuestsManager(this);
+    this.buildingsManager = new BuildingsManager(this);
     if(!this.neighborGame)
       new Notification(this).showAll();
-    this.tutorial = new Tutorial(this);
 		
-		console.log(x = this.reInitializationNotifications)
+		/*    if(!this.neighborGame)
+      new Notification(this).showAll();*/
+    this.tutorial = new Tutorial(this);
 		this.reInitializationNotifications.each(function(fn){fn()});
   },
   

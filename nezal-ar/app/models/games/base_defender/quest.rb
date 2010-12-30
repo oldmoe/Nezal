@@ -79,9 +79,23 @@ module BD
       user_game_profile.metadata['quests']['current'].each do | id |
         quest = ::Quest.where(:id=>id).first
         if quest
+          user_game_profile.metadata['quests']['descriptions'][id] = quest.metadata
+          user_game_profile.metadata['quests']['descriptions'][id]['name'] = quest.name
+        end
+      end
+      user_game_profile.metadata['quests']['conquered'].each do | id |
+        quest = ::Quest.where(:id=>id).first
+        if quest
+          user_game_profile.metadata['quests']['descriptions'][id] = quest.metadata
+          user_game_profile.metadata['quests']['descriptions'][id]['name'] = quest.name
+        end
+      end
+=begin
           user_game_profile.metadata['quests']['descriptions'][id] = {}
           user_game_profile.metadata['quests']['descriptions'][id]['name'] = quest.name
-          user_game_profile.metadata['quests']['descriptions'][id]['desc'] = ""
+          user_game_profile.metadata['quests']['descriptions'][id]['description'] = quest.metadata["description"]
+          user_game_profile.metadata['quests']['descriptions'][id]['congratesMsg'] = quest.metadata["congratesMsg"]
+          user_game_profile.metadata['quests']['descriptions'][id]['rewards'] = quest.rewards
           quest.metadata['conditions'].each_pair do | item, conditions |
             if CONDITIONS[:buildings][item]
               user_game_profile.metadata['quests']['descriptions'][id]['desc'] =  user_game_profile.metadata['quests']['descriptions'][id]['desc'] +
@@ -96,8 +110,7 @@ module BD
                                                             "Obtain up to " + conditions.to_s + " " +  item + ". "
             end
           end
-        end
-      end
+=end      
       #######################################################################################
       user_game_profile.save
     end

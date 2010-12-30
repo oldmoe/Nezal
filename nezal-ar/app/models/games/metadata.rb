@@ -1,40 +1,40 @@
 class Metadata
 
   def self.init_game(game)
-    game.metadata = "{}"
+    game.metadata = {}
     game.save
   end
   
   def self.edit_game(game, data)
-    game.metadata = data 
+    game.metadata= self.decode(data) 
     game.save
   end  
     
   def self.load_game(game)
-    game.metadata || "{}"
+    game.metadata || {}
   end
 
   def self.init_game_profile(game_profile)
-    game_profile.metadata =  "{}"
+    game_profile.metadata =  {}
     game_profile.save
   end
   
   def self.edit_game_profile(game_profile, data)
-    game_profile.metadata = data
+    game_profile.metadata = self.decode(data)
     game_profile.save
   end
   
   def self.load_game_profile(game_profile)
-    game_profile.metadata || "{}"
+    game_profile.metadata || {}
   end
   
   def self.init_campaign(camp)
-    camp.metadata = "{}"
+    camp.metadata = {}
     camp.save
   end
   
   def self.edit_campaign(camp, data)
-    camp.metadata = data
+    camp.metadata = self.decode(data)
     camp.save
   end
   
@@ -43,26 +43,26 @@ class Metadata
   end
   
   def self.init_user_campaign(user_campaign)
-    user_campaign.metadata = "{}"
+    user_campaign.metadata= {}
     user_campaign.save
   end
   
   def self.edit_user_campaign(user_campaign, data_encoded)
-    user_campaign.metadata = data
+    user_campaign.metadata= self.decode(data)
     user_campaign.save
   end
   
   def self.load_user_campaign(user_campaign)
-    user_campaign.metadata || "{}"
+    user_campaign.metadata || {}
   end
 
   def self.init_quest(quest)
-    quest.metadata = "{}"
+    quest.metadata= {}
     quest.save
   end
 
   def self.edit_quest(quest, data)
-    quest.metadata = data
+    quest.metadata= self.decode(data)
     quest.save
   end
   
