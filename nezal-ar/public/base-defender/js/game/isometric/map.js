@@ -358,7 +358,9 @@ var Map={
 			}
 		})
 		div.observe('mouseover',function(){
-			owner.sprites.outline.show()
+			if (owner.state != owner.states.NOT_PLACED) {
+	  		owner.sprites.outline.show()
+	  	}
 		})
 		div.observe('mouseout',function(){
 			owner.sprites.outline.hide()
