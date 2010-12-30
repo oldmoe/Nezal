@@ -64,7 +64,7 @@ var Tutorial = Class.create({
                                               setTimeout(function(){
                                                   var offset = Element.cumulativeOffset($$('#buildingsPanel #quarry .itemData')[0]);
 
-                                                  Element.cumulativeOffset(this.game.townhallFactory.townhall.sprites.building.div);
+//                                                  Element.cumulativeOffset(this.game.townhallFactory.townhall.sprites.building.div);
 
                                                   ['townhall', 'lumbermill'].each(function(item){
                                                       $$('#buildingsPanel #' + item + ' .background')[0].src=Loader.images.quests['inactiveCell.png'].src;
