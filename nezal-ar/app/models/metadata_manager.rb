@@ -1,6 +1,5 @@
 module MetadataManager 
-  
-
+ 
   def self.included(base)
     base.before_save do
       self["metadata"]= Metadata.encode(self.metadata)

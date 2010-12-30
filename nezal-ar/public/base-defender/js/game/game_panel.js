@@ -8,10 +8,10 @@ var GamePanel = Class.create({
 	render : function(){
     if(this.game.neighborGame) return;
     var rock = this.game.scene._FormatResourceDisplay(this.game.resources.rock);
-    var iron = this.game.scene._FormatResourceDisplay(this.game.resources.iron);
+    var lumber = this.game.scene._FormatResourceDisplay(this.game.resources.lumber);
     $('game-panel').show();
     $('rock-amount').innerHTML = this.game.templatesManager.resourceAmountInGamePanel(rock, this.game.quarryFactory.rockPerMinute);
-    $('iron-amount').innerHTML = this.game.templatesManager.resourceAmountInGamePanel(iron, this.game.mineFactory.ironPerMinute);
+    $('lumber-amount').innerHTML = this.game.templatesManager.resourceAmountInGamePanel(lumber, this.game.lumbermillFactory.lumberPerMinute);
     $('workers-amount').innerHTML = this.game.workerFactory.idleWorkers + ' / ' + this.game.workerFactory.workers;
     $('coins-amount').innerHTML = this.game.user.coins;
   }

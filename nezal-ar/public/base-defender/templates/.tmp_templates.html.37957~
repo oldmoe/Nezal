@@ -25,26 +25,26 @@
                 <img class="icon" src="images/buildings/quarry.png">
                 </img><span>Quarry</span>
             </div>
-            <div id="build-lumbermill" class="townhall-new-building">
-                <img class="icon" src="images/buildings/lumbermill.png">
-                </img><span class="new-building-name">Lumbermill</span>
+            <div id="build-mine" class="townhall-new-building">
+                <img class="icon" src="images/buildings/mine.png">
+                </img><span class="new-building-name">Mine</span>
             </div>
         </div>
     </div>
     {/if}
 </textarea>
 
-<textarea id="lumbermill-panel">
+<textarea id="mine-panel">
     <div class="building-presentation">
-        <span>Lumbermill</span>
-        <img src="images/buildings/lumbermill.png">
+        <span>Mine</span>
+        <img src="images/buildings/mine.png">
         </img>
     </div>
     {if building.inProgress()}
     <span class="building-in-progress">Building in progress</span>
     {else}
     <div class="building-functions">
-        <div id="lumbermill-assign-worker">
+        <div id="mine-assign-worker">
             <span style="">Assign a worker</span>
             <button id="assign_worker_trigger" style="margin-left: 5px;">
                 +

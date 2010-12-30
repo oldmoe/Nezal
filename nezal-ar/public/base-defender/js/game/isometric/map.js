@@ -8,7 +8,7 @@ var Map={
 	mapHeight : 1000,	
 	hoverX :0,
 	hoverY :0,
-	x:0,y:0,
+	x:380,y:275,
 	speed:2,
 	origin:[0,0],
 	movementSpeed : 8,
@@ -21,12 +21,11 @@ var Map={
 		var rawMap = scene.rawMap;
 		this.containerDiv = $("gameSceneContainer")
 		this.div = $('gameCanvas')
-		this.clickDiv = $('clickCanvas');
 		this.grid=[];
 		var img3 = new Image;
 		Map.containerDiv.style.width = Map.viewWidth + "px";
 		Map.containerDiv.style.height = Map.viewHeight + "px";
-		this.div.style.backgroundImage = "url(images/grid_background.png)"
+		this.div.style.backgroundImage = "url(images/background.png)"
 		
 		for(var i=0;i<rawMap.length;i++){
 				for(var j=0;j<rawMap[0].length;j++){
@@ -40,43 +39,20 @@ var Map={
 			}
 			
 		img3.onload = function(){
-			Map.div.style.width = $('clickCanvas').style.width = img3.width + "px";
+			Map.div.style.width =  img3.width + "px";
 			Map.mapWidth = img3.width;
-			Map.div.style.height = $('clickCanvas').style.height = img3.height + "px";
+			Map.div.style.height = img3.height + "px";
 			Map.mapHeight = img3.height;
-			console.log("End onload")		
+			Map.navigation = new Navigation(Map);
 		}
 		img3.src="images/background.png"
 		Map.initDirections()
 		Map.tileIsoLength = Math.sqrt(Math.pow(Map.tileWidth/2,2)+Math.pow(Map.tileHeight/2,2))/2
 		Map.tileAngle = Map.getTileAngle()
-		
-		Map.clickDiv.onmousedown = function(e){
-			Map.mouseDown = [e.layerX, e.layerY]
-			Map.mousedown = true
-		}
-		Map.clickDiv.onmousemove = function(e){
-				if (Map.mousedown) {
-					Map.move(-1*(e.layerX - Map.mouseDown[0]),-1*(e.layerY - Map.mouseDown[1]))
-					Map.mouseDown = [e.layerX, e.layerY]
-				}
-		}
-		Map.clickDiv.onmouseup = function(e){
-			if(Map.mousedown){
-				Map.mousedown = false
-				//Map.clickDiv.stopObserving('mouseup')
-				//Map.clickDiv.stopObserving('mousemove')
-			}
-		}
-//		$('rightScroll').observe('mouseover', function(){Map.repeatMovement(1, 0);});
-//		$('leftScroll').observe('mouseover', function(){Map.repeatMovement(-1, 0);});
-//		$('upScroll').observe('mouseover', function(){Map.repeatMovement(0, -1);});
-//		$('downScroll').observe('mouseover', function(){Map.repeatMovement(0, 1);});
-//    
-//		$('rightScroll').observe('mouseout', function(){Map.stopMovement();});
-//		$('leftScroll').observe('mouseout', function(){Map.stopMovement();});
-//		$('upScroll').observe('mouseout', function(){Map.stopMovement();});
-//		$('downScroll').observe('mouseout', function(){Map.stopMovement();});
+	},
+	
+	centerMap : function(){
+		Map.move(Map.mapWidth/2-Map.viewWidth/2,Map.mapHeight/2-Map.viewHeight/2)
 	},
 	
 	initDirections : function(){
@@ -256,14 +232,7 @@ var Map={
 		var tileValues = Map.tileValue(x,y)
 		return Map.value(tileValues[0],tileValues[1])		
 	},
-	addMine : function(x,y){
-		var mine = new Mine()
-		mine.x = this.x+x
-		mine.y = this.y+y
-		if(Map.addElement(mine))
-		Map.addObjectToGrid(mine)
-		
-	},
+
 	addObjectToGrid : function(obj){
 		var noOfRows = Math.round(obj.xdim/Map.tileIsoLength)
 		var noOfColumns = Math.round(obj.ydim/Map.tileIsoLength)
@@ -296,7 +265,7 @@ var Map={
 		return {"x":x+Map.x,"y":y+Map.y}
 	},
 	
-	addElement : function(obj){
+	validateLocation : function(obj){
 		var collide = false
 		for(var i=0;i<this.objects.length;i++){
 			if(obj.collides(this.objects[i])){
@@ -304,12 +273,18 @@ var Map={
 				break
 			}			
 		}
-		if(!collide){
-			this.objects.push(obj)
-			this.addObjectToGrid(obj)
-		}
 		return !collide
 	},
+	
+	addElement : function(obj){
+		var valid = this.validateLocation(obj)
+		if(valid) {
+	  	this.objects.push(obj)
+	  	this.addObjectToGrid(obj)
+	  }
+		return valid
+	},
+	
 	lookupLocation : function(x,y){
 		var mapCoords = Map.tileValue(x,y)
 		if(Map.grid[mapCoords[0]][mapCoords[1]].value)	return Map.grid[mapCoords[0]][mapCoords[1]].value.owner
@@ -350,17 +325,6 @@ var Map={
 		clearInterval(Map.periodicalMovementEvent);
 	},
 	hovered : function(x,y){
-		//Map.hoverX = x
-		//Map.hoverY = y
-		/*var values = Map.tileValue(this.x+x,this.y+y)
-		var obj = new Mine()
-		var coordinateValues = Map.value(values[0],values[1])
-		obj.x = this.x+x
-		obj.y = this.y+y
-		obj.update()
-		//Map.doDrawMap()
-		Map.ctx.drawImage(obj.img,obj.x -this.x-Math.round(obj.imgWidth/2),obj.y-this.y-Math.round(obj.imgHeight/2))
-		*/
 	},
 	moveObject : function(object,x,y){
 		var astar = new Astar()
@@ -385,6 +349,20 @@ var Map={
 			//Map.doMoveObject(object,path)
 		}
 		
+	},
+	registerListeners : function(div,owner){
+		div.observe('click',function(){
+			if(!game.buildingMode.isOn){
+				owner.renderPanel()
+				$('building-panel').show();
+			}
+		})
+		div.observe('mouseover',function(){
+			owner.sprites.outline.show()
+		})
+		div.observe('mouseout',function(){
+			owner.sprites.outline.hide()
+		})
 	},
 	N:0, NE:1, E:2, SE:3, S:4, SW:5, W:6, NW:7 
 }

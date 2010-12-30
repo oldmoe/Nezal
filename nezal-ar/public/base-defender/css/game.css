@@ -31,10 +31,14 @@ body{
 		background-color:blue;
 		position:absolute;
 		z-index:0;
+		top:-275px;
+		left:-380px;
 	}
 #clickCanvas{
 	position:absolute;
 	z-index:2;
+	top:-275px;
+	left:-380px;
 }
 #gameSceneContainer{
 	overflow: hidden;
@@ -49,6 +53,7 @@ body{
 }
 
 .DomSprite{
+	cursor : pointer;
 	position : absolute;
 	overflow : hidden;
 }

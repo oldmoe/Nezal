@@ -1,11 +1,11 @@
 var BuildingMode = Class.create({
   game : null,
-  buildings : ['townhall', 'quarry', 'mine'],
+  buildings : ['townhall', 'quarry', 'lumbermill'],
   inProgressImage : 'progress.png',
   isOn : false,
   selectedBuilding : null,
   callback : null,
-  
+  buildingMoveObserver : null,
   initialize : function(game){
     this.game = game;
     this._AttachCanvasClickListener();
@@ -22,23 +22,23 @@ var BuildingMode = Class.create({
 	
 	_AttachMouseMoveEvent : function(){
 		var self = this;
-		$('clickCanvas').observe('mousemove', function(mouse){
+		this.buildingMoveObserver = function(mouse){
 			var mapCoords = Map.getRealCoords(mouse.pointerX(), mouse.pointerY());
     	self.selectedBuilding.coords.x = mapCoords.x;
 			self.selectedBuilding.coords.y = mapCoords.y;
       self.selectedBuilding.render()
-		});
+		}
+		$('gameCanvas').observe('mousemove', this.buildingMoveObserver);
 	},
   
   off : function(){
     this.isOn = false;
-		
-		$('clickCanvas').stopObserving('mousemove');
+		$('gameCanvas').stopObserving('mousemove', this.buildingMoveObserver);
   },
   
   _AttachCanvasClickListener : function(){
     var self = this;
-    $('clickCanvas').observe('click', function(mouse){
+    $('gameCanvas').observe('click', function(mouse){
       if(self.game.neighborGame)
         return;
       
@@ -47,19 +47,9 @@ var BuildingMode = Class.create({
 	  	var mapCoords =  Map.getRealCoords(x,y)
       if(self.isOn) 
         self._ModeOnAction(mapCoords.x, mapCoords.y);
-      else
-        self._ModeOffAction(mapCoords.x, mapCoords.y);
     });
   },
-  
-  _ModeOffAction : function(x, y){
-    var selectedBuilding = this.game.scene.map.lookupLocation(x, y);
-    if(selectedBuilding){
-      selectedBuilding.renderPanel();
-      $('building-panel').show();
-    }
-  },
-  
+	
   _ModeOnAction : function(x, y){
     if (this.selectedBuilding.build(x, y)) {
       this.callback();

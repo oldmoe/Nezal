@@ -6,11 +6,10 @@ var BaseDefenderScene = Class.create(Scene, {
   groundLayer : null,
   buildingsLayer : null,
   map : [],
-  landmarks : new Hash({"grass" : 0, "water" : 1, "rock" : 2, "iron" : 3}),
-  icons : ["worker.png", "iron.png", "rock.png"],
+  landmarks : new Hash({"grass" : 0, "water" : 1, "rock" : 2, "lumber" : 3}),
+  icons : ["worker.png", "lumber.png", "rock.png"],
   textures : null,  
   navigation : null,
-  
   initialize : function($super, game){
     $super(game);
 		this.gamePanel = new GamePanel(game);
@@ -23,6 +22,9 @@ var BaseDefenderScene = Class.create(Scene, {
 		this.createRenderLoop('info', this.reactor.everySeconds(1));
 		this.pushInfoDisplay(this.gamePanel);
     this.pushInfoDisplay(this.questPanel);
+		
+		//BAD CODE : this needs to be created in game engine not game logic
+		this.buildingPanelDisplay = new BuildingPanelDisplay(this.game);
   },
 	
 	pushAnimation : function(object){
@@ -44,7 +46,7 @@ var BaseDefenderScene = Class.create(Scene, {
 		var blockTexture = Loader.images.textures[textureImageName];
 		new DisplayUnit(coords, blockTexture);
 	},
-  
+ 
   adjustNeighborScene : function(){
     $('game-panel').hide();
     $('quest-panel').hide();

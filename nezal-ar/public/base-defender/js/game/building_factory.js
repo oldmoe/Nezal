@@ -8,7 +8,6 @@ var BuildingFactory = Class.create({
 	buildingDisplayClass :null,
 	
   initialize : function(game){  
-    //console.log(this.name);
     this.buildingClass = eval(this.name.capitalize());
 		this.buildingDisplayClass = eval(this.name.capitalize() + "Display");
     this.game = game;

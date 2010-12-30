@@ -8,5 +8,9 @@ var BuildingPanel = Class.create({
   
   hide : function(){
     $('building-panel').hide();
-  }
+  },
+	
+	render : function(){
+		
+	} 
 })

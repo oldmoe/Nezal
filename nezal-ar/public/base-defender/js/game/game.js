@@ -13,11 +13,12 @@ var Game = Class.create({
   buildingMode : null,
   townhallFactory : null,
   quarryFactory : null,
-  mineFactory : null,
+  lumbermillFactory : null,
   neighborGame : null,
+	reInitializationNotifications : [],
   resources : {
     rock : 0,
-    iron : 0
+    lumber : 0
   },
   
   initialize : function(){
@@ -67,9 +68,14 @@ var Game = Class.create({
 		var buildingImages = BuildingMode.prototype.buildings.collect(function(building){
       return building + ".png";
     });
+		var buildingOutlineImages = BuildingMode.prototype.buildings.collect(function(building){
+      return building + "_outline.png";
+    });
+		var buildingModeImages = ['2x2_invalid.png', '2x2_base.png'];
     new Loader().load([{images : BaseDefenderScene.prototype.textures, path: 'images/textures/', store: 'textures'},
                        {images : buildingImages, path: 'images/buildings/', store: 'buildings'},
-                       {images : [BuildingMode.prototype.inProgressImage], path: 'images/buildings/', store: 'buildings'}],
+											 {images : buildingModeImages, path: 'images/buildings/', store: 'buildingModes'},
+											 {images : buildingOutlineImages, path: 'images/buildings/outlines/', store: 'buildingOutlines'}],
       {onFinish : loaderFinishCallback
     });
 	
@@ -91,8 +97,9 @@ var Game = Class.create({
   },
   
   reflectStatusChange : function(){
+		this.reInitializationNotifications = [];
     if(this.reactor) this.reactor.stop();
-    this.reactor = new Reactor(50);
+    this.reactor = new Reactor(33);
     this.reactor.run();
     
     this.buildingMode = new BuildingMode(this);
@@ -100,15 +107,18 @@ var Game = Class.create({
 		this.scene = new BaseDefenderScene(this);	
     this.workerFactory = new WorkerFactory(this);
     this.resources.rock = this.user.data.rock;
-    this.resources.iron = this.user.data.iron;
+    this.resources.lumber = this.user.data.lumber;
     
     BuildingFactory._GlobalRegistry = {};
     this.townhallFactory = new TownhallFactory(this);
     this.quarryFactory = new QuarryFactory(this);
-    this.mineFactory = new MineFactory(this);
+    this.lumbermillFactory = new LumbermillFactory(this);
     if(!this.neighborGame)
       new Notification(this).showAll();
     this.tutorial = new Tutorial(this);
+		
+		console.log(x = this.reInitializationNotifications)
+		this.reInitializationNotifications.each(function(fn){fn()});
   },
   
   loadUserEmpire : function(user_id){

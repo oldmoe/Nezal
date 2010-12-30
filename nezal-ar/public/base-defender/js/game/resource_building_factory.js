@@ -6,7 +6,9 @@ var ResourceBuildingFactory = Class.create(BuildingFactory, {
     $super(game);
     for( var buildingLocation in this.factoryRegistry ){
       var building = this.factoryRegistry[buildingLocation];
-      this.resourcePerMinute += building.unitPerWorkerMinute * building.assignedWorkers;
+			if (building.state == building.states.NORMAL) {
+				this.resourcePerMinute += building.unitPerWorkerMinute * building.assignedWorkers;
+			}
     }
     //this._CollectResources();
   }
