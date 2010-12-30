@@ -98,16 +98,6 @@
   </div>
 </textarea>
 
-<textarea id="quests-list">
-  {for quest in questsList}
-    <div class="quest" onclick="if($('1000')) $('1000').parentNode.remove();
-                                $('gameContainer').insert(game.templatesManager.notification('${quest['desc']}', 1000));
-                                $('1000').observe('click', function(){this.parentNode.remove();});">
-        ${quest['name']}
-    </div>
-  {/for}
-</textarea>
-
 <textarea style="display:none;" id='progress'>
      <div class='progressBarContainer'>
        <div class='progressBar'>

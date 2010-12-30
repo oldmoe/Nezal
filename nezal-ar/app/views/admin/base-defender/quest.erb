@@ -2,11 +2,12 @@
 var Quest = {
     conditions : {},
     rewards : {},
+    metadata : {},
 
     init : function()
     {
-        Quest.conditions = <%=@quest.metadata%>.conditions;
-        Quest.rewards = <%=@quest.metadata%>.rewards;
+        Quest.metadata = <%=Metadata.encode(@quest.metadata)%>;
+        Quest.conditions = <%=Metadata.encode(BD::Quest::CONDITIONS)%>
     }
 }
 Quest.init();
@@ -27,10 +28,56 @@ Quest.init();
     </span>
   </div>
 
-  <div id="conditions">
+  <div>
+    <LABEL for="addMission" class="label title">Quest</LABEL>
+    <div class="form_row">  
+        <LABEL for="title">Title</LABEL>
+        <INPUT type="text" id="title" name='title'><BR>
+    </div>
+    <div class="form_row">  
+        <LABEL for="description">Description</LABEL>
+        <INPUT type="text" id="description" name='description'><BR>
+    </div>
+    <LABEL for="conditions" class="label title">Conditions</LABEL>
+    <div id="conditions">
+      <div id="list">
+      </div>
+    </div>
+    <LABEL for="rewards" class="label title">Rewards</LABEL>
+    <div id="rewards">
+      <div class="form_row">  
+          <LABEL for="coins">Coins</LABEL>
+          <INPUT type="text" id="coins" name='coins'><BR>
+      </div>
+      <div class="form_row">  
+          <LABEL for="exp">Exp Points</LABEL>
+          <INPUT type="text" id="exp" name='exp'><BR>
+      </div>
+    </div>
     <div class="form_row">
-        <input type="submit" value="save" class="submit" onclick="CampaignData.saveMission(); return false;"/>
+      <input type="submit" value="save" class="submit" onclick="CampaignData.saveMission(); return false;"/>
     </div>
   </div>
 
 </div>
+
+<textarea id="waveTemplate" style="display:none;">
+  <div id='newCondition'> 
+    <LABEL for="category" class="category">Category</LABEL>
+    <select id="category" name="category">
+      {for category in creeps }                        
+      <option value="${creep}"  {if creep == element['category']} 'SELECTED' {/if}> ${creep} </option>
+      {/for}
+    </select>
+    <LABEL for="condition" class="count">Condition</LABEL>
+    <select id="condition" name="condition">
+      {for category in creeps }                        
+      <option value="${creep}"  {if creep == element['category']} 'SELECTED' {/if}> ${creep} </option>
+      {/for}
+    </select>
+    <span class="delete" >
+      <a order="${element_index}" wave="${wave_id}" href="#" onclick="CampaignData.deleteWaveCreep(this);return false;"> x </a>
+    </span>
+  </div>
+</textarea>
+

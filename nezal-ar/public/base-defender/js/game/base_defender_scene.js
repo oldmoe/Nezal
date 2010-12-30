@@ -14,7 +14,6 @@ var BaseDefenderScene = Class.create(Scene, {
   initialize : function($super, game){
     $super(game);
 		this.gamePanel = new GamePanel(game);
-    this.questPanel = new QuestPanel(game);
     this.map = Map;
 		this.rawMap = this.game.user.data["map"];
 		this.map.clear();
@@ -22,7 +21,6 @@ var BaseDefenderScene = Class.create(Scene, {
 		this.createRenderLoop('animations', 1);
 		this.createRenderLoop('info', this.reactor.everySeconds(1));
 		this.pushInfoDisplay(this.gamePanel);
-    this.pushInfoDisplay(this.questPanel);
   },
 	
 	pushAnimation : function(object){
@@ -47,7 +45,6 @@ var BaseDefenderScene = Class.create(Scene, {
   
   adjustNeighborScene : function(){
     $('game-panel').hide();
-    $('quest-panel').hide();
     if(this.game.selectedBuildingPanel){
       this.game.selectedBuildingPanel.hide();
     }

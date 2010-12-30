@@ -67,8 +67,12 @@ var Game = Class.create({
 		var buildingImages = BuildingMode.prototype.buildings.collect(function(building){
       return building + ".png";
     });
+    var questsImages = ["msgBg.png", "wedge.png", "button.png", "bubble.png", "questBg.png", "buildingPanelBg.png", "activeCell.png", "inactiveCell.png"];
+    var iconsImages = ["townhall.png", "quarry.png", "mine.png", "iron.png", "rock.png"];
     new Loader().load([{images : BaseDefenderScene.prototype.textures, path: 'images/textures/', store: 'textures'},
                        {images : buildingImages, path: 'images/buildings/', store: 'buildings'},
+                       {images : iconsImages, path: 'images/icons/', store: 'icons'},
+                       {images : questsImages, path: 'images/quests/', store: 'quests'},
                        {images : [BuildingMode.prototype.inProgressImage], path: 'images/buildings/', store: 'buildings'}],
       {onFinish : loaderFinishCallback
     });
@@ -106,8 +110,10 @@ var Game = Class.create({
     this.townhallFactory = new TownhallFactory(this);
     this.quarryFactory = new QuarryFactory(this);
     this.mineFactory = new MineFactory(this);
-    if(!this.neighborGame)
-      new Notification(this).showAll();
+    this.questsManager = new QuestsManager(this);
+    this.buildingsManager = new BuildingsManager(this);
+/*    if(!this.neighborGame)
+      new Notification(this).showAll();*/
     this.tutorial = new Tutorial(this);
   },
   

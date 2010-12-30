@@ -4,10 +4,13 @@ var TemplatesManager = Class.create({
     
     network.fetchTemplate( "templates/templates.html", function(responseText){
       templatesRootNode.innerHTML = responseText;
-      templatesRootNode.select('textarea').each(function(node){
-        node.setAttribute('id', node.getAttribute('id') + "-template");
+      network.fetchTemplate( "templates/quests.html", function(responseText){
+        templatesRootNode.innerHTML += responseText;
+        templatesRootNode.select('textarea').each(function(node){
+          node.setAttribute('id', node.getAttribute('id') + "-template");
+        });
       });
-    } );
+    });
     
     document.body.appendChild(templatesRootNode.hide());
   },
@@ -45,6 +48,23 @@ var TemplatesManager = Class.create({
     
   progress : function(){
     return TrimPath.processDOMTemplate("progress-template");
+  },
+
+  welcome : function(userName){
+    return TrimPath.processDOMTemplate("welcome-template", {'userName' : userName});
+  },
+ 
+  quest : function(quest){
+    return TrimPath.processDOMTemplate("quest-template", {'quest' : quest});
+  },
+
+  buildingsPanel : function(buildings){
+    return TrimPath.processDOMTemplate("buildings-panel-template", {'buildings' : buildings});
+  },
+  buildButton : function(){
+    return TrimPath.processDOMTemplate("build-button-template", {});
   }
+
+
 
 });

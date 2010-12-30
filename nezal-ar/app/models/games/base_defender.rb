@@ -128,7 +128,9 @@ class BaseDefender < Metadata
       building['state'] = BD::Building.states['NORMAL']
       building['startedBuildingAt'] = nil
       metadata['idle_workers'] += 1
-      
+      if @@building_modules[building_name].respond_to? 'assign_worker'
+        @@building_modules[building_name].assign_worker(user_game_profile, building['coords']) 
+      end
       Notification.new( {:metadata => metadata, :notification_text => building_name + " construction is completed!"} )
       
     else
@@ -139,6 +141,7 @@ class BaseDefender < Metadata
   def self.initialize_game_metadata( game )
     #Applying Speed Factor!
     @@building_modules.keys.each do |building_name|
+      puts building_name
       building_levels = game.metadata['buildings'][building_name]['levels']
       building_levels.keys.each do |level|
         building_levels[level]['time'] /= @@speed_factor
@@ -228,8 +231,8 @@ class BaseDefender < Metadata
                    'quarry' => nil,
                    'workers' => 1,
                    'idle_workers' => 1,
-                   'rock' => 100,
-                   'iron' => 100,
+                   'rock' => 15000,
+                   'iron' => 15000,
                    'notifications' => {'id_generator' => 0, 'queue' => []},
                    'map' => [
                               [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
