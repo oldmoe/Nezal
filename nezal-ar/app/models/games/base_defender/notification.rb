@@ -6,6 +6,7 @@ class Notification
     notification['type'] = options[:notification_type]
     notification['text'] = options[:notification_text]
     notification['id'] = metadata['notifications']['id_generator']
+    notification['data'] = options[:notification_data]
     notification['time'] = Time.now.utc.to_i
     metadata['notifications']['queue'].push notification
   end

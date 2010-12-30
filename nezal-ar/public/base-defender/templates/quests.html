@@ -87,7 +87,16 @@
       <div class="text">
         <span> ${msg['text']} </span>
       </div>
+      <div class="rewards">
+          {for reward in msg['data']['rewards'] }
+          <div class="reward"> 
+            <img  class="${reward_index}" src="${Loader.images.quests['resources.png'].src}"/>
+            ${reward}
+          </div>
+          {/for}
+      </div>
     </div>
+    
   </div>
 </textarea>
 

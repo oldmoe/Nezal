@@ -144,7 +144,7 @@ module BD
 
     def self.reward(user_game_profile, quest)
       Notification.new( {:metadata => user_game_profile.metadata, :notification_type => "quest",
-                         :notification_text => quest.metadata['congratesMsg'] })
+                         :notification_text => quest.metadata['congratesMsg'], :notification_data => {:rewards => quest.metadata['rewards']} })
       if quest.metadata['rewards']['exp']
         
         puts user_game_profile.exp.class

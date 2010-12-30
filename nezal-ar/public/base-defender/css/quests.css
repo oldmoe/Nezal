@@ -43,11 +43,8 @@
   text-align: center;
   vertical-align: top;
   cursor: pointer;
-  height : 38px;
 }
-#interaction .okImage {
-  height : 38px;
-}
+
 #interaction .okText {
   color: #DDDDDD;
   font-family: Showg;
@@ -75,7 +72,7 @@
 }
 #interaction #msg .okImage {
   position: relative;
-  height : 38px;
+  height : 36px;
 }
 
 #interaction #msg #welcomeMsg .okButtonWrapper {
@@ -116,13 +113,37 @@
   color: #683502;
   font-size: 18px;
   padding-top : 5px;
-  position: absolute;
   width: 280px;
+  height : 50px;
 }
 #interaction #msg #congratesMsg .header{
   color: #F23D00;
   font-size: 24px;
 }
+#interaction #msg #congratesMsg .rewards{
+  width : 150px;
+  text-align : center;
+}
+#interaction #msg #congratesMsg .reward{
+  display : inline-block;
+  overflow : hidden;
+  width : 31%;
+  text-align : center;
+  font-size : 17px;
+}
+#interaction #msg #congratesMsg .reward .lumber{
+  position : relative;
+  left : 5px;
+}
+#interaction #msg #congratesMsg .reward .rock{
+  position : relative;
+  left : -50px;
+}
+#interaction #msg #congratesMsg .reward .coins{
+  position : relative;
+  left : -100px;
+}
+
 
 
 
@@ -244,5 +265,7 @@
 #interaction #questDisplay .alignDiv {
   width : 77%;
 }
-
+#interaction #questDisplay .okImage {
+  height : 40px;
+}
 

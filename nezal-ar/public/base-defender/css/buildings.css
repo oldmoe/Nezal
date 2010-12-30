@@ -32,6 +32,7 @@
   left : 0px;
   height: 40px;
   width: 100%;
+  z-index : 10;
 }
   /* Each aligned button should set a width to this div according to desired position of button */
 #interaction .alignDiv {
@@ -120,4 +121,7 @@
 }
 #interaction #buildingDisplay .buildButton .alignDiv {
   width : 80%;
+}
+#interaction #buildingDisplay .okImage {
+  height : 40px;
 }
