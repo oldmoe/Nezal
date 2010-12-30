@@ -6,6 +6,7 @@ var Building = Class.create({
   coords : {x : null, y : null},
   currentLevelBluePrints : null,
   nextLevelBluePrints : null,
+	locationValid : true,
   state : 0,
 	states : {NOT_PLACED : 0, UNDER_CONSTRUCTION : 1, UPGRADING : 2, NORMAL : 3},
   initialize : function(factory, buildingSpecs){
@@ -29,7 +30,7 @@ var Building = Class.create({
   
   init : function(){
     this.setState(this.initialState);
-    return this;    
+    return this;
   },
   
   tick : function(){
@@ -41,8 +42,26 @@ var Building = Class.create({
           self.game.reInitialize();
         });
       }
-    }
+    } else if (this.state == this.states.NOT_PLACED) {
+			this.locationValid = this.validateLocation(this.coords.x,this.coords.y);
+	  }
   },
+	
+	validateLocation : function(x,y){
+		var mapCoords = this.game.scene.map.tileValue(x,y);
+		var map = this.game.scene.map;
+		var cond1 = map.grid[mapCoords[0]][mapCoords[1]].terrainType == this.game.scene.landmarks.get(this.canBeBuiltOn);
+		var cond2 = map.validateLocation(this)
+    if(!cond1){
+      alert(this.name + " can be built on " + this.canBeBuiltOn + " only!");
+      return false;
+    }
+		if(!cond2){
+      console.log("this location is occupied by another building");
+      return false;
+    }
+		return true;
+	},
   
   stateChanged : function(){
   },
@@ -79,50 +98,7 @@ var Building = Class.create({
       return 0;
     }
   },
-  
-//  render : function(){
-//    var self = this;
-//    if( this.level == 0 && !this.inProgress ) return;
-//    
-//    var x = this.coords['x']
-//    var y = this.coords['y']
-//    
-//    if (this.inProgress) {
-//      if (!this.game.neighborGame) {
-//        $('building-remaining-time').style['top'] = (y - 15) + "px";
-//        $('building-remaining-time').style['left'] = (x - 20) + "px";
-//        $('building-remaining-time').show();
-//        
-//        var reactorCallback = function(){
-//          var remainingTime = self.upgradeRemainingTime();
-//          if (remainingTime > 0) {
-//            var remainingText = remainingTime + " Seconds";
-//            $('building-remaining-time').innerHTML = self.game.templatesManager.buildingRemainingTime(remainingText);
-//            self.game.reactor.push(0, reactorCallback);
-//          }
-//          else {
-//            //Adding a delay before calling the server to overcome time precision errors
-//            if (!self.noMore) {
-//              self.noMore = true
-//              self.game.reactor.push(2, function(){
-//                self.noMore = false
-//                $('building-remaining-time').hide();
-//                self.game.reInitialize();
-//              });
-//            }
-//          }
-//        }
-//        
-//        this.game.reactor.push(0, reactorCallback);
-//      }
-//      
-//    }
-//    
-//    if( !this.game.neighborGame && this.game.selectedBuildingPanel != null && this.game.selectedBuildingPanel.selectedBuilding.name == this.name ){
-//      this.renderPanel();
-//    }
-//  },
-  
+	
   isValidToBuild : function(x,y){
     if(this.game.disableJsValidation)
       return true;
@@ -137,10 +113,10 @@ var Building = Class.create({
     
     /****************************** Validating resources **************************************/
     var neededRock = this.factory.bluePrints.levels[1].rock - this.game.resources.rock;
-    var neededIron = this.factory.bluePrints.levels[1].iron - this.game.resources.iron;
+    var neededLumber = this.factory.bluePrints.levels[1].lumber - this.game.resources.lumber;
     
-    if( neededRock > 0 && neededIron > 0 ){
-      alert("Not enough resources, you need more "+ neededRock +" rock and "+ neededIron + " iron");
+    if( neededRock > 0 && neededLumber > 0 ){
+      alert("Not enough resources, you need more "+ neededRock +" rock and "+ neededLumber + " lumber");
       return false;
     }
     
@@ -149,28 +125,18 @@ var Building = Class.create({
       return false;
     }
     
-    if( neededIron > 0 ){
-      alert("Not enough resources, you need more "+ neededIron +" iron");
+    if( neededLumber > 0 ){
+      alert("Not enough resources, you need more "+ neededLumber +" lumber");
       return false;
     }
     /****************************************************************************************/
-   
-    /****************************** Validating location **************************************/
-   	var mapCoords = this.game.scene.map.tileValue(x,y);
-		var map = this.game.scene.map;
-		var cond1 = map.grid[mapCoords[0]][mapCoords[1]].terrainType == this.game.scene.landmarks.get(this.canBeBuiltOn);
-		var cond2 = map.addElement(this)
-    if(!cond1){
-      alert(this.name + " can be built on " + this.canBeBuiltOn + " only!");
-      return false;
-    }
-		if(!cond2){
-      alert("this location is occupied by another building");
-      return false;
-    }
-    /******************************************************************************************/
-   
-   return true;
+   	if(this.validateLocation(x,y)){
+			Map.addElement(this)
+		}
+		else{
+			return false
+		} 
+	 return true;
   }
   
 });

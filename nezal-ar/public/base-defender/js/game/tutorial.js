@@ -35,7 +35,7 @@ var Tutorial = Class.create({
                                               $('hand').hide();
                                               setTimeout(function(){
                                                   var offset = Element.cumulativeOffset($$('#buildingsPanel #townhall .itemData')[0]);
-                                                  ['quarry', 'mine'].each(function(item){
+                                                  ['quarry', 'lumbermill'].each(function(item){
                                                       $$('#buildingsPanel #' + item + ' .background')[0].src=Loader.images.quests['inactiveCell.png'].src;
                                                       $$('#buildingsPanel #' + item + ' .itemData')[0].setStyle({cursor : 'default' });
                                                   });
@@ -63,7 +63,7 @@ var Tutorial = Class.create({
                                               $('hand').hide();
                                               setTimeout(function(){
                                                   var offset = Element.cumulativeOffset($$('#buildingsPanel #quarry .itemData')[0]);
-                                                  ['townhall', 'mine'].each(function(item){
+                                                  ['townhall', 'lumbermill'].each(function(item){
                                                       $$('#buildingsPanel #' + item + ' .background')[0].src=Loader.images.quests['inactiveCell.png'].src;
                                                       $$('#buildingsPanel #' + item + ' .itemData')[0].setStyle({cursor : 'default' });
                                                   });

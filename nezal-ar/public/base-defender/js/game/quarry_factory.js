@@ -4,7 +4,7 @@ var QuarryFactory = Class.create(ResourceBuildingFactory, {
   buildingClass : Quarry,
   factoryRegistry : {},
   rockPerMinute : 0,
-  
+  collect : "rock",
   initialize : function($super, game){
     $super(game);
     this.rockPerMinute = this.resourcePerMinute;

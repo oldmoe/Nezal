@@ -13,11 +13,12 @@ var Game = Class.create({
   buildingMode : null,
   townhallFactory : null,
   quarryFactory : null,
-  mineFactory : null,
+  lumbermillFactory : null,
   neighborGame : null,
+	reInitializationNotifications : [],
   resources : {
     rock : 0,
-    iron : 0
+    lumber : 0
   },
   
   initialize : function(){
@@ -67,15 +68,19 @@ var Game = Class.create({
 		var buildingImages = BuildingMode.prototype.buildings.collect(function(building){
       return building + ".png";
     });
-    var questsImages = ["msgBg.png", "wedge.png", "button.png", "bubble.png", "questBg.png", "buildingPanelBg.png", "activeCell.png", "inactiveCell.png"];
-    var iconsImages = ["townhall.png", "quarry.png", "mine.png", "iron.png", "rock.png"];
+		var buildingOutlineImages = BuildingMode.prototype.buildings.collect(function(building){
+      return building + "_outline.png";
+    });
+		var buildingModeImages = ['2x2_invalid.png', '2x2_base.png'];
+		var questsImages = ["msgBg.png", "wedge.png", "button.png", "bubble.png", "questBg.png", "buildingPanelBg.png", "activeCell.png", "inactiveCell.png"];
+    var iconsImages = ["townhall.png", "quarry.png", "lumbermill.png", "lumber.png", "rock.png"];
     new Loader().load([{images : BaseDefenderScene.prototype.textures, path: 'images/textures/', store: 'textures'},
                        {images : buildingImages, path: 'images/buildings/', store: 'buildings'},
-                       {images : iconsImages, path: 'images/icons/', store: 'icons'},
-                       {images : questsImages, path: 'images/quests/', store: 'quests'},
-                       {images : [BuildingMode.prototype.inProgressImage], path: 'images/buildings/', store: 'buildings'}],
-      {onFinish : loaderFinishCallback
-    });
+											 {images : buildingModeImages, path: 'images/buildings/', store: 'buildingModes'},
+											 {images : iconsImages, path: 'images/icons/', store: 'icons'},
+											 {images : questsImages, path: 'images/quests/', store: 'quests'},
+											 {images : buildingOutlineImages, path: 'images/buildings/outlines/', store: 'buildingOutlines'}],
+      {onFinish : loaderFinishCallback});
 	
   },
   
@@ -95,8 +100,9 @@ var Game = Class.create({
   },
   
   reflectStatusChange : function(){
+		this.reInitializationNotifications = [];
     if(this.reactor) this.reactor.stop();
-    this.reactor = new Reactor(50);
+    this.reactor = new Reactor(33);
     this.reactor.run();
     
     this.buildingMode = new BuildingMode(this);
@@ -104,18 +110,21 @@ var Game = Class.create({
 		this.scene = new BaseDefenderScene(this);	
     this.workerFactory = new WorkerFactory(this);
     this.resources.rock = this.user.data.rock;
-    this.resources.iron = this.user.data.iron;
-
+    this.resources.lumber = this.user.data.lumber;
+    
     BuildingFactory._GlobalRegistry = {};
     this.townhallFactory = new TownhallFactory(this);
     this.quarryFactory = new QuarryFactory(this);
-    this.mineFactory = new MineFactory(this);
-    this.questsManager = new QuestsManager(this);
+    this.lumbermillFactory = new LumbermillFactory(this);
+		this.questsManager = new QuestsManager(this);
     this.buildingsManager = new BuildingsManager(this);
+
     this.tutorial = new Tutorial(this);
     this.tutorial.fire();
+    this.reInitializationNotifications.each(function(fn){fn()});
 /*    if(!this.neighborGame)
       new Notification(this).showAll();*/
+
   },
   
   loadUserEmpire : function(user_id){

@@ -17,29 +17,10 @@ var ResourceBuilding = Class.create(Building, {
 	tick : function($super){
     $super();
 		if (this.state == this.states.NORMAL) {
-			this.game.resources[this.factory.canBeBuiltOn] += this.totalPerTick;
+			this.game.resources[this.factory.collect] += this.totalPerTick;
 		}
 		return this;
 	},
-  
-  renderPanel : function(){
-    var self = this;
-    this.game.selectedBuildingPanel = new BuildingPanel(this, function(){
-      return self.game.templatesManager.resourceBuildingPanel(self);
-    });
-    this._AttachAssignTrigger();
-  },
-  
-  _AttachAssignTrigger: function(){
-    var self = this;
-    if($$('.building-functions').any()){
-      var trigger = $('assign_worker_trigger');
-    
-      trigger.observe('click', function(){
-        self._AssignWorker();
-      });
-    }
-  },
   
   _AssignWorker: function(){
     if(this._ValidateAssignWorker()){

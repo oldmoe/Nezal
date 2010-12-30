@@ -25,7 +25,7 @@ module BD
         user_game_profile.metadata[@name][location_hash]['coords'] = coords
         
         user_game_profile.metadata['rock'] -= game_metadata['buildings'][@name]['levels']['1']['rock']
-        user_game_profile.metadata['iron'] -= game_metadata['buildings'][@name]['levels']['1']['iron']
+        user_game_profile.metadata['lumber'] -= game_metadata['buildings'][@name]['levels']['1']['lumber']
         
         user_game_profile.save
         
@@ -41,10 +41,10 @@ module BD
   
         #validating resources
         neededRock = game_metadata['buildings'][@name]['levels']['1']['rock'] - user_profile_metadata['rock'];
-        neededIron = game_metadata['buildings'][@name]['levels']['1']['iron'] - user_profile_metadata['iron'];
-        if( neededRock > 0 && neededIron > 0 )
+        neededLumber = game_metadata['buildings'][@name]['levels']['1']['lumber'] - user_profile_metadata['lumber'];
+        if( neededRock > 0 && neededLumber > 0 )
           return {'valid' => false,
-                  'error' => "Not enough resources, you need more "+ neededRock +" rock and "+ neededIron + " iron"}
+                  'error' => "Not enough resources, you need more "+ neededRock +" rock and "+ neededLumber + " lumber"}
         end
         
         if( neededRock > 0)
@@ -52,9 +52,9 @@ module BD
                   'error' => "Not enough resources, you need more " + neededRock + " rock"}
         end
         
-        if( neededIron > 0)
+        if( neededLumber > 0)
           return {'valid' => false,
-                  'error' => "Not enough resources, you need more " + neededIron + " rock"}
+                  'error' => "Not enough resources, you need more " + neededLumber + " rock"}
         end
         
         #validating location # to be reconsidered  after server Map implementation

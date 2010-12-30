@@ -2,7 +2,7 @@
  * @author michaelyoussef
  */
 var ProgressDisplay = Class.create({
-  initialize : function(time, top, left){
+  initialize : function(time, top, left, zIndex){
     this.time = time;
     this.elapsed = 0
     this.html = TrimPath.processDOMTemplate("progress-template");
@@ -10,7 +10,7 @@ var ProgressDisplay = Class.create({
     div.innerHTML = this.html;
     div.addClassName('progressContainer')
     this.div = $($('gameCanvas').appendChild(div));
-    this.div.setStyle({top:top+"px", left:left+"px"});
+    this.div.setStyle({top:top+"px", left:left+"px",zIndex : zIndex});
     this.timeContainer = this.div.down('.progressTime')
     this.progressBar = this.div.down('.progressBar')
   },

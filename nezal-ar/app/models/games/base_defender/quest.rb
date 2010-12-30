@@ -6,9 +6,9 @@ module BD
         :buildings => {
                         "townhall" => [:level],
                         "quarry" => [:level],
-                        "mine" => [:level]
+                        "lumbermill" => [:level]
                     }, # For all the defined buildings, u can make a condition regarding the level of one of the buildings
-        :resources => ["iron", "rock", "workers"] # For all the resources, u can make a condition about the direct value of a certain resource
+        :resources => ["lumber", "rock", "workers"] # For all the resources, u can make a condition about the direct value of a certain resource
     }
 
     # Base Defender Quests : 

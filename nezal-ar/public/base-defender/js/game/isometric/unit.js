@@ -114,21 +114,7 @@ var Tank = Class.create(Unit,{
 		this.sprite = new DomSprite(this, this.img)
 	}
 })
-var Mine = Class.create(Unit,{
-	initialize : function($super){
-		$super()
-		this.zdim=2 * this.lengthMultiplier
-		this.imgWidth=128
-		this.imgHeight=97
-		this.xdim = 3 * this.lengthMultiplier
-		this.ydim = 3 * this.lengthMultiplier
-		this.img = new Image
-		this.img.src="images/mine.png"
-		this.shadeImg = new Image 
-		this.shadeImg.src = "images/mine_shade.png"
-		this.sprite = new DomSprite(this,this.img)
-	}
-})
+
 //var Display = Class.create({
 //	initialize : function(owner){
 //		this.owner = owner;
