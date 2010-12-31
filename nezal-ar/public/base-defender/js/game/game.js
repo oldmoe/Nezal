@@ -76,14 +76,18 @@ var Game = Class.create({
                          "activeCell.png", "inactiveCell.png", "resources.png"];
     var iconsImages = ["townhall.png", "quarry.png", "lumbermill.png", "lumber.png", "rock.png", "workers.png"];
 		//var gameElementsImages = ["coins.png", "monitor.png", "rock.png", "lumber.png", "workers.png", "xp_bar.png"];
+		var workerImages = ["worker.png"];
     new Loader().load([{images : BaseDefenderScene.prototype.textures, path: 'images/textures/', store: 'textures'},
                        {images : buildingImages, path: 'images/buildings/', store: 'buildings'},
 											 {images : buildingModeImages, path: 'images/buildings/', store: 'buildingModes'},
 											 {images : iconsImages, path: 'images/icons/', store: 'icons'},
+											 {images : workerImages, path: 'images/worker/', store: 'worker'},
 											 {images : questsImages, path: 'images/quests/', store: 'quests'},
 											 {images : buildingOutlineImages, path: 'images/buildings/outlines/', store: 'buildingOutlines'}],
       {onFinish : loaderFinishCallback});
-	
+		Loader.images.worker = {}
+		Loader.images.worker['worker.png'] = new Image()
+		Loader.images.worker['worker.png'].src = "images/worker/worker.png"
   },
   
   reInitialize : function(callback){
@@ -110,17 +114,15 @@ var Game = Class.create({
     this.buildingMode = new BuildingMode(this);
     this.user = new User(this);
 		this.scene = new BaseDefenderScene(this);	
-    this.workerFactory = new WorkerFactory(this);
-    this.resources.rock = this.user.data.rock;
+   	this.resources.rock = this.user.data.rock;
     this.resources.lumber = this.user.data.lumber;
-    
     BuildingFactory._GlobalRegistry = {};
     this.townhallFactory = new TownhallFactory(this);
     this.quarryFactory = new QuarryFactory(this);
     this.lumbermillFactory = new LumbermillFactory(this);
 		this.questsManager = new QuestsManager(this);
     this.buildingsManager = new BuildingsManager(this);
-
+		this.workerFactory = new WorkerFactory(this);
     this.tutorial = new Tutorial(this);
     this.tutorial.fire();
     this.reInitializationNotifications.each(function(fn){fn()});
