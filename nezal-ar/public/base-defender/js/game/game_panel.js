@@ -5,6 +5,7 @@ var GamePanel = Class.create({
   initialize : function(game){
 		this.game = game;
     var self = this;
+    $('workers_game_element').stopObserving('click');
     $('workers_game_element').observe('click',
                                       function(){
                                         self.game.workerFactory.buyWorker() 

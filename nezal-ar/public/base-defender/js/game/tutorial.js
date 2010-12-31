@@ -36,6 +36,7 @@ var Tutorial = Class.create({
                                               setTimeout(function(){
                                                   var offset = Element.cumulativeOffset($$('#buildingsPanel #townhall .itemData')[0]);
                                                   ['quarry', 'lumbermill'].each(function(item){
+                                                      $$('#buildingsPanel #' + item + ' .itemData')[0].onclick=function(){}
                                                       $$('#buildingsPanel #' + item + ' .background')[0].src=Loader.images.quests['inactiveCell.png'].src;
                                                       $$('#buildingsPanel #' + item + ' .itemData')[0].setStyle({cursor : 'default' });
                                                   });
@@ -67,6 +68,7 @@ var Tutorial = Class.create({
 //                                                  Element.cumulativeOffset(this.game.townhallFactory.townhall.sprites.building.div);
 
                                                   ['townhall', 'lumbermill'].each(function(item){
+                                                      $$('#buildingsPanel #' + item + ' .itemData')[0].onclick=function(){}
                                                       $$('#buildingsPanel #' + item + ' .background')[0].src=Loader.images.quests['inactiveCell.png'].src;
                                                       $$('#buildingsPanel #' + item + ' .itemData')[0].setStyle({cursor : 'default' });
                                                   });
@@ -92,7 +94,6 @@ var Tutorial = Class.create({
     var self = this.game.tutorial;
     $('workers_game_element').observe('click', 
                                             function(){
-                                              $('questDisplay').hide();
                                               $('hand').hide();
                                            });
   },
@@ -110,6 +111,7 @@ var Tutorial = Class.create({
                                               setTimeout(function(){
                                                   var offset = Element.cumulativeOffset($$('#buildingsPanel #lumbermill .itemData')[0]);
                                                   ['quarry', 'townhall'].each(function(item){
+                                                      $$('#buildingsPanel #' + item + ' .itemData')[0].onclick=function(){}
                                                       $$('#buildingsPanel #' + item + ' .background')[0].src=Loader.images.quests['inactiveCell.png'].src;
                                                       $$('#buildingsPanel #' + item + ' .itemData')[0].setStyle({cursor : 'default' });
                                                   });
