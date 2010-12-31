@@ -68,7 +68,8 @@ var TemplatesManager = Class.create({
     return TrimPath.processDOMTemplate("build-button-template", {});
   },
 	workersInGamePanel: function(idleWorkers, totalWorkers){
-		return TrimPath.processDOMTemplate("workers-in-game-panel-template", {});
+		return TrimPath.processDOMTemplate("workers-in-game-panel-template", 
+														{idleWorkers : idleWorkers, totalWorkers : totalWorkers});
   }
 
 
