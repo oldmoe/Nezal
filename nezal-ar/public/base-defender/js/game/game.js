@@ -81,7 +81,7 @@ var Game = Class.create({
                        {images : buildingImages, path: 'images/buildings/', store: 'buildings'},
 											 {images : buildingModeImages, path: 'images/buildings/', store: 'buildingModes'},
 											 {images : iconsImages, path: 'images/icons/', store: 'icons'},
-											 {images : workerImages, path: 'images/worker/', store: 'worker'},
+											// {images : workerImages, path: 'images/worker/', store: 'worker'},
 											 {images : questsImages, path: 'images/quests/', store: 'quests'},
 											 {images : buildingOutlineImages, path: 'images/buildings/outlines/', store: 'buildingOutlines'}],
       {onFinish : loaderFinishCallback});
