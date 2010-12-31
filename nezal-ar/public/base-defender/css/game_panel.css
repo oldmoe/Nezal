@@ -7,6 +7,7 @@
 #workers_game_element {
 	right: 10px;
 	top: 3px;
+  cursor : pointer;
 }
 
 #coins_game_element {

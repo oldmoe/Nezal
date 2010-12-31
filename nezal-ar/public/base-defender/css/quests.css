@@ -275,3 +275,8 @@
   height : 40px;
 }
 
+.rotated {
+  -webkit-transform: rotate(270deg);
+  -moz-transform: rotate(270deg);
+    -o-transform: rotate(270deg);
+}
