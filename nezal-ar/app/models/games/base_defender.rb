@@ -231,8 +231,8 @@ class BaseDefender < Metadata
                    'quarry' => nil,
                    'workers' => 1,
                    'idle_workers' => 1,
-                   'rock' => 15000,
-                   'lumber' => 15000,
+                   'rock' => 20000,
+                   'lumber' => 20000,
                    'notifications' => {'id_generator' => 0, 'queue' => []},
                    'map' => (0..72).to_a.map{(0..24).to_a.map{0}}
                   }

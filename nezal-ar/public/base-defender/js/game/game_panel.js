@@ -3,7 +3,13 @@
  */
 var GamePanel = Class.create({
   initialize : function(game){
-		this.game = game
+		this.game = game;
+    var self = this;
+    $('workers_game_element').stopObserving('click');
+    $('workers_game_element').observe('click',
+                                      function(){
+                                        self.game.workerFactory.buyWorker() 
+                                      })
 	},
 	render : function(){
     if(this.game.neighborGame) return;
