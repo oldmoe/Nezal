@@ -6,6 +6,7 @@ var Tutorial = Class.create({
   initialize : function(game){
     this.game = game;
     var self = this;    
+    $('hand').hide();
   },
 
   fire : function(){
