@@ -11,7 +11,6 @@ var Notification = Class.create({
     var notificationsHTML = "";
     notifications.each(function(notification){
       notificationsHTML += self.game.templatesManager.notification(notification.text, notification.id);
-      //console.log(self.game.templatesManager.notification(notification.text, notification.id));
     });
     $('gameContainer').insert(notificationsHTML);
     this._AttachNotificationsAckTriggers();

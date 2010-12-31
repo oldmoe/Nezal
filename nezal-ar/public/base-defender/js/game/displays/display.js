@@ -171,10 +171,7 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
 var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
 	renderPanel : function(){
     var self = this.owner;
-		console.log("rendering resource building panel")
     self.game.selectedBuildingPanel = new BuildingPanel(self, function(){
-			console.log(self);
-			console.log(self.game.templatesManager.resourceBuildingPanel(self));
       return self.game.templatesManager.resourceBuildingPanel(self);
     });
     this._AttachAssignTrigger();
@@ -203,12 +200,8 @@ var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
 
 var BuildingPanelDisplay = Class.create({
   initialize : function(game){
-		console.log("Pushing Notification");
-		console.log(game.reInitializationNotifications.size());
 		game.reInitializationNotifications.push(function(){
-			console.log("Notification Fired");
 			if (game.selectedBuildingPanel && game.selectedBuildingPanel.selectedBuilding) {
-				console.log("Notification Fired Successfully");
 		  	game.selectedBuildingPanel.selectedBuilding.renderPanel();
 		  }
 		});

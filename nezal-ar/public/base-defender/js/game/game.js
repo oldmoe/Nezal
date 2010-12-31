@@ -20,7 +20,7 @@ var Game = Class.create({
     rock : 0,
     lumber : 0
   },
-  
+  workersStatus : null,
   initialize : function(){
     this.network = new Network();
   },

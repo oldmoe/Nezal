@@ -8,12 +8,22 @@ var WorkerFactory = Class.create({
     this.workers = this.game.user.data.workers;
     this.idleWorkers = this.game.user.data.idle_workers;
     this.recruitmentPlans = this.game.data.workers;
+		if(!game.workersStatus) game.workersStatus = {}
 		for(var i=0;i<this.idleWorkers;i++){
-			do{
-				var x = Math.round(game.scene.map.x+game.scene.map.viewWidth*Math.random())
-				var y = Math.round(game.scene.map.y+game.scene.map.viewHeight*Math.random())
-			}while(Map.occupied(x,y))
+			var x =0;var y=0;
+			if (game.workersStatus[i]) {
+		  	x = game.workersStatus[i].x
+		  	y = game.workersStatus[i].y
+		  }
+		  else {
+		  	do {
+		  		var x = Math.round(game.scene.map.x + game.scene.map.viewWidth * Math.random())
+		  		var y = Math.round(game.scene.map.y + game.scene.map.viewHeight * Math.random())
+		  	}
+		  	while (Map.occupied(x, y));
+		  }
 			var worker = new Worker(game,x,y)
+			if(!game.workersStatus[i])game.workersStatus[i] = worker.coords 
 			var workerDisplay = new WorkerDisplay(worker)
 			this.game.scene.pushAnimation(workerDisplay);
 		}

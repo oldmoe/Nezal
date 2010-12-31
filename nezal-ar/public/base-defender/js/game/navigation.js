@@ -27,12 +27,10 @@ var Navigation = Class.create({
 		this.map.div.observe('mousedown',function(e){
 			 Map.mouseIsDown = true
 			 Map.mouseLocation = {x:e.pointerX(), y:e.pointerY()}
-			 console.log('mousedown')
 		});
 		
 		document.body.observe('mouseup',function(e){
 			Map.mouseIsDown = false
-			console.log('mouseup')				
 			if(Map.dragged){
 				self.dragDiv.hide()
 				Map.dragged = false;
@@ -42,7 +40,6 @@ var Navigation = Class.create({
 		self.dragDiv.observe('mouseout',function(e){
 			if (Map.dragged) {
 		  	Map.mouseIsDown = false
-		  	console.log('mouseout')
 		  	Map.dragged = false
 		  	self.dragDiv.hide()
 	  	}				

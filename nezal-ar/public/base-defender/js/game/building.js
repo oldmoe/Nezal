@@ -57,7 +57,7 @@ var Building = Class.create({
       return false;
     }
 		if(!cond2){
-      console.log("this location is occupied by another building");
+      //console.log("this location is occupied by another building");
       return false;
     }
 		return true;
