@@ -27,6 +27,26 @@ var Display = Class.create({
 	 }
 });
 
+var WorkerDisplay = Class.create(Display,{
+	imgWidth : 64,
+	imgHeight : 93,
+	xdim : 64,
+	ydim : 93,
+	zdim : 0,
+	initialize: function($super, owner, properties){
+  	$super(owner, properties)
+		this.noOfXTiles = Math.ceil(this.xdim / Map.tileIsoLength)
+		this.noOfYTiles = Math.ceil(this.ydim / Map.tileIsoLength)
+		this.owner = owner
+		this.img = Loader.images.worker['worker.png'];
+		Object.extend(this.owner,this);
+		this.sprites.worker = new DomSprite(owner,this.img);
+  },
+	render : function(){
+		this.sprites.worker.render()
+	}
+});
+
 var BuildingDisplay = Class.create(Display, {
   initialize : function($super,owner,properties){
 		$super(owner,properties)
@@ -179,6 +199,7 @@ var LumbermillDisplay = Class.create(ResourceBuildingDisplay, {
 var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
   
 });
+
 
 var BuildingPanelDisplay = Class.create({
   initialize : function(game){

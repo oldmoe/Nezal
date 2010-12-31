@@ -294,6 +294,12 @@ var Map={
 		if(this.objects)this.objects = []
 		if(this.div)this.div.innerHTML = ""
 	},
+	occupied : function(x,y){
+		var mapTiles = Map.tileValue(x,y)
+		if(Map.grid[mapTiles[0]][mapTiles[1]].value)return true
+		return false 
+	},
+	
 	repeatMovement : function(xDirection,yDirection){
 		var self = this;
 		Map.periodicalMovementEvent = setInterval(function(){self.move(xDirection, yDirection)}, this.movementSpeed);
@@ -328,7 +334,7 @@ var Map={
 	},
 	moveObject : function(object,x,y){
 		var astar = new Astar()
-		var srcTiles = Map.tileValue(object.x,object.y)
+		var srcTiles = Map.tileValue(object.coords.x,object.coords.y)
 		var destTiles = Map.tileValue(x,y)
 		if(Map.grid[destTiles[0]][destTiles[1]].value!=0) return
 		var path = astar.getOptimalPath(Map,Map.grid[srcTiles[0]][srcTiles[1]],Map.grid[destTiles[0]][destTiles[1]])
@@ -366,6 +372,6 @@ var Map={
 			owner.sprites.outline.hide()
 		})
 	},
-	N:0, NE:1, E:2, SE:3, S:4, SW:5, W:6, NW:7 
+	E:0, NE:1, N:2, NW:3, W:4, SW:5, S:6, SE:7 
 }
 

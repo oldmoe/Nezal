@@ -8,6 +8,15 @@ var WorkerFactory = Class.create({
     this.workers = this.game.user.data.workers;
     this.idleWorkers = this.game.user.data.idle_workers;
     this.recruitmentPlans = this.game.data.workers;
+		for(var i=0;i<this.idleWorkers;i++){
+			do{
+				var x = Math.round(game.scene.map.x+game.scene.map.viewWidth*Math.random())
+				var y = Math.round(game.scene.map.y+game.scene.map.viewHeight*Math.random())
+			}while(Map.occupied(x,y))
+			var worker = new Worker(game,x,y)
+			var workerDisplay = new WorkerDisplay(worker)
+			this.game.scene.pushAnimation(workerDisplay);
+		}
   },
   
   nextWorkerCost : function(){
