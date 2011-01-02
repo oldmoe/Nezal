@@ -1384,19 +1384,20 @@ div.clickableButton:hover, span.clickableButton:hover
 	position:absolute;
 }
 #previousCampaigns ul{	
-	font-size:24px;
-	height:300px;
-	margin-left:100px;
-	margin-right:100px;
-	margin-top:105px;
-	position:relative;
-	width:540px;
-	z-index:1000;
+	font-size: 18px;
+    height: 300px;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 82px;
+    position: relative;
+    width: 600px;
+    z-index: 1000;
 }
 
 #previousCampaigns ul li{
+	float:left;
 	list-style-type : none;
-	width: 270px;
+	width: 300px;
 }
 
 #previousCampaigns ul li a{
@@ -1412,6 +1413,7 @@ div.clickableButton:hover, span.clickableButton:hover
 #previousCampaigns ul li img{
 	width :32px;
 	margin: 10px;
+	height: 22px;
 	vertical-align: middle;
 	border: none;
 }
