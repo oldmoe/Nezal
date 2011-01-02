@@ -1384,11 +1384,11 @@ div.clickableButton:hover, span.clickableButton:hover
 	position:absolute;
 }
 #previousCampaigns ul{	
-	font-size:24px;
+	font-size:18px;
 	height:300px;
 	margin-left:100px;
 	margin-right:100px;
-	margin-top:55px;
+	margin-top:40px;
 	position:relative;
 	width:540px;
 	z-index:1000;
