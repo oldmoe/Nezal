@@ -9,7 +9,7 @@ var Navigation = Class.create({
 			this.dragDiv.setStyle({
 											width: document.body.clientWidth + "px",
 											height: document.body.clientHeight + "px",
-											zIndex: 100000,
+											"z-index": 100000,
 											position: "absolute",
 											top: 0,
 											left: 0,

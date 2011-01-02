@@ -304,17 +304,6 @@ var Map={
 		var self = this;
 		Map.periodicalMovementEvent = setInterval(function(){self.move(xDirection, yDirection)}, this.movementSpeed);
 	},
-//	move : function (xDirection,yDirection){
-//		if(this.x+this.speed*xDirection >=0 && this.x+this.speed*xDirection < this.mapWidth - this.viewWidth
-//		 &&this.y+this.speed*yDirection >=0 && this.y+this.speed*yDirection < this.mapHeight - this.viewHeight){
-//			this.x+=this.speed*xDirection
-//			this.y+=this.speed*yDirection
-//			this.div.style.left = -this.x +"px"
-//			this.div.style.top = -this.y +"px"
-//			this.origin = Map.tileValue(this.x,this.y)
-//		}
-////		console.log(this.x,this.y)
-//	},
 
 	move : function (dx,dy){
 		if(this.x+dx >=0 && this.x+dx < this.mapWidth - this.viewWidth
@@ -325,13 +314,15 @@ var Map={
 			this.div.style.top = -this.y +"px"
 			this.origin = Map.tileValue(this.x,this.y)
 		}
-//		console.log(this.x,this.y)
 	},
+	
 	stopMovement : function(){
 		clearInterval(Map.periodicalMovementEvent);
 	},
+	
 	hovered : function(x,y){
 	},
+	
 	moveObject : function(object,x,y){
 		var astar = new Astar()
 		var srcTiles = Map.tileValue(object.coords.x,object.coords.y)
@@ -349,10 +340,6 @@ var Map={
 		if(path){
 			object.moving = false
 			object.movingPath = path
-			for(var i=0;i<path.length;i++){
-					//$$('.cell')[path[i].x*map.grid[0].length+path[i].y].addClassName('cellPath')
-			}
-			//Map.doMoveObject(object,path)
 		}
 		
 	},

@@ -113,8 +113,6 @@ var BuildingDisplay = Class.create(Display, {
 				this.sprites.invalid.show();
 			}
     }
-		
-		
 		for(var sprite in this.sprites){
 			this.sprites[sprite].render();
 		}
@@ -129,8 +127,18 @@ var BuildingDisplay = Class.create(Display, {
 });
 
 var TownhallDisplay = Class.create(BuildingDisplay, {
-		frameDuration : 4,
-		frameDurationCounter : 2,
+		animationRepeats : 2,
+		animationEverySeconds : 4,
+		tickDelay : 4,
+		initialize : function($super,owner,properties){
+			$super(owner,properties)
+			var self = this;
+			this.owner.game.scene.pushPeriodicalRenderLoop(
+							this.tickDelay,
+							this.animationRepeats * this.sprites.building.noOfAnimationFrames,
+							this.animationEverySeconds,
+							function(){self.renderAnimation()})
+		},
 		
 		renderPanel : function(){
 	    var self = this.owner;
@@ -154,16 +162,12 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
 	    }
 	  },
 		
-		render : function($super){
-      $super();
+		renderAnimation : function(){
 			if (!this.sprites.building.animated) {
         this.sprites.building.currentAnimationFrame = 0
       }
       else {
-        this.frameDurationCounter = (this.frameDurationCounter + 1) % (this.frameDuration + 1);
-        if (this.frameDuration == this.frameDurationCounter) {
-          this.sprites.building.currentAnimationFrame = (this.sprites.building.currentAnimationFrame + 1) % this.sprites.building.noOfAnimationFrames;
-        }
+		  	this.sprites.building.currentAnimationFrame = (this.sprites.building.currentAnimationFrame + 1) % this.sprites.building.noOfAnimationFrames;
       }
 		}
 });

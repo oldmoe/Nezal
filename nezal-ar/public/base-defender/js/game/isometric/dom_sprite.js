@@ -13,7 +13,7 @@ var DomSprite = Class.create(Sprite, {
 		this.img = img.clone()
 		this.shadeImg = shadeImg
 		this.owner = owner
-		this.div.style.zIndex = this.owner.y + this.owner.zdim
+		this.div.setStyle ({"z-index" :(this.owner.y + this.owner.zdim)})
 		this.div.appendChild(this.img)
 		this.div.style.width = this.owner.imgWidth + "px"
 		this.div.style.height =  this.owner.imgHeight + "px"
@@ -27,9 +27,12 @@ var DomSprite = Class.create(Sprite, {
 				Map.registerListeners(this.clickDiv,this.owner)
 				$('gameCanvas').appendChild(this.clickDiv);
 				this.clickDiv.addClassName('DomSprite');
-				this.clickDiv.style.zIndex = this.div.style.zIndex + 1;
-				this.clickDiv.style.width = this.div.style.width 
-				this.clickDiv.style.height = this.div.style.height
+				this.clickDiv.setStyle({"z-index":(this.div.style['z-index'] + 1),
+																width:this.div.style.width,
+																height:this.div.style.height,
+																background:"green",
+																opacity:0
+																})
 		}
 	},
 	
@@ -58,15 +61,18 @@ var DomSprite = Class.create(Sprite, {
 			if(this.owner.dead){
 				return this.destroy()
 			}
-			this.div.style.left =  this.owner.coords.x -Math.round(this.owner.imgWidth/2)+this.shiftX + "px"
-			this.div.style.top =  this.owner.coords.y -Math.round(this.owner.imgHeight/2)+this.shiftY + "px"
-			this.img.style.marginLeft = -this.owner.imgWidth*this.owner.angle  + "px"
-			this.img.style.marginTop = -this.currentAnimationFrame * this.owner.imgHeight + "px"
-			this.div.style.zIndex = this.owner.coords.y
+			this.div.setStyle({left : this.owner.coords.x -Math.round(this.owner.imgWidth/2)+this.shiftX + "px",
+												 top : this.owner.coords.y -Math.round(this.owner.imgHeight/2)+this.shiftY + "px",
+												 "z-index" : this.owner.coords.y})
+			this.img.setStyle({									 
+												 marginLeft :(-this.owner.imgWidth*this.owner.angle  + "px"),
+												 marginTop : (-this.currentAnimationFrame * this.owner.imgHeight + "px")})
+	
 			if (this.clickable) {
-	  		this.clickDiv.style.zIndex = this.div.style.zIndex + 1;
-				this.clickDiv.style.left = this.div.style.left;
-				this.clickDiv.style.top = this.div.style.top;
+				this.clickDiv.setStyle({"z-index" :(this.div.style['z-index'] + 1),
+																left:this.div.style.left,
+																top:this.div.style.top});															
+	
 	  	}
 		}catch(e){
 			console.log('Sprite#render: ',e)

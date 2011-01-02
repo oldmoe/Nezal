@@ -61,16 +61,23 @@ var Reactor = Class.create({
 		return this.events[h] && this.events[h][0] != ticks ? insert ? h : -1 : h;
 	},
   
-  pushPeriodical : function(ticks, func, callback){
-    var self = this;
+  pushPeriodical : function(tickDelay,numberOfRuns, everyTicks, func){
+		var totalNoOfRuns = numberOfRuns;
+		var self = this;
     var newFunc = function(){
+			if(numberOfRuns == 0){
+				self.pushPeriodical(tickDelay,totalNoOfRuns, everyTicks, func);
+				return;
+			} 
       if(!self.running) return
       func();
-      self.push(ticks, newFunc);
+      self.push(tickDelay, newFunc);
+			numberOfRuns --;
     };
-    self.push(ticks, newFunc);
-    if(callback) callback();
+    self.push(everyTicks, newFunc);
   },
+	
+	
 	
 	push : function(ticks, func, callback){
 		var delay = this.ticks + ticks

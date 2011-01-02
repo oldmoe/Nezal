@@ -94,7 +94,6 @@ var Game = Class.create({
     this.neighborGame = false;
     this.gameStatus = this.network.initializeGame();
     this.data = this.gameStatus.game_data.metadata;
-    
     this.reflectStatusChange();
     this.scene.render();
   },
