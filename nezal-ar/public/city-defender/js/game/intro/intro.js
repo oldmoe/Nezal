@@ -765,12 +765,15 @@ var Intro = {
 				onFinish()
 	  },
     showPaymentBg: function(){
-      $('payments-container').innerHTML = TrimPath.parseTemplate($('payment-options-template').value).process();
-      $$('#payments-container .clickSound').each(function(element){
-        element.stopObserving('click');
-      });
-      payment.activateMiddlePackage();
-      $('paymentFloatBg').show();
+		$('paymentFloatBg').show();
+		/*
+		  $('payments-container').innerHTML = TrimPath.parseTemplate($('payment-options-template').value).process();
+		  $$('#payments-container .clickSound').each(function(element){
+			element.stopObserving('click');
+		  });
+		  payment.activateMiddlePackage();
+		  $('paymentFloatBg').show();
+	  */
     },
     hidePaymentBg: function(){
       $('paymentFloatBg').hide();

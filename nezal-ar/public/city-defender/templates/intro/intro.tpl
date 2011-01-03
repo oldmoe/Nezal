@@ -616,7 +616,16 @@
     <div id="contactUsFloatBg" style="display: none;">
     </div>
   
-    <div id="paymentFloatBg" style="display : none;">
+	<div id="paymentFloatBg" style="display : none;">
+		<div class="pay">
+			payment is temporarily disabled, if you have a problem with previous payment please send a message
+      </div>
+	    <div id="contact-us-message"> ${Text.payments.contactUsMessage}
+			<a class="clickSound" href="javascript:void(0);" id="contact-us-trigger" onclick="Intro.showContactUsForm();"> ${Text.payments.contactUsTrigger} </a> 
+		</div>
+	  <div id="paymentClose" onclick="Intro.hidePaymentBg();" class="clickSound"> X </div>
+	</div>
+    <!--div id="paymentFloatBg" style="display : none;">
       <div class="pay">
         <img id="pay-left-image" src="${Loader.images.payments['pay_left.png'].getAttribute('data')}" />
         <img id="pay-middle-image" src="${Loader.images.payments['pay_middle.png'].getAttribute('data')}" />
@@ -627,7 +636,7 @@
       </div>
       
       <div id="paymentClose" onclick="Intro.hidePaymentBg();" class="clickSound"> X </div>
-    </div>
+    </div-->
     
     <div id="background">
       <img src="${Loader.images.intro['background.png'].getAttribute('data')}"/>
