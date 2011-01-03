@@ -617,13 +617,13 @@
     </div>
   
 	<div id="paymentFloatBg" style="display : none;">
+		<div id="paymentClose" onclick="Intro.hidePaymentBg();" class="clickSound"> X </div>
 		<div class="pay">
 			payment is temporarily disabled, if you have a problem with previous payment please send a message
       </div>
 	    <div id="contact-us-message"> ${Text.payments.contactUsMessage}
 			<a class="clickSound" href="javascript:void(0);" id="contact-us-trigger" onclick="Intro.showContactUsForm();"> ${Text.payments.contactUsTrigger} </a> 
 		</div>
-	  <div id="paymentClose" onclick="Intro.hidePaymentBg();" class="clickSound"> X </div>
 	</div>
     <!--div id="paymentFloatBg" style="display : none;">
       <div class="pay">
