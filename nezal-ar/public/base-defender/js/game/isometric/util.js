@@ -154,3 +154,8 @@ Array.prototype.pushInPlaceAscending=function(obj,field){
 		this[index]=obj
 	}
 }
+
+Math.randomSign = function(){
+  var r = Math.random();
+  return r > 0.5 ? 1 : -1;
+}

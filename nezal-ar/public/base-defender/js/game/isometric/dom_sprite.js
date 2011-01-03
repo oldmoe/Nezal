@@ -13,7 +13,7 @@ var DomSprite = Class.create(Sprite, {
 		this.img = img.clone()
 		this.shadeImg = shadeImg
 		this.owner = owner
-		this.div.setStyle ({"z-index" :(this.owner.y + this.owner.zdim)})
+		this.div.setStyle ({zIndex :(this.owner.coords.y + this.owner.zdim)})
 		this.div.appendChild(this.img)
 		this.div.style.width = this.owner.imgWidth + "px"
 		this.div.style.height =  this.owner.imgHeight + "px"
@@ -27,7 +27,7 @@ var DomSprite = Class.create(Sprite, {
 				Map.registerListeners(this.clickDiv,this.owner)
 				$('gameCanvas').appendChild(this.clickDiv);
 				this.clickDiv.addClassName('DomSprite');
-				this.clickDiv.setStyle({"z-index":(this.div.style['z-index'] + 1),
+				this.clickDiv.setStyle({zIndex:(this.div.style.zIndex + 1),
 																width:this.div.style.width,
 																height:this.div.style.height,
 																background:"green",
@@ -35,6 +35,10 @@ var DomSprite = Class.create(Sprite, {
 																})
 		}
 	},
+  
+  setImgWidth : function(width){
+    this.img.style.width = width + "px";
+  },
 	
 	setStyle : function(style){
 		this.div.setStyle(style)
@@ -61,15 +65,16 @@ var DomSprite = Class.create(Sprite, {
 			if(this.owner.dead){
 				return this.destroy()
 			}
+      
 			this.div.setStyle({left : this.owner.coords.x -Math.round(this.owner.imgWidth/2)+this.shiftX + "px",
 												 top : this.owner.coords.y -Math.round(this.owner.imgHeight/2)+this.shiftY + "px",
-												 "z-index" : this.owner.coords.y})
+												 zIndex : this.owner.coords.y})
 			this.img.setStyle({									 
 												 marginLeft :(-this.owner.imgWidth*this.owner.angle  + "px"),
 												 marginTop : (-this.currentAnimationFrame * this.owner.imgHeight + "px")})
 	
 			if (this.clickable) {
-				this.clickDiv.setStyle({"z-index" :(this.div.style['z-index'] + 1),
+				this.clickDiv.setStyle({zIndex :(this.div.style.zIndex + 1),
 																left:this.div.style.left,
 																top:this.div.style.top});															
 	

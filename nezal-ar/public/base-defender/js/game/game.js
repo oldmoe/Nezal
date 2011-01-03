@@ -76,18 +76,19 @@ var Game = Class.create({
                          "activeCell.png", "inactiveCell.png", "resources.png"];
     var iconsImages = ["townhall.png", "quarry.png", "lumbermill.png", "lumber.png", "rock.png", "workers.png"];
 		//var gameElementsImages = ["coins.png", "monitor.png", "rock.png", "lumber.png", "workers.png", "xp_bar.png"];
-		var workerImages = ["worker.png"];
+    
+    //This is duplicated to avoid a problem in the loader that can't deal with an array of a single item
+		var workerImages = ["worker.png", "worker.png"];
+    var bubbleImages = ["bubble.png", "bubble.png"]
     new Loader().load([{images : BaseDefenderScene.prototype.textures, path: 'images/textures/', store: 'textures'},
                        {images : buildingImages, path: 'images/buildings/', store: 'buildings'},
 											 {images : buildingModeImages, path: 'images/buildings/', store: 'buildingModes'},
 											 {images : iconsImages, path: 'images/icons/', store: 'icons'},
-											// {images : workerImages, path: 'images/worker/', store: 'worker'},
+										 	 {images : workerImages, path: 'images/worker/', store: 'worker'},
+                       {images : bubbleImages, path: 'images/', store: 'bubble'},
 											 {images : questsImages, path: 'images/quests/', store: 'quests'},
 											 {images : buildingOutlineImages, path: 'images/buildings/outlines/', store: 'buildingOutlines'}],
       {onFinish : loaderFinishCallback});
-		Loader.images.worker = {}
-		Loader.images.worker['worker.png'] = new Image()
-		Loader.images.worker['worker.png'].src = "images/worker/worker.png"
   },
   
   reInitialize : function(callback){
@@ -107,7 +108,7 @@ var Game = Class.create({
   reflectStatusChange : function(){
 		this.reInitializationNotifications = [];
     if(this.reactor) this.reactor.stop();
-    this.reactor = new Reactor(33);
+    this.reactor = new Reactor(100);
     this.reactor.run();
     
     this.buildingMode = new BuildingMode(this);
