@@ -4,8 +4,10 @@ var DomImgSprite = Class.create(DomSprite, {
   
 	initialize : function($super, owner, imgAssets, properties){
     $super(owner, imgAssets, properties);
+    console.log(owner, imgAssets)
 		this.img = imgAssets.img.clone()
-		this.shadeImg = imgAssets.shadeImg
+    if( imgAssets.shadeImg )
+		  this.shadeImg = imgAssets.shadeImg.clone();
 		this.div.appendChild(this.img)
 		this.currentAnimationFrame = 0
 		this.currentDirectionFrame = 0
@@ -27,6 +29,12 @@ var DomImgSprite = Class.create(DomSprite, {
   
   setImgWidth : function(width){
     this.img.style.width = width + "px";
+  },
+  
+  replaceImg : function(img){
+    this.div.removeChild(this.img)
+    this.img = img.clone()
+    this.div.appendChild(this.img)  
   },
 	
 	render : function(){

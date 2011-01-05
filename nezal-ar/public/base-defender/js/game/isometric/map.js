@@ -171,7 +171,7 @@ var Map={
 	//takes tile values and map them to x,y values
 	value : function(i,j){
 		var y=Math.round((i-1)*Map.tileHeight/2) 
-		var	x=-((i+1)%2)*Map.tileWidth/2+j*Map.tileWidth+Map.tileWidth/2
+		var	x=-((i+1)%2)*Map.tileWidth/2+j*Map.tileWidth+Map.tileWidth/2;
 		return [x,y]
 	},
 	
@@ -350,6 +350,15 @@ var Map={
 				$('building-panel').show();
 			}
 		})
+    
+    div.observe('mousemove',function(mouse){
+      var x = mouse.pointerX();
+      var y = mouse.pointerY();
+      owner.sprites.mouseover.shiftX = x - ( owner.coords.x - Math.round(owner.imgWidth/2) - Map.x ) + 10;
+      owner.sprites.mouseover.shiftY = y - ( owner.coords.y -Math.round(owner.imgHeight/2) - Map.y );
+      owner.sprites.mouseover.show();
+    })
+    
 		div.observe('mouseover',function(){
 			if (owner.state != owner.states.NOT_PLACED) {
 	  		owner.sprites.outline.show();
@@ -358,6 +367,7 @@ var Map={
 		})
 		div.observe('mouseout',function(){
 			owner.sprites.outline.hide();
+      owner.sprites.mouseover.hide();
       owner.sprites.info.hide();
 		})
 	},

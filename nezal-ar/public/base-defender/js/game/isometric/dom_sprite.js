@@ -1,6 +1,6 @@
 var DomSprite = Class.create(Sprite, {
-  shiftX : 0,
-  shiftY : 0,
+  shiftX : 2,
+  shiftY : 2,
   initialize : function(owner, assets, properties){
     this.div = $(document.createElement('DIV'));
     $('gameCanvas').appendChild(this.div);
@@ -9,6 +9,7 @@ var DomSprite = Class.create(Sprite, {
     this.div.setStyle ({zIndex :(this.owner.coords.y + this.owner.zdim)});
     this.div.style.width = this.owner.imgWidth + "px";
     this.div.style.height =  this.owner.imgHeight + "px";
+    Object.extend( this, properties );
   },
   
   setStyle : function(style){
@@ -35,9 +36,10 @@ var DomSprite = Class.create(Sprite, {
     return Nezal.notImplemented()();
   },
   
-  destroy : function(){
-    if(this.div.parentNode){
-      this.div = $(this.div.parentNode.removeChild(this.div))
-    }
-  }
+	destroy : function(){
+		if(this.div.parentNode){
+			this.div = $(this.div.parentNode.removeChild(this.div))
+		}
+	}
+	
 })
