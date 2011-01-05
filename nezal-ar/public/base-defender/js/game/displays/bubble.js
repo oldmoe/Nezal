@@ -1,10 +1,10 @@
 var Bubble = Class.create({
   initialize : function(coords , largeSizeLimit){
     this.coords = coords;
-    this.imgWidth = largeSizeLimit;
-    this.imgHeight = largeSizeLimit;
-    this.xdim = largeSizeLimit;
-    this.ydim = largeSizeLimit;
+    this.imgWidth = 110;
+    this.imgHeight = 40;
+    this.xdim = 110;
+    this.ydim = 40;
     this.zdim = 0;
     this.reset();
   },

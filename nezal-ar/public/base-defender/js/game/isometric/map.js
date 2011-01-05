@@ -171,7 +171,7 @@ var Map={
 	//takes tile values and map them to x,y values
 	value : function(i,j){
 		var y=Math.round((i-1)*Map.tileHeight/2) 
-		var	x=-((i+1)%2)*Map.tileWidth/2+j*Map.tileWidth+Map.tileWidth/2
+		var	x=-((i+1)%2)*Map.tileWidth/2+j*Map.tileWidth+Map.tileWidth/2;
 		return [x,y]
 	},
 	

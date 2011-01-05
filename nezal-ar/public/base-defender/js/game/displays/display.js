@@ -34,16 +34,23 @@ var WorkerDisplay = Class.create(Display,{
 	ydim : 93,
 	zdim : 0,
 	initialize: function($super, owner, properties){
-  	$super(owner, properties)
-		this.noOfXTiles = Math.ceil(this.xdim / Map.tileIsoLength)
-		this.noOfYTiles = Math.ceil(this.ydim / Map.tileIsoLength)
-		this.owner = owner
+  	$super(owner, properties);
+		this.noOfXTiles = Math.ceil(this.xdim / Map.tileIsoLength);
+		this.noOfYTiles = Math.ceil(this.ydim / Map.tileIsoLength);
+		this.owner = owner;
 		this.img = Loader.images.worker['worker.png'];
+		this.shadowImg = Loader.images.worker['worker_shadow.png'];
 		Object.extend(this.owner,this);
 		this.sprites.worker = new DomSprite(owner,this.img);
+		this.sprites.shadow = new DomSprite(owner.shadow,this.shadowImg,null,{shiftY: 48, shiftX: 10});
   },
 	render : function(){
-		this.sprites.worker.render()
+		this.sprites.worker.render();
+		this.sprites.shadow.render();
+		var divider = 20;
+		if (this.owner.angle == Map.S) divider = 45;
+		var scale = Math.abs(this.sprites.shadow.owner.coords.y-this.sprites.worker.owner.coords.y)/divider + 1;
+		this.sprites.shadow.setImgWidth(scale*this.shadowImg.width)
 	}
 });
 
@@ -198,7 +205,7 @@ var LumbermillDisplay = Class.create(ResourceBuildingDisplay, {
 });
 
 var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
-  numberOfBubbles : 12,
+  numberOfBubbles : 2,
   bubbles : null,
   bubbleImg : null,
   bubbleElevation : null,
@@ -209,8 +216,8 @@ var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
   initialize : function($super,owner,properties){
     var self = this;
     this.bubbles = [];
-    this.bubbleImg = Loader.images.bubble["bubble.png"];
-    this.bubbleElevation = 70;
+    this.bubbleImg = Loader.images.smoke["smoke_small.png"];
+    this.bubbleElevation = 42;
     
     for (var i = 0; i < this.numberOfBubbles; i++) {
       
@@ -218,8 +225,6 @@ var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
         shiftY: 0,
         shiftX: 0
       });
-      
-      bubbleSprite.setImgWidth(this.bubbleSmallSizeLimit);
       bubbleSprite.owner.yMovement = i*this.bubbleElevation / this.numberOfBubbles;
       bubbleSprite.owner.xMovement = 10;
       this.bubbles.push(bubbleSprite);
@@ -229,47 +234,33 @@ var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
   
   render : function($super){
     $super();
-    var self = this;
-    this.bubbles.each(function(bubble){
-      var bubbleSizeScale = Math.round(Math.random());
-      var bubbleXShift = 2;
-      
-      bubble.owner.yMovement -= 1;
-      bubble.shiftY = bubble.owner.yMovement - 30;
-      
-      if( -bubble.owner.xMovement > self.bubbleXMovementLimit ) {
-        bubble.owner.xDirection *= -1;
-        bubble.owner.xMovement += 2;
-      } else if( bubble.owner.xMovement > self.bubbleXMovementLimit  ) {
-        bubble.owner.xDirection *= -1;
-        bubble.owner.xMovement -= 2;
-      } else {
-        bubble.owner.xMovement += bubble.owner.xDirection* bubbleXShift;
-      }
-      bubble.shiftX = bubble.owner.xMovement;
-      
-      //Bubble max elevation reached, reseting it
-      if( bubble.owner.yMovement < -self.bubbleElevation ) {
-        bubble.owner.reset();
-        return;
-      }
-      
-      //Bubble is on its half way
-      var sizeDirection = 1;
-      if( -bubble.owner.yMovement < self.bubbleElevation/1.5 ){
-        if (self.bubbleLargeSizeLimit > bubble.owner.size) {
-            bubble.owner.size += bubbleSizeScale;
-            bubble.setImgWidth( bubble.owner.size);
-        }
-      //Bubble is on its last half way
-      } else {
-        if (self.bubbleSmallSizeLimit < bubble.owner.size) {
-            bubble.owner.size -= bubbleSizeScale;
-            bubble.setImgWidth( bubble.owner.size );
-        }
-      }
-      bubble.render();
-    })
+		if (this.owner.state == this.owner.states.NORMAL) {
+			var self = this;
+			this.bubbles.each(function(bubble){
+				bubble.owner.yMovement -= 0.5;
+				bubble.owner.xMovement +=0.5;
+				bubble.shiftY = bubble.owner.yMovement - 30;
+				bubble.shiftX = bubble.owner.xMovement;
+				if (bubble.owner.yMovement < -self.bubbleElevation) {
+					bubble.owner.reset();
+					return;
+				}
+				
+				var sizeDirection = 1;
+				if (-bubble.owner.yMovement <= 1) {
+					bubble.replaceImg(Loader.images.smoke['smoke_small.png'])
+				}
+				else 
+					if (-bubble.owner.yMovement == self.bubbleElevation / 3) {
+						bubble.replaceImg(Loader.images.smoke['smoke_medium.png'])
+					}
+					else 
+						if (-bubble.owner.yMovement == self.bubbleElevation / 1.5) {
+							bubble.replaceImg(Loader.images.smoke['smoke_big.png'])
+						}
+				bubble.render();
+			})
+		}
   }
 });
 

@@ -88,5 +88,10 @@ var DomSprite = Class.create(Sprite, {
 		if(this.div.parentNode){
 			this.div = $(this.div.parentNode.removeChild(this.div))
 		}
+	},
+	replaceImg : function(img){
+		this.div.removeChild(this.img)
+		this.img = img.clone()
+		this.div.appendChild(this.img)	
 	}
 })

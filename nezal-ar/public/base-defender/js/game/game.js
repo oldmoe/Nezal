@@ -78,14 +78,15 @@ var Game = Class.create({
 		//var gameElementsImages = ["coins.png", "monitor.png", "rock.png", "lumber.png", "workers.png", "xp_bar.png"];
     
     //This is duplicated to avoid a problem in the loader that can't deal with an array of a single item
-		var workerImages = ["worker.png", "worker.png"];
-    var bubbleImages = ["bubble.png", "bubble.png"]
+		var workerImages = ["worker.png", "worker_shadow.png"];
+    //var bubbleImages = ["bubble.png", "bubble.png"]
+		var smokeImages = ["smoke_big.png","smoke_medium.png","smoke_small.png"]
     new Loader().load([{images : BaseDefenderScene.prototype.textures, path: 'images/textures/', store: 'textures'},
                        {images : buildingImages, path: 'images/buildings/', store: 'buildings'},
 											 {images : buildingModeImages, path: 'images/buildings/', store: 'buildingModes'},
 											 {images : iconsImages, path: 'images/icons/', store: 'icons'},
 										 	 {images : workerImages, path: 'images/worker/', store: 'worker'},
-                       {images : bubbleImages, path: 'images/', store: 'bubble'},
+                       {images : smokeImages, path: 'images/', store: 'smoke'},
 											 {images : questsImages, path: 'images/quests/', store: 'quests'},
 											 {images : buildingOutlineImages, path: 'images/buildings/outlines/', store: 'buildingOutlines'}],
       {onFinish : loaderFinishCallback});
@@ -108,7 +109,7 @@ var Game = Class.create({
   reflectStatusChange : function(){
 		this.reInitializationNotifications = [];
     if(this.reactor) this.reactor.stop();
-    this.reactor = new Reactor(100);
+    this.reactor = new Reactor(33);
     this.reactor.run();
     
     this.buildingMode = new BuildingMode(this);
