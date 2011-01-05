@@ -1,7 +1,7 @@
 var JumpingObject = Class.create({
 	 coords : null,
 	 moving : false ,
-	 randomMove : false,
+	 randomMove : true,
 	 rotating : false,
 	 targetAngle :0,
 	 angle : 0,
