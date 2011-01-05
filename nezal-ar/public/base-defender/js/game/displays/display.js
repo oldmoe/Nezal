@@ -223,7 +223,7 @@ var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
       
       var bubbleSprite = new DomSprite(new Bubble(owner.coords, this.bubbleLargeSizeLimit), this.bubbleImg, null, {
         shiftY: 0,
-        shiftX: 0
+        shiftX: this.bubbleInitialXShift
       });
       bubbleSprite.owner.yMovement = i*this.bubbleElevation / this.numberOfBubbles;
       bubbleSprite.owner.xMovement = this.bubbleInitialXShift;
@@ -239,9 +239,7 @@ var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
 			var self = this;
 			this.bubbles.each(function(bubble){
 				bubble.owner.yMovement -= 0.5;
-				//bubble.owner.xMovement +=0.5;
 				bubble.shiftY = bubble.owner.yMovement - 30;
-				//bubble.shiftX = bubble.owner.xMovement;
 				if (bubble.owner.yMovement < -self.bubbleElevation) {
 					bubble.owner.reset();
 					bubble.owner.xMovement = self.bubbleInitialXShift;
