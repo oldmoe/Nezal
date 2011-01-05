@@ -40,7 +40,7 @@ var WorkerDisplay = Class.create(Display,{
 		this.owner = owner
 		this.img = Loader.images.worker['worker.png'];
 		Object.extend(this.owner,this);
-		this.sprites.worker = new DomSprite(owner,this.img);
+		this.sprites.worker = new DomImgSprite(owner,{img : this.img});
   },
 	render : function(){
 		this.sprites.worker.render()
@@ -60,10 +60,11 @@ var BuildingDisplay = Class.create(Display, {
 		this.outlineImg = Loader.images.buildingOutlines[this.owner.name+"_outline.png"];
 		this.mapTiles =[];
 		Object.extend(this.owner,this); 
-		this.sprites.base = new DomSprite(owner,this.baseImg,null,{shiftY: this.zdim});
-		this.sprites.invalid = new DomSprite(owner,this.invalidImg,null,{shiftY: this.zdim});
-		this.sprites.outline = new DomSprite(owner,this.outlineImg);
-		this.sprites.building = new DomSprite(owner,this.img,null,{clickable:true});
+		this.sprites.base = new DomImgSprite(owner, {img : this.baseImg}, {shiftY: this.zdim});
+		this.sprites.invalid = new DomImgSprite(owner, {img : this.invalidImg}, {shiftY: this.zdim});
+		this.sprites.outline = new DomImgSprite(owner, {img: this.outlineImg});
+    //this.sprites.info = new DomTextSprite(owner, {text : owner.textInfo()});
+		this.sprites.building = new DomImgSprite(owner, {img : this.img}, {clickable:true});
 		this.render();
     this.manageStateChange();
 	},
@@ -214,7 +215,7 @@ var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
     
     for (var i = 0; i < this.numberOfBubbles; i++) {
       
-      var bubbleSprite = new DomSprite(new Bubble(owner.coords, this.bubbleLargeSizeLimit), this.bubbleImg, null, {
+      var bubbleSprite = new DomImgSprite(new Bubble(owner.coords, this.bubbleLargeSizeLimit), {img : this.bubbleImg}, {
         shiftY: 0,
         shiftX: 0
       });

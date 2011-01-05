@@ -14,10 +14,6 @@ var Nezal = {
 		}
 	},
 	
-	degToRad : function(deg){
-		return deg * Math.PI / 180
-	},
-	
 	clone_obj : function(obj) {
 		if (typeof obj !== 'object' || obj == null)return obj;
 		var c = obj instanceof Array ? [] : {};
