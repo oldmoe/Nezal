@@ -216,28 +216,29 @@ var LumbermillDisplay = Class.create(ResourceBuildingDisplay, {
 });
 
 var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
-  numberOfBubbles : 2,
+  numberOfBubbles : 3,
   bubbles : null,
   bubbleImg : null,
   bubbleElevation : null,
   bubbleXMovementLimit : 15,
   bubbleSmallSizeLimit : 5,
   bubbleLargeSizeLimit : 23,
-  
+  bubbleInitialXShift : 50,
   initialize : function($super,owner,properties){
     var self = this;
     this.bubbles = [];
-    this.bubbleImg = Loader.images.smoke["smoke_small.png"];
-    this.bubbleElevation = 42;
+    this.bubbleImg = Loader.images.smoke["smoke_big.png"];
+    this.bubbleElevation = 60;
     
     for (var i = 0; i < this.numberOfBubbles; i++) {
       
       var bubbleSprite = new DomImgSprite(new Bubble(owner.coords, this.bubbleLargeSizeLimit), {img : this.bubbleImg}, {
         shiftY: 0,
-        shiftX: 0
+        shiftX: this.bubbleInitialXShift
       });
       bubbleSprite.owner.yMovement = i*this.bubbleElevation / this.numberOfBubbles;
-      bubbleSprite.owner.xMovement = 10;
+      bubbleSprite.owner.xMovement = this.bubbleInitialXShift;
+			bubbleSprite.setImgWidth(10);
       this.bubbles.push(bubbleSprite);
     }
     $super(owner,properties);
@@ -249,26 +250,22 @@ var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
 			var self = this;
 			this.bubbles.each(function(bubble){
 				bubble.owner.yMovement -= 0.5;
-				bubble.owner.xMovement +=0.5;
 				bubble.shiftY = bubble.owner.yMovement - 30;
-				bubble.shiftX = bubble.owner.xMovement;
 				if (bubble.owner.yMovement < -self.bubbleElevation) {
 					bubble.owner.reset();
+					bubble.owner.xMovement = self.bubbleInitialXShift;
+					bubble.setImgWidth(10);
 					return;
 				}
 				
 				var sizeDirection = 1;
-				if (-bubble.owner.yMovement <= 1) {
-					bubble.replaceImg(Loader.images.smoke['smoke_small.png'])
+				for(var i=0;i<self.bubbleElevation/3;i++){
+					if (-bubble.owner.yMovement == (i+1)*3) {
+						bubble.shiftX = bubble.owner.xMovement-i*3/2;
+						bubble.img.setOpacity(1 + bubble.owner.yMovement/self.bubbleElevation);
+						bubble.setImgWidth((i+1)*3 + 10);
+		  		}
 				}
-				else 
-					if (-bubble.owner.yMovement == self.bubbleElevation / 3) {
-						bubble.replaceImg(Loader.images.smoke['smoke_medium.png'])
-					}
-					else 
-						if (-bubble.owner.yMovement == self.bubbleElevation / 1.5) {
-							bubble.replaceImg(Loader.images.smoke['smoke_medium.png'])
-						}
 				bubble.render();
 			})
 		}

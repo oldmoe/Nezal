@@ -79,8 +79,7 @@ var Game = Class.create({
     
     //This is duplicated to avoid a problem in the loader that can't deal with an array of a single item
 		var workerImages = ["worker.png", "worker_shadow.png"];
-    //var bubbleImages = ["bubble.png", "bubble.png"]
-		var smokeImages = ["smoke_big.png","smoke_medium.png","smoke_small.png"]
+		var smokeImages = ["smoke_big.png", "smoke_big.png"]
     new Loader().load([{images : BaseDefenderScene.prototype.textures, path: 'images/textures/', store: 'textures'},
                        {images : buildingImages, path: 'images/buildings/', store: 'buildings'},
 											 {images : buildingModeImages, path: 'images/buildings/', store: 'buildingModes'},
