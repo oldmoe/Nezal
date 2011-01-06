@@ -350,13 +350,25 @@ var Map={
 				$('building-panel').show();
 			}
 		})
+    
+    div.observe('mousemove',function(mouse){
+      var x = mouse.pointerX();
+      var y = mouse.pointerY();
+      owner.sprites.mouseover.shiftX = x - ( owner.coords.x - Math.round(owner.imgWidth/2) - Map.x ) + 10;
+      owner.sprites.mouseover.shiftY = y - ( owner.coords.y -Math.round(owner.imgHeight/2) - Map.y );
+      owner.sprites.mouseover.show();
+    })
+    
 		div.observe('mouseover',function(){
 			if (owner.state != owner.states.NOT_PLACED) {
-	  		owner.sprites.outline.show()
+	  		owner.sprites.outline.show();
+        owner.sprites.info.show();
 	  	}
 		})
 		div.observe('mouseout',function(){
-			owner.sprites.outline.hide()
+			owner.sprites.outline.hide();
+      owner.sprites.mouseover.hide();
+      owner.sprites.info.hide();
 		})
 	},
 	E:0, NE:1, N:2, NW:3, W:4, SW:5, S:6, SE:7 

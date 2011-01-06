@@ -41,8 +41,8 @@ var WorkerDisplay = Class.create(Display,{
 		this.img = Loader.images.worker['worker.png'];
 		this.shadowImg = Loader.images.worker['worker_shadow.png'];
 		Object.extend(this.owner,this);
-		this.sprites.worker = new DomSprite(owner,this.img);
-		this.sprites.shadow = new DomSprite(owner.shadow,this.shadowImg,null,{shiftY: 48, shiftX: 10});
+		this.sprites.worker = new DomImgSprite(owner, {img : this.img});
+		this.sprites.shadow = new DomImgSprite(owner.shadow, {img : this.shadowImg}, {shiftY: 48, shiftX: 10});
   },
 	render : function(){
 		this.sprites.worker.render();
@@ -65,12 +65,15 @@ var BuildingDisplay = Class.create(Display, {
 		this.invalidImg =  Loader.images.buildingModes[buildImgName+"_invalid.png"];
 		this.baseImg = Loader.images.buildingModes[buildImgName+'_base.png'];
 		this.outlineImg = Loader.images.buildingOutlines[this.owner.name+"_outline.png"];
+    this.mouseoverImg = Loader.images.icons[this.owner.name+"_icon.png"];
 		this.mapTiles =[];
 		Object.extend(this.owner,this); 
-		this.sprites.base = new DomSprite(owner,this.baseImg,null,{shiftY: this.zdim});
-		this.sprites.invalid = new DomSprite(owner,this.invalidImg,null,{shiftY: this.zdim});
-		this.sprites.outline = new DomSprite(owner,this.outlineImg);
-		this.sprites.building = new DomSprite(owner,this.img,null,{clickable:true});
+		this.sprites.base = new DomImgSprite(owner, {img : this.baseImg}, {shiftY: this.zdim});
+		this.sprites.invalid = new DomImgSprite(owner, {img : this.invalidImg}, {shiftY: this.zdim});
+		this.sprites.outline = new DomImgSprite(owner, {img: this.outlineImg});
+    this.sprites.info = new DomTextSprite(owner, {text : owner.textInfo()}, {centered: true, shiftY: -10});
+		this.sprites.building = new DomImgSprite(owner, {img : this.img}, {clickable: true});
+    this.sprites.mouseover = new DomImgSprite(owner, {img: this.mouseoverImg});
 		this.render();
     this.manageStateChange();
 	},
@@ -81,7 +84,9 @@ var BuildingDisplay = Class.create(Display, {
       self.sprites.building.setOpacity(0.5);
       self.sprites.building.animated = false;
 			self.sprites.base.show();
-			self.sprites.outline.hide()
+			self.sprites.outline.hide();
+      self.sprites.info.hide();
+      self.sprites.mouseover.hide();
 			self.sprites.invalid.hide();
     });
     this.owner.stateNotifications[this.owner.states.UNDER_CONSTRUCTION].push(function(){
@@ -91,21 +96,27 @@ var BuildingDisplay = Class.create(Display, {
       self.sprites.building.setOpacity(0.5);
       self.sprites.building.animated = false;
 			self.sprites.base.hide();
-			self.sprites.outline.hide()
+			self.sprites.outline.hide();
+      self.sprites.info.hide();
+      self.sprites.mouseover.hide();
 			self.sprites.invalid.hide();
     });
     this.owner.stateNotifications[this.owner.states.UPGRADING].push(function(){
       self.sprites.building.setOpacity(0.5);
       self.sprites.building.animated = false;
 			self.sprites.base.hide();
-			self.sprites.outline.hide()
+			self.sprites.outline.hide();
+      self.sprites.info.hide();
+      self.sprites.mouseover.hide();
 			self.sprites.invalid.hide();
     });
     this.owner.stateNotifications[this.owner.states.NORMAL].push(function(){
       self.sprites.building.setOpacity(1);
       self.sprites.building.animated = true;
 			self.sprites.base.hide();
-			self.sprites.outline.hide()
+			self.sprites.outline.hide();
+      self.sprites.info.hide();
+      self.sprites.mouseover.hide();
 			self.sprites.invalid.hide();
     });
   },
@@ -221,7 +232,7 @@ var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
     
     for (var i = 0; i < this.numberOfBubbles; i++) {
       
-      var bubbleSprite = new DomSprite(new Bubble(owner.coords, this.bubbleLargeSizeLimit), this.bubbleImg, null, {
+      var bubbleSprite = new DomImgSprite(new Bubble(owner.coords, this.bubbleLargeSizeLimit), {img : this.bubbleImg}, {
         shiftY: 0,
         shiftX: this.bubbleInitialXShift
       });

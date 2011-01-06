@@ -98,6 +98,10 @@ var Building = Class.create({
       return 0;
     }
   },
+  
+  textInfo : function(){
+    return this.name.capitalize() + " " + this.level;
+  },
 	
   isValidToBuild : function(x,y){
     if(this.game.disableJsValidation)
