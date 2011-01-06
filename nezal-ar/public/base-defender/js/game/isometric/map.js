@@ -234,8 +234,8 @@ var Map={
 	},
 
 	addObjectToGrid : function(obj){
-		var noOfRows = Math.round(obj.xdim/Map.tileIsoLength)
-		var noOfColumns = Math.round(obj.ydim/Map.tileIsoLength)
+		var noOfRows = Math.ceil(obj.xdim/Map.tileIsoLength)
+		var noOfColumns = Math.ceil(obj.ydim/Map.tileIsoLength)
 		var topX = obj.owner.coords.x 
 		var topY = obj.owner.coords.y -Map.tileHeight/2
 		var originTile = Map.tileValue(topX,topY)
@@ -338,8 +338,8 @@ var Map={
 			}
 			
 		if(path){
-			object.moving = false
-			object.movingPath = path
+			object.moving = false;
+			object.movingPath = path;
 		}
 		
 	},

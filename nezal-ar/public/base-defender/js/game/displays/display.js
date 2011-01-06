@@ -205,7 +205,7 @@ var LumbermillDisplay = Class.create(ResourceBuildingDisplay, {
 });
 
 var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
-  numberOfBubbles : 3,
+  numberOfBubbles : 2,
   bubbles : null,
   bubbleImg : null,
   bubbleElevation : null,
@@ -225,7 +225,7 @@ var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
         shiftY: 0,
         shiftX: this.bubbleInitialXShift
       });
-      bubbleSprite.owner.yMovement = i*this.bubbleElevation / this.numberOfBubbles;
+      bubbleSprite.owner.yMovement = i*this.bubbleElevation /(2*this.numberOfBubbles);
       bubbleSprite.owner.xMovement = this.bubbleInitialXShift;
 			bubbleSprite.setImgWidth(10);
       this.bubbles.push(bubbleSprite);
