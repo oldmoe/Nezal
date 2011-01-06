@@ -216,16 +216,17 @@ var LumbermillDisplay = Class.create(ResourceBuildingDisplay, {
 });
 
 var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
-  numberOfBubbles : 2,
+  numberOfBubbles : 3,
   bubbles : null,
   bubbleImg : null,
   bubbleElevation : null,
   bubbleXMovementLimit : 15,
   bubbleSmallSizeLimit : 5,
   bubbleLargeSizeLimit : 23,
-  bubbleInitialXShift : 50,
+  bubbleInitialXShift : 65,
   initialize : function($super,owner,properties){
-    var self = this;
+    $super(owner,properties);
+		var self = this;
     this.bubbles = [];
     this.bubbleImg = Loader.images.smoke["smoke_big.png"];
     this.bubbleElevation = 60;
@@ -236,12 +237,11 @@ var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
         shiftY: 0,
         shiftX: this.bubbleInitialXShift
       });
-      bubbleSprite.owner.yMovement = i*this.bubbleElevation /(2*this.numberOfBubbles);
+      bubbleSprite.owner.yMovement = i*this.bubbleElevation /(this.numberOfBubbles);
       bubbleSprite.owner.xMovement = this.bubbleInitialXShift;
 			bubbleSprite.setImgWidth(10);
       this.bubbles.push(bubbleSprite);
     }
-    $super(owner,properties);
   },
   
   render : function($super){
@@ -250,7 +250,7 @@ var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
 			var self = this;
 			this.bubbles.each(function(bubble){
 				bubble.owner.yMovement -= 0.5;
-				bubble.shiftY = bubble.owner.yMovement - 30;
+				bubble.shiftY = bubble.owner.yMovement - 25;
 				if (bubble.owner.yMovement < -self.bubbleElevation) {
 					bubble.owner.reset();
 					bubble.owner.xMovement = self.bubbleInitialXShift;

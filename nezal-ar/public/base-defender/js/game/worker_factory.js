@@ -49,9 +49,7 @@ var WorkerFactory = Class.create({
   buyWorker : function(){
     if(this._ValidateBuyWorker()){
       var response = this.game.network.buyWorker();
-      console.log('before update game status')
       this.game.updateGameStatus(response['gameStatus']);
-      console.log('before update game status')
     }
   },
   

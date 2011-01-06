@@ -4,7 +4,6 @@ var DomImgSprite = Class.create(DomSprite, {
   
 	initialize : function($super, owner, imgAssets, properties){
     $super(owner, imgAssets, properties);
-    console.log(owner, imgAssets)
 		this.img = imgAssets.img.clone()
     if( imgAssets.shadeImg )
 		  this.shadeImg = imgAssets.shadeImg.clone();
