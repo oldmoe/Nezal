@@ -245,7 +245,7 @@ var Map={
 			originTile = Map.getNeighbor(originTile[0],originTile[1],Map.SW)
 			if(!originTile) continue;
 			var loopingTile = [];loopingTile[0] = originTile[0]; loopingTile[1] = originTile[1]
-			for(var j=0;j<noOfColumns;j++){
+			for(var j=0;j<noOfColumns+1;j++){
 				Map.grid[loopingTile[0]][loopingTile[1]].value = obj
 				mapTiles.push(Map.grid[loopingTile[0]][loopingTile[1]])
 				loopingTile = Map.getNeighbor(loopingTile[0],loopingTile[1],Map.SE)
