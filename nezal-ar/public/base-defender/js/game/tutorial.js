@@ -88,7 +88,12 @@ var Tutorial = Class.create({
       Hand.point(this.self.game, { 'object' : $$('.buildButton .okButton')[0], 'rotated' : false });
     },
     assigned_workers : function(id){
-      Hand.point(this.self.game, { 'object' : this.self.game.quarryFactory.factoryRegistry[id].sprites.building.div, 'rotated' : false });
+      var self = this.self.game.tutorial;
+      var id = id;
+      $$('#questDisplay .okButton')[0].observe('click', function(){
+            Hand.point(self.game, { 'object' : self.game.quarryFactory.factoryRegistry[id].sprites.building.div, 'rotated' : false });
+            $$('#questDisplay .okButton')[0].stopObserving('click');
+       });
     }
   },
 
@@ -120,7 +125,12 @@ var Tutorial = Class.create({
       Hand.point(this.self.game, { 'object' : $$('.buildButton .okButton')[0], 'rotated' : false});
     },
     assigned_workers : function(id){
-      Hand.point(this.self.game, { 'object' : this.self.game.lumbermillFactory.factoryRegistry[id].sprites.building.div, 'rotated' : false });
+      var self = this.self.game.tutorial;
+      var id = id;
+      $$('#questDisplay .okButton')[0].observe('click', function(){
+            Hand.point(self.game, { 'object' : self.game.lumbermillFactory.factoryRegistry[id].sprites.building.div, 'rotated' : false });
+            $$('#questDisplay .okButton')[0].stopObserving('click');
+       });
     }
   }
 

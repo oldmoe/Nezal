@@ -155,14 +155,11 @@
   position : relative;
   left : 10px;
 }
-
-
-
 #interaction #questDisplay {
   height: 385px;
   left: 80px;
   position: absolute;
-  top: 85px;
+  top: 75px;
   width: 600px;
 }
 #interaction #questDisplay .title {

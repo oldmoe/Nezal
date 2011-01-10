@@ -18,7 +18,7 @@ var BaseDefenderScene = Class.create(Scene, {
 		this.map.clear();
 		this.map.init(this);
 		this.createRenderLoop('animations', 1);
-		this.createRenderLoop('hand', 10);
+		this.createRenderLoop('hand', 8);
 		this.createRenderLoop('info', this.reactor.everySeconds(1));
 		this.pushInfoDisplay(this.gamePanel);
 		//BAD CODE : this needs to be created in game engine not game logic
