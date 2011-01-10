@@ -26,10 +26,11 @@ class GamesController < ApplicationController
                       :locale => @game_profile.locale, 
                       :bookmarked => @game_profile.bookmarked,
                       :like => @game_profile.like,
-                      :metadata => user_metadata, 
+                      :metadata => user_metadata
                     },
       :ranks => ranks
     }
+    data[:user_data][:volatile_data] = @game_profile['volatile_data'] || {}
     JSON.generate(data)
   end
   

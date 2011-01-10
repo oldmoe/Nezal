@@ -129,7 +129,7 @@ class BaseDefender < Metadata
       building['startedBuildingAt'] = nil
       metadata['idle_workers'] += 1
       if @@building_modules[building_name].respond_to? 'assign_worker'
-        @@building_modules[building_name].assign_worker(user_game_profile, building['coords']) 
+#        @@building_modules[building_name].assign_worker(user_game_profile, building['coords']) 
       end
       Notification.new( {:metadata => metadata, :notification_type => "building", :notification_text => building_name + " construction is completed!"} )
       

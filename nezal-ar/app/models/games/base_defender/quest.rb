@@ -5,10 +5,21 @@ module BD
     CONDITIONS = {
         :buildings => {
                         "townhall" => [:level],
-                        "quarry" => [:level],
-                        "lumbermill" => [:level]
+                        "quarry" => [:level, :assigned_workers],
+                        "lumbermill" => [:level, :assigned_workers]
                     }, # For all the defined buildings, u can make a condition regarding the level of one of the buildings
         :resources => ["lumber", "rock", "workers"] # For all the resources, u can make a condition about the direct value of a certain resource
+    }
+
+    REWARDS = { 
+        :profile => ["coins", "exp"],
+        :resources => ["lumber", "rock"]
+    }
+
+    STATUS = { 
+      :not_started => -1,
+      :in_progress => 0,
+      :done => 1      
     }
 
     # Base Defender Quests : 
@@ -34,7 +45,7 @@ module BD
       # Pass by the current quests, check for conquered ones, reward them & move them to conquered ones 
       user_game_profile.metadata['quests']['current'].each do |id|
         quest = ::Quest.where(:id => id).first
-        if quest && self.conquered?(user_game_profile.metadata, quest)
+        if quest && self.conquered?(user_game_profile, quest)
           # Reward, move to conquered
           user_game_profile.metadata['quests']['conquered'] << id
           user_game_profile.metadata['quests']['current'].delete(id)
@@ -45,7 +56,7 @@ module BD
       # Add the conquered ones to conquered list, others to current
       quests = user_game_profile.game.quests.where(" primal='t' AND id NOT IN ( #{user_game_profile.metadata['quests']['primal'].join(',')} )").all
       quests.each do |quest|
-        self.conquered?(user_game_profile.metadata, quest) ? 
+        self.conquered?(user_game_profile, quest) ? 
                 user_game_profile.metadata['quests']['conquered'] << quest.id : user_game_profile.metadata['quests']['current'] << quest.id
       end
       new_quests = quests.collect {|quest| quest.id}
@@ -60,7 +71,7 @@ module BD
             quests.delete(id)
           else
             quest = ::Quest.where(:id => id).first
-            if self.conquered?(user_game_profile.metadata, quest)
+            if self.conquered?(user_game_profile, quest)
               user_game_profile.metadata['quests']['conquered'] << quest.id unless user_game_profile.metadata['quests']['conquered'].index(quest.id)
             else
               user_game_profile.metadata['quests']['current'] << quest.id unless user_game_profile.metadata['quests']['current'].index(quest.id)
@@ -80,9 +91,11 @@ module BD
         quest = ::Quest.where(:id=>id).first
         if quest
           user_game_profile.metadata['quests']['descriptions'][id] = quest.metadata
+          user_game_profile.metadata['quests']['descriptions'][id]['status'] = self.status(user_game_profile, quest)
           user_game_profile.metadata['quests']['descriptions'][id]['name'] = quest.name
         end
       end
+=begin
       user_game_profile.metadata['quests']['conquered'].each do | id |
         quest = ::Quest.where(:id=>id).first
         if quest
@@ -90,71 +103,98 @@ module BD
           user_game_profile.metadata['quests']['descriptions'][id]['name'] = quest.name
         end
       end
-=begin
-          user_game_profile.metadata['quests']['descriptions'][id] = {}
-          user_game_profile.metadata['quests']['descriptions'][id]['name'] = quest.name
-          user_game_profile.metadata['quests']['descriptions'][id]['description'] = quest.metadata["description"]
-          user_game_profile.metadata['quests']['descriptions'][id]['congratesMsg'] = quest.metadata["congratesMsg"]
-          user_game_profile.metadata['quests']['descriptions'][id]['rewards'] = quest.rewards
-          quest.metadata['conditions'].each_pair do | item, conditions |
-            if CONDITIONS[:buildings][item]
-              user_game_profile.metadata['quests']['descriptions'][id]['desc'] =  user_game_profile.metadata['quests']['descriptions'][id]['desc'] +
-                                                            "Obtain " + item + " with following specifications"
-              conditions.each_pair do | cond, cond_val|
-                user_game_profile.metadata['quests']['descriptions'][id]['desc'] =  user_game_profile.metadata['quests']['descriptions'][id]['desc'] + ", " +
-                                                              cond + " : " + cond_val.to_s
-              end
-              user_game_profile.metadata['quests']['descriptions'][id]['desc'] =  user_game_profile.metadata['quests']['descriptions'][id]['desc'] + ". "
-            elsif CONDITIONS[:resources].index(item)
-              user_game_profile.metadata['quests']['descriptions'][id]['desc'] =  user_game_profile.metadata['quests']['descriptions'][id]['desc'] + 
-                                                            "Obtain up to " + conditions.to_s + " " +  item + ". "
-            end
-          end
-=end      
+=end
       #######################################################################################
       user_game_profile.save
     end
 
-    def self.conquered?(metadata, quest)
+    def self.conquered?(profile, quest)
       conquered = true
-      quest.metadata['conditions'].each_pair do | item, conditions |
-        if CONDITIONS[:buildings][item]
-          if metadata[item]
-            metadata[item].each_pair do |key, value|
-              condition_met = true
-              conditions.each_pair do |cond, cond_val|
-                if value[cond].nil? || (value[cond] && value[cond] < cond_val)
-                  condition_met = false 
-                  break
-                end
+      metadata = profile.metadata
+      quest.metadata['conditions']['buildings'].each_pair do | item, conditions |
+        if metadata[item]
+          metadata[item].each_pair do |key, value|
+            condition_met = true
+            conditions.each_pair do |cond, cond_val|
+              if value[cond].nil? || (value[cond] && value[cond] < cond_val)
+                condition_met = false 
+                break
               end
-              conquered = condition_met
-              break if conquered
             end
-          else
-            conquered = false 
+            conquered = condition_met
+            break if conquered
           end
-        elsif CONDITIONS[:resources].index(item)
-          conquered = false if metadata[item] < conditions 
+        else
+          conquered = false 
         end
         break unless conquered
-      end 
+      end
+      quest.metadata['conditions']['resources'].each_pair do | item, conditions |
+        condition_met = true
+        condition_met = false if metadata[item] < conditions 
+        conquered &= condition_met
+        break unless conquered
+      end
       conquered
+    end
+
+    # Status each condition in the quest
+    def self.status(profile, quest)
+      status = { :buildings => {}, :resources => {} }
+      metadata = profile.metadata
+      quest.metadata['conditions']['buildings'].each_pair do | item, conditions |
+        status[:buildings][item] = {}
+        if metadata[item]
+          metadata[item].each_pair do |key, value|
+            condition_met = true
+            conditions.each_pair do |cond, cond_val|
+              condition = false
+              condition_status = { :id => key, :status => self::STATUS[:not_started], :value => value[cond] || 0, :target => cond_val }
+              if value[cond] && value[cond] >= cond_val
+                condition_status[:status] = self::STATUS[:done]
+                condition = true
+              elsif value[cond]
+                condition_status[:status] = self::STATUS[:in_progress]
+                condition = false
+              else
+                condition_status[:status] = self::STATUS[:not_started]
+                condition = false
+              end
+              status[:buildings][item][cond] = condition_status
+              condition_met &&= condition
+            end
+            break if condition_met
+          end
+        else
+          conditions.each_pair do |cond, cond_val|
+            status[:buildings][item][cond] =  { :status => self::STATUS[:not_started], :value => 0, :target => cond_val }
+          end
+        end
+      end
+      quest.metadata['conditions']['resources'].each_pair do | item, conditions |
+        condition_status = { :status => self::STATUS[:done], :value => metadata[item] || 0, :target => conditions}
+        if metadata[item] && (metadata[item] < conditions)
+          condition_status[:status] = self::STATUS[:not_started]
+        end
+        status[:resources][item] = condition_status
+      end 
+      status
     end
 
     def self.reward(user_game_profile, quest)
       Notification.new( {:metadata => user_game_profile.metadata, :notification_type => "quest",
                          :notification_text => quest.metadata['congratesMsg'], :notification_data => {:rewards => quest.metadata['rewards']} })
       if quest.metadata['rewards']['exp']
-        
-        puts user_game_profile.exp.class
-        puts quest.metadata['rewards']['exp'].class
-        
         user_game_profile.exp = user_game_profile.exp.to_i + quest.metadata['rewards']['exp']
       end
       if quest.metadata['rewards']['coins'] 
         user_game_profile.user.coins += quest.metadata['rewards']['coins']
         user_game_profile.user.save
+      end
+      self::REWARDS[:resources].each do | reward |
+        if quest.metadata['rewards'][reward]  
+          user_game_profile.metadata[reward] += quest.metadata['rewards'][reward].to_i
+        end
       end
     end
 
