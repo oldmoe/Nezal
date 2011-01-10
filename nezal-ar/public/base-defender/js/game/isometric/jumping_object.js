@@ -13,6 +13,7 @@ var JumpingObject = Class.create({
 	 doingJump : false, 
 	 minSpeed : 1.5,
 	 maxSpeed : 4,
+	 movementFinishCallback : null,
 	 initialize : function(game,x,y){
 	 	this.game = game;
 		this.coords = {};
@@ -91,6 +92,9 @@ var JumpingObject = Class.create({
 		  	var x = Math.round(game.scene.map.x + game.scene.map.viewWidth * Math.random())
 		  	var y = Math.round(game.scene.map.y + game.scene.map.viewHeight * Math.random())
 		  	Map.moveObject(this, x, y)
+		}
+		else if(this.movementFinishCallback){
+			this.movementFinishCallback();
 		}
 	},
 	

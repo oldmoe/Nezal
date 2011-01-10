@@ -10,6 +10,8 @@ var BuildingMode = Class.create({
     this.game = game;
     this._AttachCanvasClickListener();
     this._AttachBuildingPanelCloseListeners();
+		var self = this;
+		$('cancelBuilding').observe('click',function(){self.cancelBuildingMode()})
   },
   
   on : function(building, callback){
@@ -18,7 +20,15 @@ var BuildingMode = Class.create({
 		if(this.selectedBuilding)this.game.scene.removeAnimation(this.selectedBuilding)
     this.selectedBuilding = building;
 		this._AttachMouseMoveEvent();
+		$('cancelBuilding').show();
   },
+	
+	move: function(){
+		//Map.objects.remove(this.selectedBuilding);
+		//this.selectedBuilding.setState(this.selectedBuilding.states.NOT_PLACED);
+		//this.selectedBuilding.destroy();
+		//this.game.scene.remove(this.selectedBuilding);
+	},
 	
 	_AttachMouseMoveEvent : function(){
 		var self = this;
@@ -34,8 +44,15 @@ var BuildingMode = Class.create({
   off : function(){
     this.isOn = false;
 		$('gameCanvas').stopObserving('mousemove', this.buildingMoveObserver);
+		$('cancelBuilding').hide();
   },
   
+	cancelBuildingMode : function(){
+		this.off();
+		this.selectedBuilding.destroy();
+		this.game.scene.remove(this.selectedBuilding);	
+	},
+	
   _AttachCanvasClickListener : function(){
     var self = this;
     $('gameCanvas').observe('click', function(mouse){
@@ -69,5 +86,23 @@ var BuildingMode = Class.create({
         closeCallback();
       }
     });
-  }
+  },
+
+	
+	collect : function(building){
+		var townHall = this.game.townhallFactory.townhall;
+		var worker  = new Worker(game,building.coords.x,building.coords.y-10);
+		worker.randomMove = false;
+		var workerDisplay = new WorkerDisplay(worker)
+		this.game.scene.pushAnimation(workerDisplay);
+		game.scene.push(worker); 
+		var callback2 = function(){
+			game.scene.removeAnimation(workerDisplay);
+			game.scene.remove(worker);
+		}
+		var callback1 = function(){
+			Map.moveObject(worker, building.coords.x,building.coords.y-10, callback2, true);
+		}
+		Map.moveObject(worker, townHall.coords.x, townHall.coords.y, callback1, true);
+	}
 });

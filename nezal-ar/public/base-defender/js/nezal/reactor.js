@@ -46,7 +46,7 @@ var Reactor = Class.create({
 				}
 			})
 		}catch(e){
-			console.log(e)
+//			console.log(e)
 			//alert('inside reactor : '+ e)
 		}
 		this.ticks++
