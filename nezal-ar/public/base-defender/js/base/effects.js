@@ -1,6 +1,6 @@
-// script.aculo.us effects.js v1.8.3, Thu Oct 08 11:23:33 +0200 2009
+// script.aculo.us effects.js v1.9.0, Thu Dec 23 16:54:48 -0500 2010
 
-// Copyright (c) 2005-2009 Thomas Fuchs (http://script.aculo.us, http://mir.aculo.us)
+// Copyright (c) 2005-2010 Thomas Fuchs (http://script.aculo.us, http://mir.aculo.us)
 // Contributors:
 //  Justin Palmer (http://encytemedia.com/)
 //  Mark Pilgrim (http://diveintomark.org/)
@@ -567,7 +567,7 @@ Effect.Puff = function(element) {
    [ new Effect.Scale(element, 200,
       { sync: true, scaleFromCenter: true, scaleContent: true, restoreAfterFinish: true }),
      new Effect.Opacity(element, { sync: true, to: 0.0 } ) ],
-     Object.extend({ duration: 1.0,
+     Object.extend({ duration: 0.5,
       beforeSetupInternal: function(effect) {
         Position.absolutize(effect.effects[0].element);
       },

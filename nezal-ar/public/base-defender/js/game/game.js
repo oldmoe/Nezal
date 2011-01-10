@@ -73,28 +73,29 @@ var Game = Class.create({
     });
 		var buildingModeImages = ['2x2_invalid.png', '2x2_base.png'];
 		var questsImages = ["msgBg.png", "wedge.png", "button.png", "bubble.png", "questBg.png", "buildingPanelBg.png",
-                         "activeCell.png", "inactiveCell.png", "resources.png", "temp.png", "temp.png"];
-    var iconsImages = ["townhall.png", "quarry.png", "lumbermill.png", "lumber.png", "rock.png", "workers.png"];
+                         "activeCell.png", "inactiveCell.png", "resources.png"];
+    var iconsImages = ["townhall.png", "townhall_icon.png", "quarry_icon.png", "lumbermill_icon.png", "quarry.png", "lumbermill.png", "lumber.png", "rock.png", "workers.png"];
+
 		//var gameElementsImages = ["coins.png", "monitor.png", "rock.png", "lumber.png", "workers.png", "xp_bar.png"];
-		var workerImages = ["worker.png"];
+    
+    //This is duplicated to avoid a problem in the loader that can't deal with an array of a single item
+		var workerImages = ["worker.png", "worker_shadow.png"];
+		var smokeImages = ["smoke_big.png", "smoke_big.png"]
     new Loader().load([{images : BaseDefenderScene.prototype.textures, path: 'images/textures/', store: 'textures'},
                        {images : buildingImages, path: 'images/buildings/', store: 'buildings'},
 											 {images : buildingModeImages, path: 'images/buildings/', store: 'buildingModes'},
 											 {images : iconsImages, path: 'images/icons/', store: 'icons'},
-											// {images : workerImages, path: 'images/worker/', store: 'worker'},
+										 	 {images : workerImages, path: 'images/worker/', store: 'worker'},
+                       {images : smokeImages, path: 'images/', store: 'smoke'},
 											 {images : questsImages, path: 'images/quests/', store: 'quests'},
 											 {images : buildingOutlineImages, path: 'images/buildings/outlines/', store: 'buildingOutlines'}],
       {onFinish : loaderFinishCallback});
-		Loader.images.worker = {}
-		Loader.images.worker['worker.png'] = new Image()
-		Loader.images.worker['worker.png'].src = "images/worker/worker.png"
   },
   
   reInitialize : function(callback){
     this.neighborGame = false;
     this.gameStatus = this.network.initializeGame();
     this.data = this.gameStatus.game_data.metadata;
-    
     this.reflectStatusChange();
     this.scene.render();
   },
@@ -108,7 +109,7 @@ var Game = Class.create({
   reflectStatusChange : function(){
 		this.reInitializationNotifications = [];
     if(this.reactor) this.reactor.stop();
-    this.reactor = new Reactor(33);
+    this.reactor = new Reactor(50);
     this.reactor.run();
     
     this.buildingMode = new BuildingMode(this);

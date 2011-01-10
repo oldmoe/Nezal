@@ -34,16 +34,23 @@ var WorkerDisplay = Class.create(Display,{
 	ydim : 93,
 	zdim : 0,
 	initialize: function($super, owner, properties){
-  	$super(owner, properties)
-		this.noOfXTiles = Math.ceil(this.xdim / Map.tileIsoLength)
-		this.noOfYTiles = Math.ceil(this.ydim / Map.tileIsoLength)
-		this.owner = owner
+  	$super(owner, properties);
+		this.noOfXTiles = Math.ceil(this.xdim / Map.tileIsoLength);
+		this.noOfYTiles = Math.ceil(this.ydim / Map.tileIsoLength);
+		this.owner = owner;
 		this.img = Loader.images.worker['worker.png'];
+		this.shadowImg = Loader.images.worker['worker_shadow.png'];
 		Object.extend(this.owner,this);
-		this.sprites.worker = new DomSprite(owner,this.img);
+		this.sprites.worker = new DomImgSprite(owner, {img : this.img});
+		this.sprites.shadow = new DomImgSprite(owner.shadow, {img : this.shadowImg}, {shiftY: 48, shiftX: 10});
   },
 	render : function(){
-		this.sprites.worker.render()
+		this.sprites.worker.render();
+		this.sprites.shadow.render();
+		var divider = 20;
+		if (this.owner.angle == Map.S) divider = 45;
+		var scale = Math.abs(this.sprites.shadow.owner.coords.y-this.sprites.worker.owner.coords.y)/divider + 1;
+		this.sprites.shadow.setImgWidth(scale*this.shadowImg.width)
 	}
 });
 
@@ -58,12 +65,15 @@ var BuildingDisplay = Class.create(Display, {
 		this.invalidImg =  Loader.images.buildingModes[buildImgName+"_invalid.png"];
 		this.baseImg = Loader.images.buildingModes[buildImgName+'_base.png'];
 		this.outlineImg = Loader.images.buildingOutlines[this.owner.name+"_outline.png"];
+    this.mouseoverImg = Loader.images.icons[this.owner.name+"_icon.png"];
 		this.mapTiles =[];
 		Object.extend(this.owner,this); 
-		this.sprites.base = new DomSprite(owner,this.baseImg,null,{shiftY: this.zdim});
-		this.sprites.invalid = new DomSprite(owner,this.invalidImg,null,{shiftY: this.zdim});
-		this.sprites.outline = new DomSprite(owner,this.outlineImg);
-		this.sprites.building = new DomSprite(owner,this.img,null,{clickable:true});
+		this.sprites.base = new DomImgSprite(owner, {img : this.baseImg}, {shiftY: this.zdim});
+		this.sprites.invalid = new DomImgSprite(owner, {img : this.invalidImg}, {shiftY: this.zdim});
+		this.sprites.outline = new DomImgSprite(owner, {img: this.outlineImg});
+    this.sprites.info = new DomTextSprite(owner, {text : owner.textInfo()}, {centered: true, shiftY: -10});
+		this.sprites.building = new DomImgSprite(owner, {img : this.img}, {clickable: true});
+    this.sprites.mouseover = new DomImgSprite(owner, {img: this.mouseoverImg});
 		this.render();
     this.manageStateChange();
 	},
@@ -74,7 +84,9 @@ var BuildingDisplay = Class.create(Display, {
       self.sprites.building.setOpacity(0.5);
       self.sprites.building.animated = false;
 			self.sprites.base.show();
-			self.sprites.outline.hide()
+			self.sprites.outline.hide();
+      self.sprites.info.hide();
+      self.sprites.mouseover.hide();
 			self.sprites.invalid.hide();
     });
     this.owner.stateNotifications[this.owner.states.UNDER_CONSTRUCTION].push(function(){
@@ -84,21 +96,27 @@ var BuildingDisplay = Class.create(Display, {
       self.sprites.building.setOpacity(0.5);
       self.sprites.building.animated = false;
 			self.sprites.base.hide();
-			self.sprites.outline.hide()
+			self.sprites.outline.hide();
+      self.sprites.info.hide();
+      self.sprites.mouseover.hide();
 			self.sprites.invalid.hide();
     });
     this.owner.stateNotifications[this.owner.states.UPGRADING].push(function(){
       self.sprites.building.setOpacity(0.5);
       self.sprites.building.animated = false;
 			self.sprites.base.hide();
-			self.sprites.outline.hide()
+			self.sprites.outline.hide();
+      self.sprites.info.hide();
+      self.sprites.mouseover.hide();
 			self.sprites.invalid.hide();
     });
     this.owner.stateNotifications[this.owner.states.NORMAL].push(function(){
       self.sprites.building.setOpacity(1);
       self.sprites.building.animated = true;
 			self.sprites.base.hide();
-			self.sprites.outline.hide()
+			self.sprites.outline.hide();
+      self.sprites.info.hide();
+      self.sprites.mouseover.hide();
 			self.sprites.invalid.hide();
     });
   },
@@ -113,8 +131,6 @@ var BuildingDisplay = Class.create(Display, {
 				this.sprites.invalid.show();
 			}
     }
-		
-		
 		for(var sprite in this.sprites){
 			this.sprites[sprite].render();
 		}
@@ -129,8 +145,18 @@ var BuildingDisplay = Class.create(Display, {
 });
 
 var TownhallDisplay = Class.create(BuildingDisplay, {
-		frameDuration : 4,
-		frameDurationCounter : 2,
+		animationRepeats : 2,
+		animationEverySeconds : 4,
+		tickDelay : 4,
+		initialize : function($super,owner,properties){
+			$super(owner,properties)
+			var self = this;
+			this.owner.game.scene.pushPeriodicalRenderLoop(
+							this.tickDelay,
+							this.animationRepeats * this.sprites.building.noOfAnimationFrames,
+							this.animationEverySeconds,
+							function(){self.renderAnimation()})
+		},
 		
 		renderPanel : function(){
 	    var self = this.owner;
@@ -154,16 +180,12 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
 	    }
 	  },
 		
-		render : function($super){
-      $super();
+		renderAnimation : function(){
 			if (!this.sprites.building.animated) {
         this.sprites.building.currentAnimationFrame = 0
       }
       else {
-        this.frameDurationCounter = (this.frameDurationCounter + 1) % (this.frameDuration + 1);
-        if (this.frameDuration == this.frameDurationCounter) {
-          this.sprites.building.currentAnimationFrame = (this.sprites.building.currentAnimationFrame + 1) % this.sprites.building.noOfAnimationFrames;
-        }
+		  	this.sprites.building.currentAnimationFrame = (this.sprites.building.currentAnimationFrame + 1) % this.sprites.building.noOfAnimationFrames;
       }
 		}
 });
@@ -194,7 +216,60 @@ var LumbermillDisplay = Class.create(ResourceBuildingDisplay, {
 });
 
 var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
+  numberOfBubbles : 3,
+  bubbles : null,
+  bubbleImg : null,
+  bubbleElevation : null,
+  bubbleXMovementLimit : 15,
+  bubbleSmallSizeLimit : 5,
+  bubbleLargeSizeLimit : 23,
+  bubbleInitialXShift : 65,
+  initialize : function($super,owner,properties){
+    $super(owner,properties);
+		var self = this;
+    this.bubbles = [];
+    this.bubbleImg = Loader.images.smoke["smoke_big.png"];
+    this.bubbleElevation = 60;
+    
+    for (var i = 0; i < this.numberOfBubbles; i++) {
+      
+      var bubbleSprite = new DomImgSprite(new Bubble(owner.coords, this.bubbleLargeSizeLimit), {img : this.bubbleImg}, {
+        shiftY: 0,
+        shiftX: this.bubbleInitialXShift
+      });
+      bubbleSprite.owner.yMovement = i*this.bubbleElevation /(this.numberOfBubbles);
+      bubbleSprite.owner.xMovement = this.bubbleInitialXShift;
+			bubbleSprite.setImgWidth(10);
+      this.bubbles.push(bubbleSprite);
+    }
+  },
   
+  render : function($super){
+    $super();
+		if (this.owner.state == this.owner.states.NORMAL) {
+			var self = this;
+			this.bubbles.each(function(bubble){
+				bubble.owner.yMovement -= 0.5;
+				bubble.shiftY = bubble.owner.yMovement - 25;
+				if (bubble.owner.yMovement < -self.bubbleElevation) {
+					bubble.owner.reset();
+					bubble.owner.xMovement = self.bubbleInitialXShift;
+					bubble.setImgWidth(10);
+					return;
+				}
+				
+				var sizeDirection = 1;
+				for(var i=0;i<self.bubbleElevation/3;i++){
+					if (-bubble.owner.yMovement == (i+1)*3) {
+						bubble.shiftX = bubble.owner.xMovement-i*3/2;
+						bubble.img.setOpacity(1 + bubble.owner.yMovement/self.bubbleElevation);
+						bubble.setImgWidth((i+1)*3 + 10);
+		  		}
+				}
+				bubble.render();
+			})
+		}
+  }
 });
 
 

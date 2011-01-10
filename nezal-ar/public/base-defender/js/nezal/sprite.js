@@ -40,7 +40,7 @@ var Sprite = Class.create({
 		this.visible = false
 		return this
 	},
-
+	
 	render : function(ctx){
 		if(!this.visible) return
 		ctx.save()

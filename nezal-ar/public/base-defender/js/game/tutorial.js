@@ -122,8 +122,6 @@ var Tutorial = Class.create({
     assigned_workers : function(id){
       Hand.point(this.self.game, { 'object' : this.self.game.lumbermillFactory.factoryRegistry[id].sprites.building.div, 'rotated' : false });
     }
-  },
-
-  
+  }
 
 });

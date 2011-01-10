@@ -171,7 +171,7 @@ var Map={
 	//takes tile values and map them to x,y values
 	value : function(i,j){
 		var y=Math.round((i-1)*Map.tileHeight/2) 
-		var	x=-((i+1)%2)*Map.tileWidth/2+j*Map.tileWidth+Map.tileWidth/2
+		var	x=-((i+1)%2)*Map.tileWidth/2+j*Map.tileWidth+Map.tileWidth/2;
 		return [x,y]
 	},
 	
@@ -234,8 +234,8 @@ var Map={
 	},
 
 	addObjectToGrid : function(obj){
-		var noOfRows = Math.round(obj.xdim/Map.tileIsoLength)
-		var noOfColumns = Math.round(obj.ydim/Map.tileIsoLength)
+		var noOfRows = Math.ceil(obj.xdim/Map.tileIsoLength)
+		var noOfColumns = Math.ceil(obj.ydim/Map.tileIsoLength)
 		var topX = obj.owner.coords.x 
 		var topY = obj.owner.coords.y -Map.tileHeight/2
 		var originTile = Map.tileValue(topX,topY)
@@ -245,7 +245,7 @@ var Map={
 			originTile = Map.getNeighbor(originTile[0],originTile[1],Map.SW)
 			if(!originTile) continue;
 			var loopingTile = [];loopingTile[0] = originTile[0]; loopingTile[1] = originTile[1]
-			for(var j=0;j<noOfColumns;j++){
+			for(var j=0;j<noOfColumns+1;j++){
 				Map.grid[loopingTile[0]][loopingTile[1]].value = obj
 				mapTiles.push(Map.grid[loopingTile[0]][loopingTile[1]])
 				loopingTile = Map.getNeighbor(loopingTile[0],loopingTile[1],Map.SE)
@@ -304,17 +304,6 @@ var Map={
 		var self = this;
 		Map.periodicalMovementEvent = setInterval(function(){self.move(xDirection, yDirection)}, this.movementSpeed);
 	},
-//	move : function (xDirection,yDirection){
-//		if(this.x+this.speed*xDirection >=0 && this.x+this.speed*xDirection < this.mapWidth - this.viewWidth
-//		 &&this.y+this.speed*yDirection >=0 && this.y+this.speed*yDirection < this.mapHeight - this.viewHeight){
-//			this.x+=this.speed*xDirection
-//			this.y+=this.speed*yDirection
-//			this.div.style.left = -this.x +"px"
-//			this.div.style.top = -this.y +"px"
-//			this.origin = Map.tileValue(this.x,this.y)
-//		}
-////		console.log(this.x,this.y)
-//	},
 
 	move : function (dx,dy){
 		if(this.x+dx >=0 && this.x+dx < this.mapWidth - this.viewWidth
@@ -325,13 +314,15 @@ var Map={
 			this.div.style.top = -this.y +"px"
 			this.origin = Map.tileValue(this.x,this.y)
 		}
-//		console.log(this.x,this.y)
 	},
+	
 	stopMovement : function(){
 		clearInterval(Map.periodicalMovementEvent);
 	},
+	
 	hovered : function(x,y){
 	},
+	
 	moveObject : function(object,x,y){
 		var astar = new Astar()
 		var srcTiles = Map.tileValue(object.coords.x,object.coords.y)
@@ -347,12 +338,8 @@ var Map={
 			}
 			
 		if(path){
-			object.moving = false
-			object.movingPath = path
-			for(var i=0;i<path.length;i++){
-					//$$('.cell')[path[i].x*map.grid[0].length+path[i].y].addClassName('cellPath')
-			}
-			//Map.doMoveObject(object,path)
+			object.moving = false;
+			object.movingPath = path;
 		}
 		
 	},
@@ -363,13 +350,25 @@ var Map={
 				$('building-panel').show();
 			}
 		})
+    
+    div.observe('mousemove',function(mouse){
+      var x = mouse.pointerX();
+      var y = mouse.pointerY();
+      owner.sprites.mouseover.shiftX = x - ( owner.coords.x - Math.round(owner.imgWidth/2) - Map.x ) + 10;
+      owner.sprites.mouseover.shiftY = y - ( owner.coords.y -Math.round(owner.imgHeight/2) - Map.y );
+      owner.sprites.mouseover.show();
+    })
+    
 		div.observe('mouseover',function(){
 			if (owner.state != owner.states.NOT_PLACED) {
-	  		owner.sprites.outline.show()
+	  		owner.sprites.outline.show();
+        owner.sprites.info.show();
 	  	}
 		})
 		div.observe('mouseout',function(){
-			owner.sprites.outline.hide()
+			owner.sprites.outline.hide();
+      owner.sprites.mouseover.hide();
+      owner.sprites.info.hide();
 		})
 	},
 	E:0, NE:1, N:2, NW:3, W:4, SW:5, S:6, SE:7 
