@@ -56,4 +56,11 @@ body{
 	cursor : pointer;
 	position : absolute;
 	overflow : hidden;
+
 }
+
+#cancelBuilding{
+	 left: 684px;
+	 position: absolute;
+	 top: 347px;
+ }

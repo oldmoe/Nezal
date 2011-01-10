@@ -323,11 +323,11 @@ var Map={
 	hovered : function(x,y){
 	},
 	
-	moveObject : function(object,x,y){
+	moveObject : function(object,x,y,callback,ignorePlace){
 		var astar = new Astar()
 		var srcTiles = Map.tileValue(object.coords.x,object.coords.y)
 		var destTiles = Map.tileValue(x,y)
-		if(Map.grid[destTiles[0]][destTiles[1]].value!=0) return
+		if(Map.grid[destTiles[0]][destTiles[1]].value!=0 && !ignorePlace) return
 		var path = astar.getOptimalPath(Map,Map.grid[srcTiles[0]][srcTiles[1]],Map.grid[destTiles[0]][destTiles[1]])
 		for(var i=0;i<Math.ceil(this.mapHeight*2/this.tileHeight)+1;i++){
 				for(var j=0;j<Math.ceil(this.mapWidth/this.tileWidth)+1;j++){
@@ -340,6 +340,7 @@ var Map={
 		if(path){
 			object.moving = false;
 			object.movingPath = path;
+			if(callback)object.movementFinishCallback = callback; 
 		}
 		
 	},
@@ -348,6 +349,7 @@ var Map={
 			if(!game.buildingMode.isOn){
 				owner.renderPanel()
 				$('building-panel').show();
+			//	owner.game.buildingMode.selectedBuilding = owner;
 			}
 		})
     
