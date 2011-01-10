@@ -30,6 +30,10 @@ var DomImgSprite = Class.create(DomSprite, {
     this.img.style.width = width + "px";
   },
   
+	setImgHeight : function(height){
+    this.img.style.height = height + "px";
+  },
+	
   replaceImg : function(img){
     this.div.removeChild(this.img)
     this.img = img.clone()
@@ -50,6 +54,13 @@ var DomImgSprite = Class.create(DomSprite, {
         top: this.div.style.top
       });
     }
+  },
+  
+	destroy : function($super){
+		$super()
+		if(this.clickDiv && this.clickDiv.parentNode){
+			this.clickDiv = $(this.clickDiv.parentNode.removeChild(this.clickDiv))
+		}
 	}
 	
 })
