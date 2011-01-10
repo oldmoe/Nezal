@@ -10,7 +10,7 @@ var ProgressDisplay = Class.create({
     div.innerHTML = this.html;
     div.addClassName('progressContainer')
     this.div = $($('gameCanvas').appendChild(div));
-    this.div.setStyle({top:top+"px", left:left+"px","z-index" : zIndex});
+    this.div.setStyle({top:top+"px", left:left+"px",zIndex : zIndex});
     this.timeContainer = this.div.down('.progressTime')
     this.progressBar = this.div.down('.progressBar')
   },

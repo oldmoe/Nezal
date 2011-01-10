@@ -10,10 +10,9 @@ var WorkerFactory = Class.create({
     this.recruitmentPlans = this.game.data.workers;
 		if(!game.workersStatus) game.workersStatus = {}
 		for(var i=0;i<this.idleWorkers;i++){
-			var x =0;var y=0;
+			var x =0;var y=0;var worker = null;
 			if (game.workersStatus[i]) {
-		  	x = game.workersStatus[i].x
-		  	y = game.workersStatus[i].y
+		  	worker = game.workersStatus[i]
 		  }
 		  else {
 		  	do {
@@ -21,9 +20,10 @@ var WorkerFactory = Class.create({
 		  		var y = Math.round(game.scene.map.y + game.scene.map.viewHeight * Math.random())
 		  	}
 		  	while (Map.occupied(x, y));
+				worker = new Worker(game,x,y)
 		  }
-			var worker = new Worker(game,x,y)
-			if(!game.workersStatus[i])game.workersStatus[i] = worker.coords 
+			if(!game.workersStatus[i])game.workersStatus[i] = worker
+			game.scene.push(worker); 
 			var workerDisplay = new WorkerDisplay(worker)
 			this.game.scene.pushAnimation(workerDisplay);
 		}

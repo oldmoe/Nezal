@@ -234,8 +234,8 @@ var Map={
 	},
 
 	addObjectToGrid : function(obj){
-		var noOfRows = Math.round(obj.xdim/Map.tileIsoLength)
-		var noOfColumns = Math.round(obj.ydim/Map.tileIsoLength)
+		var noOfRows = Math.ceil(obj.xdim/Map.tileIsoLength)
+		var noOfColumns = Math.ceil(obj.ydim/Map.tileIsoLength)
 		var topX = obj.owner.coords.x 
 		var topY = obj.owner.coords.y -Map.tileHeight/2
 		var originTile = Map.tileValue(topX,topY)
@@ -245,7 +245,7 @@ var Map={
 			originTile = Map.getNeighbor(originTile[0],originTile[1],Map.SW)
 			if(!originTile) continue;
 			var loopingTile = [];loopingTile[0] = originTile[0]; loopingTile[1] = originTile[1]
-			for(var j=0;j<noOfColumns;j++){
+			for(var j=0;j<noOfColumns+1;j++){
 				Map.grid[loopingTile[0]][loopingTile[1]].value = obj
 				mapTiles.push(Map.grid[loopingTile[0]][loopingTile[1]])
 				loopingTile = Map.getNeighbor(loopingTile[0],loopingTile[1],Map.SE)
@@ -338,8 +338,8 @@ var Map={
 			}
 			
 		if(path){
-			object.moving = false
-			object.movingPath = path
+			object.moving = false;
+			object.movingPath = path;
 		}
 		
 	},
