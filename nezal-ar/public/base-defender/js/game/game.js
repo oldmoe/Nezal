@@ -73,7 +73,7 @@ var Game = Class.create({
     });
 		var buildingModeImages = ['2x2_invalid.png', '2x2_base.png'];
 		var questsImages = ["msgBg.png", "wedge.png", "button.png", "bubble.png", "questBg.png", "buildingPanelBg.png",
-                         "activeCell.png", "inactiveCell.png", "resources.png"];
+                         "activeCell.png", "inactiveCell.png", "resources.png", "temp.png", "temp.png"];
     var iconsImages = ["townhall.png", "quarry.png", "lumbermill.png", "lumber.png", "rock.png", "workers.png"];
 		//var gameElementsImages = ["coins.png", "monitor.png", "rock.png", "lumber.png", "workers.png", "xp_bar.png"];
 		var workerImages = ["worker.png"];

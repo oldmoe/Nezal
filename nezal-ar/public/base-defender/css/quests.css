@@ -39,12 +39,16 @@
   height : 100%;
   display:inline-block;
 }
+#interaction .okImage{
+  display : block;
+}
 #interaction .okButton {
   display: inline-block;
   text-align: center;
   vertical-align: top;
   cursor: pointer;
   overflow : hidden;
+  height : 100%;
 }
 
 #interaction .okText {
@@ -52,9 +56,11 @@
   font-family: Showg;
   font-size: 21px;
   position: relative;
+  display : block;
   text-shadow: -1px -1px 1px black;
-  top: -35px;
-  height : 20px
+  top: -36px;
+  height : 100%;
+  line-height : 36px;
 }
 /* End of Button CSS */
 
@@ -222,6 +228,15 @@
   font-size : 22px;  
   line-height : 18px;
 }
+#interaction #questDisplay .condition .desc .condMsg{
+  display: inline-block;
+  vertical-align: top;
+  width : 320px;
+}
+#interaction #questDisplay .condition .desc .condStatus{
+  display: inline-block;
+  width : 60px;
+}
 #interaction #questDisplay .condition .background {
   position : relative;
   top : -100px;
@@ -259,8 +274,8 @@
 #interaction #questDisplay .bubbleText {
   color: #5E0000;
   display: inline-block;
-  padding: 18px 15px 0;
   position: relative;
+  height : 88px;
   top: -105px;
   font-size : 22px;
 }
