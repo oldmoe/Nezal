@@ -33,7 +33,25 @@ var DomSprite = Class.create(Sprite, {
   },
 
   render : function(){
-    return Nezal.notImplemented()();
+    try{
+      if(this.owner.dead){
+        return this.destroy()
+      }
+      
+      if (this.visible) {
+        
+        console.log("dom_sprite", this.owner.coords.x - Math.round(this.owner.imgWidth / 2))
+        
+        this.div.setStyle({
+          left: this.owner.coords.x - Math.round(this.owner.imgWidth / 2) + this.shiftX + "px",
+          top: this.owner.coords.y - Math.round(this.owner.imgHeight / 2) + this.shiftY + "px",
+          zIndex: this.owner.coords.y
+        });
+      }
+  
+    }catch(e){
+      console.log('Sprite#render: ',e)
+    }
   },
   
 	destroy : function(){

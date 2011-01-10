@@ -46,14 +46,15 @@ var Navigation = Class.create({
 		})
 		
 		document.body.observe('mousemove',function(e){
-			 if(Map.mouseIsDown){
+			if(Map.mouseIsDown){
+        $("building-panel").hide();
 			 	self.dragDiv.show()
 				Map.dragged = true
 				var dx = e.pointerX() - Map.mouseLocation.x;
 				var dy = e.pointerY() - Map.mouseLocation.y;
 				Map.move( -dx, -dy);
 				Map.mouseLocation = {x:e.pointerX(), y:e.pointerY()}
-			 }
+			}
 		})
 	}
 });

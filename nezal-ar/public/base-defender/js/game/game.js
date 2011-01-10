@@ -108,7 +108,7 @@ var Game = Class.create({
   reflectStatusChange : function(){
 		this.reInitializationNotifications = [];
     if(this.reactor) this.reactor.stop();
-    this.reactor = new Reactor(33);
+    this.reactor = new Reactor(900);
     this.reactor.run();
     
     this.buildingMode = new BuildingMode(this);

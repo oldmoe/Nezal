@@ -4,7 +4,6 @@ var DomImgSprite = Class.create(DomSprite, {
   
 	initialize : function($super, owner, imgAssets, properties){
     $super(owner, imgAssets, properties);
-    console.log(owner, imgAssets)
 		this.img = imgAssets.img.clone()
     if( imgAssets.shadeImg )
 		  this.shadeImg = imgAssets.shadeImg.clone();
@@ -37,28 +36,20 @@ var DomImgSprite = Class.create(DomSprite, {
     this.div.appendChild(this.img)  
   },
 	
-	render : function(){
-		try{
-			if(this.owner.dead){
-				return this.destroy()
-			}
-      
-			this.div.setStyle({left : this.owner.coords.x -Math.round(this.owner.imgWidth/2)+this.shiftX + "px",
-												 top : this.owner.coords.y -Math.round(this.owner.imgHeight/2)+this.shiftY + "px",
-												 zIndex : this.owner.coords.y})
-			this.img.setStyle({									 
-												 marginLeft :(-this.owner.imgWidth*this.owner.angle  + "px"),
-												 marginTop : (-this.currentAnimationFrame * this.owner.imgHeight + "px")})
-	
-			if (this.clickable) {
-				this.clickDiv.setStyle({zIndex :(this.div.style.zIndex + 1),
-																left:this.div.style.left,
-																top:this.div.style.top});															
-	
-	  	}
-		}catch(e){
-			console.log('Sprite#render: ',e)
-		}
+	render : function($super){
+    $super();
+    this.img.setStyle({
+      marginLeft: (-this.owner.imgWidth * this.owner.angle + "px"),
+      marginTop: (-this.currentAnimationFrame * this.owner.imgHeight + "px")
+    });
+    
+    if (this.clickable) {
+      this.clickDiv.setStyle({
+        zIndex: (this.div.style.zIndex + 1),
+        left: this.div.style.left,
+        top: this.div.style.top
+      });
+    }
 	}
 	
 })

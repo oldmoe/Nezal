@@ -6,7 +6,7 @@
   position : absolute;
   bottom : 25px;
   right : 25px;
-  width : 400px;
+  width : 340px;
   height : 100px;
   background-color: gold;
   opacity : 0.92;
@@ -25,7 +25,7 @@
   height : 80px;
   margin-top : 5px;
   padding-top : 10px;
-  width : 78px;
+  width : 90px;
   float : left;
 }
 
@@ -54,7 +54,7 @@
   float : left;
   height : 90px;
   margin : 5px;
-  width : 295px;
+  width : 225px;
 }
 
 .building-functions span {

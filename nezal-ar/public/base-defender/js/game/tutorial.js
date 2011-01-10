@@ -87,7 +87,6 @@ var Tutorial = Class.create({
 
   workers : function(){
     var offset = Element.cumulativeOffset($('workers_game_element'));
-    console.log(offset)
     $('hand').addClassName('rotated');
     $('hand').setStyle({ top : offset[1] + 60 + "px",
                           left :  offset[0] + "px"});
