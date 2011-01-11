@@ -12,6 +12,7 @@ var DomImgSprite = Class.create(DomSprite, {
 		this.currentDirectionFrame = 0
 		this.noOfAnimationFrames = this.img.height/this.owner.imgHeight
 		this.noOfDirections = 8
+		this.img.setStyle({height:"auto"});
 		if(this.clickable){
 				this.clickDiv = $(document.createElement('DIV'));
 				Map.registerListeners(this.clickDiv,this.owner)
@@ -27,11 +28,11 @@ var DomImgSprite = Class.create(DomSprite, {
 	},
   
   setImgWidth : function(width){
-    this.img.style.width = width + "px";
+    this.img.setStyle({width:(width + "px")});
   },
   
 	setImgHeight : function(height){
-    this.img.style.height = height + "px";
+      this.img.setStyle({height:(height + "px")});
   },
 	
   replaceImg : function(img){
