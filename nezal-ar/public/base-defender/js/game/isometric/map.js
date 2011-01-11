@@ -349,7 +349,7 @@ var Map={
 			if(!game.buildingMode.isOn){
 				owner.renderPanel()
 				$('building-panel').show();
-			//	owner.game.buildingMode.selectedBuilding = owner;
+				owner.game.buildingMode.selectedBuilding = owner;
 			}
 		})
     

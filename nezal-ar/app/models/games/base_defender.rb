@@ -108,6 +108,7 @@ class BaseDefender < Metadata
     @@building_modules.keys.each do |building_name|
       if( metadata[building_name].present? )
         metadata[building_name].keys.each do |building_instance_coords|
+          puts ">>>>>>>>>" + metadata[building_name][building_instance_coords].to_s
           if(metadata[building_name][building_instance_coords]['state'] == BD::Building.states['UNDER_CONSTRUCTION'])
             building_job(user_game_profile, metadata[building_name][building_instance_coords], building_name , @@game_metadata['buildings'][building_name] )
           end
@@ -183,6 +184,8 @@ class BaseDefender < Metadata
     data = self.decode(data)
     if data['event'] == 'upgrade'
       validation = upgrade_building(user_game_profile, data)
+    elsif data['event'] == 'move' 
+      validation = move_building(user_game_profile, data)
     elsif data['event'] == 'buy_worker'
       validation = buy_worker(user_game_profile)
     elsif data['event'] == 'assign_worker'
@@ -190,6 +193,7 @@ class BaseDefender < Metadata
     elsif data['event'] == 'notification_ack'
       validation = Notification.delete({:profile => user_game_profile, :id => data['id']})
     end
+    
     user_game_profile['error'] = validation['error'] unless validation['valid']
     BD::Quest::assess_user_quests user_game_profile
     #### TODO We need to check why they need the stringified one 
@@ -222,6 +226,12 @@ class BaseDefender < Metadata
       return validation
     end
     
+  end
+  
+  def self.move_building(user_game_profile, data)
+    name = data['building']
+    validation = @@building_modules[name].move(user_game_profile, name, data['coords'], data['oldCoords'])
+    return validation
   end
   
   def self.init_game_profile(user_game_profile)

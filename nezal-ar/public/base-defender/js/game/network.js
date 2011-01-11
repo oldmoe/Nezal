@@ -63,6 +63,10 @@ var Network = Class.create({
   upgradeBuilding : function(name, coords){
     return this.contactTheBoss({ 'event' :'upgrade', 'building' : name, 'coords' : coords });
   },
+	
+	moveBuilding : function(name, coords, oldCoords){
+    return this.contactTheBoss({ 'event' :'move', 'building' : name, 'coords' : coords, 'oldCoords': oldCoords });
+  },
   
   buyWorker : function(){
     return this.contactTheBoss({ 'event' :'buy_worker'});
