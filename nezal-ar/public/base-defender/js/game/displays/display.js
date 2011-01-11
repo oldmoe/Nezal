@@ -126,6 +126,13 @@ var BuildingDisplay = Class.create(Display, {
     });
   },
 	
+  renderPanel : function(){
+    $('building-panel').setStyle({
+      top: this.owner.coords.y - Map.y - Math.round(this.owner.imgHeight / 2) + "px",
+      left: this.owner.coords.x - Map.x + Math.round(this.owner.imgWidth / 2) + "px"
+    });
+  },
+  
 	render : function(){
     if (this.owner.state == this.owner.states.UNDER_CONSTRUCTION) {
       this.progressDisplay.render( this.owner.elapsedTime() );
@@ -138,6 +145,12 @@ var BuildingDisplay = Class.create(Display, {
     }
 		for(var sprite in this.sprites){
 			this.sprites[sprite].render();
+		}
+	},
+  
+	destroy : function(){
+		for(var sprite in this.sprites){
+			this.sprites[sprite].destroy();
 		}
 	}
 	
@@ -157,7 +170,8 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
 							function(){self.renderAnimation()})
 		},
 		
-		renderPanel : function(){
+		renderPanel : function($super){
+      $super();
 	    var self = this.owner;
 	    self.game.selectedBuildingPanel = new BuildingPanel(self, function(){
 	      return self.game.templatesManager.townhallPanel(self.name, self.inProgress(), self.game.workerFactory.nextWorkerCost());
@@ -190,7 +204,8 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
 });
 
 var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
-	renderPanel : function(){
+	renderPanel : function($super){
+    $super();
     var self = this.owner;
     self.game.selectedBuildingPanel = new BuildingPanel(self, function(){
       return self.game.templatesManager.resourceBuildingPanel(self);

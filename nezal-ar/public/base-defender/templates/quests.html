@@ -33,14 +33,52 @@
       <span class="text"> ${quest.title} </span>
     </div>
     <div class="conditions">
-      {for condition in quest.conditions}
+      {for building in quest.conditions.buildings}
+        {for condition in building}
+          <div class="condition">          
+            <div class="image">
+              <div class="alignDiv" style="width:30px;"></div>
+              <img src="${Loader.images.icons[building_index+'.png'].src}"/>        
+            </div>
+            <div class="desc">
+              <div class="text"> 
+                <div class="condMsg"> ${quest['conditionMsgs'][building_index][condition_index]} </div>
+                {if quest['status']['buildings'][building_index][condition_index]['status'] < 1 }
+                <div class="condStatus"> 
+                  ${quest['status']['buildings'][building_index][condition_index]['value']} /
+                  ${quest['status']['buildings'][building_index][condition_index]['target']}
+                </div>
+                {else}
+                <div class="condStatus"> 
+                  <img style="width:28px;" src="${Loader.images.quests['correct.png'].src}"/>
+                </div>
+                {/if}
+              </div>
+            </div>
+            <img class="background" src="${Loader.images.quests['questBg.png'].src}"/>
+          </div>
+        {/for}
+      {/for}
+      {for condition in quest.conditions.resources}
         <div class="condition">          
           <div class="image">
             <div class="alignDiv" style="width:30px;"></div>
             <img src="${Loader.images.icons[condition_index+'.png'].src}"/>        
           </div>
           <div class="desc">
-            <div class="text"> ${quest['conditionMsgs'][condition_index]} </div>
+            <div class="text"> 
+              <div class="condMsg"> ${quest['conditionMsgs'][condition_index]} </div>
+              {if quest['status']['resources'][condition_index]['status'] < 1 }
+              <div class="condStatus"> 
+                ${quest['status']['resources'][condition_index]['value']} /
+                ${quest['status']['resources'][condition_index]['target']}
+              </div>
+              {else}
+              <div class="condStatus"> 
+                <img style="width:28px;" src="${Loader.images.quests['correct.png'].src}"/>
+              </div>
+              {/if}
+            </div>
           </div>
           <img class="background" src="${Loader.images.quests['questBg.png'].src}"/>
         </div>
@@ -54,7 +92,9 @@
         </div>
         <div class="bubble">
           <img src="${Loader.images.quests['bubble.png'].src}"/>
-          <span class="bubbleText"> ${quest.description} </span>
+          <div class="bubbleText">
+            <div style="display : table-cell;vertical-align:middle;height: 88px;"> ${quest.description} </div>
+          </div>
         </div>
       </div>
       <div class="okButtonWrapper">
@@ -108,7 +148,7 @@
   <div class="buildButton">
     <div class="okButtonWrapper">
       <div class="alignDiv"> </div>
-      <div class="okButton" onclick="$('questDisplay').hide(); game.buildingsManager.displayBuildingsPanel();">
+      <div class="okButton">
         <img class="okImage" src="${Loader.images.quests['button.png'].src}"/>
         <div class="okText"> build </div>
       </div>

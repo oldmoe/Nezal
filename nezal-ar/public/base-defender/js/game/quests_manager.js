@@ -3,6 +3,12 @@
  */
 var QuestsManager = Class.create({
 
+  status : {
+    notStarted : -1,
+    inProgress : 0,
+    done : 1
+  },
+
   initialize : function(game){
     this.game = game
   },
@@ -37,12 +43,12 @@ var QuestsManager = Class.create({
     } else {
       var mandatoryQuest = null;
       mandatoryQuest = this.mandatoryQuest();
-      if(mandatoryQuest!=null && this.game.tutorial.inProgress.indexOf(mandatoryQuest)==-1)
+      if(mandatoryQuest!=null)
       {
         this.displayQuest(mandatoryQuest);
         var tutorialHandle = this.game.tutorial[this.game.user.data.quests.descriptions[mandatoryQuest]['name']];
         if(tutorialHandle)
-          tutorialHandle();
+          tutorialHandle.handle();
       }
     }
   },
@@ -55,10 +61,43 @@ var QuestsManager = Class.create({
 
   mandatoryQuest : function() {
     var self = this;
-    return this.game.user.data.quests['current'].find( function(quest){
-                        if(self.game.user.data.quests.descriptions[quest]['mandatory'] == true)
-                          return true; 
-            });
+    var mandatory =  this.game.user.data.quests['current'].find( function(quest){
+                            if(self.game.user.data.quests.descriptions[quest]['mandatory'] == true)
+                            {
+                              if(self.game.user.data.quests.descriptions[quest]['status']['buildings'])
+                              {
+                                for(var i in self.game.user.data.quests.descriptions[quest]['status']['buildings'])
+                                {
+                                  var conditions = self.game.user.data.quests.descriptions[quest]['status']['buildings'][i]; 
+                                  for( var j in conditions)
+                                  {
+                                    if(conditions[j]['status'] == self.status.notStarted )
+                                    {
+                                      return true; 
+                                    }else if(conditions[j]['status'] == self.status.inProgress )
+                                    {
+                                      return false
+                                    }
+                                  }
+                                }
+                              }
+                              if(self.game.user.data.quests.descriptions[quest]['status']['resources'])
+                              {
+                                for(var i in self.game.user.data.quests.descriptions[quest]['status']['resources'])
+                                {
+                                  var conditions = self.game.user.data.quests.descriptions[quest]['status']['resources'][i];
+                                  if(conditions['status'] == self.status.notStarted )
+                                  {
+                                    return true; 
+                                  }else if(conditions['status'] == self.status.notStarted )
+                                  {
+                                    return false;
+                                  }
+                                } 
+                              }
+                            }
+                    }); 
+    return mandatory;
   }
 
 })

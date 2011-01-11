@@ -24,117 +24,114 @@ var Tutorial = Class.create({
     }
   },
 
-  townhall : function(){
-    this.game.buildingsManager.displayBuildButton();
-    var offset = Element.cumulativeOffset($$('.buildButton .okButton')[0]);
-    $('hand').removeClassName('rotated');
-    $('hand').setStyle({ top : offset[1] - 60 + "px", left :  offset[0] + "px" });
-    $('hand').show();
-    var self = this.game.tutorial;
-    $$('.buildButton .okButton')[0].observe('click', 
-                                            function(){
-                                              $('hand').hide();
-                                              setTimeout(function(){
-                                                  var offset = Element.cumulativeOffset($$('#buildingsPanel #townhall .itemData')[0]);
-                                                  ['quarry', 'lumbermill'].each(function(item){
-                                                      $$('#buildingsPanel #' + item + ' .itemData')[0].onclick=function(){}
-                                                      $$('#buildingsPanel #' + item + ' .background')[0].src=Loader.images.quests['inactiveCell.png'].src;
-                                                      $$('#buildingsPanel #' + item + ' .itemData')[0].setStyle({cursor : 'default' });
-                                                  });
-                                                  var quest = self.game.questsManager.mandatoryQuest();
-                                                  if(quest) {
-                                                    self.inProgress.push(quest)
-                                                    self.inProgress = self.inProgress.uniq();
-                                                  }
-                                                  $$('#buildingsPanel #townhall .itemData')[0].observe('click', function(){$('hand').hide()});
-                                                  $('hand').setStyle({ top : offset[1] - 60 + "px", left :  offset[0] + "px" });
-                                                  $('hand').show();
-                                              } , 200);
-                                           });
+  townhall : {
+    self : this,
+    handle : function() {
+      this.level();
+    },
+    level : function() {  
+      var self = this.self.game.tutorial;
+      var buildButtonCallBack = function(){
+                                    Hand.hide();
+                                    $('questDisplay').hide();
+                                    self.game.buildingsManager.displayBuildingsPanel({'disabled' : ['quarry', 'lumbermill']});
+                                    setTimeout(function(){
+                                        $$('#buildingsPanel #townhall .itemData')[0].observe('click', function(){$('hand').hide()});
+                                        Hand.point(self.game, { 'object' : $$('#buildingsPanel #townhall .itemData')[0], 'rotated' : false });
+                                    } , 500);
+                                 };
+      this.self.game.buildingsManager.displayBuildButton(buildButtonCallBack);
+      Hand.point(self.game, { 'object' : $$('.buildButton .okButton')[0], 'rotated' : false});
+    }
   },
 
-  quarry : function(){
-    this.game.buildingsManager.displayBuildButton();
-    var offset = Element.cumulativeOffset($$('.buildButton .okButton')[0]);
-    $('hand').removeClassName('rotated');
-    $('hand').setStyle({ top : offset[1] - 60 + "px", left :  offset[0] + "px" });
-    $('hand').show();
-    var self = this.game.tutorial;
-    $$('.buildButton .okButton')[0].observe('click', 
-                                            function(){
-                                              $('hand').hide();
-                                              setTimeout(function(){
-                                                  var offset = Element.cumulativeOffset($$('#buildingsPanel #quarry .itemData')[0]);
-
-//                                                  Element.cumulativeOffset(this.game.townhallFactory.townhall.sprites.building.div);
-
-                                                  ['townhall', 'lumbermill'].each(function(item){
-                                                      $$('#buildingsPanel #' + item + ' .itemData')[0].onclick=function(){}
-                                                      $$('#buildingsPanel #' + item + ' .background')[0].src=Loader.images.quests['inactiveCell.png'].src;
-                                                      $$('#buildingsPanel #' + item + ' .itemData')[0].setStyle({cursor : 'default' });
-                                                  });
-                                                  var quest = self.game.questsManager.mandatoryQuest();
-                                                  if(quest) {
-                                                    self.inProgress.push(quest)
-                                                    self.inProgress = self.inProgress.uniq();
-                                                  }
-                                                  $$('#buildingsPanel #quarry .itemData')[0].observe('click', function(){$('hand').hide()});
-                                                  $('hand').setStyle({ top : offset[1] - 60 + "px", left :  offset[0] + "px" });
-                                                  $('hand').show();
-                                              } , 200);
-                                           });
+  workers : {
+    self : this,
+    handle : function() {
+      this.workers();
+    },
+    workers : function() { 
+      Hand.point(this.self.game, { 'object' : $('workers_game_element'), 'rotated' : true });
+      var self = this.self.game.tutorial;
+      $('workers_game_element').observe('click', 
+                                              function(){
+                                                Hand.hide();
+                                              });
+    }
   },
 
-  workers : function(){
-    var offset = Element.cumulativeOffset($('workers_game_element'));
-    $('hand').addClassName('rotated');
-    $('hand').setStyle({ top : offset[1] + 60 + "px",
-                          left :  offset[0] + "px"});
-    $('hand').show();
-    var self = this.game.tutorial;
-    $('workers_game_element').observe('click', 
-                                            function(){
-                                              $('hand').hide();
-                                           });
+  quarry : {
+    self : this,
+    handle : function() {
+      var status = this.self.game.user.data.quests.descriptions[this.self.game.questsManager.mandatoryQuest()]['status']['buildings']['quarry'];
+      for( var i in status)
+      {
+        if(status[i]['status'] < 0)
+        {
+          this[i](status[i]['id']);
+          break;
+        }
+      }
+    },
+    level : function(id) { 
+      var self = this.self.game.tutorial;
+      var buildButtonCallBack = function(){
+                                    Hand.hide();
+                                    $('questDisplay').hide();
+                                    self.game.buildingsManager.displayBuildingsPanel({'disabled' : ['townhall', 'lumbermill']});
+                                    setTimeout(function(){
+                                        $$('#buildingsPanel #quarry .itemData')[0].observe('click', function(){$('hand').hide()});
+                                        Hand.point(self.game, { 'object' : $$('#buildingsPanel #quarry .itemData')[0], 'rotated' : false });
+                                    } , 200);
+                                 };
+      this.self.game.buildingsManager.displayBuildButton(buildButtonCallBack);
+      Hand.point(this.self.game, { 'object' : $$('.buildButton .okButton')[0], 'rotated' : false });
+    },
+    assigned_workers : function(id){
+      var self = this.self.game.tutorial;
+      var id = id;
+      $$('#questDisplay .okButton')[0].observe('click', function(){
+            Hand.point(self.game, { 'object' : self.game.quarryFactory.factoryRegistry[id].sprites.building.div, 'rotated' : false });
+            $$('#questDisplay .okButton')[0].stopObserving('click');
+       });
+    }
   },
 
-  lumbermill : function(){
-    this.game.buildingsManager.displayBuildButton();
-    var offset = Element.cumulativeOffset($$('.buildButton .okButton')[0]);
-    $('hand').removeClassName('rotated');
-    $('hand').setStyle({ top : offset[1] - 60 + "px", left :  offset[0] + "px" });
-    $('hand').show();
-    var self = this.game.tutorial;
-    $$('.buildButton .okButton')[0].observe('click', 
-                                            function(){
-                                              $('hand').hide();
-                                              setTimeout(function(){
-                                                  var offset = Element.cumulativeOffset($$('#buildingsPanel #lumbermill .itemData')[0]);
-                                                  ['quarry', 'townhall'].each(function(item){
-                                                      $$('#buildingsPanel #' + item + ' .itemData')[0].onclick=function(){}
-                                                      $$('#buildingsPanel #' + item + ' .background')[0].src=Loader.images.quests['inactiveCell.png'].src;
-                                                      $$('#buildingsPanel #' + item + ' .itemData')[0].setStyle({cursor : 'default' });
-                                                  });
-                                                  var quest = self.game.questsManager.mandatoryQuest();
-                                                  if(quest) {
-                                                    self.inProgress.push(quest)
-                                                    self.inProgress = self.inProgress.uniq();
-                                                  }
-                                                  $$('#buildingsPanel #lumbermill .itemData')[0].observe('click', function(){$('hand').hide()});
-                                                  $('hand').setStyle({ top : offset[1] - 60 + "px", left :  offset[0] + "px" });
-                                                  $('hand').show();
-                                              } , 200);
-                                           });
-  },
-
-
-  buildTownhall : function(){
-    $('establish-townhall-container').show();
-    $('establish-townhall').observe('click', function(){
-      $('establish-townhall-container').hide();
-      game.buildingMode.on(self.game.townhallFactory.newTownhall(), function(){
-        //$('establish-townhall').hide();
-      });
-    });
+  lumbermill : {
+    self : this,
+    handle : function() {
+      var status = this.self.game.user.data.quests.descriptions[this.self.game.questsManager.mandatoryQuest()]['status']['buildings']['lumbermill'];
+      for( var i in status)
+      {
+        if(status[i]['status'] < 0)
+        {
+          this[i](status[i]['id']);
+          break;
+        }
+      }
+    },
+    level : function(id) { 
+      var self = this.self.game.tutorial;
+      var buildButtonCallBack = function(){
+                                    Hand.hide();
+                                    $('questDisplay').hide();
+                                    self.game.buildingsManager.displayBuildingsPanel({'disabled' : ['quarry', 'townhall']});
+                                    setTimeout(function(){
+                                        $$('#buildingsPanel #lumbermill .itemData')[0].observe('click', function(){$('hand').hide()});
+                                        Hand.point(self.game, { 'object' : $$('#buildingsPanel #lumbermill .itemData')[0], 'rotated' : false });
+                                    } , 200);
+                                 };
+      this.self.game.buildingsManager.displayBuildButton(buildButtonCallBack);
+      Hand.point(this.self.game, { 'object' : $$('.buildButton .okButton')[0], 'rotated' : false});
+    },
+    assigned_workers : function(id){
+      var self = this.self.game.tutorial;
+      var id = id;
+      $$('#questDisplay .okButton')[0].observe('click', function(){
+            Hand.point(self.game, { 'object' : self.game.lumbermillFactory.factoryRegistry[id].sprites.building.div, 'rotated' : false });
+            $$('#questDisplay .okButton')[0].stopObserving('click');
+       });
+    }
   }
+
 });

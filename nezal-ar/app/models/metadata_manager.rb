@@ -10,6 +10,7 @@ module MetadataManager
   end  
 
   def metadata 
+    self["metadata"] ||= "{}"
     @decoded_metadata ||= Metadata.decode(self["metadata"])
   end
 
