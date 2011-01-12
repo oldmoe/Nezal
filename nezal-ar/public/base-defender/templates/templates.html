@@ -53,6 +53,15 @@
         <span>
           Collection workers : ${building.assignedWorkers} / ${building.maxWorkers}
         </span>
+        <div id="lumbermill-collect">
+            <span style="">Collect Lumber</span>
+            <button id="collect_resources_trigger" style="margin-left: 5px;">
+                +
+            </button>
+        </div>
+        <span>
+          Lumber : ${building.resource()}
+        </span>
     </div>
     {/if}
 </textarea>
@@ -79,6 +88,15 @@
         </div>
         <span>
           Collection workers : ${building.assignedWorkers} / ${building.maxWorkers}
+        </span>
+        <div id="quarry-collect">
+            <span style="">Collect Lumber</span>
+            <button id="collect_resources_trigger" style="margin-left: 5px;">
+                +
+            </button>
+        </div>
+        <span>
+          Rock : ${building.resource()}
         </span>
     </div>
     {/if}

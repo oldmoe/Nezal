@@ -72,6 +72,10 @@ var Network = Class.create({
     return this.contactTheBoss({ 'event' :'assign_worker', 'building' : name, 'coords' : coords });
   },
   
+  collectResources : function(name, coords){
+    return this.contactTheBoss({ 'event' :'collect_resources', 'building' : name, 'coords' : coords });
+  },
+
   fetchTemplate : function(path, callBack){
     new Ajax.Request(path, {
       method : 'get',

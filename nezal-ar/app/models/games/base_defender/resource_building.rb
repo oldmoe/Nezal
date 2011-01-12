@@ -3,6 +3,36 @@ module BD
     def self.collects
       @collect
     end
+
+    def self.collect(user_game_profile, coords)
+      game_metadata = user_game_profile.game.metadata
+      location_hash = BaseDefender.convert_location(coords)
+      building = user_game_profile.metadata[@name][location_hash]
+      time = Time.now.utc.to_i
+      collected_resources = self.calculate_collected_resources(building, game_metadata, time)
+      building[self.collects] += collected_resources
+      user_game_profile.metadata[@collect]= building[self.collects] + user_game_profile.metadata[@collect]
+      user_game_profile.metadata[@name][location_hash][self.collects] = 0
+      user_game_profile.metadata[@name][location_hash]['last_collect'] = time
+      user_game_profile.save
+      return validate_collect( user_game_profile.metadata, game_metadata, location_hash)
+    end
+
+    def self.calculate_collected_resources(building, game_metadata, time_now)
+      time_now = time_now
+      building_collected_resources =  building[self.collects] || 0 
+      last_collect_time =  building['last_collect'] || time_now 
+      collecting_time = time_now - last_collect_time
+      assigned_workers = building['assigned_workers']
+      building_capacity = game_metadata['buildings'][@name]['levels'][building['level'].to_s]['capacity']
+      unit_per_worker_minute = game_metadata['buildings'][@name]['levels'][building['level'].to_s]['unit_per_worker_minute']
+      total_per_minute = unit_per_worker_minute * assigned_workers
+      collected = ((total_per_minute/60.0) * collecting_time).round
+      if (building_collected_resources + collected) > building_capacity
+        collected = building_capacity - building_collected_resources
+      end
+      return collected
+    end
     
     def self.assign_worker(user_game_profile, coords)
       location_hash = BaseDefender.convert_location(coords)
@@ -40,5 +70,10 @@ module BD
       return {'valid' => true, 'error' => ''}
       
     end
+    
+    def self.validate_collect(user_profile_metadata, game_metadata, location_hash)
+      return {}
+    end
+
   end
 end

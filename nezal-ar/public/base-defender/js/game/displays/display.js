@@ -76,7 +76,7 @@ var BuildingDisplay = Class.create(Display, {
 		this.sprites.base = new DomImgSprite(owner, {img : this.baseImg}, {shiftY: this.zdim});
 		this.sprites.invalid = new DomImgSprite(owner, {img : this.invalidImg}, {shiftY: this.zdim});
 		this.sprites.outline = new DomImgSprite(owner, {img: this.outlineImg});
-    this.sprites.info = new DomTextSprite(owner, {text : owner.textInfo()}, {centered: true, shiftY: -10});
+    this.sprites.info = new DomTextSprite(owner, 'textInfo', {centered: true, shiftY: -10});
 		this.sprites.building = new DomImgSprite(owner, {img : this.img}, {clickable: true});
     this.sprites.mouseover = new DomImgSprite(owner, {img: this.mouseoverImg});
 		this.render();
@@ -190,6 +190,28 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
 });
 
 var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
+  initialize : function($super,owner,properties){
+		$super(owner,properties)
+		this.sprites.text = new DomTextSprite(owner, 'resource',{centered: true, shiftY: -10});
+  },
+
+  manageStateChange : function($super){
+    $super()
+    var self = this;
+    this.owner.stateNotifications[this.owner.states.NOT_PLACED].push(function(){
+      self.sprites.text.hide()
+    });
+    this.owner.stateNotifications[this.owner.states.UNDER_CONSTRUCTION].push(function(){
+      self.sprites.text.hide()
+    });
+    this.owner.stateNotifications[this.owner.states.UPGRADING].push(function(){
+      self.sprites.text.hide()
+    });
+    this.owner.stateNotifications[this.owner.states.NORMAL].push(function(){
+      self.sprites.text.show()
+    });
+  },
+
 	renderPanel : function(){
     var self = this.owner;
     self.game.selectedBuildingPanel = new BuildingPanel(self, function(){
@@ -201,10 +223,14 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
 	_AttachAssignTrigger: function(){
     var self = this.owner;
     if($$('.building-functions').any()){
-      var trigger = $('assign_worker_trigger');
-    
+      var trigger = $('assign_worker_trigger');    
       trigger.observe('click', function(){
         self._AssignWorker();
+      });
+
+      trigger = $('collect_resources_trigger');
+      trigger.observe('click', function(){
+        self._CollectResources();
       });
     }
   }
