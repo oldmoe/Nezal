@@ -12,7 +12,8 @@ var DomTextSprite = Class.create(DomSprite, {
     }
   },
   
-  render : function(){
+  render : function($super){
+    $super();
     try{
       if(this.owner.dead){
         return this.destroy();
@@ -29,5 +30,4 @@ var DomTextSprite = Class.create(DomSprite, {
  //     console.log('Sprite#render: ',e)
     }
   }
-  
 })

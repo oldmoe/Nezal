@@ -12,6 +12,7 @@ var DomImgSprite = Class.create(DomSprite, {
 		this.currentDirectionFrame = 0
 		this.noOfAnimationFrames = this.img.height/this.owner.imgHeight
 		this.noOfDirections = 8
+		this.img.setStyle({height:"auto"});
 		if(this.clickable){
 				this.clickDiv = $(document.createElement('DIV'));
 				Map.registerListeners(this.clickDiv,this.owner)
@@ -27,11 +28,11 @@ var DomImgSprite = Class.create(DomSprite, {
 	},
   
   setImgWidth : function(width){
-    this.img.style.width = width + "px";
+    this.img.setStyle({width:(width + "px")});
   },
   
 	setImgHeight : function(height){
-    this.img.style.height = height + "px";
+      this.img.setStyle({height:(height + "px")});
   },
 	
   replaceImg : function(img){
@@ -40,29 +41,22 @@ var DomImgSprite = Class.create(DomSprite, {
     this.div.appendChild(this.img)  
   },
 	
-	render : function(){
-		try{
-			if(this.owner.dead){
-				return this.destroy()
-			}
-      
-			this.div.setStyle({left : this.owner.coords.x -Math.round(this.owner.imgWidth/2)+this.shiftX + "px",
-												 top : this.owner.coords.y -Math.round(this.owner.imgHeight/2)+this.shiftY + "px",
-												 zIndex : this.owner.coords.y})
-			this.img.setStyle({									 
-												 marginLeft :(-this.owner.imgWidth*this.owner.angle  + "px"),
-												 marginTop : (-this.currentAnimationFrame * this.owner.imgHeight + "px")})
-	
-			if (this.clickable) {
-				this.clickDiv.setStyle({zIndex :(this.div.style.zIndex + 1),
-																left:this.div.style.left,
-																top:this.div.style.top});															
-	
-	  	}
-		}catch(e){
-			//console.log('Sprite#render: ',e)
-		}
-	},
+	render : function($super){
+    $super();
+    this.img.setStyle({
+      marginLeft: (-this.owner.imgWidth * this.owner.angle + "px"),
+      marginTop: (-this.currentAnimationFrame * this.owner.imgHeight + "px")
+    });
+    
+    if (this.clickable) {
+      this.clickDiv.setStyle({
+        zIndex: (this.div.style.zIndex + 1),
+        left: this.div.style.left,
+        top: this.div.style.top
+      });
+    }
+  },
+  
 	destroy : function($super){
 		$super()
 		if(this.clickDiv && this.clickDiv.parentNode){

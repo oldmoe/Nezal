@@ -23,7 +23,7 @@ var ResourceBuilding = Class.create(Building, {
   totalPerTick : function(){
 		var collected = this.unitPerWorkerTick * this.assignedWorkers
     if(this[this.factory.collect] + collected > this.capacity)
-      return 0;
+      return (this.capacity - this[this.factory.collect]);
     else
       return collected;
   },

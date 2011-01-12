@@ -349,17 +349,20 @@ var Map={
 			if(!game.buildingMode.isOn){
 				owner.renderPanel()
 				$('building-panel').show();
-			//	owner.game.buildingMode.selectedBuilding = owner;
+				owner.game.buildingMode.selectedBuilding = owner;
 			}
 		})
     
-    div.observe('mousemove',function(mouse){
+    var mousemoveCallback = function(mouse){
       var x = mouse.pointerX();
       var y = mouse.pointerY();
       owner.sprites.mouseover.shiftX = x - ( owner.coords.x - Math.round(owner.imgWidth/2) - Map.x ) + 10;
       owner.sprites.mouseover.shiftY = y - ( owner.coords.y -Math.round(owner.imgHeight/2) - Map.y );
+      owner.sprites.mouseover.render();
       owner.sprites.mouseover.show();
-    })
+    }
+    
+    div.observe('mousemove', mousemoveCallback);
     
 		div.observe('mouseover',function(){
 			if (owner.state != owner.states.NOT_PLACED) {

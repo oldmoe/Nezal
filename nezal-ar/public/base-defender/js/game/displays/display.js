@@ -126,6 +126,13 @@ var BuildingDisplay = Class.create(Display, {
     });
   },
 	
+  renderPanel : function(){
+    $('building-panel').setStyle({
+      top: this.owner.coords.y - Map.y - Math.round(this.owner.imgHeight / 2) + "px",
+      left: this.owner.coords.x - Map.x + Math.round(this.owner.imgWidth / 2) + "px"
+    });
+  },
+  
 	render : function(){
     if (this.owner.state == this.owner.states.UNDER_CONSTRUCTION) {
       this.progressDisplay.render( this.owner.elapsedTime() );
@@ -138,6 +145,12 @@ var BuildingDisplay = Class.create(Display, {
     }
 		for(var sprite in this.sprites){
 			this.sprites[sprite].render();
+		}
+	},
+  
+	destroy : function(){
+		for(var sprite in this.sprites){
+			this.sprites[sprite].destroy();
 		}
 	}
 	
@@ -157,7 +170,8 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
 							function(){self.renderAnimation()})
 		},
 		
-		renderPanel : function(){
+		renderPanel : function($super){
+      $super();
 	    var self = this.owner;
 	    self.game.selectedBuildingPanel = new BuildingPanel(self, function(){
 	      return self.game.templatesManager.townhallPanel(self.name, self.inProgress(), self.game.workerFactory.nextWorkerCost());
@@ -190,9 +204,10 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
 });
 
 var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
+
   initialize : function($super,owner,properties){
 		$super(owner,properties)
-		this.sprites.text = new DomTextSprite(owner, 'resource',{centered: true, shiftY: -10});
+		this.sprites.text = new DomTextSprite(owner, 'resource',{centered: true, shiftY: 110});
   },
 
   manageStateChange : function($super){
@@ -212,7 +227,8 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
     });
   },
 
-	renderPanel : function(){
+	renderPanel : function($super){
+    $super();
     var self = this.owner;
     self.game.selectedBuildingPanel = new BuildingPanel(self, function(){
       return self.game.templatesManager.resourceBuildingPanel(self);
@@ -265,7 +281,7 @@ var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
       bubbleSprite.owner.yMovement = i*this.bubbleElevation /(this.numberOfBubbles);
       bubbleSprite.owner.xMovement = this.bubbleInitialXShift;
 			bubbleSprite.setImgWidth(10);
-			bubbleSprite.setImgHeight(5);
+		//	bubbleSprite.setImgHeight(5);
       this.bubbles.push(bubbleSprite);
     }
   },
@@ -281,7 +297,7 @@ var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
 					bubble.owner.reset();
 					bubble.owner.xMovement = self.bubbleInitialXShift;
 					bubble.setImgWidth(10);
-					bubble.setImgHeight(5);
+					//bubble.setImgHeight(5);
 					return;
 				}
 				
@@ -291,7 +307,7 @@ var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
 						bubble.shiftX = bubble.owner.xMovement-i*3/2;
 						bubble.img.setOpacity(1 + bubble.owner.yMovement/self.bubbleElevation);
 						bubble.setImgWidth((i+1)*3 + 10);
-						bubble.setImgHeight(((i+1)*3 + 10)/2);
+				//		bubble.setImgHeight(((i+1)*3 + 10)/2);
 		  		}
 				}
 				bubble.render();

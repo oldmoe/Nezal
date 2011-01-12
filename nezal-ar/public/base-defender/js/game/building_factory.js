@@ -22,8 +22,9 @@ var BuildingFactory = Class.create({
         this.factoryRegistrar( buildingInstanceCoords,building);
 				var display = new this.buildingDisplayClass(building, this.bluePrints.display);
         building.init();
+				this.game.scene.push(building);
+				this.game.scene.map.addElement(building);
 				this.game.scene.pushAnimation(display);
-				this.game.scene.map.addElement(display);
       }
     }
   },
