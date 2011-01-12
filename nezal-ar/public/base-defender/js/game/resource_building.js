@@ -17,7 +17,7 @@ var ResourceBuilding = Class.create(Building, {
   },
 
   resource : function(){
-    return parseInt(this[this.factory.collect]);
+    return this.factory.collect + " : " + parseInt(this[this.factory.collect]);
   },
 	
   totalPerTick : function(){
