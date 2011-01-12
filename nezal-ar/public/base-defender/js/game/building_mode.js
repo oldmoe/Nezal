@@ -70,7 +70,6 @@ var BuildingMode = Class.create({
   },
 	
   _ModeOnAction : function(x, y){
-		console.log(this.moveBuilding)
 		if(this.moveBuilding){
 			this.moveBuilding = false;
 			this.selectedBuilding.move(x,y)
