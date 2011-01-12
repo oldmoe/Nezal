@@ -1,10 +1,10 @@
 module BD
   class Building
     @@states = { 
-                 'NOT_PLACED' => 0,
-                 'UNDER_CONSTRUCTION' => 1,
-                 'UPGRADING' => 2,
-                 'NORMAL' => 3 
+               'NOT_PLACED' => 0,
+               'UNDER_CONSTRUCTION' => 1,
+               'UPGRADING' => 2,
+               'NORMAL' => 3 
                 }
     class << self
       def states
@@ -70,7 +70,20 @@ module BD
         
         return {'valid' => true, 'error' => ''}
       end
-    
+      
+      def move(user_game_profile, name, coords, old_coords)
+        coords_str = BaseDefender.convert_location(coords)
+        old_coords_str = BaseDefender.convert_location(old_coords)
+        puts "|||||||||||||||" + old_coords_str
+        building = user_game_profile.metadata[name].delete(old_coords_str)
+        if building.present?
+          building['coords'] = coords
+          user_game_profile.metadata[name][coords_str] = building
+        else
+          return {'valid' => false, 'error' => "There is no #{name} in this location"}
+        end
+        return {'valid' => true, 'error' => ''}
+      end
       def upgrade(user_game_profile, coords)
         puts "upgrading " + @name
       end

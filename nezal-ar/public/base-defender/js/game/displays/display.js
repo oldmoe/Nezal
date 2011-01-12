@@ -254,7 +254,7 @@ var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
       bubbleSprite.owner.yMovement = i*this.bubbleElevation /(this.numberOfBubbles);
       bubbleSprite.owner.xMovement = this.bubbleInitialXShift;
 			bubbleSprite.setImgWidth(10);
-			bubbleSprite.setImgHeight(5);
+		//	bubbleSprite.setImgHeight(5);
       this.bubbles.push(bubbleSprite);
     }
   },
@@ -270,7 +270,7 @@ var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
 					bubble.owner.reset();
 					bubble.owner.xMovement = self.bubbleInitialXShift;
 					bubble.setImgWidth(10);
-					bubble.setImgHeight(5);
+					//bubble.setImgHeight(5);
 					return;
 				}
 				
@@ -280,7 +280,7 @@ var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
 						bubble.shiftX = bubble.owner.xMovement-i*3/2;
 						bubble.img.setOpacity(1 + bubble.owner.yMovement/self.bubbleElevation);
 						bubble.setImgWidth((i+1)*3 + 10);
-						bubble.setImgHeight(((i+1)*3 + 10)/2);
+				//		bubble.setImgHeight(((i+1)*3 + 10)/2);
 		  		}
 				}
 				bubble.render();

@@ -6,28 +6,30 @@ var BuildingMode = Class.create({
   selectedBuilding : null,
   callback : null,
   buildingMoveObserver : null,
+	moveBuilding : false,
   initialize : function(game){
     this.game = game;
     this._AttachCanvasClickListener();
     this._AttachBuildingPanelCloseListeners();
-		var self = this;
-		$('cancelBuilding').observe('click',function(){self.cancelBuildingMode()})
+		this._AttachCancelBuildingListener();
   },
   
   on : function(building, callback){
     this.isOn = true;
     this.callback = callback;
-		if(this.selectedBuilding)this.game.scene.removeAnimation(this.selectedBuilding)
     this.selectedBuilding = building;
 		this._AttachMouseMoveEvent();
 		$('cancelBuilding').show();
   },
 	
 	move: function(){
-		//Map.objects.remove(this.selectedBuilding);
-		//this.selectedBuilding.setState(this.selectedBuilding.states.NOT_PLACED);
-		//this.selectedBuilding.destroy();
-		//this.game.scene.remove(this.selectedBuilding);
+		this.moveBuilding = true;
+		Map.objects.remove(this.selectedBuilding);
+		this.selectedBuilding.oldCoords = {};
+		this.selectedBuilding.oldCoords.x = this.selectedBuilding.coords.x;
+		this.selectedBuilding.oldCoords.y = this.selectedBuilding.coords.y;
+		this.selectedBuilding.setState(this.selectedBuilding.states.NOT_PLACED);
+		this.on(this.selectedBuilding);
 	},
 	
 	_AttachMouseMoveEvent : function(){
@@ -42,6 +44,7 @@ var BuildingMode = Class.create({
 	},
   
   off : function(){
+		this.moveBuilding = false
     this.isOn = false;
 		$('gameCanvas').stopObserving('mousemove', this.buildingMoveObserver);
 		$('cancelBuilding').hide();
@@ -50,7 +53,7 @@ var BuildingMode = Class.create({
 	cancelBuildingMode : function(){
 		this.off();
 		this.selectedBuilding.destroy();
-		this.game.scene.remove(this.selectedBuilding);	
+		this.selectedBuilding = null;	
 	},
 	
   _AttachCanvasClickListener : function(){
@@ -58,7 +61,6 @@ var BuildingMode = Class.create({
     $('gameCanvas').observe('click', function(mouse){
       if(self.game.neighborGame)
         return;
-      
       var x = mouse.pointerX();
       var y = mouse.pointerY();
 	  	var mapCoords =  Map.getRealCoords(x,y)
@@ -68,10 +70,15 @@ var BuildingMode = Class.create({
   },
 	
   _ModeOnAction : function(x, y){
-    if (this.selectedBuilding.build(x, y)) {
+		console.log(this.moveBuilding)
+		if(this.moveBuilding){
+			this.moveBuilding = false;
+			this.selectedBuilding.move(x,y)
+		}
+    else if (this.selectedBuilding.build(x, y)) {
       this.callback();
-      this.off();
     }
+		this.off();
   },
   _AttachBuildingPanelCloseListeners : function(){
     var self = this;
@@ -88,6 +95,10 @@ var BuildingMode = Class.create({
     });
   },
 
+	_AttachCancelBuildingListener : function(){
+		var self = this;
+		$('cancelBuilding').observe('click',function(){self.cancelBuildingMode()})
+	},
 	
 	collect : function(building){
 		var townHall = this.game.townhallFactory.townhall;
