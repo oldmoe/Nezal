@@ -69,11 +69,7 @@ class BaseDefender < Metadata
     if user_game_profile.metadata['last_loaded'].nil?
       return
     end
-   
-    resources_collected = {}
-    now = Time.now.utc.to_i
-    seconds_passed_since_last_load = now - user_game_profile.metadata['last_loaded']
-    
+    now = Time.now.utc.to_i  
     #Looping on every resource building module
     @@resource_building_modules.keys.each do |resource_building_name|
       #Checking if the user have built this type of building or not yet
@@ -83,24 +79,19 @@ class BaseDefender < Metadata
         #Looping on every resource building instance
         resource_building.keys.each do |building_instance_coords|
           resource_building_instance = resource_building[building_instance_coords]
-          #Checking if there is any worker assigned to the building
-          if( resource_building_instance['assigned_workers'].present? && resource_building_instance['assigned_workers'] > 0 )
-            resource_building_level = resource_building_instance['level']
-            assigned_workers = resource_building_instance['assigned_workers']
-            unit_per_worker_minute = @@game_metadata['buildings'][resource_building_name]['levels'][resource_building_level.to_s]['unit_per_worker_minute']
-            total_per_minute = unit_per_worker_minute * assigned_workers
-            collects = resource_building_module.collects
-            resources_collected[collects] = 0 if resources_collected[collects].nil?
-            resources_collected[collects] += ((total_per_minute/60.0) * seconds_passed_since_last_load).round
+          collects = resource_building_module.collects
+          resource_building_level = resource_building_instance['level']
+          resource_building_instance[collects] = 0 if resource_building_instance[collects].nil?
+          if( resource_building_instance['assigned_workers'].present? && 
+              resource_building_instance['assigned_workers'] > 0 && 
+              resource_building_instance[collects] < @@game_metadata['buildings'][resource_building_name]['levels'][resource_building_level.to_s]['capacity'])
+            resource_building_instance[collects] += @@building_modules[resource_building_name].calculate_collected_resources(resource_building_instance,
+                                                                                                       @@game_metadata , now)
+            resource_building_instance['last_collect'] = now
           end
         end
       end
     end
-    
-    resources_collected.keys.each do |resource|
-      user_game_profile.metadata[resource] += resources_collected[resource]
-    end
-    
   end
   
   def self.building_jobs(user_game_profile)
@@ -188,6 +179,8 @@ class BaseDefender < Metadata
       validation = buy_worker(user_game_profile)
     elsif data['event'] == 'assign_worker'
       validation = assign_worker(user_game_profile, data)
+    elsif data['event'] == 'collect_resources'
+      validation = collect_building(user_game_profile, data)
     elsif data['event'] == 'notification_ack'
       validation = Notification.delete({:profile => user_game_profile, :id => data['id']})
     end
@@ -224,6 +217,12 @@ class BaseDefender < Metadata
       return validation
     end
     
+  end
+
+  def self.collect_building(user_game_profile, data)
+    building = data['building']
+    coords = data['coords']
+    @@building_modules[building].collect(user_game_profile, coords)
   end
   
   def self.move_building(user_game_profile, data)

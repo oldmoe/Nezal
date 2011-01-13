@@ -86,6 +86,7 @@ module BD
       def upgrade(user_game_profile, coords)
         puts "upgrading " + @name
       end
+
     end
   end
 end
