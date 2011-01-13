@@ -74,7 +74,6 @@ module BD
       def move(user_game_profile, name, coords, old_coords)
         coords_str = BaseDefender.convert_location(coords)
         old_coords_str = BaseDefender.convert_location(old_coords)
-        puts "|||||||||||||||" + old_coords_str
         building = user_game_profile.metadata[name].delete(old_coords_str)
         if building.present?
           building['coords'] = coords

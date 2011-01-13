@@ -108,7 +108,6 @@ class BaseDefender < Metadata
     @@building_modules.keys.each do |building_name|
       if( metadata[building_name].present? )
         metadata[building_name].keys.each do |building_instance_coords|
-          puts ">>>>>>>>>" + metadata[building_name][building_instance_coords].to_s
           if(metadata[building_name][building_instance_coords]['state'] == BD::Building.states['UNDER_CONSTRUCTION'])
             building_job(user_game_profile, metadata[building_name][building_instance_coords], building_name , @@game_metadata['buildings'][building_name] )
           end
@@ -142,7 +141,6 @@ class BaseDefender < Metadata
   def self.initialize_game_metadata( game )
     #Applying Speed Factor!
     @@building_modules.keys.each do |building_name|
-      puts building_name
       building_levels = game.metadata['buildings'][building_name]['levels']
       building_levels.keys.each do |level|
         building_levels[level]['time'] /= @@speed_factor
