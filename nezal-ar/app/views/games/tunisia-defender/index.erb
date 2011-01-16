@@ -1,36 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="X-UA-Compatible" content="chrome=1">
-	<meta http-equiv="Content-Type" content="text/html;" charset="utf-8">
-	<link type="text/css" href="<%=bust_cache('css/all/intro.css')%>" rel="stylesheet" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta http-equiv="Content-Type" content="text/html;" charset="utf-8">
+  <link type="text/css" href="<%=bust_cache('css/all/intro.css')%>" rel="stylesheet" />
   <link type="text/css" href="<%=bust_cache('css/all/payments.css')%>" rel="stylesheet" />
-	<!--[if IE]>
-		<script src="swf/flashcanvas.js"></script>
-	<![endif]-->
-	<script src="http://connect.facebook.net/en_US/all.js"></script>
-	<script src="<%=bust_cache('js/game/replay_creator.js')%>"></script>
-	<script src="<%=bust_cache('js/all/base.js')%>"></script>
-	<script src="<%=bust_cache('js/all/nezal.js')%>"></script>
+  <!--[if IE]>
+    <script src="swf/flashcanvas.js"></script>
+  <![endif]-->
+  <script src="http://connect.facebook.net/en_US/all.js"></script>
+  <script src="<%=bust_cache('js/game/replay_creator.js')%>"></script>
+  <script src="<%=bust_cache('js/all/base.js')%>"></script>
+  <script src="<%=bust_cache('js/all/nezal.js')%>"></script>
   <script src="<%=bust_cache('js/all/payments.js')%>"></script>
-	<script>
-		soundManager.url = 'swf/';
-		soundManager.flashVersion = 9; // optional: shiny features (default = 8)
-		soundManager.useFlashBlock = false; // optionally, enable when you're ready to dive in
-		// enable HTML5 audio support, if you're feeling adventurous.
-		soundManager.useHTML5Audio = false;
-	</script>
-	<script src="<%=bust_cache('js/all/game.js')%>" type="text/javascript"></script>
-	<script type="text/javascript">
-	var _gaq = _gaq || [];
-	_gaq.push(['_setAccount', 'UA-19379382-1']);
-	_gaq.push(['_trackPageview']);
-	(function() {
-	var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-	ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-	})();
-	</script>
+  <script>
+    soundManager.url = 'swf/';
+    soundManager.flashVersion = 9; // optional: shiny features (default = 8)
+    soundManager.useFlashBlock = false; // optionally, enable when you're ready to dive in
+    // enable HTML5 audio support, if you're feeling adventurous.
+    soundManager.useHTML5Audio = false;
+  </script>
+  <script src="<%=bust_cache('js/all/game.js')%>" type="text/javascript"></script>
+  <script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-19379382-1']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+  </script>
 </head>
 <body>
 
@@ -45,16 +45,13 @@
   <div style="color : FloralWhite; font-family : Adlib;"> </div>
   <div id="inProgress" style="width:500px;">
     <img id="logo" name="logo.png"/>
-    <img id="title" name="title.png"/>
-    <img id="blank" name="blank.png"/>
-    <img id="titleAr" name="title-ar.png"/>
-	<div id="loadingBarEmpty">
-		<div id="loadingBarLeft"> </div>
-		<div id="loadingBarFill"> </div>
-		<div id="loadingBarRight"> </div>
-	</div>
-	<div id="fileName"> </div>
-	<div id="loadingPercentage"> </div>
+	  <div id="loadingBarEmpty">
+	    <div id="loadingBarLeft"> </div>
+	    <div id="loadingBarFill"> </div>
+	    <div id="loadingBarRight"> </div>
+	  </div>
+  	<div id="fileName"> </div>
+  	<div id="loadingPercentage"> </div>
   </div>
 </div>
 
@@ -67,8 +64,8 @@
     
     <div id="levelSelection" style="display : none; text-align:center;">
     </div>
-	
-	 <div id="previousCampaigns" style="display : none;">
+  
+   <div id="previousCampaigns" style="display : none;">
     </div>
 
     <div id="campaign" style="display : none;">
@@ -85,7 +82,7 @@
 	<div id="publishScreen" style="display : none;">
 	</div> 
 	
-  <div id='introTemplates' style="display : none;">
+	  <div id='introTemplates' style="display : none;">
   </div>
   
   <div id="gameStart" style="display: none;">
@@ -131,11 +128,11 @@
 	    if (loadedProgress==$$('#inProgress img').length)
 	        window.setTimeout(function(){$('pause').show()}, 100)
 	}
-	$$('#pause  #loadingBarEmpty').first().style.backgroundImage = "url('images/intro/loading_bar_background.png')"
 	$$('#pause  #loadingBarEmpty #loadingBarLeft').first().style.backgroundImage = "url('images/intro/loading_bar_left.png')"
 	$$('#pause  #loadingBarEmpty #loadingBarRight').first().style.backgroundImage = "url('images/intro/loading_bar_right.png')"
 	$$('#pause  #loadingBarEmpty #loadingBarFill').first().style.backgroundImage = "url('images/intro/loading_bar_middle.png')"
 	$(document).observe('dom:loaded',function(){
+
     if(window.location.search.indexOf('replay') > -1){
       var options = window.location.search.split('?')[1].split('&')
       Nezal.replay = true
@@ -197,7 +194,7 @@
                                   $('pause').hide()
                                   $('gameStart').show();
                                   $("intro").hide();    
-				                  onFinish()
+                          onFinish()
                             })            
                         }
                    })  
@@ -208,6 +205,7 @@
 		}
 		$('iframe').src = Loader.toLoad[0]
 	})
+
   payment = new Payment();
 </script>
 <link type="text/css" href="<%=bust_cache('css/game.css')%>" rel="stylesheet" />

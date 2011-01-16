@@ -103,7 +103,6 @@
       <img id="paper" src="${Loader.images.intro['paper.png'].getAttribute('data')}"/>
       <img id="introText" src="${Loader.images.intro['text.png'].getAttribute('data')}"/>
       <img id="logo" src="${Loader.images.intro['logo.png'].getAttribute('data')}"/>
-      <img id="title" src="${Loader.images.intro['title.png'].getAttribute('data')}"/>
       <img id="blank" src="${Loader.images.intro['blank.png'].getAttribute('data')}"/>
       <img id="titleAr" src="${Loader.images.intro['title-ar.png'].getAttribute('data')}"/>
     </div>
