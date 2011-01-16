@@ -8,7 +8,7 @@ load Dir.pwd + '/lib/jsmin.rb'
 
 
 
-@base = Dir.pwd + "/public/city-defender/"
+@base = Dir.pwd + "/public/tunisia-defender/"
 
 @files = {
 	'base' => [
@@ -66,6 +66,7 @@ load Dir.pwd + '/lib/jsmin.rb'
 
 def bundle
 	total = ''
+  @base = Dir.pwd + "/public/tunisia-defender/"
 	[['base','js'], ['nezal','js'], ['game', 'js'], ['intro', 'css'],['payments', 'js'],['payments', 'css']].each do |folder|
 		STDERR.print "Processing #{folder.join('.')} ... "
 		if folder[0] != 'nezal' && folder[0] != 'payments'
@@ -87,7 +88,7 @@ def bundle
 			total<<";"<<data_out if folder[0]!='base'
 		else
 			data_out = conc.to_s
-		end
+	end
 		original = File.read("#{@base}#{folder[1]}/all/#{folder[0]}.#{folder[1]}") rescue nil
 		if original == data_out
 			STDERR.puts " no changes found, skipping file"

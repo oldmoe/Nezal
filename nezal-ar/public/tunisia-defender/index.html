@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="chrome=1">
+	<meta http-equiv="Content-Type" content="text/html;" charset="utf-8">
+	<link type="text/css" href="css/all/intro.css?t=lf44ej" rel="stylesheet" />
+  <link type="text/css" href="css/all/payments.css?t=lf44ej" rel="stylesheet" />
+	<!--[if IE]>
+		<script src="swf/flashcanvas.js"></script>
+	<![endif]-->
+	<script src="http://connect.facebook.net/en_US/all.js"></script>
+	<script src="js/game/replay_creator.js?t=lf4457"></script>
+	<script src="js/all/base.js?t=ldf7pj"></script>
+	<script src="js/all/nezal.js?t=lf44ei"></script>
+  <script src="js/all/payments.js?t=lf44ej"></script>
+	<script>
+		soundManager.url = 'swf/';
+		soundManager.flashVersion = 9; // optional: shiny features (default = 8)
+		soundManager.useFlashBlock = false; // optionally, enable when you're ready to dive in
+		// enable HTML5 audio support, if you're feeling adventurous.
+		soundManager.useHTML5Audio = false;
+	</script>
+	<script src="js/all/game.js?t=lf44ej" type="text/javascript"></script>
+	<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-19379382-1']);
+	_gaq.push(['_trackPageview']);
+	(function() {
+	var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	})();
+	</script>
+</head>
+<body>
+
+<iframe id ="iframe" src="#" style="display : none;"></iframe>
+<iframe id="pages" src="#" style="display : none;"></iframe>
+<div id="playerProgress">
+</div>
+<div id ="images"></div>
+<div id="pause" style="display : none;">
+  <div style="width:100%; height:100%; background:white;"> </div>
+  <div style="color : FloralWhite; font-family : Digital;"> </div>
+  <div style="color : FloralWhite; font-family : PakGirl;"> </div>
+  <div style="color : FloralWhite; font-family : Alpine;"> </div>
+  <div style="color : FloralWhite; font-family : Adlib;"> </div>
+  <div id="inProgress" style="width:500px;">
+    <img id="logo" name="logo.png"/>
+    <img id="title" name="title.png"/>
+    <img id="blank" name="blank.png"/>
+    <img id="titleAr" name="title-ar.png"/>
+	<div id="loadingBarEmpty">
+		<div id="loadingBarLeft"> </div>
+		<div id="loadingBarFill"> </div>
+		<div id="loadingBarRight"> </div>
+	</div>
+	<div id="fileName"> </div>
+	<div id="loadingPercentage"> </div>
+  </div>
+</div>
+
+<div id="game">
+<iframe id ="scores" src="" style = "width :760px;height:150px;display:block;position:absolute;overflow:hidden;border:none;top:551px;" frameborder=0 ></iframe>
+
+  <div id="congrates" style="display : none;">
+  </div>
+  <div id="intro">
+    
+    <div id="levelSelection" style="display : none; text-align:center;">
+    </div>
+	
+	 <div id="previousCampaigns" style="display : none;">
+    </div>
+
+    <div id="campaign" style="display : none;">
+    </div>
+    
+    <div id="mission" style="display : none;">
+    </div>
+
+    <div id="marketPlace" style="display : none;">
+    </div>
+
+  </div>
+  
+  <div id='introTemplates' style="display : none;">
+  </div>
+  
+  <div id="gameStart" style="display: none;">
+  </div>
+  
+</div>
+<script>
+	function register(win, resources, dumb){
+		Loader.notify(win, resources, dumb)			
+	}
+</script>
+</body>
+<!--[if lt IE 8]>
+	<script>
+		_gaq.push(['_trackEvent', 'Unsupported browser', 'Unsupported browser', navigator.userAgent]);
+		window.location='statics/unsupported_browser.html' 
+	</script>
+<![endif]-->
+
+<!--[if IE]>
+	<script>
+		Loader.dumb = true
+		Loader.toLoad = [
+			'html_resources/user_dumb.html?t=lf44el',
+			'html_resources/english_dumb.html?t=lf44ek',
+			'html_resources/arabic_dumb.html?t=lf44ej',
+			'html_resources/french_dumb.html?t=lf44ek',
+      'html_resources/payments_dumb.html?t=lf44el',
+			'html_resources/intro_dumb.html?t=lf44el',
+			function(){Loader.fire('intro')},
+			'html_resources/animations_dumb.html?t=lf44ej',
+			'html_resources/game_dumb.html?t=lf44ek',
+			'html_resources/background_dumb.html?t=lf44ek',
+			function(){Loader.fire('tutorial')},
+			'html_resources/weapons_dumb.html?t=lf44el',
+			function(){Loader.fire('game')}
+		]
+	</script>
+<![endif]-->
+<script>		
+	development = false
+	var loadedProgress = 0
+	function onFinishProgress()
+	{
+	    loadedProgress++;
+	    if (loadedProgress==$$('#inProgress img').length)
+	        window.setTimeout(function(){$('pause').show()}, 100)
+	}
+	$$('#pause  #loadingBarEmpty').first().style.backgroundImage = "url('images/intro/loading_bar_background.png')"
+	$$('#pause  #loadingBarEmpty #loadingBarLeft').first().style.backgroundImage = "url('images/intro/loading_bar_left.png')"
+	$$('#pause  #loadingBarEmpty #loadingBarRight').first().style.backgroundImage = "url('images/intro/loading_bar_right.png')"
+	$$('#pause  #loadingBarEmpty #loadingBarFill').first().style.backgroundImage = "url('images/intro/loading_bar_middle.png')"
+	$(document).observe('dom:loaded',function(){
+    if(window.location.search.indexOf('replay') > -1){
+      var options = window.location.search.split('?')[1].split('&')
+      Nezal.replay = true
+      Nezal.replayId = options.find(function(opt){return opt.indexOf('replay') == 0}).split('=')[1]         
+    }
+		FBConnect.init(function(){			
+      if(!Nezal.replay)Intro.initialize();							
+		});
+    	$$('#inProgress img').each(function(image){
+  	      	image.onload = onFinishProgress;
+      			image.src = "images/intro/"+image.getAttribute('name')
+    			});		
+		if(!Loader.dumb){
+      if(!Nezal.replay){
+			  Loader.toLoad = [
+				  'html_resources/user.html?t=lf44el',
+				  'html_resources/english.html?t=lf44ek',
+				  'html_resources/arabic.html?t=lf44ej',
+				  'html_resources/french.html?t=lf44ek',
+          'html_resources/payments.html?t=lf44el',
+				  'html_resources/intro.html?t=lf44el',
+				  function(){Loader.fire('intro')},
+				  'html_resources/animations.html?t=lf44ej',
+				  'html_resources/game.html?t=lf44ek',
+				  'html_resources/background.html?t=lf44ek',
+				  function(){Loader.fire('tutorial')},
+				  'html_resources/weapons.html?t=lf44el',
+				  function(){Loader.fire('game')}
+			  ]
+      }else{
+        Loader.toLoad = [
+ 				    'html_resources/intro.html?t=lf44el',
+            'html_resources/animations.html?t=lf44ej',
+				    'html_resources/game.html?t=lf44ek',
+				    'html_resources/background.html?t=lf44ek',
+  				  'html_resources/weapons.html?t=lf44el',
+				    function(){
+               new Ajax.Request('replays/'+Nezal.replayId, { method : 'get', onSuccess : function(res){
+                  data = JSON.parse(res.responseText)
+                  data.replay = JSON.parse(data.replay)
+                  data.campaign_metadata = JSON.parse(data.campaign_metadata)
+                  data.game_metadata = JSON.parse(data.game_metadata)  
+                  data.user_metadata = JSON.parse(data.user_metadata) 
+                  var order = 0
+                  var tmpOrder=0
+                  data.campaign_metadata.each(function(mission){
+                    if(mission['name'] != data.mission_name)  tmpOrder++
+                    else order=tmpOrder
+                  })
+                  Config.rank="PVT"
+                  Config.missionPath = data.mission_name.underscore()
+                  Intro = GameReplay.prepareConfig(data.campaign_metadata[order],data.level,data.game_metadata, data.user_metadata)                  
+                  Config.level=data.level 
+                  Config.campaign = data.camp_name
+                  Config.missionPath = data.mission_name.underscore()
+                  new Ajax.Request(PathConfigs.gameTemplate, {method:'get',
+                        onSuccess: function(t){
+                            $("gameStart").innerHTML = t.responseText
+                            $('iframe').src=Loader.loadPage(Config.campaign,
+                            function(){
+                                  city_defender_start(data.replay);
+                                  $('pause').hide()
+                                  $('gameStart').show();
+                                  $("intro").hide();    
+				                  onFinish()
+                            })            
+                        }
+                   })  
+               }})         
+            }
+			  ]
+      }
+		}
+		$('iframe').src = Loader.toLoad[0]
+	})
+  payment = new Payment();
+</script>
+<link type="text/css" href="css/game.css?t=lf4457" rel="stylesheet" />
+</html>
