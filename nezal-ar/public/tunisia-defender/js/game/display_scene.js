@@ -5,8 +5,6 @@ var DisplayScene = Class.create(CityDefenderScene, {
 		this.baseCtx = baseCtx;
 		this.upperCtx = upperCtx;
 		this.upgraded = false
-		$$('.status').first().title = "XP: "+this.exp+"/"+(this.maxExp+1)
-		$$('#gameElements #exp').first().innerHTML = "XP "+this.exp+"/"+(this.maxExp+1)
 		this.templates['towerInfo'] = TrimPath.parseTemplate($('towerInfoTemplate').value) 
 		this.templates['towerInfo'] = TrimPath.parseTemplate($('towerInfoTemplate').value) 
 		this.templates['stats'] = TrimPath.parseTemplate($('statsTemplate').value) 
@@ -126,12 +124,6 @@ var DisplayScene = Class.create(CityDefenderScene, {
 	},
 
 	renderData : function(){
-		this.currentExp = this.exp
-		if(this.currentExp>this.maxExp){
-			this.minExp = this.maxExp	
-			this.maxExp = this.maxExp*2
-		}
-		$('statusBarFill').style.width = Math.max(((this.currentExp-this.minExp)/(this.maxExp-this.minExp))*100-4,0)+"%"
 		$('money').innerHTML = this.money;
 		$('lives').innerHTML = window.Text.game.upperBar.lives+" "+Math.max(this.maxEscaped - this.escaped,0);
 		$('score').innerHTML = window.Text.game.upperBar.score+" "+this.score;
@@ -311,7 +303,14 @@ var DisplayScene = Class.create(CityDefenderScene, {
 						//Here we make the rank 
 					  callback();
 				  }
-				  Intro.sendScore(this.score, win, onSuccess);
+					var stars = 0;
+					if(win){
+						if(this.escaped == 0)stars = 3;
+						else if(this.escaped < 10)stars = 2;
+						else stars = 1;	
+					}
+					
+				  Intro.sendScore(this.score, win, stars, onSuccess);
 			 }
 	},
 	selectTower : function(x, y){

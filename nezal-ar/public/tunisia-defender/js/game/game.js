@@ -15,25 +15,13 @@ var Game = Class.create({
       Config.coins = Intro.userData.coins
 			game.started = true
 			Map.init();
-			if(Intro.userData.newbie)Config = tutorialConfig
-			else Config = GameConfigs
+			//if(Intro.userData.newbie)Config = tutorialConfig
+			 Config = GameConfigs
 			this.prepareConfig()
 			this.config = Nezal.clone_obj(Config)
 			this.config.waves.reverse()
 			$$('#game #scores').first().show()
-			if(Intro.userData.newbie){
-				$('modalWindow').show()
-				this.scene = new TutorialScene(this.config,33,this.ctx,this.topCtx, replay);
-				this.tutorial = new Tutorial(this.scene,this.tutorialCtx)
-				$('gameExit').hide()
-				$('gameReset').hide()
-				$$('#modalWindow #ok #rogerText').first().innerHTML = Text.game.controls.roger
-				$$('.sound').first().observe('click',Sounds.mute)
-				$$('.music').first().observe('click',Sounds.switchmusic)
-				$$('.snapshot').first().hide()
-			}
-			else{
-			   if(!replay){this.scene = new DisplayScene(this.config,33,this.ctx,this.topCtx, replay);
+		   if(!replay){this.scene = new DisplayScene(this.config,33,this.ctx,this.topCtx, replay);
 						   this.registerHandlers();
 				}
 				else if(Nezal.replay){
@@ -41,8 +29,7 @@ var Game = Class.create({
 				}
 				else{
 					this.scene= new CityDefenderScene(this.config,33,replay);
-				}
-			}
+				}	
 			if(Config.map)Map.bgGrid = Config.map
 			if(Config.mapEntry)Map.entry = Config.mapEntry
 			GhostTurret = new Turret(0, 0,this.scene, ghostTurretFeatures)
@@ -121,8 +108,7 @@ var Game = Class.create({
 		
 	},
 	setGameImages : function(){
-		if(Intro.userData.newbie)Config = tutorialConfig
-		else Config = GameConfigs
+		Config = GameConfigs
 		game.prepareConfig()
 		Config.towers.each(function(tower){
 			var div = document.createElement("div");
@@ -151,8 +137,7 @@ var Game = Class.create({
 		})		
 		$$('.start').first().appendChild(Loader.images.background['start.png'])
 		$('gameElements').appendChild(Loader.images.background['l_shape.png'])
-		if(Intro.userData.newbie)$('canvasContainer').appendChild(Loader.images.background['path.png'])
-		else $('canvasContainer').appendChild(Loader.challenges[Config.campaign]['images/'+Config.missionPath+'/path.png'])
+		$('canvasContainer').appendChild(Loader.challenges[Config.campaign]['images/'+Config.missionPath+'/path.png'])
 		Config.towers.each(function(turret){ 
 			$$('.'+turret).first().appendChild(Loader.images.background[turret.toLowerCase()+'_button.png'])
 			

@@ -12,6 +12,9 @@ textarea{
   -khtml-user-select: auto;
   user-select: auto;
 }
+.baloon{
+	direction:rtl;
+}
 #gameContainer{
 	/*-webkit-transform: rotate(90deg);
 	-moz-transform: scale(0.8)*/
@@ -149,11 +152,11 @@ textarea{
 }
 
 #gameElements .start{
-	position:absolute;
-	top:468px;
-	left:0px;
-	width:155px;
-	height:82px;
+	  height: 82px;
+    left: 0;
+    position: absolute;
+    top: 473px;
+    width: 155px;
 }
 
 #gameElements .startText {
@@ -164,7 +167,7 @@ textarea{
 	font-size:23px;
 	height:30px;
 	left:0px;
-	margin-top:7%;
+	margin-top:4%;
 	position:absolute;
 	text-align:center;
 	text-shadow:2px 2px 1px #000000;
@@ -189,8 +192,6 @@ textarea{
 	background-image: url('../images/background/mystry_button.png')	
 }
 #gameElements .towerInfo {
-	background-image: url('../images/background/monitor.png');
-	background-color:black;
 	color:white;
 	font-family:verdana;
 	font-size:10px;
@@ -217,20 +218,40 @@ textarea{
 }
 #gameElements #sellTower{
 	width : 50px;
-	-moz-border-radius:5px 5px 5px 5px;
-	-webkit-border-radius:5px 5px 5px 5px;
-	-o-border-radius:5px 5px 5px 5px;
-	border-radius:5px 5px 5px 5px;
-	border:1px solid white;
+	position : absolute;
 	margin-left:4px;
-	margin-top:6px;
+	margin-top:9px;
 	color:white;
 	cursor: pointer;
 	text-align : center;
 	font-family:Helvetica;
 	font-size:12px;
 	font-weight : bold;
+	z-index:10
 }
+#gameElements #towerPrice{
+  color: #FFCC00;
+  cursor: pointer;
+  font-family: Helvetica;
+  font-size: 19px;
+  font-weight: bold;
+  margin-left: 0;
+  margin-top: 11px;
+  position: absolute;
+  text-align: center;
+  width: 50px;
+  z-index: 10;
+}
+#towerData #sellImg{
+	 left: 4px;
+   position: absolute;
+   top: 8px;	
+}
+#towerData #towerName{
+  	left: 74px;
+    position: absolute;
+    top: 46px;	
+}	
 
 
 
@@ -242,7 +263,7 @@ textarea{
 	font-weight:bold;
 	height:37px;
 	margin-left:5px;
-	margin-top:7px;
+	margin-top:6px;
 	position:absolute;
 	text-align:center;
 	width:87%;
@@ -258,14 +279,14 @@ textarea{
 }
 #towerData #upgradeImg{
 	position:absolute;
-	margin-left:1px;
-	margin-top:7px;
+	margin-left:9px;
+	margin-top:2px;
 }
 #gameElements .towerInfo table {
 	border:medium none;
 	padding:0;
 	width:69px;
-	margin:3px 0px 3px 0px;
+	margin:64px 0px 3px 0px;
 }
 #gameElements .towerInfo #diagramRank{
 	padding-left : 35px;
@@ -869,6 +890,10 @@ position:"absolute";
 #incomingWaves div.wave {
 	background-color:#082245;
 	border : 2px solid #082245;
+	-moz-border-radius:8px 8px 8px 8px;
+	-webkit-border-radius:8px 8px 8px 8px;
+	-o-border-radius:8px 8px 8px 8px;
+	border-radius:8px 8px 8px 8px;
 	float:right;
 	height:30px;
 	margin:13px 1px 1px;

@@ -190,7 +190,7 @@ function createAudioElements(count, store, url, loops){
 function createBackgroundMusic(){
 	var gameSound = soundManager.createSound({
 	  id: "gameSound",
-	  url: 'sounds/sfx/mp3/game.mp3',
+	  url: 'sounds/sfx/mp3/tunis_game.mp3',
 	  autoLoad: true,
 	  autoPlay: false,
 	  volume: 50,

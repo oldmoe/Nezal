@@ -506,12 +506,13 @@ var Intro = {
         }
     },
 
-    sendScore : function(score, win, callback){
+    sendScore : function(score, win, stars, callback){
         new Ajax.Request(  GameConfigs.campaign + "/metadata" ,
               {   method:'post', 
                   parameters: { 'data' : Object.toJSON({'mission' : GameConfigs.mission.order,
                                                         'win' : win,
                                                         'level' : (GameConfigs.level).toString(),
+																												'stars' : stars, 
                                                        'score' : score }) },
                   onSuccess : function(t, json){
                       var data = JSON.parse(t.responseText);

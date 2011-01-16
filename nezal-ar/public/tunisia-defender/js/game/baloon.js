@@ -8,7 +8,7 @@ var Baloon = Class.create(Sprite,{
 	    this.div = document.createElement('div');
 			this.div.setOpacity(1)
 	    var divIdName = 'baloon';
-	    this.div.setAttribute('id',divIdName);
+	    this.div.setAttribute('class',divIdName);
 		this.div.style.position = 'absolute';
 		var img = Element.clone(Loader.images.game["baloon"+num+".png"]);
 		this.text = document.createElement("div"); 
@@ -16,12 +16,13 @@ var Baloon = Class.create(Sprite,{
 		this.text.style.position = "absolute"
 		this.text.style.fontSize = "11px"
 		this.text.style.fontWeight = "bold"
-		this.text.style.paddingTop = "2px"
+		this.text.style.paddingTop = "8px"
+		this.text.style.width = "77px"
 		this.text.style.textAlign = "center"
 		img.style.position = "relative"
 		this.div.style.left = this.owner.x+"px"
 		this.div.style.top = this.owner.y+"px"
-		this.text.style.top = "5px";this.text.style.left = "3px"
+		this.text.style.top = "8px";this.text.style.left = "3px"
 		img.style.top = 0;img.style.left = 0
 		this.div.appendChild(img)
 		this.div.appendChild(this.text)
