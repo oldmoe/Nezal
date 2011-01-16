@@ -229,7 +229,7 @@
           {if ( (Intro.campaignData.user_data.metadata.levels[(GameConfigs.level).toString()] >= mission['order']) && 
                  (Intro.campaignData.user_data.metadata.missions[[mission.order]-1]) ) }  
             <div class="mission clickableButton">
-              <div path="${mission['path']}" onclick="Intro.selectMission(this); Intro.next();" class="clickSound" >
+              <div path="${mission['path']}" onclick="Intro.selectMission(this); Intro.finish();" class="clickSound" >
                 <img id="${mission['path']}" 
                    src="${Loader.challenges[GameConfigs.campaign]['images/'+mission.path+'/mission_active.png'].getAttribute('data')}"/>
               </div>
@@ -252,7 +252,7 @@
       {/for}
     </div>
     <div id="backContainer">
-      <div id="back" onclick="Intro.previous();" class="clickableButton clickSound">
+      <div id="back" onclick="Intro.select('marketPlace');" class="clickableButton clickSound">
         {if ($('intro').getStyle('direction')=='rtl') }
           <img src="${Loader.images.intro['ready.png'].getAttribute('data')}"/>
         {else}
@@ -475,10 +475,6 @@
     {if ( !( data.upgrade && (data.nextUpgrade == data.currUpgrade))  ) }
         <div class="actions">
           <div class='rank'>
-            <span {if (data.rank[0] > data.exp)} "style="color:red;" {/if}>
-              ${Text.intro.marketPlace.requiredRank} :
-            </span>
-            <img src="${Loader.images.intro['ranks/'+data.rank[1]+'.png'].getAttribute('data')}"> </img>
           </div>
           <div class="action">
               {if (!Intro.userData.metadata[data.type][data.itemid])}
@@ -644,12 +640,6 @@
     </div>
     <div id="upperPart">
         <img src="${Loader.images.intro['market/upper.png'].getAttribute('data')}"/>
-        <div class="rank">
-          <img class="rankImg" src="${Loader.images.intro['ranks/'+Intro.userData.rank +'.png'].getAttribute('data')}"/>
-          <div class="rankText">
-            ${Text.game.ranks[data.userData['rank']]['abbr']}
-          </div>
-        </div>
         <img class="titleImg" src="${Loader.images.intro['title.png'].getAttribute('data')}"/>
         <div class="coins">
           ${data.userData['coins']}

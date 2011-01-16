@@ -1204,7 +1204,8 @@ div.clickableButton:hover, span.clickableButton:hover
   display:inline-block;
   text-transform:capitalize;
   vertical-align:top;
-  width:50%;
+  width:48%;
+	height : 30px;
 }
 #marketPlace #floatBg .actions .rank span
 {

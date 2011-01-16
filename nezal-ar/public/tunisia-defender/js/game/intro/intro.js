@@ -1,5 +1,5 @@
 var GameConfigs = {
-  level: 0, 
+  level: 1, 
   campaign : 'tunisia',
   missionPath : 'cairo', 
   mapImage : '',
@@ -82,14 +82,14 @@ var PathConfigs = {
 
 var Intro = {
     dirty : false ,
-    currentPage : -1,
-    nextPageIndex : 0,
+    currentPage : 0,
+    nextPageIndex : 1,
     campLoader : new ResourceLoader(),
     missionLoader : new ResourceLoader(),
     sequence : [
               "levelSelection",
               "campaign",
-              "mission",
+//              "mission",
               "marketPlace"
             ],
     templates : {
@@ -104,7 +104,7 @@ var Intro = {
             },
 
     initialize: function(){
-		Intro.currentPage = -1;
+		Intro.currentPage = 0;
         Intro.retrieveTemplates();
     },
     
@@ -119,6 +119,7 @@ var Intro = {
         loader.addResource(PathConfigs.gameTemplate);
         loader.addResource(PathConfigs.playerProgressTemplate);
         loader.addResource('metadata');
+				loader.addResource('js/game/languages/'+GameConfigs.language+'.js');
         loader.load(function(){
       			  $('introTemplates').innerHTML = loader.resources.get(PathConfigs.introTemplate);
 			      for(var template in Intro.templates){
@@ -142,7 +143,11 @@ var Intro = {
               Intro.userData = data['user_data'];
               Intro.userData["metadata"] = JSON.parse(data['user_data']['metadata']);
               Intro.ranks = data['ranks'];
+					
   			  Intro.doneLoading = true;
+					eval(loader.resources.get('js/game/languages/'+GameConfigs.language+'.js'));
+					$('intro').addClassName(GameConfigs.language)
+          $('congrates').addClassName(GameConfigs.language)
 		  	  Intro.start()
 			  Intro.processPlayerProgress()
 			  $('scores').src = 'scores/friends.html?'+Object.toQueryString(FBConnect.session)
@@ -223,7 +228,7 @@ var Intro = {
             onSelect : function() {
                 var loader = new ResourceLoader();
                 Language.getLanguage(Intro.userData.locale, function(){
-                    GameConfigs.language = Language.userLanguage;
+                    GameConfigs.language = "arabic";
                     loader.addResource('js/game/languages/'+GameConfigs.language+'.js');
                     loader.load(function(){
                         eval(loader.resources.get('js/game/languages/'+GameConfigs.language+'.js'));
@@ -334,7 +339,7 @@ var Intro = {
             }
         }, 
         marketPlace : {
-            index : 3,
+            index : 2,
             emptySpots : 5,
             onSelect : function(){
                 /* Get User Data : coins, unlocked towers, super weapons & upgrade */
