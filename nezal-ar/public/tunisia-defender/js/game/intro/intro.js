@@ -656,9 +656,9 @@ var Intro = {
 		//}
 	},
 	enableProgressbar : function(percentage,timeout,fileName){
-		if(Loader.loaded[fileName]||percentage==97){
+		if(Loader.loaded[fileName]||percentage==91){
 			$$('#pause #loadingPercentage').first().innerHTML = "100 %"
-			$$('#pause  #loadingBarEmpty #loadingBarFill').first().style.width = "97%"		
+			$$('#pause  #loadingBarEmpty #loadingBarFill').first().style.width = "91%"		
 			//Intro.fileLoading=false
 			return 
 		}
