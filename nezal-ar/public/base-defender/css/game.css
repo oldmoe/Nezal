@@ -8,6 +8,13 @@ body{
 	margin : 0px;
 }
 
+area {
+	cursor : pointer;
+}
+
+img{
+	border:none;
+}
 
 #gameContainer {
 	padding-top: 0px;
@@ -34,9 +41,9 @@ body{
 		top:-275px;
 		left:-380px;
 	}
-#clickCanvas{
+#imageMap{
 	position:absolute;
-	z-index:2;
+	z-index:100000;
 	top:-275px;
 	left:-380px;
 }
@@ -53,7 +60,6 @@ body{
 }
 
 .DomSprite{
-	cursor : pointer;
 	position : absolute;
 	overflow : hidden;
 

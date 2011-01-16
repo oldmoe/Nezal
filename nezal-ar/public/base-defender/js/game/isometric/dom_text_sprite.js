@@ -13,10 +13,10 @@ var DomTextSprite = Class.create(DomSprite, {
   
   render : function($super){
     $super();
-    this.span.setStyle({
-      marginLeft: (-this.owner.imgWidth * this.owner.angle + "px"),
-      marginTop: (-this.currentAnimationFrame * this.owner.imgHeight + "px")
-    });
+//    this.span.setStyle({
+//      marginLeft: (-this.owner.imgWidth * this.owner.angle + "px"),
+//      marginTop: (-this.currentAnimationFrame * this.owner.imgHeight + "px")
+//    });
   }
   
 })

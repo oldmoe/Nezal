@@ -19,7 +19,7 @@ var JumpingObject = Class.create({
 		this.coords = {};
 	 	this.coords.x = x;
 		this.coords.y = y;
-		this.shadow = {xdim: 40, ydim: 40, zdim: 0, imgWidth: 40, imgHeight: 40};
+		this.shadow = {xdim: 40, ydim: 40, zdim: 0, imgWidth: 40, imgHeight: 40, angle:0};
 		this.shadow.coords = {x:this.coords.x, y:this.coords.y};
 		this.movingPath = [];
 	 },

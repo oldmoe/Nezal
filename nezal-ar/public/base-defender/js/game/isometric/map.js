@@ -26,7 +26,6 @@ var Map={
 		Map.containerDiv.style.width = Map.viewWidth + "px";
 		Map.containerDiv.style.height = Map.viewHeight + "px";
 		this.div.style.backgroundImage = "url(images/background.png)"
-		
 		for(var i=0;i<rawMap.length;i++){
 				for(var j=0;j<rawMap[0].length;j++){
 					if(!Map.grid[i])Map.grid[i]=[];
@@ -39,9 +38,9 @@ var Map={
 			}
 			
 		img3.onload = function(){
-			Map.div.style.width =  img3.width + "px";
+			Map.div.style.width  =  img3.width + "px";
 			Map.mapWidth = img3.width;
-			Map.div.style.height = img3.height + "px";
+			Map.div.style.height =  img3.height + "px";
 			Map.mapHeight = img3.height;
 			Map.navigation = new Navigation(Map);
 		}

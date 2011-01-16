@@ -15,10 +15,10 @@ var ResourceBuilding = Class.create(Building, {
   },
 	
 	tick : function($super){
-    $super();
-		if (this.state == this.states.NORMAL) {
-			this.game.resources[this.factory.collect] += this.totalPerTick;
-		}
+//    $super();
+//		if (this.state == this.states.NORMAL) {
+//			this.game.resources[this.factory.collect] += this.totalPerTick;
+//		}
 		return this;
 	},
   

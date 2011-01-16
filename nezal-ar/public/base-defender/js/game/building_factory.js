@@ -17,7 +17,6 @@ var BuildingFactory = Class.create({
     if( this.game.user.data[this.name]){
       
       for( var buildingInstanceCoords in game.user.data[this.name] ){
-				
 				var building = new this.buildingClass(this, this.game.user.data[this.name][buildingInstanceCoords]);
         this.factoryRegistrar( buildingInstanceCoords,building);
 				var display = new this.buildingDisplayClass(building, this.bluePrints.display);
