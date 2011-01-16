@@ -95,39 +95,28 @@
 	}
 </script>
 </body>
-<!--[if lt IE 8]>
+<!--[if IE]>
 	<script>
 		_gaq.push(['_trackEvent', 'Unsupported browser', 'Unsupported browser', navigator.userAgent]);
 		window.location='statics/unsupported_browser.html' 
 	</script>
 <![endif]-->
 
-<!--[if IE]>
-	<script>
-		Loader.dumb = true
-		Loader.toLoad = [
-			'<%=bust_cache('html_resources/user_dumb.html')%>',
-      '<%=bust_cache('html_resources/payments_dumb.html')%>',
-			'<%=bust_cache('html_resources/intro_dumb.html')%>',
-			function(){Loader.fire('intro')},
-			'<%=bust_cache('html_resources/animations_dumb.html')%>',
-			'<%=bust_cache('html_resources/game_dumb.html')%>',
-			'<%=bust_cache('html_resources/background_dumb.html')%>',
-			function(){Loader.fire('tutorial')},
-			'<%=bust_cache('html_resources/weapons_dumb.html')%>',
-			function(){Loader.fire('game')}
-		]
-	</script>
-<![endif]-->
 <script>		
 	development = false
 	var loadedProgress = 0
+	var connected = false;
+	function startLoading(){
+		if (loadedProgress==$$('#inProgress img').length&&connected)
+	        window.setTimeout(function(){$('pause').show()}, 100)
+	}
+	
 	function onFinishProgress()
 	{
 	    loadedProgress++;
-	    if (loadedProgress==$$('#inProgress img').length)
-	        window.setTimeout(function(){$('pause').show()}, 100)
+			startLoading()
 	}
+	
 	$$('#pause  #loadingBarEmpty #loadingBarLeft').first().style.backgroundImage = "url('images/intro/loading_bar_left.png')"
 	$$('#pause  #loadingBarEmpty #loadingBarRight').first().style.backgroundImage = "url('images/intro/loading_bar_right.png')"
 	$$('#pause  #loadingBarEmpty #loadingBarFill').first().style.backgroundImage = "url('images/intro/loading_bar_middle.png')"
@@ -139,7 +128,9 @@
       Nezal.replayId = options.find(function(opt){return opt.indexOf('replay') == 0}).split('=')[1]         
     }
 		FBConnect.init(function(){			
-      if(!Nezal.replay)Intro.initialize();							
+      if(!Nezal.replay)Intro.initialize();
+			connected = true;
+			startLoading()							
 		});
     	$$('#inProgress img').each(function(image){
   	      	image.onload = onFinishProgress;

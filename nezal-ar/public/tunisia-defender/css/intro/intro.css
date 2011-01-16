@@ -1342,15 +1342,17 @@ div.clickableButton:hover, span.clickableButton:hover
   color:#ff4102;
 }
 #pause  #loadingBarEmpty{
-	height:25px;
+	background:url("../../images/intro/loading_background.png");
+	height:33px;
 	left:224px;
 	position:absolute;
 	top:321px;
-	width:232px;
+	width:240px;
 }
 #pause  #loadingBarEmpty div{
 	height : 25px;
 	float : left;
+	margin-top:4px;
 }
 
 #pause  #loadingBarEmpty #loadingBarRight{				
@@ -1369,7 +1371,7 @@ div.clickableButton:hover, span.clickableButton:hover
 	font-size:x-small;
 	font-weight:bold;	
 	position:absolute;
-	top:325px
+	top:330px
 }
 #inProgress  #loadingPercentage{
 	left:395px;
@@ -1597,4 +1599,4 @@ div.clickableButton:hover, span.clickableButton:hover
 .arabic{
 		direction :rtl;
 }
-}
+

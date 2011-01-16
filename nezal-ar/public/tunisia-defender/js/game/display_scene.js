@@ -292,13 +292,13 @@ var DisplayScene = Class.create(CityDefenderScene, {
 		var tower = this.selectedTower
 		if(tower && tower.upgrades[tower.rank]){
 			if(tower.upgrades[tower.rank].power)
-			$('powerMeter').style.borderRight = Math.ceil((tower.upgrades[tower.rank].power-tower.power)*60/450)+"px solid #FAC200"
+			$('powerMeter').style.borderRight = Math.ceil((tower.upgrades[tower.rank].power-tower.power)*60/450)+"px solid #B30000"
 			if(tower.upgrades[tower.rank].rate)
-			$('rateMeter').style.borderRight = Math.ceil((tower.upgrades[tower.rank].rate-tower.rate)*60/1)+"px solid #FAC200"
+			$('rateMeter').style.borderRight = Math.ceil((tower.upgrades[tower.rank].rate-tower.rate)*60/1)+"px solid #B30000"
 			if(tower.upgrades[tower.rank].range)
-			$('rangeMeter').style.borderRight = Math.ceil((tower.upgrades[tower.rank].range-tower.range)*60/6)+"px solid #FAC200"
+			$('rangeMeter').style.borderRight = Math.ceil((tower.upgrades[tower.rank].range-tower.range)*60/6)+"px solid #B30000"
 			if(tower.upgrades[tower.rank].maxHp){
-				$('shieldsMeter').style.borderRight = Math.ceil((tower.upgrades[tower.rank].maxHp-tower.maxHp)*60/10000)+"px solid #FAC200"
+				$('shieldsMeter').style.borderRight = Math.ceil((tower.upgrades[tower.rank].maxHp-tower.maxHp)*60/10000)+"px solid #B30000"
 			}
 		}
 	},
