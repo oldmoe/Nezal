@@ -1342,19 +1342,19 @@ div.clickableButton:hover, span.clickableButton:hover
   color:#ff4102;
 }
 #pause  #loadingBarEmpty{
-	height:10px;
-	left:324px;
+	height:25px;
+	left:224px;
 	position:absolute;
-	top:296px;
-	width:134px;
+	top:321px;
+	width:232px;
 }
 #pause  #loadingBarEmpty div{
-	height : 8px;
+	height : 25px;
 	float : left;
 }
 
 #pause  #loadingBarEmpty #loadingBarRight{				
-	width : 2px;
+	width : 10px;
 }
 
 #pause  #loadingBarEmpty #loadingBarFill{
@@ -1362,20 +1362,22 @@ div.clickableButton:hover, span.clickableButton:hover
 }
 
 #pause  #loadingBarEmpty #loadingBarLeft{
-	width : 2px;
+	width : 10px;
 }
 #inProgress  #loadingPercentage, #inProgress #fileName{
 	font-family:tahoma;
 	font-size:x-small;
 	font-weight:bold;	
 	position:absolute;
-	top:318px
+	top:325px
 }
 #inProgress  #loadingPercentage{
-	left:464px;
+	left:395px;
+  color:white;
 }
 #inProgress #fileName{
-	left:298px;
+	left:250px;
+  color:white;
 }
 
 #scores {
