@@ -220,10 +220,7 @@ var DisplayScene = Class.create(CityDefenderScene, {
 		$$('#popup #congratsContent').first().innerHTML = Text.game.promotion.msg1
 		$$('#popup #promotedContent').first().innerHTML = Text.game.promotion.msg2+" "+window.Text.game.ranks[Config.rank].name
 		game.scene.rank = Config.rank
-		var img = document.createElement("IMG");
-		img.src = "images/intro/ranks/" + Config.rank + ".png";
 		$$('#popup #rankImg').first().appendChild(img)
-		$$('#rank img')[0].src = "images/intro/ranks/" + Config.rank + ".png";
 		if(win){
 			$('popupClose').observe('click',win)
 			$('popupOk').observe('click',win)
@@ -312,8 +309,6 @@ var DisplayScene = Class.create(CityDefenderScene, {
 				  var currRank = Config.rank;
 					onSuccess = function() {
 						//Here we make the rank 
-					  $$('#rank img')[0].src = "images/intro/ranks/" + Config.rank + ".png";
-					  $$('.rankName')[0].innerHTML = window.Text.game.ranks[Config.rank].abbr;
 					  callback();
 				  }
 				  Intro.sendScore(this.score, win, onSuccess);

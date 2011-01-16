@@ -1,6 +1,6 @@
 FBDefender = {
     
-    imagesUrl : 'http://studio.nezal.com/fb-games/city-defender/images/',
+    imagesUrl : 'http://studio.nezal.com/fb-games/tunisia-defender/images/',
     
     gameName : function(){
       return Text.gameName;  
@@ -8,6 +8,14 @@ FBDefender = {
     
     isMarket : false,
     
+		publish : function(attachment, userPrompt, actionLinks, onPublishSuccess){
+			$("publishScreen").innerHTML = Intro.templates.publishConfirm[1].process();
+			$("publishScreen").show();
+			$$("#publishScreen #okButton")[0].observe('click', function(){
+	  			FBConnect.publish(attachment, userPrompt, actionLinks, onPublishSuccess);
+					$("publishScreen").hide();
+	  	})
+		},
     
     invite : function(){
        FBConnect.invite(Text.facebook.invite.inviteMsg, Text.facebook.invite.userPrompt, FBDefender.gameName() );
@@ -114,7 +122,7 @@ FBDefender = {
                   };
                   var actionLinks = [ {text: FBDefender.gameName(), href: loc } ];
                   FBDefender.isMarket = false;
-                  FBConnect.publish(attachment, Text.facebook.userPrompt, actionLinks, FBDefender.onPublishSuccess)
+                  FBDefender.publish(attachment, Text.facebook.userPrompt, actionLinks, FBDefender.onPublishSuccess)
         } );  
     },
 
@@ -137,7 +145,7 @@ FBDefender = {
                   };
                   var actionLinks = [ {text: FBDefender.gameName(), href: loc } ];
                   FBDefender.isMarket = false;
-                  FBConnect.publish(attachment, Text.facebook.userPrompt , actionLinks, FBDefender.onPublishSuccess)
+                  FBDefender.publish(attachment, Text.facebook.userPrompt , actionLinks, FBDefender.onPublishSuccess)
         } );  
     },
       
@@ -161,7 +169,7 @@ FBDefender = {
                   };
                   var actionLinks = [ {text: FBDefender.gameName(), href: loc } ];
                   FBDefender.isMarket = false;
-                  FBConnect.publish(attachment, Text.facebook.userPrompt , actionLinks, FBDefender.onPublishSuccess)
+                  FBDefender.publish(attachment, Text.facebook.userPrompt , actionLinks, FBDefender.onPublishSuccess)
         } );  
     },
     
@@ -183,7 +191,7 @@ FBDefender = {
                   };
                   var actionLinks = [ {text: FBDefender.gameName(), href: loc } ];
                   FBDefender.isMarket = true;
-                  FBConnect.publish(attachment, Text.facebook.userPrompt , actionLinks, FBDefender.onPublishSuccess)
+                  FBDefender.publish(attachment, Text.facebook.userPrompt , actionLinks, FBDefender.onPublishSuccess)
         } );  
     },
 
@@ -205,7 +213,7 @@ FBDefender = {
                   };
                   var actionLinks = [ {text: FBDefender.gameName(), href: loc } ];
                   FBDefender.isMarket = true;
-                  FBConnect.publish(attachment, Text.facebook.userPrompt , actionLinks, FBDefender.onPublishSuccess)
+                  FBDefender.publish(attachment, Text.facebook.userPrompt , actionLinks, FBDefender.onPublishSuccess)
         } );  
     },
 
@@ -229,7 +237,7 @@ FBDefender = {
                   };
                   var actionLinks = [ {text: FBDefender.gameName(), href: loc } ];
                   FBDefender.isMarket = false;
-                  FBConnect.publish(attachment, Text.facebook.userPrompt, actionLinks, FBDefender.onPublishSuccess)
+                  FBDefender.publish(attachment, Text.facebook.userPrompt, actionLinks, FBDefender.onPublishSuccess)
         } );
     },
 	publishSnapshot : function(img){

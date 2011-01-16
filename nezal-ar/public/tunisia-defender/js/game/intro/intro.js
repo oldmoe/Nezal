@@ -100,93 +100,67 @@ var Intro = {
               mission : [ "missionTemplate", 0],
               marketPlace : [ "marketItemsTemplate", 0],
               marketplaceItem : [ "marketItemDetailsTemplate", 0],
-              marketScroll : ["marketScrollerTemplate", 0]
+              marketScroll : ["marketScrollerTemplate", 0],
+							publishConfirm : ["publishConfirmTemplate", 0]
             },
 
     initialize: function(){
-		Intro.currentPage = 0;
-        Intro.retrieveTemplates();
+				Intro.currentPage = 0;
+      	Intro.retrieveTemplates();
     },
     
-    start: function(){  
-		//alert('starting')
-		if(Intro.doneLoading && Loader.events.intro.loaded) Intro.next();
-    },
+		start: function(){  
+				//alert('starting')
+				if(Intro.doneLoading && Loader.events.intro.loaded){
+					Intro.next();
+				} 
+		},
     
     retrieveTemplates: function(){
         var loader = new ResourceLoader();
         loader.addResource(PathConfigs.introTemplate);
         loader.addResource(PathConfigs.gameTemplate);
-        loader.addResource(PathConfigs.playerProgressTemplate);
         loader.addResource('metadata');
-				loader.addResource('js/game/languages/'+GameConfigs.language+'.js');
         loader.load(function(){
-      			  $('introTemplates').innerHTML = loader.resources.get(PathConfigs.introTemplate);
+						$('introTemplates').innerHTML = loader.resources.get(PathConfigs.introTemplate);
 			      for(var template in Intro.templates){
             		  Intro.templates[template][1] = TrimPath.parseDOMTemplate(Intro.templates[template][0]);
-				  }
-				  Intro.templates.playerProgress = loader.resources.get(PathConfigs.playerProgressTemplate)
-			  //$("gameStart").innerHTML = loader.resources.get(PathConfigs.gameTemplate);
-              $("gameStart").innerHTML = Intro.templates['game'] = loader.resources.get(PathConfigs.gameTemplate);
-              var data = JSON.parse(loader.resources.get('metadata'));
-              GameConfigs.currentCampaign = data['game_data']['current_campaign'];			  
-			  GameConfigs.campaign = data['game_data']['current_campaign'];
-              Intro.gameData = JSON.parse(data['game_data']['metadata']);
-              for(var i in Intro.gameData.towers)
-              {
-                  Intro.gameData.towers[i].upgrades = JSON.parse(Intro.gameData.towers[i].upgrades);
-              }
-              for(var i in Intro.gameData.weapons)
-              {
-                  Intro.gameData.weapons[i].upgrades = JSON.parse(Intro.gameData.weapons[i].upgrades);
-              }
-              Intro.userData = data['user_data'];
-              Intro.userData["metadata"] = JSON.parse(data['user_data']['metadata']);
-              Intro.ranks = data['ranks'];
-					
-  			  Intro.doneLoading = true;
-					eval(loader.resources.get('js/game/languages/'+GameConfigs.language+'.js'));
-					$('intro').addClassName(GameConfigs.language)
-          $('congrates').addClassName(GameConfigs.language)
-		  	  Intro.start()
-			  Intro.processPlayerProgress()
-			  $('scores').src = 'scores/friends.html?'+Object.toQueryString(FBConnect.session)
-			  //$('scores').contentDocument.location.reload(true)
-			  /*
-              Loader.loadPage(GameConfigs.campaign, function(){
-				  
-                  Intro.start();
-              });
-			  */
+						}
+            $("gameStart").innerHTML = Intro.templates['game'] = loader.resources.get(PathConfigs.gameTemplate);
+            var data = JSON.parse(loader.resources.get('metadata'));
+            GameConfigs.currentCampaign = data['game_data']['current_campaign'];			  
+					  GameConfigs.campaign = data['game_data']['current_campaign'];
+            Intro.gameData = JSON.parse(data['game_data']['metadata']);
+            for(var i in Intro.gameData.towers)
+            {
+                Intro.gameData.towers[i].upgrades = JSON.parse(Intro.gameData.towers[i].upgrades);
+            }
+            for(var i in Intro.gameData.weapons)
+            {
+                Intro.gameData.weapons[i].upgrades = JSON.parse(Intro.gameData.weapons[i].upgrades);
+            }
+            Intro.userData = data['user_data'];
+            Intro.userData["metadata"] = JSON.parse(data['user_data']['metadata']);
+            Intro.ranks = data['ranks'];						
+	  			  Intro.doneLoading = true;
+						$('intro').addClassName(GameConfigs.language);
+	          $('congrates').addClassName(GameConfigs.language);
+						$('publishScreen').addClassName(GameConfigs.language);
+			  	  Intro.start();
           });
     },
-	processPlayerProgress : function(){
-		$("playerProgress").innerHTML = TrimPath.parseTemplate(Intro.templates.playerProgress).process();
-		Intro.setPlayerProgressWidth()
-	},
-	setPlayerProgressWidth : function(){
-		var percentages = [34,55,75,96]
-		var index=0;
-		if(Intro.userData.bookmarked&&Intro.userData.like&&Intro.userData.subscribed){
-			$("playerProgress").hide();
-			index=3
-		}else if(Intro.userData.bookmarked&&Intro.userData.like){
-			index=2
-		}else if(Intro.userData.bookmarked){
-			index=1
-		}
-		$$('#playerProgress #progressBarEmpty #progressBarFill')[0].style.width = percentages[index]+"%"
-	},
-	retrievePrevCampaigns : function(){
-		new Ajax.Request( 'statics/campaigns.json', {method:'get',
-			onSuccess: function(t){
-				Intro.prevCampaigns = JSON.parse(t.responseText)
-				$('previousCampaigns').innerHTML = TrimPath.parseTemplate($('prevChallengesTemplate').value).process({campaigns:Intro.prevCampaigns})
-				$('levelSelection').hide()
-				$('previousCampaigns').show()
-			}
-		});
-	},
+	
+		retrievePrevCampaigns : function(){
+			new Ajax.Request( 'statics/campaigns.json', {method:'get',
+				onSuccess: function(t){
+					Intro.prevCampaigns = JSON.parse(t.responseText)
+					$('previousCampaigns').innerHTML = TrimPath.parseTemplate($('prevChallengesTemplate').value).process({campaigns:Intro.prevCampaigns})
+					$('levelSelection').hide()
+					$('previousCampaigns').show()
+				}
+			});
+		},
+		
     retrieveData: function( callback){
         new Ajax.Request( 'metadata', {method:'get',
             onSuccess: function(t){
@@ -254,49 +228,49 @@ var Intro = {
                 });
             }
         },
+				
         campaign : {
             index : 1,
-			onSelect : function(campaign){
-				$('previousCampaigns').hide()
-				$$('.levels').each(function(div){div.hide()})
-				if(campaign)GameConfigs.campaign = campaign.name
-				Intro.enablePauseScreen();
-				Loader.events.challenge = {loaded : false, onLoad :  Intro.pages.campaign.doOnSelect}
-				Loader.loadPage(GameConfigs.campaign, function(){Loader.fire('challenge')})
-			},
+						onSelect : function(campaign){
+								$('previousCampaigns').hide();
+								$$('.levels').each(function(div){div.hide()});
+								if(campaign)GameConfigs.campaign = campaign.name
+								Intro.enablePauseScreen();
+								Loader.events.challenge = {loaded : false, onLoad :  Intro.pages.campaign.doOnSelect}
+								Loader.loadPage(GameConfigs.campaign, function(){Loader.fire('challenge')})
+						},
             doOnSelect : function() {
                 var loader = Intro.campLoader;
                 var campInfoPath = Intro.campPath() + "/camp.info";
                 var campMetadata = GameConfigs.campaign + "/metadata";
-				loader.resources=new Hash()	
+								loader.resources=new Hash()	
                 loader.addResource(campInfoPath);
                 loader.addResource(campMetadata);
                 loader.load(function(){
-					Intro.campaignData = JSON.parse(loader.resources.get(campMetadata));
-					Intro.campaignData.campaignInfo = JSON.parse(loader.resources.get(campInfoPath));
-					Intro.campaignData.missionsInfo = {};
-					loader.resetResource(campMetadata);
-					var missionLoader = Intro.missionLoader;
-					Intro.campaignData.camp_data.metadata.each(function(mission){
-					   var missionPath = Intro.campPath() + "/" + mission['path'] + "/mission.info"; 
-					   missionLoader.addResource(missionPath);
-					});
-					missionLoader.load( function(){
-						Intro.campaignData.camp_data.metadata.each(function(mission){
-						   var missionPath = Intro.campPath() + "/" + mission['path'] + "/mission.info"; 
-						   Intro.campaignData.missionsInfo[mission['path']] = 						   
-								JSON.parse(missionLoader.resources.get(missionPath));
-								
-						});
-						$('campaign').innerHTML = 
-						 Intro.templates.campaign[1].process({"camp":Intro.campaignData.campaignInfo}); 
-						Intro.show();
-						$('intro').show();
-						Intro.disablePauseScreen();
-						$('gameStart').hide();
-					});
-					$('scores').src = 'scores/friends.html?'+Object.toQueryString(FBConnect.session)
-				});
+										Intro.campaignData = JSON.parse(loader.resources.get(campMetadata));
+										Intro.campaignData.campaignInfo = JSON.parse(loader.resources.get(campInfoPath));
+										Intro.campaignData.missionsInfo = {};
+										loader.resetResource(campMetadata);
+										var missionLoader = Intro.missionLoader;
+										Intro.campaignData.camp_data.metadata.each(function(mission){
+										   var missionPath = Intro.campPath() + "/" + mission['path'] + "/mission.info"; 
+										   missionLoader.addResource(missionPath);
+										});
+										missionLoader.load( function(){
+												Intro.campaignData.camp_data.metadata.each(function(mission){
+												   var missionPath = Intro.campPath() + "/" + mission['path'] + "/mission.info"; 
+												   Intro.campaignData.missionsInfo[mission['path']] = 						   
+														JSON.parse(missionLoader.resources.get(missionPath));
+														
+												});
+												$('campaign').innerHTML = Intro.templates.campaign[1].process({"camp":Intro.campaignData.campaignInfo}); 
+												Intro.show();
+												$('intro').show();
+												Intro.disablePauseScreen();
+												$('gameStart').hide();
+										});
+										$('scores').src = 'scores/friends.html?'+Object.toQueryString(FBConnect.session)
+								});
             }
         },
         mission : {

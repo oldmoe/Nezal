@@ -783,3 +783,8 @@
         <div class="right"><img src=""/></div> 
     </div>
 </textarea>
+<textarea id="publishConfirmTemplate">
+  <div id="publishConfirm">
+    <div id="okButton"> ok </div>
+  </div>
+</textarea>

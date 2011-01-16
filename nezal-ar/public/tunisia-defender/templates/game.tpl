@@ -116,10 +116,6 @@
 					0
 				</div>
 				<div class="fps"></div>
-			  <div class="rank" id="rank">
-			    <img src=""/>
-			  </div>
-			  <div class="rankName" id = "rankName">${Config.rank}</div>
 				<div id="exp"></div>
 				<div class="start">	<div class = "startText"> </div></div>
 				<div class="towers">

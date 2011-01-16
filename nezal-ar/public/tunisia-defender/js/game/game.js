@@ -160,8 +160,6 @@ var Game = Class.create({
 		
 		var template = TrimPath.parseTemplate($('resultTemplate').value) 
 		$('result').innerHTML = template.process()
-		var img8 = Loader.images.intro['character.png']
-		$$('#modalWindow #character').first().appendChild(img8)
 		var img9 = document.createElement("IMG");
 		$$('#gameElements .superWeapons div').each(function(div){ 
 			if(div.className != ''){
@@ -184,11 +182,8 @@ var Game = Class.create({
 		$('gameExit').appendChild(image2)
 		$('gameResume').appendChild(image3)
 		//Here we make the rank 
-		$$('#rank img')[0].src = "images/intro/ranks/" + Config.rank + ".png";
-		$$('.rankName')[0].innerHTML = window.Text.game.ranks[Config.rank].abbr;
 		$$('#snapshotWindow #background')[0].src=Loader.images.background['pop_up.png'].getAttribute('data')
 		$('popup').appendChild(Loader.images.background['pop_up.png'])
-		$$('#popup #popupOk').first().appendChild(Loader.images.intro['mission/accept.png'])
 		if(Sounds.muted)Sounds.mute()
 	},
 	

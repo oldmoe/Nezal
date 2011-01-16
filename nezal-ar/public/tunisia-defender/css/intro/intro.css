@@ -1580,3 +1580,19 @@ div.clickableButton:hover, span.clickableButton:hover
 #playerProgress #playerProgressIframeContainer iframe{
 	margin:10px;
 }
+
+#publishScreen 
+{
+	width : 400px;
+	height : 200px;
+	background : black;
+	position : absolute;
+	top : 100px;
+	left : 100px;
+	color : white;
+	z-index : 1000;
+}
+.arabic{
+		direction :rtl;
+}
+}
