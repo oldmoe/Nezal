@@ -218,6 +218,7 @@
       <img src="${Loader.images.intro['campaign/background.png'].getAttribute('data')}"/>
       <img id="paper" src="${Loader.images.intro['campaign/cities.png'].getAttribute('data')}"/>
     </div>
+    <div class="wrapper"> </div>
     <div class="camp-header">
       <div class="market-link">
         <img src="${Loader.images.intro['campaign/market-link.png'].getAttribute('data')}"/>
@@ -228,7 +229,7 @@
         </div>
       </div>
       <div class="logo">
-        <img src="${Loader.images.intro['logo.png'].getAttribute('data')}"/>
+        <img src="${Loader.images.intro['campaign/logo.png'].getAttribute('data')}"/>
       </div>
     </div>  
     <div id="missions">
@@ -248,11 +249,29 @@
               <div class="missionScore">
                   ${Intro.campaignData.user_data.metadata.missions[[mission.order]-1].score}
               </div>
+              <div class="stars"> 
+                <div class="star-img">
+                  {for star in $A($R(0,Intro.campaignData.user_data.metadata.missions[[mission.order]-1].stars))}
+                  <span style="width:13px;display:inline-block;margin-left:3px;">                
+                    <img src="${Loader.images.intro['campaign/star-filled.png'].getAttribute('data')}"/>
+                  </span>
+                  {/for}
+                  {eval}
+                    limit = Intro.campaignData.user_data.metadata.missions[[mission.order]-1].stars
+                    if(!limit)
+                      limit = 0
+                  {/eval}
+                  {for star in $A($R(0,3-limit))}
+                  <span style="width:13px;display:inline-block;margin-left:3px;">                
+                    <img src="${Loader.images.intro['campaign/star.png'].getAttribute('data')}"/>
+                  </span>
+                  {/for}
+                </div>
+              </div>
             </div>
-
          {else}
             <div class="mission">
-              <img id="${mission['path']}" 
+              <img  id="${mission['path']}" class="inactive-mission"
                  src="${Loader.images.intro['campaign/mission-locked.png'].getAttribute('data')}"/>
             </div>
           {/if}
