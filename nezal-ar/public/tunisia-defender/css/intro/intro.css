@@ -154,10 +154,19 @@
 }
 #campaign #paper,#previousCampaigns #paper
 {
-  left: 65px;
+  left: 60px;
   position: absolute;
   top: 194px;
   z-index : 100;
+}
+#campaign .wrapper 
+{
+  position : absolute;
+  left : 0px;
+  top : 0px;
+  width : 100%;
+  height : 100%;
+  z-index : 101;
 }
 #campaign .camp-header
 {
@@ -175,13 +184,14 @@
   right: 30px;
   top: 54px;
   width: 320px;
+  z-index : 102;
 }
 #campaign .market-link .button {
-    cursor: pointer;
-    display: inline-block;
-    position: absolute;
-    right: 12px;
-    top: 16px;
+  cursor: pointer;
+  display: inline-block;
+  position: absolute;
+  right: 12px;
+  top: 16px;
 }
 #campaign .market-link .button .buttonImg {
   position: absolute;
@@ -193,14 +203,13 @@
   height: 100%;
   left: 0;
   position: absolute;
-  width:270px;
+  width:280px;
   overflow : hidden;
 }
 #campaign .camp-header .logo img {
   left: 38px;
   position: absolute;
   top: 20px;
-  width: 190px;
 }
 #campaign #camp-map 
 {
@@ -221,6 +230,7 @@
   height : 81px;
   display:inline-block;
   overflow : hidden;
+  vertical-align : top;
 }
 #campaign .mission .missionScore
 {
@@ -252,6 +262,23 @@
   width: 102px;
   height : 82px;
 }
+#campaign .mission .stars
+{
+  position: relative;
+  text-align: center;
+  top: -170px;
+  width: 105px;  
+  text-align : center
+  padding : 0px;
+}
+#campaign .mission .star-img
+{
+  position: relative;
+  top : 0px;
+  right : 19px;
+  width : 59px;
+  text-align : right;
+}
 #campaign .mission .mission-hover
 {
   position: relative;
@@ -260,7 +287,12 @@
   width: 112px;
   height : 65px;
 }
-
+#campaign .mission .inactive-mission
+{
+  position : relative;
+  top : 2px;
+  right : 2px;
+}
 /***************************
   Css for the marketplace page
 ***************************/
