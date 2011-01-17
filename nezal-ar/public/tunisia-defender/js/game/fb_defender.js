@@ -109,7 +109,7 @@ FBDefender = {
                   var loc = "http://apps.facebook.com/" + FBConnect.url() + "/";
                   var attachment =  {
                               name : FBConnect.user.first_name + " " + Text.facebook.completeMession[0] + " " +
-                                     Intro.campaignData.missionsInfo[mission.name]['name'].toUpperCase() + " " +
+                                     Config.mission.name.toUpperCase() + " " +
                                      Text.facebook.completeMession[1] +" " +
                                      FBDefender.gameName(),
                               href : loc,

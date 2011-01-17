@@ -256,7 +256,7 @@
 			shield:'القوة',
 			rate: 'سرعة',
 			range:'مدى',
-			upgrade : "طور",
+			upgrade : "طوّر",
 			sell : "بيع"
 		},
 		ranks:{

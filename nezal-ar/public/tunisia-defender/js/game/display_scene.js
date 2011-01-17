@@ -205,22 +205,22 @@ var DisplayScene = Class.create(CityDefenderScene, {
 		this.push(2,function(){self.displayStats()})
 	},
 	promoteUser : function(win){
-		Sounds.play(Sounds.gameSounds.rank_promotion)
-		$('pauseWindow').style.zIndex = 302
-		$('pauseWindow').show()	
-		$('popup').show()
-		$$('#popup #congratsContent').first().innerHTML = Text.game.promotion.msg1
-		$$('#popup #promotedContent').first().innerHTML = Text.game.promotion.msg2+" "+window.Text.game.ranks[Config.rank].name
-		game.scene.rank = Config.rank
-		$$('#popup #rankImg').first().appendChild(img)
-		if(win){
-			$('popupClose').observe('click',win)
-			$('popupOk').observe('click',win)
-			FBDefender.publishRankPromotion({name : Config.rank, image : "fb-" + Config.rank + '.png'});
-		}
-		else{
-			
-		}
+//		Sounds.play(Sounds.gameSounds.rank_promotion)
+//		$('pauseWindow').style.zIndex = 302
+//		$('pauseWindow').show()	
+//		$('popup').show()
+//		$$('#popup #congratsContent').first().innerHTML = Text.game.promotion.msg1
+//		$$('#popup #promotedContent').first().innerHTML = Text.game.promotion.msg2+" "+window.Text.game.ranks[Config.rank].name
+//		game.scene.rank = Config.rank
+//		$$('#popup #rankImg').first().appendChild(img)
+//		if(win){
+//			$('popupClose').observe('click',win)
+//			$('popupOk').observe('click',win)
+//			FBDefender.publishRankPromotion({name : Config.rank, image : "fb-" + Config.rank + '.png'});
+//		}
+//		else{
+//			
+//		}
 	},
 	end : function($super,state){
 		var self = game.scene
@@ -230,7 +230,7 @@ var DisplayScene = Class.create(CityDefenderScene, {
 			var resultText = window.Text.game.result
 			if(state == "win"){
 					function win(){	
-							self.statText = resultText.winMission1 +" " +Intro.campaignData.missionsInfo[Config.missionPath]['name']+" "+resultText.winMission2+"\n\n"+resultText.enemies+"\t"+resultText.destroyed+" "
+							self.statText = resultText.winMission1 +" " +self.config.mission.name+" "+resultText.winMission2+"\n\n"+resultText.enemies+"\t"+resultText.destroyed+" "
 							+self.stats.creepsDestroyed+"\t"+resultText.escaped+" "+self.escaped+"\n"+resultText.towers+"\t"+resultText.built+" "
 							+self.stats.towersCreated+"\t"+resultText.destroyed+" "+self.stats.towersDestroyed
 							$('pauseWindow').style.zIndex = 299
@@ -254,14 +254,10 @@ var DisplayScene = Class.create(CityDefenderScene, {
 														 score : self.score});
 											   });
 						}
-					if(game.scene.rank!=Config.rank){
-						self.promoteUser(win)
-					}else{
 						win()
-					}
 			}
 			else{
-				self.statText = Intro.campaignData.missionsInfo[Config.missionPath]['name']+" "+resultText.loseMission +"\n\n"+resultText.enemies+"\t"+resultText.destroyed+" "
+				self.mission.name+" "+resultText.loseMission +"\n\n"+resultText.enemies+"\t"+resultText.destroyed+" "
 				+self.stats.creepsDestroyed+"\t"+resultText.escaped+" "+self.escaped+"\n"+resultText.towers+"\t"+resultText.built+" "
 				+self.stats.towersCreated+"\t"+resultText.destroyed+" "+self.stats.towersDestroyed
 				$$('#result #win').first().hide()
