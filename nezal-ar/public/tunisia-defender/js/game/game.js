@@ -133,7 +133,6 @@ var Game = Class.create({
 				var div2 = document.createElement("div");
 				div2.setAttribute('class',weapon);
 				$$(".superWeaponsOff").first().appendChild(div2)
-			
 		})
 		Loader.images.background['start_hover.png'].setAttribute('class','startImgHover')		
 		$$('.start').first().appendChild(Loader.images.background['start_hover.png'])
