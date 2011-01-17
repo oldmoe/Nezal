@@ -251,7 +251,7 @@
               </div>
               <div class="stars"> 
                 <div class="star-img">
-                  {for star in $A($R(0,Intro.campaignData.user_data.metadata.missions[[mission.order]-1].stars))}
+                  {for star in $A($R(1,Intro.campaignData.user_data.metadata.missions[[mission.order]-1].stars))}
                   <span style="width:13px;display:inline-block;margin-left:3px;">                
                     <img src="${Loader.images.intro['campaign/star-filled.png'].getAttribute('data')}"/>
                   </span>
@@ -261,7 +261,7 @@
                     if(!limit)
                       limit = 0
                   {/eval}
-                  {for star in $A($R(0,3-limit))}
+                  {for star in $A($R(0,2-limit))}
                   <span style="width:13px;display:inline-block;margin-left:3px;">                
                     <img src="${Loader.images.intro['campaign/star.png'].getAttribute('data')}"/>
                   </span>
