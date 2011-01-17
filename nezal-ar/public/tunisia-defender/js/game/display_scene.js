@@ -5,8 +5,6 @@ var DisplayScene = Class.create(CityDefenderScene, {
 		this.baseCtx = baseCtx;
 		this.upperCtx = upperCtx;
 		this.upgraded = false
-		$$('.status').first().title = "XP: "+this.exp+"/"+(this.maxExp+1)
-		$$('#gameElements #exp').first().innerHTML = "XP "+this.exp+"/"+(this.maxExp+1)
 		this.templates['towerInfo'] = TrimPath.parseTemplate($('towerInfoTemplate').value) 
 		this.templates['towerInfo'] = TrimPath.parseTemplate($('towerInfoTemplate').value) 
 		this.templates['stats'] = TrimPath.parseTemplate($('statsTemplate').value) 
@@ -126,12 +124,6 @@ var DisplayScene = Class.create(CityDefenderScene, {
 	},
 
 	renderData : function(){
-		this.currentExp = this.exp
-		if(this.currentExp>this.maxExp){
-			this.minExp = this.maxExp	
-			this.maxExp = this.maxExp*2
-		}
-		$('statusBarFill').style.width = Math.max(((this.currentExp-this.minExp)/(this.maxExp-this.minExp))*100-4,0)+"%"
 		$('money').innerHTML = this.money;
 		$('lives').innerHTML = window.Text.game.upperBar.lives+" "+Math.max(this.maxEscaped - this.escaped,0);
 		$('score').innerHTML = window.Text.game.upperBar.score+" "+this.score;
@@ -292,13 +284,13 @@ var DisplayScene = Class.create(CityDefenderScene, {
 		var tower = this.selectedTower
 		if(tower && tower.upgrades[tower.rank]){
 			if(tower.upgrades[tower.rank].power)
-			$('powerMeter').style.borderRight = Math.ceil((tower.upgrades[tower.rank].power-tower.power)*60/450)+"px solid #FAC200"
+			$('powerMeter').style.borderRight = Math.ceil((tower.upgrades[tower.rank].power-tower.power)*60/450)+"px solid #B30000"
 			if(tower.upgrades[tower.rank].rate)
-			$('rateMeter').style.borderRight = Math.ceil((tower.upgrades[tower.rank].rate-tower.rate)*60/1)+"px solid #FAC200"
+			$('rateMeter').style.borderRight = Math.ceil((tower.upgrades[tower.rank].rate-tower.rate)*60/1)+"px solid #B30000"
 			if(tower.upgrades[tower.rank].range)
-			$('rangeMeter').style.borderRight = Math.ceil((tower.upgrades[tower.rank].range-tower.range)*60/6)+"px solid #FAC200"
+			$('rangeMeter').style.borderRight = Math.ceil((tower.upgrades[tower.rank].range-tower.range)*60/6)+"px solid #B30000"
 			if(tower.upgrades[tower.rank].maxHp){
-				$('shieldsMeter').style.borderRight = Math.ceil((tower.upgrades[tower.rank].maxHp-tower.maxHp)*60/10000)+"px solid #FAC200"
+				$('shieldsMeter').style.borderRight = Math.ceil((tower.upgrades[tower.rank].maxHp-tower.maxHp)*60/10000)+"px solid #B30000"
 			}
 		}
 	},
@@ -311,7 +303,14 @@ var DisplayScene = Class.create(CityDefenderScene, {
 						//Here we make the rank 
 					  callback();
 				  }
-				  Intro.sendScore(this.score, win, onSuccess);
+					var stars = 0;
+					if(win){
+						if(this.escaped == 0)stars = 3;
+						else if(this.escaped < 10)stars = 2;
+						else stars = 1;	
+					}
+					
+				  Intro.sendScore(this.score, win, stars, onSuccess);
 			 }
 	},
 	selectTower : function(x, y){

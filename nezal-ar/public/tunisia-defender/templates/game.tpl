@@ -1,4 +1,4 @@
-	<div id="preload" style="display:none">
+﻿	<div id="preload" style="display:none">
 		</div>
 		<textarea id='statsTemplate' style="display:none">
 		Score : ${game.scene.score}
@@ -19,11 +19,12 @@
 			</div>
 			<div id="towerData">
 			{if tower.display !=null }
+          <img id="sellImg" src="${Loader.images.background['sell_button.png'].getAttribute('data')}" onmousedown = "game.scene.sellSelectedTower()"/>
 					<div id = "sellTower" onmousedown = "game.scene.sellSelectedTower()"><h4>${window.Text.game.towerInfo.sell}</h4><hr/><div id="sellValue">$${Math.round(tower.price*0.75*tower.hp/tower.maxHp)}</div></div>
 					{else}
-						<h4 style="margin-left:8px;margin-top:7px;">$${tower.price}</h4>
+						<div id = "towerPrice">$${tower.price}</div>
 					{/if}
-				<h4>${Text.intro.towers[tower.name].name}</h4>
+				<div id="towerName"><h4>${Text.intro.towers[tower.name].name}</h4></div>
 			<table>
 				<tr>
 					<td><div class='meter' id = 'powerMeter' style="width:${Math.round(60 * tower.power / 420)}px;backgroundColor:blue">${window.Text.game.towerInfo.power}</div>
@@ -43,7 +44,7 @@
 				{if tower.display !=null }
 					{if tower.rank < tower.maxRank}
 					<div id = "upgradeTower" onmousedown = "game.scene.upgradeSelectedTower()">${window.Text.game.towerInfo.upgrade}
-						<span id="upgradeWord" style="color:white;display:block;">$${tower.upgrades[tower.rank].price}&nbsp; &nbsp;Level ${tower.rank+1} </span>
+						<span id="upgradeWord" style="color:white;display:block;">$${tower.upgrades[tower.rank].price}&nbsp; &nbsp;${tower.rank+1} مستوى</span>
 					</div>
 						{if tower.upgradable}
 							<img id="upgradeImg" src="${Loader.images.background['upgrade_button.png'].getAttribute('data')}" onmousedown = "game.scene.upgradeSelectedTower()"/>
@@ -52,7 +53,7 @@
 						{/if}
 					{else}
 					<div id = "upgradeTower" >
-						<div id = "maxUpgrade" style = "paddingTop:10px bgcolor="grey">Max upgrade</div>
+						<div id = "maxUpgrade" style = "paddingTop:10px bgcolor="grey">المستوى الأقصى</div>
 					</div>
 					<img id="upgradeImg" src="${Loader.images.background['upgrade_button_off.png'].getAttribute('data')}"/>
 					{/if}
@@ -91,9 +92,6 @@
 			</div>
 			<div class="status">
 				<div id="statusBarEmpty">
-					<div id="statusBarLeft"> </div>
-					<div id="statusBarFill"> </div>
-					<div id="statusBarRight"> </div>
 				</div>
 				<div id="score" class="score">0</div>
 				<div id="lives" class="lives">0</div>
@@ -116,7 +114,6 @@
 					0
 				</div>
 				<div class="fps"></div>
-				<div id="exp"></div>
 				<div class="start">	<div class = "startText"> </div></div>
 				<div class="towers">
 				
