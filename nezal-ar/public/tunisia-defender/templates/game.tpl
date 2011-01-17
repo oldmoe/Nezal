@@ -136,7 +136,7 @@
 							<div class='wave'>
 								{for creep in wave}
 									<div class='creep' style ="width :${100/wave.length}%">
-										<center><img src="${Loader.images.intro['creeps/'+creep.category.underscore()+'.png'].getAttribute('data')}"></img></center>
+										<center><img src="${Loader.images.intro['creeps/'+creep.category.underscore().trim()+'.png'].getAttribute('data')}"></img></center>
 									</div>															  
 								{/for}
 							</div>										
