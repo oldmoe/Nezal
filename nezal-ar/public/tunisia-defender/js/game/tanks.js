@@ -31,7 +31,7 @@ var BlackTank = Class.create(Creep,{
   images : {},
   name : 'BlackTank',
   price : 40,
-	hp : 2500,maxHp : 2500,
+	hp : 3000,maxHp : 3000,
 	speed : 2,power : 3
 })
 

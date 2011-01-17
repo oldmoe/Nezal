@@ -134,7 +134,11 @@ var Game = Class.create({
 				div2.setAttribute('class',weapon);
 				$$(".superWeaponsOff").first().appendChild(div2)
 			
-		})		
+		})
+		Loader.images.background['start_hover.png'].setAttribute('class','startImgHover')		
+		$$('.start').first().appendChild(Loader.images.background['start_hover.png'])
+		$$('.startImgHover')[0].hide();
+		Loader.images.background['start.png'].setAttribute('class','startImg')
 		$$('.start').first().appendChild(Loader.images.background['start.png'])
 		$('gameElements').appendChild(Loader.images.background['l_shape.png'])
 		$('canvasContainer').appendChild(Loader.challenges[Config.campaign]['images/'+Config.missionPath+'/path.png'])
@@ -190,6 +194,8 @@ var Game = Class.create({
 		})
 				
 		$$('#gameElements .start').first().observe('click', function(){self.scene.startAttack()})
+		$$('#gameElements .start').first().observe('mouseover', function(){$$(".startImgHover")[0].show()})
+		$$('#gameElements .start').first().observe('mouseout', function(){$$(".startImgHover")[0].hide()})
 		$('playAgain').observe('click',function(){
 			Sounds.stopTrack()
 			game.reset()})
@@ -206,6 +212,18 @@ var Game = Class.create({
 		$$('#snapshotWindow #share').first().observe('click',function(){game.scene.shareSnapshot()})
 		$$('#snapshotWindow #close').first().observe('click',function(){game.scene.closeSnapshot()})
 	},
+	
+	registerTowerStatus : function(buttonName){
+		if ($(buttonName) && $(buttonName + "ImgHover")) {
+			$(buttonName).observe('mouseover', function(){
+				$(buttonName + "ImgHover").show();
+			})
+			$(buttonName).observe('mouseout', function(){
+				$(buttonName + "ImgHover").hide();
+			})
+		}
+	},
+	
 	reset : function(replay){
 		game.started = false
 		game.scene.displays = []
@@ -279,7 +297,6 @@ function city_defender_start(replay){
 		game.topCtx = top.getContext('2d')
 		game.start(replay);
 		Upgrades.selectDefault();
-		
 }
 function onFinish(){
 	$('gameElements').style.visibility = 'visible'

@@ -19,7 +19,8 @@
 			</div>
 			<div id="towerData">
 			{if tower.display !=null }
-          <img id="sellImg" src="${Loader.images.background['sell_button.png'].getAttribute('data')}" onmousedown = "game.scene.sellSelectedTower()"/>
+          <img id="sellTowerImgHover" src="${Loader.images.background['sell_hover.png'].getAttribute('data')}" onmousedown = "game.scene.sellSelectedTower()" style="display:none;"/>
+          <img id="sellTowerImg" src="${Loader.images.background['sell_button.png'].getAttribute('data')}" onmousedown = "game.scene.sellSelectedTower()"/>
 					<div id = "sellTower" onmousedown = "game.scene.sellSelectedTower()"><h4>${window.Text.game.towerInfo.sell}</h4><hr/><div id="sellValue">$${Math.round(tower.price*0.75*tower.hp/tower.maxHp)}</div></div>
 					{else}
 						<div id = "towerPrice">$${tower.price}</div>
@@ -47,15 +48,16 @@
 						<span id="upgradeWord" style="color:white;display:block;">$${tower.upgrades[tower.rank].price}&nbsp; &nbsp;${tower.rank+1} مستوى</span>
 					</div>
 						{if tower.upgradable}
-							<img id="upgradeImg" src="${Loader.images.background['upgrade_button.png'].getAttribute('data')}" onmousedown = "game.scene.upgradeSelectedTower()"/>
+              <img id="upgradeTowerImgHover" src="${Loader.images.background['upgrade_hover.png'].getAttribute('data')}" style="display:none;"/>
+							<img id="upgradeTowerImg" src="${Loader.images.background['upgrade_button.png'].getAttribute('data')}"/>
 						{else}
-							<img id="upgradeImg" src="${Loader.images.background['upgrade_button_off.png'].getAttribute('data')}"/>
+							<img id="upgradeTowerImg" src="${Loader.images.background['upgrade_button_off.png'].getAttribute('data')}"/>
 						{/if}
 					{else}
 					<div id = "upgradeTower" >
 						<div id = "maxUpgrade" style = "paddingTop:10px bgcolor="grey">المستوى الأقصى</div>
 					</div>
-					<img id="upgradeImg" src="${Loader.images.background['upgrade_button_off.png'].getAttribute('data')}"/>
+					<img id="upgradeTowerImg" src="${Loader.images.background['upgrade_button_off.png'].getAttribute('data')}"/>
 					{/if}
 				{/if}
 			</div>

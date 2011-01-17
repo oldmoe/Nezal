@@ -160,19 +160,25 @@ textarea{
 }
 
 #gameElements .startText {
-	-moz-user-select:none;
-	color:white;
-	cursor:pointer;
-	font-family:AdLib, Arial Black, Tahoma;
-	font-size:23px;
-	height:30px;
-	left:0px;
-	margin-top:4%;
-	position:absolute;
-	text-align:center;
-	text-shadow:2px 2px 1px #000000;
-	top:25px;
-	width:155px;
+	-moz-user-select: none;
+	color: white;
+	cursor: pointer;
+	font-family: AdLib,Arial Black,Tahoma;
+	font-size: 30px;
+	height: 72px;
+	left: 0;
+	line-height: 2.5;
+	position: absolute;
+	text-align: center;
+	text-shadow: 2px 2px 1px #000000;
+	top: 8px;
+	width: 155px;
+	z-index:10;
+}
+.startImg{
+	left:2px;
+	top:1px;
+	position : absolute;
 }
 
 #gameElements .towers{
@@ -203,10 +209,6 @@ textarea{
 	width:113px;
 }
 
-#gameElements #sellTower:hover{
-	background-color:grey;	
-}
-
 #gameElements hr{
  border : 1px sold orange;
 	margin :1px;
@@ -217,35 +219,40 @@ textarea{
  opacity :0.5;
 }
 #gameElements #sellTower{
-	width : 50px;
-	position : absolute;
-	margin-left:4px;
-	margin-top:9px;
-	color:white;
+	color: white;
 	cursor: pointer;
-	text-align : center;
-	font-family:Helvetica;
-	font-size:12px;
-	font-weight : bold;
-	z-index:10
+	font-family: Helvetica;
+	font-size: 12px;
+	font-weight: bold;
+	left: 7px;
+	position: absolute;
+	text-align: center;
+	top: 13px;
+	width: 50px;
+	z-index: 10;
 }
 #gameElements #towerPrice{
   color: #FFCC00;
-  cursor: pointer;
-  font-family: Helvetica;
-  font-size: 19px;
-  font-weight: bold;
-  margin-left: 0;
-  margin-top: 11px;
-  position: absolute;
-  text-align: center;
-  width: 50px;
-  z-index: 10;
+	cursor: pointer;
+	font-family: Helvetica;
+	font-size: 19px;
+	font-weight: bold;
+	position: absolute;
+	text-align: center;
+	top: 15px;
+	width: 50px;
+	z-index: 10;
 }
-#towerData #sellImg{
-	 left: 4px;
+#towerData #sellTowerImgHover{
+	 left: 3px;
    position: absolute;
    top: 8px;	
+}
+#towerData #sellTowerImg{
+	 left: 6px;
+   position: absolute;
+   top: 10px;	
+	
 }
 #towerData #towerName{
   	left: 74px;
@@ -256,7 +263,7 @@ textarea{
 
 
 #gameElements #upgradeTower {
-	color:black;
+	color:#FFCC00;
 	cursor:pointer;
 	font-family:Helvetica;
 	font-size:12px;
@@ -269,6 +276,8 @@ textarea{
 	width:87%;
 	z-index:10;
 }
+
+
 #gameElements #upgradeTower #upgradeWord{
 	color:white;
 	font-family:tahoma;
@@ -277,11 +286,18 @@ textarea{
 	text-align:center;
 	margin:0;
 }
-#towerData #upgradeImg{
+#towerData #upgradeTowerImgHover{
 	position:absolute;
-	margin-left:9px;
+	margin-left:3px;
 	margin-top:2px;
 }
+
+#towerData #upgradeTowerImg{
+	position:absolute;
+	margin-left:7px;
+	margin-top:4px;
+}
+
 #gameElements .towerInfo table {
 	border:medium none;
 	padding:0;

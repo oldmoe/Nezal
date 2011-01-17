@@ -369,11 +369,13 @@ var DisplayScene = Class.create(CityDefenderScene, {
 	},
 	processTowerInfoTemplate : function(){
 		$('towerInfo').innerHTML = this.templates['towerInfo'].process({tower: this.selectedTower})
+		game.registerTowerStatus("upgradeTower");
+		game.registerTowerStatus("sellTower");
 		this.updateMeters()
 	},
   sellSelectedTower : function($super){
-        $super()
-    		Sounds.play(Sounds.gameSounds.click)
+    $super()
+		Sounds.play(Sounds.gameSounds.click)
   },
   resetScene : function($super){
 	$super()

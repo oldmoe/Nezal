@@ -82,8 +82,8 @@ var CityDefenderScene = Class.create(Scene, {
 		creep.maxHp = creep.maxHp/2
 		creep.hp = creep.maxHp
 		creep.price=creep.price*Math.pow(1.1,this.waveNumber)
-		creep.hp = Math.round(creep.hp*Math.pow(this.creepMultiplier[this.config.level-1],this.waveNumber))
-		creep.power = Math.round(creep.power*Math.pow(this.creepPowerMultiplier[this.config.level-1],this.waveNumber))
+		creep.hp = Math.round(creep.hp*Math.pow(this.creepMultiplier[Math.floor((this.config.mission.order-1)/6)],this.waveNumber))
+		creep.power = Math.round(creep.power*Math.pow(this.creepPowerMultiplier[Math.floor((this.config.mission.order-1)/6)],this.waveNumber))
 		creep.maxHp = creep.hp
 		this.creeps.push(creep)
 		return this
@@ -94,8 +94,8 @@ var CityDefenderScene = Class.create(Scene, {
 		plane.maxHp = plane.maxHp/2
 		plane.hp = plane.maxHp
 		plane.price=plane.price*Math.pow(1.1,this.waveNumber)
-		plane.hp = Math.round(plane.hp*Math.pow(this.creepMultiplier[this.config.level-1],this.waveNumber))
-		plane.power = Math.round(plane.power*Math.pow(this.creepPowerMultiplier[this.config.level-1],this.waveNumber))
+		plane.hp = Math.round(plane.hp*Math.pow(this.creepMultiplier[Math.floor((this.config.mission.order-1)/6)],this.waveNumber))
+		plane.power = Math.round(plane.power*Math.pow(this.creepPowerMultiplier[Math.floor((this.config.mission.order-1)/6)],this.waveNumber))
 		plane.maxHp = plane.hp
 		return this
 	},
@@ -383,8 +383,8 @@ var CityDefenderScene = Class.create(Scene, {
 	fps : 0,
 	score: 0,
 	moneyMultiplier: [1.1,1.1,1.1],
-	creepMultiplier: [1.05,1.13,1.17],
-	creepPowerMultiplier: [1.05,1.1,1.15],
+	creepMultiplier: [1.11,1.13,1.15,1.17],
+	creepPowerMultiplier: [1.1,1.12,1.14,1.16],
 	wave : 0,
 	sound : true,
 	wavesCount : 0,
