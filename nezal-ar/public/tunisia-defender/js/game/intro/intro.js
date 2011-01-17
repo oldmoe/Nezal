@@ -236,43 +236,70 @@ var Intro = {
 								$$('.levels').each(function(div){div.hide()});
 								if(campaign)GameConfigs.campaign = campaign.name
 								Intro.enablePauseScreen();
-								Loader.events.challenge = {loaded : false, onLoad :  Intro.pages.campaign.doOnSelect}
-								Loader.loadPage(GameConfigs.campaign, function(){Loader.fire('challenge')})
-						},
-            doOnSelect : function() {
+        				Loader.events.challenge = {loaded : false, onLoad :  Intro.pages.campaign.doOnSelect}
+        				Loader.loadPage(GameConfigs.campaign, function(){Loader.fire('challenge')})
+      			},
+            doOnSelect : function(){
                 var loader = Intro.campLoader;
-                var campInfoPath = Intro.campPath() + "/camp.info";
                 var campMetadata = GameConfigs.campaign + "/metadata";
 								loader.resources=new Hash()	
-                loader.addResource(campInfoPath);
                 loader.addResource(campMetadata);
                 loader.load(function(){
 										Intro.campaignData = JSON.parse(loader.resources.get(campMetadata));
-										Intro.campaignData.campaignInfo = JSON.parse(loader.resources.get(campInfoPath));
-										Intro.campaignData.missionsInfo = {};
 										loader.resetResource(campMetadata);
-										var missionLoader = Intro.missionLoader;
-										Intro.campaignData.camp_data.metadata.each(function(mission){
-										   var missionPath = Intro.campPath() + "/" + mission['path'] + "/mission.info"; 
-										   missionLoader.addResource(missionPath);
-										});
-										missionLoader.load( function(){
-												Intro.campaignData.camp_data.metadata.each(function(mission){
-												   var missionPath = Intro.campPath() + "/" + mission['path'] + "/mission.info"; 
-												   Intro.campaignData.missionsInfo[mission['path']] = 						   
-														JSON.parse(missionLoader.resources.get(missionPath));
-														
-												});
-												$('campaign').innerHTML = Intro.templates.campaign[1].process({"camp":Intro.campaignData.campaignInfo}); 
-												Intro.show();
-												$('intro').show();
-												Intro.disablePauseScreen();
-												$('gameStart').hide();
-										});
+										$('campaign').innerHTML = Intro.templates.campaign[1].process({"camp":Intro.campaignData}); 
+                    $$('.camp-header .market-link .button')[0].observe('mouseover',
+                                                                      function(){
+                                                                          $$('.camp-header .market-link .button img')[0].show();
+                                                                      })
+                    $$('.camp-header .market-link .button')[0].observe('mouseout',
+                                                                      function(){
+                                                                          $$('.camp-header .market-link .button img')[0].hide();
+                                                                      })
+                    $$('.camp-header .market-link .button')[0].observe('mousedown',
+                                                                      function(){
+                                                                          $$('.camp-header .market-link .button img')[1].hide();          
+                                                                          $$('.camp-header .market-link .button img')[2].show();
+                                                                      });
+                    $$('.camp-header .market-link .button')[0].observe('mouseup',
+                                                                      function(){
+                                                                          $$('.camp-header .market-link .button img')[1].show();          
+                                                                          $$('.camp-header .market-link .button img')[2].hide();
+                                                                          Sounds.play(Sounds.gameSounds.click)
+                                                                          Intro.select('marketPlace');
+                                                                      })
+                    $$('#missions .clickableButton').each(function(button){
+                        var mission = button.getAttribute('path');
+                        button.observe('mouseover',
+                                        function(){
+                                            $$('#missions #' + mission + ' .mission-hover img')[0].show();
+                                        });
+                        button.observe('mouseout',
+                                        function(){
+                                            $$('#missions #' + mission + ' .mission-hover img')[0].hide();
+                                        });
+                        button.observe('mousedown',
+                                        function(){
+                                            $$('#missions #' + mission + ' .mission-normal img')[0].hide();
+                                            $$('#missions #' + mission + ' .mission-normal img')[1].show();
+                                        });
+                        button.observe('mouseup',
+                                      function(){
+                                          Intro.selectMission(button);
+                                          $$('#missions #' + mission + ' .mission-normal img')[0].show();
+                                          $$('#missions #' + mission + ' .mission-normal img')[1].hide();
+                                          Intro.finish();
+                                      })
+                    });
+										Intro.show();
+										$('intro').show();
+										Intro.disablePauseScreen();
+										$('gameStart').hide();
 										$('scores').src = 'scores/friends.html?'+Object.toQueryString(FBConnect.session)
 								});
             }
         },
+
         mission : {
             index : 2,
             onSelect : function(){

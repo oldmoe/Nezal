@@ -176,6 +176,7 @@
 			</div>
 		</div>
 </textarea>
+
 <textarea id='difficultyTemplate' style="display:none">
 	<div id="levels">
 			<div id="floatBgLevel" >
@@ -207,62 +208,64 @@
 		</div>
 </textarea>
 
+
+
+
+
+
 <textarea id='campaignTemplate' style="display:none">
     <div id="background">
-      <img src="${Loader.images.intro['background.png'].getAttribute('data')}"/>
-      <img id="paper" src="${Loader.images.intro['paper.png'].getAttribute('data')}"/>
+      <img src="${Loader.images.intro['campaign/background.png'].getAttribute('data')}"/>
+      <img id="paper" src="${Loader.images.intro['campaign/cities.png'].getAttribute('data')}"/>
     </div>
-    <div class="camp-info">
-      <div class="camp-details">
-        <div class="name">
-          ${camp['name']}
-        </div>
-        <div class="desc">
-          ${camp['description']}
+    <div class="camp-header">
+      <div class="market-link">
+        <img src="${Loader.images.intro['campaign/market-link.png'].getAttribute('data')}"/>
+        <div class="button clickSound">
+          <img src="${Loader.images.intro['campaign/market-hover.png'].getAttribute('data')}" style="display:none;"/>
+          <img src="${Loader.images.intro['campaign/market-button.png'].getAttribute('data')}" class="buttonImg"/>
+          <img src="${Loader.images.intro['campaign/market-click.png'].getAttribute('data')}" class="buttonImg" style="display:none;"/>
         </div>
       </div>
-      <img id="camp-map" src="${Loader.challenges[GameConfigs.campaign]['images/flag.png'].getAttribute('data')}"/>
+      <div class="logo">
+        <img src="${Loader.images.intro['logo.png'].getAttribute('data')}"/>
+      </div>
     </div>  
     <div id="missions">
       {for mission in Intro.campaignData.camp_data.metadata }
           {if ( (Intro.campaignData.user_data.metadata.levels[(GameConfigs.level).toString()] >= mission['order']) && 
                  (Intro.campaignData.user_data.metadata.missions[[mission.order]-1]) ) }  
-            <div class="mission clickableButton">
-              <div path="${mission['path']}" onclick="Intro.selectMission(this); Intro.finish();" class="clickSound" >
-                <img id="${mission['path']}" 
-                   src="${Loader.challenges[GameConfigs.campaign]['images/'+mission.path+'/mission_active.png'].getAttribute('data')}"/>
+            <div class="mission" id="${mission['path']}">
+              <div class="mission-hover">
+                <img src="${Loader.images.intro['campaign/mission-hover.png'].getAttribute('data')}" style="display:none;"/>
+              </div>
+              <div path="${mission['path']}" class="clickSound clickableButton">
+              </div>
+              <div class="mission-normal">
+                <img src="${Loader.images.intro['campaign/mission-button.png'].getAttribute('data')}"/>
+                <img src="${Loader.images.intro['campaign/mission-clicked.png'].getAttribute('data')}" style="display:none; z-index:5;"/>
               </div>
               <div class="missionScore">
-                ${Intro.campaignData.user_data.metadata.missions[[mission.order]-1].score}
-              </div>
-              <div class="missionName">
-                ${Intro.campaignData.missionsInfo[mission.path]['name']}
+                  ${Intro.campaignData.user_data.metadata.missions[[mission.order]-1].score}
               </div>
             </div>
-          {else}
+
+         {else}
             <div class="mission">
               <img id="${mission['path']}" 
-                 src="${Loader.challenges[GameConfigs.campaign]['images/'+mission.path+'/mission_inactive.png'].getAttribute('data')}"/>
-              <div class="missionName">
-                ${Intro.campaignData.missionsInfo[mission.path]['name']}
-              </div>
+                 src="${Loader.images.intro['campaign/mission-locked.png'].getAttribute('data')}"/>
             </div>
           {/if}
       {/for}
     </div>
-    <div id="backContainer">
-      <div id="back" onclick="Intro.select('marketPlace');" class="clickableButton clickSound">
-        {if ($('intro').getStyle('direction')=='rtl') }
-          <img src="${Loader.images.intro['ready.png'].getAttribute('data')}"/>
-        {else}
-          <img src="${Loader.images.intro['back.png'].getAttribute('data')}"/>
-        {/if}
-        <div class="text buttonText">
-            ${Text.intro.campaign.back}
-        </div>
-      </div>
-    </div>
+  
 </textarea>
+
+
+
+
+
+
 
 <textarea id='missionTemplate' style="display:none">
     <div id="floatBg" style="display : none;">
@@ -782,6 +785,9 @@
         <div class="right"><img src=""/></div> 
     </div>
 </textarea>
+
+
+
 <textarea id="publishConfirmTemplate">
   <div id="publishConfirm">
     <div id="okButton"> ok </div>
