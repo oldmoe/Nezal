@@ -236,10 +236,6 @@ var Intro = {
 								$$('.levels').each(function(div){div.hide()});
 								if(campaign)GameConfigs.campaign = campaign.name
 								Intro.enablePauseScreen();
-        				Loader.events.challenge = {loaded : false, onLoad :  Intro.pages.campaign.doOnSelect}
-        				Loader.loadPage(GameConfigs.campaign, function(){Loader.fire('challenge')})
-      			},
-            doOnSelect : function(){
                 var loader = Intro.campLoader;
                 var campMetadata = GameConfigs.campaign + "/metadata";
 								loader.resources=new Hash()	
@@ -756,11 +752,16 @@ var Intro = {
 		$('levelSelection').show()		
 	  },
 	  finish: function(){
-		if(Loader.events.game.loaded){
-		  Intro.doFinish();
-		}else{
-		  Loader.events.game.onLoad = function(){Intro.doFinish()}
-		}
+        var image = new Image();
+      	image.onload = function(){
+                                    Loader.challenges[GameConfigs.missionPath + "/path.png"] = image;
+		                                if(Loader.events.game.loaded){
+		                                  Intro.doFinish();
+		                                }else{
+		                                  Loader.events.game.onLoad = function(){Intro.doFinish()}
+		                                }
+                               }
+  			image.src = "challenges/" + GameConfigs.campaign + "/images/" + GameConfigs.missionPath + "/path.png";
 	  },
 	  
 	  doFinish : function(){

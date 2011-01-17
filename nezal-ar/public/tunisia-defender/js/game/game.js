@@ -140,7 +140,7 @@ var Game = Class.create({
 		Loader.images.background['start.png'].setAttribute('class','startImg')
 		$$('.start').first().appendChild(Loader.images.background['start.png'])
 		$('gameElements').appendChild(Loader.images.background['l_shape.png'])
-		$('canvasContainer').appendChild(Loader.challenges[Config.campaign]['images/'+Config.missionPath+'/path.png'])
+		$('canvasContainer').appendChild(Loader.challenges[Config.missionPath+'/path.png'])
 		Config.towers.each(function(turret){ 
 			$$('.'+turret).first().appendChild(Loader.images.background[turret.toLowerCase()+'_button.png'])
 			
