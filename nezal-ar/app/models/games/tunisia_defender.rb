@@ -101,14 +101,9 @@ class TunisiaDefender < Metadata
 		user_campaign.score -= old_score 
 		user_campaign.score += metadata['missions'][data['mission'] -1]['score']
 	  else 
-		puts ">>>>>>>CHEATER<<<<<<<<"
-	  end
-      puts "======================================================"
-      puts data['level']
-      puts metadata['levels']
-      puts metadata['levels'][data['level']]
-      puts data['mission']
-      puts "======================================================"      
+		puts ">>>>>>>CHEATER<<<<<<<< camp id : #{user_campaign.id}"
+    
+	  end      
       if (data['win'])
         metadata['missions'][data['mission']] ||= { 'order' => data['mission'] + 1, 'score' => 0 }
         if ( metadata['levels'][data['level']] == data['mission'] )
