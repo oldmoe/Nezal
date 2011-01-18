@@ -33,10 +33,18 @@
   </script>
 </head>
 <body>
-
+	<script>
+		function startGame(){
+			$('gameIntro').hide();
+			$('startingGame').show();
+			gameLoaded();
+		}
+	</script>
+<iframe id ="gameIntro" src="statics/game.html" frameborder=0></iframe>
 <iframe id ="iframe" src="#" style="display : none;"></iframe>
 <iframe id="pages" src="#" style="display : none;"></iframe>
 <div id ="images"></div>
+<div id="startingGame" style="display : none;">
 <div id="pause" style="display : none;">
   <div style="width:100%; height:100%; background:white;"> </div>
   <div style="color : FloralWhite; font-family : Digital;"> </div>
@@ -56,7 +64,7 @@
 </div>
 
 <div id="game">
-<iframe id ="scores" src="" style = "width :760px;height:150px;display:block;position:absolute;overflow:hidden;border:none;top:551px;" frameborder=0 ></iframe>
+<iframe id ="scores" src="" style = "width :760px;height:160px;display:block;position:absolute;overflow:hidden;border:none;top:551px;" frameborder=0 ></iframe>
 
   <div id="congrates" style="display : none;">
   </div>
@@ -88,6 +96,7 @@
   <div id="gameStart" style="display: none;">
   </div>
   
+	</div>
 </div>
 <script>
 	function register(win, resources, dumb){
@@ -95,12 +104,6 @@
 	}
 </script>
 </body>
-<!--[if IE]>
-	<script>
-		_gaq.push(['_trackEvent', 'Unsupported browser', 'Unsupported browser', navigator.userAgent]);
-		window.location='statics/unsupported_browser.html' 
-	</script>
-<![endif]-->
 
 <script>		
 	development = false
@@ -118,9 +121,10 @@
 	}
 	
 	$$('#pause  #loadingBarEmpty #loadingBarLeft').first().style.backgroundImage = "url('images/intro/loading_bar_left.png')"
+	$$('#pause  #loadingBarEmpty #loadingBarLeft').first().style.marginLeft = 3+"px"
 	$$('#pause  #loadingBarEmpty #loadingBarRight').first().style.backgroundImage = "url('images/intro/loading_bar_right.png')"
 	$$('#pause  #loadingBarEmpty #loadingBarFill').first().style.backgroundImage = "url('images/intro/loading_bar_middle.png')"
-	$(document).observe('dom:loaded',function(){
+	function gameLoaded(){
 
     if(window.location.search.indexOf('replay') > -1){
       var options = window.location.search.split('?')[1].split('&')
@@ -194,7 +198,7 @@
       }
 		}
 		$('iframe').src = Loader.toLoad[0]
-	})
+	}
 
   payment = new Payment();
 </script>

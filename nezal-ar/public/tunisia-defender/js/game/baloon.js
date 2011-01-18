@@ -12,7 +12,7 @@ var Baloon = Class.create(Sprite,{
 		this.div.style.position = 'absolute';
 		var img = Element.clone(Loader.images.game["baloon"+num+".png"]);
 		this.text = document.createElement("div"); 
-		if(num==2)this.text.style.color = "white";
+		this.text.style.color = "white";
 		this.text.style.position = "absolute"
 		this.text.style.fontSize = "11px"
 		this.text.style.fontWeight = "bold"

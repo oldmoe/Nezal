@@ -108,6 +108,7 @@ var Game = Class.create({
 		
 	},
 	setGameImages : function(){
+		if(game.started)return;
 		Config = GameConfigs
 		game.prepareConfig()
 		Config.towers.each(function(tower){
@@ -161,9 +162,9 @@ var Game = Class.create({
 		var image1 = new Image()
 		var image2 = new Image()
 		var image3 = new Image()
-		image1.src = Loader.images.background['exit_restart_button.png'].getAttribute('data')
-		image2.src = Loader.images.background['exit_restart_button.png'].getAttribute('data')
-		image3.src = Loader.images.background['exit_restart_button.png'].getAttribute('data')
+		image1.src = Loader.images.intro['button_middle.png'].getAttribute('data')
+		image2.src = Loader.images.intro['button_middle.png'].getAttribute('data')
+		image3.src = Loader.images.intro['button_middle.png'].getAttribute('data')
 		$('gameReset').appendChild(image1)
 		$('gameExit').appendChild(image2)
 		$('gameResume').appendChild(image3)
