@@ -177,7 +177,7 @@ textarea{
 }
 #gameElements .towerInfo {
 	color:white;
-	font-family:verdana;
+	font-family:tahoma;
 	font-size:10px;
 	height:186px;
 	left:642px;
@@ -975,7 +975,7 @@ position:"absolute";
   top : 50px;
 }
 #win .win_logo{
-  left : 85px;
+  left : 100px;
 	top :8px;
 }
 #win .exit{

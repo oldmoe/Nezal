@@ -110,7 +110,7 @@ var FBConnect = {
                                    "&next=http://apps.facebook.com/"+ 
                                    FBConnect.url() + "/" + appendParam +
                                  "&display=page&locale=en_US&return_session=0&" +
-                                 "fbconnect=0&canvas=1&legacy_return=1&method=permissions.request&perms=email,publish_stream";
+                                 "fbconnect=0&canvas=1&legacy_return=1&method=permissions.request&perms=email";
                 }
                 window.top.location = redirect_url;
             }
