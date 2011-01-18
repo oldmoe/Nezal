@@ -58,23 +58,27 @@
 		
 	</style>
 	<script>
-    soundManager.url = '../swf/';
+		/*
+		soundManager.url = '../swf/';
     soundManager.flashVersion = 9; // optional: shiny features (default = 8)
-    soundManager.useFlashBlock = true; // optionally, enable when you're ready to dive in
+    soundManager.useFlashBlock = false; // optionally, enable when you're ready to dive in
     // enable HTML5 audio support, if you're feeling adventurous.
     soundManager.useHTML5Audio = false;
-		var sound = null
 		var attributes = {
-		  id: "intro",
+		  id: "introslide",
 		  url: '../sounds/sfx/mp3/intro.mp3',
 		  autoLoad : true,
 		  autoPlay : true,
 		  volume: 50
 		}
+		var sound = null
 		soundManager.onready(function() {
-			sound = soundManager.createSound(attributes);
-		})
-		
+			//if(sessionStorage.introStarted != 'true'){
+				sound = soundManager.createSound(attributes);
+			//	sessionStorage.introStarted = 'true';
+				alert(1)
+			//}
+		})*/
   </script>
 		<script>var target = 'none'</script>  
   <!--[if IE]>
@@ -124,6 +128,7 @@
 	var reactor = new Reactor()
 	reactor.run()
 	function done(){
+		//if(sound)sound.stop()
 		reactor.stop()
 		if (target != 'none') {
 			window.parent.location = target
