@@ -501,10 +501,6 @@ var Intro = {
                                 itemConfig = SuperWeaponConfig;
                                 typeName = "superWeapons";
                             }
-                            FBDefender.publishUnlockedItem(
-                                { name : itemid,
-                                  image : 'intro/'+ type + "/" + itemConfig[itemid]['image'],
-                                  type : typeName})
                             Intro.select('marketPlace');
                             Intro.disablePauseScreen();
                   }
@@ -538,10 +534,6 @@ var Intro = {
                                 itemConfig = SuperWeaponConfig;
                                 typeName = "superWeapons";
                             }
-                            FBDefender.publishUpgradedItem(
-                                { name : itemid,
-                                  image : 'intro/'+ type + "/" + itemConfig[itemid]['image'],
-                                  type : typeName})
                             Intro.select('marketPlace');
                             Intro.disablePauseScreen();
                   }
