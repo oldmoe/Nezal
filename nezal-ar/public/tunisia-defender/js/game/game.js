@@ -146,8 +146,6 @@ var Game = Class.create({
 			
 		})
 		
-		var template = TrimPath.parseTemplate($('resultTemplate').value) 
-		$('result').innerHTML = template.process()
 		var img9 = document.createElement("IMG");
 		$$('#gameElements .superWeapons div').each(function(div){ 
 			if(div.className != ''){
@@ -195,10 +193,7 @@ var Game = Class.create({
 		$$('#gameElements .start').first().observe('click', function(){self.scene.startAttack()})
 		$$('#gameElements .start').first().observe('mouseover', function(){$$(".startImgHover")[0].show()})
 		$$('#gameElements .start').first().observe('mouseout', function(){$$(".startImgHover")[0].hide()})
-		$('playAgain').observe('click',function(){
-			Sounds.stopTrack()
-			game.reset()})
-		$('exit').observe('click', game.exit)
+		
 		$('gameExit').observe('click', function(){
 			game.exit()})
 		$('gameReset').observe('click',function(){game.reset()})	
@@ -233,7 +228,6 @@ var Game = Class.create({
 		$$('#gameElements .start').first().stopObserving('click')
 		$$('#gameElements .start').first().removeClassName('resumed')
 		$$('#gameElements .start').first().removeClassName('paused')
-		$('stats').innerHTML = ''
 		game.unRegisterHandlers()
 		Sounds.togglePauseTrack()
 		$('droppingGround').removeClassName('off')	
@@ -263,13 +257,40 @@ var Game = Class.create({
 		$$('#gameElements .superWeapons div').each(function(div){ 
 			if(div.className != ''){div.stopObserving('click')}
 		})
-		$('playAgain').stopObserving('click')
-		$('exit').stopObserving('click')
 		$('gameExit').stopObserving('click')	
 		$('gameReset').stopObserving('click')	
 		$('gameResume').stopObserving('click')	
 		$$('.sound').first().stopObserving('click')
 		$$('.music').first().stopObserving('click')
+	},
+	registerResultHandlers : function(){
+		$$('.playAgain').each(function(div){
+			div.observe('click', function(){
+			Sounds.stopTrack()
+			game.reset();
+			})
+		})
+		$$('.exit').each(function(div){
+			div.observe('click', function(){
+				game.exit();
+			})
+		})
+		$$('#win .playAgain')[0].observe('mouseover',function(){$$('#win .playAgain .hover')[0].show()})
+		$$('#lose .playAgain')[0].observe('mouseover',function(){$$('#lose .playAgain .hover')[0].show()})
+		$$('#win .exit')[0].observe('mouseover',function(){$$('#win .exit .hover')[0].show()})
+		$$('#lose .exit')[0].observe('mouseover',function(){$$('#lose .exit .hover')[0].show()})
+		$$('#win .nextCity')[0].observe('mouseover',function(){$$('#win .nextCity .hover')[0].show()})
+		
+		$$('#win .playAgain')[0].observe('mouseout',function(){$$('#win .playAgain .hover')[0].hide()})
+		$$('#lose .playAgain')[0].observe('mouseout',function(){$$('#lose .playAgain .hover')[0].hide()})
+		$$('#win .exit')[0].observe('mouseout',function(){$$('#win .exit .hover')[0].hide()})
+		$$('#lose .exit')[0].observe('mouseout',function(){$$('#lose .exit .hover')[0].hide()})
+		$$('#win .nextCity')[0].observe('mouseout',function(){$$('#win .nextCity .hover')[0].hide()})
+		
+	},
+	unregisterResultHandlers : function(){
+		$$('.playAgain').each(function(div){div.stopObserving('click')})
+		$$('.exit').each(function(div){div.stopObserving('click')})
 	}
 });
 
@@ -307,4 +328,30 @@ function onFinish(){
 		$('static').show();
 		Effect.Fade('static',{duration: 1.0})
 	},100)
+}
+var TunisiaCities={
+	'sidi_bouzid':	'سيدي بوزيد',
+	'tozeur':		'توزر',
+	'tataouine':	'تطاوين',
+	'kebili':		'قبلي',
+	'zaghouan':	'زغوان',
+	'siliana':		'سليانة',
+	'kef':		'الكاف',
+	'beja':		'باجة',
+	'gafsa':		'قفصة',
+	'gabes':		'قابس',
+	'monastir':	'المنستير',
+	'mahdia':		'المهدية',
+	'jendouba':	'جندوبة',
+	'ariana':		'أريانة',
+	'medenine':	'مدنين',
+	'kasserine':	'القصرين',
+	'manouba':	'منوبة',
+	'kairouan':	'القيروان',
+	'ben_arous': 'بن عروس',
+	'bizerte':		'بنزرت',
+	'sousse':		'سوسة',
+	'nabeul':		'نابل',
+	'sfax':		'صفاقس',
+	'tunis':		'تونس'
 }

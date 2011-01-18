@@ -1,13 +1,16 @@
-<html>
+﻿<html>
 	<head>
 		<style>
 			body{
 				margin:0px;
 				overflow:hidden;
+        font-family:tahoma;
 			}
 			#friends{
-				width : 760px;
-				height: 113px;
+        background-image: url("images/friends_background.png");
+        height: 124px;
+        padding-top: 3px;
+        width: 760px;
 			}
 			
 			#friends a{
@@ -22,11 +25,11 @@
 				margin-top : 8px;
 			}
 			#friends .friend .photo{
-				position : absolute;
-				left : 12px;
-				top : 12px;
-				width : 44px;
-				height : 44px;
+				 height: 46px;
+         left: 19px;
+         position: absolute;
+         top: 14px;
+         width: 46px;
 			}
 
 			#friends-container {
@@ -58,11 +61,10 @@
 
 			.friend .name {
 				position : absolute;
-				top : 57px;
+				top : 62px;
 				left:0px;
 				width: 100%;
 				text-align : center;
-				font-family : helvetica;
 				font-size : 14px;
 				color : white;
 				font-weight: bold;			
@@ -71,11 +73,10 @@
 
 			.friend .score {
 				position : absolute;
-				top : 72px;
+				top : 78px;
 				width: 100%;
 				left:0px;
 				text-align : center;
-				font-family : helvetica;
 				font-size : 14px;
 				color : orange;
 				font-weight: bold;			
@@ -86,10 +87,10 @@
 				top : 20px;
 				left: 60px;
 				text-align : center;
-				font-family : helvetica;
 				font-size : 16px;
 				color : orange;
-				font-weight: bold;			
+				font-weight: bold;
+        z-index:1;
 			}
 
 			.friend .top_rank sup{
@@ -99,10 +100,12 @@
 				padding-top:3px;
 				width:98px;
 				height:32px;
+				color: white;
 				background-repeat:no-repeat;
 				text-align : center;
 				float : left;
 				cursor:pointer;
+        font-weight:bold;
 			}
 			#friendsRanks{
 				margin-left : 10px;
@@ -118,7 +121,7 @@
 				display :block;
 				float:left;
 				color:orange;
-				font-size:18px;
+				font-size:14px;
 				font-weight:bold;
 				margin-left:10px;
 			}
@@ -165,7 +168,7 @@
 				{else}
 					<a href="#" onclick="window.parent.FBDefender.invite();return false;">
 					<img class='photo' src='images/q_mark.png' />				
-					<div class="name addFriend"><span>Add Friend</span>
+					<div class="name addFriend"><span>أضف صديق</span>
 						<span class="coinsWon">+500</span>
 						<img src="../images/intro/market/money.png"/>
 					</div>
@@ -196,7 +199,7 @@
 										{else}
 											<a href="#" onclick="window.parent.FBDefender.invite();return false;">
 											<img class='photo' src='images/q_mark.png' />				
-											<div class="name addFriend"><span>Add Friend</span>
+											<div class="name addFriend"><span>أضف صديق</span>
 												<span class="coinsWon">+500</span>
 												<img src="../images/intro/market/money.png"/>
 											</div>
@@ -214,7 +217,7 @@
 						<div class = "friend">
 							<img src="images/blank.png" />
 							<img class='photo' src='images/q_mark.png' />				
-							<div class="name addFriend"><span>Add Friend</span>
+							<div class="name addFriend"><span>أضف صديق</span>
 									<span class="coinsWon">+500</span>
 									<img src="../images/intro/market/money.png"/>
 								</div>
@@ -227,10 +230,10 @@
 		</div>
 	</textarea >
 		<div id="friendsRanks" class="active" onclick = "viewFriendsRanks()">	
-				Friends
+				اصدقائي
 			</div>
 		<div id="worldRanks" class="inactive" onclick = "viewWorldRanks()">
-					Everyone
+					الكل
 					</div>
 
 <script>
