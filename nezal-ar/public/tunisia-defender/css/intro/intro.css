@@ -100,40 +100,77 @@
   top : 180px;
   width : 400px;
   height : 170px;
-  z-index:100;
+  z-index:1002;
 }
-#congrates .content
+#congrates .congratesBg 
 {
-  font-family:verdana;
-  font-size:13px;
-  height:70px;
-  left:140px;
-  position:absolute;
-  top:35px;
-  width:220px;
-  font-weight : bold;
+  width : 400px;
+}
+#congrates .logo {
+    left: 20px;
+    position: absolute;
+    top: 35px;
+    width: 130px;
+}
+#congrates .content {
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  height: 70px;
+  left: 160px;
+  position: absolute;
+  top: 50px;
+  width: 200px;
 }
 #congrates .ok
 {
-  height:30px;
-  left:135px;
-  position:absolute;
-  top:110px;
-  width:230px;
+  height: 30px;
+  left: 160px;
+  position: absolute;
+  text-align: center;
+  top: 146px;
+  width: 79px;
+}
+#congrates .ok div.hover img
+{
+  width : 79px;
+}
+#congrates .ok div.hover
+{
+  display:none;
+  position : absolute;
+  top : 0px;
+  left : 0px;
+  width : 79px;
+}
+#ok:hover div.hover
+{
+  display:block;
+}
+#congrates .ok .button
+{
+  position: absolute;
+  z-index: 10;
+  top : 2px;
+  right : 2px;
+}
+#congrates .ok .button img
+{
+  width:75px;
+  position : absolute;
+  top :0px;
 }
 #congrates #rogerText
 {
-  color:#FFCA00;
-  font-family:verdana;
-  font-size:11px;
-  font-weight:bold;
-  height:22px;
-  line-height:22px;
-  position:absolute;
-  text-align:center;
-  top:5px;
-  width:50px;
-  margin : 0px 2px;
+  color: white;
+  font-size: 17px;
+  font-weight: bold;
+  height: 52px;
+  line-height: 52px;
+  position: absolute;
+  text-align: center;
+  top: 0;
+  width: 73px;
 }
 #intro
 {
@@ -970,15 +1007,96 @@ div.clickableButton, span.clickableButton
 
 #publishScreen 
 {
-	width : 400px;
-	height : 200px;
-	background : black;
+	width : 550px;
+	height : 275px;
 	position : absolute;
-	top : 100px;
-	left : 100px;
+	top : 120px;
+	left : 110px;
 	color : white;
 	z-index : 1000;
 }
+#publishScreen #publishConfirm
+  height: 100%;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+#publishScreen .background
+{
+  position : absolute;
+  top : 0px;
+  right : 0px;
+}
+#publishScreen .logo
+{
+  position : absolute;
+  top : 40px;
+  left : 35px;
+}
+#publishScreen .content
+{
+  position: absolute;
+  right: 40px;
+  top: 50px;
+  width: 280px;
+}
+#publishScreen .ok
+{
+  height: 80px;
+  position: absolute;
+  right: 140px;
+  top: 195px;
+  width: 250px;
+}
+#publishScreen .ok #right
+{
+  position : absolute;
+  right : 0px;
+  top : 0px;
+}
+#right .button
+{
+  position : absolute;
+  top : 3px;
+  right : 2px;
+}
+#left .button
+{
+  position : absolute;
+  top : 3px;
+  right : 3px;
+}
+#right div.hover-right, #left div.hover-left
+{
+  position : absolute;
+  top : 0px;
+  display : none;
+}
+#right:hover div.hover-right
+{
+  display : block;
+}
+#left:hover div.hover-left
+{
+  display : block;
+}
+#publishScreen .ok #left
+{
+  position : absolute;
+  right : 130px;
+  top : 0px;
+}
+#publishScreen .ok #rogerText
+{
+  font-size: 20px;
+  line-height: 60px;
+  position: absolute;
+  text-align: center;
+  top: 10px;
+  width: 100%;
+}
+
+
 .arabic{
 		direction :rtl;
 }

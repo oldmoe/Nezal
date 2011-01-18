@@ -359,7 +359,9 @@
 		soundon : 'Son activé',
 		soundoff: 'Son desactivé',
 		level:'Niveau',
-		roger:'Entendu'
+		roger:'Entendu',
+    ok : 'sure',
+    cancel : 'cancel'
 	},
 	promotion: {
 		msg1 : 'Félicitations ',

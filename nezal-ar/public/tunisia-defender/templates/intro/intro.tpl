@@ -1,21 +1,20 @@
 <textarea id='congratesTemplate' style="display:none">
   <div id="character">
-	  <img class="congratesBg" src="${Loader.images.intro['character.png'].getAttribute('data')}"/>
+    <img class="congratesBg" src="${Loader.images.intro['publish/publish.png'].getAttribute('data')}"/>
+    <img class="logo" src="${Loader.images.intro['intro-logo.png'].getAttribute('data')}"/>
   </div>
   <div class="content"> 
 	  <div class="msg">
 	    ${msg}
 	  </div>
   </div>
-  <div class="ok">
-    <div style="display:inline-block; height : 10px; width : 140px;">
+  <div class="ok" id="ok">
+    <div class="hover">
+      <img src="${Loader.images.intro['publish/button_middle_hover.png'].getAttribute('data')}" class="hover"/>
     </div>
-    <div style="display:inline-block;" onclick="Intro.hideCongrates()" class="clickableButton clickSound">
-        {if ($('intro').getStyle('direction')=='ltr') }
-          <img src="${Loader.images.intro['ready.png'].getAttribute('data')}" style="width:80px;"/>
-        {else}
-          <img src="${Loader.images.intro['back.png'].getAttribute('data')}" style="width:80px;"/>
-        {/if}
+    <div style="display:inline-block;" onclick="Intro.hideCongrates()" class="clickableButton clickSound button">
+      <img src="${Loader.images.intro['publish/button_middle.png'].getAttribute('data')}"/>
+      <img src="${Loader.images.intro['publish/button_middle_click.png'].getAttribute('data')}" style="display:none;"/>
 	    <div id='rogerText'>${Text.game.controls.roger}</div>
     </div>
   </div>
@@ -714,6 +713,36 @@
 
 <textarea id="publishConfirmTemplate">
   <div id="publishConfirm">
-    <div id="okButton"> ok </div>
+    <div id="background">
+      <img class="background" src="${Loader.images.intro['publish/publish.png'].getAttribute('data')}"/>
+      <img class="logo" src="${Loader.images.intro['intro-logo.png'].getAttribute('data')}"/>
+    </div>
+    <div class="content"> 
+	    <div class="msg">
+        ${Text.facebook.userPrompt}
+	    </div>
+    </div>
+    <div class="ok" id="ok">
+      <div id="right">
+        <div class="hover-right">
+          <img src="${Loader.images.intro['publish/button_right_hover.png'].getAttribute('data')}"/>
+        </div>
+        <div id="okButton" style="display:inline-block;" class="clickableButton clickSound button">
+          <img src="${Loader.images.intro['publish/button_right.png'].getAttribute('data')}"/>
+          <img src="${Loader.images.intro['publish/button_right_click.png'].getAttribute('data')}" style="display:none;"/>
+	        <div id='rogerText'>${Text.game.controls.ok}</div>
+        </div>
+      </div>
+      <div id="left">
+        <div class="hover-left">
+         <img src="${Loader.images.intro['publish/button_left_hover.png'].getAttribute('data')}"/>
+        </div>
+        <div style="display:inline-block;" onclick="Intro.hidePublishScreen();" class="clickableButton clickSound button">
+          <img src="${Loader.images.intro['publish/button_left.png'].getAttribute('data')}"/>
+          <img src="${Loader.images.intro['publish/button_left_click.png'].getAttribute('data')}" style="display:none;"/>
+	        <div id='rogerText'>${Text.game.controls.cancel}</div>
+        </div>
+      </div>
+    </div>
   </div>
 </textarea>

@@ -232,6 +232,7 @@ var Intro = {
         campaign : {
             index : 1,
 						onSelect : function(campaign){
+                if(!Intro.userData.like) FBDefender.isFan();
 								$('previousCampaigns').hide();
 								$$('.levels').each(function(div){div.hide()});
 								if(campaign)GameConfigs.campaign = campaign.name
@@ -631,6 +632,16 @@ var Intro = {
     
     showLikeCongrates : function(){
       $('congrates').innerHTML = Intro.templates.congrates[1].process({ "msg" : Text.facebook.like });
+      $$('#congrates .ok .button')[0].observe('mousedown', 
+                                          function(){
+                                            $$('#congrates .ok .button img')[1].show();
+                                            $$('#congrates .ok .button img')[0].hide();
+                                          });
+      $$('#congrates .ok .button')[0].observe('mouseup', 
+                                          function(){
+                                            $$('#congrates .ok .button img')[0].show();
+                                            $$('#congrates .ok .button img')[1].hide();
+                                          });
       likeButton = $$('#marketPlace .like')[0];
       if(likeButton) likeButton.hide();
       $$('#congrates .clickSound').each(function(element){
@@ -663,7 +674,9 @@ var Intro = {
     hideFloatBg : function(){
         $$("#" + Intro.sequence[Intro.currentPage]  + " #" + "floatBg")[0].hide();
     },
-
+    hidePublishScreen : function(){
+        $('publishScreen').hide();
+    },
     enablePauseScreen : function() {
         $('pause').show()
     },

@@ -1,6 +1,6 @@
 FBDefender = {
     
-    imagesUrl : 'http://studio.nezal.com/fb-games/tunisia-defender/images/',
+    imagesUrl : 'http://studio.nezal.com:3500/tunisia-defender/images/',
     
     gameName : function(){
       return Text.gameName;  
