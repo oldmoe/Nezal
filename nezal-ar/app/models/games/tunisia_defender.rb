@@ -5,10 +5,11 @@ class TunisiaDefender < Metadata
   WIN_EXP_FACTOR = (1.5/50)
   LOSE_EXP_FACTOR = (1.0/50)
   WIN_COIN_FACTOR = (1.0/300)
-  LIKE_COINS = 500
-  BOOKMARK_COINS = 500
-  SUBSCRIBE_COINS = 500
+  LIKE_COINS = 1000
+  BOOKMARK_COINS = 1000
+  SUBSCRIBE_COINS = 1000
   INVITE_COINS = 500
+  DEFAULT_USER_COINS = 2000
   
   def self.init_game(game)
     metadata = { 'towers' => {}, 'weapons' => {} , 'creeps' => {} }
