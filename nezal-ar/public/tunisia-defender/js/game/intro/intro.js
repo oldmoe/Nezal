@@ -261,7 +261,7 @@ var Intro = {
                                                                       function(){
                                                                           $$('.camp-header .market-link .button img')[1].show();          
                                                                           $$('.camp-header .market-link .button img')[2].hide();
-                                                                          Sounds.play(Sounds.gameSounds.click)
+                                                                          Sounds.play(Sounds.gameSounds.click);
                                                                           Intro.select('marketPlace');
                                                                       })
                     $$('#missions .clickableButton').each(function(button){
@@ -353,6 +353,26 @@ var Intro = {
                 $('marketPlace').innerHTML = Intro.templates.marketPlace[1].process({ 
                                                   "type" : "towers",
                                                   "data" : data});
+                $$('#marketPlace .addMoney')[0].observe('mouseover',
+                                      function(){
+                                          $$('#marketPlace .addMoney img')[2].show();
+                                      });
+                $$('#marketPlace .addMoney')[0].observe('mouseout',
+                                      function(){
+                                          $$('#marketPlace .addMoney img')[2].hide();
+                                      });
+                $$('#marketPlace .addMoney')[0].observe('mousedown',
+                                      function(){
+                                          $$('#marketPlace .addMoney img')[0].hide();
+                                          $$('#marketPlace .addMoney img')[1].show();
+                                      });
+                $$('#marketPlace .addMoney')[0].observe('mouseup',
+                                      function(){
+                                          $$('#marketPlace .addMoney img')[0].show();
+                                          $$('#marketPlace .addMoney img')[1].hide();
+                                          Sounds.play(Sounds.gameSounds.click);
+                                          Intro.showPaymentBg();
+                                      });
                 $('weaponsDisplay').innerHTML = Intro.templates.marketScroll[1].process({ 
                                                   "type" : "weapons",
                                                   "data" : data,
@@ -611,6 +631,8 @@ var Intro = {
     
     showLikeCongrates : function(){
       $('congrates').innerHTML = Intro.templates.congrates[1].process({ "msg" : Text.facebook.like });
+      likeButton = $$('#marketPlace .like')[0];
+      if(likeButton) likeButton.hide();
       $$('#congrates .clickSound').each(function(element){
           element.observe('click', function(element){Sounds.play(Sounds.gameSounds.click)})
       });
