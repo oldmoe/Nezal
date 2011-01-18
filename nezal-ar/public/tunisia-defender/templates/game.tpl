@@ -155,32 +155,70 @@
 			<div id="static" style="display:none"></div>
 			<div id="result" style="display:none;"></div>
 			<textarea id='resultTemplate' style="display:none">
-					<img src="${Loader.images.intro['paper.png'].getAttribute('data')}"/>
-					<img id="resultCoin" src="${Loader.images.background['coin.png'].getAttribute('data')}"/>
-					<div id="replay" onclick="game.scene.replayScene()" style="display:none;"></div>
-					<div id="coins">
-						<div id="coinsWord">${Text.game.result.coins}</div>
-						<div id="coinsValue">0</div>
-					</div>
-					<div id="score">
-						<div id="scoreWord">${Text.game.result.score}</div>
-						<div id="scoreValue"></div>
-					</div>
-					<div id="win">
-						<img id="resultBlank" src="${Loader.images.intro['blank.png'].getAttribute('data')}"/>
-						<img id="winClouds" src="${Loader.images.background['win_clouds.png'].getAttribute('data')}"/>
-						<img id="winCenter" src="${Loader.images.background['win_center.png'].getAttribute('data')}"/>
-						<img id="twoCannons" src="${Loader.images.intro['logo.png'].getAttribute('data')}"/>
-					</div>
-					<div id="lose" >
-						<img id="loseClouds" src="${Loader.images.background['lose_clouds.png'].getAttribute('data')}"/>
-						<img id="loseCenter" src="${Loader.images.background['lose_center.png'].getAttribute('data')}"/>
-					</div>
-					<div id="resultText">
-						<pre id="stats"></pre>
-					</div>
-					<div id="playAgain">${Text.game.result.playAgain}</div>
-					<div id="exit">${Text.game.result.exit}</div>
+				<div id="win">
+          <img class="resultBackground" src="${Loader.images.intro['win_lose_background.png'].getAttribute('data')}"/>
+          <img class="win_logo" src="${Loader.images.intro['win_logo.png'].getAttribute('data')}"/>
+          <div class="exit">
+            <img class="hover" src="${Loader.images.intro['button_left_hover.png'].getAttribute('data')}" style="display:none"/>
+            <img src="${Loader.images.intro['button_left.png'].getAttribute('data')}"/>
+            <img class="citiesImg" src="${Loader.images.intro['cities.png'].getAttribute('data')}"/>
+          </div>
+          <div class="playAgain">
+            <img class="hover" src="${Loader.images.intro['button_middle_hover.png'].getAttribute('data')}" style="display:none"/>
+            <img src="${Loader.images.intro['button_middle.png'].getAttribute('data')}"/>
+            <img class="replayImg" src="${Loader.images.intro['replay.png'].getAttribute('data')}"/>
+          </div>
+          <div class="nextCity">
+            <img class="hover" src="${Loader.images.intro['button_right_hover.png'].getAttribute('data')}" style="display:none"/>
+            <img src="${Loader.images.intro['button_right.png'].getAttribute('data')}"/>
+            <img class="nextImg" src="${Loader.images.intro['next.png'].getAttribute('data')}"/>
+          </div>
+        </div>
+        <div id="lose">
+          <img class="resultBackground" src="${Loader.images.intro['win_lose_background.png'].getAttribute('data')}"/>
+          <img class="lose_logo" src="${Loader.images.intro['lose_logo.png'].getAttribute('data')}"/>
+          <div class="exit">
+            <img class="hover" src="${Loader.images.intro['button_left_hover.png'].getAttribute('data')}" style="display:none"/>
+            <img src="${Loader.images.intro['button_left.png'].getAttribute('data')}"/>
+            <img class="citiesImg" src="${Loader.images.intro['cities.png'].getAttribute('data')}"/>
+          </div>
+          <div class="playAgain">
+            <img class="hover" src="${Loader.images.intro['button_right_hover.png'].getAttribute('data')}" style="display:none"/>
+            <img src="${Loader.images.intro['button_right.png'].getAttribute('data')}"/>
+            <img class="replayImg" src="${Loader.images.intro['replay.png'].getAttribute('data')}"/>
+          </div>
+        </div>
+        <img id="resultCoin" src="${Loader.images.intro['market/coin.png'].getAttribute('data')}"/>
+        <div id="coins">
+          <div id="coinsWord">النقود</div>
+          <div id="coinsValue">10000</div>
+        </div>
+        <div id="score">
+          <div id="scoreWord">النقاط</div>
+          <div id="scoreValue">10000</div>
+        </div>
+        <div class="cityName">
+          ${TunisiaCities[game.scene.config.mission.path]}
+        </div>
+         <div class="stars"> 
+          <div class="star-img">
+            {for star in $A($R(1,game.scene.stars))}
+            <span style="width:13px;display:inline-block;margin-left:3px;">                
+              <img src="${Loader.images.intro['campaign/star-filled.png'].getAttribute('data')}"/>
+            </span>
+            {/for}
+            {eval}
+              limit = game.scene.stars
+              if(!limit)
+                limit = 0
+            {/eval}
+            {for star in $A($R(0,2-limit))}
+            <span style="width:13px;display:inline-block;margin-left:3px;">                
+              <img src="${Loader.images.intro['campaign/star.png'].getAttribute('data')}"/>
+            </span>
+            {/for}
+          </div>
+        </div>
 			</textarea>
 			<div id="splashScreen" style="display:none">
 				<div class="loading_bar_bg">

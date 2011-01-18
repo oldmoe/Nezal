@@ -86,7 +86,9 @@ class TunisiaDefender < Metadata
     data = self.decode(data_encoded)
     metadata = self.decode(user_campaign.metadata)
     if metadata['missions'][data['mission'] -1]
-      metadata['missions'][data['mission'] -1]['stars'] = data['stars']
+      if(!metadata['missions'][data['mission'] -1]['stars']||metadata['missions'][data['mission'] -1]['stars'] < data['stars'])
+        metadata['missions'][data['mission'] -1]['stars'] = data['stars']
+      end        
       old_score = metadata['missions'][data['mission'] -1]['score']
       metadata['missions'][data['mission'] -1]['score'] = 
 		  if metadata['missions'][data['mission'] -1]['score'] > data['score']

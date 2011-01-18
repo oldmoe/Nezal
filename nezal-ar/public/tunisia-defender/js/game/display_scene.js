@@ -9,6 +9,7 @@ var DisplayScene = Class.create(CityDefenderScene, {
 		this.templates['towerInfo'] = TrimPath.parseTemplate($('towerInfoTemplate').value) 
 		this.templates['stats'] = TrimPath.parseTemplate($('statsTemplate').value) 
 		IncomingWaves.init($("container"),$("wavesTemplate"),"incomingWaves",this.reactor)
+		this.resultTemplate = TrimPath.parseTemplate($('resultTemplate').value) 
 		this.displays = []
 	},
 	init : function($super){
@@ -186,23 +187,23 @@ var DisplayScene = Class.create(CityDefenderScene, {
 	displayStats : function(){
 		$$('#score #scoreValue').first().innerHTML = this.score
 		$$('#coins #coinsValue').first().innerHTML = Intro.userData.coins - this.coins
-		if(this.statText){
-			if(this.statText.length == this.statTextIndex){
-				this.statText = ''
-				this.reactor.pause()
-				this.statTextIndex = 0
-				return
-			}else{
-				var data = $('stats').innerHTML
-				$('stats').innerHTML = data + this.statText[this.statTextIndex]
-				this.statTextIndex++
-			}
-		}else{
-			this.statTextIndex = 0
-			$('stats').innerHTML = ''
-		}
-		var self = this
-		this.push(2,function(){self.displayStats()})
+//		if(this.statText){
+//			if(this.statText.length == this.statTextIndex){
+//				this.statText = ''
+//				this.reactor.pause()
+//				this.statTextIndex = 0
+//				return
+//			}else{
+//				var data = $('stats').innerHTML
+//				$('stats').innerHTML = data + this.statText[this.statTextIndex]
+//				this.statTextIndex++
+//			}
+//		}else{
+//			this.statTextIndex = 0
+//			$('stats').innerHTML = ''
+//		}
+//		var self = this
+//		this.push(2,function(){self.displayStats()})
 	},
 	promoteUser : function(win){
 //		Sounds.play(Sounds.gameSounds.rank_promotion)
@@ -223,16 +224,14 @@ var DisplayScene = Class.create(CityDefenderScene, {
 //		}
 	},
 	end : function($super,state){
+		$('result').innerHTML = this.resultTemplate.process()
+		game.registerResultHandlers()
 		var self = game.scene
 		self.push(40,function(){
 			game.scene.running = false
 			$("result").addClassName(state);
-			var resultText = window.Text.game.result
 			if(state == "win"){
 					function win(){	
-							self.statText = resultText.winMission1 +" " +self.config.mission.name+" "+resultText.winMission2+"\n\n"+resultText.enemies+"\t"+resultText.destroyed+" "
-							+self.stats.creepsDestroyed+"\t"+resultText.escaped+" "+self.escaped+"\n"+resultText.towers+"\t"+resultText.built+" "
-							+self.stats.towersCreated+"\t"+resultText.destroyed+" "+self.stats.towersDestroyed
 							$('pauseWindow').style.zIndex = 299
 							$('pauseWindow').hide()	
 							$('popup').hide()
@@ -257,9 +256,6 @@ var DisplayScene = Class.create(CityDefenderScene, {
 						win()
 			}
 			else{
-				self.mission.name+" "+resultText.loseMission +"\n\n"+resultText.enemies+"\t"+resultText.destroyed+" "
-				+self.stats.creepsDestroyed+"\t"+resultText.escaped+" "+self.escaped+"\n"+resultText.towers+"\t"+resultText.built+" "
-				+self.stats.towersCreated+"\t"+resultText.destroyed+" "+self.stats.towersDestroyed
 				$$('#result #win').first().hide()
 				$$('#result #lose').first().show()
 				new Effect.Appear("static")
@@ -305,7 +301,7 @@ var DisplayScene = Class.create(CityDefenderScene, {
 						else if(this.escaped < 10)stars = 2;
 						else stars = 1;	
 					}
-					
+					this.stars = stars
 				  Intro.sendScore(this.score, win, stars, onSuccess);
 			 }
 	},
