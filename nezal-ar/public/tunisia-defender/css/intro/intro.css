@@ -15,13 +15,13 @@
   src: url("../fonts/arabic.TTF");
 }
 #intro.arabic{
-  font-family : Arabic, Adlib,Tahoma,Arial Black;
+  font-family : Arabic, Tahoma,Arial Black;
   font-weight : bold;
   direction : rtl;
 }
 #intro.arabic .buttonText
 {
-  font-family : Arabic, Adlib, Arial Black, Tahoma;
+  font-family : Arabic, Tahoma;
   text-transform : capitalize;
   text-align:center;
   font-size : 17px;
@@ -84,7 +84,7 @@
   top:234px;
 }
 #congrates.arabic{
-  font-family : Adlib,Tahoma,Arial Black;
+  font-family : Arabic,Tahoma,Arial Black;
   font-weight : bold;
   direction : rtl;
 }
@@ -195,6 +195,18 @@
   position: absolute;
   top: 194px;
   z-index : 100;
+}
+#campaign #map
+{
+  left: 266px;
+  position: absolute;
+  top: 60px;
+}
+#campaign #name {
+  left: 280px;
+  position: absolute;
+  top: 85px;
+  z-index: 100;
 }
 #campaign .wrapper 
 {
@@ -339,6 +351,17 @@
   top: 0px;
   left: 0px;
 }
+#marketPlace #background .map
+{
+  position: absolute;
+  top: 55px;
+  left: 265px;
+}
+#marketPlace #background .name {
+  position: absolute;
+  right: 275px;
+  top: 95px;
+}
 #marketPlace #upperPart {
   height: 160px;
   left: 0;
@@ -361,7 +384,7 @@
 #marketPlace #upperPart .coins 
 {
   height: 70px;
-  left: 520px;
+  left: 537px;
   position: absolute;
   text-align: center;
   top: 24px;
@@ -397,7 +420,7 @@
 #marketPlace #upperPart .like
 {
   position: absolute;
-  top: 70px;
+  top: 128px;
   left: 288px;
   width: 200px;
   height: 30px;
@@ -413,10 +436,10 @@
 	border:1px solid black;
 	color:black;
 	height:100px;
-	left:125px;
-	opacity:0.8;
+	left:140px;
+	opacity:0.9;
 	position:absolute;
-	top:76px;
+	top:160px;
 	z-index:1000;
 }
 #marketPlace #playerProgressIframeContainer .close{
@@ -433,7 +456,7 @@
 {
   position: absolute;
   top: 98px;
-  left: 572px;
+  left: 590px;
   width: 97px;
   height: 33px;
   cursor : pointer;
@@ -532,10 +555,9 @@
 #marketPlace li .content .itemPrice
 {
   color:#FAC200;
-  font-family:Adlib, Arial Black, Tahoma;
-  font-size:19px;
+  font-family:Digital, Arial Black, Tahoma;
+  font-size:20px;
   text-align:center;
-  padding-top:4px;
   float : left;
   width:60px;
   font-weight : normal;
@@ -603,6 +625,23 @@ div.clickableButton, span.clickableButton
 }
 
 
+#marketPlace #floatBg
+{
+  color:#FAC200;
+  height:222px;
+  left:130px;
+  position:absolute;
+  top:150px;
+  width:520px;
+  z-index:101;
+}
+#marketPlace #floatBg .background
+{
+  position : absolute;
+  top : 0px;
+  left : 0px;
+}
+
 #marketPlace #paymentFloatBg
 {
   -moz-border-radius:25px;
@@ -657,22 +696,6 @@ div.clickableButton, span.clickableButton
   top: 20px;
   width: 440px;
   
-}
-
-#marketPlace #floatBg
-{
-  -moz-border-radius:25px;
-  -webkit-border-radius: 25px;
-  -khtml-border-radius: 25px;
-  background:none repeat scroll 0 0 black;
-  color:#FAC200;
-  height:222px;
-  left:130px;
-  opacity:0.9;
-  position:absolute;
-  top:150px;
-  width:520px;
-  z-index:101;
 }
 #marketPlace #paymentFloatBg #paymentClose {
   margin-left: 580px;
@@ -730,6 +753,9 @@ div.clickableButton, span.clickableButton
 }
 #marketPlace #floatBg .content
 {
+  position : absolute;
+  left : 0px;
+  top : 0px;
   display:inline-block;
   height:150px;
   margin:10px;
@@ -812,39 +838,19 @@ div.clickableButton, span.clickableButton
   top:170px;
   width:470px;
 }
-#marketPlace #floatBg .actions .rank
-{
-  display:inline-block;
-  text-transform:capitalize;
-  vertical-align:top;
-  width:48%;
-	height : 30px;
-}
-#marketPlace #floatBg .actions .rank span
-{
-  display:inline-block;
-  margin-top:12px;
-  vertical-align:top;
-}
-#marketPlace #floatBg .actions .rank img
-{
-  height:35px;
-}
 #marketPlace #floatBg .actions .action
 {
-  bottom:0;
-  display:inline-block;
-  font-size:11px;
-  width:236px;
-  direction : ltr;
+  position : absolute; 
+  left : 10px;
+  top : 5px;
+  width:75px;
+  height : 28px;
 }
 #marketPlace #floatBg .actions .action .active
 {
-  color:#FF4102;
-  font-size:19px;
-  display:inline-block;
-  padding-top:10px;
-  width : 81px;
+  position : absolute;
+  top : 0px;
+  left : 0px;
   text-align: center;
 }
 #marketPlace #floatBg .actions .action .inactive
@@ -857,16 +863,17 @@ div.clickableButton, span.clickableButton
   width : 81px;
   text-align: center;
 }
-#marketPlace #floatBg .actions .addMoney
+#marketPlace #floatBg .actions .action .active .buttonText
 {
-  bottom:0;
+  font-size: 16px;
+  height: 28px;
+  left: 0;
+  line-height: 27px;
+  position: absolute;
+  top: 0;
+  width: 75px;
   color:white;
-  cursor:pointer;
-  display:inline-block;
-  height:10px;
-  text-transform:capitalize;
 }
-
 
 #marketPlace #floatBg #upgrade .content .spans
 {
@@ -905,7 +912,7 @@ div.clickableButton, span.clickableButton
 }
 #marketPlace  #floatBg #upgrade .beforeText
 {
-  color : #ff4102;
+  color : #b30000;
 }
 #marketPlace  #floatBg #upgrade .parent
 {
@@ -923,7 +930,7 @@ div.clickableButton, span.clickableButton
   display:inline-block;
   width : 70%;
   height : 25px;
-  background : #ff4102;
+  background : #b30000;
   margin:0 -4px;
 }
 #marketPlace  #floatBg #upgrade .barYellow
@@ -953,7 +960,7 @@ div.clickableButton, span.clickableButton
 }
 #marketPlace  #floatBg #upgrade .currUpgrade
 {
-  color:#ff4102;
+  color:#b30000;
 }
 #pause  #loadingBarEmpty{
 	background:url("../../images/intro/loading_background.png");
@@ -1035,10 +1042,14 @@ div.clickableButton, span.clickableButton
 }
 #publishScreen .content
 {
+  font-family: Tahoma;
+  font-size: 30px;
+  font-weight: bold;
   position: absolute;
   right: 40px;
-  top: 50px;
+  top: 70px;
   width: 280px;
+  line-height : 150%;
 }
 #publishScreen .ok
 {

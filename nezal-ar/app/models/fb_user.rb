@@ -1,6 +1,6 @@
 class FbUser < ActiveRecord::Base
   
-  attr_accessible :fb_id
+  attr_accessible :fb_id, :coins
   has_many  :game_profiles, :class_name => "UserGameProfile", :dependent => :destroy, :foreign_key => 'user_id'
 
   # Get Global Top Scorers 

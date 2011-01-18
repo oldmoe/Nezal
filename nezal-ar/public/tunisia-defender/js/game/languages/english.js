@@ -1,5 +1,5 @@
 window.Text = {
-	gameName: 'Defender of Arabia',
+	gameName: 'Defender of Tunisia',
 	towers : 'tower',
   payments : {
     daopay : {
