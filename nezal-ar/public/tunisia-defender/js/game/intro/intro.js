@@ -291,6 +291,7 @@ var Intro = {
 										Intro.show();
 										$('intro').show();
 										Intro.disablePauseScreen();
+										Sounds.gameSounds.game[0].play()
 										$('gameStart').hide();
 										$('scores').src = 'scores/friends.html?'+Object.toQueryString(FBConnect.session)
 								});
@@ -683,7 +684,7 @@ var Intro = {
 	enableProgressbar : function(percentage,timeout,fileName){
 		if(Loader.loaded[fileName]||percentage==91){
 			$$('#pause #loadingPercentage').first().innerHTML = "100 %"
-			$$('#pause  #loadingBarEmpty #loadingBarFill').first().style.width = "91%"		
+			$$('#pause  #loadingBarEmpty #loadingBarFill').first().style.width = "89%"		
 			//Intro.fileLoading=false
 			return 
 		}
@@ -779,6 +780,7 @@ var Intro = {
 		$('levelSelection').show()		
 	  },
 	  finish: function(){
+				Sounds.gameSounds.game[0].stop()
         var image = new Image();
       	image.onload = function(){
                                     Loader.challenges[GameConfigs.missionPath + "/path.png"] = image;

@@ -115,6 +115,7 @@
 				<div id="money">
 					0
 				</div>
+        <div id="InGamecityName"></div>
 				<div class="fps"></div>
 				<div class="start">	<div class = "startText"> </div></div>
 				<div class="towers">
@@ -123,7 +124,7 @@
 				<div id="towerInfo" class="towerInfo">
 					<p>
 					<b style="font-size:14px">
-					Click on a tower to view its info
+					إضغط على المدفع لتعرف قدراته
 					</b>
 					</p>
 				</div>
@@ -204,7 +205,7 @@
           <div class="star-img">
             {for star in $A($R(1,game.scene.stars))}
             <span style="width:13px;display:inline-block;margin-left:3px;">                
-              <img src="${Loader.images.intro['campaign/star-filled.png'].getAttribute('data')}"/>
+              <img src="${Loader.images.background['star.png'].getAttribute('data')}"/>
             </span>
             {/for}
             {eval}
@@ -214,7 +215,7 @@
             {/eval}
             {for star in $A($R(0,2-limit))}
             <span style="width:13px;display:inline-block;margin-left:3px;">                
-              <img src="${Loader.images.intro['campaign/star.png'].getAttribute('data')}"/>
+              <img src="${Loader.images.background['star_outline.png'].getAttribute('data')}"/>
             </span>
             {/for}
           </div>
