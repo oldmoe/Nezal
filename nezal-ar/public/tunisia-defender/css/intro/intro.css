@@ -3,10 +3,6 @@
   src: url("../fonts/ADLIB.TTF");
 }
 @font-face {
-  font-family: "Mcs";
-  src: url("../fonts/MCS.TTF");
-}
-@font-face {
   font-family: "Digital";
   src: url("../fonts/DIGITAL.TTF");
 }
@@ -14,14 +10,18 @@
   font-family: "Pakgirl";
   src: url("../fonts/30pakgirl_bold_TBS.ttf");
 }
+@font-face {
+  font-family: "Arabic";
+  src: url("../fonts/arabic.TTF");
+}
 #intro.arabic{
-  font-family : Adlib,Tahoma,Arial Black;
+  font-family : Arabic, Adlib,Tahoma,Arial Black;
   font-weight : bold;
   direction : rtl;
 }
 #intro.arabic .buttonText
 {
-  font-family : Adlib, Arial Black, Tahoma;
+  font-family : Arabic, Adlib, Arial Black, Tahoma;
   text-transform : capitalize;
   text-align:center;
   font-size : 17px;
@@ -100,40 +100,77 @@
   top : 180px;
   width : 400px;
   height : 170px;
-  z-index:100;
+  z-index:1002;
 }
-#congrates .content
+#congrates .congratesBg 
 {
-  font-family:verdana;
-  font-size:13px;
-  height:70px;
-  left:140px;
-  position:absolute;
-  top:35px;
-  width:220px;
-  font-weight : bold;
+  width : 400px;
+}
+#congrates .logo {
+    left: 20px;
+    position: absolute;
+    top: 35px;
+    width: 130px;
+}
+#congrates .content {
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  height: 70px;
+  left: 160px;
+  position: absolute;
+  top: 50px;
+  width: 200px;
 }
 #congrates .ok
 {
-  height:30px;
-  left:135px;
-  position:absolute;
-  top:110px;
-  width:230px;
+  height: 30px;
+  left: 160px;
+  position: absolute;
+  text-align: center;
+  top: 146px;
+  width: 79px;
+}
+#congrates .ok div.hover img
+{
+  width : 79px;
+}
+#congrates .ok div.hover
+{
+  display:none;
+  position : absolute;
+  top : 0px;
+  left : 0px;
+  width : 79px;
+}
+#ok:hover div.hover
+{
+  display:block;
+}
+#congrates .ok .button
+{
+  position: absolute;
+  z-index: 10;
+  top : 2px;
+  right : 2px;
+}
+#congrates .ok .button img
+{
+  width:75px;
+  position : absolute;
+  top :0px;
 }
 #congrates #rogerText
 {
-  color:#FFCA00;
-  font-family:verdana;
-  font-size:11px;
-  font-weight:bold;
-  height:22px;
-  line-height:22px;
-  position:absolute;
-  text-align:center;
-  top:5px;
-  width:50px;
-  margin : 0px 2px;
+  color: white;
+  font-size: 17px;
+  font-weight: bold;
+  height: 52px;
+  line-height: 52px;
+  position: absolute;
+  text-align: center;
+  top: 0;
+  width: 73px;
 }
 #intro
 {
@@ -302,188 +339,228 @@
   top: 0px;
   left: 0px;
 }
-#marketPlace #paper
-{
+#marketPlace #upperPart {
+  height: 160px;
+  left: 0;
+  position: absolute;
+  top: 20px;
+  width: 100%;
+}
+#marketPlace #upperPart .logo {
   position: absolute;
   top: 0px;
-  left: 0px;
+  left: 40px;
+  width: 200px;
+  height: 160px;
 }
-#marketPlace #upperPart
+#marketPlace #upperPart .logo img
 {
-  left:73px;
-  position:absolute;
-  top:42px;
-  width:606px;
+  width : 185px;
+  float : left;
 }
-#marketPlace #upperPart .rank
+#marketPlace #upperPart .coins 
 {
-  color:#FAC200;
-  height:65px;
-  left:35px;
-  position:absolute;
-  text-align:center;
-  top:30px;
-  width:135px;
+  height: 70px;
+  left: 520px;
+  position: absolute;
+  text-align: center;
+  top: 24px;
+  width: 200px;
 }
-#marketPlace #upperPart .rankImg
+#marketPlace #upperPart .coins .background
 {
-  height : 35px;
+  position: absolute;
+  left : 0px;
+  top : 0px;
 }
-#marketPlace .rankText
+#marketPlace #upperPart .coins .money 
 {
-  line-height:25px;
+  direction: ltr;
+  height: 26px;
+  left: 60px;
+  position: absolute;
+  text-align: center;
+  top: 19px;
+  width: 100px;
 }
-
-#marketPlace #upperPart .titleImg
+#marketPlace #upperPart .coins .money .text
 {
-  height:97px;
-  left:215px;
-  position:absolute;
-  top:12px;
+  font-family: Digital,Verdana,Tahoma;
+  font-size: 25px;
+  color : #FFCA00;
+  font-weight: normal;
+  display : inline-block;
+  line-height : 25px;
+  height : 25px;
+  overflow : hidden;
 }
-#marketPlace #upperPart .coins
+#marketPlace #upperPart .like
 {
-  font-family:Digital, Verdana, Tahoma;
-  font-size:21px;
-  left:480px;
-  position:absolute;
-  text-align:center;
-  top:35px;
-  width:75px;
-  font-weight : normal;
+  position: absolute;
+  top: 70px;
+  left: 288px;
+  width: 200px;
+  height: 30px;
+  cursor : pointer;
+}
+#marketPlace #playerProgressIframeContainer{
+	-moz-border-radius:5px 5px 5px 5px;
+	-webkit-border-radius:5px 5px 5px 5px;
+	-o-border-radius:5px 5px 5px 5px;
+	-ms-border-radius:5px 5px 5px 5px;
+	border-radius:5px 5px 5px 5px;
+	background-color:white;
+	border:1px solid black;
+	color:black;
+	height:100px;
+	left:125px;
+	opacity:0.8;
+	position:absolute;
+	top:76px;
+	z-index:1000;
+}
+#marketPlace #playerProgressIframeContainer .close{
+	cursor:pointer;
+	float:right;
+	font-family:Adlib;
+	margin-right:5px;
+	margin-top:5px;
+}
+#marketPlace #playerProgressIframeContainer iframe{
+	margin:10px;
 }
 #marketPlace #upperPart .addMoney
 {
-  color:#FAC200;
-  font-family:Adlib,Arial Black,Tahoma;
-  font-size:15px;
-  left:436px;
-  position:absolute;
-  text-align:center;
-  top:68px;
-  width:140px;
+  position: absolute;
+  top: 98px;
+  left: 572px;
+  width: 97px;
+  height: 33px;
+  cursor : pointer;
 }
-#marketPlace #upperPart .addMoney img
+#marketPlace #upperPart .addMoney .image
 {
-  border: none;
+  position : absolute;
+  left : 2px;
+  top : 2px;
+  z-index : 10;
 }
-.actions .action #addMoneyAnchor {
-  text-decoration: none;
-  color: #FAC200;
-}
-#marketPlace #upperPart .addText
+#marketPlace #upperPart .addMoney .hover
 {
-  display:inline-block;
-  line-height:30px;
-  text-align:center;
-  vertical-align:top;
-  width:25%;
+  position : absolute;
+  left : 0px;
+  top : 0px;
 }
-#intro.french #marketPlace #upperPart .addText
+#marketPlace .descriptionText
 {
-  width:36%;
-  font-size : 12px;
+  position: absolute;
+  right: 245px;
+  top: 315px;
 }
-#marketPlace #upperPart .moneyText
-{
-  display:inline-block;
-  height:30px;
-  line-height:30px;
-  vertical-align:top;
-}
-#intro.french #marketPlace #upperPart .moneyText
-{
-  font-size : 12px;
-}
+
 #marketPlace #weapons
 {
   font-size:14px;
-  left:4px;
   position:absolute;
-  top:165px;
+  top:185px;
   text-align : center;
   direction : ltr;
+  width : 100%;
+  height : 130px;
 }
 #marketPlace #towers
 {
   font-size:14px;
-  left:4px;
   position:absolute;
-  top:323px;
+  top:343px;
   text-align : center;
   direction : ltr;
+  width : 100%;
+  height : 130px;
 }
 #marketPlace #weaponsDisplay, #marketPlace #towersDisplay
 {
-  height:100px;
-  left:70px;
+  height: 115px;
+  left: 34px;
+  position: absolute;
+  top: 8px;
+  width: 693px;
+}
+#marketPlace .upgradeLevel
+{
+  font-family: Adlib,Arial Black,Tahoma;
+  font-size: 28px;
+  font-weight: normal;
+  height: 30px;
+  position: absolute;
+  text-align: right;
+  top: 86px;
+  width: 90px;
+  direction : rtl;
+}
+#marketPlace .qBoxImage
+{
+  position : absolute;
+  top : 14px;
+  width : 124px;
+}
+#marketPlace #weapons .lockImage, #marketPlace #towers .lockImage
+{
+  text-align : center;
+  width : 124px;
   position:absolute;
-  top:25px;
-  width:595px;
+  top:55px;
 }
-#marketPlace .itemImage
+#marketPlace li .content
 {
-  position:relative;
+  position:absolute;
+  top:6px;
+  width:124px;
 }
-#marketPlace .coinImage
+#marketPlace li .content .itemImage
 {
-  padding-left : 5px;
+  position: absolute;
+  text-align: center;
+  top: 7px;
+  width: 124px;
+}
+#marketPlace li .content  .coinImage
+{
+  padding-left : 20px;
   float : left;
 }
-#marketPlace .itemPrice
+#marketPlace li .content .itemPrice
 {
   color:#FAC200;
   font-family:Adlib, Arial Black, Tahoma;
-  font-size:18px;
+  font-size:19px;
   text-align:center;
   padding-top:4px;
   float : left;
   width:60px;
   font-weight : normal;
 }
-#marketPlace .upgradeLevel
-{
-  font-family:Adlib, Arial Black, Tahoma;
-  font-size:30px;
-  position:absolute;
-  text-align:right;
-  top:10px;
-  width:105px;
-  font-weight : normal;
-}
-#marketPlace .qBoxImage
-{
-  padding-top : 14px;
-}
-#marketPlace #weapons .lockImage, #marketPlace #towers .lockImage
-{
-  margin-left:34px;
-  position:absolute;
-  top:50px;
-}
 #marketPlace #info
 {
   position:absolute;
-  top:70px;
-  width:104px;
+  top:80px;
+  width:124px;
 }
 #marketPlace .infoImage
 {
   cursor:pointer;
   float:right;
-  margin-right:3px;
+  margin-right:12px;
 }
 #marketPlace .unlockImage
 {
   position:relative;
-  top:-26px;
+  top:-24px;
 }
-
 #marketPlace .unlockText
 {
   color:white;
   cursor:pointer;
-  font-family:Adlib,Arial Black,Tahoma;
   font-size:14px;
   left:1px;
   position:relative;
@@ -497,9 +574,20 @@
 {
   font-size:9px;
 }
+
+#marketPlace #actionContainer
+{
+  position : absolute;
+  top : 490px;
+  width : 690px;
+  left:27px;
+  height : 45px;
+  cursor : pointer;
+  color : #FAC200;
+}
 #marketPlace #ready, #marketPlace #back
 {
-  width : 115px;
+  width : 100px;
   height : 45px;
   cursor : pointer;
   color : #FAC200;
@@ -507,61 +595,13 @@
 }
 #marketPlace #ready
 {
-  left : 595px;
-}
-#marketPlace #actionContainer
-{
-  position : absolute;
-  top : 482px;
-  width : 690px;
-  left:27px;
-  height : 45px;
-  cursor : pointer;
-  color : #FAC200;
-}
-#marketPlace #backText, #marketPlace #readyText
-{
-  display:inline-block;
-  height:32px;
-  line-height:32px;
-  position:relative;
-  text-align:center;
-  top:-42px;
-  width:80px;
-}
-#marketPlace .msg
-{
-  color:black;
-  font-size:16px;
-  height:17px;
-  line-height:17px;
-  position:absolute;
-  text-align:center;
-  top:146px;
-  width:100%;
-}
-#marketPlace .action .text
-{
-  color:white;
-  font-size:11px;
-  height:100%;
-  left:0;
-  line-height:180%;
-  position:absolute;
-  text-align:center;
-  top:0;
-  width:100%;
+  left : 600px;
 }
 div.clickableButton, span.clickableButton
 {
-  opacity : 0.85;
   cursor : pointer;
 }
-div.clickableButton:hover, span.clickableButton:hover
-{
-  opacity : 1;
-  cursor : pointer;
-}
+
 
 #marketPlace #paymentFloatBg
 {
@@ -628,7 +668,7 @@ div.clickableButton:hover, span.clickableButton:hover
   color:#FAC200;
   height:222px;
   left:130px;
-  opacity:0.85;
+  opacity:0.9;
   position:absolute;
   top:150px;
   width:520px;
@@ -795,7 +835,8 @@ div.clickableButton:hover, span.clickableButton:hover
   bottom:0;
   display:inline-block;
   font-size:11px;
-  width:231px;
+  width:236px;
+  direction : ltr;
 }
 #marketPlace #floatBg .actions .action .active
 {
@@ -966,15 +1007,96 @@ div.clickableButton:hover, span.clickableButton:hover
 
 #publishScreen 
 {
-	width : 400px;
-	height : 200px;
-	background : black;
+	width : 550px;
+	height : 275px;
 	position : absolute;
-	top : 100px;
-	left : 100px;
+	top : 120px;
+	left : 110px;
 	color : white;
 	z-index : 1000;
 }
+#publishScreen #publishConfirm
+  height: 100%;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+#publishScreen .background
+{
+  position : absolute;
+  top : 0px;
+  right : 0px;
+}
+#publishScreen .logo
+{
+  position : absolute;
+  top : 40px;
+  left : 35px;
+}
+#publishScreen .content
+{
+  position: absolute;
+  right: 40px;
+  top: 50px;
+  width: 280px;
+}
+#publishScreen .ok
+{
+  height: 80px;
+  position: absolute;
+  right: 140px;
+  top: 195px;
+  width: 250px;
+}
+#publishScreen .ok #right
+{
+  position : absolute;
+  right : 0px;
+  top : 0px;
+}
+#right .button
+{
+  position : absolute;
+  top : 3px;
+  right : 2px;
+}
+#left .button
+{
+  position : absolute;
+  top : 3px;
+  right : 3px;
+}
+#right div.hover-right, #left div.hover-left
+{
+  position : absolute;
+  top : 0px;
+  display : none;
+}
+#right:hover div.hover-right
+{
+  display : block;
+}
+#left:hover div.hover-left
+{
+  display : block;
+}
+#publishScreen .ok #left
+{
+  position : absolute;
+  right : 130px;
+  top : 0px;
+}
+#publishScreen .ok #rogerText
+{
+  font-size: 20px;
+  line-height: 60px;
+  position: absolute;
+  text-align: center;
+  top: 10px;
+  width: 100%;
+}
+
+
 .arabic{
 		direction :rtl;
 }

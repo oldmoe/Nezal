@@ -358,7 +358,9 @@ window.Text = {
 		soundon : 'Sound on',
 		soundoff: 'Sound off',
 		level:'Level',
-		roger:'Roger'
+		roger:'Roger',
+    ok : 'sure',
+    cancel : 'cancel'
 	},
 	promotion: {
 		msg1 : 'Congratulations',

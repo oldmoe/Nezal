@@ -1,21 +1,20 @@
 <textarea id='congratesTemplate' style="display:none">
   <div id="character">
-	  <img class="congratesBg" src="${Loader.images.intro['character.png'].getAttribute('data')}"/>
+    <img class="congratesBg" src="${Loader.images.intro['publish/publish.png'].getAttribute('data')}"/>
+    <img class="logo" src="${Loader.images.intro['intro-logo.png'].getAttribute('data')}"/>
   </div>
   <div class="content"> 
 	  <div class="msg">
 	    ${msg}
 	  </div>
   </div>
-  <div class="ok">
-    <div style="display:inline-block; height : 10px; width : 140px;">
+  <div class="ok" id="ok">
+    <div class="hover">
+      <img src="${Loader.images.intro['publish/button_middle_hover.png'].getAttribute('data')}" class="hover"/>
     </div>
-    <div style="display:inline-block;" onclick="Intro.hideCongrates()" class="clickableButton clickSound">
-        {if ($('intro').getStyle('direction')=='ltr') }
-          <img src="${Loader.images.intro['ready.png'].getAttribute('data')}" style="width:80px;"/>
-        {else}
-          <img src="${Loader.images.intro['back.png'].getAttribute('data')}" style="width:80px;"/>
-        {/if}
+    <div style="display:inline-block;" onclick="Intro.hideCongrates()" class="clickableButton clickSound button">
+      <img src="${Loader.images.intro['publish/button_middle.png'].getAttribute('data')}"/>
+      <img src="${Loader.images.intro['publish/button_middle_click.png'].getAttribute('data')}" style="display:none;"/>
 	    <div id='rogerText'>${Text.game.controls.roger}</div>
     </div>
   </div>
@@ -215,7 +214,7 @@
 
 <textarea id='campaignTemplate' style="display:none">
     <div id="background">
-      <img src="${Loader.images.intro['campaign/background.png'].getAttribute('data')}"/>
+      <img src="${Loader.images.intro['background.png'].getAttribute('data')}"/>
       <img id="paper" src="${Loader.images.intro['campaign/cities.png'].getAttribute('data')}"/>
     </div>
     <div class="wrapper"> </div>
@@ -229,7 +228,7 @@
         </div>
       </div>
       <div class="logo">
-        <img src="${Loader.images.intro['campaign/logo.png'].getAttribute('data')}"/>
+        <img src="${Loader.images.intro['intro-logo.png'].getAttribute('data')}"/>
       </div>
     </div>  
     <div id="missions">
@@ -287,82 +286,6 @@
 
 
 <textarea id='missionTemplate' style="display:none">
-    <div id="floatBg" style="display : none;">
-      <div class="content"> 
-        <div class="spans">
-          <span class="name">   </span>
-          :
-          <span class="desc">   </span>
-        </div>
-        <div class="skeleton">
-          <img src=""></img>
-        </div>
-      </div>
-      <div id="close" onclick="Intro.hideFloatBg();" class="clickSound"> X </div>
-    </div>
-    
-    <div id="background">
-      <img src="${Loader.images.intro['background.png'].getAttribute('data')}"/>
-      <img id="paper" src="${Loader.images.intro['paper.png'].getAttribute('data')}"/>
-      <img id="character" src="${Loader.images.intro['mission/character.png'].getAttribute('data')}"/>
-      <img id="buble" src="${Loader.images.intro['mission/buble.png'].getAttribute('data')}"/>
-      <img id="mapBackground" src="${Loader.images.intro['mission/map.png'].getAttribute('data')}"/>
-      <img id="creepBackground" src="${Loader.images.intro['mission/creep.png'].getAttribute('data')}"/>
-    </div>
-    <div id="cityName">
-        ${city.name}
-    </div>
-    <div id="cityDesc" class="desc">
-        ${city.summary}
-    </div>
-    <div id="cityImage">
-        <img src="${Loader.challenges[GameConfigs.campaign]['images/flag.png'].getAttribute('data')}">
-    </div>
-    <div id="fullDesc" class="desc">
-        ${city.description}    
-    </div>
-    <div id="cityMap">       
-      <img src="${Loader.challenges[GameConfigs.campaign]['images'+path+'/path.png'].getAttribute('data')}"
-           style="width:222px;">
-    </div>
-    <div id="accept" onclick="Intro.next();" class="clickableButton acceptSound">
-      <img src="${Loader.images.intro['mission/accept.png'].getAttribute('data')}" >
-      <div class="text buttonText">
-        ${Text.intro.mission.accept}
-      </div>
-    </div>
-    <div id="reject" onclick="Intro.previous();" class="clickableButton rejectSound">
-      <span style="color : #550000; font-size: 12px;">${Text.intro.mission.or}</span> ${Text.intro.mission.goBack}
-    </div>
-    <div class="creepsHeadline">
-      ${Text.intro.mission.msg}
-    </div>
-    <div id="creeps">
-	      <div id="creeps-scroll">
-	          <div class="left">
-              <img src="">
-	            </img>
-            </div> 
-	          <div id="creeps-container" class="container">
-		          <ul id='creeps-ul'>
-    		        {for creep in city.creeps }
-    		          <li creepid="${creep}" onclick="Intro.showFloatBg(this)" class="clickSound">
-    		            <img src="${Loader.images.intro['creeps/'+creepConfig[creep]['image']].getAttribute('data')}" > </img>
-    		          </li>
-		            {/for}
-		          </ul>
-	          </div>
-	          <div class="right">
-              <img src="">
-              </img>
-	          </div> 
-        </div>
-	  </div>
-    <div id="creepBar">
-    </div>
-    <div id="stamp">
-      <img src="${Loader.images[GameConfigs.language]['confidintial-stamp.png'].getAttribute('data')}"> </img>
-    </div>
 </textarea>
 
 
@@ -501,10 +424,12 @@
               {if (!Intro.userData.metadata[data.type][data.itemid])}
                 {if ((data.cost > data.coins) || ( data.rank[0] > data.exp))}
                 <div  class="inactive">
+  		            <img src="${Loader.images.intro['market/buy-button.png'].getAttribute('data')}"/>
                   <span> ${Text.intro.marketPlace.unlock} </span>
                 </div>
                 {else}
                 <div class="active">
+  		            <img src="${Loader.images.intro['market/buy-button.png'].getAttribute('data')}"/>
                   <span class="clickableButton clickSound" itemid="${data.itemid}" 
                         type="${data.type}" onclick="Intro.unlockItem(this);"> 
                       ${Text.intro.marketPlace.unlock}
@@ -517,11 +442,13 @@
                              Intro.gameData[data.type][data.itemid]['upgrades'].length )}
                    
                         {if ((data.cost > data.coins) || ( data.rank[0] > data.exp))}
+          		            <img  src="${Loader.images.intro['market/buy-button.png'].getAttribute('data')}"/>
                           <div  class="inactive">
                             <span> ${Text.intro.marketPlace.upgrade} </span>
                           </div>
                         {else}
                           <div class="active">
+            		            <img src="${Loader.images.intro['market/buy-button.png'].getAttribute('data')}"/>
                             <span class="clickableButton clickSound" itemid="${data.itemid}" 
                                   type="${data.type}" onclick="Intro.upgradeItem(this);"> 
                                 ${Text.intro.marketPlace.upgrade}
@@ -533,13 +460,6 @@
                     <div  class="inactive"></div>
                 {/if}
               {/if}
-              <span style="margin:0 44px;"></span>
-              <a id="addMoneyAnchor" class="clickSound" href="javascript:void(0);" onclick="Intro.showPaymentBg();">
-                <div class="addMoney" >
-                  <img src="${Loader.images.intro['market/money.png'].getAttribute('data')}" > </img>
-                </div>
-              </a>
-              
           </div>
         </div>
     {/if}
@@ -642,81 +562,56 @@
 			<a class="clickSound" href="javascript:void(0);" id="contact-us-trigger" onclick="Intro.showContactUsForm();"> ${Text.payments.contactUsTrigger} </a> 
 		</div>
 	</div>
-    <!--div id="paymentFloatBg" style="display : none;">
-      <div class="pay">
-        <img id="pay-left-image" src="${Loader.images.payments['pay_left.png'].getAttribute('data')}" />
-        <img id="pay-middle-image" src="${Loader.images.payments['pay_middle.png'].getAttribute('data')}" />
-        <img id="pay-right-image" src="${Loader.images.payments['pay_right.png'].getAttribute('data')}" />
-      </div>
-      
-      <div id="payments-container">
-      </div>
-      
-      <div id="paymentClose" onclick="Intro.hidePaymentBg();" class="clickSound"> X </div>
-    </div-->
+    
     
     <div id="background">
       <img src="${Loader.images.intro['background.png'].getAttribute('data')}"/>
-      <img id="paper" src="${Loader.images.intro['paper.png'].getAttribute('data')}"/>
     </div>
     <div id="upperPart">
-        <img src="${Loader.images.intro['market/upper.png'].getAttribute('data')}"/>
-        <img class="titleImg" src="${Loader.images.intro['title.png'].getAttribute('data')}"/>
-        <div class="coins">
-          ${data.userData['coins']}
+        <div class="logo">
+          <img src="${Loader.images.intro['intro-logo.png'].getAttribute('data')}"/>
         </div>
-        <a class="clickSound" href="javascript:void(0);" onclick="Intro.showPaymentBg();">
-          <div class="addMoney">
-            <span class="addText">
-              ${Text.intro.marketPlace.add}
-            </span>
-            <img src="${Loader.images.intro['market/money.png'].getAttribute('data')}" > </img>
-            <span class="moneyText">
-              ${Text.intro.marketPlace.money}
-            </span>
+        <div class="coins">
+          <img class="background" src="${Loader.images.intro['market/money-panel.png'].getAttribute('data')}"/>
+          <div class="money">          
+            <div class="text">
+              ${data.userData['coins']}
+            </div>
           </div>
-        </a>
+        </div>
+        {if (!Intro.userData.like)}
+          <div id='playerProgressIframeContainer' style='display:none'>
+          	<div class="close" onclick="$('playerProgressIframeContainer').hide();FBDefender.isFan()">X</div>
+          	<iframe id="playerProgressIframe"  scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:80px;" allowTransparency="true"></iframe>
+          </div>
+          <div class="like" onclick="$('playerProgressIframe').src='http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.facebook.com%2Fapps%2Fapplication.php%3Fid%3D'+FBConnect.appIds[FBConnect.url()]+'&layout=standard&show_faces=true&width=450&action=like&colorscheme=light&height=80';$('playerProgressIframeContainer').show();">
+            <img src="${Loader.images.intro['market/like.png'].getAttribute('data')}" > </img>
+          </div>
+        {/if}
+        <div class="addMoney clickSound">
+          <img class="image" src="${Loader.images.intro['market/buy-button.png'].getAttribute('data')}" > </img>
+          <img src="${Loader.images.intro['market/buy-clicked.png'].getAttribute('data')}" style="display:none;"> </img>
+          <img class="hover" src="${Loader.images.intro['market/buy-hover.png'].getAttribute('data')}" style="display:none;"> </img>
+        </div>
+    </div>
+    <div class="descriptionText">
+      <img src="${Loader.images.intro['market/text.png'].getAttribute('data')}" > </img>
     </div>
     <div id="weapons">
       <img  src="${Loader.images.intro['market/scroller.png'].getAttribute('data')}"/>
-      <div class="msg">
-          ${Text.intro.marketPlace.addWeapon}
-      </div>
       <div id="weaponsDisplay">
       </div>
     </div>
     
     <div id="towers">
       <img  src="${Loader.images.intro['market/scroller.png'].getAttribute('data')}"/>
-      <div class="msg">
-          ${Text.intro.marketPlace.addTower}
-      </div>
       <div id="towersDisplay">
       </div>
     </div>
     
     <div id="actionContainer">
       <div id="back" onclick="Intro.previous();" class="buttonText clickableButton clickSound" >
-        {if ($('intro').getStyle('direction')=='rtl') }
-          <img src="${Loader.images.intro['ready.png'].getAttribute('data')}"/>
-        {else}
-          <img src="${Loader.images.intro['back.png'].getAttribute('data')}"/>
-        {/if}
-        <div style="width : 28px; height : 10px;display:inline-block;"></div>
-        <div id="backText">
-          ${Text.intro.marketPlace.back}
-        </div>
-      </div>
-      <div style="width : 448px; height : 10px;display:inline-block;"></div>
-      <div id="ready" onclick="Intro.next();" class="buttonText clickableButton clickSound">
-        {if ($('intro').getStyle('direction')=='rtl') }
-          <img src="${Loader.images.intro['back.png'].getAttribute('data')}"/>
-        {else}
-          <img src="${Loader.images.intro['ready.png'].getAttribute('data')}"/>
-        {/if}
-        <div id="readyText">
-          ${Text.intro.marketPlace.ready}
-        </div>
+        <img src="${Loader.images.intro['market/ready.png'].getAttribute('data')}"/>
         <div style="width : 28px; height : 10px;display:inline-block;"></div>
       </div>
     </div>
@@ -731,25 +626,30 @@
 		          <li itemid="${item}" class="clickSound" 
 	                onmouseover="this.select('#info')[0].show();"
 	                onmouseout="this.select('#info')[0].hide();">
-                {if (!Intro.userData.metadata[type][item])}   
-		                <img class="coinImage" 
-		                      src="${Loader.images.intro['market/coin.png'].getAttribute('data')}"> </img>
-                    <div class="itemPrice">
-                        ${Intro.gameData[type][item].cost}
-                    </div>
-                {else}  
-                    {if (Intro.gameData[type][item]['upgrades'][Intro.userData.metadata[type][item]['upgrades']])}
-                    <img class="coinImage" 
-		                      src="${Loader.images.intro['market/coin.png'].getAttribute('data')}"> </img>
-                    <div class="itemPrice">
-                        ${Intro.gameData[type][item]['upgrades'][Intro.userData.metadata[type][item]['upgrades']].cost}
-                    </div>  
-                    {else}
-                    <div style="width:20px;height:23px;"></div>
-                    {/if}
-                {/if}
-		            <img class="itemImage" 
-		                  src="${Loader.images.intro[type+'/'+itemConfig[item]['image']].getAttribute('data')}"> </img>
+                <img src="${Loader.images.intro['market/panel-unit.png'].getAttribute('data')}"> </img>
+                <div class="content">
+                  {if (!Intro.userData.metadata[type][item])}   
+		                  <img class="coinImage" 
+		                        src="${Loader.images.intro['market/coin.png'].getAttribute('data')}"> </img>
+                      <div class="itemPrice">
+                          ${Intro.gameData[type][item].cost}
+                      </div>
+                  {else}  
+                      {if (Intro.gameData[type][item]['upgrades'][Intro.userData.metadata[type][item]['upgrades']])}
+                      <img class="coinImage" 
+		                        src="${Loader.images.intro['market/coin.png'].getAttribute('data')}"> </img>
+                      <div class="itemPrice">
+                          ${Intro.gameData[type][item]['upgrades'][Intro.userData.metadata[type][item]['upgrades']].cost}
+                      </div>  
+                      {else}
+                      <div style="width:20px;height:23px;"></div>
+                      {/if}
+                  {/if}
+                  <div class="itemImage">
+  		              <img 
+		                    src="${Loader.images.intro[type+'/'+itemConfig[item]['image']].getAttribute('data')}"> </img>
+                  </div>
+                </div>
                 {if (!Intro.userData.metadata[type][item])}
                   <div class="lockImage">
   		                <img 
@@ -757,12 +657,14 @@
                   </div>
                 {else}
                   <div class="upgradeLevel">
+  		                <img 
+		                    src="${Loader.images.intro['market/level.png'].getAttribute('data')}"> </img>
                       ${Intro.userData.metadata[type][item]['upgrades']}
                   </div>
                 {/if}
                 <div id="info" style="display : none;">
                   {if (!Intro.userData.metadata[type][item])}
-                    <div style="float:left; margin-left:5px;">
+                    <div style="float:left; margin-left:12px;">
                       <div class="unlockText clickSound" type="${type}" itemid="${item}"
                             onclick="Intro.showFloatBg(this)">
                           ${Text.intro.marketPlace.unlock}
@@ -776,7 +678,7 @@
                   {else}
                     {if (Intro.userData.metadata[type][item]['upgrades'] < 
                          Intro.gameData[type][item]['upgrades'].length )}
-                      <div style="float:left; margin-left:5px;">
+                      <div style="float:left; margin-left:12px;">
                         <div class="unlockText clickableButton clickSound" type="${type}"
                             itemid="${item}" upgrade="true"
                             onclick="Intro.showFloatBg(this)">
@@ -795,8 +697,10 @@
             {/for}
 		        {for item in data.gameData.empty[type] }  
   		        <li>
-		            <img class="qBoxImage" 
-		                  src="${Loader.images.intro['market/q-box.png'].getAttribute('data')}"> </img>
+                <img src="${Loader.images.intro['market/panel-unit.png'].getAttribute('data')}"> </img>
+                <div class="qBoxImage">
+  		            <img src="${Loader.images.intro['market/q-box.png'].getAttribute('data')}"> </img>
+                </div>
 		          </li>
 		        {/for}
           </ul>
@@ -809,6 +713,36 @@
 
 <textarea id="publishConfirmTemplate">
   <div id="publishConfirm">
-    <div id="okButton"> ok </div>
+    <div id="background">
+      <img class="background" src="${Loader.images.intro['publish/publish.png'].getAttribute('data')}"/>
+      <img class="logo" src="${Loader.images.intro['intro-logo.png'].getAttribute('data')}"/>
+    </div>
+    <div class="content"> 
+	    <div class="msg">
+        ${Text.facebook.userPrompt}
+	    </div>
+    </div>
+    <div class="ok" id="ok">
+      <div id="right">
+        <div class="hover-right">
+          <img src="${Loader.images.intro['publish/button_right_hover.png'].getAttribute('data')}"/>
+        </div>
+        <div id="okButton" style="display:inline-block;" class="clickableButton clickSound button">
+          <img src="${Loader.images.intro['publish/button_right.png'].getAttribute('data')}"/>
+          <img src="${Loader.images.intro['publish/button_right_click.png'].getAttribute('data')}" style="display:none;"/>
+	        <div id='rogerText'>${Text.game.controls.ok}</div>
+        </div>
+      </div>
+      <div id="left">
+        <div class="hover-left">
+         <img src="${Loader.images.intro['publish/button_left_hover.png'].getAttribute('data')}"/>
+        </div>
+        <div style="display:inline-block;" onclick="Intro.hidePublishScreen();" class="clickableButton clickSound button">
+          <img src="${Loader.images.intro['publish/button_left.png'].getAttribute('data')}"/>
+          <img src="${Loader.images.intro['publish/button_left_click.png'].getAttribute('data')}" style="display:none;"/>
+	        <div id='rogerText'>${Text.game.controls.cancel}</div>
+        </div>
+      </div>
+    </div>
   </div>
 </textarea>
