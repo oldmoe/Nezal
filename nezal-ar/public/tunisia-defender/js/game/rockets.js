@@ -72,6 +72,7 @@ var Rocket = Class.create(Unit, {
 	lastTargerY : 0,
 	initialize : function($super,x,y,scene,extension){
 		$super(x,y,scene,extension)
+		this.range = this.parent.range + 1;
 		this.dead = false
 	},	
 	tick : function(){
@@ -94,14 +95,33 @@ var Rocket = Class.create(Unit, {
 				this.targetUnit.takeHit(this.power);
 				if(this.targetUnit.dead){
 					if(this.parent && !this.parent.dead){
-						//var moneyAnim = new MoneyAnimation(this.targetUnit.x-10,this.targetUnit.y-5,Math.round(this.targetUnit.price))
-						//this.scene.objects.push(moneyAnim)
 						this.scene.scenario.notify({name:"towerDestroyedCreep", method: false, unit:this.parent})
 					}
 				}
 			}
+			this.splash()
 			this.die();		
 		}
+	},
+	splash : function(){
+		var grid = Map.findTile(this.x, this.y)
+		gridX = grid[0]
+		gridY = grid[1]
+		var targets = []
+		for(var i = gridX - this.range; i < gridX + this.range + 1; i++){
+			for(var j = gridY - this.range; j < gridY + this.range + 1; j++){
+				if(Map.grid[i] && Map.grid[i][j]){
+					this.parent.getTargetfromCell(Map.grid[i][j], targets)
+				}
+			}
+		}
+		var power = this.power
+		var targetUnit = this.targetUnit
+		targets.each(function(target){
+			if(target != targetUnit){
+				target.takeHit(Math.round(power * 0.2))
+			}
+		})
 	},
 	die : function(){
 		this.dead = true

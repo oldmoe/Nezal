@@ -276,7 +276,7 @@
 #campaign .mission
 {
   width : 112px;
-  height : 81px;
+  height : 85px;
   display:inline-block;
   overflow : hidden;
   vertical-align : top;
@@ -1110,5 +1110,13 @@ div.clickableButton, span.clickableButton
 
 .arabic{
 		direction :rtl;
+}
+#gameIntro{
+	border: 0px;
+	height: 600px;
+	position: absolute;
+	width: 770px;
+	z-index: 1;
+	overflow:hidden;
 }
 

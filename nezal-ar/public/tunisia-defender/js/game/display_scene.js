@@ -36,6 +36,7 @@ var DisplayScene = Class.create(CityDefenderScene, {
 			var div = $$('#gameElements .superWeapons div.'+weapon)[0].setOpacity(1)
 		})
 		this.renderData()
+		$('InGamecityName').innerHTML = TunisiaCities[game.scene.config.mission.path]
 		return this
 	},
 	addTurret : function($super,klass, x, y){
@@ -224,6 +225,7 @@ var DisplayScene = Class.create(CityDefenderScene, {
 //		}
 	},
 	end : function($super,state){
+		if(game.scene.config.mission.order==24)$('nextCity').hide()
 		$('result').innerHTML = this.resultTemplate.process()
 		game.registerResultHandlers()
 		var self = game.scene

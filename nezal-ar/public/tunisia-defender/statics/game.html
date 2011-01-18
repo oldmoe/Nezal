@@ -1,0 +1,140 @@
+﻿<html>
+<head>
+	<script src="../js/all/base.js" type="text/javascript"></script>
+	<script src="../js/all/nezal.js" type="text/javascript"></script>
+	<style>
+		body{
+			border:none;
+			padding:0px;
+			margin:0px;
+			overflow:hidden;
+			background-color:white;
+		}
+		#intro img{
+			position: absolute;
+			left: 73px;
+			top:50px;
+			width: 600px;
+			height:400px;
+			border:2px solid white;
+		}
+		
+		#intro {
+			font-family : tahoma;
+			position: relative;
+			margin-left: auto;
+			margin-right: auto;
+			top:25px;
+			width: 750px;
+			height:550px;		
+      background-color: #3b5998;
+		}
+		
+		#intro #text{
+			position: absolute;
+			width: 600px;
+			top : 460px;
+      left:75px;
+			color: white;
+			font-size: 20px;
+			text-align : center;
+			font-weight: bold;
+		}
+		
+		#intro #skip{
+			position: absolute;
+			top : 500px;
+			left:600px;
+			font-size: 12px;
+			font-weight: bold;
+		}
+		#intro #skip a{
+			color:white;
+		}
+		#intro #skip a:hover{
+			color:#3b5998;
+			background-color:white;
+		}
+		
+	</style>
+		<script>var target = 'none'</script>  
+  <!--[if IE]>
+		<script>target = '../statics/unsupported_browser.html'</script>
+	<![endif]-->
+</head>
+<body>
+  <div id="intro">    
+	<div id="text" style="display:none"></div>
+	<div id="skip"><a href="#" onclick="done();return false">تخطي المفدمة</a></div>
+  </div>
+</body>
+<script>
+	var slideIndex = 0;
+	var text = [
+		['... لقد خرج الشعب التونسي لاقتلاع الطغاة'],
+		['... الذين حاولوا كسر انتفاضة الشعب بكل السبل'],
+		['... و لم ينجحوا'],
+		['... و ظل الشعب صامدا حتى سقط الطاغية'],
+		['و انتصرت تونس ...',
+		'قف مع شعب تونس و جيشها في وجه من يخططون لعودة النظام البائد',
+		'كن درعا لتونس'],
+		['ابني المدافع و طوّرها',
+		'لصد فلول أنصار الطاغية',
+		'لا تدع قوات الاستبداد تمر']
+	]
+  function loadImages(){
+    for(var i=0;i<6;i++){
+        var image = new Image()
+        image.onload = loader(image, i)
+        image.style.display = 'none'
+        image.id = 'image'+i
+        image.src = "../images/start/"+i+".jpg"
+    }
+  }
+  
+  function loader(image, i){
+    return function(){
+      $('intro').appendChild(image)
+      loaded[i] = true
+      showSlide(i)
+    }
+  }
+  
+  var loaded = [false, false, false, false, false, false];
+  var timePassed = [true, false, false, false, false, false]
+	var reactor = new Reactor()
+	reactor.run()
+	function done(){
+		reactor.stop()
+		if (target != 'none') {
+			window.parent.location = target
+		}else{
+			window.parent.startGame()
+		}
+	}
+  function showSlide(index){
+    if(index >= text.length) done()
+    if(!(loaded[index] && timePassed[index]))return;
+    Effect.Fade('image'+Math.max((index-1),0), {afterFinish:function(){
+      Effect.Appear('image'+index)    
+    }, afterSetup:function(){
+      showText(text[index], index) 
+    }})
+	}
+  
+  function showText(t, index){
+    Effect.Fade('text', {afterFinish:function(){
+      $('text').innerHTML = t.shift()
+      Effect.Appear('text')
+      if(t.length > 0){
+        reactor.push(60, function(){showText(t, index)})
+      }else{
+        reactor.push(60, function(){timePassed[index+1] = true;showSlide(index+1)})
+      }  
+     }})
+  }
+  
+	reactor.push(1, function(){loadImages()})
+</script>
+</html>
+
