@@ -57,6 +57,25 @@
 		}
 		
 	</style>
+	<script>
+    soundManager.url = '../swf/';
+    soundManager.flashVersion = 9; // optional: shiny features (default = 8)
+    soundManager.useFlashBlock = true; // optionally, enable when you're ready to dive in
+    // enable HTML5 audio support, if you're feeling adventurous.
+    soundManager.useHTML5Audio = false;
+		var sound = null
+		var attributes = {
+		  id: "intro",
+		  url: '../sounds/sfx/mp3/intro.mp3',
+		  autoLoad : true,
+		  autoPlay : true,
+		  volume: 50
+		}
+		soundManager.onready(function() {
+			sound = soundManager.createSound(attributes);
+		})
+		
+  </script>
 		<script>var target = 'none'</script>  
   <!--[if IE]>
 		<script>target = '../statics/unsupported_browser.html'</script>
