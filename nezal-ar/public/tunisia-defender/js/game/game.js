@@ -230,7 +230,7 @@ var Game = Class.create({
 		$$('#gameElements .start').first().removeClassName('resumed')
 		$$('#gameElements .start').first().removeClassName('paused')
 		game.unRegisterHandlers()
-		Sounds.togglePauseTrack()
+		Sounds.resumeTrack()
 		$('droppingGround').removeClassName('off')	
 		$('result').hide()
 		$$('#gameElements .superWeapons div').each(function(div){ 
@@ -331,6 +331,7 @@ function onFinish(){
 	window.setTimeout(function(){
 		$('gameElements').show();
 		$('canvasContainer').show();
+		Sounds.gameSounds.game[0].stop()
 		Sounds.resumeTrack()
 		$('static').show();
 		Effect.Fade('static',{duration: 1.0})
