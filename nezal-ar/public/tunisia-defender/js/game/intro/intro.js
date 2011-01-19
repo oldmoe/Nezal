@@ -847,7 +847,7 @@ var Intro = {
         })
       }
       
-      setTimeout(sync,3000);
+      setTimeout(coinSync,3000);
 
       
       
