@@ -32,6 +32,7 @@ router = Rack::Router.new(nil) do |r|
       end
     end
   end
+  r.map "/fb-games/social_gold", :to => ServerRequestController
   r.map "/nezal-admin", :to => AdminController
   r.map "/fb-games/users", :to => UsersController
   r.map "/fb-games", :to => GamesController

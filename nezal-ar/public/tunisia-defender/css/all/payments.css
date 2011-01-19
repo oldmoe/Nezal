@@ -1,8 +1,7 @@
 .pay, .pay img {
-    left: 8px;
-    margin-top: 37px;
-	padding: 33px;
-    text-align: center;
+  position: absolute;
+  top: 17px;
+  left: 8px;
 }
 
 a.pay {

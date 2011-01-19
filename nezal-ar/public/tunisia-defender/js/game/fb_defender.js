@@ -80,7 +80,7 @@ FBDefender = {
                                   Intro.userData.like = true;
                                   Intro.showLikeCongrates();
                               }
-                              if(Intro.currentPage == Intro.pages['marketPlace'].index && FBDefender.isMarket==true)
+                              if($$('#intro #marketPlace')[0].visible())
                                   Intro.select('marketPlace');
                           }
                       });
