@@ -776,7 +776,7 @@ var Intro = {
         callback();
 	  },
 	  
-	  replay: function(){  
+	  replay: function(){
         Intro.select('campaign');
 	  },
 	  showLevelSelection: function(){

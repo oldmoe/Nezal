@@ -84,9 +84,12 @@ var Sounds = {
 		Sounds.gameSounds.game[0].mute()
 	},
 	togglePauseTrack : function(){
-		return;
 		if(!Sounds.gameSounds.game||Sounds.muted||!Sounds.musicOn)return
-		Sounds.gameSounds.game[0].togglePause()
+		if(Sounds.gameSounds.game[0].muted){
+			Sounds.gameSounds.game[0].unmute()
+		}else{
+			Sounds.gameSounds.game[0].mute()		
+		}
 	},
 	stopTrack : function(){
 		if(!Sounds.gameSounds.game||Sounds.muted)return

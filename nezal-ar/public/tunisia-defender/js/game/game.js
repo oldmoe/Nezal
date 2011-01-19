@@ -248,6 +248,7 @@ var Game = Class.create({
 		Intro.enablePauseScreen();
 		$("gameStart").innerHTML = Intro.templates['game'];
 		game.scene.reactor.stop()
+		Sounds.resumeTrack()
 		$('gameStart').hide()
 		Intro.replay();	
 		//onFinish()
