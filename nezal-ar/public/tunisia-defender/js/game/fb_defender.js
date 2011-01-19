@@ -113,7 +113,7 @@ FBDefender = {
                                      Text.facebook.completeMession[1] +" ",
                               href : loc,
                             	'media': [{ 'type': 'image', 
-                            	            'src': FBDefender.imagesUrl+ 'facebook/medal.png',
+                            	            'src': FBDefender.imagesUrl+ 'facebook/logo.png',
                             	            'href': loc }],
                               caption: FBConnect.user.first_name + Text.facebook.completeMession[2] +
                                        " " +Text.facebook.completeMession[3] +
