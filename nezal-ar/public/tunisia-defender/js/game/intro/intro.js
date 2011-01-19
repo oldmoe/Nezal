@@ -291,7 +291,7 @@ var Intro = {
 										Intro.show();
 										$('intro').show();
 										Intro.disablePauseScreen();
-										//Sounds.gameSounds.game[0].play()
+										Sounds.gameSounds.game[0].play()
 										$('gameStart').hide();
 										$('scores').src = 'scores/friends.html?'+Object.toQueryString(FBConnect.session)
 								});
