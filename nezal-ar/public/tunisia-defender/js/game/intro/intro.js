@@ -782,6 +782,7 @@ var Intro = {
 	  finish: function(){
 				Sounds.gameSounds.game[0].stop()
         var image = new Image();
+        Intro.enablePauseScreen();
       	image.onload = function(){
                                     Loader.challenges[GameConfigs.missionPath + "/path.png"] = image;
 		                                if(Loader.events.game.loaded){
