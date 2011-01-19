@@ -55,7 +55,7 @@
 						{/if}
 					{else}
 					<div id = "upgradeTower" >
-						<div id = "maxUpgrade" style = "paddingTop:10px bgcolor="grey">المستوى الأقصى</div>
+						<div id = "maxUpgrade" style = "paddingTop:10px;font-size:12px" >المستوى الأقصى</div>
 					</div>
 					<img id="upgradeTowerImg" src="${Loader.images.background['upgrade_button_off.png'].getAttribute('data')}"/>
 					{/if}

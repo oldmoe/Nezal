@@ -152,9 +152,11 @@
 		<script src="../js/all/nezal.js" type="text/javascript"></script>
 	</head>
 	<body>
-	<div id="container"></div>
+	<div id="container">
+				<div id="friends">
+				</div>
+	</div>
 	<textarea id='friendsTemplate' style="display:none">
-		<div id="friends">
 			{for friend in top_scorers}
 			{if friend}
 				<a href='http://www.facebook.com/profile.php?id=${friend.id}' target='fb_${friend.id}'>
@@ -227,8 +229,8 @@
               <img src="" />
 	          </div> 
        </div>
-		</div>
 	</textarea >
+	
 		<div id="friendsRanks" class="active" onclick = "viewFriendsRanks()">	
 				اصدقائي
 			</div>
@@ -379,7 +381,7 @@
 				}
 				function renderResponse(response){
 					var activeIndex = prepareRanks(response)			
-					$('container').innerHTML = template.process( {friends: response['close'], top_scorers :response['top'],top_ranks : ['1<sup>st</sup>', '2<sup>nd</sup>', '3<sup>rd</sup>']})
+					$('friends').innerHTML = template.process( {friends: response['close'], top_scorers :response['top'],top_ranks : ['1<sup>st</sup>', '2<sup>nd</sup>', '3<sup>rd</sup>']})
 					var friendsCarousel = new Carousel("friends-scroll", images);
 		           	friendsCarousel.displayCount = 3;
 					friendsCarousel.checkButtons();

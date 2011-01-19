@@ -276,6 +276,11 @@ var Game = Class.create({
 				game.exit();
 			})
 		})
+		$$('#win .nextCity')[0].observe('click',function(){
+			GameConfigs.missionPath = Intro.campaignData.camp_data.metadata[game.scene.config.mission.order].path
+			game.exit()
+			Intro.finish()
+		})
 		$$('#win .playAgain')[0].observe('mouseover',function(){$$('#win .playAgain .hover')[0].show()})
 		$$('#lose .playAgain')[0].observe('mouseover',function(){$$('#lose .playAgain .hover')[0].show()})
 		$$('#win .exit')[0].observe('mouseover',function(){$$('#win .exit .hover')[0].show()})
