@@ -192,11 +192,11 @@
         <img id="resultCoin" src="${Loader.images.intro['market/coin.png'].getAttribute('data')}"/>
         <div id="coins">
           <div id="coinsWord">النقود</div>
-          <div id="coinsValue">10000</div>
+          <div id="coinsValue"></div>
         </div>
         <div id="score">
           <div id="scoreWord">النقاط</div>
-          <div id="scoreValue">10000</div>
+          <div id="scoreValue"></div>
         </div>
         <div class="cityName">
           ${TunisiaCities[game.scene.config.mission.path]}
