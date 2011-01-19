@@ -72,7 +72,7 @@ var Rocket = Class.create(Unit, {
 	lastTargerY : 0,
 	initialize : function($super,x,y,scene,extension){
 		$super(x,y,scene,extension)
-		this.range = this.parent.range + 1;
+		if(this.parent)this.range = this.parent.range + 1;
 		this.dead = false
 	},	
 	tick : function(){
@@ -128,6 +128,8 @@ var Rocket = Class.create(Unit, {
 	}
 })
 var PatriotRocket = Class.create(Rocket, {	
-	speed : 10	
+	speed : 10,
+	splash: function(){
+  }
 })
 
