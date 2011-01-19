@@ -294,6 +294,7 @@ var Intro = {
 										Intro.disablePauseScreen();
                     if(!Intro.sound)
                     {
+											Sounds.gameSounds.game[0].stop()
 										  Sounds.gameSounds.game[0].play()
                       Intro.sound = 1;
                     }
