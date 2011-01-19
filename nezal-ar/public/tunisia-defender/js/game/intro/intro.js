@@ -84,6 +84,7 @@ var Intro = {
     dirty : false ,
     currentPage : 0,
     nextPageIndex : 1,
+    sound : null,
     campLoader : new ResourceLoader(),
     missionLoader : new ResourceLoader(),
     sequence : [
@@ -291,7 +292,11 @@ var Intro = {
 										Intro.show();
 										$('intro').show();
 										Intro.disablePauseScreen();
-										Sounds.gameSounds.game[0].play()
+                    if(!Intro.sound)
+                    {
+										  Sounds.gameSounds.game[0].play()
+                      Intro.sound = 1;
+                    }
 										$('gameStart').hide();
 										$('scores').src = 'scores/friends.html?'+Object.toQueryString(FBConnect.session)
 								});
@@ -781,6 +786,7 @@ var Intro = {
 	  },
 	  finish: function(){
 				Sounds.gameSounds.game[0].stop()
+        Intro.sound = null;
         var image = new Image();
         Intro.enablePauseScreen();
       	image.onload = function(){
