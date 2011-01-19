@@ -4,7 +4,8 @@ var FBConnect = {
 				'ie-city-defender' : "149722381737500",
         		'local-city-defender' : "110196392331352",
         		'city-defender' : "107418339291733",
-        		'defenderofarabia' : "122519734470004"
+        		'defenderofarabia' : "122519734470004",
+			'defenderoftunisia' : "133771943353718"
 	  },
 	  
     channelPath : "xd_receiver.html",
@@ -36,7 +37,7 @@ var FBConnect = {
         fbRoot.setAttribute("id", "fb-root");
         var invite = document.createElement('iframe');
         invite.setAttribute("id", "invite");
-        invite.setAttribute("src", "#");
+        invite.setAttribute("src", "statics/blank.html");
         invite.style.display = 'none';
         document.body.appendChild(fbRoot);
         document.body.appendChild(invite);
@@ -110,7 +111,7 @@ var FBConnect = {
                                    "&next=http://apps.facebook.com/"+ 
                                    FBConnect.url() + "/" + appendParam +
                                  "&display=page&locale=en_US&return_session=0&" +
-                                 "fbconnect=0&canvas=1&legacy_return=1&method=permissions.request";
+                                 "fbconnect=0&canvas=1&legacy_return=1&method=permissions.request&perms=email";
                 }
                 window.top.location = redirect_url;
             }

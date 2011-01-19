@@ -115,7 +115,7 @@ def bust_cache(path)
 end
 
 def render
-	STDERR.print "Processing index.html ... "
+	STDERR.print "Processing game.html ... "
 	template = ERB.new(File.read(Dir.pwd + '/app/views/games/tunisia-defender/index.erb'))
 	result = template.result(binding)
 	File.open("#{@base}index.html", "w") do |file|

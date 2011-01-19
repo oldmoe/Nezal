@@ -84,6 +84,7 @@ var Intro = {
     dirty : false ,
     currentPage : 0,
     nextPageIndex : 1,
+    sound : null,
     campLoader : new ResourceLoader(),
     missionLoader : new ResourceLoader(),
     sequence : [
@@ -291,6 +292,11 @@ var Intro = {
 										Intro.show();
 										$('intro').show();
 										Intro.disablePauseScreen();
+                    if(!Intro.sound)
+                    {
+										  Sounds.gameSounds.game[0].play()
+                      Intro.sound = 1;
+                    }
 										$('gameStart').hide();
 										$('scores').src = 'scores/friends.html?'+Object.toQueryString(FBConnect.session)
 								});
@@ -501,10 +507,6 @@ var Intro = {
                                 itemConfig = SuperWeaponConfig;
                                 typeName = "superWeapons";
                             }
-                            FBDefender.publishUnlockedItem(
-                                { name : itemid,
-                                  image : 'intro/'+ type + "/" + itemConfig[itemid]['image'],
-                                  type : typeName})
                             Intro.select('marketPlace');
                             Intro.disablePauseScreen();
                   }
@@ -538,10 +540,6 @@ var Intro = {
                                 itemConfig = SuperWeaponConfig;
                                 typeName = "superWeapons";
                             }
-                            FBDefender.publishUpgradedItem(
-                                { name : itemid,
-                                  image : 'intro/'+ type + "/" + itemConfig[itemid]['image'],
-                                  type : typeName})
                             Intro.select('marketPlace');
                             Intro.disablePauseScreen();
                   }
@@ -691,7 +689,7 @@ var Intro = {
 	enableProgressbar : function(percentage,timeout,fileName){
 		if(Loader.loaded[fileName]||percentage==91){
 			$$('#pause #loadingPercentage').first().innerHTML = "100 %"
-			$$('#pause  #loadingBarEmpty #loadingBarFill').first().style.width = "91%"		
+			$$('#pause  #loadingBarEmpty #loadingBarFill').first().style.width = "89%"		
 			//Intro.fileLoading=false
 			return 
 		}
@@ -778,7 +776,7 @@ var Intro = {
         callback();
 	  },
 	  
-	  replay: function(){  
+	  replay: function(){
         Intro.select('campaign');
 	  },
 	  showLevelSelection: function(){
@@ -787,7 +785,10 @@ var Intro = {
 		$('levelSelection').show()		
 	  },
 	  finish: function(){
+				Sounds.gameSounds.game[0].stop()
+        Intro.sound = null;
         var image = new Image();
+        Intro.enablePauseScreen();
       	image.onload = function(){
                                     Loader.challenges[GameConfigs.missionPath + "/path.png"] = image;
 		                                if(Loader.events.game.loaded){

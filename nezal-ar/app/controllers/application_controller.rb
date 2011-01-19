@@ -14,7 +14,7 @@ class ApplicationController < Sinatra::Base
 	        @game = Game.where( 'name' =>app_name).first
 			@user = FbUser.where( 'fb_id' => @fb_uid ).first
 			if(!@user)
-				@user = FbUser.create('fb_id' => @fb_uid )
+				@user = FbUser.create('fb_id' => @fb_uid, 'coins' => get_helper_klass::DEFAULT_USER_COINS )
 			end
 			@game_profile = UserGameProfile.where('game_id' => @game.id, 'user_id' => @user.id).first
 			if !(@game_profile)

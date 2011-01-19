@@ -226,13 +226,14 @@ var Hyper = Class.create(SuperWeapon, {
 		this.scene.scenario.notify({name:"superWeaponsHyper", method: false, unit:this.scene.turrets.random()})
 		Sounds.play(Sounds.superWeapons.hyper,true)
 		var hyper = function(tower){
+			tower.originalRate = tower.rate; 
 			tower.rate *= self.factor1;
 			tower.originalX = tower.x
 			tower.originalY = tower.y
 		}
 		this.scene.turrets.each(hyper)
-		this.hyperEffect(0,0)
 		this.scene.towerMutators.push({name : 'hyper', action : hyper})
+		this.hyperEffect(0,0)
 	},
 	hyperEffect : function(ticks,flip){
 		if(ticks > this.factor2*1000/this.scene.reactor.delay){
@@ -260,7 +261,7 @@ var Hyper = Class.create(SuperWeapon, {
 	unHyper : function(){
 		var self = this
 		self.scene.turrets.each(function(tower){
-			tower.rate /= self.factor1;
+			if(tower.originalRate)tower.rate = tower.originalRate;
 			tower.x = tower.originalX
 			tower.y = tower.originalY
 		});

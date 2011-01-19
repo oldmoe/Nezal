@@ -73,15 +73,23 @@ var Sounds = {
 	},
 	resumeTrack : function(){
 		if(!Sounds.gameSounds.game||Sounds.muted||!Sounds.musicOn)return
-		Sounds.gameSounds.game[0].play()
+		if(Sounds.gameSounds.game[0].muted){
+			Sounds.gameSounds.game[0].unmute()
+		}else{
+			Sounds.gameSounds.game[0].play()		
+		}
 	},
 	pauseTrack : function(){
 		if(!Sounds.gameSounds.game||Sounds.muted)return
-		Sounds.gameSounds.game[0].pause()
+		Sounds.gameSounds.game[0].mute()
 	},
 	togglePauseTrack : function(){
 		if(!Sounds.gameSounds.game||Sounds.muted||!Sounds.musicOn)return
-		Sounds.gameSounds.game[0].togglePause()
+		if(Sounds.gameSounds.game[0].muted){
+			Sounds.gameSounds.game[0].unmute()
+		}else{
+			Sounds.gameSounds.game[0].mute()		
+		}
 	},
 	stopTrack : function(){
 		if(!Sounds.gameSounds.game||Sounds.muted)return

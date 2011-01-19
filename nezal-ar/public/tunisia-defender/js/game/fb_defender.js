@@ -108,17 +108,16 @@ FBDefender = {
         FBConnect.getUserInfo( function(){
                   var loc = "http://apps.facebook.com/" + FBConnect.url() + "/";
                   var attachment =  {
-                              name : FBConnect.user.first_name + " " + Text.facebook.completeMession[0] + " " +
-                                     Config.mission.name.toUpperCase() + " " +
-                                     Text.facebook.completeMession[1] +" " +
-                                     FBDefender.gameName(),
+                              name : Text.facebook.completeMession[0] + " " +
+                                     TunisiaCities[game.scene.config.mission.path] + " " +
+                                     Text.facebook.completeMession[1] +" ",
                               href : loc,
                             	'media': [{ 'type': 'image', 
                             	            'src': FBDefender.imagesUrl+ 'facebook/medal.png',
                             	            'href': loc }],
                               caption: FBConnect.user.first_name + Text.facebook.completeMession[2] +
                                        " " +Text.facebook.completeMession[3] +
-                                        " " +mission.score +  Text.facebook.completeMession[4]
+                                        " " +mission.score + " "+ Text.facebook.completeMession[4]
                   };
                   var actionLinks = [ {text: FBDefender.gameName(), href: loc } ];
                   FBDefender.isMarket = false;

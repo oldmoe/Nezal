@@ -44,36 +44,14 @@ textarea{
 	width : 760px;
 	height: 550px;
 	position: absolute;
-	top:0px;
-	left:0px;
+	top:40px;
+	left:73px;
 	font-size : 18px;
 	font-weight : normal;
 	font-family : verdana;
 	color : #fff;
 	vertical-align:middle;
 	z-index : 500;
-}
-#result .statusDiv
-{
-  text-align : center;
-}
-#result #youLose
-{
-  position : absolute;
-  left : 105px;
-  top : 215px;
-  z-index : 100;
-}
-#result #youWin
-{
-  position : absolute;
-  left : 105px;
-  top : 195px;
-  z-index : 100;
-}
-#result #winImage
-{
-  margin-left : 10px;
 }
 
 #splashScreen{
@@ -163,11 +141,11 @@ textarea{
 	-moz-user-select: none;
 	color: white;
 	cursor: pointer;
-	font-family: AdLib,Arial Black,Tahoma;
+	font-family: Tahoma,AdLib,Arial Black;
 	font-size: 30px;
 	height: 72px;
 	left: 0;
-	line-height: 2.5;
+	line-height: 2.4;
 	position: absolute;
 	text-align: center;
 	text-shadow: 2px 2px 1px #000000;
@@ -199,10 +177,11 @@ textarea{
 }
 #gameElements .towerInfo {
 	color:white;
-	font-family:verdana;
+	font-family:tahoma;
 	font-size:10px;
 	height:186px;
 	left:642px;
+	text-align:center;
 	padding:2px;
 	position:absolute;
 	top:354px;
@@ -215,13 +194,16 @@ textarea{
 }
 
 #gameElements #maxUpgrade{
- padding-top : 10px;
+ padding-top : 0px;
+ line-height: 15px;
+ opacity: 0.5;
+ width: 91px;
  opacity :0.5;
 }
 #gameElements #sellTower{
 	color: white;
 	cursor: pointer;
-	font-family: Helvetica;
+	font-family: tahoma;
 	font-size: 12px;
 	font-weight: bold;
 	left: 7px;
@@ -263,39 +245,39 @@ textarea{
 
 
 #gameElements #upgradeTower {
-	color:#FFCC00;
-	cursor:pointer;
-	font-family:Helvetica;
-	font-size:12px;
-	font-weight:bold;
-	height:37px;
-	margin-left:5px;
-	margin-top:6px;
-	position:absolute;
-	text-align:center;
-	width:87%;
-	z-index:10;
+	color: #FFCC00;
+	cursor: pointer;
+	font-family: tahoma;
+	font-size: 14px;
+	font-weight: bold;
+	height: 37px;
+	left: 5px;
+	position: absolute;
+	text-align: center;
+	top: 151px;
+	width: 87%;
+	z-index: 10;
 }
 
 
 #gameElements #upgradeTower #upgradeWord{
 	color:white;
 	font-family:tahoma;
-	font-size:12px;
+	font-size:11px;
 	font-weight:bold;
 	text-align:center;
 	margin:0;
 }
 #towerData #upgradeTowerImgHover{
+	left:7px;
+	top:144px;
 	position:absolute;
-	margin-left:3px;
-	margin-top:2px;
 }
 
 #towerData #upgradeTowerImg{
+	left:10px;
+	top:147px;
 	position:absolute;
-	margin-left:7px;
-	margin-top:4px;
 }
 
 #gameElements .towerInfo table {
@@ -351,10 +333,10 @@ textarea{
 #gameElements .towerInfo tr:nth-child(odd)    { color : #fc0; }
 
 #gameElements .towerInfo h4 {
-	color:#FFCC00;
-	font-size:14px;
-	margin:2px 2px 0 2px;
-	font-family:helvetica;
+	color: #FFCC00;
+	font-family: tahoma;
+	font-size: 15px;
+	margin: 1px 2px 0;
 }
 
 #money{
@@ -366,7 +348,7 @@ textarea{
   left:672px;
   text-align:center;
   text-shadow:-1px 1px black;
-  top:91px;
+  top:93px;
   width:79px;
   position:absolute;
 }
@@ -603,7 +585,8 @@ textarea{
 	left:187px;
 	top: 1px;
 	width:130px;
-	height:13px;
+	height:20px;
+	line-height:20px;
 }
 
 .status .lives{
@@ -611,14 +594,16 @@ textarea{
 	left:354px;
 	top: 1px;
 	width:80px;
-	height:13px;
+	height:20px;
+	line-height:20px;
 }
 
- .status .waves{
+.status .waves{
 	position:absolute;
 	top: 1px;
 	width:150px;
-	height:13px;
+	height:20px;
+	line-height:20px;
 	left:15px
 }
 
@@ -939,107 +924,7 @@ position:"absolute";
 	top:63px;
 	left:14px;
 }
-#result img{
-	position: absolute;
-}
-#result #winClouds,#result #loseClouds{
-	position: absolute;
-	top: 45px;
-	left: 60px;
-}
-#result #winCenter{
-	left:277px;
-	top:114px;
-	z-index:2;
-}
-#result #twoCannons{
-	left:166px;
-	top:45px;
-	z-index:0;
-}
-#result #loseCenter{
-	top: 40px;
-	left:225px;
-	z-index:2
-}
-#result #resultBlank{
-	left:236px;
-	top:250px;
-	z-index:1;
-}
-#result #resultCoin {
-	left:73px;
-	top:250px;
-	z-index:2;
-}
-#result #coins,#result #score{
-	position:absolute;
-	top:252px;
-	color:#e91;
-	font-size:27px;
-	font-family:Adlib, Arial Black, Tahoma;
-	text-shadow: #000 2px 2px 1px;
-}
-#result #coins{
-	left:113px;
-}
-#result #score{
-	left:585px;
-}
-#result #resultText{
-	position:absolute;
-	-moz-border-radius:20px;
-	-webkit-border-radius:20px;
-	-o-border-radius:20px;
-	border-radius:20px;
-	top:324px;
-	left:194px;
-	width :358px; 
-	height: 136px;
-	border :5px solid #FF4102;
-	background-color : #01060d;
-	white-space: pre-wrap;       /* css-3 */
-	white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
-	white-space: -pre-wrap;      /* Opera 4-6 */
-	white-space: -o-pre-wrap;    /* Opera 7 */
-	word-wrap: break-word;  
-	opacity : 0.78;
-}
-#result #stats{
-	width :358px; 
-	height: 136px;
-	white-space: pre-wrap;       /* css-3 */
-	white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
-	white-space: -pre-wrap;      /* Opera 4-6 */
-	white-space: -o-pre-wrap;    /* Opera 7 */
-	word-wrap: break-word;  
-	font-size:15px;
-	font-weight:bold;
-	left:6px;
-	position:absolute;
-	top:0px
-}
-#result #exit,#result #playAgain{
-	position:absolute;
-	color:white;
-	text-shadow: #000 2px 2px 1px;
-	top:375px;
-	font-family:Pakgirl, Arial Black, Tahoma;
-	cursor:pointer;
-}
-#result #exit:hover,#result #playAgain:hover{
-	color:red;
-}
-#result #exit{
-	left:585px;
-	font-size:16px;
-	width:20px;
-}
-#result #playAgain{
-	left:100px;
-	font-size: 16px;
-	width:20px;
-}
+
 #pauseWindow{
 	z-index : 299;
 	width :760px;
@@ -1054,16 +939,20 @@ position:"absolute";
 }
 
 #gameElements  .buttonText {
-	display:table-cell;
-	font-size:20px;
-	font-weight:bold;
-	height:50px;
-	text-align:center;
-	top:5px;
-	vertical-align:middle;
-	width:166px;
+	color: white;
+	display: table-cell;
+	font-family: tahoma;
+	font-size: 17px;
+	font-weight: bold;
+	height: 70px;
+	text-align: center;
+	top: 26px;
+	vertical-align: middle;
+	width: 114px;
 }
-
+#result{
+	font-family:tahoma;
+}
 #gameElements #gameMenu {
 	width:200px;
 	padding-left:12px;
@@ -1080,3 +969,152 @@ position:"absolute";
 	cursor: pointer;
 }
 
+#result img,#result div{
+  position:absolute;
+}
+#result .hover{
+  left: -2px;
+  top:-4px;
+}
+/*style of win screen*/
+#win .resultBackground{
+  top : 50px;
+}
+#win .win_logo{
+  left : 100px;
+	top :8px;
+}
+#win .exit{
+  cursor : pointer;
+  left: 99px;
+  top: 310px;
+}
+#win .right_hover{
+  left: 105px;
+  top: 310px;
+}
+#win .citiesImg{
+  left:29px;
+  top:10px;
+}
+#win .playAgain{
+  cursor : pointer; 
+  left: 218px;
+  top: 310px;
+}
+#win .replayImg{
+  left: 20px;
+  top: 7px;
+}
+#win .nextCity{
+  cursor : pointer;
+  left: 332px;
+  top: 310px;
+}
+#win .nextImg{
+  left: 15px;
+  top: 10px;
+}
+#win .nextImg{
+  left: 15px;
+  top: 10px;
+}
+#win .nextImg{
+  left: 15px;
+  top: 10px;
+}
+#win .nextImg{
+  left: 15px;
+  top: 10px;
+}
+
+
+/*style of lose screen*/
+#lose .resultBackground{
+  top : 50px;
+}
+#lose .lose_logo{
+  left : 119px;
+}
+#lose .exit{
+  cursor : pointer;
+  left: 142px;
+  top: 310px;
+}
+
+#lose .citiesImg{
+  left:29px;
+  top:10px;
+}
+#lose .playAgain{
+  cursor : pointer;
+  left: 262px;
+  top: 310px;
+}
+#lose .replayImg{
+  left: 20px;
+  top: 10px;
+}
+
+
+#result #resultCoin{
+  left:15px;
+  top:119px;
+}
+#result #coins,#result #score{
+	color: white;
+	font-size: 17px;
+	font-weight: bold;
+	left: 45px;
+	
+}
+#result #coins{
+	top: 118px;
+}
+
+#result #score{
+	top: 93px;
+}
+#result #coinsWord,#result #scoreWord{
+  left:64px;
+}
+#result #coinsValue,#result #scoreValue{
+  color:#EE9911;
+}
+#result .cityName{
+	direction: rtl;
+	left: 353px;
+	font-weight:bold;
+	position: absolute;
+	text-align: center;
+	top: 101px;
+	width: 200px;
+}
+#result .stars
+{
+  position: relative;
+  text-align: center;
+  top: 110px;
+  left: 424px;  
+  text-align : center
+  padding : 0px;
+}
+#result .star-img
+{
+  position: relative;
+  top : 0px;
+  right : 19px;
+  width : 60px;
+  text-align : right;
+}
+#gameElements #InGamecityName{
+	color: white;
+	direction: rtl;
+	font-family: tahoma;
+	font-weight: bold;
+	height: 29px;
+	left: 651px;
+	position: absolute;
+	top: 71px;
+	width: 100px;
+}
