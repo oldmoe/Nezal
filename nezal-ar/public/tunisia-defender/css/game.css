@@ -195,6 +195,9 @@ textarea{
 
 #gameElements #maxUpgrade{
  padding-top : 0px;
+ line-height: 15px;
+ opacity: 0.5;
+ width: 91px;
  opacity :0.5;
 }
 #gameElements #sellTower{
@@ -248,10 +251,10 @@ textarea{
 	font-size: 14px;
 	font-weight: bold;
 	height: 37px;
-	margin-left: 5px;
-	margin-top: 7px;
+	left: 5px;
 	position: absolute;
 	text-align: center;
+	top: 151px;
 	width: 87%;
 	z-index: 10;
 }
