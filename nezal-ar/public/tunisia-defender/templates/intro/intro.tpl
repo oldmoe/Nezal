@@ -471,7 +471,7 @@
 <textarea id="payment-options-template" style="display:none;">
   <a href="javascript:void(0);" class="pay clickSound" id="middle-selection">
     <div>
-      <img id="daopay-logo" src="${Loader.images.payments['daopay_logo.png'].getAttribute('data')}"></img>
+      <img id="daopay-logo" src="${Loader.images.payments['social_gold_logo.png'].getAttribute('data')}"></img>
       <span id="daopay-description">
         ${Text.payments['daopay']['description']}
       </span>
@@ -481,7 +481,7 @@
   </a>
   <a href="javascript:void(0);" class="pay clickSound" id="top-left-selection">
     <span class="package-info package-price">
-      ${payment.packages['left']['price']} EUR
+      ${payment.packages['left']['price']} دولار
     </span>
     <span class="package-info package-coins">
       ${payment.packages['left']['coins']} ${Text.game.result.coins}
@@ -491,7 +491,7 @@
     <span id="best-value" class="package-info">
     </span>
     <span id="middle-package-price" class="package-info">
-      ${payment.packages['middle']['price']} EUR
+      ${payment.packages['middle']['price']} دولار
     </span>
     <span id="middle-package-coins" class="package-info">
       ${payment.packages['middle']['coins']} ${Text.game.result.coins}
@@ -499,7 +499,7 @@
   </a>
   <a href="javascript:void(0);" class="pay clickSound" id="top-right-selection">
     <span class="package-info package-price">
-      ${payment.packages['right']['price']} EUR
+      ${payment.packages['right']['price']} دولار
     </span>
     <span class="package-info package-coins">
       ${payment.packages['right']['coins']} ${Text.game.result.coins}
@@ -554,13 +554,16 @@
     </div>
   
 	<div id="paymentFloatBg" style="display : none;">
-		<div id="paymentClose" onclick="Intro.hidePaymentBg();" class="clickSound"> X </div>
 		<div class="pay">
-			payment is temporarily disabled, if you have a problem with previous payment please send a message
-      </div>
-	    <div id="contact-us-message"> ${Text.payments.contactUsMessage}
-			<a class="clickSound" href="javascript:void(0);" id="contact-us-trigger" onclick="Intro.showContactUsForm();"> ${Text.payments.contactUsTrigger} </a> 
-		</div>
+      <img id="pay-left-image" src="${Loader.images.payments['pay_left.png'].getAttribute('data')}" />
+      <img id="pay-middle-image" src="${Loader.images.payments['pay_middle.png'].getAttribute('data')}" />
+      <img id="pay-right-image" src="${Loader.images.payments['pay_right.png'].getAttribute('data')}" />
+    </div>
+    
+    <div id="payments-container">
+    </div>
+    
+    <div id="paymentClose" onclick="Intro.hidePaymentBg();" class="clickSound"> X </div>
 	</div>
     
     

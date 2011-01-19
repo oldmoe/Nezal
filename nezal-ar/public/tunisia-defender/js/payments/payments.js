@@ -3,19 +3,19 @@ var Payment = Class.create({
   
   packages : {
     left : {
-      priceCategory : '0.8',
-      price : '0.80',
-      coins : '2,500'
+      priceCategory : '1',
+      price : '1.00',
+      coins : '4,000'
     }, 
     middle : {
-      priceCategory : '1.6',
-      price : '1.60',
-      coins : '6,000'
+      priceCategory : '3',
+      price : '3.00',
+      coins : '15,000'
     },
     right : {
-      priceCategory : '2.4',
-      price : '2.4',
-      coins : '10,000'
+      priceCategory : '5',
+      price : '5.00',
+      coins : '22,000'
     }
   },
   
@@ -32,7 +32,7 @@ var Payment = Class.create({
 	[$('top-' + position + '-selection'), $('middle-selection')].invoke("observe", "click", function(){
       //document.location.href = "http://daopay.com/payment/?appcode=62070&price=" + priceCategory;
       //Intro.showDaopayBg("http://daopay.com/pay/?appcode=62070&price=" + priceCategory);
-      window.open("http://daopay.com/pay/?appcode=62070&price=" + priceCategory, null, "width=400,height=550");
+      window.open("social_gold/sign_request?price=" + priceCategory, null, "width=400,height=550");
     });
     
     this.positions.without(position).each(function(element){

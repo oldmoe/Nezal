@@ -675,8 +675,9 @@ div.clickableButton, span.clickableButton
   z-index:101;
 }
 #marketPlace #paymentFloatBg #paymentClose {
-  margin-left: 580px;
-  margin-top: 11px;
+   left: 580px;
+   position: absolute;
+   top: 10px;
 }
 #marketPlace #contactUsClose {
   margin-left: 585px;
@@ -1010,8 +1011,8 @@ div.clickableButton, span.clickableButton
 	width : 550px;
 	height : 275px;
 	position : absolute;
-	top : 120px;
-	left : 110px;
+	top: 190px;
+	left: 60px;
 	color : white;
 	z-index : 1000;
 }

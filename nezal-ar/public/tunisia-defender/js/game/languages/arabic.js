@@ -3,10 +3,10 @@
 	towers : '',
   payments : {
     daopay : {
-      description : 'ادفع عن طريق الموبايل بسرعة وسهولة وأمان وبدون الحاجة إلى بطاقة ائتمان',
-      packageCommand : 'ادفع *price* EUR وأحصل على *reward* من النقود'
+      description : 'إدفع بواسطة بطاقة الإئتمان، لشراء نقود لتتمكن من تطوير اسلحتك',
+      packageCommand : 'ادفع *price* دولار وأحصل على *reward* من النقود'
     },
-    success : 'مبروك, لقد قمت بشراء *coins* من النقود بنجاح',
+    success : 'مبروك، لقد قمت بشراء *coins* من النقود، سوف يتم اضافتها إلى رصيد نقودك خلال بضع ثواني' ,
     contactUsMessage : 'For any issue, please',
     contactUsTrigger : 'contact us',
     contactUsFormTitle : 'Explain your issue :',

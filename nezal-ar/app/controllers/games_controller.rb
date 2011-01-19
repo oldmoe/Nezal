@@ -139,18 +139,56 @@ class GamesController < ApplicationController
     @game_profile.locale
   end
   
+  @@packages = {"1" => 4000, "3" => 15000, "5" => 22000}
+  
+  def self.coin_packages
+    @@packages
+  end
+  
+  get '/:game_name/social_gold/sign_request' do
+    logfile = File.join( "payment.log" )
+    logger = Logger.new( logfile )
+    offer_id = 'efl3ru5v71w42nzr97fivqtjf'
+    secretMerchantKey = "dfgjbt7idwah2w0ua8wzppah2"
+    api_server_name = "api.sandbox.jambool.com"
+    api_server_port = :defaults
+    is_production = false
+    
+    payments_client = PaymentsClient.new(api_server_name, api_server_port, offer_id, secretMerchantKey, logger, is_production)
+    
+    user_id = @user.id
+    format = "iframe"
+    usdAmount = params["price"]
+    currency_label = 'Coins'
+    app_params = 'Defender of Tunisia'
+    platform = 'Facebook'
+    currency_xrate= nil
+    currency_amount= nil
+    quantity = @@packages[params["price"]]
+    
+    url = payments_client.get_buy_currency_url(user_id, usdAmount, currency_label, currency_xrate, currency_amount, quantity, format, app_params, platform)
+    
+    redirect url
+  end
+  
+  get '/:game_name/sync/coins' do
+    @user.coins.to_s
+  end
+  
+  get '/:game_name/social_gold/success' do
+    @package_coins = @@packages[(params["amount"].to_i/100).to_s]
+    erb :"#{@app_configs["game_name"]}/social_gold_confirmation"
+  end
+  
   # Do not remove 127.0.0.1 from the valid gateway, it is safe 
   @@valid_gateways = ['195.58.177.2','195.58.177.3','195.58.177.4','195.58.177.5', "127.0.0.1"]
-  
-  @@packages = {"0.8" => 2500, "1.6" => 6000, "2.4" => 10000}
-  
   
   get '/:game_name/daopay/confirmation' do
     redirect payment_fault_redirection unless @@valid_gateways.include? request.ip
     @package_coins = @@packages[params["price"]]
     @user.coins += @@packages[params["price"]]
     @user.save
-	payment = Payment.create!({:profile_id=>@game_profile.id,:price=>params['price']})
+	  payment = Payment.create!({:profile_id=>@game_profile.id,:price=>params['price']})
     erb :"#{@app_configs["game_name"]}/daopay_confirmation"
   end
 

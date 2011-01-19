@@ -808,36 +808,63 @@ var Intro = {
 				onFinish()
 	  },
     showPaymentBg: function(){
-		$('paymentFloatBg').show();
-		/*
-		  $('payments-container').innerHTML = TrimPath.parseTemplate($('payment-options-template').value).process();
-		  $$('#payments-container .clickSound').each(function(element){
-			element.stopObserving('click');
-		  });
-		  payment.activateMiddlePackage();
-		  $('paymentFloatBg').show();
-	  */
+      $('payments-container').innerHTML = TrimPath.parseTemplate($('payment-options-template').value).process();
+      $$('#payments-container .clickSound').each(function(element){
+        element.stopObserving('click');
+      });
+      payment.activateMiddlePackage();
+      $('paymentFloatBg').show();
     },
     hidePaymentBg: function(){
       $('paymentFloatBg').hide();
     },
     
     paymentSuccess: function(coins){
-      $('paymentSuccessContainer').innerHTML = TrimPath.parseTemplate($('payment-success').value).process({'coins' : coins});
-      $('paymentSuccessOk').observe('click', function(element){Sounds.play(Sounds.gameSounds.click)});
-      //$$('#paymentSuccessModalWindow .content')[0].innerHTML = "+ " + coins
-      $('paymentSuccessContainer').show();
+      $('congrates').innerHTML = Intro.templates.congrates[1].process({ "msg" : Text.payments.success.replace('*coins*', coins) });
+      $$('#congrates .ok .button')[0].observe('mousedown', 
+                                          function(){
+                                            $$('#congrates .ok .button img')[1].show();
+                                            $$('#congrates .ok .button img')[0].hide();
+                                          });
+      $$('#congrates .ok .button')[0].observe('mouseup', 
+                                          function(){
+                                            $$('#congrates .ok .button img')[0].show();
+                                            $$('#congrates .ok .button img')[1].hide();
+                                          });
+      $$('#congrates .clickSound').each(function(element){
+          element.observe('click', function(element){Sounds.play(Sounds.gameSounds.click)})
+      });
+      $('congrates').show();
       
-      Intro.userData.coins += Number(coins);
-      $$('#upperPart .coins')[0].innerHTML = Intro.userData.coins;
+      var coinSync = function(){
+        new Ajax.Request("sync/coins", {
+          method: 'get',
+          onSuccess: function(t){
+            Intro.userData.coins = Number(t.responseText);
+            Sounds.play(Sounds.gameSounds.add_money)
+          }
+        })
+      }
       
-      Sounds.play(Sounds.gameSounds.add_money)
+      setTimeout(sync,3000);
+
       
-      var goldAnimationRepitition = 5;
-      setInterval(function(){
-        $$('#upperPart .coins')[0].style.color = ["black", "gold"][goldAnimationRepitition%2]
-        goldAnimationRepitition--;
-      }, 500);
+      
+//      $('paymentSuccessContainer').innerHTML = TrimPath.parseTemplate($('payment-success').value).process({'coins' : coins});
+//      $('paymentSuccessOk').observe('click', function(element){Sounds.play(Sounds.gameSounds.click)});
+//      //$$('#paymentSuccessModalWindow .content')[0].innerHTML = "+ " + coins
+//      $('paymentSuccessContainer').show();
+//      
+//      Intro.userData.coins += Number(coins);
+//      $$('#upperPart .coins')[0].innerHTML = Intro.userData.coins;
+//      
+//      Sounds.play(Sounds.gameSounds.add_money)
+//      
+//      var goldAnimationRepitition = 5;
+//      setInterval(function(){
+//        $$('#upperPart .coins')[0].style.color = ["black", "gold"][goldAnimationRepitition%2]
+//        goldAnimationRepitition--;
+//      }, 500);
     },
     hidePaymentSuccess: function(){
       $('paymentSuccessContainer').hide();
