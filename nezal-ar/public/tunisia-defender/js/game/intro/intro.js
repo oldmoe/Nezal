@@ -843,6 +843,7 @@ var Intro = {
           method: 'get',
           onSuccess: function(t){
             Intro.userData.coins = Number(t.responseText);
+            $$('#intro #marketPlace .money .text')[0].innerHTML = Intro.userData.coins
             Sounds.play(Sounds.gameSounds.add_money)
           }
         })
