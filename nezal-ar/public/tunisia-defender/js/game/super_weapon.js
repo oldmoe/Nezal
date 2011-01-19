@@ -232,8 +232,8 @@ var Hyper = Class.create(SuperWeapon, {
 			tower.originalY = tower.y
 		}
 		this.scene.turrets.each(hyper)
-		this.hyperEffect(0,0)
 		this.scene.towerMutators.push({name : 'hyper', action : hyper})
+		this.hyperEffect(0,0)
 	},
 	hyperEffect : function(ticks,flip){
 		if(ticks > this.factor2*1000/this.scene.reactor.delay){

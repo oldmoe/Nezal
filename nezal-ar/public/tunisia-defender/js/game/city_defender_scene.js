@@ -334,6 +334,11 @@ var CityDefenderScene = Class.create(Scene, {
 			tower.statechange = true
 			tower.upgradable = false
 		}
+		if(upgraded){
+				this.towerMutators.each(function(mutator){
+					mutator.action(tower)
+				})
+		}
 		return upgraded
 	},
 	
