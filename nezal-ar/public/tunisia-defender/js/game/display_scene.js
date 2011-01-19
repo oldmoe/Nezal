@@ -331,8 +331,8 @@ var DisplayScene = Class.create(CityDefenderScene, {
 		var score = this.score-oldScore
 		var anim = new MoneyAnimation(341,462,this.money-oldMoney)
 		anim.totalMovement = 90
-		var msg = "+"+(this.money-oldMoney) +"  Money"
-		if(score>0)msg+="<br/>Time bonus: +"+score+"   Score"
+		var msg = "+"+(this.money-oldMoney) +"  مال"
+		if(score>0)msg+="<br/>+"+score+"   نقاط"
 		if(this.waveNumber == 3&&!this.upgraded){
 			this.showHintMsg("Be careful, you should upgrade your towers because enemies will grow stronger")
 		}
