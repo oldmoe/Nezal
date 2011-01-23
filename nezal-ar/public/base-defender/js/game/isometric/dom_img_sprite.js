@@ -5,6 +5,14 @@ var DomImgSprite = Class.create(DomSprite, {
 	initialize : function($super, owner, imgAssets, properties){
     $super(owner, imgAssets, properties);
 		this.img = imgAssets.img.clone()
+		if(this.img){
+			this.img.observe('mousedown',function(event){
+				 if(event.preventDefault)
+				 {
+				  event.preventDefault();
+				 }
+			})
+		}
     if( imgAssets.shadeImg )
 		  this.shadeImg = imgAssets.shadeImg.clone();
 		this.div.appendChild(this.img)

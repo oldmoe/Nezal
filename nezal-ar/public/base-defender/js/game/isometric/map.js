@@ -351,6 +351,12 @@ var Map={
 				owner.game.buildingMode.selectedBuilding = owner;
 			}
 		})
+		div.observe('mousedown',function(event){
+			 if(event.preventDefault)
+			 {
+			  event.preventDefault();
+			 }
+		})
     
     var mousemoveCallback = function(mouse){
       var x = mouse.pointerX();
