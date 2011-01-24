@@ -2,23 +2,37 @@ var ResourceBuilding = Class.create(Building, {
   assignedWorkers : null,
   maxWorkers : null,
   unitPerWorkerTick : null,
+  capacity : null,
   
   initialize : function($super, factory, buildingSpecs){
     $super(factory, buildingSpecs);
     this.assignedWorkers = buildingSpecs.assigned_workers || 0;
+    this[this.factory.collect] = buildingSpecs[this.factory.collect]
     if (this.level > 0) {
       this.maxWorkers = this.currentLevelBluePrints.max_workers;
       this.unitPerWorkerMinute = this.currentLevelBluePrints.unit_per_worker_minute
 			this.unitPerWorkerTick = (this.unitPerWorkerMinute / (60)) * (this.game.reactor.delay / 1000);
-			this.totalPerTick = this.unitPerWorkerTick * this.assignedWorkers
+      this.capacity = this.currentLevelBluePrints.capacity
     }
   },
+
+  resource : function(){
+    return this.factory.collect + " : " + parseInt(this[this.factory.collect]);
+  },
 	
+  totalPerTick : function(){
+		var collected = this.unitPerWorkerTick * this.assignedWorkers
+    if(this[this.factory.collect] + collected > this.capacity)
+      return (this.capacity - this[this.factory.collect]);
+    else
+      return collected;
+  },
+
 	tick : function($super){
-//    $super();
-//		if (this.state == this.states.NORMAL) {
-//			this.game.resources[this.factory.collect] += this.totalPerTick;
-//		}
+    $super();
+		if (this.state == this.states.NORMAL) {
+			this[this.factory.collect] += this.totalPerTick();
+		}
 		return this;
 	},
   
@@ -27,6 +41,11 @@ var ResourceBuilding = Class.create(Building, {
       var response = this.game.network.assignWorker(this.name, this.coords);
       this.game.updateGameStatus(response['gameStatus']);
     }
+  },
+
+  _CollectResources: function(){
+    var response = this.game.network.collectResources(this.name, this.coords);
+    this.game.updateGameStatus(response['gameStatus']);
   },
   
   _ValidateAssignWorker: function(){
