@@ -352,10 +352,11 @@ var Map={
 			}
 		})
 		div.observe('mousedown',function(event){
-			 if(event.preventDefault)
-			 {
-			  event.preventDefault();
-			 }
+			if (evene.button == 2) {
+		  	if (event.preventDefault) {
+		  		event.preventDefault();
+		  	}
+	  	}
 		})
     
     var mousemoveCallback = function(mouse){
