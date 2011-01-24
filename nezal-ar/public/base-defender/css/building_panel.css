@@ -1,14 +1,8 @@
 #building-panel {
-  -moz-border-radius : 10px;
-  -webkit-border-radius : 10px;
-  -o-border-radius : 10px;
-  border-radius : 10px;
+  background-image: url("../images/buildings/panel/panel.png");
   position : absolute;
-  bottom : 25px;
-  right : 25px;
-  width : 340px;
-  height : 100px;
-  background-color: gold;
+  width : 210px;
+  height : 130px;
 }
 #close-building-panel {
   float: right;
@@ -51,9 +45,10 @@
 }
 .building-functions {
   float : left;
-  height : 90px;
-  margin : 5px;
-  width : 225px;
+  height: 120px;
+  margin-top: 20px;
+  margin-left: 90px;
+  width: 100px;
 }
 
 .building-functions span {

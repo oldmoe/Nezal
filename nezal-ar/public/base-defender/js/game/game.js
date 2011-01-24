@@ -3,6 +3,7 @@ var Game = Class.create({
   templatesManager : null,
   selectedBuildingPanel : null,
   workerFactory : null,
+  researchManager : null,
   reactor : null,
   network : null,
   gameStatus : null,
@@ -20,6 +21,7 @@ var Game = Class.create({
     rock : 0,
     lumber : 0
   },
+  //Batoota Code
   workersStatus : null,
   initialize : function(){
     this.network = new Network();
@@ -78,6 +80,7 @@ var Game = Class.create({
 		 "lumbermill.png", "lumber.png", "rock.png", "workers.png","cancel.png"];
    
 		var workerImages = ["worker.png", "worker_shadow.png"];
+    //var buildingPanelImages = ["panel.png"]
 		
 		//This is duplicated to avoid a problem in the loader that can't deal with an array of a single item
 		var smokeImages = ["smoke_big.png", "smoke_big.png"]
@@ -88,7 +91,9 @@ var Game = Class.create({
 										 	 {images : workerImages, path: 'images/worker/', store: 'worker'},
                        {images : smokeImages, path: 'images/', store: 'smoke'},
 											 {images : questsImages, path: 'images/quests/', store: 'quests'},
-											 {images : buildingOutlineImages, path: 'images/buildings/outlines/', store: 'buildingOutlines'}],
+											 {images : buildingOutlineImages, path: 'images/buildings/outlines/', store: 'buildingOutlines'},
+                       //{images : buildingPanelImages, path: 'images/buildings/panel/', store: 'buildingPanel'}
+                       ],
       {onFinish : loaderFinishCallback});
   },
   

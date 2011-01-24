@@ -162,6 +162,7 @@ class BaseDefender < Metadata
     end
     
     @@game_metadata = initialize_game_metadata user_game_profile.game
+    BD::Research.init user_game_profile
     calculate_jobs user_game_profile
     BD::Quest::assess_user_quests user_game_profile
     #### TODO We need to check why they need the stringified one 

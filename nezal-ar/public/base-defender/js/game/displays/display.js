@@ -182,15 +182,6 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
 		
 		_AttachNewBuildingsTriggers : function(){
 	    var thisGame = this.game;
-	    if ($$('.building-functions').any()) {
-	      $('build-quarry').observe('click', function(){
-	        thisGame.buildingMode.on(thisGame.quarryFactory.newQuarry(), function(){});
-	      });
-	      $('build-lumbermill').observe('click', function(){
-	        thisGame.buildingMode.on(thisGame.lumbermillFactory.newLumbermill(), function(){});
-	      });
-	      
-	    }
 	  },
 		
 		renderAnimation : function(){
