@@ -352,7 +352,7 @@ var Map={
 			}
 		})
 		div.observe('mousedown',function(event){
-			if (evene.button == 2) {
+			if (event.button != 2) {
 		  	if (event.preventDefault) {
 		  		event.preventDefault();
 		  	}
