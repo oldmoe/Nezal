@@ -24,6 +24,7 @@ var Carousel = Class.create( {
     initialize : function(id, images, displayCount){
         this.id = id;
         this.images = images;
+				if($$('#' + this.id + ' ul li')[0])
         this.width = parseInt($$('#' + this.id + ' ul li')[0].getStyle('width')) + 
                         parseInt($$('#' + this.id + ' ul li')[0].getStyle('padding-left')) + 
                         parseInt($$('#' + this.id + ' ul li')[0].getStyle('padding-right')) +

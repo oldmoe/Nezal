@@ -4,6 +4,7 @@ var DomTextSprite = Class.create(DomSprite, {
   initialize : function($super, owner, textAssets, properties){
     $super(owner, textAssets, properties);
     this.textAssets = textAssets;
+		console.log(textAssets)
     this.span = $(document.createElement('SPAN'));
     this.div.appendChild(this.span);
     this.span.innerHTML = this.owner[textAssets]();

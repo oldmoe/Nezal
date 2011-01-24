@@ -40,7 +40,8 @@ var Scene = Class.create({
 				}
 			})
 			this.objects = remainingObjects
-		}catch(x){console.log(x)}
+		}catch(x){//console.log(x)
+		}
 		return this
 	},
 	//moves objects in the scene 
@@ -79,7 +80,7 @@ var Scene = Class.create({
 				}
 			}
 		}catch(x){
-			console.log(x)
+		//	console.log(x.message);
 		}
 	}
 	

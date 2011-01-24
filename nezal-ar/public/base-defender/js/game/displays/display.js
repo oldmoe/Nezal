@@ -51,7 +51,7 @@ var WorkerDisplay = Class.create(Display,{
   },
 	render : function(){
 		this.sprites.worker.render();
-		this.sprites.shadow.render();
+	//	this.sprites.shadow.render();
 		var divider = 20;
 		if (this.owner.angle == Map.S) divider = 45;
 		var scale = Math.abs(this.sprites.shadow.owner.coords.y-this.sprites.worker.owner.coords.y)/divider + 1;
@@ -71,14 +71,17 @@ var BuildingDisplay = Class.create(Display, {
 		this.baseImg = Loader.images.buildingModes[buildImgName+'_base.png'];
 		this.outlineImg = Loader.images.buildingOutlines[this.owner.name+"_outline.png"];
     this.mouseoverImg = Loader.images.icons[this.owner.name+"_icon.png"];
+		this.transparentImg = Loader.images.buildingModes["transparent.png"];
 		this.mapTiles =[];
 		Object.extend(this.owner,this); 
 		this.sprites.base = new DomImgSprite(owner, {img : this.baseImg}, {shiftY: this.zdim});
 		this.sprites.invalid = new DomImgSprite(owner, {img : this.invalidImg}, {shiftY: this.zdim});
 		this.sprites.outline = new DomImgSprite(owner, {img: this.outlineImg});
     this.sprites.info = new DomTextSprite(owner, 'textInfo', {centered: true, shiftY: -10});
-		this.sprites.building = new DomImgSprite(owner, {img : this.img}, {clickable: true});
+		this.sprites.building = new DomImgSprite(owner, {img: this.img} );
     this.sprites.mouseover = new DomImgSprite(owner, {img: this.mouseoverImg});
+		this.sprites.clickSprite = new DomImgSprite(owner,{img : this.transparentImg, area:this.area}, {clickable: true});
+		this.sprites.clickSprite.img.setStyle({width:this.imgWidth+"px",height:this.imgHeight+"px"})	
 		this.render();
     this.manageStateChange();
 	},
@@ -257,7 +260,6 @@ var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
   bubbleLargeSizeLimit : 23,
   bubbleInitialXShift : 65,
   initialize : function($super,owner,properties){
-    $super(owner,properties);
 		var self = this;
     this.bubbles = [];
     this.bubbleImg = Loader.images.smoke["smoke_big.png"];
@@ -272,9 +274,9 @@ var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
       bubbleSprite.owner.yMovement = i*this.bubbleElevation /(this.numberOfBubbles);
       bubbleSprite.owner.xMovement = this.bubbleInitialXShift;
 			bubbleSprite.setImgWidth(10);
-		//	bubbleSprite.setImgHeight(5);
       this.bubbles.push(bubbleSprite);
     }
+		    $super(owner,properties);
   },
   
   render : function($super){
@@ -288,7 +290,6 @@ var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
 					bubble.owner.reset();
 					bubble.owner.xMovement = self.bubbleInitialXShift;
 					bubble.setImgWidth(10);
-					//bubble.setImgHeight(5);
 					return;
 				}
 				
@@ -298,7 +299,6 @@ var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
 						bubble.shiftX = bubble.owner.xMovement-i*3/2;
 						bubble.img.setOpacity(1 + bubble.owner.yMovement/self.bubbleElevation);
 						bubble.setImgWidth((i+1)*3 + 10);
-				//		bubble.setImgHeight(((i+1)*3 + 10)/2);
 		  		}
 				}
 				bubble.render();
