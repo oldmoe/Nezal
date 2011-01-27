@@ -7,7 +7,7 @@
   bottom : 25px;
   right : 25px;
   width : 340px;
-  height : 100px;
+  height : 140px;
   background-color: gold;
 }
 #close-building-panel {
@@ -21,15 +21,16 @@
 }
 .building-presentation {
   border-right : 1px solid;
-  height : 80px;
+  height : 120px;
   margin-top : 5px;
   padding-top : 10px;
-  width : 90px;
+  width : 110px;
   float : left;
+  text-align : center;
 }
 
 .building-presentation .building-presentation-crop{
-  height : 70px;
+  height : 80px;
   overflow : hidden;
 }
 
@@ -44,20 +45,23 @@
 }
 
 .building-presentation img{
-  float : left;
-  margin-left : 15px;
-  margin-top : 0;
+  margin-top : 15px;
   width : 55px;
 }
 .building-functions {
   float : left;
-  height : 90px;
+  height : 120px;
   margin : 5px;
-  width : 225px;
+  width : 205px;
 }
 
 .building-functions span {
-  font-size: 14px;
+  font-size: 12px;
+}
+.building-functions span.desc {
+    width: 200px;
+    display: inline-block;
+    border-bottom: 1px solid ;
 }
 
 .building-in-progress {

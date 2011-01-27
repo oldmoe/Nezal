@@ -100,7 +100,8 @@ class BaseDefender < Metadata
       if( metadata[building_name].present? )
         metadata[building_name].keys.each do |building_instance_coords|
           puts ">>>>>>>>>" + metadata[building_name][building_instance_coords].to_s
-          if(metadata[building_name][building_instance_coords]['state'] == BD::Building.states['UNDER_CONSTRUCTION'])
+          if(metadata[building_name][building_instance_coords]['state'] == BD::Building.states['UNDER_CONSTRUCTION'] || 
+            metadata[building_name][building_instance_coords]['state'] == BD::Building.states['UPGRADING'])
             building_job(user_game_profile, metadata[building_name][building_instance_coords], building_name , @@game_metadata['buildings'][building_name] )
           end
         end

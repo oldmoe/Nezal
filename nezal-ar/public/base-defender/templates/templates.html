@@ -12,8 +12,17 @@
     {else}
     <div class="building-functions">
         <div id="townhall-hire-worker">
-            <span style="font-size: 14px;">Train a worker</span>
-            <button id="buy_worker_trigger" style="margin-left: 5px;">
+            <span>Train a worker</span>
+            <button id="buy_worker_trigger">
+                +
+            </button>
+            <span>for</span>
+            <span>${coins}</span>
+            <img style="width: 19px;" src="images/icons/coins.png">
+        </div>
+        <div id="townhall-upgrade">
+            <span>Upgrade </span>
+            <button id="upgrade_trigger">
                 +
             </button>
             <span>for</span>
@@ -50,7 +59,7 @@
                 +
             </button>
         </div>
-        <span>
+        <span class="desc">
           Collection workers : ${building.assignedWorkers} / ${building.maxWorkers}
         </span>
         <div id="lumbermill-collect">
@@ -59,7 +68,7 @@
                 +
             </button>
         </div>
-        <span>
+        <span class="desc">
           Lumber : ${building.resource()}
         </span>
     </div>
@@ -86,7 +95,7 @@
                 +
             </button>
         </div>
-        <span>
+        <span class="desc">
           Collection workers : ${building.assignedWorkers} / ${building.maxWorkers}
         </span>
         <div id="quarry-collect">
@@ -95,7 +104,7 @@
                 +
             </button>
         </div>
-        <span>
+        <span class="desc">
           Rock : ${building.resource()}
         </span>
     </div>
