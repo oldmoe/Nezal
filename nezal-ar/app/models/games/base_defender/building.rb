@@ -83,8 +83,65 @@ module BD
         end
         return {'valid' => true, 'error' => ''}
       end
+
       def upgrade(user_game_profile, coords)
+        location_hash = BaseDefender.convert_location(coords)
+        game_metadata = BaseDefender.adjusted_game_metadata
+        
+        validation = validateBuilding(user_game_profile.metadata, game_metadata, coords)
+        return validation if validation['valid'] == false      
+
+        user_game_profile.metadata['idle_workers'] -= 1
+        user_game_profile.metadata[@name][location_hash]['startedBuildingAt'] = Time.now.utc.to_i
+        user_game_profile.metadata[@name][location_hash]['state'] = states['UPGRADING']
+        user_game_profile.metadata[@name][location_hash]['coords'] = coords
+        
+        user_game_profile.metadata['rock'] -= game_metadata['buildings'][@name]['levels']['1']['rock']
+        user_game_profile.metadata['lumber'] -= game_metadata['buildings'][@name]['levels']['1']['lumber']
+        
+        user_game_profile.save
         puts "upgrading " + @name
+        return validation
+      end
+
+      def validate_upgrade(user_profile_metadata, game_metadata, coords)
+        return validation if validation['valid'] == false
+        #validating workers
+        if( user_profile_metadata['idle_workers'] == 0 )
+          return { 'valid' => false,
+                   'error' => "There is no idle workers to build the " + @name}
+        end
+        
+        #make sure the building we are attempting to upgrade exists
+        if( !user_game_profile.metadata[@name][location_hash] )
+          return {'valid' => false,
+                  'error' => "The building you are trying to upgrade doesn't exist"}
+        end
+        #validating there is a next level to upgrade too, validate the user has enough resources.
+        current_level = user_game_profile.metadata[@name][location_hash]['level']
+        if( game_metadata['buildings'][@name]['levels'][(current_level+1).to_s] )
+          neededRock = game_metadata['buildings'][@name]['levels'][(current_level+1).to_s]['rock'] - user_profile_metadata['rock'];
+          neededLumber = game_metadata['buildings'][@name]['levels'][(current_level+1).to_s]['lumber'] - user_profile_metadata['lumber'];
+          if( neededRock > 0 && neededLumber > 0 )
+            return {'valid' => false,
+                    'error' => "Not enough resources, you need more "+ neededRock +" rock and "+ neededLumber + " lumber"}
+          end
+          if( neededRock > 0)
+            return {'valid' => false,
+                    'error' => "Not enough resources, you need more " + neededRock + " rock"}
+          end
+          if( neededLumber > 0)
+            return {'valid' => false,
+                    'error' => "Not enough resources, you need more " + neededLumber + " rock"}
+          end
+          # TODO : In here should come a part to check the dependency chain.
+          # make sure that the user have met the conditions required for that upgrade.
+        else
+          return {'valid' => false,
+                  'error' => "Max upgrade level reached"}
+        end
+
+        return {'valid' => true, 'error' => ''}
       end
 
     end

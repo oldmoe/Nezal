@@ -19,6 +19,15 @@
   font-family : Lds;
   z-index : 1000000;
 }
+#interaction .yellowText {
+  color : #fdf48e;
+}
+#interaction .blueText {
+  color : #326479;
+}
+#interaction .redText {
+  color : #f23d00;
+}
 #interaction .title {
   color: white;
   font-family: Showg;
@@ -30,9 +39,10 @@
 /* CSS for aligned buttons that should work with both LTR, RTL */
 #interaction .okButtonWrapper {
   position: absolute;
-  left : 0px;
-  height: 40px;
+  left: 0;
   width: 100%;
+  height: 55px;
+  z-index: 10;
 }
   /* Each aligned button should set a width to this div according to desired position of button */
 #interaction .alignDiv {
@@ -50,25 +60,22 @@
   overflow : hidden;
   height : 100%;
 }
-
 #interaction .okText {
-  color: #DDDDDD;
   font-family: Showg;
-  font-size: 21px;
+  font-size: 34px;
   position: relative;
   display : block;
   text-shadow: -1px -1px 1px black;
-  top: -36px;
+  top: -50px;
   height : 100%;
-  line-height : 36px;
+  line-height : 50px;
 }
 /* End of Button CSS */
 
 #interaction #msg {
   position: absolute;
   top: 170px;
-  left: 165px;
-  width: 430px;
+  width: 760px;
   height: 210px;
 }
 #interaction #msg img {
@@ -78,24 +85,49 @@
   left: 0px;
   top: 0px;
 }
+#interaction #msg .msgBGImgs {
+  position : absolute ; 
+  top : 10px;
+}
+#interaction #msg .wedge {
+  margin: 0 20px;
+  position: absolute;
+  top: 50px;
+}
+#interaction #msg .bubble {
+  position : absolute;
+  top : 20px; 
+  left : 100px
+}
+#interaction #msg .close {
+  cursor: pointer;
+  height: 23px;
+  position: absolute;
+  right: 5px;
+  top: 0;
+  width: 50px;
+}
 #interaction #msg .okImage {
   position: relative;
-  height : 36px;
 }
-
+#interaction #msg #welcomeMsg {
+  position: absolute;
+  height: 100%;
+  width: 600px;
+  left: 80px;
+}
 #interaction #msg #welcomeMsg .okButtonWrapper {
-  top: 120px;
+  top: 170px;
 }
 #interaction #msg #welcomeMsg .alignDiv {
-  width : 42%;
+  width : 70%;
 }
 #interaction #msg #welcomeMsg .text {
-    color: #683502;
-    font-size: 21px;
-    left: 95px;
-    position: absolute;
-    top: 40px;
-    width: 280px;
+  font-size: 21px;
+  left: 115px;
+  position: absolute;
+  top: 40px;
+  width: 430px;
 }
 #interaction #msg #welcomeMsg .text .name{
     color: #F23D00;
@@ -106,9 +138,6 @@
 
 
 
-#interaction #msg #congratesMsg .okButtonWrapper {
-  top: 120px;
-}
 #interaction #msg #congratesMsg .alignDiv {
   width : 64%;
 }
@@ -155,36 +184,42 @@
   position : relative;
   left : 10px;
 }
+
+
+
 #interaction #questDisplay {
-  height: 385px;
+  height: 390px;
   left: 80px;
   position: absolute;
   top: 75px;
   width: 600px;
 }
+#interaction #questDisplay .background{
+  position: absolute;
+  top: 0;
+  left: 0;
+}
 #interaction #questDisplay .title {
-  padding : 0px;
-  margin : 0px;
-  height : 75px;
+  position: absolute;
+  left: 0;
+  top: 40px;
+  height : 40px;
   width : 100%;
   overflow : hidden;
 }
-#interaction #questDisplay .title .background{
-  position: relative;
-  top: 0;
-  left: 0;
+#interaction #questDisplay .close {
+  position : absolute;
+  right : 5px;
+  top : 0px;
+  width : 50px;
+  height : 40px;
+  cursor : pointer;
 }
-#interaction #questDisplay .title .text{
-  left: 0;
-  padding-top: 22px;
-  position: absolute;
-  top: 0;
-  width: 100%;
-  z-index: 10;
-}
-
 #interaction #questDisplay .conditions {
+  position: absolute;
+  top: 85px;
   width: 100%;
+  height: 160px;
 }
 
 #interaction #questDisplay .condition {
@@ -203,24 +238,24 @@
   width : 54px;
 }
 #interaction #questDisplay .condition .desc{
-  background: none repeat scroll 0 0 #F1BF5C;
-  color: #5e0000;
+  background: none repeat scroll 0 0 white;
   display: inline-block;
-  height: 42px;
+  height: 35px; 
+  margin: 5px 0;
+  position: absolute;
   vertical-align: top;
-  width: 420px;
-  margin : 6px 0px;
-  -moz-border-radius : 10px;
-  -webkit-border-radius : 10px;
-  -o-border-radius : 10px;
-  border-radius : 10px;
-  position : relative;
-  z-index : 10;
+  width: 495px;
+  top: 8px; 
+  left: 50px;
+  -moz-border-radius : 8px;
+  -webkit-border-radius : 8px;
+  -o-border-radius : 8px;
+  border-radius : 8px;
 }
 #interaction #questDisplay .condition .desc .text{
   display: inline-block;
   height: 18px;
-  margin: 10px;
+  margin: 10px 0px;
   vertical-align: top;
   font-size : 22px;  
   line-height : 18px;
@@ -229,35 +264,27 @@
   display: inline-block;
   vertical-align: top;
   width : 320px;
+  margin : 0px 40px;
 }
 #interaction #questDisplay .condition .desc .condStatus{
   display: inline-block;
   width : 60px;
 }
-#interaction #questDisplay .condition .background {
-  position : relative;
-  top : -100px;
-}
 #interaction #questDisplay .descriptionWrapper {
-  height : 210px;
-  width : 100%;
-  overflow : hidden;
-}
-#interaction #questDisplay .descriptionWrapper .background {
-  position : relative;
-  top : -390px;
+  height: 175px;
+  overflow: hidden;
+  position: absolute;
+  top: 230px;
+  width: 100%;
 }
 #interaction #questDisplay .description {
-  height: 180px;
-  position : relative;
-  z-index : 10;
-  top : 0px;
-  left : 20px; 
+  height: 150px;
+  margin: 0 10px;
+  position: relative;
   width: 550px;
-  text-align : left;
+  z-index: 10;
 }
 #interaction #questDisplay .wedge {
-  padding-top: 18px;
   width : 85px;
   display : inline-block;    
 }
@@ -269,12 +296,12 @@
   width: 450px;
 }
 #interaction #questDisplay .bubbleText {
-  color: #5E0000;
   display: inline-block;
+  font-size: 22px;
+  height: 82px;
   position: relative;
-  height : 88px;
-  top: -105px;
-  font-size : 22px;
+  top: -100px;
+  margin: 0px 20px;
 }
 #interaction #questDisplay .okButtonWrapper {
   position : relative;
@@ -282,10 +309,7 @@
   z-index : 10;
 }
 #interaction #questDisplay .alignDiv {
-  width : 77%;
-}
-#interaction #questDisplay .okImage {
-  height : 40px;
+  width : 70%;
 }
 
 .rotated {

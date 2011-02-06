@@ -5,6 +5,18 @@
   margin-left: 12px;
   width: 70px;
 }
+#building-panel {
+  -moz-border-radius : 10px;
+  -webkit-border-radius : 10px;
+  -o-border-radius : 10px;
+  border-radius : 10px;
+  position : absolute;
+  bottom : 25px;
+  right : 25px;
+  width : 340px;
+  height : 140px;
+  background-color: gold;
+}
 
 #panel-buttons-container .panel-button {
   overflow: hidden;
@@ -40,7 +52,12 @@
 }
 
 .building-functions span {
-  font-size: 14px;
+  font-size: 12px;
+}
+.building-functions span.desc {
+    width: 200px;
+    display: inline-block;
+    border-bottom: 1px solid ;
 }
 
 .building-in-progress {
