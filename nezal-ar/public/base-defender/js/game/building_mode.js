@@ -10,7 +10,6 @@ var BuildingMode = Class.create({
   initialize : function(game){
     this.game = game;
     this._AttachCanvasClickListener();
-    this._AttachBuildingPanelCloseListeners();
 		this._AttachCancelBuildingListener();
   },
   
@@ -78,20 +77,6 @@ var BuildingMode = Class.create({
       this.callback();
     }
 		this.off();
-  },
-  _AttachBuildingPanelCloseListeners : function(){
-    var self = this;
-    var closeCallback = function(){
-      $('building-panel').hide();
-      self.game.selectedBuildingPanel = null;
-    }
-    
-    $('close-building-panel').observe('click', closeCallback);
-    document.observe('keydown', function(event){
-      if (event.keyCode == Event.KEY_ESC) {
-        closeCallback();
-      }
-    });
   },
 
 	_AttachCancelBuildingListener : function(){

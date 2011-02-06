@@ -71,7 +71,6 @@ var BuildingDisplay = Class.create(Display, {
 		this.baseImg = Loader.images.buildingModes[buildImgName+'_base.png'];
 		this.outlineImg = Loader.images.buildingOutlines[this.owner.name+"_outline.png"];
     this.mouseoverImg = Loader.images.icons[this.owner.name+"_icon.png"];
-		this.transparentImg = Loader.images.buildingModes["transparent.png"];
 		this.mapTiles =[];
 		Object.extend(this.owner,this); 
 		this.sprites.base = new DomImgSprite(owner, {img : this.baseImg}, {shiftY: this.zdim});
@@ -80,8 +79,7 @@ var BuildingDisplay = Class.create(Display, {
     this.sprites.info = new DomTextSprite(owner, 'textInfo', {centered: true, shiftY: -10});
 		this.sprites.building = new DomImgSprite(owner, {img: this.img} );
     this.sprites.mouseover = new DomImgSprite(owner, {img: this.mouseoverImg});
-		this.sprites.clickSprite = new DomImgSprite(owner,{img : this.transparentImg, area:this.area}, {clickable: true});
-		this.sprites.clickSprite.img.setStyle({width:this.imgWidth+"px",height:this.imgHeight+"px"})	
+		this.sprites.clickSprite = new DomImgSprite(owner,{area:this.area}, {clickable: true});
 		this.render();
     this.manageStateChange();
 	},
@@ -180,11 +178,6 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
 	      return self.game.templatesManager.townhallPanel(self.name, self.inProgress(), self.game.workerFactory.nextWorkerCost());
 	    });
 	    self.game.workerFactory.attachHireTrigger();
-	    this._AttachNewBuildingsTriggers();
-	  },
-		
-		_AttachNewBuildingsTriggers : function(){
-	    var thisGame = this.game;
 	  },
 		
 		renderAnimation : function(){

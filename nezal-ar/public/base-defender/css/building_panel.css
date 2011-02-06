@@ -1,53 +1,41 @@
+#panel-buttons-container {
+  height: 103px;
+  float: left;
+  margin-top: 20px;
+  margin-left: 12px;
+  width: 70px;
+}
+
+#panel-buttons-container .panel-button {
+  overflow: hidden;
+  height: 25px;
+  width: 66px;
+  cursor: pointer;
+}
+
+#panel-buttons-container .panel-button span {
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  left: 16px;
+  position: absolute;
+}
+
+#panel-buttons-container #panel-button-upgrade span {
+  top: 24px;
+}
+
 #building-panel {
   background-image: url("../images/buildings/panel/panel.png");
   position : absolute;
   width : 210px;
   height : 130px;
 }
-#close-building-panel {
-  float: right;
-  font-family: fantasy;
-  font-weight: bold;
-  cursor: pointer;
-  position: absolute;
-  right: 4px;
-  top: 0;
-}
-.building-presentation {
-  border-right : 1px solid;
-  height : 80px;
-  margin-top : 5px;
-  padding-top : 10px;
-  width : 90px;
-  float : left;
-}
-
-.building-presentation .building-presentation-crop{
-  height : 70px;
-  overflow : hidden;
-}
-
-.building-presentation span{
-  display : block;
-  float : none;
-  font-family : fantasy;
-  font-size : 15px;
-  font-weight : bold;
-  text-align : center;
-  line-height : 8px;
-}
-
-.building-presentation img{
-  float : left;
-  margin-left : 15px;
-  margin-top : 0;
-  width : 55px;
-}
 .building-functions {
   float : left;
-  height: 120px;
+  height: 100px;
   margin-top: 20px;
-  margin-left: 90px;
+  margin-left: 5px;
   width: 100px;
 }
 
