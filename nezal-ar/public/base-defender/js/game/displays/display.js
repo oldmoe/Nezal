@@ -110,6 +110,9 @@ var BuildingDisplay = Class.create(Display, {
 			self.sprites.invalid.hide();
     });
     this.owner.stateNotifications[this.owner.states.UPGRADING].push(function(){
+      var top =  self.owner.coords.y -Math.round(self.imgHeight/2)
+      var left =  self.owner.coords.x -Math.round(self.imgWidth/2);
+      self.progressDisplay = new ProgressDisplay( self.owner.nextLevelBluePrints.time, top, left, self.owner.coords.y );
       self.sprites.building.setOpacity(0.5);
       self.sprites.building.animated = false;
 			self.sprites.base.hide();
@@ -136,8 +139,15 @@ var BuildingDisplay = Class.create(Display, {
     });
   },
   
+  _AttachUpgradeTrigger : function(){
+    var self = this;
+    $('upgrade_trigger').observe('click', function(){
+      self.owner.upgrade();
+    });
+  },
+
 	render : function(){
-    if (this.owner.state == this.owner.states.UNDER_CONSTRUCTION) {
+    if (this.owner.state == this.owner.states.UNDER_CONSTRUCTION || this.owner.state == this.owner.states.UPGRADING ) {
       this.progressDisplay.render( this.owner.elapsedTime() );
     } else if (this.owner.state == this.owner.states.NOT_PLACED) {
 			if( this.owner.locationValid ){
@@ -181,6 +191,7 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
 	    });
 	    self.game.workerFactory.attachHireTrigger();
 	    this._AttachNewBuildingsTriggers();
+      this._AttachUpgradeTrigger();
 	  },
 		
 		_AttachNewBuildingsTriggers : function(){
@@ -237,6 +248,7 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
       return self.game.templatesManager.resourceBuildingPanel(self);
     });
     this._AttachAssignTrigger();
+    this._AttachUpgradeTrigger();
   },
 	
 	_AttachAssignTrigger: function(){

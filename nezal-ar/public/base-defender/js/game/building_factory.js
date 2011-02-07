@@ -30,7 +30,7 @@ var BuildingFactory = Class.create({
   
   newBuilding : function(){
     var building = new this.buildingClass(this, this.newBuildingSpecs);
-		var display = new this.buildingDisplayClass(building, this.bluePrints.display)
+		var display = new this.buildingDisplayClass(building, this.bluePrints['levels'][this.newBuildingSpecs['level']].display)
     return building.init();		
   },
   

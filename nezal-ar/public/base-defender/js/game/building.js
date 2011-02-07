@@ -34,7 +34,7 @@ var Building = Class.create({
   
   tick : function(){
     var self = this;
-    if (this.state == this.states.UNDER_CONSTRUCTION) {
+    if (this.state == this.states.UNDER_CONSTRUCTION || this.state == this.states.UPGRADING ) {
       if( this.elapsedTime() >= this.nextLevelBluePrints.time) {
         var delayRequest = this.game.scene.reactor.everySeconds(2);
         self.game.scene.reactor.push(delayRequest, function(){
@@ -85,6 +85,13 @@ var Building = Class.create({
       return false;
     }
   },
+
+  upgrade: function(){
+    if(this.isValidToUpgrade(this.coords.x, this.coords.y)){
+      var response = this.game.network.upgradeBuilding(this.name, this.coords);
+      this.game.updateGameStatus(response['gameStatus']);
+    }
+  },
 	
 	move : function(x,y){
 		this.coords['x'] = x;
@@ -114,11 +121,57 @@ var Building = Class.create({
     return this.name.capitalize() + " " + this.level;
   },
 	
-  isValidToBuild : function(x,y){
+  isValidToUpgrade : function(x,y){
     if(this.game.disableJsValidation)
       return true;
       
       
+    /****************************** Validating workers **************************************/
+    if( this.game.workerFactory.idleWorkers == 0 ){
+      alert("Cannot pgrade " + this.name + ", all your workers are busy!");
+      return false;
+    }
+    /****************************** Validating upgrade **************************************/    
+    var level = (parseInt(this.level) + 1).toString(); 
+    if(!this.factory.bluePrints.levels[level]) {
+      alert("You have reached max upgrade");
+      return false;
+    }
+    /****************************************************************************************/
+    
+    /****************************** Validating resources **************************************/
+    var level = (parseInt(this.level) + 1).toString(); 
+    var neededRock = this.factory.bluePrints.levels[level].rock - this.game.resources.rock;
+    var neededLumber = this.factory.bluePrints.levels[level].lumber - this.game.resources.lumber;
+    
+    if( neededRock > 0 && neededLumber > 0 ){
+      alert("Not enough resources, you need more "+ neededRock +" rock and "+ neededLumber + " lumber");
+      return false;
+    }
+    
+    if(  neededRock > 0 ){
+      alert("Not enough resources, you need more "+ neededRock +" rock");
+      return false;
+    }
+    
+    if( neededLumber > 0 ){
+      alert("Not enough resources, you need more "+ neededLumber +" lumber");
+      return false;
+    }
+    /****************************************************************************************/
+   	if(!this.validateLocation(x,y)){
+			Map.addElement(this)
+		}
+		else{
+			return false
+		} 
+	 return true;
+  },
+
+  isValidToBuild : function(x,y) {
+    if(this.game.disableJsValidation)
+      return true;
+            
     /****************************** Validating workers **************************************/
     if( this.game.workerFactory.idleWorkers == 0 ){
       alert("Cannot build " + this.name + ", all your workers are busy!");
@@ -145,13 +198,13 @@ var Building = Class.create({
       return false;
     }
     /****************************************************************************************/
-   	if(this.validateLocation(x,y)){
+    if(this.validateLocation(x,y)){
 			Map.addElement(this)
 		}
 		else{
 			return false
 		} 
-	 return true;
+    return true;
   }
   
 });
