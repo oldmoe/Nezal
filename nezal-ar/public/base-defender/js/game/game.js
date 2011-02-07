@@ -74,7 +74,7 @@ var Game = Class.create({
       return building + "_outline.png";
     });
 
-		var buildingModeImages = ['2x2_invalid.png', '2x2_base.png','transparent.png'];
+		var buildingModeImages = ['2x2_invalid.png', '2x2_base.png','transparent.png','transparent.png'];
 		var questsImages = ["msgBg.png", "wedge.png", "button.png", "msgBaloon.png", "questBaloon.png" , "questBg.png", "buildingPanelBg.png",
                          "activeCell.png", "inactiveCell.png", "resources.png", "correct.png", "correct.png"];
 												 
