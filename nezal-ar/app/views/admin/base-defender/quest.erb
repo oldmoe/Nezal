@@ -1,14 +1,24 @@
 <script type='text/javascript'>
 var Quest = {
+
     conditions : {},
     rewards : {},
     metadata : {},
 
-    init : function()
-    {
-        Quest.metadata = <%=Metadata.encode(@quest.metadata)%>;
-        Quest.conditions = <%=Metadata.encode(BD::Quest::CONDITIONS)%>
+    init : function() {
+        this.metadata = new Hash(<%=Metadata.encode(@quest.metadata)%>);
+        this.conditions = new Hash(<%=Metadata.encode(BD::Quest::CONDITIONS)%>);
+        this.rewards = new Hash(<%=Metadata.encode(BD::Quest::REWARDS)%>);
+        this.rewards.keys().each(function(key){
+            
+        });
+        console.log(Quest.metadata);
+    },
+
+    displayConditions : function() {
+          
     }
+
 }
 Quest.init();
 </script>
@@ -29,7 +39,7 @@ Quest.init();
   </div>
 
   <div>
-    <LABEL for="addMission" class="label title">Quest</LABEL>
+    <LABEL for="quest" class="label title">Quest</LABEL>
     <div class="form_row">  
         <LABEL for="title">Title</LABEL>
         <INPUT type="text" id="title" name='title'><BR>
@@ -38,20 +48,17 @@ Quest.init();
         <LABEL for="description">Description</LABEL>
         <INPUT type="text" id="description" name='description'><BR>
     </div>
-    <LABEL for="conditions" class="label title">Conditions</LABEL>
-    <div id="conditions">
-      <div id="list">
-      </div>
+    <div class="form_row">  
+      <LABEL for="congratesMsg" class="label title">Congrates Msg</LABEL>
+      <INPUT type="text" id="congratesMsg" name='congratesMsg'><BR>
     </div>
     <LABEL for="rewards" class="label title">Rewards</LABEL>
     <div id="rewards">
-      <div class="form_row">  
-          <LABEL for="coins">Coins</LABEL>
-          <INPUT type="text" id="coins" name='coins'><BR>
-      </div>
-      <div class="form_row">  
-          <LABEL for="exp">Exp Points</LABEL>
-          <INPUT type="text" id="exp" name='exp'><BR>
+      <div id="newReward">
+          <div class="form_row">  
+              <LABEL for="coins">Coins</LABEL>
+              <INPUT type="text" id="coins" name='coins'><BR>
+          </div>
       </div>
     </div>
     <div class="form_row">
@@ -61,8 +68,8 @@ Quest.init();
 
 </div>
 
-<textarea id="waveTemplate" style="display:none;">
-  <div id='newCondition'> 
+<textarea id="rewardTemplate" style="display:none;">
+  <div id='newReward'> 
     <LABEL for="category" class="category">Category</LABEL>
     <select id="category" name="category">
       {for category in creeps }                        
