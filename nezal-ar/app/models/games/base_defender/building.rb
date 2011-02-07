@@ -40,6 +40,9 @@ module BD
         end
   
         #validating resources
+        #x = game_metadata['buildings']
+        #y = x[@name]
+        #z = y[]
         neededRock = game_metadata['buildings'][@name]['levels']['1']['rock'] - user_profile_metadata['rock'];
         neededLumber = game_metadata['buildings'][@name]['levels']['1']['lumber'] - user_profile_metadata['lumber'];
         if( neededRock > 0 && neededLumber > 0 )
@@ -74,7 +77,6 @@ module BD
       def move(user_game_profile, name, coords, old_coords)
         coords_str = BaseDefender.convert_location(coords)
         old_coords_str = BaseDefender.convert_location(old_coords)
-        puts "|||||||||||||||" + old_coords_str
         building = user_game_profile.metadata[name].delete(old_coords_str)
         if building.present?
           building['coords'] = coords

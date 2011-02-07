@@ -8,7 +8,8 @@ class BaseDefender < Metadata
     "lumbermill" => BD::Lumbermill
   }
   @@building_modules = {
-    "townhall" => BD::Townhall 
+    "townhall" => BD::Townhall,
+    "storage" => BD::Storage 
   }.merge @@resource_building_modules
   
   @@game_metadata = nil
@@ -85,8 +86,10 @@ class BaseDefender < Metadata
           if( resource_building_instance['assigned_workers'].present? && 
               resource_building_instance['assigned_workers'] > 0 && 
               resource_building_instance[collects] < @@game_metadata['buildings'][resource_building_name]['levels'][resource_building_level.to_s]['capacity'])
-            resource_building_instance[collects] += @@building_modules[resource_building_name].calculate_collected_resources(resource_building_instance,
+              start_resources = @@building_modules[resource_building_name].calculate_collected_resources(user_game_profile, resource_building_instance,
                                                                                                        @@game_metadata , now)
+            resource_building_instance[collects] += start_resources[0]+start_resources[1]
+                                                                                                       
             resource_building_instance['last_collect'] = now
           end
         end
