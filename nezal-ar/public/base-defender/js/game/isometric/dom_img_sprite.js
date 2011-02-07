@@ -5,7 +5,7 @@ var DomImgSprite = Class.create(DomSprite, {
 	initialize : function($super, owner, imgAssets, properties){
     $super(owner, imgAssets, properties);
     if(!this.clickable){
-  		this.img = imgAssets.img.clone()
+      this.img = imgAssets.img.clone()
   		if(this.img){
   			this.img.observe('mousedown',function(event){
   				 if(event.preventDefault)
