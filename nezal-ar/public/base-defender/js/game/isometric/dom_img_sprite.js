@@ -31,8 +31,6 @@ var DomImgSprite = Class.create(DomSprite, {
 				Map.registerListeners(this.clickDiv,this.owner);
 				$('gameCanvas').appendChild(this.map);
 				this.map.appendChild(this.clickDiv);
-				this.map.addClassName('DomSprite');
-				this.map.setStyle({zIndex:(this.div.style.zIndex + this.minAreaZIndex)})
 		}
 	},
   

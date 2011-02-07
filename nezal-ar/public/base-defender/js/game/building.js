@@ -51,6 +51,7 @@ var Building = Class.create({
 		var map = this.game.scene.map;
 		var cond1 = map.grid[mapCoords[0]][mapCoords[1]].terrainType == this.game.scene.landmarks.get(this.canBeBuiltOn);
 		var cond2 = map.validateLocation(this)
+		console.log(cond2)
     if(!cond1){
       alert(this.name + " can be built on " + this.canBeBuiltOn + " only!");
       return false;

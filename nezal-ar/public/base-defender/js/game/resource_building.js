@@ -3,7 +3,7 @@ var ResourceBuilding = Class.create(Building, {
   maxWorkers : null,
   unitPerWorkerTick : null,
   capacity : null,
-  
+  producing : true,
   initialize : function($super, factory, buildingSpecs){
     $super(factory, buildingSpecs);
     this.assignedWorkers = buildingSpecs.assigned_workers || 0;
@@ -22,10 +22,14 @@ var ResourceBuilding = Class.create(Building, {
 	
   totalPerTick : function(){
 		var collected = this.unitPerWorkerTick * this.assignedWorkers
-    if(this[this.factory.collect] + collected > this.capacity)
-      return (this.capacity - this[this.factory.collect]);
-    else
-      return collected;
+    if (this[this.factory.collect] + collected > this.capacity) {
+			this.producing = false
+			return (this.capacity - this[this.factory.collect]);
+		}
+		else {
+			this.producing = true
+			return collected;
+		}
   },
 
 	tick : function($super){
