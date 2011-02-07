@@ -9,31 +9,54 @@ module BD
       location_hash = BaseDefender.convert_location(coords)
       building = user_game_profile.metadata[@name][location_hash]
       time = Time.now.utc.to_i
-      collected_resources = self.calculate_collected_resources(building, game_metadata, time)
+      collected_resources, remaining_resources = self.calculate_collected_resources(user_game_profile, building, game_metadata, time)
+      puts "$$$$$$$$$$$$$$$$$$$$#{remaining_resources}"
       building[self.collects] += collected_resources
       user_game_profile.metadata[@collect]= building[self.collects] + user_game_profile.metadata[@collect]
-      user_game_profile.metadata[@name][location_hash][self.collects] = 0
+      user_game_profile.metadata[@name][location_hash][self.collects] = remaining_resources
       user_game_profile.metadata[@name][location_hash]['last_collect'] = time
       user_game_profile.save
       return validate_collect( user_game_profile.metadata, game_metadata, location_hash)
     end
 
-    def self.calculate_collected_resources(building, game_metadata, time_now)
+    def self.calculate_collected_resources(user_game_profile, building, game_metadata, time_now)
       time_now = time_now
       building_collected_resources =  building[self.collects] || 0 
       last_collect_time =  building['last_collect'] || time_now 
       collecting_time = time_now - last_collect_time
       assigned_workers = building['assigned_workers']
       building_capacity = game_metadata['buildings'][@name]['levels'][building['level'].to_s]['capacity']
+      total_storage = self.calculate_total_storage_left(user_game_profile.metadata, building, game_metadata)
       unit_per_worker_minute = game_metadata['buildings'][@name]['levels'][building['level'].to_s]['unit_per_worker_minute']
       total_per_minute = unit_per_worker_minute * assigned_workers
       collected = ((total_per_minute/60.0) * collecting_time).round
       if (building_collected_resources + collected) > building_capacity
         collected = building_capacity - building_collected_resources
       end
-      return collected
+      remained = 0
+      if(total_storage <= user_game_profile.metadata[@collect])
+        puts "><><><><><><#{total_storage}"
+        puts "><><><><><><#{user_game_profile.metadata[@collect]}"
+        remained = user_game_profile.metadata[@collect] - total_storage
+        user_game_profile.metadata[@collect] = total_storage
+        user_game_profile.metadata[@collect]
+      end      
+      return collected, remained
     end
     
+    def self.calculate_total_storage_left(profile_metadata, building, game_metadata)
+      total_storage = 0
+      profile_metadata['townhall'].values.each do |townhall|
+        total_storage += game_metadata['buildings']['townhall']['levels'][townhall['level'].to_s]['storageCapacity'].to_i
+      end
+      if(!profile_metadata['storage'].nil?)
+        profile_metadata['storage'].values.each do |storage|
+          total_storage += game_metadata['buildings']['storage']['levels'][storage['level'].to_s]['storageCapacity'].to_i
+        end
+      end
+      total_storage
+    end 
+  
     def self.assign_worker(user_game_profile, coords)
       location_hash = BaseDefender.convert_location(coords)
       game_metadata = BaseDefender.adjusted_game_metadata

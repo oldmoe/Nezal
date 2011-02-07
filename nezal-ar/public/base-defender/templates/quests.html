@@ -107,7 +107,7 @@
       </div>
       <div class="okButtonWrapper">
         <div class="alignDiv"> </div>
-        <div class="okButton"  >
+        <div class="okButton" onclick="$('questDisplay').hide();" >
           <img class="okImage" src="${Loader.images.quests['button.png'].src}"/>
           <div class="okText yellowText"> OK </div>
         </div>
@@ -119,21 +119,27 @@
 <textarea style="display:none;" id='congrates'>
   <div id='congratesMsg'>
     <img class="background" src="${Loader.images.quests['msgBg.png'].src}"/>
+    <div class="msgBGImgs">
+      <img class="wedge" src="${Loader.images.quests['wedge.png'].src}"/>
+      <img class="bubble" src="${Loader.images.quests['msgBaloon.png'].src}"/>
+    </div>
+    <div class="close" onclick="$('msg').hide(); game.questsManager.ackCongratesMsgs(${msg['id']});"> </div>
     <div class="okButtonWrapper">
       <div class="alignDiv"> </div>
       <div class="okButton" ackId="${msg['id']}" onclick="$('msg').hide(); game.questsManager.ackCongratesMsgs(${msg['id']});">
         <img class="okImage" src="${Loader.images.quests['button.png'].src}"/>
-        <div class="okText"> OK </div>
+        <div class="okText yellowText"> OK </div>
       </div>
     </div>
-    <div class="alignDiv" style="width : 23%;"> </div>
+    <div class="alignDiv" style="width : 20%;"> </div>
     <div class="msg">
       <div class="header">
         <span> Congratulations: </span>
       </div>
-      <div class="text">
+      <div class="text blueText">
         <span> ${msg['text']} </span>
       </div>
+      <div class="alignDiv" style="width : 55%;"> </div>
       <div class="rewards">
           {for reward in msg['data']['rewards'] }
           <div class="reward"> 

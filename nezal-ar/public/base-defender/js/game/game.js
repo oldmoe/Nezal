@@ -70,14 +70,17 @@ var Game = Class.create({
 		var buildingImages = BuildingMode.prototype.buildings.collect(function(building){
       return building + ".png";
     });
+		buildingImages.push("lumbermill_saw.png")
+		buildingImages.push("lumbermill_saw.png")
 		var buildingOutlineImages = BuildingMode.prototype.buildings.collect(function(building){
       return building + "_outline.png";
     });
-		var buildingModeImages = ['2x2_invalid.png', '2x2_base.png','transparent.png'];
+
+		var buildingModeImages = ['2x2_invalid.png', '2x2_base.png','transparent.png','transparent.png'];
 		var questsImages = ["msgBg.png", "wedge.png", "button.png", "msgBaloon.png", "questBaloon.png" , "questBg.png", "buildingPanelBg.png",
                          "activeCell.png", "inactiveCell.png", "resources.png", "correct.png", "correct.png"];
     var iconsImages = ["townhall.png", "townhall_icon.png", "quarry_icon.png", "lumbermill_icon.png", "quarry.png",
-		 "lumbermill.png", "lumber.png", "rock.png", "workers.png","cancel.png"];
+		 "lumbermill.png", "lumber.png", "rock.png", "workers.png","cancel.png","storage.png","storage_icon.png"];
    
 		var workerImages = ["worker.png", "worker_shadow.png"];
     //var buildingPanelImages = ["panel.png"]
@@ -129,6 +132,7 @@ var Game = Class.create({
 		this.questsManager = new QuestsManager(this);
     this.buildingsManager = new BuildingsManager(this);
 		this.workerFactory = new WorkerFactory(this);
+		this.storageFactory = new StorageFactory(this);
     this.tutorial = new Tutorial(this);
     this.tutorial.fire();
     this.reInitializationNotifications.each(function(fn){fn()});

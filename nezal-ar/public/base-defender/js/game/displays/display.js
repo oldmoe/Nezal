@@ -73,15 +73,19 @@ var BuildingDisplay = Class.create(Display, {
     this.mouseoverImg = Loader.images.icons[this.owner.name+"_icon.png"];
 		this.mapTiles =[];
 		Object.extend(this.owner,this); 
-		this.sprites.base = new DomImgSprite(owner, {img : this.baseImg}, {shiftY: this.zdim});
-		this.sprites.invalid = new DomImgSprite(owner, {img : this.invalidImg}, {shiftY: this.zdim});
-		this.sprites.outline = new DomImgSprite(owner, {img: this.outlineImg});
-    this.sprites.info = new DomTextSprite(owner, 'textInfo', {centered: true, shiftY: -10});
-		this.sprites.building = new DomImgSprite(owner, {img: this.img} );
-    this.sprites.mouseover = new DomImgSprite(owner, {img: this.mouseoverImg});
-		this.sprites.clickSprite = new DomImgSprite(owner,{area:this.area}, {clickable: true});
+		this.createSprites()	
 		this.render();
     this.manageStateChange();
+	},
+	createSprites : function(){
+		this.sprites.base = new DomImgSprite(this.owner, {img : this.baseImg}, {shiftY: this.zdim});
+		this.sprites.invalid = new DomImgSprite(this.owner, {img : this.invalidImg}, {shiftY: this.zdim});
+		this.sprites.outline = new DomImgSprite(this.owner, {img: this.outlineImg});
+    this.sprites.info = new DomTextSprite(this.owner, 'textInfo', {centered: true, shiftY: -10});
+		this.sprites.building = new DomImgSprite(this.owner, {img: this.img} );
+    this.sprites.mouseover = new DomImgSprite(this.owner, {img: this.mouseoverImg});
+		this.sprites.clickSprite = new DomImgSprite(this.owner,{img : this.transparentImg, area:this.area}, {clickable: true});
+		this.sprites.clickSprite.img.setStyle({width:this.imgWidth+"px",height:this.imgHeight+"px"})
 	},
 	
   manageStateChange : function(){
@@ -108,6 +112,9 @@ var BuildingDisplay = Class.create(Display, {
 			self.sprites.invalid.hide();
     });
     this.owner.stateNotifications[this.owner.states.UPGRADING].push(function(){
+      var top =  self.owner.coords.y -Math.round(self.imgHeight/2)
+      var left =  self.owner.coords.x -Math.round(self.imgWidth/2);
+      self.progressDisplay = new ProgressDisplay( self.owner.nextLevelBluePrints.time, top, left, self.owner.coords.y );
       self.sprites.building.setOpacity(0.5);
       self.sprites.building.animated = false;
 			self.sprites.base.hide();
@@ -134,8 +141,15 @@ var BuildingDisplay = Class.create(Display, {
     });
   },
   
+  _AttachUpgradeTrigger : function(){
+    var self = this;
+    $('upgrade_trigger').observe('click', function(){
+      self.owner.upgrade();
+    });
+  },
+
 	render : function(){
-    if (this.owner.state == this.owner.states.UNDER_CONSTRUCTION) {
+    if (this.owner.state == this.owner.states.UNDER_CONSTRUCTION || this.owner.state == this.owner.states.UPGRADING ) {
       this.progressDisplay.render( this.owner.elapsedTime() );
     } else if (this.owner.state == this.owner.states.NOT_PLACED) {
 			if( this.owner.locationValid ){
@@ -190,8 +204,10 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
 		}
 });
 
+var StorageDisplay = Class.create(TownhallDisplay, {
+	
+})
 var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
-
   initialize : function($super,owner,properties){
 		$super(owner,properties)
 		this.sprites.text = new DomTextSprite(owner, 'resource',{centered: true, shiftY: 110});
@@ -221,6 +237,7 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
       return self.game.templatesManager.resourceBuildingPanel(self);
     });
     this._AttachAssignTrigger();
+    this._AttachUpgradeTrigger();
   },
 	
 	_AttachAssignTrigger: function(){
@@ -240,7 +257,49 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
 });
 
 var LumbermillDisplay = Class.create(ResourceBuildingDisplay, {
-  
+		animationRepeats : 2,
+		animationEverySeconds : 4,
+		tickDelay : 3,
+		sawAnimationCounter : 0,
+		
+	initialize : function($super,owner,properties){
+		$super(owner,properties)
+		var self = this;
+		this.owner.game.scene.pushPeriodicalRenderLoop(
+						this.tickDelay,
+						this.animationRepeats * this.sprites.building.noOfAnimationFrames,
+						this.animationEverySeconds,
+						function(){self.renderAnimation()})
+	},
+		
+  createSprites : function(){
+		this.sawImg = Loader.images.buildings['lumbermill_saw.png'];
+		this.sprites.base = new DomImgSprite(this.owner, {img : this.baseImg}, {shiftY: this.zdim});
+		this.sprites.invalid = new DomImgSprite(this.owner, {img : this.invalidImg}, {shiftY: this.zdim});
+		this.sprites.outline = new DomImgSprite(this.owner, {img: this.outlineImg});
+    this.sprites.info = new DomTextSprite(this.owner, 'textInfo', {centered: true, shiftY: -10});
+		this.sprites.building = new DomImgSprite(this.owner, {img: this.img});
+		this.sprites.saw = new DomImgSprite(this.owner, {img: this.sawImg});
+    this.sprites.mouseover = new DomImgSprite(this.owner, {img: this.mouseoverImg});
+		this.sprites.clickSprite = new DomImgSprite(this.owner,{img : this.transparentImg, area:this.area}, {clickable: true});
+		this.sprites.clickSprite.img.setStyle({width:this.imgWidth+"px",height:this.imgHeight+"px"})
+	},
+	renderAnimation : function(){
+		if (!this.sprites.building.animated) {
+      this.sprites.building.currentAnimationFrame = 0
+    }
+    else {
+	  	this.sprites.building.currentAnimationFrame = (this.sprites.building.currentAnimationFrame + 1) % this.sprites.building.noOfAnimationFrames;
+    }
+	},
+	render : function($super){
+    $super();
+		if(!this.owner.producing)return;
+		if (this.owner.state == this.owner.states.NORMAL && this.sawAnimationCounter%2==0) {
+				this.sprites.saw.currentAnimationFrame = (this.sprites.saw.currentAnimationFrame + 1) % this.sprites.saw.noOfAnimationFrames;
+		}		
+		this.sawAnimationCounter = (this.sawAnimationCounter+1)%2; 
+	}
 });
 
 var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
@@ -274,6 +333,13 @@ var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
   
   render : function($super){
     $super();
+		
+		if(!this.owner.producing){
+			this.bubbles.each(function(bubble){
+				bubble.hide()
+			})
+			return;
+		}
 		if (this.owner.state == this.owner.states.NORMAL) {
 			var self = this;
 			this.bubbles.each(function(bubble){
@@ -294,6 +360,7 @@ var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
 						bubble.setImgWidth((i+1)*3 + 10);
 		  		}
 				}
+				bubble.show();
 				bubble.render();
 			})
 		}
