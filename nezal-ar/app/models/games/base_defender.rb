@@ -212,10 +212,11 @@ class BaseDefender < Metadata
   def self.upgrade_building(user_game_profile, data)
     
     building = data['building']
-    
+    coords = data['coords']
     name = data['building']
     building = user_game_profile.metadata[name]
-    if building.nil? || building[building].nil?
+    location = self.convert_location(coords)
+    if building.nil? || building[location].nil?
       validation = @@building_modules[name].build(user_game_profile, data['coords'])
       return validation
     else

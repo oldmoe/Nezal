@@ -110,17 +110,17 @@
 #interaction #msg .okImage {
   position: relative;
 }
-#interaction #msg #welcomeMsg {
+#interaction #msg .okButtonWrapper {
+  top: 170px;
+}
+#interaction #msg .alignDiv {
+  width : 70%;
+}
+#interaction #msg #welcomeMsg, #interaction #msg #congratesMsg {
   position: absolute;
   height: 100%;
   width: 600px;
   left: 80px;
-}
-#interaction #msg #welcomeMsg .okButtonWrapper {
-  top: 170px;
-}
-#interaction #msg #welcomeMsg .alignDiv {
-  width : 70%;
 }
 #interaction #msg #welcomeMsg .text {
   font-size: 21px;
@@ -136,22 +136,17 @@
 }
 
 
-
-
-#interaction #msg #congratesMsg .alignDiv {
-  width : 64%;
-}
 #interaction #msg #congratesMsg .msg {
   display: inline-block;
   position: relative;
-  top: 35px;
+  top: 40px;
+  vertical-align: top;
+  width: 415px;
 }
 #interaction #msg #congratesMsg .text {
-  color: #683502;
-  font-size: 18px;
+  font-size: 20px;
   padding-top : 5px;
-  width: 280px;
-  height : 50px;
+  height : 25px;
 }
 #interaction #msg #congratesMsg .header{
   color: #F23D00;
@@ -160,6 +155,7 @@
 #interaction #msg #congratesMsg .rewards{
   width : 150px;
   text-align : center;
+  display : inline-block;
 }
 #interaction #msg #congratesMsg .reward{
   display : inline-block;
@@ -240,13 +236,13 @@
 #interaction #questDisplay .condition .desc{
   background: none repeat scroll 0 0 white;
   display: inline-block;
-  height: 35px; 
+  height: 35px;
+  left: -50px;
   margin: 5px 0;
-  position: absolute;
+  position: relative;
+  top: 8px;
   vertical-align: top;
   width: 495px;
-  top: 8px; 
-  left: 50px;
   -moz-border-radius : 8px;
   -webkit-border-radius : 8px;
   -o-border-radius : 8px;
@@ -269,6 +265,7 @@
 #interaction #questDisplay .condition .desc .condStatus{
   display: inline-block;
   width : 60px;
+  margin-top: -6px;
 }
 #interaction #questDisplay .descriptionWrapper {
   height: 175px;
