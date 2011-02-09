@@ -82,7 +82,6 @@ var BuildingDisplay = Class.create(Display, {
 		this.sprites.base = new DomImgSprite(this.owner, {img : this.baseImg}, {shiftY: this.zdim});
 		this.sprites.invalid = new DomImgSprite(this.owner, {img : this.invalidImg}, {shiftY: this.zdim});
 		this.sprites.outline = new DomImgSprite(this.owner, {img: this.outlineImg});
-		console.log(this.owner.name+'.png')
     this.sprites.info = new DomTextSprite(this.owner, 'textInfo', {centered: true, shiftY: -10});
 		this.sprites.building = new DomImgSprite(this.owner, {img: this.img} );
     this.sprites.mouseover = new DomImgSprite(this.owner, {img: this.mouseoverImg});
@@ -210,6 +209,9 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
 				$('build-storage').observe('click', function(){
 	        thisGame.buildingMode.on(thisGame.storageFactory.newStorage(), function(){});
 	      });
+				$('build-defense_center').observe('click', function(){
+	        thisGame.buildingMode.on(thisGame.defenseCenterFactory.newDefenseCenter(), function(){});
+	      });
 	      
 	    }
 	  },
@@ -227,6 +229,11 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
 var StorageDisplay = Class.create(TownhallDisplay, {
 	
 })
+
+var DefenseCenterDisplay = Class.create(TownhallDisplay, {
+	
+})
+
 var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
   initialize : function($super,owner,properties){
 		$super(owner,properties)
@@ -319,7 +326,10 @@ var LumbermillDisplay = Class.create(ResourceBuildingDisplay, {
 				this.sprites.saw.currentAnimationFrame = (this.sprites.saw.currentAnimationFrame + 1) % this.sprites.saw.noOfAnimationFrames;
 		}		
 		this.sawAnimationCounter = (this.sawAnimationCounter+1)%2; 
-	}
+	},
+	manageStateChange: function($super){
+  	$super()
+  }
 });
 
 var QuarryDisplay = Class.create(ResourceBuildingDisplay, {

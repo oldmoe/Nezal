@@ -8,8 +8,9 @@ var BuildingFactory = Class.create({
 	buildingDisplayClass :null,
 	
   initialize : function(game){  
-    this.buildingClass = eval(this.name.capitalize());
-		this.buildingDisplayClass = eval(this.name.capitalize() + "Display");
+    this.buildingClass = eval(this.name.dasherize().capitalize().camelize());  
+		 //To get the class name: "defense_center-> defense-center -> Defence-center -> DefenceCenter"
+		this.buildingDisplayClass = eval(this.name.dasherize().capitalize().camelize() + "Display");
     this.game = game;
     this.bluePrints = this.game.data.buildings[this.name];
     this.maximumNubmer = this.game.data.buildings[this.name].maximum_number;
