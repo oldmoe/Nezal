@@ -84,8 +84,7 @@ var BuildingDisplay = Class.create(Display, {
     this.sprites.info = new DomTextSprite(this.owner, 'textInfo', {centered: true, shiftY: -10});
 		this.sprites.building = new DomImgSprite(this.owner, {img: this.img} );
     this.sprites.mouseover = new DomImgSprite(this.owner, {img: this.mouseoverImg});
-		this.sprites.clickSprite = new DomImgSprite(this.owner,{img : this.transparentImg, area:this.area}, {clickable: true});
-		this.sprites.clickSprite.img.setStyle({width:this.imgWidth+"px",height:this.imgHeight+"px"})
+		this.sprites.clickSprite = new DomImgSprite(this.owner,{area:this.area}, {clickable: true});
 	},
 	
   manageStateChange : function(){
@@ -143,6 +142,7 @@ var BuildingDisplay = Class.create(Display, {
   
   _AttachUpgradeTrigger : function(){
     var self = this;
+    $('upgrade_trigger').stopObserving("click");
     $('upgrade_trigger').observe('click', function(){
       self.owner.upgrade();
     });
@@ -281,8 +281,7 @@ var LumbermillDisplay = Class.create(ResourceBuildingDisplay, {
 		this.sprites.building = new DomImgSprite(this.owner, {img: this.img});
 		this.sprites.saw = new DomImgSprite(this.owner, {img: this.sawImg});
     this.sprites.mouseover = new DomImgSprite(this.owner, {img: this.mouseoverImg});
-		this.sprites.clickSprite = new DomImgSprite(this.owner,{img : this.transparentImg, area:this.area}, {clickable: true});
-		this.sprites.clickSprite.img.setStyle({width:this.imgWidth+"px",height:this.imgHeight+"px"})
+		this.sprites.clickSprite = new DomImgSprite(this.owner,{area:this.area}, {clickable: true});
 	},
 	renderAnimation : function(){
 		if (!this.sprites.building.animated) {

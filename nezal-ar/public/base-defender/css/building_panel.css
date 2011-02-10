@@ -5,18 +5,6 @@
   margin-left: 12px;
   width: 70px;
 }
-#building-panel {
-  -moz-border-radius : 10px;
-  -webkit-border-radius : 10px;
-  -o-border-radius : 10px;
-  border-radius : 10px;
-  position : absolute;
-  bottom : 25px;
-  right : 25px;
-  width : 340px;
-  height : 140px;
-  background-color: gold;
-}
 
 #panel-buttons-container .panel-button {
   overflow: hidden;
@@ -30,6 +18,7 @@
   font-size: 12px;
   font-weight: bold;
   left: 16px;
+  top: 24px;
   position: absolute;
 }
 
@@ -55,14 +44,15 @@
   font-size: 12px;
 }
 .building-functions span.desc {
-    width: 200px;
+    width: 100px;
     display: inline-block;
     border-bottom: 1px solid ;
 }
 
 .building-in-progress {
-  line-height: 90px;
-  margin-left: 50px;
+  font-size: 10px;
+  line-height: 131px;
+  margin-left: 5px;
 }
 
 img.icon {
