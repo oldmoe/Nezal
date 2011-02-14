@@ -9,7 +9,8 @@ class BaseDefender < Metadata
   }
   @@building_modules = {
     "townhall" => BD::Townhall,
-    "storage" => BD::Storage 
+    "storage" => BD::Storage ,
+    "defense_center" => BD::DefenseCenter
   }.merge @@resource_building_modules
   
   @@game_metadata = nil

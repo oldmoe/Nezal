@@ -207,6 +207,11 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
 var StorageDisplay = Class.create(TownhallDisplay, {
 	
 })
+
+var DefenseCenterDisplay = Class.create(TownhallDisplay, {
+	
+})
+
 var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
   initialize : function($super,owner,properties){
 		$super(owner,properties)
@@ -298,7 +303,10 @@ var LumbermillDisplay = Class.create(ResourceBuildingDisplay, {
 				this.sprites.saw.currentAnimationFrame = (this.sprites.saw.currentAnimationFrame + 1) % this.sprites.saw.noOfAnimationFrames;
 		}		
 		this.sawAnimationCounter = (this.sawAnimationCounter+1)%2; 
-	}
+	},
+	manageStateChange: function($super){
+  	$super()
+  }
 });
 
 var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
