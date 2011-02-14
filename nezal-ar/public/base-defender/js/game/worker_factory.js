@@ -9,6 +9,7 @@ var WorkerFactory = Class.create({
     this.idleWorkers = this.game.user.data.idle_workers;
     this.recruitmentPlans = this.game.data.workers;
 		if(!game.workersStatus) game.workersStatus = {}
+		var townhall = this.game.townhallFactory.getTownhall()
 		for(var i=0;i<this.idleWorkers;i++){
 			var x =0;var y=0;var worker = null;
 			if (game.workersStatus[i]) {
@@ -16,8 +17,8 @@ var WorkerFactory = Class.create({
 		  }
 		  else {
 		  	do {
-		  		var x = Math.round(game.scene.map.x + game.scene.map.viewWidth * Math.random())
-		  		var y = Math.round(game.scene.map.y + game.scene.map.viewHeight * Math.random())
+		  		var x = townhall.coords.x + 20
+		  		var y = townhall.coords.y + 20
 		  	}
 		  	while (Map.occupied(x, y));
 				worker = new Worker(game,x,y)
@@ -48,8 +49,12 @@ var WorkerFactory = Class.create({
   
   buyWorker : function(){
     if(this._ValidateBuyWorker()){
-      var response = this.game.network.buyWorker();
-      this.game.updateGameStatus(response['gameStatus']);
+			var buyWorkerCallback = function(){
+	  		var response = this.game.network.buyWorker();
+	  		this.game.updateGameStatus(response['gameStatus']);
+	  	}
+			this.game.townhallFactory.getTownhall().producingCallback = buyWorkerCallback
+			this.game.townhallFactory.getTownhall().producing = true
     }
   },
   
