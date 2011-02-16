@@ -16,11 +16,17 @@ var WorkerFactory = Class.create({
 		  	worker = game.workersStatus[i]
 		  }
 		  else {
-		  	do {
-		  		var x = townhall.coords.x + 20
-		  		var y = townhall.coords.y + 20
+				var x =0;var y =0;
+					if (townhall) {
+		  			x = townhall.coords.x + 30
+		  			y = townhall.coords.y + 30
+		  		}else{
+		  			do {
+						 x = Math.round(game.scene.map.x + game.scene.map.viewWidth * Math.random())
+						 y = Math.round(game.scene.map.y + game.scene.map.viewHeight * Math.random())
+						}while (Map.occupied(x, y));
 		  	}
-		  	while (Map.occupied(x, y));
+		  	
 				worker = new Worker(game,x,y)
 		  }
 			if(!game.workersStatus[i])game.workersStatus[i] = worker

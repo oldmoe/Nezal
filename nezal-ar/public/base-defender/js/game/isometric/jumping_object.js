@@ -13,6 +13,8 @@ var JumpingObject = Class.create({
 	 doingJump : false, 
 	 minSpeed : 1.5,
 	 maxSpeed : 4,
+	 noOfStates : 8, 
+	currentState : 0,
 	 movementFinishCallback : null,
 	 initialize : function(game,x,y){
 	 	this.game = game;

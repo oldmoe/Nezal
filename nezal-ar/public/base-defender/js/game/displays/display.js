@@ -245,6 +245,7 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
 					this.doorOpening = false
 					this.doorClosing = true
 					if(this.owner.producingCallback)this.owner.producingCallback()
+					return
 				}
 				if(this.sprites.building.currentAnimationFrame == 0 && this.doorClosing){
 					this.doorClosing = false
