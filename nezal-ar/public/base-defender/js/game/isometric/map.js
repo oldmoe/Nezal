@@ -94,7 +94,7 @@ var Map={
 				if(i2==rowOddDirections[k][1]&&j2==rowOddDirections[k][2]) return rowOddDirections[k][0]
 			}
 		}
-		return null
+		return 0
 	},
 	getNeighbor : function(i,j,direction){
 		var ret = null

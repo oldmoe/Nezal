@@ -42,7 +42,7 @@ var JumpingObject = Class.create({
 				this.doingJump = true;
 				this.speed = this.maxSpeed;
 				var jmpTile = this.getJumpTile();
-				if(jmpTile!=null)this.movingPath.push(this.getJumpTile());
+				if(jmpTile!=null)this.movingPath.push(jmpTile);
 			}
 			
 			var values = Map.value(this.movingPath[this.movingPath.length-1].x,this.movingPath[this.movingPath.length-1].y)

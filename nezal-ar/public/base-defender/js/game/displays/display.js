@@ -47,16 +47,16 @@ var WorkerDisplay = Class.create(Display,{
 		this.shadowImg = Loader.images.worker['worker_shadow.png'];
 		Object.extend(this.owner,this);
 		this.sprites.worker = new DomImgSprite(owner, {img : this.img});
-		this.sprites.shadow = new DomImgSprite(owner.shadow, {img : this.shadowImg}, {shiftY: 48, shiftX: 10});
+		this.sprites.shadow = new DomImgSprite(owner.shadow, {img : this.shadowImg}, {shiftY: 40, shiftX: 0});
   },
 	
 	render : function(){
+		this.sprites.worker.currentAnimationFrame = Math.abs(this.owner.state)
 		this.sprites.worker.render();
-		//this.sprites.shadow.render();
-		var divider = 20;
-		if (this.owner.angle == Map.S) divider = 45;
-		var scale = Math.abs(this.sprites.shadow.owner.coords.y-this.sprites.worker.owner.coords.y)/divider + 1;
-		this.sprites.shadow.setImgWidth(scale*this.shadowImg.width)
+		this.sprites.shadow.render();
+		var shadowWidth = (Math.abs(4-this.owner.state)+1)*5
+		this.sprites.shadow.shiftX = 15 + (25 - shadowWidth)/2
+		this.sprites.shadow.setImgWidth(shadowWidth)
 	}
 });
 
@@ -262,7 +262,7 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
 			if (!this.sprites.building.animated && !this.owner.producing) {
         this.sprites.building.currentAnimationFrame = 0
       }
-      else {
+      else if(!this.owner.producing){
 		  	this.sprites.building.currentAnimationFrame = (this.sprites.building.currentAnimationFrame + 1) % this.sprites.building.noOfAnimationFrames;
       }
 		}
