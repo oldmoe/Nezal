@@ -47,15 +47,16 @@ var WorkerDisplay = Class.create(Display,{
 		this.shadowImg = Loader.images.worker['worker_shadow.png'];
 		Object.extend(this.owner,this);
 		this.sprites.worker = new DomImgSprite(owner, {img : this.img});
-		this.sprites.shadow = new DomImgSprite(owner.shadow, {img : this.shadowImg}, {shiftY: 48, shiftX: 10});
+		this.sprites.shadow = new DomImgSprite(owner.shadow, {img : this.shadowImg}, {shiftY: 40, shiftX: 0});
   },
+	
 	render : function(){
+		this.sprites.worker.currentAnimationFrame = Math.abs(this.owner.state)
 		this.sprites.worker.render();
 		this.sprites.shadow.render();
-		var divider = 20;
-		if (this.owner.angle == Map.S) divider = 45;
-		var scale = Math.abs(this.sprites.shadow.owner.coords.y-this.sprites.worker.owner.coords.y)/divider + 1;
-		this.sprites.shadow.setImgWidth(scale*this.shadowImg.width)
+		var shadowWidth = (Math.abs(4-this.owner.state)+1)*5
+		this.sprites.shadow.shiftX = 15 + (25 - shadowWidth)/2
+		this.sprites.shadow.setImgWidth(shadowWidth)
 	}
 });
 
@@ -69,6 +70,7 @@ var BuildingDisplay = Class.create(Display, {
 		var buildImgName = this.noOfXTiles+"x"+this.noOfYTiles
 		this.invalidImg =  Loader.images.buildingModes[buildImgName+"_invalid.png"];
 		this.baseImg = Loader.images.buildingModes[buildImgName+'_base.png'];
+		this.shadowImg = Loader.images.buildingShadows[this.owner.name+"_shadow.png"];
 		this.outlineImg = Loader.images.buildingOutlines[this.owner.name+"_outline.png"];
     this.mouseoverImg = Loader.images.icons[this.owner.name+"_icon.png"];
 		this.transparentImg = Loader.images.buildingModes["transparent.png"];
@@ -78,12 +80,20 @@ var BuildingDisplay = Class.create(Display, {
 		this.render();
     this.manageStateChange();
 	},
+	
 	createSprites : function(){
 		this.sprites.base = new DomImgSprite(this.owner, {img : this.baseImg}, {shiftY: this.zdim});
 		this.sprites.invalid = new DomImgSprite(this.owner, {img : this.invalidImg}, {shiftY: this.zdim});
 		this.sprites.outline = new DomImgSprite(this.owner, {img: this.outlineImg});
+		this.sprites.shadow = new DomImgSprite(this.owner, {img: this.shadowImg, width:this.shadowImg.width,
+		height:this.shadowImg.height});
+		this.sprites.shadow.shiftX = this.imgWidth - this.shadowImg.width
+		this.sprites.shadow.shiftY = this.imgHeight - this.shadowImg.height
     this.sprites.info = new DomTextSprite(this.owner, 'textInfo', {centered: true, shiftY: -10});
-		this.sprites.building = new DomImgSprite(this.owner, {img: this.img} );
+		this.sprites.building = new DomImgSprite(this.owner, {img: this.img});
+		this.sprites.building.shiftX = (this.imgWidth - this.img.width)/2+2;
+		this.sprites.base.shiftX = (this.imgWidth - this.img.width)/2+2;
+		this.sprites.invalid.shiftX = (this.imgWidth - this.img.width)/2+2;
     this.sprites.mouseover = new DomImgSprite(this.owner, {img: this.mouseoverImg});
 		this.sprites.clickSprite = new DomImgSprite(this.owner,{img : this.transparentImg, area:this.area}, {clickable: true});
 		this.sprites.clickSprite.img.setStyle({width:this.imgWidth+"px",height:this.imgHeight+"px"})
@@ -176,6 +186,9 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
 		animationRepeats : 2,
 		animationEverySeconds : 4,
 		tickDelay : 4,
+		doorOpening : false,
+		doorClosing : false,
+		doorFrames : 6,
 		initialize : function($super,owner,properties){
 			$super(owner,properties)
 			var self = this;
@@ -215,22 +228,51 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
 	      
 	    }
 	  },
+			
+		render : function($super){
+			$super()
+			if(this.owner.producing && this.owner.game.reactor.ticks %4==0) this.renderDoor()
+		},	
 		
+		renderDoor : function(){
+				if(!this.doorOpening && !this.doorClosing){
+					this.sprites.building.animated = false
+					this.sprites.building.replaceImg(Loader.images.buildings['townhall_door.png'])
+					this.doorOpening = true
+					this.sprites.building.currentAnimationFrame = 0
+				} 
+				if(this.sprites.building.currentAnimationFrame == this.doorFrames-1){
+					this.doorOpening = false
+					this.doorClosing = true
+					if(this.owner.producingCallback)this.owner.producingCallback()
+					return
+				}
+				if(this.sprites.building.currentAnimationFrame == 0 && this.doorClosing){
+					this.doorClosing = false
+					this.owner.producing = false
+					this.sprites.building.replaceImg(Loader.images.buildings['townhall.png'])
+					this.sprites.building.animated = true
+				}
+				else if (this.doorOpening)
+				this.sprites.building.currentAnimationFrame = (this.sprites.building.currentAnimationFrame + 1);
+				else if (this.doorClosing)
+				this.sprites.building.currentAnimationFrame = (this.sprites.building.currentAnimationFrame - 1);
+		},
 		renderAnimation : function(){
-			if (!this.sprites.building.animated) {
+			if (!this.sprites.building.animated && !this.owner.producing) {
         this.sprites.building.currentAnimationFrame = 0
       }
-      else {
+      else if(!this.owner.producing){
 		  	this.sprites.building.currentAnimationFrame = (this.sprites.building.currentAnimationFrame + 1) % this.sprites.building.noOfAnimationFrames;
       }
 		}
 });
 
-var StorageDisplay = Class.create(TownhallDisplay, {
+var StorageDisplay = Class.create(BuildingDisplay, {
 	
 })
 
-var DefenseCenterDisplay = Class.create(TownhallDisplay, {
+var DefenseCenterDisplay = Class.create(BuildingDisplay, {
 	
 })
 
@@ -304,6 +346,10 @@ var LumbermillDisplay = Class.create(ResourceBuildingDisplay, {
 		this.sprites.base = new DomImgSprite(this.owner, {img : this.baseImg}, {shiftY: this.zdim});
 		this.sprites.invalid = new DomImgSprite(this.owner, {img : this.invalidImg}, {shiftY: this.zdim});
 		this.sprites.outline = new DomImgSprite(this.owner, {img: this.outlineImg});
+		this.sprites.shadow = new DomImgSprite(this.owner, {img: this.shadowImg, width:this.shadowImg.width,
+		height:this.shadowImg.height});
+			this.sprites.shadow.shiftX = this.imgWidth - this.shadowImg.width
+			this.sprites.shadow.shiftY = this.imgHeight - this.shadowImg.height
     this.sprites.info = new DomTextSprite(this.owner, 'textInfo', {centered: true, shiftY: -10});
 		this.sprites.building = new DomImgSprite(this.owner, {img: this.img});
 		this.sprites.saw = new DomImgSprite(this.owner, {img: this.sawImg});

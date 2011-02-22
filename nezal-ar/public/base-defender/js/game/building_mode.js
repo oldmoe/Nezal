@@ -23,6 +23,7 @@ var BuildingMode = Class.create({
   },
 	
 	move: function(){
+		if(!this.selectedBuilding)return
 		this.moveBuilding = true;
 		Map.objects.remove(this.selectedBuilding);
 		this.selectedBuilding.oldCoords = {};
@@ -51,9 +52,14 @@ var BuildingMode = Class.create({
   },
   
 	cancelBuildingMode : function(){
+		if (this.moveBuilding) {
+			this._ModeOnAction(this.selectedBuilding.oldCoords.x,this.selectedBuilding.oldCoords.y)
+		}
+		else {
+			this.selectedBuilding.destroy();
+			this.selectedBuilding = null;
+		}	
 		this.off();
-		this.selectedBuilding.destroy();
-		this.selectedBuilding = null;	
 	},
 	
   _AttachCanvasClickListener : function(){

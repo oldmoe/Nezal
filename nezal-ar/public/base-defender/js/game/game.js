@@ -69,17 +69,21 @@ var Game = Class.create({
       return building + ".png";
     });
 		buildingImages.push("lumbermill_saw.png")
-		buildingImages.push("lumbermill_saw.png")
+		buildingImages.push("townhall_door.png")
 		var buildingOutlineImages = BuildingMode.prototype.buildings.collect(function(building){
       return building + "_outline.png";
     });
 
-		var buildingModeImages = ['2x2_invalid.png', '2x2_base.png','transparent.png','transparent.png'];
+		var buildingShadowImages = BuildingMode.prototype.buildings.collect(function(building){
+      return building + "_shadow.png";
+    });
+
+		var buildingModeImages = ['2x2_invalid.png', '2x2_base.png','1x1_invalid.png', '1x1_base.png','transparent.png','transparent.png'];
 		var questsImages = ["msgBg.png", "wedge.png", "button.png", "msgBaloon.png", "questBaloon.png" , "questBg.png", "buildingPanelBg.png",
                          "activeCell.png", "inactiveCell.png", "resources.png", "correct.png", "correct.png"];
     var iconsImages = ["townhall.png", "townhall_icon.png", "quarry_icon.png", "lumbermill_icon.png", "quarry.png",
 		 "lumbermill.png", "lumber.png", "rock.png", "workers.png","cancel.png","storage.png","storage_icon.png",
-		 'defense_center.png','defense_center_icon.png'];
+		 "defense_center.png","defense_center_icon.png"];
    
 		var workerImages = ["worker.png", "worker_shadow.png"];
 		
@@ -92,7 +96,8 @@ var Game = Class.create({
 										 	 {images : workerImages, path: 'images/worker/', store: 'worker'},
                        {images : smokeImages, path: 'images/', store: 'smoke'},
 											 {images : questsImages, path: 'images/quests/', store: 'quests'},
-											 {images : buildingOutlineImages, path: 'images/buildings/outlines/', store: 'buildingOutlines'}],
+											 {images : buildingOutlineImages, path: 'images/buildings/outlines/', store: 'buildingOutlines'},
+											 {images : buildingShadowImages, path: 'images/buildings/shadows/', store: 'buildingShadows'}],
       {onFinish : loaderFinishCallback});
   },
   

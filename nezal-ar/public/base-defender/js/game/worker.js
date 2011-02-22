@@ -1,3 +1,3 @@
-var Worker = Class.create(JumpingObject,{
+var Worker = Class.create(MovingObject,{
 	
 });

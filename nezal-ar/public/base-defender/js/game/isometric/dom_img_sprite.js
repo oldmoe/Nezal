@@ -13,8 +13,6 @@ var DomImgSprite = Class.create(DomSprite, {
 				 }
 			})
 		}
-    if( imgAssets.shadeImg )
-		  this.shadeImg = imgAssets.shadeImg.clone();
 		this.div.appendChild(this.img)
 		this.currentAnimationFrame = 0
 		this.currentDirectionFrame = 0
@@ -35,10 +33,12 @@ var DomImgSprite = Class.create(DomSprite, {
 	},
   
   setImgWidth : function(width){
+		this.imgWidth = width
     this.img.setStyle({width:(width + "px")});
   },
   
 	setImgHeight : function(height){
+			this.imgHeight = height
       this.img.setStyle({height:(height + "px")});
   },
 	

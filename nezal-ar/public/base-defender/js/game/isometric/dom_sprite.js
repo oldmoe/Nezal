@@ -7,8 +7,10 @@ var DomSprite = Class.create(Sprite, {
     this.div.addClassName('DomSprite');
     this.owner = owner;
     this.div.setStyle ({zIndex :(this.owner.coords.y + this.owner.zdim)});
-    this.div.style.width = this.owner.imgWidth + "px";
-    this.div.style.height =  this.owner.imgHeight + "px";
+		if(assets && assets.width)this.div.style.width = assets.width + "px";
+    else this.div.style.width = this.owner.imgWidth + "px";
+		if(assets && assets.height)this.div.style.height = assets.height + "px";
+    else this.div.style.height =  this.owner.imgHeight + "px";
     Object.extend( this, properties );
   },
   
