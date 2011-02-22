@@ -14,21 +14,21 @@ var Display = Class.create({
 		this.sprites = {}
 		this.owner = owner
 	},
-	 collides : function(u){
-		return Util.collision(this,u)
-	 },
-	 distance : function(u){
+	collides : function(u){
+	  return Util.collision(this,u)
+	},
+	distance : function(u){
 		return Math.sqrt(Math.pow(u.x-this.x,2)+Math.pow(u.y-this.y,2))
-	 },
-	 getNextMove : function(){
+	},
+	getNextMove : function(){
 		if(this.x!=this.goalX || this.y!=this.goalY){
 			var movement = Util.getNextMove(this.x,this.y,this.goalX,this.goalY,this.speed)
 		}
-	 },
-	 destroy : function(){
+	},
+	destroy : function(){
 		for(var sprite in this.sprites){
 			this.sprites[sprite].destroy();
-		}
+	  }
 	}
 });
 
@@ -51,7 +51,7 @@ var WorkerDisplay = Class.create(Display,{
   },
 	render : function(){
 		this.sprites.worker.render();
-	//	this.sprites.shadow.render();
+		this.sprites.shadow.render();
 		var divider = 20;
 		if (this.owner.angle == Map.S) divider = 45;
 		var scale = Math.abs(this.sprites.shadow.owner.coords.y-this.sprites.worker.owner.coords.y)/divider + 1;
