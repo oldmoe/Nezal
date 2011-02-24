@@ -51,8 +51,10 @@ class AdminController < ApplicationController
   put '/:game_name/metadata' do 
     @game = Game.find_by_name(params[:game_name])
     klass = self.get_helper_klass
-    klass.edit_game(@game, params["data"])
-    ''
+    data = params["data"] 
+    data ||= params
+    klass.edit_game(@game, data)
+    redirect "/#{ADMIN_URL}/#{@game.name}/metadata/edit"
   end
 
   # Add rank to a game 

@@ -72,6 +72,7 @@ var BuildingDisplay = Class.create(Display, {
 		this.baseImg = Loader.images.buildingModes[buildImgName+'_base.png'];
 		this.shadowImg = Loader.images.buildingShadows[this.owner.name+"_shadow.png"];
 		this.outlineImg = Loader.images.buildingOutlines[this.owner.name+"_outline.png"];
+		this.movingImg = Loader.images.buildingMoving[this.owner.name+"_moving.png"];
     this.mouseoverImg = Loader.images.icons[this.owner.name+"_icon.png"];
 		this.transparentImg = Loader.images.buildingModes["transparent.png"];
 		this.mapTiles =[];
@@ -95,6 +96,8 @@ var BuildingDisplay = Class.create(Display, {
 		this.sprites.base.shiftX = (this.imgWidth - this.img.width)/2+2;
 		this.sprites.invalid.shiftX = (this.imgWidth - this.img.width)/2+2;
     this.sprites.mouseover = new DomImgSprite(this.owner, {img: this.mouseoverImg});
+    if(this.movingImg)
+      this.sprites.moving = new DomImgSprite(this.owner, {img: this.movingImg});
 		this.sprites.clickSprite = new DomImgSprite(this.owner,{img : this.transparentImg, area:this.area}, {clickable: true});
 		this.sprites.clickSprite.img.setStyle({width:this.imgWidth+"px",height:this.imgHeight+"px"})
 	},
@@ -102,7 +105,16 @@ var BuildingDisplay = Class.create(Display, {
   manageStateChange : function(){
     var self = this;
     this.owner.stateNotifications[this.owner.states.NOT_PLACED].push(function(){
-      self.sprites.building.setOpacity(0.5);
+      if(self.sprites.moving)
+      {
+        self.sprites.moving.setOpacity(0.5);
+        self.sprites.building.hide();
+      }
+      else
+      {
+        self.sprites.building.setOpacity(0.5);
+        self.sprites.moving.hide();
+      }
       self.sprites.building.animated = false;
 			self.sprites.base.show();
 			self.sprites.outline.hide();
@@ -114,33 +126,39 @@ var BuildingDisplay = Class.create(Display, {
       var top =  self.owner.coords.y -Math.round(self.imgHeight/2)
       var left =  self.owner.coords.x -Math.round(self.imgWidth/2);
       self.progressDisplay = new ProgressDisplay( self.owner.nextLevelBluePrints.time, top, left, self.owner.coords.y );
+      self.sprites.building.show();
       self.sprites.building.setOpacity(0.5);
       self.sprites.building.animated = false;
 			self.sprites.base.hide();
 			self.sprites.outline.hide();
       self.sprites.info.hide();
       self.sprites.mouseover.hide();
+			if(self.sprites.moving) self.sprites.moving.hide();
 			self.sprites.invalid.hide();
     });
     this.owner.stateNotifications[this.owner.states.UPGRADING].push(function(){
       var top =  self.owner.coords.y -Math.round(self.imgHeight/2)
       var left =  self.owner.coords.x -Math.round(self.imgWidth/2);
       self.progressDisplay = new ProgressDisplay( self.owner.nextLevelBluePrints.time, top, left, self.owner.coords.y );
+      self.sprites.building.show();
       self.sprites.building.setOpacity(0.5);
       self.sprites.building.animated = false;
 			self.sprites.base.hide();
 			self.sprites.outline.hide();
       self.sprites.info.hide();
       self.sprites.mouseover.hide();
+			if(self.sprites.moving) self.sprites.moving.hide();
 			self.sprites.invalid.hide();
     });
     this.owner.stateNotifications[this.owner.states.NORMAL].push(function(){
+      self.sprites.building.show();
       self.sprites.building.setOpacity(1);
       self.sprites.building.animated = true;
 			self.sprites.base.hide();
 			self.sprites.outline.hide();
       self.sprites.info.hide();
       self.sprites.mouseover.hide();
+			if(self.sprites.moving) self.sprites.moving.hide();
 			self.sprites.invalid.hide();
     });
   },
@@ -225,6 +243,9 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
 				$('build-defense_center').observe('click', function(){
 	        thisGame.buildingMode.on(thisGame.defenseCenterFactory.newDefenseCenter(), function(){});
 	      });
+				$('build-wedge').observe('click', function(){
+	        thisGame.buildingMode.on(thisGame.wedgeFactory.newWedge(), function(){});
+	      });
 	      
 	    }
 	  },
@@ -270,11 +291,15 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
 
 var StorageDisplay = Class.create(BuildingDisplay, {
 	
-})
+});
 
 var DefenseCenterDisplay = Class.create(BuildingDisplay, {
 	
-})
+});
+
+var WedgeDisplay = Class.create(BuildingDisplay, {
+	
+});
 
 var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
   initialize : function($super,owner,properties){

@@ -10,7 +10,8 @@ class BaseDefender < Metadata
   @@building_modules = {
     "townhall" => BD::Townhall,
     "storage" => BD::Storage ,
-    "defense_center" => BD::DefenseCenter
+    "defense_center" => BD::DefenseCenter, 
+    "wedge" => BD::Wedge
   }.merge @@resource_building_modules
   
   @@game_metadata = nil
@@ -237,6 +238,15 @@ class BaseDefender < Metadata
     name = data['building']
     validation = @@building_modules[name].move(user_game_profile, name, data['coords'], data['oldCoords'])
     return validation
+  end
+
+  def self.edit_game(game, params)
+    puts "===================================== Inside edit_game"
+    puts params
+    game.metadata ||= { "buildings" => {}, "workers" => {} }
+    game.metadata["buildings"][params["name"]] ||= {} 
+    game.metadata["buildings"][params["name"]]["maximum_number"] = params["max_buildings"]
+    game.save
   end
   
   def self.init_game_profile(user_game_profile)
