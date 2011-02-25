@@ -1,6 +1,6 @@
 var BuildingMode = Class.create({
   game : null,
-  buildings : ['townhall', 'quarry', 'lumbermill','storage','defense_center'],
+  buildings : ['townhall', 'quarry', 'lumbermill','storage','defense_center', 'wedge'],
   inProgressImage : 'progress.png',
   isOn : false,
   selectedBuilding : null,

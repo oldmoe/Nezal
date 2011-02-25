@@ -4,6 +4,7 @@ var DomImgSprite = Class.create(DomSprite, {
   minAreaZIndex : 10000000,
 	initialize : function($super, owner, imgAssets, properties){
     $super(owner, imgAssets, properties);
+    console.log(owner, imgAssets, properties)
 		this.img = imgAssets.img.clone()
 		if(this.img){
 			this.img.observe('mousedown',function(event){
