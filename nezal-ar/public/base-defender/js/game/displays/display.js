@@ -74,6 +74,7 @@ var BuildingDisplay = Class.create(Display, {
 		this.outlineImg = Loader.images.buildingOutlines[this.owner.name+"_outline.png"];
 		this.movingImg = Loader.images.buildingMoving[this.owner.name+"_moving.png"];
     this.mouseoverImg = Loader.images.icons[this.owner.name+"_icon.png"];
+    console.log(this.img, this.invalidImg, this.baseImg, this.shadowImg, this.outlineImg, this.movingImg, this.mouseoverImg);
 		this.mapTiles =[];
 		Object.extend(this.owner,this); 
 		this.createSprites()	
