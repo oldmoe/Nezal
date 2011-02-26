@@ -41,6 +41,7 @@
       <span class="text yellowText"> ${quest.title} </span>
     </div>
     <div class="conditions">
+      <div class="container"
       {for building in quest.conditions.buildings}
         {for condition in building}
           <div class="condition">          
@@ -91,6 +92,7 @@
           </div>
         </div>
       {/for}
+      </div>
     </div>
     <div class="descriptionWrapper">
       <div class="description">

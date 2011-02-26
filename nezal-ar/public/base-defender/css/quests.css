@@ -202,12 +202,19 @@
   width : 50px;
   height : 40px;
   cursor : pointer;
+  z-index: 10;
 }
 #interaction #questDisplay .conditions {
   position: absolute;
   top: 85px;
   width: 100%;
   height: 160px;
+  display : table;
+}
+
+#interaction #questDisplay .conditions .container{
+  display : table-cell;
+  vertical-align : middle;
 }
 
 #interaction #questDisplay .condition {

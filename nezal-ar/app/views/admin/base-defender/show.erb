@@ -1,0 +1,28 @@
+<LABEL for="new_game">Add New Building</LABEL>
+<form id="new_building" action="/<%=AdminController::ADMIN_URL%>/<%=@game.name%>/metadata" method="post" enctype="multipart/form-data">
+  <input type="hidden" name="_method" value="put"/>
+  <div class="form_row">  
+    <LABEL for="name">Name</LABEL>
+    <INPUT type="text" id="name" name='name'><BR>
+  </div>
+  <div class="form_row">
+    <LABEL for="max_buildings">Maximum Allowed Buildings</LABEL>
+	  <textarea name='max_buildings' type="text"></textarea>  
+  </div>	  
+  <div class="form_row">
+    <input type="submit" value="Save" class="submit"/>
+  </div>
+</form> 
+
+<% @game.metadata.each_pair do | key, val | %>
+  <div class="game">
+    <div>   
+      <%= key %>
+      <br/>
+      <% @game.metadata[key].each_key do | key | %>
+        <%= key %>
+        <br/>
+      <% end %>
+    </div>
+  </div>
+<% end %>

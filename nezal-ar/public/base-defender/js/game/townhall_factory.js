@@ -13,6 +13,11 @@ var TownhallFactory = Class.create(BuildingFactory, {
   
   newTownhall : function(){
     return this.newBuilding();
-  }
+  },
+	getTownhall : function(){
+		for (townhall in this.factoryRegistry){
+   		return this.factoryRegistry[townhall]			
+		}
+	}
   
 });

@@ -4,46 +4,44 @@ var DomImgSprite = Class.create(DomSprite, {
   minAreaZIndex : 10000000,
 	initialize : function($super, owner, imgAssets, properties){
     $super(owner, imgAssets, properties);
-    if(!this.clickable){
-      this.img = imgAssets.img.clone()
-  		if(this.img){
-  			this.img.observe('mousedown',function(event){
-  				 if(event.preventDefault)
-  				 {
-  				  event.preventDefault();
-  				 }
-  			})
-  		}
-      if( imgAssets.shadeImg )
-  		  this.shadeImg = imgAssets.shadeImg.clone();
-  		this.div.appendChild(this.img)
-  		this.currentAnimationFrame = 0
-  		this.currentDirectionFrame = 0
-  		this.noOfAnimationFrames = this.img.height/this.owner.imgHeight
-  		this.noOfDirections = 8
-  		this.img.setStyle({height:"auto"});
-		} else {
-      var useMapId = this.owner.coords.x+"-"+this.owner.coords.y;
-      this.domArea = new DomArea({
-        useMapId: useMapId,
-        shape: 'poly',
-        coords: imgAssets.area,
-        parentDiv: this.div,
-        mapParentDiv: $('gameCanvas'),
-        size: {
-          width: this.owner.imgWidth,
-          height: this.owner.imgHeight
-        }
-      });
-			Map.registerListeners(this.domArea.area,this.owner);
-    }
+    console.log( imgAssets )
+		this.img = imgAssets.img.clone()
+		if(this.img){
+			this.img.observe('mousedown',function(event){
+				 if(event.preventDefault)
+				 {
+				  event.preventDefault();
+				 }
+			})
+		}
+    if( imgAssets.shadeImg )
+      this.shadeImg = imgAssets.shadeImg.clone();
+		this.div.appendChild(this.img)
+		this.currentAnimationFrame = 0
+		this.currentDirectionFrame = 0
+		this.noOfAnimationFrames = this.img.height/this.owner.imgHeight
+		this.noOfDirections = 8
+		this.img.setStyle({height:"auto"});
+		if(this.clickable){
+				this.img.setAttribute('usemap','#'+this.owner.coords.x+"-"+this.owner.coords.y)
+				this.map = $(document.createElement('map'));
+				this.map.setAttribute('name',this.owner.coords.x+"-"+this.owner.coords.y)
+				this.clickDiv = $(document.createElement('area'));
+				this.clickDiv.setAttribute('shape','poly');
+				this.clickDiv.setAttribute('coords', imgAssets.area);
+				Map.registerListeners(this.clickDiv,this.owner);
+				$('gameCanvas').appendChild(this.map);
+				this.map.appendChild(this.clickDiv);
+		}
 	},
   
   setImgWidth : function(width){
+		this.imgWidth = width
     this.img.setStyle({width:(width + "px")});
   },
   
 	setImgHeight : function(height){
+			this.imgHeight = height
       this.img.setStyle({height:(height + "px")});
   },
 	
