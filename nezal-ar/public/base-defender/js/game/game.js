@@ -78,7 +78,7 @@ var Game = Class.create({
 
 		var buildingModeImages = ['2x2_invalid.png', '2x2_base.png','transparent.png','transparent.png'];
 		var questsImages = ["msgBg.png", "wedge.png", "button.png", "msgBaloon.png", "questBaloon.png" , "questBg.png", "buildingPanelBg.png",
-                         "activeCell.png", "inactiveCell.png", "resources.png", "correct.png", "correct.png"];
+                         "activeCell.png", "inactiveCell.png", "resources.png", "correct.png", "correct.png", "buildingsBg.png", "wedgesBg.png"];
     var iconsImages = ["townhall.png", "townhall_icon.png", "quarry_icon.png", "lumbermill_icon.png", "quarry.png",
 		 "lumbermill.png", "lumber.png", "rock.png", "workers.png","cancel.png","storage.png","storage_icon.png",
 		 'defense_center.png','defense_center_icon.png'];
