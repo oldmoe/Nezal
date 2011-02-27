@@ -1,72 +1,58 @@
-#building-panel {
-  -moz-border-radius : 10px;
-  -webkit-border-radius : 10px;
-  -o-border-radius : 10px;
-  border-radius : 10px;
-  position : absolute;
-  bottom : 25px;
-  right : 25px;
-  width : 340px;
-  height : 140px;
-  background-color: gold;
+#panel-buttons-container {
+  height: 103px;
+  float: left;
+  margin-top: 20px;
+  margin-left: 12px;
+  width: 70px;
 }
-#close-building-panel {
-  float: right;
-  font-family: fantasy;
-  font-weight: bold;
+
+#panel-buttons-container .panel-button {
+  overflow: hidden;
+  height: 25px;
+  width: 66px;
   cursor: pointer;
+}
+
+#panel-buttons-container .panel-button span {
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  left: 16px;
+  top: 24px;
   position: absolute;
-  right: 4px;
-  top: 0;
-}
-.building-presentation {
-  border-right : 1px solid;
-  height : 120px;
-  margin-top : 5px;
-  padding-top : 10px;
-  width : 110px;
-  float : left;
-  text-align : center;
 }
 
-.building-presentation .building-presentation-crop{
-  height : 80px;
-  overflow : hidden;
+#panel-buttons-container #panel-button-upgrade span {
+  top: 24px;
 }
 
-.building-presentation span{
-  display : block;
-  float : none;
-  font-family : fantasy;
-  font-size : 15px;
-  font-weight : bold;
-  text-align : center;
-  line-height : 8px;
-}
-
-.building-presentation img{
-  margin-top : 15px;
-  width : 55px;
+#building-panel {
+  background-image: url("../images/buildings/panel/panel.png");
+  position : absolute;
+  width : 210px;
+  height : 130px;
 }
 .building-functions {
   float : left;
-  height : 120px;
-  margin : 5px;
-  width : 205px;
+  height: 100px;
+  margin-top: 20px;
+  margin-left: 5px;
+  width: 100px;
 }
 
 .building-functions span {
   font-size: 12px;
 }
 .building-functions span.desc {
-    width: 200px;
+    width: 100px;
     display: inline-block;
     border-bottom: 1px solid ;
 }
 
 .building-in-progress {
-  line-height: 90px;
-  margin-left: 50px;
+  font-size: 10px;
+  line-height: 131px;
+  margin-left: 5px;
 }
 
 img.icon {

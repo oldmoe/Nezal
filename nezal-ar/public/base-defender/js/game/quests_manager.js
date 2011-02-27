@@ -23,11 +23,12 @@ var QuestsManager = Class.create({
     $('questDisplay').innerHTML = '';
     $('questDisplay').innerHTML = this.game.templatesManager.quest(this.game.user.data.quests.descriptions[questId]);
     $('questDisplay').show();
+    $('interaction').show();
   },
 
   displayCongratesMsg : function(msg){
     $('msg').innerHTML = this.game.templatesManager.congrates(msg);
-    $('msg').show();
+    $('interaction').show();
   },
 
   handleQuests : function() {
@@ -35,8 +36,9 @@ var QuestsManager = Class.create({
        if there is any quests notifications, display them one by one.
        else, Check for a mandatory Quest and display it.
     */
-    $('questDisplay').hide();
-    $('msg').hide();
+    //$('questDisplay').hide();
+    $('interaction').hide();
+    $('msg').innerHTML = ""
     var notifications = this.game.user.data.notifications.queue.findAll(function(n) { return n['type'] == 'quest'; });
     if( notifications && notifications.length > 0 ) {
       this.displayCongratesMsg(notifications.first());

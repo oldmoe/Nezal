@@ -15,6 +15,7 @@ var Tutorial = Class.create({
         serviceProvider.getUserInfo(function(){
                                       $('msg').innerHTML = this.game.templatesManager.welcome(serviceProvider.user['first_name']);
                                       $('msg').show();
+                                      $('interaction').show();
                                     });
       }else {
         this.game.questsManager.handleQuests();
@@ -34,14 +35,14 @@ var Tutorial = Class.create({
       var buildButtonCallBack = function(){
                                     Hand.hide();
                                     $('questDisplay').hide();
-                                    self.game.buildingsManager.displayBuildingsPanel({'disabled' : ['quarry', 'lumbermill']});
+                                    self.game.buildingsManager.displayBuildingsPanel({'disabled' : ['quarry', 'lumbermill', 'storage', 'defense_center']});
                                     setTimeout(function(){
                                         $$('#buildingsPanel #townhall .itemData')[0].observe('click', function(){$('hand').hide()});
                                         Hand.point(self.game, { 'object' : $$('#buildingsPanel #townhall .itemData')[0], 'rotated' : false });
                                     } , 500);
                                  };
       this.self.game.buildingsManager.displayBuildButton(buildButtonCallBack);
-      Hand.point(self.game, { 'object' : $$('.buildButton .okButton')[0], 'rotated' : false});
+      Hand.point(self.game, { 'object' : $('buildButton'), 'rotated' : false});
     }
   },
 
