@@ -29,7 +29,6 @@ var Astar = Class.create({
 		var closedList = []
 		openList.push(srcNode)
 		var goalReached = false
-		
         while(openList.length > 0) {
             var lowInd = 0;
             for(var i=0; i<openList.length; i++) {

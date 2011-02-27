@@ -239,7 +239,7 @@ var Map={
 		var topY = obj.owner.coords.y -Map.tileHeight/2
 		var originTile = Map.tileValue(topX,topY)
 		var mapTiles = []
-		for(var i=0;i<noOfRows;i++){
+		for(var i=0;i<noOfRows+1;i++){
 			if(!originTile) continue;
 			originTile = Map.getNeighbor(originTile[0],originTile[1],Map.SW)
 			if(!originTile) continue;
@@ -326,7 +326,7 @@ var Map={
 		var astar = new Astar()
 		var srcTiles = Map.tileValue(object.coords.x,object.coords.y)
 		var destTiles = Map.tileValue(x,y)
-		if(Map.grid[destTiles[0]][destTiles[1]].value!=0 && !ignorePlace) return
+		if(Map.grid[destTiles[0]][destTiles[1]].value!=0 && !ignorePlace) destTiles = Map.getNearestEmptyTile(destTiles)
 		var path = astar.getOptimalPath(Map,Map.grid[srcTiles[0]][srcTiles[1]],Map.grid[destTiles[0]][destTiles[1]])
 		for(var i=0;i<Math.ceil(this.mapHeight*2/this.tileHeight)+1;i++){
 				for(var j=0;j<Math.ceil(this.mapWidth/this.tileWidth)+1;j++){
@@ -343,6 +343,22 @@ var Map={
 		}
 		
 	},
+	
+	getNearestEmptyTile : function(tile){
+		var openList = []
+		openList.push(tile)
+		var found = false
+		while(!found){
+			var tile = openList[0]
+		 	for (var k=0;k<8;k++){
+				var neighbor = Map.getNeighbor(tile[0],tile[1],k)
+				if(neighbor && Map.grid[neighbor[0]][neighbor[1]].value ==0 &&Map.grid[neighbor[0]][neighbor[1]].terrainType==0 )return neighbor
+				else if(neighbor) openList.push(neighbor)
+			}
+			openList.splice(0,1)			
+		}	
+	},
+	
 	registerListeners : function(div,owner){
 		div.observe('click',function(){
 			if(!game.buildingMode.isOn){
@@ -384,4 +400,3 @@ var Map={
 	},
 	E:0, NE:1, N:2, NW:3, W:4, SW:5, S:6, SE:7 
 }
-

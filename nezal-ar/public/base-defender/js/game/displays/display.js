@@ -134,7 +134,7 @@ var BuildingDisplay = Class.create(Display, {
       else
       {
         self.sprites.building.setOpacity(0.5);
-        self.sprites.moving.hide();
+        //self.sprites.moving.hide();
       }
       self.sprites.building.animated = false;
 			self.sprites.base.show();

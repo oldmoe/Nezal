@@ -5,10 +5,11 @@ var MovingObject = Class.create({
 	 targetAngle :0,
 	 angle : 0,
 	 speed : 0.7,
+	 randomMove : false,
 	 distanceToNextTile : 0,
 	 noOfStates : 8,
 	 state : 0,
-	 counter : 0,
+	 tickCounter : 0,
 	 initialize : function(game,x,y){
 	 	this.game = game
 		this.coords = {}
@@ -21,7 +22,7 @@ var MovingObject = Class.create({
 	 },
 	 
 	 tick : function(){
-	 		this.counter++
+	 		this.tickCounter++
 	 		if(this.movingPath.length>0){
 			if(this.targetAngle!=this.angle){
 				this.changeAngle();
@@ -34,8 +35,8 @@ var MovingObject = Class.create({
 				this.targetAngle = Map.getDirection(this.coords.x,this.coords.y,values[0],values[1])
 			}
 			//this.state = this.calculateCurrentState(values)
-			var movements = Util.getNextMove(this.coords.x,this.coords.y,values[0],values[1],this.distanceToNextTile/24)
-			if(this.counter%3==0)this.state = (this.state+1)%8
+			var movements = Util.getNextMove(this.coords.x,this.coords.y,values[0],values[1],this.speed)
+			if(this.tickCounter%3==0)this.state = (this.state+1)%8
 			this.coords.x+=movements[0]
 			this.coords.y+=movements[1]
 			var mapValues = Map.tileValue(this.coords.x,this.coords.y)
@@ -52,7 +53,7 @@ var MovingObject = Class.create({
 				this.state = 0
 			} 
 		}
-		else {
+		else if(this.randomMove){
 			var rand = Math.random()
 			if (rand <= 0.05) {
 		  	var x = Math.round(game.scene.map.x + game.scene.map.viewWidth * Math.random())
