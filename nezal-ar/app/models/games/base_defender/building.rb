@@ -23,7 +23,7 @@ module BD
         user_game_profile.metadata[@name][location_hash]['startedBuildingAt'] = Time.now.utc.to_i
         user_game_profile.metadata[@name][location_hash]['state'] = states['UNDER_CONSTRUCTION']
         user_game_profile.metadata[@name][location_hash]['coords'] = coords
-        
+        user_game_profile.metadata[@name][location_hash]['hp'] = game_metadata['buildings'][@name]['levels']['1']['hp']
         user_game_profile.metadata['rock'] -= game_metadata['buildings'][@name]['levels']['1']['rock']
         user_game_profile.metadata['lumber'] -= game_metadata['buildings'][@name]['levels']['1']['lumber']
         
