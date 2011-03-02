@@ -94,7 +94,8 @@ var BuildingDisplay = Class.create(Display, {
 		this.outlineImg = Loader.images.buildingOutlines[this.owner.name+"_outline.png"];
 		this.movingImg = Loader.images.buildingMoving[this.owner.name+"_moving.png"];
     this.mouseoverImg = Loader.images.icons[this.owner.name+"_icon.png"];
-    console.log(this.img, this.invalidImg, this.baseImg, this.shadowImg, this.outlineImg, this.movingImg, this.mouseoverImg);
+		this.transparentImg = Loader.images.buildingModes['transparent.png'];
+  //  console.log(this.img, this.invalidImg, this.baseImg, this.shadowImg, this.outlineImg, this.movingImg, this.mouseoverImg);
 		this.mapTiles =[];
 		Object.extend(this.owner,this); 
 		this.createSprites()	
@@ -380,7 +381,7 @@ var LumbermillDisplay = Class.create(ResourceBuildingDisplay, {
 		this.sprites.building = new DomImgSprite(this.owner, {img: this.img});
 		this.sprites.saw = new DomImgSprite(this.owner, {img: this.sawImg});
     this.sprites.mouseover = new DomImgSprite(this.owner, {img: this.mouseoverImg});
-		this.sprites.clickSprite = new DomImgSprite(this.owner,{area:this.area}, {clickable: true});
+		this.sprites.clickSprite = new DomImgSprite(this.owner,{img: this.transparentImg,area:this.area}, {clickable: true});
 	},
 	renderAnimation : function(){
 		if (!this.sprites.building.animated) {
