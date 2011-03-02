@@ -66,7 +66,7 @@
   height: 325px;
   left: 80px;
   position: absolute;
-  top: 85px;
+  top: 100px;
   width: 600px;
 }
 #interaction #buildingsPanel .buildings {
@@ -78,18 +78,18 @@
 }
 #interaction .buildingPanelBg {
   margin-left: 105px;
-  margin-top: 45px;
+  margin-top: 61px;
   position : relative;
 }
 
 #interaction .buildingsBg {
-  top: 54px;
+  top: 70px;
   left: 114px;
   position: absolute;
 }
 
 #interaction .wedgesBg {
-  top: 54px;
+  top: 70px;
   left: 114px;
   position: absolute;
 }
@@ -99,7 +99,7 @@
   height: 35px;
   position: absolute;
   right: 80px;
-  top: 85px;
+  top: 105px;
   width: 40px;
   z-index: 10;
 }
@@ -113,7 +113,7 @@
   line-height: 48px;
   position: absolute;
   text-align: center;
-  top: 50px;
+  top: 70px;
   width: 150px;
   z-index: 10;
 }
@@ -128,7 +128,7 @@
   line-height: 48px;
   position: absolute;
   text-align: center;
-  top: 50px;
+  top: 70px;
   width: 150px;
   z-index: 10;
 }

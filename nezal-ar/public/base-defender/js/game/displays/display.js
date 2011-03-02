@@ -372,7 +372,7 @@ var LumbermillDisplay = Class.create(ResourceBuildingDisplay, {
 		this.sprites.base = new DomImgSprite(this.owner, {img : this.baseImg}, {shiftY: this.zdim});
 		this.sprites.invalid = new DomImgSprite(this.owner, {img : this.invalidImg}, {shiftY: this.zdim});
 		this.sprites.shadow = new DomImgSprite(this.owner, {img: this.shadowImg, width:this.shadowImg.width,
-		height:this.shadowImg.height});
+		                                                    height:this.shadowImg.height});
 		this.sprites.outline = new DomImgSprite(this.owner, {img: this.outlineImg});
 		this.sprites.health = new DomHealthSprite(this.owner)
 		this.sprites.shadow.shiftX = this.imgWidth - this.shadowImg.width
@@ -382,6 +382,7 @@ var LumbermillDisplay = Class.create(ResourceBuildingDisplay, {
 		this.sprites.saw = new DomImgSprite(this.owner, {img: this.sawImg});
     this.sprites.mouseover = new DomImgSprite(this.owner, {img: this.mouseoverImg});
 		this.sprites.clickSprite = new DomImgSprite(this.owner,{img: this.transparentImg,area:this.area}, {clickable: true});
+    this.sprites.clickSprite.img.setStyle({width:this.imgWidth+"px",height:this.imgHeight+"px"})
 	},
 	renderAnimation : function(){
 		if (!this.sprites.building.animated) {
