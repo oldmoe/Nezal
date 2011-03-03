@@ -2,12 +2,15 @@ var BuildingsManager = Class.create({
 
   initialize : function(game){
     this.game = game
+    this.displayBuildButton(function(){
+      game.buildingsManager.displayBuildingsPanel({'disabled' : []});
+    })
   },
 
   /*
    * Params will include : hash { 'disable', 'listeners'}
       - disabled list : disables clicks on items named in disbaled array.
-      - listeners : hash of listners to attach to certain items.
+      - listeners : hash of listeners to attach to certain items.
    */
   displayBuildingsPanel : function(params){
     var buildings = {};
@@ -22,15 +25,15 @@ var BuildingsManager = Class.create({
                       $$('#buildingsPanel #' + item + ' .itemData')[0].setStyle({cursor : 'default' });
                   });
     $('buildingDisplay').show();
+    $('interaction').show();
   },
 
   /*
    * Params will include : The param list to be passed on to displayBuildingsPanel
    */
   displayBuildButton : function(onclick){
-    $('buildingDisplay').innerHTML = this.game.templatesManager.buildButton();
-    $$('.buildButton .okButton')[0].observe('click', onclick);
-    $('buildingDisplay').show();
+    $('buildButton').observe('click', onclick);
+    $('buildButton').show();
   },
   
   build : function(building){

@@ -74,7 +74,7 @@ var BuildingDisplay = Class.create(Display, {
 		this.outlineImg = Loader.images.buildingOutlines[this.owner.name+"_outline.png"];
 		this.movingImg = Loader.images.buildingMoving[this.owner.name+"_moving.png"];
     this.mouseoverImg = Loader.images.icons[this.owner.name+"_icon.png"];
-		this.transparentImg = Loader.images.buildingModes["transparent.png"];
+    console.log(this.img, this.invalidImg, this.baseImg, this.shadowImg, this.outlineImg, this.movingImg, this.mouseoverImg);
 		this.mapTiles =[];
 		Object.extend(this.owner,this); 
 		this.createSprites()	
@@ -87,7 +87,7 @@ var BuildingDisplay = Class.create(Display, {
 		this.sprites.invalid = new DomImgSprite(this.owner, {img : this.invalidImg}, {shiftY: this.zdim});
 		this.sprites.outline = new DomImgSprite(this.owner, {img: this.outlineImg});
 		this.sprites.shadow = new DomImgSprite(this.owner, {img: this.shadowImg, width:this.shadowImg.width,
-		height:this.shadowImg.height});
+                                            height:this.shadowImg.height});
 		this.sprites.shadow.shiftX = this.imgWidth - this.shadowImg.width
 		this.sprites.shadow.shiftY = this.imgHeight - this.shadowImg.height
     this.sprites.info = new DomTextSprite(this.owner, 'textInfo', {centered: true, shiftY: -10});
@@ -96,6 +96,7 @@ var BuildingDisplay = Class.create(Display, {
 		this.sprites.base.shiftX = (this.imgWidth - this.img.width)/2+2;
 		this.sprites.invalid.shiftX = (this.imgWidth - this.img.width)/2+2;
     this.sprites.mouseover = new DomImgSprite(this.owner, {img: this.mouseoverImg});
+
     if(this.movingImg)
       this.sprites.moving = new DomImgSprite(this.owner, {img: this.movingImg});
 		this.sprites.clickSprite = new DomImgSprite(this.owner,{img : this.transparentImg, area:this.area}, {clickable: true});
@@ -172,6 +173,7 @@ var BuildingDisplay = Class.create(Display, {
   
   _AttachUpgradeTrigger : function(){
     var self = this;
+    $('upgrade_trigger').stopObserving("click");
     $('upgrade_trigger').observe('click', function(){
       self.owner.upgrade();
     });
@@ -224,30 +226,7 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
 	      return self.game.templatesManager.townhallPanel(self.name, self.inProgress(), self.game.workerFactory.nextWorkerCost());
 	    });
 	    self.game.workerFactory.attachHireTrigger();
-	    this._AttachNewBuildingsTriggers();
-      this._AttachUpgradeTrigger();
-	  },
-		
-		_AttachNewBuildingsTriggers : function(){
-	    var thisGame = this.game;
-	    if ($$('.building-functions').any()) {
-	      $('build-quarry').observe('click', function(){
-	        thisGame.buildingMode.on(thisGame.quarryFactory.newQuarry(), function(){});
-	      });
-	      $('build-lumbermill').observe('click', function(){
-	        thisGame.buildingMode.on(thisGame.lumbermillFactory.newLumbermill(), function(){});
-	      });
-				$('build-storage').observe('click', function(){
-	        thisGame.buildingMode.on(thisGame.storageFactory.newStorage(), function(){});
-	      });
-				$('build-defense_center').observe('click', function(){
-	        thisGame.buildingMode.on(thisGame.defenseCenterFactory.newDefenseCenter(), function(){});
-	      });
-				$('build-wedge').observe('click', function(){
-	        thisGame.buildingMode.on(thisGame.wedgeFactory.newWedge(), function(){});
-	      });
-	      
-	    }
+
 	  },
 			
 		render : function($super){
@@ -379,8 +358,7 @@ var LumbermillDisplay = Class.create(ResourceBuildingDisplay, {
 		this.sprites.building = new DomImgSprite(this.owner, {img: this.img});
 		this.sprites.saw = new DomImgSprite(this.owner, {img: this.sawImg});
     this.sprites.mouseover = new DomImgSprite(this.owner, {img: this.mouseoverImg});
-		this.sprites.clickSprite = new DomImgSprite(this.owner,{img : this.transparentImg, area:this.area}, {clickable: true});
-		this.sprites.clickSprite.img.setStyle({width:this.imgWidth+"px",height:this.imgHeight+"px"})
+		this.sprites.clickSprite = new DomImgSprite(this.owner,{area:this.area}, {clickable: true});
 	},
 	renderAnimation : function(){
 		if (!this.sprites.building.animated) {

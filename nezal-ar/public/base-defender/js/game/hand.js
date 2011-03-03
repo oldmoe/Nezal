@@ -15,6 +15,7 @@ var Hand = {
      - rotated : whether it should look up or down, true for up
    */
   point : function(game, params) {
+    console.log(game, params);
     this.game = game;
     var obj = params['object'];
     var rotated = params['rotated'];
@@ -37,7 +38,7 @@ var Hand = {
   render : function(){
     this.topOffset = this.topOffset + 8*this.moveDirection*this.direction;
     this.leftOffset = this.leftOffset + 8*this.moveDirection;
-    $('hand').setStyle({ top : this.topOffset + "px", left : this.leftOffset + "px" });
+    $('hand').setStyle({zIndex : 1001,  top : this.topOffset + "px", left : this.leftOffset + "px" });
     this.moveDirection *= -1;
   },
 

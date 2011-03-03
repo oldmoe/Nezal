@@ -40,7 +40,7 @@ module BD
     end
 
     def self.assess_user_quests(user_game_profile)
-      # Decode metadata, initialize the user quest hash if not fount
+      # Decode metadata, initialize the user quest hash if not found
       user_game_profile.metadata['quests'] ||= {'primal' => [], 'current' => [], 'conquered' => []}
       # Pass by the current quests, check for conquered ones, reward them & move them to conquered ones 
       user_game_profile.metadata['quests']['current'].each do |id|

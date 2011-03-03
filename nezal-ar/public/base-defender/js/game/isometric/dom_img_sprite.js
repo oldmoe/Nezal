@@ -4,7 +4,7 @@ var DomImgSprite = Class.create(DomSprite, {
   minAreaZIndex : 10000000,
 	initialize : function($super, owner, imgAssets, properties){
     $super(owner, imgAssets, properties);
-    console.log(owner, imgAssets, properties)
+    //console.log( imgAssets )
 		this.img = imgAssets.img.clone()
 		if(this.img){
 			this.img.observe('mousedown',function(event){
@@ -14,6 +14,8 @@ var DomImgSprite = Class.create(DomSprite, {
 				 }
 			})
 		}
+    if( imgAssets.shadeImg )
+      this.shadeImg = imgAssets.shadeImg.clone();
 		this.div.appendChild(this.img)
 		this.currentAnimationFrame = 0
 		this.currentDirectionFrame = 0
@@ -51,15 +53,16 @@ var DomImgSprite = Class.create(DomSprite, {
 	
 	render : function($super){
     $super();
-    this.img.setStyle({
-      marginLeft: (-this.owner.imgWidth * this.owner.angle + "px"),
-      marginTop: (-this.currentAnimationFrame * this.owner.imgHeight + "px")
-    });
     
-    if (this.map) {
+    if (this.clickable) {
 			this.div.setStyle({
 				zIndex: (this.owner.coords.y + this.minAreaZIndex)
 			})
+    }else{
+      this.img.setStyle({
+        marginLeft: (-this.owner.imgWidth * this.owner.angle + "px"),
+        marginTop: (-this.currentAnimationFrame * this.owner.imgHeight + "px")
+      });
     }
   },
   

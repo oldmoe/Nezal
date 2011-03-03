@@ -3,6 +3,7 @@ var Game = Class.create({
   templatesManager : null,
   selectedBuildingPanel : null,
   workerFactory : null,
+  researchManager : null,
   reactor : null,
   network : null,
   gameStatus : null,
@@ -20,6 +21,7 @@ var Game = Class.create({
     rock : 0,
     lumber : 0
   },
+  //Batoota Code
   workersStatus : null,
   initialize : function(){
     this.network = new Network();
@@ -82,12 +84,13 @@ var Game = Class.create({
 
 		var buildingModeImages = ['2x2_invalid.png', '2x2_base.png','1x1_invalid.png', '1x1_base.png','transparent.png','transparent.png'];
 		var questsImages = ["msgBg.png", "wedge.png", "button.png", "msgBaloon.png", "questBaloon.png" , "questBg.png", "buildingPanelBg.png",
-                         "activeCell.png", "inactiveCell.png", "resources.png", "correct.png", "correct.png"];
+                         "activeCell.png", "inactiveCell.png", "resources.png", "correct.png", "correct.png", "buildingsBg.png", "wedgesBg.png"];
     var iconsImages = ["townhall.png", "townhall_icon.png", "quarry_icon.png", "lumbermill_icon.png", "quarry.png",
 		 "lumbermill.png", "lumber.png", "rock.png", "workers.png","cancel.png","storage.png","storage_icon.png",
 		 "defense_center.png","defense_center_icon.png", "wedge_icon.png"];
    
 		var workerImages = ["worker.png", "worker_shadow.png"];
+    //var buildingPanelImages = ["panel.png"]
 		
 		//This is duplicated to avoid a problem in the loader that can't deal with an array of a single item
 		var smokeImages = ["smoke_big.png", "smoke_big.png"]
@@ -121,7 +124,7 @@ var Game = Class.create({
   reflectStatusChange : function(){
 		this.reInitializationNotifications = [];
     if(this.reactor) this.reactor.stop();
-    this.reactor = new Reactor(50);
+    this.reactor = new Reactor(100);
     this.reactor.run();
     
     this.buildingMode = new BuildingMode(this);

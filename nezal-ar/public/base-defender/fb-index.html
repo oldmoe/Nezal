@@ -89,8 +89,15 @@
       <div id="building-remaining-time" style="display:none;"></div>
       
       <div id="building-panel" style="display:none;">
+        <div id="panel-buttons-container">
+          <div id="upgrade_trigger" class="panel-button">
+            <span>Upgrade</span>
+            <img src="images/buildings/panel/buttons.png">
+          </div>
+        </div>
+        
         <div id="building-panel-contents"></div>
-        <div id="close-building-panel">X</div>
+        
       </div>
       
       <div id="establish-townhall-container" style="display:none;">
@@ -100,13 +107,19 @@
         </div>
       </div>
 
-      <div id="interaction">
+      <div id="buildButton">
+        <img src="images/quests/button.png"/>
+        <div id="buildText" class="yellowText"> build </div>
+      </div>
+      
+      <div id="interaction" style="display:none;">
         <div id="msg" style="display:none;"> </div>
         <div id="questDisplay" style="display:none;"> </div>
         <div id="buildingDisplay" style="display:none;"> </div>
-        <div id=hand style="display:none;position:absolute;z-index:11;">
-          <img src="images/quests/cursor.png"></img>
-        </div>
+      </div>
+      
+      <div id="hand" style="display:none;position:absolute;z-index:11;">
+        <img src="images/quests/cursor.png"></img>
       </div>
     </div>
     
@@ -115,6 +128,7 @@
     <script src="js/nezal/nezal.js"></script>
     <script src="js/nezal/layer.js"></script>
     <script src="js/nezal/scene.js"></script>
+    <script src="js/nezal/dom_area.js"></script>
     <script src="js/nezal/reactor.js"></script>
 	
     <script src="js/nezal/sprite.js"></script>
