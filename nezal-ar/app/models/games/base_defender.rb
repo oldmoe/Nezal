@@ -211,7 +211,6 @@ class BaseDefender < Metadata
   
   # {'building' : 'townhall', 'coords' : {'x':'', 'y':''} }
   def self.upgrade_building(user_game_profile, data)
-    
     building = data['building']
     coords = data['coords']
     name = data['building']

@@ -32,12 +32,32 @@ var Display = Class.create({
 	}
 });
 
-var WorkerDisplay = Class.create(Display,{
+var CarDisplay = Class.create(Display,{
 	imgWidth : 64,
 	imgHeight : 93,
 	xdim : 64,
 	ydim : 93,
 	zdim : 0,
+	initialize: function($super, owner, properties){
+  	$super(owner, properties);
+		this.owner.owner
+  	this.img = Loader.images.creeps['car.png']
+		Object.extend(this.owner,this);
+  	this.sprites.body = new DomImgSprite(owner, {img: this.img});
+  },
+	render : function(){
+		if(this.owner.moving){
+			this.sprites.body.currentAnimationFrame =(this.sprites.body.currentAnimationFrame+1)% this.sprites.body.noOfAnimationFrames 
+		}
+		this.sprites.body.render()
+	}
+})
+var WorkerDisplay = Class.create(Display,{
+	imgWidth : 64,
+	imgHeight : 93,
+	xdim : 64,
+	ydim : 93,
+	zdim : 70,
 	initialize: function($super, owner, properties){
   	$super(owner, properties);
 		this.noOfXTiles = Math.ceil(this.xdim / Map.tileIsoLength);
@@ -74,7 +94,8 @@ var BuildingDisplay = Class.create(Display, {
 		this.outlineImg = Loader.images.buildingOutlines[this.owner.name+"_outline.png"];
 		this.movingImg = Loader.images.buildingMoving[this.owner.name+"_moving.png"];
     this.mouseoverImg = Loader.images.icons[this.owner.name+"_icon.png"];
-    console.log(this.img, this.invalidImg, this.baseImg, this.shadowImg, this.outlineImg, this.movingImg, this.mouseoverImg);
+		this.transparentImg = Loader.images.buildingModes['transparent.png'];
+  //  console.log(this.img, this.invalidImg, this.baseImg, this.shadowImg, this.outlineImg, this.movingImg, this.mouseoverImg);
 		this.mapTiles =[];
 		Object.extend(this.owner,this); 
 		this.createSprites()	
@@ -85,9 +106,10 @@ var BuildingDisplay = Class.create(Display, {
 	createSprites : function(){
 		this.sprites.base = new DomImgSprite(this.owner, {img : this.baseImg}, {shiftY: this.zdim});
 		this.sprites.invalid = new DomImgSprite(this.owner, {img : this.invalidImg}, {shiftY: this.zdim});
-		this.sprites.outline = new DomImgSprite(this.owner, {img: this.outlineImg});
 		this.sprites.shadow = new DomImgSprite(this.owner, {img: this.shadowImg, width:this.shadowImg.width,
-                                            height:this.shadowImg.height});
+		height:this.shadowImg.height});
+		this.sprites.outline = new DomImgSprite(this.owner, {img: this.outlineImg});
+		this.sprites.health = new DomHealthSprite(this.owner)
 		this.sprites.shadow.shiftX = this.imgWidth - this.shadowImg.width
 		this.sprites.shadow.shiftY = this.imgHeight - this.shadowImg.height
     this.sprites.info = new DomTextSprite(this.owner, 'textInfo', {centered: true, shiftY: -10});
@@ -114,7 +136,7 @@ var BuildingDisplay = Class.create(Display, {
       else
       {
         self.sprites.building.setOpacity(0.5);
-        self.sprites.moving.hide();
+        //self.sprites.moving.hide();
       }
       self.sprites.building.animated = false;
 			self.sprites.base.show();
@@ -349,16 +371,18 @@ var LumbermillDisplay = Class.create(ResourceBuildingDisplay, {
 		this.sawImg = Loader.images.buildings['lumbermill_saw.png'];
 		this.sprites.base = new DomImgSprite(this.owner, {img : this.baseImg}, {shiftY: this.zdim});
 		this.sprites.invalid = new DomImgSprite(this.owner, {img : this.invalidImg}, {shiftY: this.zdim});
-		this.sprites.outline = new DomImgSprite(this.owner, {img: this.outlineImg});
 		this.sprites.shadow = new DomImgSprite(this.owner, {img: this.shadowImg, width:this.shadowImg.width,
-		height:this.shadowImg.height});
-			this.sprites.shadow.shiftX = this.imgWidth - this.shadowImg.width
-			this.sprites.shadow.shiftY = this.imgHeight - this.shadowImg.height
+		                                                    height:this.shadowImg.height});
+		this.sprites.outline = new DomImgSprite(this.owner, {img: this.outlineImg});
+		this.sprites.health = new DomHealthSprite(this.owner)
+		this.sprites.shadow.shiftX = this.imgWidth - this.shadowImg.width
+		this.sprites.shadow.shiftY = this.imgHeight - this.shadowImg.height
     this.sprites.info = new DomTextSprite(this.owner, 'textInfo', {centered: true, shiftY: -10});
 		this.sprites.building = new DomImgSprite(this.owner, {img: this.img});
 		this.sprites.saw = new DomImgSprite(this.owner, {img: this.sawImg});
     this.sprites.mouseover = new DomImgSprite(this.owner, {img: this.mouseoverImg});
-		this.sprites.clickSprite = new DomImgSprite(this.owner,{area:this.area}, {clickable: true});
+		this.sprites.clickSprite = new DomImgSprite(this.owner,{img: this.transparentImg,area:this.area}, {clickable: true});
+    this.sprites.clickSprite.img.setStyle({width:this.imgWidth+"px",height:this.imgHeight+"px"})
 	},
 	renderAnimation : function(){
 		if (!this.sprites.building.animated) {

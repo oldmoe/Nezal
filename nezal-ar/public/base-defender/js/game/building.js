@@ -5,6 +5,8 @@ var Building = Class.create({
   _LoadTime : null,
   coords : {x : null, y : null},
   currentLevelBluePrints : null,
+	hp : 0,
+	maxHp :0,
   nextLevelBluePrints : null,
 	locationValid : true,
   state : 0,
@@ -20,6 +22,8 @@ var Building = Class.create({
     this.remainingBuildTime = buildingSpecs.remainingTime;
     this.currentLevelBluePrints = this.factory.bluePrints['levels'][this.level];
     this.nextLevelBluePrints = this.factory.bluePrints['levels'][this.level+1];
+		this.maxHp = this.currentLevelBluePrints.hp
+		this.hp = buildingSpecs.hp;
     this.initialState = buildingSpecs.state;
     this.stateNotifications = {};
     for(var state in this.states){

@@ -15,9 +15,11 @@ var Hand = {
      - rotated : whether it should look up or down, true for up
    */
   point : function(game, params) {
-    console.log(game, params);
     this.game = game;
     var obj = params['object'];
+    
+    console.log( obj );
+    
     var rotated = params['rotated'];
     var position = Element.cumulativeOffset(obj);
     $('hand').removeClassName('rotated');
@@ -43,7 +45,7 @@ var Hand = {
   },
 
   hide : function(){
-    this.game.scene.removeFromRenderLoop('hand',this);
+    this.game.scene.clearRenderLoop('hand');
     $('hand').hide();
   }
 

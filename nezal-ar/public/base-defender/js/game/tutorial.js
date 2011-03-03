@@ -11,6 +11,7 @@ var Tutorial = Class.create({
 
   fire : function(){
     if (this.game.user.newbie) {
+      $('buildButton').hide();
       if(!this.game.townhallFactory.townhall){
         serviceProvider.getUserInfo(function(){
                                       $('msg').innerHTML = this.game.templatesManager.welcome(serviceProvider.user['first_name']);
@@ -18,6 +19,7 @@ var Tutorial = Class.create({
                                       $('interaction').show();
                                     });
       }else {
+        $('buildButton').show();
         this.game.questsManager.handleQuests();
       }
     }else {
@@ -35,9 +37,9 @@ var Tutorial = Class.create({
       var buildButtonCallBack = function(){
                                     Hand.hide();
                                     $('questDisplay').hide();
-                                    self.game.buildingsManager.displayBuildingsPanel({'disabled' : ['quarry', 'lumbermill', 'storage', 'defense_center']});
+                                    self.game.buildingsManager.displayBuildingsPanel({'disabled' : ['quarry', 'lumbermill', 'storage', 'defense_center', 'wedge']});
                                     setTimeout(function(){
-                                        $$('#buildingsPanel #townhall .itemData')[0].observe('click', function(){$('hand').hide()});
+                                        $$('#buildingsPanel #townhall .itemData')[0].observe('click', function(){Hand.hide()});
                                         Hand.point(self.game, { 'object' : $$('#buildingsPanel #townhall .itemData')[0], 'rotated' : false });
                                     } , 500);
                                  };
@@ -79,14 +81,14 @@ var Tutorial = Class.create({
       var buildButtonCallBack = function(){
                                     Hand.hide();
                                     $('questDisplay').hide();
-                                    self.game.buildingsManager.displayBuildingsPanel({'disabled' : ['townhall', 'lumbermill']});
+                                    self.game.buildingsManager.displayBuildingsPanel({'disabled' : ['townhall', 'lumbermill', 'storage', 'defense_center', 'wedge']});
                                     setTimeout(function(){
-                                        $$('#buildingsPanel #quarry .itemData')[0].observe('click', function(){$('hand').hide()});
+                                        $$('#buildingsPanel #quarry .itemData')[0].observe('click', function(){Hand.hide()});
                                         Hand.point(self.game, { 'object' : $$('#buildingsPanel #quarry .itemData')[0], 'rotated' : false });
                                     } , 200);
                                  };
       this.self.game.buildingsManager.displayBuildButton(buildButtonCallBack);
-      Hand.point(this.self.game, { 'object' : $$('.buildButton .okButton')[0], 'rotated' : false });
+      Hand.point(this.self.game, { 'object' : $('buildButton'), 'rotated' : false });
     },
     assigned_workers : function(id){
       var self = this.self.game.tutorial;
@@ -116,14 +118,14 @@ var Tutorial = Class.create({
       var buildButtonCallBack = function(){
                                     Hand.hide();
                                     $('questDisplay').hide();
-                                    self.game.buildingsManager.displayBuildingsPanel({'disabled' : ['quarry', 'townhall']});
+                                    self.game.buildingsManager.displayBuildingsPanel({'disabled' : ['quarry', 'townhall', 'storage', 'defense_center', 'wedge']});
                                     setTimeout(function(){
-                                        $$('#buildingsPanel #lumbermill .itemData')[0].observe('click', function(){$('hand').hide()});
+                                        $$('#buildingsPanel #lumbermill .itemData')[0].observe('click', function(){Hand.hide()});
                                         Hand.point(self.game, { 'object' : $$('#buildingsPanel #lumbermill .itemData')[0], 'rotated' : false });
                                     } , 200);
                                  };
       this.self.game.buildingsManager.displayBuildButton(buildButtonCallBack);
-      Hand.point(this.self.game, { 'object' : $$('.buildButton .okButton')[0], 'rotated' : false});
+      Hand.point(this.self.game, { 'object' : $('buildButton'), 'rotated' : false});
     },
     assigned_workers : function(id){
       var self = this.self.game.tutorial;

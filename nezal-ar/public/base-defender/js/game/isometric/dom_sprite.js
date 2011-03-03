@@ -41,11 +41,10 @@ var DomSprite = Class.create(Sprite, {
       }
       
       if (this.visible) {
-        
         this.div.setStyle({
           left: this.owner.coords.x - Math.round(this.owner.imgWidth / 2) + this.shiftX + "px",
           top: this.owner.coords.y - Math.round(this.owner.imgHeight / 2) + this.shiftY + "px",
-          zIndex: this.owner.coords.y
+          zIndex: this.owner.coords.y + this.owner.zdim
         });
       }
   

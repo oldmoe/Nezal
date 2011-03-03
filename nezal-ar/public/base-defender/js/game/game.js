@@ -13,6 +13,7 @@ var Game = Class.create({
   tutorial : null,
   buildingMode : null,
   townhallFactory : null,
+	creepFactory : null,
   quarryFactory : null,
   lumbermillFactory : null,
   neighborGame : null,
@@ -87,11 +88,12 @@ var Game = Class.create({
                          "activeCell.png", "inactiveCell.png", "resources.png", "correct.png", "correct.png", "buildingsBg.png", "wedgesBg.png"];
     var iconsImages = ["townhall.png", "townhall_icon.png", "quarry_icon.png", "lumbermill_icon.png", "quarry.png",
 		 "lumbermill.png", "lumber.png", "rock.png", "workers.png","cancel.png","storage.png","storage_icon.png",
-		 "defense_center.png","defense_center_icon.png", "wedge_icon.png"];
+		 "defense_center.png","defense_center_icon.png", "wedge_icon.png", "wedge.png"];
    
 		var workerImages = ["worker.png", "worker_shadow.png"];
     //var buildingPanelImages = ["panel.png"]
 		
+		var creepsImages = ["car.png"]
 		//This is duplicated to avoid a problem in the loader that can't deal with an array of a single item
 		var smokeImages = ["smoke_big.png", "smoke_big.png"]
     new Loader().load([{images : BaseDefenderScene.prototype.textures, path: 'images/textures/', store: 'textures'},
@@ -99,6 +101,7 @@ var Game = Class.create({
 											 {images : buildingModeImages, path: 'images/buildings/', store: 'buildingModes'},
 											 {images : iconsImages, path: 'images/icons/', store: 'icons'},
 										 	 {images : workerImages, path: 'images/worker/', store: 'worker'},
+											 {images : creepsImages, path: 'images/creeps/', store: 'creeps'},
                        {images : smokeImages, path: 'images/', store: 'smoke'},
 											 {images : questsImages, path: 'images/quests/', store: 'quests'},
 											 {images : buildingOutlineImages, path: 'images/buildings/outlines/', store: 'buildingOutlines'},
@@ -140,6 +143,7 @@ var Game = Class.create({
     this.buildingsManager = new BuildingsManager(this);
 		this.workerFactory = new WorkerFactory(this);
 		this.storageFactory = new StorageFactory(this);
+		this.creepFactory = new CreepFactory(this)
 		this.defenseCenterFactory = new DefenseCenterFactory(this);
 		this.wedgeFactory = new WedgeFactory(this);
     this.tutorial = new Tutorial(this);

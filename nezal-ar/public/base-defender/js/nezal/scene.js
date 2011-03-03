@@ -56,6 +56,10 @@ var Scene = Class.create({
 		this.renderStores[name] = {delay : delay, tick: this.reactor.ticks, objects : []}
 	},
 	
+  clearRenderLoop : function(name){
+    this.renderStores[name].objects = [];
+  },
+  
 	pushPeriodicalRenderLoop : function(tickDelay,runningTicks,everySeconds,func){
 		this.reactor.pushPeriodical(tickDelay,runningTicks,this.reactor.everySeconds(everySeconds),func)
 	},

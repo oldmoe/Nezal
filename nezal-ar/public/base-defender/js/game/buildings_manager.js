@@ -32,6 +32,7 @@ var BuildingsManager = Class.create({
    * Params will include : The param list to be passed on to displayBuildingsPanel
    */
   displayBuildButton : function(onclick){
+    $('buildButton').stopObserving('click');
     $('buildButton').observe('click', onclick);
     $('buildButton').show();
   },
