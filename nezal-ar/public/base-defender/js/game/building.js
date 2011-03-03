@@ -23,7 +23,8 @@ var Building = Class.create({
     this.currentLevelBluePrints = this.factory.bluePrints['levels'][this.level];
     this.nextLevelBluePrints = this.factory.bluePrints['levels'][this.level+1];
 		this.maxHp = this.currentLevelBluePrints.hp
-		this.hp = buildingSpecs.hp;
+		if(buildingSpecs.hp)this.hp = buildingSpecs.hp;
+		else this.hp = this.maxHp;
     this.initialState = buildingSpecs.state;
     this.stateNotifications = {};
     for(var state in this.states){
