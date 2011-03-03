@@ -8,17 +8,17 @@
 </textarea>
 
 <textarea style="display:none;" id='welcome'>
-  <div id='welcomeMsg'>
+  <div id='welcomeMsg' style="display:none;">
     <img class="background" src="${Loader.images.quests['msgBg.png'].src}"/>
     <div class="msgBGImgs">
       <img class="wedge" src="${Loader.images.quests['wedge.png'].src}"/>
       <img class="bubble" src="${Loader.images.quests['msgBaloon.png'].src}"/>
     </div>
-    <div class="close" onclick="$('interaction').hide(); game.questsManager.handleQuests();">
+    <div class="close" onclick="Animation.hide('msg'); game.questsManager.handleQuests();">
     </div>
     <div class="okButtonWrapper">
       <div class="alignDiv"> </div>
-      <div class="okButton" onclick="$('interaction').hide(); game.questsManager.handleQuests();">
+      <div class="okButton" onclick="Animation.hide('msg'); game.questsManager.handleQuests();">
         <img class="okImage" src="${Loader.images.quests['button.png'].src}"/>
         <div class="okText yellowText"> OK </div>
       </div>
@@ -33,9 +33,9 @@
 </textarea>
 
 <textarea style="display:none;" id='quest'>
-  <div id='questScreen'>
+  <div id='questScreen' style="display:none;">
     <img class="background" src="${Loader.images.quests['questBg.png'].src}"/>
-    <div class="close" onclick="$('interaction').hide();">
+    <div class="close" onclick="Animation.hide('questDisplay');">
     </div>
     <div class="title">
       <span class="text yellowText"> ${quest.title} </span>
@@ -109,7 +109,7 @@
       </div>
       <div class="okButtonWrapper">
         <div class="alignDiv"> </div>
-        <div class="okButton" onclick="$('interaction').hide();" >
+        <div class="okButton" onclick="Animation.hide('questDisplay');" >
           <img class="okImage" src="${Loader.images.quests['button.png'].src}"/>
           <div class="okText yellowText"> OK </div>
         </div>
@@ -119,16 +119,16 @@
 </textarea>
 
 <textarea style="display:none;" id='congrates'>
-  <div id='congratesMsg'>
+  <div id='congratesMsg' style="display:none;">
     <img class="background" src="${Loader.images.quests['msgBg.png'].src}"/>
     <div class="msgBGImgs">
       <img class="wedge" src="${Loader.images.quests['wedge.png'].src}"/>
       <img class="bubble" src="${Loader.images.quests['msgBaloon.png'].src}"/>
     </div>
-    <div class="close" onclick="$('interaction').hide(); game.questsManager.ackCongratesMsgs(${msg['id']});"> </div>
+    <div class="close" onclick="Animation.hide('msg'); game.questsManager.ackCongratesMsgs(${msg['id']});"> </div>
     <div class="okButtonWrapper">
       <div class="alignDiv"> </div>
-      <div class="okButton" ackId="${msg['id']}" onclick="$('interaction').hide(); game.questsManager.ackCongratesMsgs(${msg['id']});">
+      <div class="okButton" ackId="${msg['id']}" onclick="Animation.hide('msg'); game.questsManager.ackCongratesMsgs(${msg['id']});">
         <img class="okImage" src="${Loader.images.quests['button.png'].src}"/>
         <div class="okText yellowText"> OK </div>
       </div>
@@ -165,7 +165,7 @@
     <div class="buildings">
       {for building in buildings}
         <div id="${building_index}" class="item">      
-          <div  class="itemData" onclick="$('interaction').hide();game.buildingsManager.build('${building_index}')">  
+          <div  class="itemData" onclick="Animation.hide('buildingDisplay');game.buildingsManager.build('${building_index}')">  
             <div class="name">
               ${building_index}  
             </div>
@@ -206,6 +206,6 @@
   <img class="buildingsBg" src="${Loader.images.quests['buildingsBg.png'].src}" />
   <div id="buildingsTrigger" onclick='$$(".buildingsBg")[0].setStyle({zIndex:10});$$(".wedgesBg")[0].setStyle({zIndex:0});$("buildingsPanel").setStyle({zIndex:11})'>Buildings</div>
   <div id="wedgesTrigger" onclick='//$$(".buildingsBg")[0].setStyle({zIndex:0});$$(".wedgesBg")[0].setStyle({zIndex:10});$("buildingsPanel").setStyle({zIndex:0})'>Wedges</div>
-  <div id="closeBuildingPanel" onclick="$('interaction').hide();"></div>
+  <div id="closeBuildingPanel" onclick="Animation.hide('buildingDisplay');"></div>
 </textarea>
 

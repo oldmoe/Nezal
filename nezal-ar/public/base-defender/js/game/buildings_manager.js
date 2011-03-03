@@ -24,7 +24,8 @@ var BuildingsManager = Class.create({
                       $$('#buildingsPanel #' + item + ' .background')[0].src=Loader.images.quests['inactiveCell.png'].src;
                       $$('#buildingsPanel #' + item + ' .itemData')[0].setStyle({cursor : 'default' });
                   });
-    $('buildingDisplay').show();
+    Animation.hide('questDisplay');
+    Animation.show('buildingDisplay');
     $('interaction').show();
   },
 
