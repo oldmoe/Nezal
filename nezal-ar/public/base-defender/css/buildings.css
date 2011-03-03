@@ -161,6 +161,9 @@
 #interaction #buildingsPanel .item .itemData .image{  
   height : 74px;
 }
+#interaction #buildingsPanel .item .itemData .image img{  
+  width : 31px;
+}
 #interaction #buildingsPanel .item .itemData .cost{  
   position : relative;
   top : 25px;
