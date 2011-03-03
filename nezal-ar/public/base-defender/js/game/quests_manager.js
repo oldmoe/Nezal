@@ -24,12 +24,14 @@ var QuestsManager = Class.create({
     $('questDisplay').innerHTML = this.game.templatesManager.quest(this.game.user.data.quests.descriptions[questId]);
     $('questDisplay').show();
     $('interaction').show();
+    Animation.show('questScreen');
   },
 
   displayCongratesMsg : function(msg){
     $('msg').innerHTML = this.game.templatesManager.congrates(msg);
     $('interaction').show();
     $('msg').show();
+    Animation.show('congratesMsg');
   },
 
   handleQuests : function() {
