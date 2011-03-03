@@ -125,10 +125,10 @@
       <img class="wedge" src="${Loader.images.quests['wedge.png'].src}"/>
       <img class="bubble" src="${Loader.images.quests['msgBaloon.png'].src}"/>
     </div>
-    <div class="close" onclick="Animation.hide('msg'); game.questsManager.ackCongratesMsgs(${msg['id']});"> </div>
+    <div class="close" onclick="Animation.hide('congratesMsg'); game.questsManager.ackCongratesMsgs(${msg['id']});"> </div>
     <div class="okButtonWrapper">
       <div class="alignDiv"> </div>
-      <div class="okButton" ackId="${msg['id']}" onclick="Animation.hide('msg'); game.questsManager.ackCongratesMsgs(${msg['id']});">
+      <div class="okButton" ackId="${msg['id']}" onclick="Animation.hide('congratesMsg'); game.questsManager.ackCongratesMsgs(${msg['id']});">
         <img class="okImage" src="${Loader.images.quests['button.png'].src}"/>
         <div class="okText yellowText"> OK </div>
       </div>

@@ -86,7 +86,7 @@ var Tutorial = Class.create({
                                     setTimeout(function(){
                                         $$('#buildingsPanel #quarry .itemData')[0].observe('click', function(){Hand.hide()});
                                         Hand.point(self.game, { 'object' : $$('#buildingsPanel #quarry .itemData')[0], 'rotated' : false });
-                                    } , 200);
+                                    } , 500);
                                  };
       this.self.game.buildingsManager.displayBuildButton(buildButtonCallBack);
       Hand.point(this.self.game, { 'object' : $('buildButton'), 'rotated' : false });
@@ -123,7 +123,7 @@ var Tutorial = Class.create({
                                     setTimeout(function(){
                                         $$('#buildingsPanel #lumbermill .itemData')[0].observe('click', function(){Hand.hide()});
                                         Hand.point(self.game, { 'object' : $$('#buildingsPanel #lumbermill .itemData')[0], 'rotated' : false });
-                                    } , 200);
+                                    } , 500);
                                  };
       this.self.game.buildingsManager.displayBuildButton(buildButtonCallBack);
       Hand.point(this.self.game, { 'object' : $('buildButton'), 'rotated' : false});
