@@ -4,40 +4,63 @@
 	text-shadow:-1px 2px 1px #000000;
 }
 
-#workers_game_element {
-	right: 10px;
-	top: 3px;
-  cursor : pointer;
-}
-
-#coins_game_element {
-	right: 136px;
-  top: 3px;
-}
-
-#lumber_game_element {
-	left: 137px;
-	top: 10px;
+.topGameElement {
+  position : absolute;
+  z-index : 1000;
+  text-shadow:-1px 2px 1px #000000;
+  top: 5px;
+  overflow: hidden;
 }
 
 #rock_game_element {
-	left: 10px;
-	top: 10px;
+  left: 5px;
+  width: 111px;
+}
+
+#lumber_game_element {
+  left: 120px;
+  width: 118px;
+}
+
+#lumber_game_element img{
+  margin-left: -115px;
 }
 
 #xp_bar {
-	left: 257px;
-	top: 0;
+  left: 240px;
+  width: 257px;
+}
+#xp_bar img {
+  margin-left: -233px;
+}
+
+#coins_game_element {
+  right: 131px;
+  width: 125px;
+}
+#coins_game_element img {
+  margin-left: -493px;
+}
+
+#workers_game_element {
+  cursor: pointer;
+  right: 5px;
+  width: 120px;
+}
+#workers_game_element img {
+  margin-left: -627px;
 }
 
 #workers-amount {
-	font-family: Lds;
-	font-size: 16px;
-	left: 58px;
-	position: absolute;
-	text-align: center;
-	top: 20px;
-	width: 49px;
+  color: yellow;
+  font-family: Lds;
+  font-size: 16px;
+  left: 53px;
+  line-height: 24px;
+  position: absolute;
+  text-align: center;
+  top: 16px;
+  width: 49px;
 }
 
 #idleWorkersGameElement {
@@ -49,40 +72,46 @@
 }
 
 #coins-amount {
-	font-family: Lds;
-	font-size: 19px;
-	left: 54px;
-	position: absolute;
-	text-align: center;
-	top: 15px;
-	width: 49px;
-	color: #f23d00;
-	text-s
+  color: #F23D00;
+  font-family: Lds;
+  font-size: 19px;
+  left: 50px;
+  line-height: 24px;
+  position: absolute;
+  text-align: center;
+  top: 18px;
+  width: 58px;
 }
 
 #rock-amount {
-	color: gold;
-	font-family: Lds;
-	font-size: 19px;
-	left: 42px;
-	position: absolute;
-	text-align: center;
-	top: 11px;
-	width: 54px;
+  color: gold;
+  font-family: Lds;
+  font-size: 19px;
+  left: 45px;
+  line-height: 24px;
+  position: absolute;
+  text-align: center;
+  top: 18px;
+  width: 54px;
 }
 
 #lumber-amount {
-	color: gold;
-	font-family: Lds;
-	font-size: 19px;
-	left: 42px;
-	position: absolute;
-	text-align: center;
-	top: 10px;
-	width: 54px;
+  color: gold;
+  font-family: Lds;
+  font-size: 19px;
+  left: 53px;
+  line-height: 24px;
+  position: absolute;
+  text-align: center;
+  top: 18px;
+  width: 54px;
 }
 
 #monitor {
 	bottom: 0;
-	left: 10px;
+	left: 20px;
+  overflow: hidden;
+}
+#monitor img{
+  margin-top: -26px;
 }

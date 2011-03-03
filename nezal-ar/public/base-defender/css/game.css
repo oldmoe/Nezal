@@ -66,12 +66,33 @@ img{
 }
 
 #cancelBuilding{
-	 left: 684px;
-	 position: absolute;
-	 top: 347px;
- }
- .healthSpan{
- 	-moz-border-radius:8px 8px 8px 8px;
+  left: 684px;
+  position: absolute;
+  top: 347px;
+}
+
+.healthSpan{
+	-moz-border-radius:8px 8px 8px 8px;
   -webkit-border-radius: 8px 8px 8px 8px;
   -khtml-border-radius: 8px 8px 8px 8px;
- }
+}
+
+#sendAttack {
+  bottom: 0px;
+  height: 53px;
+  position: absolute;
+  right: 150px;
+}
+
+#sendAttack #sendAttackText {
+  color: #FAC200;
+  cursor: pointer;
+  display: block;
+  font-family: showg;
+  font-size: 19px;
+  line-height: 50px;
+  position: relative;
+  text-align: center;
+  text-shadow: -3px -3px 1px black;
+  top: -50px;
+}

@@ -12,22 +12,22 @@
 }
 
 #buildButton {
-  bottom: 2px;
+  bottom: 1px;
   height: 53px;
   position: absolute;
-  right: 2px;
+  right: 20px;
 }
 
 #buildButton #buildText{
-  color: gold;
+  color: #FAC200;
   cursor: pointer;
   display: block;
   font-family: showg;
-  font-size: 34px;
+  font-size: 25px;
   line-height: 50px;
   position: relative;
   text-align: center;
-  text-shadow: -1px -1px 1px black;
+  text-shadow: -3px -3px 1px black;
   top: -50px;
 }
 
@@ -162,7 +162,8 @@
   height : 74px;
 }
 #interaction #buildingsPanel .item .itemData .image img{  
-  width : 31px;
+  width: 68px;
+  height: 74px;
 }
 #interaction #buildingsPanel .item .itemData .cost{  
   position : relative;
