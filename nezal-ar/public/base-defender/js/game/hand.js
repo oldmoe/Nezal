@@ -17,9 +17,6 @@ var Hand = {
   point : function(game, params) {
     this.game = game;
     var obj = params['object'];
-    
-    console.log( obj );
-    
     var rotated = params['rotated'];
     var position = Element.cumulativeOffset(obj);
     $('hand').removeClassName('rotated');

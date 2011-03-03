@@ -29,7 +29,7 @@ var WorkerFactory = Class.create({
 		  	
 				worker = new Worker(game,x,y)
 		  }
-			//worker.randomMove = true
+			worker.randomMove = true
 			if(!game.workersStatus[i])game.workersStatus[i] = worker
 			game.scene.push(worker); 
 			var workerDisplay = new WorkerDisplay(worker)

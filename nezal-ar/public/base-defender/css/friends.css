@@ -1,15 +1,17 @@
 #mapView {
+  background: url("../images/friends/bar.png");
   position: absolute;
-  top: 555px;
-  left: 0px;
-  width: 760px;
-  height : 140px;
+  top: 545px;
+  left: 5px;
+  width: 750px;
+  height : 122px;
+  z-index: 10;
 }
 
-#friends 
-{
-  position : absolute;
-  left : 20px;
+#friends {
+  left: 20px;
+  position: absolute;
+  top: 8px;
 }
 #friends div, #friends  img, #friends ul{
 	float :left;	
@@ -39,18 +41,18 @@
 
 
 #friends .friend{
-	position : relative;
-	float : left;
-	width:95px;
-	margin : 4px;
-  cursor : pointer;
+  cursor: pointer;
+  float: left;
+  margin: 4px;
+  position: relative;
+  width: 95px;
 }
 #friends .friend .photo{
-	position : absolute;
-	left : 12px;
-	top : 12px;
-	width : 44px;
-	height : 44px;
+  height: 44px;
+  left: 21px;
+  position: absolute;
+  top: 17px;
+  width: 44px;
 }
 #friends .friend .name{
     color: white;
@@ -60,29 +62,29 @@
     position: absolute;
     text-align: center;
     text-decoration: none;
-    top: 65px;
-    width: 100%;
+    top: 72px;
+    width: 80px;
 }
 
-#home 
-{
-  position : absolute;
-  right : 20px;
-  width : 100px;
-	margin : 4px;
-  cursor : pointer;
+#home {
+  cursor: pointer;
+  margin: 4px;
+  position: absolute;
+  right: 20px;
+  top: 8px;
+  width: 100px;
 }
 #home .photo{
-	width : 32px;
+	width : 39px;
 }
 
-#home .photoContainer{
-  height: 40px;
+#home .photoContainer {
+  height: 46px;
   left: 18px;
   overflow: hidden;
   position: absolute;
   top: 12px;
-  width: 32px;
+  width: 38px;
 }
 
 #home .name{

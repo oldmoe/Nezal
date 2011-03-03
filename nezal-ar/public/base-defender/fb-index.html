@@ -24,28 +24,31 @@
 	</head>
 	<body>
 	  <div id="gameContainer">
-	  	<div class="gameElement" id="coins_game_element">
-	  		<img src="images/game_elements/coins.png" />
+	    <div class="topGameElement" id="rock_game_element">
+        <img src="images/game_elements/upper_bar.png" />
+        <span id="rock-amount" ></span>
+      </div>
+      <div class="topGameElement" id="lumber_game_element">
+        <img src="images/game_elements/upper_bar.png" />
+        <span id="lumber-amount" ></span>
+      </div>
+      
+      <div class="topGameElement" id="xp_bar">
+        <img src="images/game_elements/upper_bar.png" />
+      </div>
+      
+	  	<div class="topGameElement" id="coins_game_element">
+	  		<img src="images/game_elements/upper_bar.png" />
 				<span id="coins-amount" ></span>
 	  	</div>
-			<div class="gameElement" id="workers_game_element">
-				<img src="images/game_elements/workers.png" />
+			<div class="topGameElement" id="workers_game_element">
+				<img src="images/game_elements/upper_bar.png" />
 				<span id="workers-amount" ></span>
 			</div>
-			<div class="gameElement" id="lumber_game_element">
-				<img src="images/game_elements/lumber.png" />
-				<span id="lumber-amount" ></span>
-			</div>
-			<div class="gameElement" id="rock_game_element">
-				<img src="images/game_elements/rock.png" />
-				<span id="rock-amount" ></span>
-			</div>
-			<div class="gameElement" id="xp_bar">
-				<img src="images/game_elements/xp_bar.png" />
-			</div>
-			<div class="gameElement" id="monitor">
+			
+			<!--div class="gameElement" id="monitor">
 				<img src="images/game_elements/monitor.png" />
-			</div>
+			</div-->
 	    <div class="gameElement" id="cancelBuilding" style="display:none;">
 	    		<img src="images/icons/cancel.png" />
 			</div>
@@ -63,7 +66,7 @@
           </div>
         </div>
         <div id="home" onclick="Javascript:game.reInitialize(function(){game.scene.render()})">
-          <img src="images/friends/blank.png" />
+          <img src="images/friends/1st_blank.png" />
           <div class="photoContainer">
             <img class='photo' src='images/buildings/townhall.png' />
           </div>	
@@ -110,6 +113,11 @@
       <div id="buildButton" style="display:none;">
         <img src="images/quests/button.png"/>
         <div id="buildText" class="yellowText"> build </div>
+      </div>
+      
+      <div id="sendAttack">
+        <img src="images/quests/button.png"/>
+        <div id="sendAttackText" class="yellowText"> attack me </div>
       </div>
       
       <div id="interaction" style="display:none;">

@@ -3,7 +3,7 @@ var Map={
 	tileWidth:64,
 	tileHeight:31,
 	viewWidth:760,
-	viewHeight:550,
+	viewHeight:670,
 	mapWidth : 1000,
 	mapHeight : 1000,	
 	hoverX :0,

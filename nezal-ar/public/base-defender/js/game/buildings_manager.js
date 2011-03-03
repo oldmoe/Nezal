@@ -39,7 +39,7 @@ var BuildingsManager = Class.create({
   },
   
   build : function(building){
-    this.game.buildingMode.on(this.game[building + 'Factory'].newBuilding(), function(){});
+    this.game.buildingMode.on(this.game[building.dasherize().camelize() + 'Factory'].newBuilding(), function(){});
   }
 
 })
