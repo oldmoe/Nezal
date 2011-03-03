@@ -67,9 +67,7 @@
 #interaction #msg {
   position: absolute;
   top: 170px;
-  width: 600px;
   left : 80px;
-  height: 210px;
 }
 #interaction #msg img {
   position : absolute;
@@ -113,6 +111,7 @@
   position: absolute;
   height: 100%;
   width: 600px;
+  height : 230px;
 }
 #interaction #msg #welcomeMsg .text {
   font-size: 21px;
