@@ -384,6 +384,23 @@ var LumbermillDisplay = Class.create(ResourceBuildingDisplay, {
 		this.sprites.clickSprite = new DomImgSprite(this.owner,{img: this.transparentImg,area:this.area}, {clickable: true});
     this.sprites.clickSprite.img.setStyle({width:this.imgWidth+"px",height:this.imgHeight+"px"})
 	},
+	 manageStateChange : function($super){
+    $super()
+    var self = this;
+    this.owner.stateNotifications[this.owner.states.NOT_PLACED].push(function(){
+      self.sprites.saw.hide()
+    });
+    this.owner.stateNotifications[this.owner.states.UNDER_CONSTRUCTION].push(function(){
+      self.sprites.saw.show()
+    });
+    this.owner.stateNotifications[this.owner.states.UPGRADING].push(function(){
+      self.sprites.saw.show()
+    });
+    this.owner.stateNotifications[this.owner.states.NORMAL].push(function(){
+      self.sprites.saw.show()
+    });
+  },
+
 	renderAnimation : function(){
 		if (!this.sprites.building.animated) {
       this.sprites.building.currentAnimationFrame = 0
@@ -394,7 +411,7 @@ var LumbermillDisplay = Class.create(ResourceBuildingDisplay, {
 	},
 	render : function($super){
     $super();
-		if(!this.owner.producing)return;
+		if(!this.owner.producing || this.owner.hp<=0 || this.owner.assignedWorkers==0)return;
 		if (this.owner.state == this.owner.states.NORMAL && this.sawAnimationCounter%2==0) {
 				this.sprites.saw.currentAnimationFrame = (this.sprites.saw.currentAnimationFrame + 1) % this.sprites.saw.noOfAnimationFrames;
 		}		
@@ -437,7 +454,7 @@ var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
   render : function($super){
     $super();
 		
-		if(!this.owner.producing){
+		if(!this.owner.producing || this.owner.hp <= 0 || this.owner.assignedWorkers==0){
 			this.bubbles.each(function(bubble){
 				bubble.hide()
 			})

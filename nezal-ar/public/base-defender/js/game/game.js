@@ -143,9 +143,10 @@ var Game = Class.create({
     this.buildingsManager = new BuildingsManager(this);
 		this.workerFactory = new WorkerFactory(this);
 		this.storageFactory = new StorageFactory(this);
-		this.creepFactory = new CreepFactory(this)
+		this.creepFactory = new CreepFactory(this);
 		this.defenseCenterFactory = new DefenseCenterFactory(this);
 		this.wedgeFactory = new WedgeFactory(this);
+		this.attackManager = new AttackManager(this);
     this.tutorial = new Tutorial(this);
     this.tutorial.fire();
     this.reInitializationNotifications.each(function(fn){fn()});

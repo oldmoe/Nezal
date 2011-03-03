@@ -70,3 +70,8 @@ img{
 	 position: absolute;
 	 top: 347px;
  }
+ .healthSpan{
+ 	-moz-border-radius:8px 8px 8px 8px;
+  -webkit-border-radius: 8px 8px 8px 8px;
+  -khtml-border-radius: 8px 8px 8px 8px;
+ }
