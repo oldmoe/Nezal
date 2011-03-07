@@ -43,6 +43,7 @@ var Map={
 			Map.div.style.height =  img3.height + "px";
 			Map.mapHeight = img3.height;
 			Map.navigation = new Navigation(Map);
+			Map.mapMirror = new MapMirror();
 		}
 		img3.src="images/background.png"
 		Map.initDirections()
