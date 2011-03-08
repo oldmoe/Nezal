@@ -38,7 +38,7 @@ var BuildingsManager = Class.create({
     $("leftArrow").stopObserving("click");
     $("leftArrow").observe("click", function(){
       if(currentShift != 0) {
-        currentShift -= 3;
+        currentShift -= 4;
         $$('#interaction .buildings')[0].setStyle({marginLeft : (currentShift*-84) + 'px' })
         $$('#rightArrow img')[0].setStyle({marginLeft : '-90px'});
         if(currentShift == 0)
@@ -51,7 +51,7 @@ var BuildingsManager = Class.create({
     $("rightArrow").stopObserving("click");
     $("rightArrow").observe("click", function(){
       if(currentShift < maxShift) { 
-        currentShift += 3;
+        currentShift += 4;
         $$('#interaction .buildings')[0].setStyle({marginLeft : (currentShift*-84) + 'px' });
         $$('#leftArrow img')[0].setStyle({marginLeft : '-60px'});
         if(currentShift == maxShift)
