@@ -7,14 +7,17 @@ class BaseDefender < Metadata
     "quarry" => BD::Quarry,
     "lumbermill" => BD::Lumbermill
   }
-  @@building_modules = {
+  @@wedges = {
+    'wedge' => BD::Wedge.new('wedge'),
+    'gaddafi' => BD::Wedge.new('gaddafi')
+  }
+  @@building_modules = ( {
     "townhall" => BD::Townhall,
     "storage" => BD::Storage ,
     "defense_center" => BD::DefenseCenter,
     "war_factory" => BD::WarFactory,
-    "house" => BD::House,
-    "wedge" => BD::Wedge
-  }.merge @@resource_building_modules
+    "house" => BD::House
+  }.merge @@resource_building_modules ).merge @@wedges
   
   @@game_metadata = nil
   
@@ -173,6 +176,8 @@ class BaseDefender < Metadata
   def self.initialize_game_metadata( game )
     #Applying Speed Factor!
     @@building_modules.keys.each do |building_name|
+      puts building_name
+      puts game.metadata['buildings'][building_name]
       building_levels = game.metadata['buildings'][building_name]['levels']
       building_levels.keys.each do |level|
         building_levels[level]['time'] /= @@speed_factor
@@ -300,12 +305,17 @@ class BaseDefender < Metadata
           creep.tick
         end
       end
+      weapons.each do |weapon|
+        weapon.display_tick
+      end
     end
-    
+    puts "=====================FINISHED========================="
     map.objects.each do |obj|
+      puts "#{obj.name}  #{obj.hp}"
       key = self.convert_location(obj.owner['coords'])
       user_game_profile.metadata[obj.name][key]['hp'] = obj.hp
     end
+    weapons.each { |weapon| puts weapon.rock_num }
     return {'valid' => true, 'error' => ''}
   end
   

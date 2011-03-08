@@ -81,7 +81,7 @@ EOF
     dir = 0
     slope = 0
     begin 
-      slope = (y1-y2).to_f/(x1-x2).to_f
+      slope = ((y1-y2).to_f/(x1-x2).to_f).round
       if(slope == 0 && x1 > x2)
         dir = @@W
       elsif(slope == 0 && x1 < x2)

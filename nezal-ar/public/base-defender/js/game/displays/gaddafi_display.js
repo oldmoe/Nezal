@@ -1,4 +1,4 @@
-var WedgeDisplay = Class.create(BuildingDisplay, {
+var GaddafiDisplay = Class.create(BuildingDisplay, {
 
   weaponDisplay : null,
 

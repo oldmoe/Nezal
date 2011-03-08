@@ -38,12 +38,14 @@ module BD
       super
       if(@target && @moving_path.length == 0)
         @target.hp -=@power
+#        puts "** Car Firing ** :: #{@target.__id__} #{@target.hp}"
         @attacked = true
       end
       if (@target.hp <= 1)
         @target.hp = 1
         @target = nil
-      end 
+      end
+      puts "#{self.__id__}  ::  #{self.coords['x']} #{self.coords['y']} #{self.hp}"
     end
     
     def pick_target

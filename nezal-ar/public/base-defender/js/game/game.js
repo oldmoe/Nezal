@@ -28,6 +28,7 @@ var Game = Class.create({
   },
 
   workersStatus : null,
+
   initialize : function(){
     this.network = new Network(); 
   	if(!this.isTouchDevice()){
@@ -40,7 +41,8 @@ var Game = Class.create({
   		this.mouseStartEvent = 'touchstart'
   		this.mouseEndEvent = 'touchend'
   		this.mouseMoveEvent = 'touchmove'
-  	}
+  }
+
 	soundManager.mute()
   },
 	
@@ -86,7 +88,7 @@ var Game = Class.create({
 	},
 	
   start : function(){
-	    var self = this;
+    var self = this;
 		var loaderFinishCallback = function(){
 	    var mapView = ""
       var friendIDs = self.network.neighbourIDs();
@@ -130,6 +132,7 @@ var Game = Class.create({
 		buildingImages.push("lumbermill_saw.png");
 		buildingImages.push("townhall_door.png");
 		buildingImages.push("wedge_face.png");
+		buildingImages.push("gaddafi_face.png");
 		buildingImages.push("storage_2.png");
 		var buildingOutlineImages = BuildingMode.prototype.buildings.collect(function(building){
       return building + "_outline.png";
@@ -140,18 +143,18 @@ var Game = Class.create({
       return building + "_shadow.png";
     });
     
-    var buildingMovingImages = [ "wedge_moving.png" ];
+    var buildingMovingImages = [ "wedge_moving.png", "gaddafi_moving.png" ];
 
 		var buildingModeImages = ['2x2_invalid.png', '2x2_base.png','1x1_invalid.png', '1x1_base.png','transparent.png','transparent.png'];
 		var questsImages = [  "msgBg.png", "wedge.png", "button.png", "msgBaloon.png", "questBaloon.png" , "questBg.png", "buildingPanelBg.png",
                           "activeCell.png", "inactiveCell.png", "resources.png", "correct.png", "correct.png", "buildingsBg.png", "wedgesBg.png", 
                           "social.png", "civil.png", "military.png", "circles.png", "hover.png", "animated_circles.gif", "line.png",
-                          "townhall_info.png", "quarry_info.png", "lumbermill_info.png", "defense_center_info.png","war_factory_info.png","house_info.png", "storage_info.png",
-                          "wedge_info.png"];
+                          "townhall_info.png", "quarry_info.png", "lumbermill_info.png", "defense_center_info.png","war_factory_info.png","house_info.png", 
+                          "storage_info.png", "wedge_info.png", "gaddafi_info.png"];
 
     var iconsImages = ["townhall.png", "townhall_icon.png", "quarry_icon.png", "lumbermill_icon.png", "quarry.png",
 		 "lumbermill.png", "lumber.png", "rock.png", "workers.png","storage.png","storage_icon.png",
-		 "defense_center.png","defense_center_icon.png","war_factory.png", "war_factory_icon.png","house.png","house_icon.png", "wedge_icon.png", "wedge.png","attention.png"];
+		 "defense_center.png","defense_center_icon.png","war_factory.png", "war_factory_icon.png","house.png","house_icon.png", "wedge_icon.png", "wedge.png","attention.png", "gaddafi_icon.png", "gaddafi.png"];
    
 		var workerImages = ["worker.png", "worker_shadow.png"];
     //var buildingPanelImages = ["panel.png"]
@@ -161,7 +164,7 @@ var Game = Class.create({
 		var smokeImages = ["smoke_big.png", "smoke_big.png"]
   
     // Weapons Images 
-		var weaponsImages = ["archer.png", "rock.png"]
+		var weaponsImages = ["slingshot.png", "rock.png"]
     new Loader().load([{images : BaseDefenderScene.prototype.textures, path: 'images/textures/', store: 'textures'},
                        {images : buildingImages, path: 'images/buildings/', store: 'buildings'},
 											 {images : buildingModeImages, path: 'images/buildings/', store: 'buildingModes'},
@@ -197,22 +200,23 @@ var Game = Class.create({
     this.reactor.run();
     this.attackManager = new AttackManager(this);
     this.user = new User(this);
-	this.scene = new BaseDefenderScene(this);	
-	this.resources.rock = this.user.data.rock;
+  	this.scene = new BaseDefenderScene(this);	
+	  this.resources.rock = this.user.data.rock;
     this.resources.lumber = this.user.data.lumber;
-	BuildingFactory._GlobalRegistry = {};
-	this.attackManager = new AttackManager(this);
-	this.townhallFactory = new TownhallFactory(this);
-	this.quarryFactory = new QuarryFactory(this);
-	this.lumbermillFactory = new LumbermillFactory(this);
-	this.buildingsManager = new BuildingsManager(this);
-	this.workerFactory = new WorkerFactory(this);
-	this.storageFactory = new StorageFactory(this);
-	this.creepFactory = new CreepFactory(this);
-	this.defenseCenterFactory = new DefenseCenterFactory(this);
-	this.warFactoryFactory = new WarFactoryFactory(this);
-	this.houseFactory = new HouseFactory(this);
+	  BuildingFactory._GlobalRegistry = {};
+	  this.attackManager = new AttackManager(this);
+	  this.townhallFactory = new TownhallFactory(this);
+	  this.quarryFactory = new QuarryFactory(this);
+	  this.lumbermillFactory = new LumbermillFactory(this);
+	  this.buildingsManager = new BuildingsManager(this);
+	  this.workerFactory = new WorkerFactory(this);
+	  this.storageFactory = new StorageFactory(this);
+	  this.creepFactory = new CreepFactory(this);
+	  this.defenseCenterFactory = new DefenseCenterFactory(this);
+	  this.warFactoryFactory = new WarFactoryFactory(this);
+	  this.houseFactory = new HouseFactory(this);
 		this.wedgeFactory = new WedgeFactory(this);
+		this.gaddafiFactory = new GaddafiFactory(this);
     if( !this.buildingMode )
       this.buildingMode = new BuildingMode(this);
     else{
