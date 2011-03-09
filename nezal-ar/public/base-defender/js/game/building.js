@@ -57,7 +57,7 @@ var Building = Class.create({
 		var cond1 = map.grid[mapCoords[0]][mapCoords[1]].terrainType == this.game.scene.landmarks.get(this.canBeBuiltOn);
 		var cond2 = map.validateLocation(this)
     if(!cond1){
-      alert(this.name + " can be built on " + this.canBeBuiltOn + " only!");
+      Notification.alert(this.name + " can be built on " + this.canBeBuiltOn + " only!");
       return false;
     }
 		if(!cond2){
@@ -82,11 +82,12 @@ var Building = Class.create({
     this.coords['x'] = xBlock;
     this.coords['y'] = yBlock;
     
-    if (this.isValidToBuild(xBlock, yBlock)) {
+    if(this.isValidToBuild(xBlock, yBlock)) {
       var response = this.game.network.upgradeBuilding(this.name, this.coords);
       this.game.updateGameStatus(response['gameStatus']);
       return response['done'];
     } else {
+      //this.game.buildingMode.cancelBuildingMode();
       return false;
     }
   },
@@ -133,13 +134,13 @@ var Building = Class.create({
       
     /****************************** Validating workers **************************************/
     if( this.game.workerFactory.idleWorkers == 0 ){
-      alert("Cannot pgrade " + this.name + ", all your workers are busy!");
+      Notification.alert("Cannot upgrade " + this.name + ", all your workers are busy!");
       return false;
     }
     /****************************** Validating upgrade **************************************/    
     var level = (parseInt(this.level) + 1).toString(); 
     if(!this.factory.bluePrints.levels[level]) {
-      alert("You have reached max upgrade");
+      Notification.alert("You have reached max upgrade");
       return false;
     }
     /****************************************************************************************/
@@ -150,17 +151,17 @@ var Building = Class.create({
     var neededLumber = this.factory.bluePrints.levels[level].lumber - this.game.resources.lumber;
     
     if( neededRock > 0 && neededLumber > 0 ){
-      alert("Not enough resources, you need more "+ neededRock +" rock and "+ neededLumber + " lumber");
+      Notification.alert("Not enough resources, you need more "+ neededRock +" rock and "+ neededLumber + " lumber");
       return false;
     }
     
     if(  neededRock > 0 ){
-      alert("Not enough resources, you need more "+ neededRock +" rock");
+      Notification.alert("Not enough resources, you need more "+ neededRock +" rock");
       return false;
     }
     
     if( neededLumber > 0 ){
-      alert("Not enough resources, you need more "+ neededLumber +" lumber");
+      Notification.alert("Not enough resources, you need more "+ neededLumber +" lumber");
       return false;
     }
     /****************************************************************************************/
@@ -179,7 +180,7 @@ var Building = Class.create({
             
     /****************************** Validating workers **************************************/
     if( this.game.workerFactory.idleWorkers == 0 ){
-      alert("Cannot build " + this.name + ", all your workers are busy!");
+      Notification.alert("Cannot build " + this.name + ", all your workers are busy!");
       return false;
     }
     /****************************************************************************************/
@@ -189,17 +190,17 @@ var Building = Class.create({
     var neededLumber = this.factory.bluePrints.levels[1].lumber - this.game.resources.lumber;
     
     if( neededRock > 0 && neededLumber > 0 ){
-      alert("Not enough resources, you need more "+ neededRock +" rock and "+ neededLumber + " lumber");
+      Notification.alert("Not enough resources, you need more "+ neededRock +" rock and "+ neededLumber + " lumber");
       return false;
     }
     
     if(  neededRock > 0 ){
-      alert("Not enough resources, you need more "+ neededRock +" rock");
+      Notification.alert("Not enough resources, you need more "+ neededRock +" rock");
       return false;
     }
     
     if( neededLumber > 0 ){
-      alert("Not enough resources, you need more "+ neededLumber +" lumber");
+      Notification.alert("Not enough resources, you need more "+ neededLumber +" lumber");
       return false;
     }
     /****************************************************************************************/

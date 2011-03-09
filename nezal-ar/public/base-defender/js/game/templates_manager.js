@@ -68,8 +68,10 @@ var TemplatesManager = Class.create({
 	workersInGamePanel: function(idleWorkers, totalWorkers){
 		return TrimPath.processDOMTemplate("workers-in-game-panel-template", 
 														{idleWorkers : idleWorkers, totalWorkers : totalWorkers});
+  },
+
+  alert : function(message){
+    return TrimPath.processDOMTemplate("alert-template", {'message' : message});
   }
-
-
 
 });

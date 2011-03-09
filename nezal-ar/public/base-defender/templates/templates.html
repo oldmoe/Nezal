@@ -104,3 +104,23 @@
      <span id="idleWorkersGameElement">${idleWorkers}</span> / <span id="totalWorkersGameElement">${totalWorkers}</span>
 </textarea>
 
+<textarea style="display:none;" id='alert'>
+  <div id='alertMsg'>
+    <img class="background" src="${Loader.images.quests['msgBg.png'].src}"/>
+    <div class="msgBGImgs">
+      <img class="wedge" src="${Loader.images.quests['wedge.png'].src}"/>
+      <img class="bubble" src="${Loader.images.quests['msgBaloon.png'].src}"/>
+    </div>
+    <div class="close" onclick="$('alertMsg').hide();">
+    </div>
+    <div class="okButtonWrapper">
+      <div class="okButton" onclick="$('alertMsg').hide();">
+        <img class="okImage" src="${Loader.images.quests['button.png'].src}"/>
+        <div class="okText yellowText"> OK </div>
+      </div>
+    </div>
+    <div class="text blueText">
+      <span>${message}</span>
+    </div>
+  </div>
+</textarea>
