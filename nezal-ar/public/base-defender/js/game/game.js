@@ -61,7 +61,7 @@ var Game = Class.create({
                     'right-disabled' :'images/friends/right-disabled.png'
                     };
         var friendsCarousel = null;
-        friendsCarousel = new Carousel("friends", images, 6);
+        friendsCarousel = new Carousel("friends", images, 5);
         friendsCarousel.checkButtons();
       });
     //////////////////////////////////
