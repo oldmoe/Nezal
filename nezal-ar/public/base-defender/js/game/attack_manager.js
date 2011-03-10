@@ -9,8 +9,11 @@ var AttackManager = Class.create({
     });
 	},
 	simulateAttack : function(){
+		var creeps = {}
 		for(var i=0;i<5;i++){
-			this.game.creepFactory.newCreep("Car")
+			var creep = this.game.creepFactory.newCreep("Car")
+			creeps[creep.coords.x+ ":"+creep.coords.y] = "Car"
 		}
+		this.game.network.simulateAttack(creeps);
 	}
 })

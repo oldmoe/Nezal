@@ -20,8 +20,8 @@ var Car = Class.create(MovingObject,{
 		if(this.target && this.movingPath.length == 0){
 			this.target.hp -=this.power
 		}
-		if (this.target.hp <= 0) {
-			this.target.hp = 0
+		if (this.target.hp <= 1) {
+			this.target.hp = 1
 			this.target = null
 		} 
 	},

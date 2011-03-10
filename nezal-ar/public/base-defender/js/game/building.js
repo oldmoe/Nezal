@@ -81,7 +81,6 @@ var Building = Class.create({
   build : function(xBlock, yBlock){
     this.coords['x'] = xBlock;
     this.coords['y'] = yBlock;
-    
     if (this.isValidToBuild(xBlock, yBlock)) {
       var response = this.game.network.upgradeBuilding(this.name, this.coords);
       this.game.updateGameStatus(response['gameStatus']);

@@ -36,7 +36,6 @@ var Map={
 					}
 				}
 			}
-			
 		img3.onload = function(){
 			Map.div.style.width  =  img3.width + "px";
 			Map.mapWidth = img3.width;

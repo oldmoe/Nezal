@@ -13,6 +13,7 @@ var CreepFactory = Class.create({
 		var displayClass = eval(type+"Display")
 		var creepDisplay = new displayClass(creep)
 		this.game.scene.pushAnimation(creepDisplay);
+		return creep
   }
   
 });

@@ -80,6 +80,10 @@ var Network = Class.create({
     return this.contactTheBoss({ 'event' :'collect_resources', 'building' : name, 'coords' : coords });
   },
 
+	simulateAttack : function(creeps){
+		return this.contactTheBoss({ 'event' : 'attack','creeps': creeps})	
+	},
+	
   fetchTemplate : function(path, callBack){
     new Ajax.Request(path, {
       method : 'get',
