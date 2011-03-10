@@ -26,3 +26,8 @@ var Notification = Class.create({
   }
   
 });
+
+Notification.alert = function(message){
+  $("alert").innerHTML = game.templatesManager.alert(message);
+  $("alert").show();
+}

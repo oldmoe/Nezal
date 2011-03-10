@@ -81,6 +81,7 @@ var WorkerDisplay = Class.create(Display,{
 });
 
 var BuildingDisplay = Class.create(Display, {
+  panelWidth : 210,
   initialize : function($super,owner,properties){
 		$super(owner,properties)
 		this.noOfXTiles = Math.ceil(this.xdim / Map.tileIsoLength)
@@ -187,10 +188,24 @@ var BuildingDisplay = Class.create(Display, {
   },
 	
   renderPanel : function(){
+    var rightLimit = this.panelWidth + this.owner.coords.x - Map.x + Math.round(this.owner.imgWidth / 2);
+    if( rightLimit < Map.viewWidth ) {
+      var left = this.owner.coords.x - Map.x + Math.round(this.owner.imgWidth / 2);
+    } else {
+      var left = this.owner.coords.x - Map.x - this.panelWidth - Math.round(this.owner.imgWidth / 2);
+    }
+    
+    var topLimit = this.owner.coords.y - Map.y - Math.round(this.owner.imgHeight / 2);
+    if( topLimit > 55 ) {
+      var top = this.owner.coords.y - Map.y - Math.round(this.owner.imgHeight / 2);
+    } else {
+      var top = this.owner.coords.y - Map.y - Math.round(this.owner.imgHeight / 2) + 55;
+    }
+    
     $('building-panel').setStyle({
-      top: this.owner.coords.y - Map.y - Math.round(this.owner.imgHeight / 2) + "px",
-      left: this.owner.coords.x - Map.x + Math.round(this.owner.imgWidth / 2) + "px"
-    });
+        top: top + "px",
+        left: left + "px"
+      });
   },
   
   _AttachUpgradeTrigger : function(){
@@ -291,15 +306,32 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
 });
 
 var StorageDisplay = Class.create(BuildingDisplay, {
+  renderPanel: function($super){
+    $super();
+    var self = this.owner;
+    self.game.selectedBuildingPanel = new BuildingPanel(self, function(){return ""});
+    this._AttachUpgradeTrigger();
+  }
 	
 });
 
 var DefenseCenterDisplay = Class.create(BuildingDisplay, {
+  renderPanel: function($super){
+    $super();
+    var self = this.owner;
+    self.game.selectedBuildingPanel = new BuildingPanel(self, function(){return ""});
+    this._AttachUpgradeTrigger();
+  }
 	
 });
 
 var WedgeDisplay = Class.create(BuildingDisplay, {
-	
+	renderPanel: function($super){
+    $super();
+    var self = this.owner;
+    self.game.selectedBuildingPanel = new BuildingPanel(self, function(){return ""});
+    this._AttachUpgradeTrigger();
+  }
 });
 
 var ResourceBuildingDisplay = Class.create(BuildingDisplay, {

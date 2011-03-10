@@ -26,6 +26,7 @@ var BuildingPanel = Class.create({
       //this.closeDomArea.area.setAttribute("id", "close-building-panel");
       this.closeDomArea.area.setStyle({cursor : "pointer"});
     }
+    
     this._AttachBuildingPanelCloseListeners();
     $('building-panel-contents').innerHTML = templater();
   },

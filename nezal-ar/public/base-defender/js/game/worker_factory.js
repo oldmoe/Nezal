@@ -71,7 +71,7 @@ var WorkerFactory = Class.create({
       return true;
     } else {
       var remainingRequiredCoins = this.nextWorkerCost() - this.game.user.coins;
-      alert("Not enough coins, you need " + remainingRequiredCoins + " more coins!");
+      Notification.alert("Not enough coins, you need " + remainingRequiredCoins + " more coins!");
       return false;
     }
   }
