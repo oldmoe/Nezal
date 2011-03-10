@@ -14,6 +14,9 @@ var BuildingMode = Class.create({
   },
   
   on : function(building, callback){
+    if( this.selectedBuilding && this.selectedBuilding.state == 0 ){
+      this.cancelBuildingMode();
+    }
     this.isOn = true;
     this.callback = callback;
     this.selectedBuilding = building;
@@ -81,8 +84,8 @@ var BuildingMode = Class.create({
 		}
     else if (this.selectedBuilding.build(x, y)) {
       this.callback();
+      this.off();
     }
-		this.off();
   },
 
 	_AttachCancelBuildingListener : function(){

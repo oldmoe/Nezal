@@ -52,6 +52,7 @@ var CarDisplay = Class.create(Display,{
 		this.sprites.body.render()
 	}
 })
+
 var WorkerDisplay = Class.create(Display,{
 	imgWidth : 64,
 	imgHeight : 93,
@@ -81,6 +82,7 @@ var WorkerDisplay = Class.create(Display,{
 });
 
 var BuildingDisplay = Class.create(Display, {
+  panelWidth : 210,
   initialize : function($super,owner,properties){
 		$super(owner,properties)
 		this.noOfXTiles = Math.ceil(this.xdim / Map.tileIsoLength)
@@ -95,7 +97,6 @@ var BuildingDisplay = Class.create(Display, {
 		this.movingImg = Loader.images.buildingMoving[this.owner.name+"_moving.png"];
     this.mouseoverImg = Loader.images.icons[this.owner.name+"_icon.png"];
 		this.transparentImg = Loader.images.buildingModes['transparent.png'];
-  //  console.log(this.img, this.invalidImg, this.baseImg, this.shadowImg, this.outlineImg, this.movingImg, this.mouseoverImg);
 		this.mapTiles =[];
 		Object.extend(this.owner,this); 
 		this.createSprites()	
@@ -187,10 +188,24 @@ var BuildingDisplay = Class.create(Display, {
   },
 	
   renderPanel : function(){
+    var rightLimit = this.panelWidth + this.owner.coords.x - Map.x + Math.round(this.owner.imgWidth / 2);
+    if( rightLimit < Map.viewWidth ) {
+      var left = this.owner.coords.x - Map.x + Math.round(this.owner.imgWidth / 2);
+    } else {
+      var left = this.owner.coords.x - Map.x - this.panelWidth - Math.round(this.owner.imgWidth / 2);
+    }
+    
+    var topLimit = this.owner.coords.y - Map.y - Math.round(this.owner.imgHeight / 2);
+    if( topLimit > 55 ) {
+      var top = this.owner.coords.y - Map.y - Math.round(this.owner.imgHeight / 2);
+    } else {
+      var top = this.owner.coords.y - Map.y - Math.round(this.owner.imgHeight / 2) + 55;
+    }
+    
     $('building-panel').setStyle({
-      top: this.owner.coords.y - Map.y - Math.round(this.owner.imgHeight / 2) + "px",
-      left: this.owner.coords.x - Map.x + Math.round(this.owner.imgWidth / 2) + "px"
-    });
+        top: top + "px",
+        left: left + "px"
+      });
   },
   
   _AttachUpgradeTrigger : function(){
@@ -291,15 +306,32 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
 });
 
 var StorageDisplay = Class.create(BuildingDisplay, {
+  renderPanel: function($super){
+    $super();
+    var self = this.owner;
+    self.game.selectedBuildingPanel = new BuildingPanel(self, function(){return ""});
+    this._AttachUpgradeTrigger();
+  }
 	
 });
 
 var DefenseCenterDisplay = Class.create(BuildingDisplay, {
+  renderPanel: function($super){
+    $super();
+    var self = this.owner;
+    self.game.selectedBuildingPanel = new BuildingPanel(self, function(){return ""});
+    this._AttachUpgradeTrigger();
+  }
 	
 });
 
 var WedgeDisplay = Class.create(BuildingDisplay, {
-	
+	renderPanel: function($super){
+    $super();
+    var self = this.owner;
+    self.game.selectedBuildingPanel = new BuildingPanel(self, function(){return ""});
+    this._AttachUpgradeTrigger();
+  }
 });
 
 var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
@@ -336,16 +368,16 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
   },
 	
 	_AttachAssignTrigger: function(){
-    var self = this.owner;
+    var owner = this.owner;
     if($$('.building-functions').any()){
       var trigger = $('assign_worker_trigger');    
       trigger.observe('click', function(){
-        self._AssignWorker();
+        owner._AssignWorker();
       });
 
       trigger = $('collect_resources_trigger');
       trigger.observe('click', function(){
-        self._CollectResources();
+        owner._CollectResources();
       });
     }
   }
@@ -492,7 +524,7 @@ var BuildingPanelDisplay = Class.create({
   initialize : function(game){
 		game.reInitializationNotifications.push(function(){
 			if (game.selectedBuildingPanel && game.selectedBuildingPanel.selectedBuilding) {
-		  	game.selectedBuildingPanel.selectedBuilding.renderPanel();
+		  	BuildingFactory._GlobalRegistry[game.selectedBuildingPanel.selectedBuilding.id].renderPanel();
 		  }
 		});
 	}

@@ -22,7 +22,7 @@ var Network = Class.create({
         gameStatus = JSON.parse(response.responseText);
         userProfile = gameStatus.user_data.metadata;
         if (userProfile['error']) {
-          alert("The server refused to do your action, what have you did?, ya la2eem ;), message : " + userProfile['error']);
+          Notification.alert("The server refused to do your action, what have you did?, ya la2eem ;), message : " + userProfile['error']);
           done = false;
         }
       }

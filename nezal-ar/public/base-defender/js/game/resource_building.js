@@ -54,12 +54,12 @@ var ResourceBuilding = Class.create(Building, {
   
   _ValidateAssignWorker: function(){
     if( this.assignedWorkers >= this.maxWorkers ){
-      alert("Cannot assign more workers, please upgrade the " + this.name + " first!");
+      Notification.alert("Cannot assign more workers, please upgrade the " + this.name + " first!");
       return false;
     }
     
     if (this.game.workerFactory.idleWorkers == 0) {
-      alert("Cannot assign a worker, all your workers are busy!");
+      Notification.alert("Cannot assign a worker, all your workers are busy!");
       return false;
     }
     
