@@ -53,6 +53,7 @@ var CarDisplay = Class.create(Display,{
 		this.sprites.body.render()
 	}
 })
+
 var WorkerDisplay = Class.create(Display,{
 	imgWidth : 64,
 	imgHeight : 93,
@@ -98,7 +99,6 @@ var BuildingDisplay = Class.create(Display, {
 		this.movingImg = Loader.images.buildingMoving[this.owner.name+"_moving.png"];
     this.mouseoverImg = Loader.images.icons[this.owner.name+"_icon.png"];
 		this.transparentImg = Loader.images.buildingModes['transparent.png'];
-  //  console.log(this.img, this.invalidImg, this.baseImg, this.shadowImg, this.outlineImg, this.movingImg, this.mouseoverImg);
 		this.mapTiles =[];
 		Object.extend(this.owner,this); 
 		this.createSprites()	
@@ -373,16 +373,16 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
   },
 	
 	_AttachAssignTrigger: function(){
-    var self = this.owner;
+    var owner = this.owner;
     if($$('.building-functions').any()){
       var trigger = $('assign_worker_trigger');    
       trigger.observe('click', function(){
-        self._AssignWorker();
+        owner._AssignWorker();
       });
 
       trigger = $('collect_resources_trigger');
       trigger.observe('click', function(){
-        self._CollectResources();
+        owner._CollectResources();
       });
     }
   }
@@ -529,7 +529,7 @@ var BuildingPanelDisplay = Class.create({
   initialize : function(game){
 		game.reInitializationNotifications.push(function(){
 			if (game.selectedBuildingPanel && game.selectedBuildingPanel.selectedBuilding) {
-		  	game.selectedBuildingPanel.selectedBuilding.renderPanel();
+		  	BuildingFactory._GlobalRegistry[game.selectedBuildingPanel.selectedBuilding.id].renderPanel();
 		  }
 		});
 	}

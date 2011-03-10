@@ -22,6 +22,12 @@ module BD
       :done => 1      
     }
 
+    CATEGORIES = {
+      :civil => 1,
+      :military => 2,
+      :social => 3
+    }
+
     # Base Defender Quests : 
     #   metadata construction : Admin Controlling method to update a game quest data
     #     - rewards : hash of items rewarded to the user for passing the quest. can include exp, coins.
@@ -93,18 +99,9 @@ module BD
           user_game_profile.metadata['quests']['descriptions'][id] = quest.metadata
           user_game_profile.metadata['quests']['descriptions'][id]['status'] = self.status(user_game_profile, quest)
           user_game_profile.metadata['quests']['descriptions'][id]['name'] = quest.name
+          puts user_game_profile.metadata['quests']['descriptions'][id]
         end
       end
-=begin
-      user_game_profile.metadata['quests']['conquered'].each do | id |
-        quest = ::Quest.where(:id=>id).first
-        if quest
-          user_game_profile.metadata['quests']['descriptions'][id] = quest.metadata
-          user_game_profile.metadata['quests']['descriptions'][id]['name'] = quest.name
-        end
-      end
-=end
-      #######################################################################################
       user_game_profile.save
     end
 

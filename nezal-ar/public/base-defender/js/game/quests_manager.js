@@ -9,14 +9,34 @@ var QuestsManager = Class.create({
     done : 1
   },
 
+  categories : {
+    1 : "civil",
+    2 : "military",
+    3 : "social"
+  },
+
   initialize : function(game){
     this.game = game
   },
 
   render : function(){
     if(this.game.neighborGame) return;
+    var quests = this.nextInCategory();
+    $('quest-panel').innerHTML = this.game.templatesManager.questsList(quests);
+    $$('#quest-panel .clickable').each( function(button){
+                                            var id = button.getAttribute('id');
+                                            button.observe( 'click', function(){
+                                                                        game.questsManager.displayQuest(id);
+                                                                      });
+                                            $$( "#quest-panel #" + id + " .shadow")[0].hide();
+                                            button.observe( 'mouseover', function(){
+                                                                           $$( "#quest-panel #" + id + " .shadow")[0].show();
+                                                                        });
+                                            button.observe( 'mouseout', function(){
+                                                                           $$("#quest-panel #" + id + " .shadow")[0].hide();
+                                                                        });
+                              });
     $('quest-panel').show();
-    $('quests-list').innerHTML = this.game.templatesManager.questsList(game.user.data.quests.descriptions);
   },
 
   displayQuest : function(questId){
@@ -42,6 +62,7 @@ var QuestsManager = Class.create({
     $('buildingDisplay').hide();
     $('msg').innerHTML = ""
     $('questDisplay').innerHTML = ""
+    this.render();
     var notifications = this.game.user.data.notifications.queue.findAll(function(n) { return n['type'] == 'quest'; });
     if( notifications && notifications.length > 0 ) {
 			$('interaction').hide();
@@ -104,6 +125,24 @@ var QuestsManager = Class.create({
                             }
                     }); 
     return mandatory;
+  },
+
+  nextInCategory : function() {
+    var self = this;
+    var result = { };
+    for( var i in this.categories) 
+    {
+      // Initialize the next quest for each category with null
+      result[this.categories[i]]  = null;
+      // Find Next quest id for each category
+      result[this.categories[i]] = this.game.user.data.quests['current'].find( function(quest){
+                                                    if(self.game.user.data.quests.descriptions[quest]['category'] == i)
+                                                    { 
+                                                      return true
+                                                    }
+                                           });
+    }
+    return result;
   }
 
 })
