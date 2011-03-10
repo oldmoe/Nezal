@@ -173,6 +173,55 @@
 }
 
 
+.clickable {
+  cursor : pointer;
+}
+#quest-panel {
+  height: 300px;
+  padding: 0 10px;
+  position: absolute;
+  top: 95px;
+  width: 100px;
+}
+#quest-panel .wedge {
+  height: 80px;
+  position: relative;
+  text-align: center;
+  top: 10px;
+  width: 70px;
+}
+#quest-panel .wedge .shadow{
+  position: absolute;
+  width: 68px;
+  left: 1px;
+  top: 0px;
+}
+#quest-panel .wedge .circle{
+  left: 2px;
+  position: absolute;
+  top: 0;
+  width: 68px;
+}
+#quest-panel .wedgeImg {
+  left: 5px;
+  position: absolute;
+  text-align: center;
+  top: 4px;
+  width: 62px;
+}
+#quest-panel .wedge .text {
+  color: white;
+  font-family: Showg;
+  font-size: 11px;
+  position: absolute;
+  text-shadow: -2px 2px 1px #000000;
+  text-transform: uppercase;
+  top: 55px;
+  width: 100%;
+}
+
+
+
 
 #interaction #questDisplay {
   height: 390px;
@@ -252,11 +301,10 @@
 }
 #interaction #questDisplay .condition .desc .text{
   display: inline-block;
-  height: 18px;
-  margin: 10px 0px;
+  height: 35px;
   vertical-align: top;
   font-size : 22px;  
-  line-height : 18px;
+  line-height : 35px;
 }
 #interaction #questDisplay .condition .desc .condMsg{
   display: inline-block;
@@ -284,8 +332,29 @@
   z-index: 10;
 }
 #interaction #questDisplay .wedge {
-  width : 85px;
-  display : inline-block;    
+  position: absolute;
+  text-align: center;
+  top: 10px;
+  width: 126px;
+  z-index: 10;
+}
+#interaction #questDisplay .wedge .circle{
+  position: relative;
+  top: -133px;
+}
+#interaction #questDisplay .wedgeImg {
+  text-align: center;
+  top: -266px;
+  position: relative;
+}
+#interaction #questDisplay .wedge .text {
+  color: white;
+  font-family: Showg;
+  font-size: 15px;
+  position: relative;
+  text-shadow: -2px 2px 1px #000000;
+  text-transform: uppercase;
+  top: -300px;
 }
 #interaction #questDisplay .bubble {
   display: inline-block;
