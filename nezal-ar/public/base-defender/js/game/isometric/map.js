@@ -361,7 +361,7 @@ var Map={
 	
 	registerListeners : function(div,owner){
 		div.observe('click',function(){
-			if(!game.buildingMode.isOn){
+			if(!game.buildingMode.isOn && owner.working){
 				owner.renderPanel()
 				$('building-panel').show();
 				owner.game.buildingMode.selectedBuilding = owner;

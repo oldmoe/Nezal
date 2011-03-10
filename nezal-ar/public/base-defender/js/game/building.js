@@ -10,6 +10,8 @@ var Building = Class.create({
   nextLevelBluePrints : null,
 	locationValid : true,
   state : 0,
+	working : true,
+	repairing : false,
 	states : {NOT_PLACED : 0, UNDER_CONSTRUCTION : 1, UPGRADING : 2, NORMAL : 3},
   initialize : function(factory, buildingSpecs){
     this.name = factory.name;
@@ -23,8 +25,16 @@ var Building = Class.create({
     this.currentLevelBluePrints = this.factory.bluePrints['levels'][this.level];
     this.nextLevelBluePrints = this.factory.bluePrints['levels'][this.level+1];
 		this.maxHp = this.currentLevelBluePrints.hp
+		console.log(buildingSpecs.started_repairing_at)
 		if(buildingSpecs.hp)this.hp = buildingSpecs.hp;
 		else this.hp = this.maxHp;
+		if(this.hp<this.maxHp){
+			this.working = false
+			if(!buildingSpecs.started_repairing_at) this.game.attackManager.showRepairMsg()
+		} 
+		if(buildingSpecs.started_repairing_at > 0){
+			this.startRepairing()
+		}
     this.initialState = buildingSpecs.state;
     this.stateNotifications = {};
     for(var state in this.states){
@@ -32,6 +42,23 @@ var Building = Class.create({
     }
   },
   
+	startRepairing : function(){
+		this.repairing = true
+		var self = this
+		condition = function(){
+			return self.hp == self.maxHp
+		}
+		mainFunc = function(){
+			self.hp++
+		}	
+		callback = function(){
+			self.repairing = false
+			self.working = true
+		}
+		var ticks = self.game.reactor.everySeconds(1)
+		self.game.reactor.pushPeriodicalWithCondition(ticks , mainFunc, condition, callback)
+	},
+	
   init : function(){
     this.setState(this.initialState);
     return this;
@@ -40,7 +67,7 @@ var Building = Class.create({
   tick : function(){
     var self = this;
     if (this.state == this.states.UNDER_CONSTRUCTION || this.state == this.states.UPGRADING ) {
-      if( this.elapsedTime() >= this.nextLevelBluePrints.time) {
+      if(this.elapsedTime() >= this.nextLevelBluePrints.time) {
         var delayRequest = this.game.scene.reactor.everySeconds(2);
         self.game.scene.reactor.push(delayRequest, function(){
           self.game.reInitialize();

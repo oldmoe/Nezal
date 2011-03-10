@@ -93,6 +93,11 @@ var BuildingMode = Class.create({
 		$('cancelBuilding').observe('click',function(){self.cancelBuildingMode()})
 	},
 	
+	repair : function(){
+		var response = this.game.network.repairBuildings();
+		this.game.updateGameStatus(response['gameStatus']);
+	},
+	
 	collect : function(building){
 		var townHall = this.game.townhallFactory.townhall;
 		var worker  = new Worker(game,building.coords.x,building.coords.y-10);

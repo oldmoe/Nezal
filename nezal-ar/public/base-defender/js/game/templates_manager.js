@@ -72,6 +72,9 @@ var TemplatesManager = Class.create({
 
   alert : function(message){
     return TrimPath.processDOMTemplate("alert-template", {'message' : message});
-  }
-
+  },
+	
+	notifyRepair : function(message){
+		return TrimPath.processDOMTemplate("repair-template", {'message' : message});
+	}
 });

@@ -1,24 +1,39 @@
 var Car = Class.create(MovingObject,{
-	hp:100, range:4, power:10,
+	hp:100, range:4, power:3,
 	speed : 3, 
 	name: "car",
 	targetLocated : false,
 	target : null,
 	mapDirection : Map.N, 
-	initialize : function(){
+	done_attack : false,
+	attacked : false,
+	initialize : function(game){
+		this.game = game
 		this.coords = {}
 		this.setInitialCoords()
 		this.movingPath = []
 	},
 	
 	tick : function($super){
+		if(this.hp <=0 ){
+			this.done_attack = true
+			this.game.attackManager.notifyDoneAttack()
+			this.game.creepFactory.remove(this)
+			return
+		}  
 		if(!this.target){
 			this.target = this.pickTarget()	
 		}
-		if(!this.target)return
+		if (!this.target) {
+			this.done_attack = true
+			this.game.attackManager.notifyDoneAttack()
+			this.game.creepFactory.remove(this)
+			return
+		}
 		$super()
 		if(this.target && this.movingPath.length == 0){
 			this.target.hp -=this.power
+			this.attacked = true
 		}
 		if (this.target.hp <= 1) {
 			this.target.hp = 1
@@ -30,7 +45,7 @@ var Car = Class.create(MovingObject,{
 		var minIndex = -1
 		var minDistance = 9999999
 		for(var i=0;i<Map.objects.length;i++){
-			if(Map.objects[i].hp<=0)continue;
+			if(Map.objects[i].hp<=1)continue;
 			var building = Map.objects[i] 
 			var distanceToBuilding = Util.distance(this.coords.x,this.coords.y,building.coords.x,building.coords.y)
 			if(distanceToBuilding < minDistance){
@@ -38,7 +53,9 @@ var Car = Class.create(MovingObject,{
 				minIndex = i
 			}
 		}
-		if(minIndex==-1) return null
+		if(minIndex==-1){
+			return null
+		} 
 		Map.moveObject(this, Map.objects[minIndex].coords.x , Map.objects[minIndex].coords.y)
 		this.targetLocated = true
 		return Map.objects[minIndex]

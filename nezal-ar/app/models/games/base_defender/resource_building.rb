@@ -10,7 +10,6 @@ module BD
       building = user_game_profile.metadata[@name][location_hash]
       time = Time.now.utc.to_i
       collected_resources, remaining_resources = self.calculate_collected_resources(user_game_profile, building, game_metadata, time)
-      puts "$$$$$$$$$$$$$$$$$$$$#{remaining_resources}"
       building[self.collects] += collected_resources
       user_game_profile.metadata[@collect]= building[self.collects] + user_game_profile.metadata[@collect]
       user_game_profile.metadata[@name][location_hash][self.collects] = remaining_resources
@@ -20,9 +19,11 @@ module BD
     end
 
     def self.calculate_collected_resources(user_game_profile, building, game_metadata, time_now)
-      time_now = time_now
+      if(!building['started_repairing_at'].nil? && building['started_repairing_at']>0)
+        return 0,0
+      end
       building_collected_resources =  building[self.collects] || 0 
-      last_collect_time =  building['last_collect'] || time_now 
+      last_collect_time =  building['last_collect'] || time_now
       collecting_time = time_now - last_collect_time
       assigned_workers = building['assigned_workers']
       building_capacity = game_metadata['buildings'][@name]['levels'][building['level'].to_s]['capacity']
@@ -35,8 +36,6 @@ module BD
       end
       remained = 0
       if(total_storage <= user_game_profile.metadata[@collect])
-        puts "><><><><><><#{total_storage}"
-        puts "><><><><><><#{user_game_profile.metadata[@collect]}"
         remained = user_game_profile.metadata[@collect] - total_storage
         user_game_profile.metadata[@collect] = total_storage
         user_game_profile.metadata[@collect]

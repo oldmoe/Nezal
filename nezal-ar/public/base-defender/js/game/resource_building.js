@@ -33,6 +33,7 @@ var ResourceBuilding = Class.create(Building, {
   },
 
 	tick : function($super){
+		if(!this.working || !this.owner.producing) return
     $super();
 		if (this.state == this.states.NORMAL) {
 			this[this.factory.collect] += this.totalPerTick();

@@ -26,25 +26,25 @@
   top : 155px;
 }
 
-#alert {
+#alert, #notify {
   position: absolute;
   left: 80px;
   top: 170px;
 }
 
-#alert .wedge {
+#alert .wedge,#notify .wedge {
   left: 15px;
   position: absolute;
   top: 60px;
 }
 
-#alert .bubble {
+#alert .bubble, #notify .bubble {
   left: 100px;
   position: absolute;
   top: 30px;
 }
 
-#alert .close {
+#alert .close, #notify .close {
   cursor: pointer;
   height: 25px;
   width: 45px;
@@ -53,7 +53,7 @@
   top: 0;
 }
 
-#alert .okButtonWrapper {
+#alert .okButtonWrapper, #notify .okButtonWrapper {
   bottom: 0;
   height: 55px;
   position: absolute;
@@ -68,4 +68,15 @@
   position: absolute;
   top: 40px;
   width: 430px;
+}
+#notify .text {
+	font-size: 21px;
+  color: black;
+  left: 115px;
+  position: absolute;
+  top: 40px;
+  width: 430px;
+}
+#interaction #notify #alertMsg .okText{
+	font-size:27px;
 }

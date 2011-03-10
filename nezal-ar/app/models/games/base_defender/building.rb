@@ -21,6 +21,7 @@ module BD
         user_game_profile.metadata[@name] = {} if user_game_profile.metadata[@name].nil?
         user_game_profile.metadata[@name][location_hash] = BaseDefender.new_building_specs
         user_game_profile.metadata[@name][location_hash]['startedBuildingAt'] = Time.now.utc.to_i
+        user_game_profile.metadata[@name][location_hash]['started_repairing_at'] = 0
         user_game_profile.metadata[@name][location_hash]['state'] = states['UNDER_CONSTRUCTION']
         user_game_profile.metadata[@name][location_hash]['coords'] = coords
         user_game_profile.metadata[@name][location_hash]['hp'] = game_metadata['buildings'][@name]['levels']['1']['hp']

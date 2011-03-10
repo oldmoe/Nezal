@@ -63,8 +63,40 @@ class BaseDefender < Metadata
   def self.calculate_jobs(user_game_profile)    
     building_jobs user_game_profile
     resource_collection_jobs user_game_profile
+    repair_jobs user_game_profile
     user_game_profile.metadata['last_loaded'] = Time.now.utc.to_i
     user_game_profile.save
+  end
+  
+  def self.repair_jobs user_game_profile
+    now = Time.now.utc.to_i
+    repair_factor = 1
+    profile_metadata = user_game_profile.metadata
+    building_names = @@game_metadata['buildings'].keys
+    building_names.each do |building_name|
+      if(!profile_metadata[building_name].nil?)
+        profile_metadata[building_name].each do |key, building|
+          started_repairing_at = user_game_profile.metadata[building_name][key]['started_repairing_at'] 
+          if(started_repairing_at > 0)
+            max_hp = @@game_metadata['buildings'][building_name]['levels'][building['level'].to_s]['hp']
+            hp = building['hp']
+            if((max_hp-hp) < (now - started_repairing_at)*repair_factor)
+              user_game_profile.metadata[building_name][key]['hp'] = max_hp
+              user_game_profile.metadata[building_name][key]['started_repairing_at'] = 0
+              if(user_game_profile.metadata[building_name][key]['last_collect'])
+                user_game_profile.metadata[building_name][key]['last_collect'] = 
+                user_game_profile.metadata[building_name][key]['last_collect'] + ((max_hp-hp)/repair_factor).round
+              end
+            else 
+              user_game_profile.metadata[building_name][key]['hp'] =  (now - started_repairing_at)* repair_factor
+            end
+          end
+        end
+      end
+    end
+    validation = {}
+    validation['valid'] = true
+    return validation  
   end
   
   def self.resource_collection_jobs(user_game_profile)
@@ -86,12 +118,12 @@ class BaseDefender < Metadata
           resource_building_level = resource_building_instance['level']
           resource_building_instance[collects] = 0 if resource_building_instance[collects].nil?
           if( resource_building_instance['assigned_workers'].present? && 
-              resource_building_instance['assigned_workers'] > 0 && 
-              resource_building_instance[collects] < @@game_metadata['buildings'][resource_building_name]['levels'][resource_building_level.to_s]['capacity'])
-              start_resources = @@building_modules[resource_building_name].calculate_collected_resources(user_game_profile, resource_building_instance,
+            resource_building_instance['assigned_workers'] > 0 && 
+            resource_building_instance[collects] < @@game_metadata['buildings'][resource_building_name]['levels'][resource_building_level.to_s]['capacity'])
+            start_resources = @@building_modules[resource_building_name].calculate_collected_resources(user_game_profile, resource_building_instance,
                                                                                                        @@game_metadata , now)
             resource_building_instance[collects] += start_resources[0]+start_resources[1]
-                                                                                                       
+            
             resource_building_instance['last_collect'] = now
           end
         end
@@ -126,7 +158,7 @@ class BaseDefender < Metadata
       building['startedBuildingAt'] = nil
       metadata['idle_workers'] += 1
       if @@building_modules[building_name].respond_to? 'assign_worker'
-#        @@building_modules[building_name].assign_worker(user_game_profile, building['coords']) 
+        #        @@building_modules[building_name].assign_worker(user_game_profile, building['coords']) 
       end
       Notification.new( {:metadata => metadata, :notification_type => "building", :notification_text => building_name + " construction is completed!"} )
       
@@ -150,7 +182,7 @@ class BaseDefender < Metadata
   def self.load_game(game)
     @@game_metadata = initialize_game_metadata game || {}
   end
-
+  
   def self.init_quest(quest)
     BD::Quest::init_quest(quest)
   end
@@ -158,7 +190,7 @@ class BaseDefender < Metadata
   def self.edit_quest(quest, data)
     BD::Quest::edit_quest(quest, data)
   end
-
+  
   def self.load_game_profile(user_game_profile)
     #reading a -maybe- attached error message from the object and porting it to the metadata!
     if(user_game_profile['error'])
@@ -190,6 +222,10 @@ class BaseDefender < Metadata
       validation = collect_building(user_game_profile, data)
     elsif data['event'] == 'notification_ack'
       validation = Notification.delete({:profile => user_game_profile, :id => data['id']})
+    elsif data['event'] == 'attack'
+      validation = simulate_attack user_game_profile, data['creeps']
+    elsif data['event'] == 'repair_buildings'
+      validation = repair_buildings user_game_profile  
     end
     
     user_game_profile['error'] = validation['error'] unless validation['valid']
@@ -197,6 +233,67 @@ class BaseDefender < Metadata
     #### TODO We need to check why they need the stringified one 
     #### and see what we gonna do about that
     user_game_profile.metadata || {}
+  end
+  
+  def self.repair_buildings user_game_profile
+    user_game_profile.metadata['attacked'] = 0
+    profile_metadata = user_game_profile.metadata
+    building_names = @@game_metadata['buildings'].keys
+    building_names.each do |building_name|
+      if(!profile_metadata[building_name].nil?)
+        profile_metadata[building_name].each do |key, building|
+          max_hp = @@game_metadata['buildings'][building_name]['levels'][building['level'].to_s]['hp']
+          hp = building['hp']
+          if(hp < max_hp)
+            user_game_profile.metadata[building_name][key]['started_repairing_at'] = Time.now.utc.to_i
+          end
+        end
+      end
+    end
+    return {'valid' => true, 'error' => ''}
+  end
+  
+  def self.simulate_attack user_game_profile, creeps_hash
+    profile_metadata = user_game_profile.metadata
+    map = BD::Map.new profile_metadata['map']
+    building_names = @@game_metadata['buildings'].keys
+    building_names.each do |building_name|
+      if(!profile_metadata[building_name].nil?)
+        profile_metadata[building_name].values.each do |building|
+          display = @@game_metadata['buildings'][building_name]['levels'][building['level'].to_s]['display']
+          map_building = BD::MapBuilding.new building,building_name, display['xdim'], display['ydim'], display['zdim'], building['hp']
+          map.add_element map_building
+        end
+      end
+    end
+    puts creeps_hash.inspect
+    creeps = []
+    creeps_hash.keys.each do |key|
+      coords = key.split(':')
+      creep_class = eval("BD::"+creeps_hash[key])
+      creeps.push(creep_class.new(map,coords[0],coords[1]))
+    end
+    done = false
+    while(!done)
+      done = true
+      creeps.each do |creep|
+        if(!creep.done_attack && !creep.dead)
+          done = false
+          creep.tick
+        end
+      end
+    end
+    creeps.each do |creep|
+      if creep.attacked
+        user_game_profile.metadata['attacked'] = 1
+        break
+      end
+    end
+    map.objects.each do |obj|
+      key = self.convert_location(obj.owner['coords'])
+      user_game_profile.metadata[obj.name][key]['hp'] = obj.hp
+    end
+    return {'valid' => true, 'error' => ''}
   end
   
   def self.buy_worker(user_game_profile)
@@ -225,7 +322,7 @@ class BaseDefender < Metadata
     end
     
   end
-
+  
   def self.collect_building(user_game_profile, data)
     building = data['building']
     coords = data['coords']
@@ -240,7 +337,7 @@ class BaseDefender < Metadata
   
   def self.init_game_profile(user_game_profile)
     user_game_profile.metadata= 
-                  {'townhall' => nil,
+    {'townhall' => nil,
                    'lumbermill' => nil,
                    'quarry' => nil,
                    'workers' => 1,
@@ -249,6 +346,6 @@ class BaseDefender < Metadata
                    'lumber' => 20000,
                    'notifications' => {'id_generator' => 0, 'queue' => []},
                    'map' => (0..72).to_a.map{(0..24).to_a.map{0}}
-                  }
+    }
   end
 end
