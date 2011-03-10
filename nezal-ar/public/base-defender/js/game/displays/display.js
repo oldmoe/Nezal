@@ -52,6 +52,7 @@ var CarDisplay = Class.create(Display,{
 		this.sprites.body.render()
 	}
 })
+
 var WorkerDisplay = Class.create(Display,{
 	imgWidth : 64,
 	imgHeight : 93,
