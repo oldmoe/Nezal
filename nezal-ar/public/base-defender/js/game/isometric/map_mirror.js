@@ -16,7 +16,7 @@ $("monitorButton").observe("click",function(e){self.onButtonClick(e)});
 },
 
 onButtonClick: function(e){
-	console.log("button clicked");
+	//console.log("button clicked");
 	if(this.flag == 1)
 		{
 			
@@ -27,7 +27,7 @@ onButtonClick: function(e){
 		}
 	else if(this.flag == 0)
 		{
-			console.log("ha3");
+			//console.log("ha3");
 			new Effect.Move('monitor', {x:10, y:447, mode: 'absolute'});
 			new Effect.Move('monitorGlass', { x: 27, y: 472, mode: 'absolute' });
 			new Effect.Move('monitorButton', { x: 24, y: 449, mode: 'absolute' });
@@ -77,7 +77,7 @@ var dy = ((y*15.7)-Map.viewHeight/2)- Map.y ;
 this.imgMirror.style.left = (x-19) +"px";
 this.imgMirror.style.top = (y-12) +"px";
 
-console.log(this);
+//console.log(this);
 Map.move(dx,dy);
 
 },
@@ -107,13 +107,13 @@ for(var e in BuildingFactory._GlobalRegistry)
 scalingBuildingHelper: function(clonedImage,locX,locY){
 		var x = locX;
 		var y = locY;
-		console.log("done");
+	//	console.log("done");
 		clonedImage.setStyle({"width":"12px"});
 		clonedImage.setStyle({"height":"12px"});
 		clonedImage.style.position = "absolute";
 		clonedImage.style.left = Math.round(x/13.21) +"px";
 		clonedImage.style.top = Math.round(y/15.7) +"px";
-		console.log("done1");
+		//console.log("done1");
 		$("monitorGlass").appendChild(clonedImage);
 		
 }

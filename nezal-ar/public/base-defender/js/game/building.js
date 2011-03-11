@@ -25,9 +25,10 @@ var Building = Class.create({
     this.currentLevelBluePrints = this.factory.bluePrints['levels'][this.level];
     this.nextLevelBluePrints = this.factory.bluePrints['levels'][this.level+1];
 		this.maxHp = this.currentLevelBluePrints.hp
-		console.log(buildingSpecs.started_repairing_at)
-		if(buildingSpecs.hp)this.hp = buildingSpecs.hp;
-		else this.hp = this.maxHp;
+		if(buildingSpecs.hp!=null)this.hp = buildingSpecs.hp;
+		else{
+			this.hp = this.maxHp;
+		} 
 		if(this.hp<this.maxHp){
 			this.working = false
 			if(!buildingSpecs.started_repairing_at) this.game.attackManager.showRepairMsg()

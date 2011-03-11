@@ -266,7 +266,6 @@ class BaseDefender < Metadata
         end
       end
     end
-    puts creeps_hash.inspect
     creeps = []
     creeps_hash.keys.each do |key|
       coords = key.split(':')
@@ -281,12 +280,6 @@ class BaseDefender < Metadata
           done = false
           creep.tick
         end
-      end
-    end
-    creeps.each do |creep|
-      if creep.attacked
-        user_game_profile.metadata['attacked'] = 1
-        break
       end
     end
     map.objects.each do |obj|
