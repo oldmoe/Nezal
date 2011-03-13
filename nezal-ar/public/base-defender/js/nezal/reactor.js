@@ -78,6 +78,17 @@ var Reactor = Class.create({
   },
 	
 	
+	pushPeriodicalWithCondition : function(everyNoOfTicks , func, condition,callback){
+		if(!condition()){
+			func()
+			var self = this
+			this.push(everyNoOfTicks,function(){
+				self.pushPeriodicalWithCondition(everyNoOfTicks , func, condition,callback)
+			})
+		}else if(callback){
+			callback()
+		}
+	},
 	
 	push : function(ticks, func, callback){
 		var delay = this.ticks + ticks

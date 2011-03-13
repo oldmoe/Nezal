@@ -60,12 +60,12 @@ var QuestsManager = Class.create({
        else, Check for a mandatory Quest and display it.
     */
     $('buildingDisplay').hide();
-    $('interaction').hide();
     $('msg').innerHTML = ""
     $('questDisplay').innerHTML = ""
     this.render();
     var notifications = this.game.user.data.notifications.queue.findAll(function(n) { return n['type'] == 'quest'; });
     if( notifications && notifications.length > 0 ) {
+			$('interaction').hide();
       this.displayCongratesMsg(notifications.first());
     } else {
       var mandatoryQuest = null;

@@ -108,28 +108,27 @@
 }
 
 #monitor {
-position: absolute;
-top: 447px;
-left: 10px;
-width: 150px;
-height:103px;
+	position: absolute;
+	top: 447px;
+	left: 10px;
+	width: 150px;
+	height:103px;
 }
 
 #monitorGlass{
-position: absolute;
-width: 115px;
-height: 70px;
-top: 472px;
-left: 27px;
+	position: absolute;
+	width: 115px;
+	height: 70px;
+	top: 472px;
+	left: 27px;
 }
 
 #monitorButton{
-color:orange;
-position: absolute;
-width: 29px;
-height:20px;
-top:449px;
-left:24px;
-z-index:2000;
-
+	color:orange;
+	position: absolute;
+	width: 29px;
+	height:20px;
+	top:449px;
+	left:24px;
+	z-index:2000;
 }

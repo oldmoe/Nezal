@@ -135,13 +135,14 @@ var Game = Class.create({
     if(this.reactor) this.reactor.stop();
     this.reactor = new Reactor(80);
     this.reactor.run();
-    
+    this.attackManager = new AttackManager(this);
     this.buildingMode = new BuildingMode(this);
     this.user = new User(this);
 		this.scene = new BaseDefenderScene(this);	
    	this.resources.rock = this.user.data.rock;
     this.resources.lumber = this.user.data.lumber;
     BuildingFactory._GlobalRegistry = {};
+		this.attackManager = new AttackManager(this);
     this.townhallFactory = new TownhallFactory(this);
     this.quarryFactory = new QuarryFactory(this);
     this.lumbermillFactory = new LumbermillFactory(this);
@@ -152,7 +153,6 @@ var Game = Class.create({
 		this.creepFactory = new CreepFactory(this);
 		this.defenseCenterFactory = new DefenseCenterFactory(this);
 		this.wedgeFactory = new WedgeFactory(this);
-		this.attackManager = new AttackManager(this);
     this.tutorial = new Tutorial(this);
     this.tutorial.fire();
     this.reInitializationNotifications.each(function(fn){fn()});

@@ -46,6 +46,7 @@ var CarDisplay = Class.create(Display,{
   	this.sprites.body = new DomImgSprite(owner, {img: this.img});
   },
 	render : function(){
+		
 		if(this.owner.moving){
 			this.sprites.body.currentAnimationFrame =(this.sprites.body.currentAnimationFrame+1)% this.sprites.body.noOfAnimationFrames 
 		}
@@ -72,6 +73,7 @@ var WorkerDisplay = Class.create(Display,{
   },
 	
 	render : function(){
+		
 		this.sprites.worker.currentAnimationFrame = Math.abs(this.owner.state)
 		this.sprites.worker.render();
 		this.sprites.shadow.render();
@@ -188,6 +190,7 @@ var BuildingDisplay = Class.create(Display, {
   },
 	
   renderPanel : function(){
+		
     var rightLimit = this.panelWidth + this.owner.coords.x - Map.x + Math.round(this.owner.imgWidth / 2);
     if( rightLimit < Map.viewWidth ) {
       var left = this.owner.coords.x - Map.x + Math.round(this.owner.imgWidth / 2);
@@ -267,8 +270,9 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
 	  },
 			
 		render : function($super){
+			
 			$super()
-			if(this.owner.producing && this.owner.game.reactor.ticks %4==0) this.renderDoor()
+			if(this.owner.producing && this.owner.working  && this.owner.game.reactor.ticks %4==0) this.renderDoor()
 		},	
 		
 		renderDoor : function(){
@@ -296,6 +300,7 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
 				this.sprites.building.currentAnimationFrame = (this.sprites.building.currentAnimationFrame - 1);
 		},
 		renderAnimation : function(){
+			
 			if (!this.sprites.building.animated && !this.owner.producing) {
         this.sprites.building.currentAnimationFrame = 0
       }
@@ -308,6 +313,7 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
 var StorageDisplay = Class.create(BuildingDisplay, {
   renderPanel: function($super){
     $super();
+		
     var self = this.owner;
     self.game.selectedBuildingPanel = new BuildingPanel(self, function(){return ""});
     this._AttachUpgradeTrigger();
@@ -322,7 +328,6 @@ var DefenseCenterDisplay = Class.create(BuildingDisplay, {
     self.game.selectedBuildingPanel = new BuildingPanel(self, function(){return ""});
     this._AttachUpgradeTrigger();
   }
-	
 });
 
 var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
@@ -434,7 +439,7 @@ var LumbermillDisplay = Class.create(ResourceBuildingDisplay, {
 	},
 	render : function($super){
     $super();
-		if(!this.owner.producing || this.owner.hp<=0 || this.owner.assignedWorkers==0)return;
+		if(!this.owner.producing || !this.owner.working || this.owner.hp<=0 || this.owner.assignedWorkers==0)return;
 		if (this.owner.state == this.owner.states.NORMAL && this.sawAnimationCounter%2==0) {
 				this.sprites.saw.currentAnimationFrame = (this.sprites.saw.currentAnimationFrame + 1) % this.sprites.saw.noOfAnimationFrames;
 		}		
@@ -477,7 +482,7 @@ var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
   render : function($super){
     $super();
 		
-		if(!this.owner.producing || this.owner.hp <= 0 || this.owner.assignedWorkers==0){
+		if(!this.owner.producing || !this.owner.working || this.owner.hp <= 0 || this.owner.assignedWorkers==0){
 			this.bubbles.each(function(bubble){
 				bubble.hide()
 			})
