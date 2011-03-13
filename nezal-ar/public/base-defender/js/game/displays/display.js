@@ -532,7 +532,7 @@ var WedgeDisplay = Class.create(BuildingDisplay, {
 
 WeaponDisplay = Class.create( Display, {
 
-	animationRepeats : 8,
+	animationRepeats : 1,
 	animationEverySeconds : 2,
 	tickDelay : 10,
 	faceAnimationCounter : 0,
@@ -559,9 +559,8 @@ WeaponDisplay = Class.create( Display, {
 	},
 
   renderAnimation : function() {
-//    var angle = Math.round(Math.random() * 10 )
-    
-    this.owner.angle = (this.owner.angle+1) % this.sprites.face.noOfDirections ;
+    var angle = Math.round(Math.random() * 10 )
+    this.owner.angle = angle % this.sprites.face.noOfDirections ;
 		this.sprites.face.render();
 		this.sprites.weapon.render();
   },
