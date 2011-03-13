@@ -559,7 +559,9 @@ WeaponDisplay = Class.create( Display, {
 	},
 
   renderAnimation : function() {
-    this.owner.angle = (this.owner.angle + 1) % this.sprites.face.noOfDirections ;
+//    var angle = Math.round(Math.random() * 10 )
+    
+    this.owner.angle = (this.owner.angle+1) % this.sprites.face.noOfDirections ;
 		this.sprites.face.render();
 		this.sprites.weapon.render();
   },
