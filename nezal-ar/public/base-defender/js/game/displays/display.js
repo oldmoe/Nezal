@@ -325,15 +325,6 @@ var DefenseCenterDisplay = Class.create(BuildingDisplay, {
 	
 });
 
-var WedgeDisplay = Class.create(BuildingDisplay, {
-	renderPanel: function($super){
-    $super();
-    var self = this.owner;
-    self.game.selectedBuildingPanel = new BuildingPanel(self, function(){return ""});
-    this._AttachUpgradeTrigger();
-  }
-});
-
 var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
   initialize : function($super,owner,properties){
 		$super(owner,properties)
@@ -517,6 +508,63 @@ var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
 			})
 		}
   }
+});
+
+var WedgeDisplay = Class.create(BuildingDisplay, {
+
+  initialize : function($super,owner,properties){
+	  $super(owner,properties)
+    this.weapon = new WeaponDisplay(this.owner.weapon, properties);
+  },
+
+	renderPanel: function($super){
+    $super();
+    var self = this.owner;
+    self.game.selectedBuildingPanel = new BuildingPanel(self, function(){return ""});
+    this._AttachUpgradeTrigger();
+  }
+});
+
+WeaponDisplay = Class.create( Display, {
+
+	animationRepeats : 8,
+	animationEverySeconds : 2,
+	tickDelay : 10,
+	faceAnimationCounter : 0,
+
+  initialize : function($super,owner,properties){
+	  $super(owner,properties)
+    this.createSprites();
+		Object.extend(this.owner,properties)
+  	this.sprites.face.render();
+		this.sprites.weapon.render();
+    var self = this;
+    this.owner.game.scene.pushPeriodicalRenderLoop(
+					  this.tickDelay,
+					  this.animationRepeats * this.sprites.face.noOfAnimationFrames,
+					  this.animationEverySeconds,
+					  function(){self.renderAnimation()})
+  },
+
+  createSprites : function(){
+		this.faceImg = Loader.images.buildings['wedge_face.png'];
+    this.weaponImg = Loader.images.weapons[this.owner.name + ".png"];
+		this.sprites.face = new DomImgSprite(this.owner, {img: this.faceImg});
+		this.sprites.weapon = new DomImgSprite(this.owner, {img: this.weaponImg});
+	},
+
+  renderAnimation : function() {
+    this.owner.angle = (this.owner.angle + 1) % this.sprites.face.noOfDirections ;
+		this.sprites.face.render();
+		this.sprites.weapon.render();
+  },
+  
+	destroy : function(){
+		for(var sprite in this.sprites){
+			this.sprites[sprite].destroy();
+		}
+	}
+
 });
 
 

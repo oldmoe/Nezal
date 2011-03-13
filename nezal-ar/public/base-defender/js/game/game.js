@@ -71,8 +71,9 @@ var Game = Class.create({
 		var buildingImages = BuildingMode.prototype.buildings.collect(function(building){
       return building + ".png";
     });
-		buildingImages.push("lumbermill_saw.png")
-		buildingImages.push("townhall_door.png")
+		buildingImages.push("lumbermill_saw.png");
+		buildingImages.push("townhall_door.png");
+		buildingImages.push("wedge_face.png");
 		var buildingOutlineImages = BuildingMode.prototype.buildings.collect(function(building){
       return building + "_outline.png";
     });
@@ -97,6 +98,9 @@ var Game = Class.create({
 		var creepsImages = ["car.png"]
 		//This is duplicated to avoid a problem in the loader that can't deal with an array of a single item
 		var smokeImages = ["smoke_big.png", "smoke_big.png"]
+  
+    // Weapons Images 
+		var weaponsImages = ["archer.png"]
     new Loader().load([{images : BaseDefenderScene.prototype.textures, path: 'images/textures/', store: 'textures'},
                        {images : buildingImages, path: 'images/buildings/', store: 'buildings'},
 											 {images : buildingModeImages, path: 'images/buildings/', store: 'buildingModes'},
@@ -107,7 +111,8 @@ var Game = Class.create({
 											 {images : questsImages, path: 'images/quests/', store: 'quests'},
 											 {images : buildingOutlineImages, path: 'images/buildings/outlines/', store: 'buildingOutlines'},
 											 {images : buildingShadowImages, path: 'images/buildings/shadows/', store: 'buildingShadows'},
-											 {images : buildingMovingImages, path: 'images/buildings/moving/', store: 'buildingMoving'}],
+											 {images : buildingMovingImages, path: 'images/buildings/moving/', store: 'buildingMoving'},
+											 {images : weaponsImages, path: 'images/weapons/', store: 'weapons'}],
       {onFinish : loaderFinishCallback});
   },
   
