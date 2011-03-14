@@ -152,7 +152,7 @@ var Building = Class.create({
   },
   
   textInfo : function(){
-    return this.name.capitalize() + " " + this.level;
+    return this.name.capitalize().replace("_", " ") + " " + this.level;
   },
 	
   isValidToUpgrade : function(x,y){

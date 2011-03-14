@@ -183,7 +183,7 @@
         <div id="${building_index}" class="item">      
           <div  class="itemData" onclick="Animation.hide('buildingDisplay');game.buildingsManager.build('${building_index}')">  
             <div class="name">
-              ${building_index}  
+              ${building_index.replace("_", " ")}  
             </div>
             <div class="image">
               <img src="${Loader.images.icons[building_index+'.png'].src}"/>
