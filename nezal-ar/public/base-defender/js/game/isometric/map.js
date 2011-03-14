@@ -75,9 +75,9 @@ var Map={
     var dir = 0
     var slope = Math.round((y1-y2)/(x1-x2))
     if(slope == "Infinity")
-      dir = Map.S;
-    else if (slope == "-Infinity")
       dir = Map.N;
+    else if (slope == "-Infinity" )
+      dir = Map.S;
     else if(slope == 0 && x1 > x2)
       dir = Map.W
     else if(slope == 0 && x1 < x2)

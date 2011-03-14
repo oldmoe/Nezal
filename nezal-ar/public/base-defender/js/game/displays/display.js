@@ -634,23 +634,25 @@ WeaponDisplay = Class.create( Display, {
     for(var sprite in this.sprites){
 			this.sprites[sprite].render();
 		}
-/*    if(this.owner.attacked == true && this.animated != true)
+    if(this.owner.attacked == true && this.animated == false)
     {
       this.animated = true;
       var self = this
+      console.log(this)
 		  condition = function(){
 			  return self.sprites.weapon.currentAnimationFrame == self.sprites.weapon.noOfAnimationFrames;
 		  }
 		  mainFunc = function(){
-			  self.sprites.weapon.currentAnimationFrame ++;
+			  self.sprites.weapon.currentAnimationFrame += 1;
 		  }	
 		  callback = function(){
 			  self.sprites.weapon.currentAnimationFrame = 0;
-        this.animated = false;
+        self.animated = false;
+        self.owner.fire();
 		  }
 //		  var ticks = self.game.reactor.everySeconds(1)
-		  this.game.reactor.pushPeriodicalWithCondition(10 , mainFunc, condition, callback)
-    }*/
+		  this.owner.game.reactor.pushPeriodicalWithCondition(3 , mainFunc, condition, callback)
+    }
 	},
 
 });
