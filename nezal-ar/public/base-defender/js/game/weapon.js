@@ -33,7 +33,7 @@ var Weapon = Class.create({
   },
 
   checkAttack : function() {
-    if(this.owner.hp<=1)
+    if(this.owner.hp<=1 || this.attacker)
       return;
     var attack = null;
     var minDistance = 150;
@@ -51,7 +51,7 @@ var Weapon = Class.create({
   },
 
   fire : function() {
-    if(this.owner.hp <=1 )
+    if(this.owner.hp <=1 || this.attacker.hp < 1)
     {
       this.attacked = false;
       this.attacker = null;
