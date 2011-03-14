@@ -27,9 +27,20 @@ var Game = Class.create({
   initialize : function(){
     this.network = new Network();
   },
-  initializeGame : function(){
+	
+	startLoading : function(){
 		var self = this
 		this.templatesManager = new TemplatesManager(this.network);
+		new Loader().load([{images : ['logo.png'], path: 'images/loading/', store: 'loading'}],
+							{onFinish : function(){
+								$('inProgress').show()
+								$('inProgress').innerHTML = self.templatesManager.loadingScreen()
+								self.initializeGame()
+							}})
+	},
+	
+  initializeGame : function(){
+		var self = this
 		var gameElementsImages = ['upper_bar.png','monitor.png','background.png','cancel.png','cancel.png']
 		var friendsImages = ['1st_blank.png']
 		var buildingImages = ['townhall.png']
@@ -48,12 +59,12 @@ var Game = Class.create({
 					$$('#inProgress #loadingBarFill')[0].style.width = Math.min(progress,88)+"%"
 				},
 				onFinish: function(){
-				$('gameContainer').innerHTML = game.templatesManager.gameElements()
-				Map.initializeMapSize()
-				self.questsManager = new QuestsManager(self);
-				$('inProgress').hide()
-				$('gameContainer').show()
-				game.start()
+					$('gameContainer').innerHTML = game.templatesManager.gameElements()
+					Map.initializeMapSize()
+					self.questsManager = new QuestsManager(self);
+					$('inProgress').hide()
+					$('gameContainer').show()
+					game.start()
 	  }});
 	},
 	

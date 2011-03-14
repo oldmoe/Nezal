@@ -79,5 +79,8 @@ var TemplatesManager = Class.create({
 	},
 	gameElements : function(){
 		return TrimPath.processDOMTemplate("gameElements-template");
+	},
+	loadingScreen : function(){
+		return TrimPath.processDOMTemplate("loadingScreen-template");
 	}
 });

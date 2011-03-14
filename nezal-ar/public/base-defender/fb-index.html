@@ -23,15 +23,7 @@
     
 	</head>
 	<body>
-		<div id="inProgress" style="width:500px;">
-	    <img id="logo" src="images/loading/logo.png"/>
-		  <div id="loadingBarEmpty">
-	  	  <div id="loadingBarLeft"> </div>
-	   		<div id="loadingBarFill"> </div>
-	    	<div id="loadingBarRight"> </div>
-	 		</div>
-  		<div id="fileName"> </div>
-  		<div id="loadingPercentage"> </div>
+		<div id="inProgress" style="">
   	</div>
 
 	  <div id="gameContainer" style ="display:none;">
@@ -112,7 +104,7 @@
 	      serviceProvider.init(function(){
 	        try {
 	          game = new Game();
-	          game.initializeGame();
+	          game.startLoading();
 	        } catch(e){}
 	      });
 			})
