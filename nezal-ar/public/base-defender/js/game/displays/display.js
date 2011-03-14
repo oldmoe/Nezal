@@ -244,6 +244,10 @@ var BuildingDisplay = Class.create(Display, {
 		for(var sprite in this.sprites){
 			this.sprites[sprite].render();
 		}
+    if(this.owner.maxHp >  this.owner.hp)
+      this.sprites.health.show();
+		else
+      this.sprites.health.hide();
 	},
   
 	destroy : function(){
@@ -562,6 +566,31 @@ var WedgeDisplay = Class.create(BuildingDisplay, {
     this.sprites.mouseover = new DomImgSprite(this.owner, {img: this.mouseoverImg});
     this.container.render();
 	},
+
+	 manageStateChange : function($super){
+    $super()
+    var self = this;
+    this.owner.stateNotifications[this.owner.states.UNDER_CONSTRUCTION].push(function(){
+      self.sprites.building.setOpacity(1);
+      self.owner.weapon.container.setOpacity(0.5);
+    });
+    this.owner.stateNotifications[this.owner.states.UPGRADING].push(function(){
+      self.sprites.building.setOpacity(1);
+      self.owner.weapon.container.setOpacity(0.5);
+    });
+    this.owner.stateNotifications[this.owner.states.NORMAL].push(function(){
+      if(self.owner.working)
+      {
+        self.sprites.building.setOpacity(1);
+        self.owner.weapon.container.setOpacity(1);
+      }
+			else
+      {
+        self.sprites.building.setOpacity(1);
+	      self.owner.weapon.container.setOpacity(0.5);
+      }
+    });
+  },
 
   render : function($super) {
     $super();
