@@ -27,16 +27,40 @@ var Game = Class.create({
   initialize : function(){
     this.network = new Network();
   },
-  
+  initializeGame : function(){
+		var self = this
+		this.templatesManager = new TemplatesManager(this.network);
+		var gameElementsImages = ['upper_bar.png','monitor.png','background.png','cancel.png','cancel.png']
+		var friendsImages = ['1st_blank.png']
+		var buildingImages = ['townhall.png']
+		var panelImages = ['buttons.png']
+		var questsImages = [  "msgBg.png", "wedge.png", "button.png", "msgBaloon.png", "questBaloon.png" , "questBg.png", "buildingPanelBg.png",
+                          "activeCell.png", "inactiveCell.png", "resources.png", "correct.png", "correct.png", "buildingsBg.png", "wedgesBg.png", 
+                          'button.png','cursor.png',"social.png", "civil.png", "military.png", "circles.png", "hover.png", "animated_circles.gif"];
+													
+		new Loader().load([{images : gameElementsImages, path: 'images/game_elements/', store: 'game_elements'},
+                       {images : friendsImages, path: 'images/friends/', store: 'friends'},
+											 {images : questsImages, path: 'images/quests/', store: 'quests'},
+											 {images : panelImages, path: 'images/buildings/panel/', store: 'panel'},
+											 {images : buildingImages, path: 'images/buildings/', store: 'buildings'}
+				],
+      {onProgress : function(progress){
+					$$('#inProgress #loadingBarFill')[0].style.width = Math.min(progress,88)+"%"
+				},
+				onFinish: function(){
+				$('gameContainer').innerHTML = game.templatesManager.gameElements()
+				Map.initializeMapSize()
+				self.questsManager = new QuestsManager(self);
+				$('inProgress').hide()
+				$('gameContainer').show()
+				game.start()
+	  }});
+	},
+	
   start : function(){
-    //The below code needs rewrite///
     var self = this;
-		
 		var loaderFinishCallback = function(){
-			self.templatesManager = new TemplatesManager(self.network);
-			
-      //The below code needs rewrite///			
-  		var mapView = ""
+    	var mapView = ""
       var friendIDs = self.network.neighbourIDs();
       var mapping = {};
       var ids = []
@@ -85,11 +109,9 @@ var Game = Class.create({
     var buildingMovingImages = [ "wedge_moving.png" ];
 
 		var buildingModeImages = ['2x2_invalid.png', '2x2_base.png','1x1_invalid.png', '1x1_base.png','transparent.png','transparent.png'];
-		var questsImages = [  "msgBg.png", "wedge.png", "button.png", "msgBaloon.png", "questBaloon.png" , "questBg.png", "buildingPanelBg.png",
-                          "activeCell.png", "inactiveCell.png", "resources.png", "correct.png", "correct.png", "buildingsBg.png", "wedgesBg.png", 
-                          "social.png", "civil.png", "military.png", "circles.png", "hover.png", "animated_circles.gif"];
+
     var iconsImages = ["townhall.png", "townhall_icon.png", "quarry_icon.png", "lumbermill_icon.png", "quarry.png",
-		 "lumbermill.png", "lumber.png", "rock.png", "workers.png","cancel.png","storage.png","storage_icon.png",
+		 "lumbermill.png", "lumber.png", "rock.png", "workers.png","storage.png","storage_icon.png",
 		 "defense_center.png","defense_center_icon.png", "wedge_icon.png", "wedge.png"];
    
 		var workerImages = ["worker.png", "worker_shadow.png"];
@@ -108,7 +130,6 @@ var Game = Class.create({
 										 	 {images : workerImages, path: 'images/worker/', store: 'worker'},
 											 {images : creepsImages, path: 'images/creeps/', store: 'creeps'},
                        {images : smokeImages, path: 'images/', store: 'smoke'},
-											 {images : questsImages, path: 'images/quests/', store: 'quests'},
 											 {images : buildingOutlineImages, path: 'images/buildings/outlines/', store: 'buildingOutlines'},
 											 {images : buildingShadowImages, path: 'images/buildings/shadows/', store: 'buildingShadows'},
 											 {images : buildingMovingImages, path: 'images/buildings/moving/', store: 'buildingMoving'},
@@ -146,7 +167,6 @@ var Game = Class.create({
     this.townhallFactory = new TownhallFactory(this);
     this.quarryFactory = new QuarryFactory(this);
     this.lumbermillFactory = new LumbermillFactory(this);
-		this.questsManager = new QuestsManager(this);
     this.buildingsManager = new BuildingsManager(this);
 		this.workerFactory = new WorkerFactory(this);
 		this.storageFactory = new StorageFactory(this);

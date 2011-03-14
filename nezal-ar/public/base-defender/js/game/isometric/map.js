@@ -19,37 +19,36 @@ var Map={
 	init : function (scene){
 		this.scene = scene;
 		var rawMap = scene.rawMap;
-		this.containerDiv = $("gameSceneContainer")
-		this.div = $('gameCanvas')
 		this.grid=[];
-		var img3 = new Image;
-		Map.containerDiv.style.width = Map.viewWidth + "px";
-		Map.containerDiv.style.height = Map.viewHeight + "px";
-		this.div.style.backgroundImage = "url(images/background.png)"
-		for(var i=0;i<rawMap.length;i++){
-				for(var j=0;j<rawMap[0].length;j++){
-					if(!Map.grid[i])Map.grid[i]=[];
-					Map.grid[i][j] = new Node(i,j);
-					Map.grid[i][j].terrainType = rawMap[i][j];
-					if(Map.grid[i][j].terrainType != 0){
-						scene.renderDisplayUnit(Map.value(i, j), rawMap[i][j]);
+			for(var i=0;i<rawMap.length;i++){
+					for(var j=0;j<rawMap[0].length;j++){
+						if(!Map.grid[i])Map.grid[i]=[];
+						Map.grid[i][j] = new Node(i,j);
+						Map.grid[i][j].terrainType = rawMap[i][j];
+						if(Map.grid[i][j].terrainType != 0){
+							scene.renderDisplayUnit(Map.value(i, j), rawMap[i][j]);
 					}
 				}
-			}
-		img3.onload = function(){
-			Map.div.style.width  =  img3.width + "px";
-			Map.mapWidth = img3.width;
-			Map.div.style.height =  img3.height + "px";
-			Map.mapHeight = img3.height;
+			}			
 			Map.navigation = new Navigation(Map);
 			Map.mapMirror = new MapMirror();
-		}
-		img3.src="images/background.png"
-		Map.initDirections()
-		Map.tileIsoLength = Math.sqrt(Math.pow(Map.tileWidth/2,2)+Math.pow(Map.tileHeight/2,2))/2
-		Map.tileAngle = Map.getTileAngle()
+			Map.initDirections()
+			Map.tileIsoLength = Math.sqrt(Math.pow(Map.tileWidth/2,2)+Math.pow(Map.tileHeight/2,2))/2
+			Map.tileAngle = Map.getTileAngle()
 	},
 	
+	initializeMapSize : function(){
+		this.containerDiv = $("gameSceneContainer")
+		this.div = $('gameCanvas');
+		this.div.style.backgroundImage = "url(images/game_elements/background.png)"
+		Map.containerDiv.style.width = Map.viewWidth + "px";
+		Map.containerDiv.style.height = Map.viewHeight + "px";
+		var backgroundImg = Loader.images.game_elements['background.png'];
+		Map.div.style.width  =  backgroundImg.width + "px";
+		Map.mapWidth = backgroundImg.width;
+		Map.div.style.height =  backgroundImg.height + "px";
+		Map.mapHeight = backgroundImg.height;
+	},
 	centerMap : function(){
 		Map.move(Map.mapWidth/2-Map.viewWidth/2,Map.mapHeight/2-Map.viewHeight/2)
 	},

@@ -54,6 +54,7 @@ var Scene = Class.create({
 
 	createRenderLoop : function(name, delay){
 		this.renderStores[name] = {delay : delay, tick: this.reactor.ticks, objects : []}
+		this.renderStores[name].working = true
 	},
 	
   clearRenderLoop : function(name){
@@ -78,7 +79,7 @@ var Scene = Class.create({
 		try{
 			for(var storeIndex in this.renderStores){
 				var store = this.renderStores[storeIndex]
-				if(this.reactor.ticks >= store.tick + store.delay ){
+				if(this.reactor.ticks >= store.tick + store.delay && store.working){
 					store.tick = this.reactor.ticks
 					store.objects.invoke('render')
 				}

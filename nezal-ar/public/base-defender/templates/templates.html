@@ -136,7 +136,7 @@
     <div class="close" onclick="$('alertMsg').hide();">
     </div>
     <div class="okButtonWrapper">
-      <div class="okButton" onclick="$('alertMsg').hide();game.buildingMode.repair()">
+      <div class="okButton" onclick="$('alertMsg').hide();game.buildingMode.repair();">
         <img class="okImage" src="${Loader.images.quests['button.png'].src}"/>
         <div class="okText yellowText"> Repair </div>
       </div>
@@ -145,4 +145,113 @@
       <span>${message}</span>
     </div>
   </div>
+</textarea>
+
+
+<textarea style="display:none;" id='gameElements'>
+ 			<div class="topGameElement" id="rock_game_element">
+        <img src="${Loader.images.game_elements['upper_bar.png'].src}" />
+        <span id="rock-amount" ></span>
+      </div>
+      <div class="topGameElement" id="lumber_game_element">
+        <img src="${Loader.images.game_elements['upper_bar.png'].src}" />
+        <span id="lumber-amount" ></span>
+      </div>
+      
+      <div class="topGameElement" id="xp_bar">
+        <img src="${Loader.images.game_elements['upper_bar.png'].src}" />
+      </div>
+      
+	  	<div class="topGameElement" id="coins_game_element">
+	  		<img src="${Loader.images.game_elements['upper_bar.png'].src}" />
+				<span id="coins-amount" ></span>
+	  	</div>
+			<div class="topGameElement" id="workers_game_element">
+				<img src="${Loader.images.game_elements['upper_bar.png'].src}" />
+				<span id="workers-amount" ></span>
+			</div>
+			
+			<div class="gameElement" id="monitor" style="display:none;">
+				<img src="${Loader.images.game_elements['monitor.png'].src}" />
+			</div>
+			
+			<div style="display:none;" class="gameElement" id="monitorGlass"></div>
+			<div style="display:none;" class="gameElement" id="monitorButton"></div>
+			
+	    <div class="gameElement" id="cancelBuilding" style="display:none;">
+	    		<img src="${Loader.images.game_elements['cancel.png'].src}" />
+			</div>
+			 <div id="mapView">
+        <div id="friends">
+          <div class="left">
+            <img src="" />
+          </div> 
+          <div id="friends-container" class="container">
+            <ul id='friends-ul'>
+            </ul>
+          </div>
+          <div class="right">
+            <img src="" />
+          </div>
+        </div>
+        <div id="home" onclick="Javascript:game.reInitialize(function(){game.scene.render()})">
+          <img src="${Loader.images.friends['1st_blank.png'].src}" />
+          <div class="photoContainer">
+            <img class='photo' src="${Loader.images.buildings['townhall.png'].src}"/>
+          </div>	
+          <div class='name'>Home</div>
+        </div>
+      </div>
+      
+			<div id="attackDiv" style="display:none;">
+				<div id ="attackTxt"> warning you are under attack</div>
+			</div>
+  	  <div id="gameSceneContainer">
+    		<div id="gameCanvas">
+				</div>
+	    </div>
+      <div id="building-remaining-time" style="display:none;"></div>
+      
+      <div id="building-panel" style="display:none;">
+        <div id="panel-buttons-container">
+          <div id="upgrade_trigger" class="panel-button">
+            <span>Upgrade</span>
+            <img src="${Loader.images.panel['buttons.png'].src}">
+          </div>
+        </div>
+        
+        <div id="building-panel-contents"></div>
+        
+      </div>
+      
+      <div id="establish-townhall-container" style="display:none;">
+        <span>Establish your town</span>
+        <div id="establish-townhall">
+          <img id="establish-townhall-img" src="${Loader.images.buildings['townhall.png'].src}"></img>
+        </div>
+      </div>
+
+      <div id="buildButton" style="display:none;">
+        <img src="${Loader.images.quests['button.png'].src}"/>
+        <div id="buildText" class="yellowText"> build </div>
+      </div>
+      
+      <div id="sendAttack">
+        <img src="${Loader.images.quests['button.png'].src}"/>
+        <div id="sendAttackText" class="yellowText"> attack me </div>
+      </div>
+      
+      <div id="quest-panel" style="display:none;"></div>
+      <div id="interaction" style="display:none;">    
+        <div id="msg" style="display:none;"> </div>
+        <div id="questDisplay" style="display:none;"> </div>
+        <div id="buildingDisplay" style="display:none;"> </div>
+        <div id="alert" style="display:none;"> </div>
+				<div id="notify" style="display:none;"> </div>
+      </div>
+      
+      <div id="hand" style="display:none;position:absolute;z-index:11;">
+        <img src="${Loader.images.quests['cursor.png'].src}"></img>
+      </div>
+
 </textarea>

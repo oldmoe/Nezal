@@ -76,5 +76,8 @@ var TemplatesManager = Class.create({
 	
 	notifyRepair : function(message){
 		return TrimPath.processDOMTemplate("repair-template", {'message' : message});
+	},
+	gameElements : function(){
+		return TrimPath.processDOMTemplate("gameElements-template");
 	}
 });
