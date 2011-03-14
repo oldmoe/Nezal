@@ -25,6 +25,20 @@ img{
 	font-family : verdana;
 }
 
+#attackDiv{
+	height:1100px;
+	position:absolute;
+	width:760px;
+	z-index:64;
+}
+
+#attackDiv #attackTxt{
+	color:red;
+	font-size:15px;
+	font-weight:bold;
+	margin-left:250px;
+	margin-top:57px;
+}
 #building-remaining-time {
   background-color : red;
   color : gold;
@@ -35,7 +49,6 @@ img{
 }
 
 #gameCanvas{
-		background-color:blue;
 		position:absolute;
 		z-index:0;
 		top:-275px;
@@ -64,7 +77,13 @@ img{
 	overflow : hidden;
 
 }
-
+.DomSprite{
+	font-family:verdana;
+	font-size:12px;
+	color : white;
+	text-shadow:1px 1px 1px black;
+	font-weight:bold;
+}
 #cancelBuilding{
   left: 684px;
   position: absolute;
@@ -96,4 +115,59 @@ img{
   text-align: center;
   text-shadow: -3px -3px 1px black;
   top: -50px;
+}
+
+
+/* loading style */
+#loadingBarEmpty{
+	background:url("../images/loading/loadingbar_empty.png");
+	height:50px;
+	left:159px;
+	position:absolute;
+	top:346px;
+	width:431px;
+}
+
+#loadingBarEmpty div{
+	height : 25px;
+	float : left;
+	margin-top:8px;
+}
+
+#loadingBarEmpty #loadingBarRight{				
+	height:35px;
+	width:20px;
+	background:url("../images/loading/loadingbar_upright.png");
+}
+
+#loadingBarEmpty #loadingBarFill{
+	height:35px;
+	background-repeat:repeat-x;				
+	background:url("../images/loading/loadingbar_upmiddle.png");
+}
+
+#loadingBarEmpty #loadingBarLeft{
+	background:url("../images/loading/loadingbar_upleft.png");
+	height:35px;
+	margin-left:5px;
+	width:20px;
+}
+#inProgress  #loadingPercentage, #inProgress #fileName{
+	font-family:tahoma;
+	font-size:x-small;
+	font-weight:bold;	
+	position:absolute;
+	top:330px
+}
+#inProgress  #loadingPercentage{
+	left:395px;
+  color:white;
+}
+#inProgress #fileName{
+	left:250px;
+  color:white;
+}
+#inProgress{
+	width : 760px;
+	height:410px;
 }

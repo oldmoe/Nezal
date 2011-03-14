@@ -1,5 +1,6 @@
 var Car = Class.create(MovingObject,{
 	hp:100, range:4, power:3,
+	maxHp : 100,
 	speed : 3, 
 	name: "car",
 	targetLocated : false,
@@ -37,6 +38,8 @@ var Car = Class.create(MovingObject,{
 		}
 		if (this.target.hp <= 1) {
 			this.target.hp = 1
+			this.target.working = false
+			this.target.setState(this.target.states.NORMAL)
 			this.target = null
 		} 
 	},

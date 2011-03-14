@@ -55,6 +55,7 @@ var Building = Class.create({
 		callback = function(){
 			self.repairing = false
 			self.working = true
+			self.setState(self.states.NORMAL)
 		}
 		var ticks = self.game.reactor.everySeconds(1)
 		self.game.reactor.pushPeriodicalWithCondition(ticks , mainFunc, condition, callback)
@@ -151,7 +152,7 @@ var Building = Class.create({
   },
   
   textInfo : function(){
-    return this.name.capitalize() + " " + this.level;
+    return this.name.capitalize().replace("_", " ") + " " + this.level;
   },
 	
   isValidToUpgrade : function(x,y){

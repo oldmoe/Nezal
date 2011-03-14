@@ -44,13 +44,16 @@ var CarDisplay = Class.create(Display,{
   	this.img = Loader.images.creeps['car.png']
 		Object.extend(this.owner,this);
   	this.sprites.body = new DomImgSprite(owner, {img: this.img});
+		this.sprites.health = new DomHealthSprite(this.owner,{healthWidth:20, healthHeight:5})
+		this.sprites.health.shiftY =3
   },
+	
 	render : function(){
-		
 		if(this.owner.moving){
 			this.sprites.body.currentAnimationFrame =(this.sprites.body.currentAnimationFrame+1)% this.sprites.body.noOfAnimationFrames 
 		}
 		this.sprites.body.render()
+		this.sprites.health.render()
 	}
 })
 
@@ -145,19 +148,21 @@ var BuildingDisplay = Class.create(Display, {
 			self.sprites.base.show();
 			self.sprites.outline.hide();
       self.sprites.info.hide();
+			if(self.sprites.text)self.sprites.text.hide()
       self.sprites.mouseover.hide();
 			self.sprites.invalid.hide();
     });
     this.owner.stateNotifications[this.owner.states.UNDER_CONSTRUCTION].push(function(){
       var top =  self.owner.coords.y -Math.round(self.imgHeight/2)
       var left =  self.owner.coords.x -Math.round(self.imgWidth/2);
-      self.progressDisplay = new ProgressDisplay( self.owner.nextLevelBluePrints.time, top, left, self.owner.coords.y );
+      self.progressDisplay = new ProgressDisplay( self.owner.nextLevelBluePrints.time, top - 10, left, self.owner.coords.y );
       self.sprites.building.show();
       self.sprites.building.setOpacity(0.5);
       self.sprites.building.animated = false;
 			self.sprites.base.hide();
 			self.sprites.outline.hide();
       self.sprites.info.hide();
+			if(self.sprites.text)self.sprites.text.hide()
       self.sprites.mouseover.hide();
 			if(self.sprites.moving) self.sprites.moving.hide();
 			self.sprites.invalid.hide();
@@ -172,17 +177,24 @@ var BuildingDisplay = Class.create(Display, {
 			self.sprites.base.hide();
 			self.sprites.outline.hide();
       self.sprites.info.hide();
+			if(self.sprites.text)self.sprites.text.hide()
       self.sprites.mouseover.hide();
 			if(self.sprites.moving) self.sprites.moving.hide();
 			self.sprites.invalid.hide();
     });
     this.owner.stateNotifications[this.owner.states.NORMAL].push(function(){
       self.sprites.building.show();
-      self.sprites.building.setOpacity(1);
+			if(self.owner.working)
+      	self.sprites.building.setOpacity(1);
+			else
+				self.sprites.building.setOpacity(0.5);
       self.sprites.building.animated = true;
 			self.sprites.base.hide();
 			self.sprites.outline.hide();
       self.sprites.info.hide();
+			if (self.sprites.text) {
+	  		self.sprites.text.hide()
+	 		}
       self.sprites.mouseover.hide();
 			if(self.sprites.moving) self.sprites.moving.hide();
 			self.sprites.invalid.hide();
@@ -575,10 +587,7 @@ var WedgeDisplay = Class.create(BuildingDisplay, {
 
 WeaponDisplay = Class.create( Display, {
 
-	animationRepeats : 1,
-	animationEverySeconds : 2,
-	tickDelay : 10,
-	faceAnimationCounter : 0,
+  animated : false,
 
   displayPriority : {
     0 : 4, 
@@ -598,13 +607,8 @@ WeaponDisplay = Class.create( Display, {
 		Object.extend(this.owner,properties)
   	this.sprites.face.render();
 		this.sprites.weapon.render();
-    var self = this;
-    this.owner.game.scene.pushPeriodicalRenderLoop(
-					  this.tickDelay,
-					  this.animationRepeats * this.sprites.face.noOfAnimationFrames,
-					  this.animationEverySeconds,
-					  function(){self.renderAnimation()}) 
     this.manageStateChange();
+		this.owner.game.scene.pushAnimation(this);
   },
 
   createSprites : function(){
@@ -634,16 +638,30 @@ WeaponDisplay = Class.create( Display, {
     });
   },
 
-  renderAnimation : function() {
-    if( this.owner.owner.state == this.owner.owner.states.NORMAL )
+  render : function() {    
+    this.sprites.weapon.setZIndex(this.displayPriority[this.owner.angle]);
+    for(var sprite in this.sprites){
+			this.sprites[sprite].render();
+		}
+    if(this.owner.attacked == true && this.animated == false)
     {
-      var angle = Math.round(Math.random() * 10 );
-      this.owner.angle = angle % this.sprites.face.noOfDirections;
-      this.sprites.weapon.setZIndex(this.displayPriority[this.owner.angle]);
+      this.animated = true;
+      var self = this
+		  condition = function(){
+			  return ( self.sprites.weapon.currentAnimationFrame == self.sprites.weapon.noOfAnimationFrames); 
+		  }
+		  mainFunc = function(){
+			  self.sprites.weapon.currentAnimationFrame += 1;
+		  }	
+		  callback = function(){
+			  self.sprites.weapon.currentAnimationFrame = 0;
+        self.animated = false;
+        self.owner.fire();
+		  }
+//		  var ticks = self.game.reactor.everySeconds(1)
+		  this.owner.game.reactor.pushPeriodicalWithCondition(2 , mainFunc, condition, callback)
     }
-	  this.sprites.face.render();
-		this.sprites.weapon.render();
-  }
+	},
 
 });
 
