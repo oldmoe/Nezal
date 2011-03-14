@@ -44,13 +44,16 @@ var CarDisplay = Class.create(Display,{
   	this.img = Loader.images.creeps['car.png']
 		Object.extend(this.owner,this);
   	this.sprites.body = new DomImgSprite(owner, {img: this.img});
+		this.sprites.health = new DomHealthSprite(this.owner,{healthWidth:20, healthHeight:5})
+		this.sprites.health.shiftY =3
   },
+	
 	render : function(){
-		
 		if(this.owner.moving){
 			this.sprites.body.currentAnimationFrame =(this.sprites.body.currentAnimationFrame+1)% this.sprites.body.noOfAnimationFrames 
 		}
 		this.sprites.body.render()
+		this.sprites.health.render()
 	}
 })
 
@@ -145,6 +148,7 @@ var BuildingDisplay = Class.create(Display, {
 			self.sprites.base.show();
 			self.sprites.outline.hide();
       self.sprites.info.hide();
+			if(self.sprites.text)self.sprites.text.hide()
       self.sprites.mouseover.hide();
 			self.sprites.invalid.hide();
     });
@@ -158,6 +162,7 @@ var BuildingDisplay = Class.create(Display, {
 			self.sprites.base.hide();
 			self.sprites.outline.hide();
       self.sprites.info.hide();
+			if(self.sprites.text)self.sprites.text.hide()
       self.sprites.mouseover.hide();
 			if(self.sprites.moving) self.sprites.moving.hide();
 			self.sprites.invalid.hide();
@@ -172,6 +177,7 @@ var BuildingDisplay = Class.create(Display, {
 			self.sprites.base.hide();
 			self.sprites.outline.hide();
       self.sprites.info.hide();
+			if(self.sprites.text)self.sprites.text.hide()
       self.sprites.mouseover.hide();
 			if(self.sprites.moving) self.sprites.moving.hide();
 			self.sprites.invalid.hide();
@@ -186,6 +192,10 @@ var BuildingDisplay = Class.create(Display, {
 			self.sprites.base.hide();
 			self.sprites.outline.hide();
       self.sprites.info.hide();
+			if (self.sprites.text) {
+	  		self.sprites.text.hide()
+				console.log('here')
+	 		}
       self.sprites.mouseover.hide();
 			if(self.sprites.moving) self.sprites.moving.hide();
 			self.sprites.invalid.hide();

@@ -25,7 +25,7 @@ var DomTextSprite = Class.create(DomSprite, {
       this.span.setStyle({                  
                          marginLeft :(-this.owner.imgWidth*this.owner.angle  + "px"),
                          marginTop : (-this.currentAnimationFrame * this.owner.imgHeight + "px")})
-  
+  		 this.span.addClassName('DomTxtSprite');
     }catch(e){
  //     console.log('Sprite#render: ',e)
     }

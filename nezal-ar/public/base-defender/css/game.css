@@ -77,7 +77,13 @@ img{
 	overflow : hidden;
 
 }
-
+.DomSprite{
+	font-family:verdana;
+	font-size:12px;
+	color : white;
+	text-shadow:1px 1px 1px black;
+	font-weight:bold;
+}
 #cancelBuilding{
   left: 684px;
   position: absolute;
