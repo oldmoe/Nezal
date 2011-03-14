@@ -175,51 +175,58 @@
 
 
 <!-- THIS PART IS NOT RELATED TO QUESTS .. IT IS THE BUILDING PANEL & HANDLING -->
-
 <textarea style="display:none;" id='buildings-panel'>
   <div id='buildingsPanel'>
     <div class="buildings">
       {for building in buildings}
-        <div id="${building_index}" class="item">      
+        <div id="${building_index}" 
+             onmouseout="$('${building_index}_info').hide();$('${building_index}_image').setStyle({height:'75px'})" 
+             onmouseover="$('${building_index}_info').show();$('${building_index}_image').setStyle({height:'90px'})"
+             class="item">      
           <div  class="itemData" onclick="Animation.hide('buildingDisplay');game.buildingsManager.build('${building_index}')">  
-            <div class="name">
-              ${building_index}  
-            </div>
-            <div class="image">
-              <img src="${Loader.images.icons[building_index+'.png'].src}"/>
-            </div>
-            <div class="cost">
-              <div class="text"> 
-                {if building['lumber']}
-                  ${building['lumber']}
-                {else}
-                  0
-                {/if}
-              </div>
-              <div class="text"> 
-                {if building['rock']}
-                  ${building['rock']}
-                {else}
-                  0
-                {/if}
-              </div>
-              <div class="text"> 
-                {if building['coins']}
-                  ${building['coins']}
-                {else}
-                  0
-                {/if}
-              </div>
-            </div>
+            
           </div>
-          <img class="background" src="${Loader.images.quests['activeCell.png'].src}"/>
+          <!--img id="${building_index}_image" class="background" src="${Loader.images.quests[building_index + '_info.png'].src}"/-->
+          <img id="${building_index}_image" class="background" src="${Loader.images.icons[building_index + '.png'].src}"/>
         </div>
       {/for}
     </div>
   </div>
+  {for building in buildings}
+    <div class="buildingInfo" id="${building_index}_info" style="display:none;">
+      <div class="buildingName">${building_index}</div>
+      <img class="resourcesNeeded" src="images/quests/resources_needed_for_building.png"><img>
+      <div class="cost">
+        <div class="text"> 
+          {if building['lumber']}
+            ${building['lumber']}
+          {else}
+            0
+          {/if}
+        </div>
+        <div class="text"> 
+          {if building['rock']}
+            ${building['rock']}
+          {else}
+            0
+          {/if}
+        </div>
+        <div class="text"> 
+          {if building['coins']}
+            ${building['coins']}
+          {else}
+            0
+          {/if}
+        </div>
+      </div>
+    </div>
+  {/for}
   <img class="buildingPanelBg" src="${Loader.images.quests['buildingPanelBg.png'].src}"/>
   <img class="wedgesBg" src="${Loader.images.quests['wedgesBg.png'].src}" />
   <img class="buildingsBg" src="${Loader.images.quests['buildingsBg.png'].src}" />
+  <img class="buildingPanelLine" src="${Loader.images.quests['line.png'].src}"/>
+  <div onclick="if(currentShift != 0){currentShift--;$$('#interaction .buildings')[0].setStyle({marginLeft : (currentShift*-105) + 'px' })}" class="leftArrowContainer"><img style="margin-left:-60px;" src="images/quests/arrows_horizontal.png"/></div>
+  <div onclick="if(currentShift < maxShift){currentShift++;$$('#interaction .buildings')[0].setStyle({marginLeft : (currentShift*-105) + 'px' })}" class="rightArrowContainer"><img style="margin-left:-90px;" src="images/quests/arrows_horizontal.png"/></div>
   <div id="buildingsTrigger" onclick='$$(".buildingsBg")[0].setStyle({zIndex:10});$$(".wedgesBg")[0].setStyle({zIndex:0});$("buildingsPanel").setStyle({zIndex:11})'>Buildings</div>
   <div id="wedgesTrigger" onclick='//$$(".buildingsBg")[0].setStyle({zIndex:0});$$(".wedgesBg")[0].setStyle({zIndex:10});$("buildingsPanel").setStyle({zIndex:0})'>Wedges</div>
   <div id="closeBuildingPanel" onclick="Animation.hide('buildingDisplay');"></div>
