@@ -259,7 +259,7 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
 							this.tickDelay,
 							this.animationRepeats * this.sprites.building.noOfAnimationFrames,
 							this.animationEverySeconds,
-							function(){self.renderAnimation()})
+							function(){self.renderAnimation()});
 		},
 		
 		renderPanel : function($super){
@@ -520,9 +520,46 @@ var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
 
 var WedgeDisplay = Class.create(BuildingDisplay, {
 
+  weaponDisplay : null,
+
+  container : null,
+
   initialize : function($super,owner,properties){
 	  $super(owner,properties)
-    this.weapon = new WeaponDisplay(this.owner.weapon, properties);
+    var self = this;
+    this.owner.weapon.container = this.container;
+    this.owner.weapon.display = new WeaponDisplay(this.owner.weapon, properties);
+  },
+
+  createSprites : function(){
+    this.container = new DomSpriteContainer(this.owner)
+		this.sprites.base = this.container.newDomImgSprite(this.owner, {img : this.baseImg}, {shiftY: this.zdim});
+		this.sprites.invalid = this.container.newDomImgSprite(this.owner, {img : this.invalidImg}, {shiftY: this.zdim});
+		this.sprites.shadow = this.container.newDomImgSprite(this.owner, {img: this.shadowImg, width:this.shadowImg.width,
+                                                      		height:this.shadowImg.height, zIndex : 1});
+		this.sprites.outline = this.container.newDomImgSprite(this.owner, {img: this.outlineImg, zIndex : 1});
+		this.sprites.building = this.container.newDomImgSprite(this.owner, {img: this.img});
+		this.sprites.health = new DomHealthSprite(this.owner)
+    this.sprites.info = new DomTextSprite(this.owner, 'textInfo', {centered: true, shiftY: -10});
+		this.sprites.shadow.shiftX = this.imgWidth - this.shadowImg.width
+		this.sprites.shadow.shiftY = this.imgHeight - this.shadowImg.height
+		this.sprites.building.shiftX = (this.imgWidth - this.img.width)/2+2;
+		this.sprites.base.shiftX = (this.imgWidth - this.img.width)/2+2;
+		this.sprites.invalid.shiftX = (this.imgWidth - this.img.width)/2+2;
+    if(this.movingImg)
+      this.sprites.moving = this.container.newDomImgSprite(this.owner, {img: this.movingImg});
+		this.sprites.clickSprite = this.container.newDomImgSprite(this.owner,{img : this.transparentImg, area:this.area}, {clickable: true});
+		this.sprites.clickSprite.img.setStyle({width:this.imgWidth+"px",height:this.imgHeight+"px"})
+    this.sprites.mouseover = new DomImgSprite(this.owner, {img: this.mouseoverImg});
+    this.container.render();
+	},
+
+  render : function($super) {
+    $super();
+    if( this.owner.owner.state == this.owner.owner.states.NOT_PLACED  && this.owner.weapon.container)
+    {
+      this.owner.weapon.container.render();
+    }
   },
 
 	renderPanel: function($super){
@@ -530,18 +567,36 @@ var WedgeDisplay = Class.create(BuildingDisplay, {
     var self = this.owner;
     self.game.selectedBuildingPanel = new BuildingPanel(self, function(){return ""});
     this._AttachUpgradeTrigger();
+  }, 
+
+  destroy : function($super) {
+    $super();
+    this.owner.weapon.display.destroy();
+    this.owner.weapon.container.destroy();
   }
 });
 
 WeaponDisplay = Class.create( Display, {
 
-	animationRepeats : 8,
+	animationRepeats : 1,
 	animationEverySeconds : 2,
 	tickDelay : 10,
 	faceAnimationCounter : 0,
 
+  displayPriority : {
+    0 : 4, 
+    1 : 2,
+    2 : 2,
+    3 : 2,
+    4 : 4,
+    5 : 2,
+    6 : 4,
+    7 : 2
+  },
+
   initialize : function($super,owner,properties){
 	  $super(owner,properties)
+    this.container = owner.container;
     this.createSprites();
 		Object.extend(this.owner,properties)
   	this.sprites.face.render();
@@ -551,29 +606,47 @@ WeaponDisplay = Class.create( Display, {
 					  this.tickDelay,
 					  this.animationRepeats * this.sprites.face.noOfAnimationFrames,
 					  this.animationEverySeconds,
-					  function(){self.renderAnimation()})
+					  function(){self.renderAnimation()}) 
+    this.manageStateChange();
   },
 
   createSprites : function(){
 		this.faceImg = Loader.images.buildings['wedge_face.png'];
     this.weaponImg = Loader.images.weapons[this.owner.name + ".png"];
-		this.sprites.face = new DomImgSprite(this.owner, {img: this.faceImg});
-		this.sprites.weapon = new DomImgSprite(this.owner, {img: this.weaponImg});
+    this.sprites.face = this.container.newDomImgSprite(this.owner, {img: this.faceImg});
+    this.sprites.weapon = this.container.newDomImgSprite(this.owner, {img: this.weaponImg});
 	},
 
-  renderAnimation : function() {
-//    var angle = Math.round(Math.random() * 10 )
-    
-    this.owner.angle = (this.owner.angle+1) % this.sprites.face.noOfDirections ;
-		this.sprites.face.render();
-		this.sprites.weapon.render();
+  manageStateChange : function(){
+    var self = this;
+    this.owner.owner.stateNotifications[this.owner.owner.states.NOT_PLACED].push(function(){
+      self.sprites.face.hide()
+      self.sprites.weapon.hide()
+    });
+    this.owner.owner.stateNotifications[this.owner.owner.states.UNDER_CONSTRUCTION].push(function(){
+      self.sprites.face.show()
+      self.sprites.weapon.show()
+    });
+    this.owner.owner.stateNotifications[this.owner.owner.states.UPGRADING].push(function(){
+      self.sprites.face.show()
+      self.sprites.weapon.show()
+    });
+    this.owner.owner.stateNotifications[this.owner.owner.states.NORMAL].push(function(){
+      self.sprites.face.show()
+      self.sprites.weapon.show()
+    });
   },
-  
-	destroy : function(){
-		for(var sprite in this.sprites){
-			this.sprites[sprite].destroy();
-		}
-	}
+
+  renderAnimation : function() {
+    if( this.owner.owner.state == this.owner.owner.states.NORMAL )
+    {
+      var angle = Math.round(Math.random() * 10 );
+      this.owner.angle = angle % this.sprites.face.noOfDirections;
+      this.sprites.weapon.setZIndex(this.displayPriority[this.owner.angle]);
+    }
+	  this.sprites.face.render();
+		this.sprites.weapon.render();
+  }
 
 });
 

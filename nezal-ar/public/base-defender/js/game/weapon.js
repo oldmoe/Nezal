@@ -9,8 +9,11 @@ var Weapon = Class.create({
 
   initialize : function(name, owner) {
     this.name = name;
+    var angle = Math.round(Math.random() * 10 )
+    this.angle = angle % 8 ;
     this.coords = owner.coords;
     this.game = owner.game;
+    this.owner = owner;
   }
   
 });

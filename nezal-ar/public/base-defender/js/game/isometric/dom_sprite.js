@@ -2,8 +2,7 @@ var DomSprite = Class.create(Sprite, {
   shiftX : 2,
   shiftY : 2,
   initialize : function(owner, assets, properties){
-    this.div = $(document.createElement('DIV'));
-    $('gameCanvas').appendChild(this.div);
+    this.createDiv();
     this.div.addClassName('DomSprite');
     this.owner = owner;
     this.div.setStyle ({zIndex :(this.owner.coords.y + this.owner.zdim)});
@@ -13,7 +12,7 @@ var DomSprite = Class.create(Sprite, {
     else this.div.style.height =  this.owner.imgHeight + "px";
     Object.extend( this, properties );
   },
-  
+
   setStyle : function(style){
     this.div.setStyle(style)
   },
@@ -41,10 +40,11 @@ var DomSprite = Class.create(Sprite, {
       }
       
       if (this.visible) {
+        var position = this.position();
         this.div.setStyle({
-          left: this.owner.coords.x - Math.round(this.owner.imgWidth / 2) + this.shiftX + "px",
-          top: this.owner.coords.y - Math.round(this.owner.imgHeight / 2) + this.shiftY + "px",
-          zIndex: this.owner.coords.y + this.owner.zdim
+          left: position.x + this.shiftX + "px",
+          top: position.y + this.shiftY + "px",
+          zIndex: position.zIndex
         });
       }
   
@@ -57,6 +57,19 @@ var DomSprite = Class.create(Sprite, {
 		if(this.div.parentNode){
 			this.div = $(this.div.parentNode.removeChild(this.div))
 		}
-	}
+	},
+
+  position : function(){
+    var position = {};
+    position.x = this.owner.coords.x - Math.round(this.owner.imgWidth / 2);
+    position.y = this.owner.coords.y - Math.round(this.owner.imgHeight / 2);
+    position.zIndex = this.owner.coords.y + this.owner.zdim;
+    return position;
+  },
+
+  createDiv : function() {
+    this.div = $(document.createElement('DIV'));
+    $('gameCanvas').appendChild(this.div);
+  },
 	
 })
