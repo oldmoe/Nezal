@@ -178,7 +178,10 @@ var BuildingDisplay = Class.create(Display, {
     });
     this.owner.stateNotifications[this.owner.states.NORMAL].push(function(){
       self.sprites.building.show();
-      self.sprites.building.setOpacity(1);
+			if(self.owner.working)
+      	self.sprites.building.setOpacity(1);
+			else
+				self.sprites.building.setOpacity(0.5);
       self.sprites.building.animated = true;
 			self.sprites.base.hide();
 			self.sprites.outline.hide();
