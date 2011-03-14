@@ -13,6 +13,7 @@ var Weapon = Class.create({
     this.angle = angle % 8 ;
     this.coords = owner.coords;
     this.game = owner.game;
+    this.owner = owner;
   }
   
 });
