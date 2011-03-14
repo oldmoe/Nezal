@@ -37,6 +37,8 @@ var Car = Class.create(MovingObject,{
 		}
 		if (this.target.hp <= 1) {
 			this.target.hp = 1
+			this.target.working = false
+			this.target.setState(this.target.states.NORMAL)
 			this.target = null
 		} 
 	},

@@ -8,6 +8,7 @@ var AttackManager = Class.create({
     $("sendAttack").stopObserving("click");
     $("sendAttack").observe("click", function(){
       self.simulateAttack();
+			$('attackDiv').show()
     });
 	},
 	simulateAttack : function(){
@@ -25,6 +26,7 @@ var AttackManager = Class.create({
 		this.creepsDone++
 		var attackSuccess = false
 		if(this.creepsDone == this.noOfCreeps){
+			$('attackDiv').hide()
 			for(creep in this.creeps){
 				if(this.creeps[creep].attacked){
 					attackSuccess = true
