@@ -194,7 +194,6 @@ var BuildingDisplay = Class.create(Display, {
       self.sprites.info.hide();
 			if (self.sprites.text) {
 	  		self.sprites.text.hide()
-				console.log('here')
 	 		}
       self.sprites.mouseover.hide();
 			if(self.sprites.moving) self.sprites.moving.hide();
@@ -648,9 +647,8 @@ WeaponDisplay = Class.create( Display, {
     {
       this.animated = true;
       var self = this
-      console.log(this)
 		  condition = function(){
-			  return self.sprites.weapon.currentAnimationFrame == self.sprites.weapon.noOfAnimationFrames;
+			  return ( self.sprites.weapon.currentAnimationFrame == self.sprites.weapon.noOfAnimationFrames); 
 		  }
 		  mainFunc = function(){
 			  self.sprites.weapon.currentAnimationFrame += 1;
@@ -661,7 +659,7 @@ WeaponDisplay = Class.create( Display, {
         self.owner.fire();
 		  }
 //		  var ticks = self.game.reactor.everySeconds(1)
-		  this.owner.game.reactor.pushPeriodicalWithCondition(3 , mainFunc, condition, callback)
+		  this.owner.game.reactor.pushPeriodicalWithCondition(2 , mainFunc, condition, callback)
     }
 	},
 
