@@ -1,5 +1,6 @@
 var Car = Class.create(MovingObject,{
 	hp:100, range:4, power:3,
+	maxHp : 100,
 	speed : 3, 
 	name: "car",
 	targetLocated : false,

@@ -123,7 +123,7 @@ var Game = Class.create({
 
     var iconsImages = ["townhall.png", "townhall_icon.png", "quarry_icon.png", "lumbermill_icon.png", "quarry.png",
 		 "lumbermill.png", "lumber.png", "rock.png", "workers.png","storage.png","storage_icon.png",
-		 "defense_center.png","defense_center_icon.png", "wedge_icon.png", "wedge.png"];
+		 "defense_center.png","defense_center_icon.png", "wedge_icon.png", "wedge.png","attention.png"];
    
 		var workerImages = ["worker.png", "worker_shadow.png"];
     //var buildingPanelImages = ["panel.png"]

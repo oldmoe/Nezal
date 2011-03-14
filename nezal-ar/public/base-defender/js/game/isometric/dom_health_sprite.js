@@ -4,6 +4,12 @@ var DomHealthSprite = Class.create(DomSprite, {
 	
   initialize : function($super, owner, properties){
     $super(owner, properties);
+		if (properties) {
+			if (properties.healthWidth) 
+				this.healthWidth = properties.healthWidth
+			if (properties.healthHeight) 
+				this.healthHeight = properties.healthHeight
+		}
     this.maxHpSpan = $(document.createElement('SPAN'));
 		this.hpSpan = $(document.createElement('SPAN'));
 		this.div.appendChild(this.maxHpSpan);
@@ -23,10 +29,10 @@ var DomHealthSprite = Class.create(DomSprite, {
   
   render : function($super){
     $super();
-		if (this.owner.hp == this.owner.maxHp) {
-			this.div.hide()
-			return 
-		}
+		//if (this.owner.hp == this.owner.maxHp) {
+		//	this.div.hide()
+		//	return 
+		//}
 		this.div.show()
     try{
       if(this.owner.dead){
