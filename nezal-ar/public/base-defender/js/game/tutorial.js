@@ -59,6 +59,7 @@ var Tutorial = Class.create({
       var self = this.self.game.tutorial;
       $('workers_game_element').observe('click', 
                                               function(){
+                                                Animation.hide('questDisplay');
                                                 Hand.hide();
                                               });
     }
