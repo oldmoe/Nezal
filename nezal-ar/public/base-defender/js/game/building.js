@@ -50,7 +50,8 @@ var Building = Class.create({
 			return self.hp == self.maxHp
 		}
 		mainFunc = function(){
-			self.hp++
+			if(!self.game.attackManager.attacking)
+				self.hp++
 		}	
 		callback = function(){
 			self.repairing = false

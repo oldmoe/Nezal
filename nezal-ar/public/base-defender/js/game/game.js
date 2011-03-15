@@ -128,7 +128,7 @@ var Game = Class.create({
 		var workerImages = ["worker.png", "worker_shadow.png"];
     //var buildingPanelImages = ["panel.png"]
 		
-		var creepsImages = ["car.png"]
+		var creepsImages = ["car.png",'explosion.png']
 		//This is duplicated to avoid a problem in the loader that can't deal with an array of a single item
 		var smokeImages = ["smoke_big.png", "smoke_big.png"]
   

@@ -12,7 +12,7 @@ module BD
       @hp = 100
       @range = 4
       @power = 10
-      @speed = 3, 
+      @speed = 3
       @name = "car"
       @target_located = false
       @target = nil 

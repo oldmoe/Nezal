@@ -44,6 +44,7 @@ var CarDisplay = Class.create(Display,{
   	this.img = Loader.images.creeps['car.png']
 		Object.extend(this.owner,this);
   	this.sprites.body = new DomImgSprite(owner, {img: this.img});
+		this.spr
 		this.sprites.health = new DomHealthSprite(this.owner,{healthWidth:20, healthHeight:5})
 		this.sprites.health.shiftY =3
   },
@@ -54,7 +55,9 @@ var CarDisplay = Class.create(Display,{
 		}
 		this.sprites.body.render()
 		this.sprites.health.render()
-	}
+	},
+	
+	
 })
 
 var WorkerDisplay = Class.create(Display,{
@@ -270,6 +273,11 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
 							this.animationRepeats * this.sprites.building.noOfAnimationFrames,
 							this.animationEverySeconds,
 							function(){self.renderAnimation()});
+		},
+		
+		createSprites : function($super){
+			$super()
+			this.sprites.health.shiftY = 20
 		},
 		
 		renderPanel : function($super){

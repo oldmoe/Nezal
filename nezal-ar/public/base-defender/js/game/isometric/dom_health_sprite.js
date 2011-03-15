@@ -29,10 +29,10 @@ var DomHealthSprite = Class.create(DomSprite, {
   
   render : function($super){
     $super();
-		//if (this.owner.hp == this.owner.maxHp) {
-		//	this.div.hide()
-		//	return 
-		//}
+		if (this.owner.hp == this.owner.maxHp) {
+			this.div.hide()
+			return 
+		}
 		this.div.show()
     try{
       if(this.owner.dead){

@@ -1,6 +1,7 @@
 var AttackManager = Class.create({
 	noOfCreeps : 5,
 	creepsDone :0,	
+	attacking : false,
 	initialize: function(game){
 		this.creeps = {}
     var self = this;
