@@ -120,6 +120,11 @@ var Game = Class.create({
     var buildingMovingImages = [ "wedge_moving.png" ];
 
 		var buildingModeImages = ['2x2_invalid.png', '2x2_base.png','1x1_invalid.png', '1x1_base.png','transparent.png','transparent.png'];
+		var questsImages = [  "msgBg.png", "wedge.png", "button.png", "msgBaloon.png", "questBaloon.png" , "questBg.png", "buildingPanelBg.png",
+                          "activeCell.png", "inactiveCell.png", "resources.png", "correct.png", "correct.png", "buildingsBg.png", "wedgesBg.png", 
+                          "social.png", "civil.png", "military.png", "circles.png", "hover.png", "animated_circles.gif", "line.png",
+                          "townhall_info.png", "quarry_info.png", "lumbermill_info.png", "defense_center_info.png", "storage_info.png",
+                          "wedge_info.png"];
 
     var iconsImages = ["townhall.png", "townhall_icon.png", "quarry_icon.png", "lumbermill_icon.png", "quarry.png",
 		 "lumbermill.png", "lumber.png", "rock.png", "workers.png","storage.png","storage_icon.png",

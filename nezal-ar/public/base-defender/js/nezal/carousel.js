@@ -31,6 +31,7 @@ var Carousel = Class.create( {
                         parseInt($$('#' + this.id + ' ul li')[0].getStyle('margin-left')) + 
                         parseInt($$('#' + this.id + ' ul li')[0].getStyle('margin-right'));
         this.displayCount = displayCount;
+        this.scroll = displayCount;
         this.ulId = $$('#' + this.id + ' ul')[0].id;
         this.listSize =  $$('#' + this.ulId + ' li').length;
         $(this.ulId).style.left = 0;

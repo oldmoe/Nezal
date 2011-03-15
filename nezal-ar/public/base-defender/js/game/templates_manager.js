@@ -62,6 +62,8 @@ var TemplatesManager = Class.create({
   },
 
   buildingsPanel : function(buildings){
+    currentShift = 0;
+    maxShift = 2;
     return TrimPath.processDOMTemplate("buildings-panel-template", {'buildings' : buildings});
   },
 

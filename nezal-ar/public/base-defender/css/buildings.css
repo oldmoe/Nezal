@@ -62,18 +62,55 @@
   display:inline-block;
 }
 
-#interaction #buildingsPanel {
-  height: 325px;
-  left: 80px;
+#interaction .leftArrowContainer {
+  left: 140px;
+  overflow: hidden;
   position: absolute;
-  top: 100px;
-  width: 600px;
+  top: 160px;
+  width: 30px;
+  cursor: pointer;
 }
+
+#interaction .rightArrowContainer {
+  left: 620px;
+  overflow: hidden;
+  position: absolute;
+  top: 160px;
+  width: 30px;
+  cursor: pointer;
+}
+
+#interaction #buildingsPanel {
+  height: 130px;
+  left: 185px;
+  overflow: hidden;
+  position: absolute;
+  top: 160px;
+  width: 420px;
+}
+
+#interaction .buildingInfo {
+  left: 135px;
+  position: absolute;
+  top: 300px;
+  z-index: 10;
+  width: 540px;
+  height: 120px;
+}
+
+#interaction .buildingInfo .buildingName {
+  color: red;
+  font-family: showg;
+  font-size: 25px;
+  text-align: center;
+}
+
+#interaction .buildingInfo .resourcesNeeded {
+  margin-left: 200px;
+}
+    
 #interaction #buildingsPanel .buildings {
-  padding-left: 75px;
-  padding-right: 180px;
-  padding-top: 24px;
-  position: relative;
+  position: absolute;
   z-index: 10;
 }
 #interaction .buildingPanelBg {
@@ -134,15 +171,24 @@
 }
     
 #interaction #buildingsPanel .item {
-  display: inline-block;
-  height: 145px;
-  overflow: hidden;
+  float: left;
+  height: 130px;
+  overflow: visible;
   position: relative;
   width: 105px;
+  text-align: center;
 }
+
+#interaction .buildingPanelLine {
+  position: absolute;
+  top: 290px;
+  left: 135px;
+}
+
 #interaction #buildingsPanel .item .background {
   position : relative;
-  top : -145px;
+  top : -128px;
+  height : 75px;
 }
 #interaction #buildingsPanel .item .itemData {  
   width : 100%;
@@ -167,16 +213,17 @@
   height: 74px;
 }
 
-#interaction #buildingsPanel .item .itemData .cost{  
-  position : relative;
-  top : 25px;
-  text-align : left;
+#interaction #buildingDisplay .cost{  
+  color: white;
+  margin-left: 197px;
+  position: relative;
+  text-align: left;
 }
-#interaction #buildingsPanel .item .itemData .cost .text{  
-  display : inline-block;
-  width : 31%;
-  font-size : 14px;
-  text-align : center;
+#interaction #buildingDisplay .cost .text{
+  display: inline-block;
+  font-size: 14px;
+  text-align: center;
+  width: 14%;
 }
 #interaction #buildingsPanel .item .inactive {
   cursor : not-allowed;

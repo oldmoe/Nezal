@@ -19,11 +19,11 @@ var BuildingsManager = Class.create({
     }
     $('buildingDisplay').innerHTML = this.game.templatesManager.buildingsPanel(buildings);
     var disabled = params['disabled'] || [];
-    disabled.each(function(item){
-                      $$('#buildingsPanel #' + item + ' .itemData')[0].onclick=function(){}
-                      $$('#buildingsPanel #' + item + ' .background')[0].src=Loader.images.quests['inactiveCell.png'].src;
-                      $$('#buildingsPanel #' + item + ' .itemData')[0].setStyle({cursor : 'default' });
-                  });
+//    disabled.each(function(item){
+//                      $$('#buildingsPanel #' + item + ' .itemData')[0].onclick=function(){}
+//                      $$('#buildingsPanel #' + item + ' .background')[0].src=Loader.images.quests['inactiveCell.png'].src;
+//                      $$('#buildingsPanel #' + item + ' .itemData')[0].setStyle({cursor : 'default' });
+//                  });
     Animation.hide('questDisplay');
     Animation.show('buildingDisplay');
     $('interaction').show();
