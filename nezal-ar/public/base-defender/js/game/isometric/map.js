@@ -71,6 +71,35 @@ var Map={
 		Map.rowOddDirections[Map.SE]=[1,1]
 		Map.rowOddDirections[Map.SW]=[1,0]
 	},
+  getGeneralDirectoin : function(x1,y1,x2,y2) {
+    var dir = 0
+    var slope = Math.round((y1-y2)/(x1-x2))
+    if(slope == "Infinity")
+      dir = Map.N;
+    else if (slope == "-Infinity" )
+      dir = Map.S;
+    else if(slope == 0 && x1 > x2)
+      dir = Map.W
+    else if(slope == 0 && x1 < x2)
+      dir = Map.E
+    else if(slope == -1 && x1 < x2)
+      dir = Map.NE
+    else if(slope < -1 && x1 < x2)
+      dir = Map.N
+    else if(slope == -1 && x1 > x2)
+      dir = Map.SW
+    else if(slope < -1 && x1 > x2)
+      dir = Map.S
+    else if(slope == 1 && x1 > x2)
+      dir = Map.NW
+    else if(slope > 1 && x1 > x2)
+      dir = Map.N
+    else if(slope == 1 && x1 < x2)
+      dir = Map.SE
+    else if(slope > 1 && x1 < x2)
+      dir = Map.S
+    return dir;
+  },
 	getTileAngle : function(){
 		var a = Math.sqrt(Math.pow(Map.tileWidth/2,2)+Math.pow(Map.tileHeight/2,2))/2
 		var theta = (180-Util.radToDeg(Math.acos((Map.tileWidth*Map.tileWidth/4-2*a*a)/(2*a*a))))/2

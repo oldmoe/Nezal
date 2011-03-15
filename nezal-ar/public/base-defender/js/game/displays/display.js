@@ -158,7 +158,7 @@ var BuildingDisplay = Class.create(Display, {
     this.owner.stateNotifications[this.owner.states.UNDER_CONSTRUCTION].push(function(){
       var top =  self.owner.coords.y -Math.round(self.imgHeight/2)
       var left =  self.owner.coords.x -Math.round(self.imgWidth/2);
-      self.progressDisplay = new ProgressDisplay( self.owner.nextLevelBluePrints.time, top, left, self.owner.coords.y );
+      self.progressDisplay = new ProgressDisplay( self.owner.nextLevelBluePrints.time, top - 10, left, self.owner.coords.y );
       self.sprites.building.show();
       self.sprites.building.setOpacity(0.5);
       self.sprites.building.animated = false;
@@ -197,7 +197,6 @@ var BuildingDisplay = Class.create(Display, {
       self.sprites.info.hide();
 			if (self.sprites.text) {
 	  		self.sprites.text.hide()
-				console.log('here')
 	 		}
       self.sprites.mouseover.hide();
 			if(self.sprites.moving) self.sprites.moving.hide();
@@ -248,6 +247,10 @@ var BuildingDisplay = Class.create(Display, {
 		for(var sprite in this.sprites){
 			this.sprites[sprite].render();
 		}
+    if(this.owner.maxHp >  this.owner.hp)
+      this.sprites.health.show();
+		else
+      this.sprites.health.hide();
 	},
   
 	destroy : function(){
@@ -572,6 +575,31 @@ var WedgeDisplay = Class.create(BuildingDisplay, {
     this.container.render();
 	},
 
+	 manageStateChange : function($super){
+    $super()
+    var self = this;
+    this.owner.stateNotifications[this.owner.states.UNDER_CONSTRUCTION].push(function(){
+      self.sprites.building.setOpacity(1);
+      self.owner.weapon.container.setOpacity(0.5);
+    });
+    this.owner.stateNotifications[this.owner.states.UPGRADING].push(function(){
+      self.sprites.building.setOpacity(1);
+      self.owner.weapon.container.setOpacity(0.5);
+    });
+    this.owner.stateNotifications[this.owner.states.NORMAL].push(function(){
+      if(self.owner.working)
+      {
+        self.sprites.building.setOpacity(1);
+        self.owner.weapon.container.setOpacity(1);
+      }
+			else
+      {
+        self.sprites.building.setOpacity(1);
+	      self.owner.weapon.container.setOpacity(0.5);
+      }
+    });
+  },
+
   render : function($super) {
     $super();
     if( this.owner.owner.state == this.owner.owner.states.NOT_PLACED  && this.owner.weapon.container)
@@ -596,10 +624,7 @@ var WedgeDisplay = Class.create(BuildingDisplay, {
 
 WeaponDisplay = Class.create( Display, {
 
-	animationRepeats : 1,
-	animationEverySeconds : 2,
-	tickDelay : 10,
-	faceAnimationCounter : 0,
+  animated : false,
 
   displayPriority : {
     0 : 4, 
@@ -619,13 +644,8 @@ WeaponDisplay = Class.create( Display, {
 		Object.extend(this.owner,properties)
   	this.sprites.face.render();
 		this.sprites.weapon.render();
-    var self = this;
-    this.owner.game.scene.pushPeriodicalRenderLoop(
-					  this.tickDelay,
-					  this.animationRepeats * this.sprites.face.noOfAnimationFrames,
-					  this.animationEverySeconds,
-					  function(){self.renderAnimation()}) 
     this.manageStateChange();
+		this.owner.game.scene.pushAnimation(this);
   },
 
   createSprites : function(){
@@ -655,16 +675,30 @@ WeaponDisplay = Class.create( Display, {
     });
   },
 
-  renderAnimation : function() {
-    if( this.owner.owner.state == this.owner.owner.states.NORMAL )
+  render : function() {    
+    this.sprites.weapon.setZIndex(this.displayPriority[this.owner.angle]);
+    for(var sprite in this.sprites){
+			this.sprites[sprite].render();
+		}
+    if(this.owner.attacked == true && this.animated == false)
     {
-      var angle = Math.round(Math.random() * 10 );
-      this.owner.angle = angle % this.sprites.face.noOfDirections;
-      this.sprites.weapon.setZIndex(this.displayPriority[this.owner.angle]);
+      this.animated = true;
+      var self = this
+		  condition = function(){
+			  return ( self.sprites.weapon.currentAnimationFrame == self.sprites.weapon.noOfAnimationFrames); 
+		  }
+		  mainFunc = function(){
+			  self.sprites.weapon.currentAnimationFrame += 1;
+		  }	
+		  callback = function(){
+			  self.sprites.weapon.currentAnimationFrame = 0;
+        self.animated = false;
+        self.owner.fire();
+		  }
+//		  var ticks = self.game.reactor.everySeconds(1)
+		  this.owner.game.reactor.pushPeriodicalWithCondition(2 , mainFunc, condition, callback)
     }
-	  this.sprites.face.render();
-		this.sprites.weapon.render();
-  }
+	},
 
 });
 
