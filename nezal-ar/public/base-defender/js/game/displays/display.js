@@ -677,7 +677,7 @@ WeaponDisplay = Class.create( Display, {
       this.animated = true;
       var self = this
 		  condition = function(){
-			  return ( self.sprites.weapon.currentAnimationFrame == self.sprites.weapon.noOfAnimationFrames); 
+			  return ( self.sprites.weapon.currentAnimationFrame == self.sprites.weapon.noOfAnimationFrames -1 ); 
 		  }
 		  mainFunc = function(){
 			  self.sprites.weapon.currentAnimationFrame += 1;
@@ -687,7 +687,6 @@ WeaponDisplay = Class.create( Display, {
         self.animated = false;
         self.owner.fire();
 		  }
-//		  var ticks = self.game.reactor.everySeconds(1)
 		  this.owner.game.reactor.pushPeriodicalWithCondition(2 , mainFunc, condition, callback)
     }
 	},
