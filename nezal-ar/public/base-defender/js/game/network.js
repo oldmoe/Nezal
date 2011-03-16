@@ -55,6 +55,16 @@ var Network = Class.create({
     });
     return IDs;
   },
+
+
+  resetEmpire : function(){
+    new Ajax.Request('users/reset', {
+      method : 'post',
+      onSuccess: function(response) {
+        window.location = window.location
+      }
+    });
+  },
   
   notificationAck : function(id){
     this.contactTheBoss({ 'event' :'notification_ack', 'id' : id });

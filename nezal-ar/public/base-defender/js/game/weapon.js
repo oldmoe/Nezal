@@ -14,8 +14,7 @@ var Weapon = Class.create({
     this.coords = owner.coords;
     this.game = owner.game;
     this.owner = owner;
-    var newAngle = Math.round(Math.random() * 10 );
-    this.angle = newAngle % 8;
+    this.randomDirectionChange();
     this.specs = this.game.data.weapons[this.name].specs;
 		this.game.scene.push(this);
     var self = this;
@@ -33,9 +32,10 @@ var Weapon = Class.create({
   },
 
   checkAttack : function() {
-    if(this.owner.hp<=1 || this.attacker)
+    if(this.owner.hp <=1 || this.attacker)
       return;
     var attack = null;
+    var minHp = 50000;
     var minDistance = 150;
     for( var i = 0 ; i < this.game.creepFactory.registery.length; i++ )
     {
@@ -43,21 +43,26 @@ var Weapon = Class.create({
       var dist = Util.distance(this.coords.x, this.coords.y, creep.coords.x, creep.coords.y);
       if(dist < minDistance)
       {
-        minDistance = dist;
-        attack = creep;
+        if(creep.hp < minHp)
+        {
+          minHp = creep.hp;
+          attack = creep;
+        }
       }
     }
     return attack;
   },
 
   fire : function() {
-    if(this.owner.hp <=1 || this.attacker.hp < 1)
+    if( this.owner.hp <=1 )
     {
       this.attacked = false;
       this.attacker = null;
       return;
     }      
     this.attacker.hp -= this.specs.power;
+    this.attacked = false;
+    this.attacker = null;
   },
   
   randomDirectionChange : function() {

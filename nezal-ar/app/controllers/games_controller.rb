@@ -185,6 +185,12 @@ class GamesController < ApplicationController
     data.to_json
   end
 
+  # User bookmarked the application
+  post '/:game_name/users/reset' do
+    get_helper_klass.init_game_profile(@game_profile)
+    @game_profile.save!()
+  end
+
 
   protected
   
