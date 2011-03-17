@@ -1,6 +1,7 @@
 var Weapon = Class.create({
 
   angle : 5,
+  targetAngle : 5,
   imgHeight : 93,
   imgWidth : 64,
   
@@ -19,6 +20,7 @@ var Weapon = Class.create({
 		this.game.scene.push(this);
     var self = this;
   	this.game.scene.pushPeriodicalRenderLoop(1,1,2,function() {self.randomDirectionChange()});
+  	this.game.scene.pushPeriodicalRenderLoop(2,4,1,function() {self.changeAngle()});
   },
 
   tick : function() {
@@ -36,7 +38,7 @@ var Weapon = Class.create({
       return;
     var attack = null;
     var minHp = 50000;
-    var minDistance = 150;
+    var minDistance = 350;
     for( var i = 0 ; i < this.game.creepFactory.registery.length; i++ )
     {
       var creep = this.game.creepFactory.registery[i];
@@ -68,8 +70,27 @@ var Weapon = Class.create({
   randomDirectionChange : function() {
     if( this.owner.state == this.owner.states.NORMAL && this.attacked == false ) {
       var newAngle = Math.round(Math.random() * 10 );
-      this.angle = newAngle % 8;
+      this.targetAngle = newAngle % 8;
+    }
+  },
+
+  changeAngle : function() {
+    if( this.owner.state == this.owner.states.NORMAL && this.attacked == false ) {
+		  if(this.angle > this.targetAngle){
+			  if((this.targetAngle+8) - this.angle < this.angle - this.targetAngle){
+				  this.angle = (this.angle+1) % 8 
+			  }else{
+				  this.angle = (this.angle+7) % 8
+			  }
+		  }else if (this.angle < this.targetAngle){
+			  if(this.targetAngle - this.angle < (this.angle+8) - this.targetAngle){
+				  this.angle = (this.angle+1) % 8 
+			  }else{
+				  this.angle = (this.angle+7) % 8
+			  }
+		  }			
     }
   }
+
 
 });
