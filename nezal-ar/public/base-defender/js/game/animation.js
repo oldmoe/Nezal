@@ -28,10 +28,10 @@ var ObjAnimation = Class.create({
 			this.sprite.currentAnimationFrame++			
 	},
 	
-	render : function(){
-			this.sprite.render()
-			if(this.currentFrame == )
-	},
+//	render : function(){
+//			this.sprite.render()
+//			if(this.currentFrame == )
+//	},
 
 	finish : function(){
 		
