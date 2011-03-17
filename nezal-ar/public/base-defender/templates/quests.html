@@ -152,6 +152,34 @@
   </div>
 </textarea>
 
+<textarea style="display:none;" id='empty-quest'>
+  <div id='emptyQuest' style="display:none;">
+    <img class="background" src="${Loader.images.quests['msgBg.png'].src}"/>
+    <div class="msgBGImgs">
+      <div class="wedge">
+        <img  src="${Loader.images.quests['hover.png'].src}" class="shadow"/>
+        <img  src="${Loader.images.quests['circles.png'].src}"  class="circle"/>
+        <img  src="${Loader.images.quests[category+'.png'].src}"/>
+      </div>
+      <img class="bubble" src="${Loader.images.quests['msgBaloon.png'].src}"/>
+    </div>
+    <div class="close" onclick="Animation.hide('msg');"> </div>
+    <div class="okButtonWrapper">
+      <div class="alignDiv"> </div>
+      <div class="okButton" ackId="${msg['id']}" onclick="Animation.hide('msg');">
+        <img class="okImage" src="${Loader.images.quests['button.png'].src}"/>
+        <div class="okText yellowText"> OK </div>
+      </div>
+    </div>
+    <div class="alignDiv" style="width : 20%;"> </div>
+    <div class="text blueText">
+      ${msg}
+      <div  class="noQuestText redText">${msg2}</div>
+    </div>
+    
+  </div>
+</textarea>
+
 <textarea style="display : none;" id="quests-list">
   {for category in game.questsManager.categories}
   {if questsList[category]}
@@ -163,8 +191,9 @@
     <div class="text"> ${category} </div>
   </div>
   {else}
-  <div class="wedge">
+  <div class="wedge empty" id="${category}">
     <div class="alignDiv" style="height: 1px;width: 42px;"></div>
+    <img  src="${Loader.images.quests['hover.png'].src}" class="shadow"/>
     <img  src="${Loader.images.quests['circles.png'].src}"  class="circle"/>
     <img  src="${Loader.images.quests[category+'.png'].src}" class="wedgeImg"/>
     <div class="text"> ${category} </div>
@@ -224,8 +253,8 @@
   <img class="wedgesBg" src="${Loader.images.quests['wedgesBg.png'].src}" />
   <img class="buildingsBg" src="${Loader.images.quests['buildingsBg.png'].src}" />
   <img class="buildingPanelLine" src="images/quests/line.png"/>
-  <div onclick="if(currentShift != 0){currentShift--;$$('#interaction .buildings')[0].setStyle({marginLeft : (currentShift*-105) + 'px' })}" class="leftArrowContainer"><img style="margin-left:-60px;" src="images/quests/arrows_horizontal.png"/></div>
-  <div onclick="if(currentShift < maxShift){currentShift++;$$('#interaction .buildings')[0].setStyle({marginLeft : (currentShift*-105) + 'px' })}" class="rightArrowContainer"><img style="margin-left:-90px;" src="images/quests/arrows_horizontal.png"/></div>
+  <div onclick="if(currentShift != 0){currentShift--;$$('#interaction .buildings')[0].setStyle({marginLeft : (currentShift*-84) + 'px' })}" class="leftArrowContainer"><img style="margin-left:-60px;" src="images/quests/arrows_horizontal.png"/></div>
+  <div onclick="if(currentShift < maxShift){currentShift++;$$('#interaction .buildings')[0].setStyle({marginLeft : (currentShift*-84) + 'px' })}" class="rightArrowContainer"><img style="margin-left:-90px;" src="images/quests/arrows_horizontal.png"/></div>
   <div id="buildingsTrigger" onclick='$$(".buildingsBg")[0].setStyle({zIndex:10});$$(".wedgesBg")[0].setStyle({zIndex:0});$("buildingsPanel").setStyle({zIndex:11})'>Buildings</div>
   <div id="wedgesTrigger" onclick='//$$(".buildingsBg")[0].setStyle({zIndex:0});$$(".wedgesBg")[0].setStyle({zIndex:10});$("buildingsPanel").setStyle({zIndex:0})'>Wedges</div>
   <div id="closeBuildingPanel" onclick="Animation.hide('buildingDisplay');"></div>

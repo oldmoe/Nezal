@@ -61,9 +61,13 @@ var TemplatesManager = Class.create({
     return TrimPath.processDOMTemplate("quest-template", {'quest' : quest});
   },
 
+  emptyQuest : function(category, msg, noQuestMsg){
+    return TrimPath.processDOMTemplate("empty-quest-template", {"category" : category, 'msg' : msg, 'msg2' : noQuestMsg});
+  },
+
   buildingsPanel : function(buildings){
     currentShift = 0;
-    maxShift = 2;
+    maxShift = 1;
     return TrimPath.processDOMTemplate("buildings-panel-template", {'buildings' : buildings});
   },
 

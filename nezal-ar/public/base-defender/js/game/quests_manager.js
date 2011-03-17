@@ -14,6 +14,13 @@ var QuestsManager = Class.create({
     2 : "military",
     3 : "social"
   },
+  
+  categoryMsgs : {
+    "noQuest" : "No quests at the moment.",
+    "civil" : "Civil quests : Build your empire. Continue the structure of your buildings." ,
+    "military" : "Military Quests : Place your wedges. Defend your Empire" ,
+    "social" : "Social Quests : Increase your neighbours"
+  },
 
   initialize : function(game){
     this.game = game
@@ -36,10 +43,25 @@ var QuestsManager = Class.create({
                                                                            $$("#quest-panel #" + id + " .shadow")[0].hide();
                                                                         });
                               });
+    $$('#quest-panel .empty').each( function(button){
+                                            var id = button.getAttribute('id');
+                                            button.observe( 'click', function(){
+                                                                        game.questsManager.displayQuestEmptyMsg(id);
+                                                                      });
+                                            $$( "#quest-panel #" + id + " .shadow")[0].hide();
+                                            button.observe( 'mouseover', function(){
+                                                                           $$( "#quest-panel #" + id + " .shadow")[0].show();
+                                                                        });
+                                            button.observe( 'mouseout', function(){
+                                                                           $$("#quest-panel #" + id + " .shadow")[0].hide();
+                                                                        });
+                              });
     $('quest-panel').show();
   },
 
   displayQuest : function(questId){
+    if($('emptyQuest')) Animation.hide('emptyQuest');
+    $('msg').hide();
     $('questDisplay').innerHTML = '';
     $('questDisplay').innerHTML = this.game.templatesManager.quest(this.game.user.data.quests.descriptions[questId]);
     $('questDisplay').show();
@@ -52,6 +74,16 @@ var QuestsManager = Class.create({
     $('interaction').show();
     $('msg').show();
     Animation.show('congratesMsg');
+  },
+
+  displayQuestEmptyMsg : function(category){
+    if($('questScreen')) Animation.hide('questScreen');
+    $('questDisplay').hide();
+    $('msg').innerHTML = '';
+    $('msg').innerHTML = this.game.templatesManager.emptyQuest(category, this.categoryMsgs[category], this.categoryMsgs["noQuest"]);
+    $('msg').show();
+    $('interaction').show();
+    Animation.show('emptyQuest');
   },
 
   handleQuests : function() {
