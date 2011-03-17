@@ -131,19 +131,22 @@ var BuildingDisplay = Class.create(Display, {
     }
     
     $('building-panel').setStyle({
-        top: top + "px",
-        left: left + "px"
-      });
+      top: top + "px",
+      left: left + "px"
+    });
+    this.renderPanelButtons();
   },
   
-  _AttachUpgradeTrigger : function(){
-    var self = this;
-    $('upgrade_trigger').stopObserving("click");
+  renderPanelButtons : function(){
+    var owner = this.owner;
+    
+    $('panel-buttons-container').innerHTML = this.game.templatesManager.upgradeButton();
+    $('upgrade_trigger').stopObserving('click');
     $('upgrade_trigger').observe('click', function(){
-      self.owner.upgrade();
+      owner.upgrade();
     });
   },
-
+  
   render : function(){
     if (this.owner.state == this.owner.states.UNDER_CONSTRUCTION || this.owner.state == this.owner.states.UPGRADING ) {
       this.progressDisplay.render( this.owner.elapsedTime() );

@@ -69,6 +69,7 @@
   top: 150px;
   width: 30px;
   cursor: pointer;
+  z-index: 10;
 }
 
 #interaction .rightArrowContainer {
@@ -78,6 +79,7 @@
   top: 150px;
   width: 30px;
   cursor: pointer;
+  z-index: 10;
 }
 
 #interaction #buildingsPanel {
@@ -186,6 +188,7 @@
   position: absolute;
   top: 250px;
   left: 135px;
+  z-index: 10;
 }
 
 #interaction #buildingsPanel .item .background {

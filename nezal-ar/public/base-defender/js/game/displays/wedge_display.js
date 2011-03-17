@@ -72,7 +72,6 @@ var WedgeDisplay = Class.create(BuildingDisplay, {
     $super();
     var self = this.owner;
     self.game.selectedBuildingPanel = new BuildingPanel(self, function(){return ""});
-    this._AttachUpgradeTrigger();
   }, 
 
   destroy : function($super) {

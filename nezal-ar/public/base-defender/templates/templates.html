@@ -34,15 +34,6 @@
           <span class="desc">
             workers: ${building.assignedWorkers}/${building.maxWorkers}
           </span>
-          <div id="lumbermill-collect">
-              <span style="">Collect</span>
-              <button id="collect_resources_trigger" style="margin-left: 5px;">
-                  +
-              </button>
-          </div>
-          <span class="desc">
-            ${building.resource()}
-          </span>
       </div>
     {/if}
 </textarea>
@@ -214,15 +205,8 @@
       <div id="building-remaining-time" style="display:none;"></div>
       
       <div id="building-panel" style="display:none;">
-        <div id="panel-buttons-container">
-          <div id="upgrade_trigger" class="panel-button">
-            <span>Upgrade</span>
-            <img src="${Loader.images.panel['buttons.png'].src}">
-          </div>
-        </div>
-        
+        <div id="panel-buttons-container"></div>
         <div id="building-panel-contents"></div>
-        
       </div>
       
       <div id="establish-townhall-container" style="display:none;">
@@ -259,6 +243,20 @@
         <img src="${Loader.images.quests['cursor.png'].src}"></img>
       </div>
 			
+</textarea>
+
+<textarea style="display:none;" id='upgrade-button'>
+  <div class="panel-button" id="upgrade_trigger">
+    <span>Upgrade</span>
+    <img src="${Loader.images.panel['buttons.png'].src}">
+  </div>
+</textarea>
+
+<textarea style="display:none;" id='resource-building-buttons'>
+  <div class="panel-button" id="collect_resource_trigger">
+    <span>Collect</span>
+    <img src="${Loader.images.panel['buttons.png'].src}">
+  </div>
 </textarea>
 
 <textarea style="display:none;" id='loadingScreen'>
