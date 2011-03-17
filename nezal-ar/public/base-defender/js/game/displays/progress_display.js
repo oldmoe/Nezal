@@ -1,6 +1,3 @@
-/**
- * @author michaelyoussef
- */
 var ProgressDisplay = Class.create({
   initialize : function(time, top, left, zIndex){
     this.time = time;
