@@ -1,5 +1,6 @@
 var ChildDomSprite = Class.create(DomImgSprite, {
-
+  shiftX : 0,
+  shiftY : 0,
   container : null,
   zIndex : 3,
 
@@ -21,8 +22,8 @@ var ChildDomSprite = Class.create(DomImgSprite, {
 
   position : function() {
     var position = {};
-    position.x = 0;
-    position.y = 0;
+    position.x = this.shiftX;
+    position.y = this.shiftY;
     position.zIndex = this.zIndex;
     return position;
   },
