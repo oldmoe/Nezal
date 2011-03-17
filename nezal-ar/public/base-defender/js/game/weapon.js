@@ -15,7 +15,8 @@ var Weapon = Class.create({
     this.coords = owner.coords;
     this.game = owner.game;
     this.owner = owner;
-    this.randomDirectionChange();
+    var newAngle = Math.round(Math.random() * 10 );
+    this.angle = newAngle % 8;
     this.specs = this.game.data.weapons[this.name].specs;
 		this.game.scene.push(this);
     var self = this;
