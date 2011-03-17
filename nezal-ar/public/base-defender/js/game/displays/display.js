@@ -44,7 +44,9 @@ var CarDisplay = Class.create(Display,{
   	this.img = Loader.images.creeps['car.png']
 		Object.extend(this.owner,this);
   	this.sprites.body = new DomImgSprite(owner, {img: this.img});
-		this.spr
+		//this.sprites.body.shiftX = this.imgWidth/2
+		//this.sprites.body.shiftY = this.imgHeight/2
+		//this.sprites.skeleton = new DomSkeleton(owner)
 		this.sprites.health = new DomHealthSprite(this.owner,{healthWidth:20, healthHeight:5})
 		this.sprites.health.shiftY =3
   },
@@ -126,8 +128,8 @@ var BuildingDisplay = Class.create(Display, {
 		this.sprites.building.shiftX = (this.imgWidth - this.img.width)/2+2;
 		this.sprites.base.shiftX = (this.imgWidth - this.img.width)/2+2;
 		this.sprites.invalid.shiftX = (this.imgWidth - this.img.width)/2+2;
-    this.sprites.mouseover = new DomImgSprite(this.owner, {img: this.mouseoverImg});
-
+  	    this.sprites.mouseover = new DomImgSprite(this.owner, {img: this.mouseoverImg});
+		//this.sprites.skeleton = new DomSkeleton(this.owner)
     if(this.movingImg)
       this.sprites.moving = new DomImgSprite(this.owner, {img: this.movingImg});
 		this.sprites.clickSprite = new DomImgSprite(this.owner,{img : this.transparentImg, area:this.area}, {clickable: true});
@@ -194,6 +196,7 @@ var BuildingDisplay = Class.create(Display, {
       self.sprites.building.animated = true;
 			self.sprites.base.hide();
 			self.sprites.outline.hide();
+			self.sprites.base.show()
       self.sprites.info.hide();
 			if (self.sprites.text) {
 	  		self.sprites.text.hide()
@@ -429,12 +432,13 @@ var LumbermillDisplay = Class.create(ResourceBuildingDisplay, {
 		this.sprites.health = new DomHealthSprite(this.owner)
 		this.sprites.shadow.shiftX = this.imgWidth - this.shadowImg.width
 		this.sprites.shadow.shiftY = this.imgHeight - this.shadowImg.height
-    this.sprites.info = new DomTextSprite(this.owner, 'textInfo', {centered: true, shiftY: -10});
+    	this.sprites.info = new DomTextSprite(this.owner, 'textInfo', {centered: true, shiftY: -10});
 		this.sprites.building = new DomImgSprite(this.owner, {img: this.img});
 		this.sprites.saw = new DomImgSprite(this.owner, {img: this.sawImg});
-    this.sprites.mouseover = new DomImgSprite(this.owner, {img: this.mouseoverImg});
+    	this.sprites.mouseover = new DomImgSprite(this.owner, {img: this.mouseoverImg});
 		this.sprites.clickSprite = new DomImgSprite(this.owner,{img: this.transparentImg,area:this.area}, {clickable: true});
-    this.sprites.clickSprite.img.setStyle({width:this.imgWidth+"px",height:this.imgHeight+"px"})
+    	this.sprites.clickSprite.img.setStyle({width:this.imgWidth+"px",height:this.imgHeight+"px"})
+		//this.sprites.skeleton = new DomSkeleton(this.owner)
 	},
 	 manageStateChange : function($super){
     $super()
@@ -571,7 +575,8 @@ var WedgeDisplay = Class.create(BuildingDisplay, {
       this.sprites.moving = this.container.newDomImgSprite(this.owner, {img: this.movingImg});
 		this.sprites.clickSprite = this.container.newDomImgSprite(this.owner,{img : this.transparentImg, area:this.area}, {clickable: true});
 		this.sprites.clickSprite.img.setStyle({width:this.imgWidth+"px",height:this.imgHeight+"px"})
-    this.sprites.mouseover = new DomImgSprite(this.owner, {img: this.mouseoverImg});
+   		 this.sprites.mouseover = new DomImgSprite(this.owner, {img: this.mouseoverImg});
+		//this.sprites.skeleton = new DomSkeleton(this.owner)
     this.container.render();
 	},
 
