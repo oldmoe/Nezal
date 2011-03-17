@@ -5,12 +5,22 @@ var BuildingDisplay = Class.create(Display, {
     this.noOfXTiles = Math.ceil(this.xdim / Map.tileIsoLength)
     this.noOfYTiles = Math.ceil(this.ydim / Map.tileIsoLength)
     this.owner = owner
-    this.img = Loader.images.buildings[this.owner.name+'.png'];
+    /* Check for level Img for the building & its hover */
+    for(var i = this.owner.level; i>0; i--)
+    {
+      this.img = Loader.images.buildings[this.owner.name + "_" + i +'.png'];
+      this.outlineImg = Loader.images.buildingOutlines[this.owner.name + "_outline_" + i +  ".png"];
+      if(this.img)  
+        break;
+    }
+    /* Use the default image if level not found */
+    if(!this.img) this.img = Loader.images.buildings[this.owner.name+'.png'];
+    if(!this.outlineImg) this.outlineImg = Loader.images.buildingOutlines[this.owner.name+"_outline.png"];
+
     var buildImgName = this.noOfXTiles+"x"+this.noOfYTiles
     this.invalidImg =  Loader.images.buildingModes[buildImgName+"_invalid.png"];
     this.baseImg = Loader.images.buildingModes[buildImgName+'_base.png'];
     this.shadowImg = Loader.images.buildingShadows[this.owner.name+"_shadow.png"];
-    this.outlineImg = Loader.images.buildingOutlines[this.owner.name+"_outline.png"];
     this.movingImg = Loader.images.buildingMoving[this.owner.name+"_moving.png"];
     this.mouseoverImg = Loader.images.icons[this.owner.name+"_icon.png"];
     this.transparentImg = Loader.images.buildingModes['transparent.png'];

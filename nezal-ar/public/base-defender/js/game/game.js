@@ -109,9 +109,11 @@ var Game = Class.create({
 		buildingImages.push("lumbermill_saw.png");
 		buildingImages.push("townhall_door.png");
 		buildingImages.push("wedge_face.png");
+		buildingImages.push("storage_2.png");
 		var buildingOutlineImages = BuildingMode.prototype.buildings.collect(function(building){
       return building + "_outline.png";
     });
+		buildingOutlineImages.push("storage_outline_2.png");
 
 		var buildingShadowImages = BuildingMode.prototype.buildings.collect(function(building){
       return building + "_shadow.png";
