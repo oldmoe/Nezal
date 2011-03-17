@@ -103,7 +103,6 @@ var BuildingDisplay = Class.create(Display, {
       self.sprites.building.animated = true;
       self.sprites.base.hide();
       self.sprites.outline.hide();
-      self.sprites.base.show()
       self.sprites.info.hide();
       if (self.sprites.text) {
         self.sprites.text.hide()
