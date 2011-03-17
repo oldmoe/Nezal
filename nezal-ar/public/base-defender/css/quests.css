@@ -84,6 +84,7 @@
   margin: 0 20px;
   position: absolute;
   top: 50px;
+  z-index : 10;
 }
 #interaction #msg .bubble {
   position : absolute;
@@ -107,7 +108,7 @@
 #interaction #msg .alignDiv {
   width : 70%;
 }
-#interaction #msg #welcomeMsg, #interaction #msg #congratesMsg {
+#interaction #msg #welcomeMsg, #interaction #msg #congratesMsg, #interaction #msg #emptyQuest {
   position: absolute;
   height: 100%;
   width: 600px;
@@ -117,7 +118,7 @@
   font-size: 21px;
   left: 115px;
   position: absolute;
-  top: 40px;
+  top: 50px;
   width: 430px;
 }
 #interaction #msg #welcomeMsg .text .name{
@@ -173,6 +174,20 @@
 }
 
 
+#interaction #msg #emptyQuest .text {
+  font-size: 21px;
+  left: 115px;
+  position: absolute;
+  top: 50px;
+  width: 430px;
+}
+#interaction #msg #emptyQuest .text .noQuestText{
+  padding-top: 10px;
+  text-align: center;
+}
+
+
+
 .clickable {
   cursor : pointer;
 }
@@ -219,9 +234,9 @@
   top: 55px;
   width: 100%;
 }
-
-
-
+#quest-panel .empty {
+  cursor : pointer;
+}
 
 #interaction #questDisplay {
   height: 390px;
