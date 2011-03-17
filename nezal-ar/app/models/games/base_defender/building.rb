@@ -95,12 +95,14 @@ module BD
         validation = validate_upgrade(user_game_profile.metadata, game_metadata, coords)
         return validation if validation['valid'] == false      
 
+        current_level = user_game_profile.metadata[@name][location_hash]['level']
+        
         user_game_profile.metadata['idle_workers'] -= 1
         user_game_profile.metadata[@name][location_hash]['startedBuildingAt'] = Time.now.utc.to_i
         user_game_profile.metadata[@name][location_hash]['state'] = states['UPGRADING']
         user_game_profile.metadata[@name][location_hash]['coords'] = coords
+        user_game_profile.metadata[@name][location_hash]['hp'] = game_metadata['buildings'][@name]['levels'][(current_level+1).to_s]['hp']
         
-        current_level = user_game_profile.metadata[@name][location_hash]['level']
         user_game_profile.metadata['rock'] -= game_metadata['buildings'][@name]['levels'][(current_level+1).to_s]['rock']
         user_game_profile.metadata['lumber'] -= game_metadata['buildings'][@name]['levels'][(current_level+1).to_s]['lumber']
         

@@ -66,7 +66,7 @@
   left: 140px;
   overflow: hidden;
   position: absolute;
-  top: 160px;
+  top: 150px;
   width: 30px;
   cursor: pointer;
 }
@@ -75,24 +75,24 @@
   left: 620px;
   overflow: hidden;
   position: absolute;
-  top: 160px;
+  top: 150px;
   width: 30px;
   cursor: pointer;
 }
 
 #interaction #buildingsPanel {
-  height: 130px;
+  height: 100px;
   left: 185px;
   overflow: hidden;
   position: absolute;
-  top: 160px;
+  top: 140px;
   width: 420px;
 }
 
 #interaction .buildingInfo {
   left: 135px;
   position: absolute;
-  top: 300px;
+  top: 265px;
   z-index: 10;
   width: 540px;
   height: 120px;
@@ -107,6 +107,7 @@
 
 #interaction .buildingInfo .resourcesNeeded {
   margin-left: 200px;
+  margin-top: 20px;
 }
     
 #interaction #buildingsPanel .buildings {
@@ -172,31 +173,33 @@
     
 #interaction #buildingsPanel .item {
   float: left;
-  height: 130px;
+  height: 78px;
+  margin-bottom: 11px;
+  margin-top: 11px;
   overflow: visible;
   position: relative;
-  width: 105px;
   text-align: center;
+  width: 84px;
 }
 
 #interaction .buildingPanelLine {
   position: absolute;
-  top: 290px;
+  top: 250px;
   left: 135px;
 }
 
 #interaction #buildingsPanel .item .background {
   position : relative;
-  top : -128px;
+  top : -77px;
   height : 75px;
 }
 #interaction #buildingsPanel .item .itemData {  
-  width : 100%;
-  height : 100%;
+  cursor: pointer;
+  height: 100%;
   position: relative;
-  z-index : 10;
-  text-align : center;
-  cursor : pointer;
+  text-align: center;
+  width: 100%;
+  z-index: 10;
 }
 #interaction #buildingsPanel .item .itemData .name {  
     font-size: 17px;
