@@ -24,11 +24,13 @@ var Navigation = Class.create({
 	attachTouchEvents : function(){
 		var self = this
 		this.map.div.observe('touchstart',function(e){
+			 e.preventDefault();
 			 Map.mouseIsDown = true
 			 Map.mouseLocation = {x:e.pointerX(), y:e.pointerY()}
 		});
 		
 		document.body.observe('touchend',function(e){
+			e.preventDefault();
 			Map.mouseIsDown = false
 			if(Map.dragged){
 				self.dragDiv.hide()
@@ -37,6 +39,7 @@ var Navigation = Class.create({
 		});
 		
 		document.body.observe('touchmove',function(e){
+			e.preventDefault();
 			if(Map.mouseIsDown){
         		$("building-panel").hide();
 			 	self.dragDiv.show()
