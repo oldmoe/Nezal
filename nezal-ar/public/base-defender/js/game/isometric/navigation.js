@@ -24,9 +24,11 @@ var Navigation = Class.create({
 	attachTouchEvents : function(){
 		var self = this
 		this.map.div.observe('touchstart',function(e){
+			var x = e.pointerX() || e.touches[0].pageX 
+			var y = e.pointerY() || e.touches[0].pageY
 			 e.preventDefault();
 			 Map.mouseIsDown = true
-			 Map.mouseLocation = {x:e.pointerX(), y:e.pointerY()}
+			 Map.mouseLocation = {x:x, y:y}
 		});
 		
 		document.body.observe('touchend',function(e){
@@ -39,18 +41,20 @@ var Navigation = Class.create({
 		});
 		
 		document.body.observe('touchmove',function(e){
+			var x = e.pointerX() || e.touches[0].pageX 
+			var y = e.pointerY() || e.touches[0].pageY
 			e.preventDefault();
 			if(Map.mouseIsDown){
         		$("building-panel").hide();
 			 	self.dragDiv.show()
 				Map.dragged = true
-				var dx = e.pointerX() - Map.mouseLocation.x;
-				var dy = e.pointerY() - Map.mouseLocation.y;
+				var dx = x - Map.mouseLocation.x;
+				var dy = y - Map.mouseLocation.y;
 				Map.move( -dx, -dy);
 				var xLoc = Map.x;
 				var yLoc = Map.y;
 				Map.mapMirror.mirrorMove(xLoc,yLoc);
-				Map.mouseLocation = {x:e.pointerX(), y:e.pointerY()}
+				Map.mouseLocation = {x:x, y:y}
 			}
 		})
 	},
