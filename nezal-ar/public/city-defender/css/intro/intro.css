@@ -84,7 +84,6 @@
 {
   position:absolute;
   left:0;
-  top:0;
   width : 760px;
   height : 550px;
   z-index:1000;
@@ -567,7 +566,7 @@
   left:420px;
   position:absolute;
   text-align:center;
-  top:55px;
+  top:38px;
   width:260px;
 }
 #mission #cityImage img
@@ -1385,19 +1384,20 @@ div.clickableButton:hover, span.clickableButton:hover
 	position:absolute;
 }
 #previousCampaigns ul{	
-	font-size:24px;
-	height:300px;
-	margin-left:100px;
-	margin-right:100px;
-	margin-top:105px;
-	position:relative;
-	width:540px;
-	z-index:1000;
+	font-size: 18px;
+    height: 300px;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 82px;
+    position: relative;
+    width: 600px;
+    z-index: 1000;
 }
 
 #previousCampaigns ul li{
+	float:left;
 	list-style-type : none;
-	width: 270px;
+	width: 300px;
 }
 
 #previousCampaigns ul li a{
@@ -1413,6 +1413,7 @@ div.clickableButton:hover, span.clickableButton:hover
 #previousCampaigns ul li img{
 	width :32px;
 	margin: 10px;
+	height: 22px;
 	vertical-align: middle;
 	border: none;
 }
@@ -1470,4 +1471,111 @@ div.clickableButton:hover, span.clickableButton:hover
 }
 #floatBgLevel #medium .difficultyLevel{
 	/*margin-left:7px;*/
+}
+#playerProgress .item{
+	float:left;
+	margin-right:8px;
+	margin-top:12px;
+	position:relative;
+	width:139px;
+	font-family:verdana;
+	font-size:16px;
+	font-weight:bold;
+	margin-top:16px;
+}
+#playerProgress .item img{
+	float:right;
+}
+#playerProgress .item .tick{
+	position:absolute;
+	right:0;
+	display:block;
+}
+#playerProgress .item .iteminfo{
+	float:left;
+	font-family:verdana;
+	font-size:14px;
+	font-weight:bolder;
+	margin-top:3px;
+	width:84px;
+	text-align:center;
+}
+#playerProgress .item a{
+	color:white;
+	font-size:13px;
+	text-decoration:none;
+}
+#playerProgress .logo{
+	float:left;
+	margin-right:20px;
+}
+#playerProgress #progressItems .logo img{
+	width:124px;
+	margin-top:1px;
+}
+#playerProgress .item .moneyImg{
+}
+#playerProgress .item .price{
+	color:yellow;
+	width:65px;
+}
+
+#playerProgress .item .titleInstalled{
+	margin-top:8px;
+}
+#playerProgress #progressBarEmpty {
+	position:absolute;
+	top:10px;
+	width:720px;
+}
+#playerProgress #progressBarEmpty #progressBarFill{
+	background:url("../../images/intro/bar.png") repeat scroll 0 0 transparent;
+	height:33px;
+	padding-top:1px;
+	position:absolute;
+	left:7px;
+	top:10px;
+	z-index:1;
+}
+#playerProgress #progressBarEmpty #bgImage{
+	position:absolute;
+	width:730px;
+}
+#playerProgress #progressItems{
+	position:absolute;
+	color:white;
+	z-index:1;
+}
+#game{
+	position:relative;
+}
+#playerProgress{
+	margin-left:10px;
+	height:66px;
+}
+#playerProgress #playerProgressIframeContainer{
+	-moz-border-radius:5px 5px 5px 5px;
+	-webkit-border-radius:5px 5px 5px 5px;
+	-o-border-radius:5px 5px 5px 5px;
+	-ms-border-radius:5px 5px 5px 5px;
+	border-radius:5px 5px 5px 5px;
+	background-color:white;
+	border:1px solid black;
+	color:black;
+	height:100px;
+	left:125px;
+	opacity:0.9;
+	position:absolute;
+	top:76px;
+	z-index:1000;
+}
+#playerProgress #playerProgressIframeContainer .close{
+	cursor:pointer;
+	float:right;
+	font-family:Adlib;
+	margin-right:5px;
+	margin-top:5px;
+}
+#playerProgress #playerProgressIframeContainer iframe{
+	margin:10px;
 }

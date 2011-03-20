@@ -3,7 +3,6 @@ var Map = {
 	width : 20,
 	height: 15,
 	grid : [],
-	tiles : [new Image(), new Image()],
 	bgGrid : [
  [2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2],
 [2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2],
@@ -39,13 +38,13 @@ var Map = {
 		//bgctx.drawImage(bg, 0, 0)
 	},
 	value : function(x, y){
-		return Map.bgGrid[Math.floor( x / Map.pitch)][Math.floor( y / Map.pitch)]
+		return Map.bgGrid[Math.abs(Math.floor( x / Map.pitch))][Math.abs(Math.floor( y / Map.pitch))]
 	},
 	findTile : function(x, y){
-		return [Math.floor(x/this.pitch),Math.floor(y/this.pitch)]
+		return [Math.abs(Math.floor(x/this.pitch)),Math.abs(Math.floor(y/this.pitch))]
 	},
 	transform : function(x){
-		return Math.floor(x/this.pitch)*this.pitch
+		return Math.abs(Math.floor(x/this.pitch)*this.pitch)
 	},
 	empty : function(x, y){
 		if(!this.grid[x]) return false;

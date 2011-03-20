@@ -52,7 +52,7 @@ var Reactor = Class.create({
 			//alert('inside reactor : '+ e)
 		}
 		this.ticks++
-		setTimeout(function(){self.tick()}, this.delay)
+  	if(window.setTimeout)window.setTimeout(function(){self.tick()}, this.delay)
 	},
 
 	_eventIndex : function(ticks, insert){

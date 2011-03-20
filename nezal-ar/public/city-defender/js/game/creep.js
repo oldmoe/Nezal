@@ -1,3 +1,4 @@
+
 var Creep = Class.create(Unit, {
 	parent : "creep",
 	speeds : [0, 1.08, 2.245, 4.852, 6.023, 7.945, 11.71, 22.625],
@@ -11,11 +12,10 @@ var Creep = Class.create(Unit, {
 	cannonDisplacement : [-4, 0],
 	turningPoint : [0, 0],
 	range : 1,
-	initialize : function($super,x,y,scene,extension){
+	
+	initialize : function($super,x,y,scene, extension){
 		$super(x,y,scene,extension)
 		Map.grid[x][y].push(this)
-		this.initImages()
-		this.createSprites()
 		// find the nearest empty tile
 		if(x == 0){
 			this.rotation = 0
@@ -27,34 +27,15 @@ var Creep = Class.create(Unit, {
 			this.bottom = this.x - Map.entry[0][0] * Map.pitch
 		}else if(x == (Map.width - 1)){			
 			this.rotation = 180
-			this.top = Map.entry[1][1] * Map.pitch - this.y					
-			this.bottom = this.y - (Map.entry[0][1]+1) * Map.pitch
+			this.bottom = this.y - Map.entry[0][1] * Map.pitch
+			this.top = (Map.entry[1][1] + 1) * Map.pitch- this.y
 		}else if(y == Map.height - 1){
 			this.rotation = 270
 			this.top = this.x - Map.entry[0][0] * Map.pitch
 			this.bottom = (Map.entry[1][0] + 1) * Map.pitch - this.x					
-		}
-		
+		}		
 	},
-	initImages : function(){},
-	createSprites: function(){
-		this.sprite = new CompositeUnitSprite(this.images,this.hp,this.maxHp)
-		this.sprite.moveTo(this.x,this.y);
-	},
-	modifySprites: function(){
-		this.sprite.x = this.x
-		this.sprite.y = this.y
-		this.sprite.rotation = this.rotation
-		this.sprite.cannonRotation = this.cannonTheta
-		if(this.baloon)this.baloon.moveTo(this.x,this.y-70)
-		this.sprite.setHp(this.hp)
-		this.sprite.maxHp = this.maxHp
-		if(this.fired){
-			this.sprite.currentFrame = 1
-			this.fired = false
-		}
-		else this.sprite.currentFrame = 0
-	},
+	
 	topBottomValues : function(){
 		if(this.rotation == 0){
 			return [Map.value(this.x, this.y - this.top - 1), Map.value(this.x, this.y + this.bottom + 1)]
@@ -147,7 +128,7 @@ var Creep = Class.create(Unit, {
 		var newGridY = Math.floor(this.y / Map.pitch) 
 		if(newGridX >= Map.width || newGridY >= Map.height || newGridX < 0 || newGridY < 0 ){
 			this.scene.escaped += 1
-			this.destroySprites()
+			this.destroy()
 		}else if(this.gridX != newGridX || this.gridY != newGridY){
 			var oldArr = Map.grid[this.gridX][this.gridY]
 			oldArr.splice(oldArr.indexOf(this), 1);
@@ -160,32 +141,6 @@ var Creep = Class.create(Unit, {
 			}
 		}
 		this.target();			//for specifying the target to hit
-		this.modifySprites()
-	},
-	target: function(){
-		if(this.dead) return
-		if(!this.reloaded){
-			this.toFire += this.rate;
-			if(this.toFire >= 1){
-				this.reloaded = true;
-				this.toFire -= 1
-			}
-		}
-		// look at the surrounding grid locations
-		var targets = []
-		for(var i = this.gridX - this.range; i < this.gridX + this.range + 1; i++){
-			for(var j = this.gridY - this.range; j < this.gridY + this.range + 1; j++){
-				if(Map.grid[i] && Map.grid[i][j]){
-					this.getTargetfromCell(Map.grid[i][j], targets)
-				}
-			}
-		}
-		if(targets.length >= 1){
-			this.pickTarget(targets)
-		}else{
-			this.targetUnit = null
-		}
-		return this;
 	},
 	getTargetfromCell: function(cell, targets){
 		if(cell.tower){
@@ -208,27 +163,21 @@ var Creep = Class.create(Unit, {
 		}
 		if(this.reloaded){
 			target.takeHit(this.power)
-			if(target.dead)		this.scene.scenario.notify({name:"creepDestroyedTower", method: false, unit:this})
+			if(target.dead&&this.scene.scenario)this.scene.scenario.notify({name:"creepDestroyedTower", method: false, unit:this})
 			this.reloaded = false;
 			this.fired = true;
 		}
 	},
 	die : function(){
-		var anim = new CoinsAnimation(this.x, this.y - 40)
-		this.scene.towerHealthLayer.attach(anim)
-		this.scene.objects.push(anim)
-		this.destroySprites()
-		var moneyAnim = new MoneyAnimation(this.x-10,this.y-5,Math.floor(this.price))
-		this.scene.objects.push(moneyAnim)
+		this.destroy()
+		this.killed = true
 		this.scene.money += Math.round(this.price);
 		this.scene.stats.creepsDestroyed++
 		this.scene.score += Math.round(this.maxHp/20)*this.scene.config.level
 	},
-	destroySprites : function(){
+	destroy : function(){
 		var cell = Map.grid[this.gridX][this.gridY];
 		cell.splice(cell.indexOf(this), 1);
-		this.sprite.destroy()
-		if(this.baloon)this.baloon.destroy()
 		this.dead = true
 	}
 })	

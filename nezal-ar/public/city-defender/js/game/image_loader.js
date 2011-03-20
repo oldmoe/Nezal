@@ -183,10 +183,6 @@ function loadGameImages(loader){
 		
 	}catch(e){}
 }
-function initLoadImages(loader){
-	loader.load([{images: ['interface.png','loading_bar_down.png','loading_bar_up.png'], path: 'images/background/', store: 'background'}],
-	{onProgress: function(progress){},onFinish:function(){$('waitScreen').hide();Effect.Appear('splashScreen');loadGameImages(loader);}})
-}
 Loader.images ={}
 Loader.sounds = {}
 Loader.animations = {}

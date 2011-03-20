@@ -43,9 +43,11 @@ var ResourceLoader = Class.create( {
             function(resource){
                 if(!resource[1])
                 {
+					
                     new Ajax.Request( resource[0], {method:'get',
                                                       onSuccess: function(t){
                                                           self.resources.set(resource[0], t.responseText);
+														 // console.log(resource[0],t.responseText)
                                                           self.loadedCount ++;
                                                           if(self.loadedCount == self.resources.keys().length)
                                                           {
@@ -74,7 +76,8 @@ var Config = GameConfigs;
 
 var PathConfigs = {
   introTemplate : "templates/intro/intro.tpl",
-  gameTemplate : "templates/game.tpl"
+  gameTemplate : "templates/game.tpl",
+  playerProgressTemplate : "templates/playerProgress.tpl",
 }
 
 var Intro = {
@@ -114,12 +117,14 @@ var Intro = {
         var loader = new ResourceLoader();
         loader.addResource(PathConfigs.introTemplate);
         loader.addResource(PathConfigs.gameTemplate);
+        loader.addResource(PathConfigs.playerProgressTemplate);
         loader.addResource('metadata');
         loader.load(function(){
       			  $('introTemplates').innerHTML = loader.resources.get(PathConfigs.introTemplate);
-			        for(var template in Intro.templates){
+			      for(var template in Intro.templates){
             		  Intro.templates[template][1] = TrimPath.parseDOMTemplate(Intro.templates[template][0]);
-              }
+				  }
+				  Intro.templates.playerProgress = loader.resources.get(PathConfigs.playerProgressTemplate)
 			  //$("gameStart").innerHTML = loader.resources.get(PathConfigs.gameTemplate);
               $("gameStart").innerHTML = Intro.templates['game'] = loader.resources.get(PathConfigs.gameTemplate);
               var data = JSON.parse(loader.resources.get('metadata'));
@@ -139,7 +144,9 @@ var Intro = {
               Intro.ranks = data['ranks'];
   			  Intro.doneLoading = true;
 		  	  Intro.start()
+			  Intro.processPlayerProgress()
 			  $('scores').src = 'scores/friends.html?'+Object.toQueryString(FBConnect.session)
+			  //$('scores').contentDocument.location.reload(true)
 			  /*
               Loader.loadPage(GameConfigs.campaign, function(){
 				  
@@ -148,6 +155,23 @@ var Intro = {
 			  */
           });
     },
+	processPlayerProgress : function(){
+		$("playerProgress").innerHTML = TrimPath.parseTemplate(Intro.templates.playerProgress).process();
+		Intro.setPlayerProgressWidth()
+	},
+	setPlayerProgressWidth : function(){
+		var percentages = [34,55,75,96]
+		var index=0;
+		if(Intro.userData.bookmarked&&Intro.userData.like&&Intro.userData.subscribed){
+			$("playerProgress").hide();
+			index=3
+		}else if(Intro.userData.bookmarked&&Intro.userData.like){
+			index=2
+		}else if(Intro.userData.bookmarked){
+			index=1
+		}
+		$$('#playerProgress #progressBarEmpty #progressBarFill')[0].style.width = percentages[index]+"%"
+	},
 	retrievePrevCampaigns : function(){
 		new Ajax.Request( 'statics/campaigns.json', {method:'get',
 			onSuccess: function(t){
@@ -210,6 +234,9 @@ var Intro = {
                         $('intro').addClassName(GameConfigs.language)
                         $('congrates').addClassName(GameConfigs.language)
             						$('levelSelection').innerHTML = Intro.templates.levelSelection[1].process(); 
+									$$('.languageSelector').each(function(div){
+										div.observe('click', function(){Intro.selectLanguage(this)})
+									})
                         if(Intro.userData.newbie){
 						    Intro.displayTutorial();
                         }else{
@@ -252,16 +279,18 @@ var Intro = {
 					missionLoader.load( function(){
 						Intro.campaignData.camp_data.metadata.each(function(mission){
 						   var missionPath = Intro.campPath() + "/" + mission['path'] + "/mission.info"; 
-						   Intro.campaignData.missionsInfo[mission['path']] = 
+						   Intro.campaignData.missionsInfo[mission['path']] = 						   
 								JSON.parse(missionLoader.resources.get(missionPath));
+								
 						});
 						$('campaign').innerHTML = 
-						  Intro.templates.campaign[1].process({"camp":Intro.campaignData.campaignInfo}); 
+						 Intro.templates.campaign[1].process({"camp":Intro.campaignData.campaignInfo}); 
 						Intro.show();
 						$('intro').show();
 						Intro.disablePauseScreen();
 						$('gameStart').hide();
 					});
+					$('scores').src = 'scores/friends.html?'+Object.toQueryString(FBConnect.session)
 				});
             }
         },
@@ -414,7 +443,7 @@ var Intro = {
     
     selectLanguage : function(element)
     {
-      var lang=element.getAttribute('language')
+	  var lang=element.getAttribute('language')
       Intro.enablePauseScreen();
       Language.select(lang, function(){
           Intro.userData.locale = Language.userLanguage;
@@ -584,6 +613,13 @@ var Intro = {
       });
       $('congrates').show()
     },
+    showSubscribeCongrates : function(){
+      $('congrates').innerHTML = Intro.templates.congrates[1].process({ "msg" : Text.facebook.subscribe });
+      $$('#congrates .clickSound').each(function(element){
+          element.observe('click', function(element){Sounds.play(Sounds.gameSounds.click)})
+      });
+      $('congrates').show()
+    },
     showBookmarkCongrates : function(){
       $('congrates').innerHTML = Intro.templates.congrates[1].process({ "msg" : Text.facebook.bookmark });
       $$('#congrates .clickSound').each(function(element){
@@ -671,18 +707,19 @@ var Intro = {
         $("intro").style['cursor'] = 'auto';
     },
 
-	  next: function(current){
-	      Intro.disabled = false;
+	  next: function(currentIndex){
+		Intro.disabled = false;
         Intro.enablePauseScreen();
-        Intro.nextPageIndex = Intro.currentPage + 1;
-        var callback = function() {
-			if(Intro.nextPageIndex == Intro.sequence.length )
-				Intro.finish();
-			else{
-				Intro.pages[Intro.sequence[Intro.currentPage + 1]].onSelect();
-														}
+        if(currentIndex != null){
+			Intro.nextPageIndex = currentIndex
+		}else{
+			Intro.nextPageIndex = Intro.currentPage + 1;
+        }
+		if(Intro.nextPageIndex == Intro.sequence.length ){
+			Intro.finish();
+		}else{
+			Intro.pages[Intro.sequence[Intro.nextPageIndex]].onSelect();
 		}
-        callback();
 	  },
 	  
 	  previous: function(current){
@@ -728,12 +765,15 @@ var Intro = {
 				onFinish()
 	  },
     showPaymentBg: function(){
-      $('payments-container').innerHTML = TrimPath.parseTemplate($('payment-options-template').value).process();
-      $$('#payments-container .clickSound').each(function(element){
-        element.stopObserving('click');
-      });
-      payment.activateMiddlePackage();
-      $('paymentFloatBg').show();
+		$('paymentFloatBg').show();
+		/*
+		  $('payments-container').innerHTML = TrimPath.parseTemplate($('payment-options-template').value).process();
+		  $$('#payments-container .clickSound').each(function(element){
+			element.stopObserving('click');
+		  });
+		  payment.activateMiddlePackage();
+		  $('paymentFloatBg').show();
+	  */
     },
     hidePaymentBg: function(){
       $('paymentFloatBg').hide();

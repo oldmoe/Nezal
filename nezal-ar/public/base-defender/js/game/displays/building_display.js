@@ -113,7 +113,6 @@ var BuildingDisplay = Class.create(Display, {
       self.sprites.building.animated = true;
       self.sprites.base.hide();
       self.sprites.outline.hide();
-      self.sprites.base.show()
       self.sprites.info.hide();
       if (self.sprites.text) {
         self.sprites.text.hide()
@@ -141,19 +140,22 @@ var BuildingDisplay = Class.create(Display, {
     }
     
     $('building-panel').setStyle({
-        top: top + "px",
-        left: left + "px"
-      });
+      top: top + "px",
+      left: left + "px"
+    });
+    this.renderPanelButtons();
   },
   
-  _AttachUpgradeTrigger : function(){
-    var self = this;
-    $('upgrade_trigger').stopObserving("click");
+  renderPanelButtons : function(){
+    var owner = this.owner;
+    
+    $('panel-buttons-container').innerHTML = this.game.templatesManager.upgradeButton();
+    $('upgrade_trigger').stopObserving('click');
     $('upgrade_trigger').observe('click', function(){
-      self.owner.upgrade();
+      owner.upgrade();
     });
   },
-
+  
   render : function(){
     if (this.owner.state == this.owner.states.UNDER_CONSTRUCTION || this.owner.state == this.owner.states.UPGRADING ) {
       this.progressDisplay.render( this.owner.elapsedTime() );

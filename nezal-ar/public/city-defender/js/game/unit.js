@@ -12,17 +12,9 @@ var Unit = Class.create({
 		this.maxHp = this.hp
 		return this
 	},
-	createBaloon : function(num){
-		this.baloon = new Baloon(num)
-		this.scene.creepsLayer.attach(this.baloon)
-	},
-	destroyBaloon : function(){
-		this.baloon.destroy()
-		this.baloon = null
-	},
-	
 	target: function(){
 		if(this.dead) return
+		if(this.fired) this.fired = false
 		if(!this.reloaded){
 			this.toFire += this.rate;
 			if(this.toFire >= 1){
@@ -54,14 +46,10 @@ var Unit = Class.create({
 		if(this.dead) return
 		this.hp -= power
 		if(this.hp <= 0 ){
-			var anim = new CreepBoom(this.x, this.y)
-			game.scene.rankLayer.attach(anim)
-			game.scene.objects.push(anim)
+      this.killed = true
 			this.dead = true; 
 			this.die(); 
-			Sounds.play(Sounds.boom.unit)
 		}
-
 		return this;
 	},
 	die: function(){

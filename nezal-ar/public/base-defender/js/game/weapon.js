@@ -4,7 +4,6 @@ var Weapon = Class.create({
   targetAngle : 5,
   imgHeight : 93,
   imgWidth : 64,
-  
   name : null,
   game : null,
   specs : null,
@@ -67,7 +66,7 @@ var Weapon = Class.create({
       this.attacker = null;
       return;
     }      
-    if(this.attacker)
+		if(this.attacker)
       this.attacker.hp -= this.specs.power;
     this.attacked = false;
     this.attacker = null;

@@ -6,10 +6,11 @@
       description : 'Pay with your mobile. It is fast, secure and easy. No credit card required!',
       packageCommand : 'Pay *price* EUR and get *reward* coins'
     },
-    success : 'Congratulations, you have successfully purchased *coins* coins',
+    success : 'Félicitation, tu as bien acheté *coins* pièces',
     contactUsMessage : 'For any issue, please',
     contactUsTrigger : 'contact us',
     contactUsFormTitle : 'Explain your issue :',
+	makeSure :' Assures-toi que l\'appel soit terminé',
     contactUsFormSend : 'Send',
     contactUsFormPostSubmissionSuccess : 'We will revise your issue soon. Thanks you for your patience.',
     contactUsFormPostSubmissionFailure : 'Your issue is not posted successfully, please try again later.'
@@ -212,13 +213,14 @@
             'upgraded the',
             'to gain massive tactical advantage on the battle.'
         ],
-        userPrompt : 'Raconte tes accomplissements à tes amis et gagne 5 pièces de monnaie.',
+        userPrompt : 'Raconte tes accomplissements à tes amis.',
 		invite : {
             inviteMsg : 'Es-tu assez motivé pour défendre les terres arabes?',
-            userPrompt : 'Invite tes amis et gagne 200 pièces de monnaie par joueur.'
+            userPrompt : 'Invite tes amis et gagne 500 pièces de monnaie par joueur.'
         },
         like : 'Félicitations, tu as gagné 500 pièces de monnaie pour avoir aimé notre jeu',
-        bookmark : 'Félicitations, tu as gagné 500 pièces de monnaie pour avoir ajouté notre signet.'
+        bookmark : 'Félicitations, tu as gagné 500 pièces de monnaie pour avoir ajouté notre signet.',
+        subscribe : 'Félicitations, tu as gagné 500 pièces de monnaie for subscribing with us.'
     },
 	game : {
 		tutorial : {

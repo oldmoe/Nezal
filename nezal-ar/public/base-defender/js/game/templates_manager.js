@@ -88,5 +88,11 @@ var TemplatesManager = Class.create({
 	},
 	loadingScreen : function(){
 		return TrimPath.processDOMTemplate("loadingScreen-template");
-	}
+	},
+  resourceBuildingPanelButtons : function(){
+    return TrimPath.processDOMTemplate("resource-building-buttons-template");
+  },
+  upgradeButton : function(){
+    return TrimPath.processDOMTemplate("upgrade-button-template");
+  }
 });

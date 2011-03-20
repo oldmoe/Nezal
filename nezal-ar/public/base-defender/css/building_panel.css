@@ -18,8 +18,10 @@
   font-size: 12px;
   font-weight: bold;
   left: 16px;
-  top: 24px;
+  margin-top: 4px;
   position: absolute;
+  text-align: center;
+  width: 58px;
 }
 
 #panel-buttons-container #panel-button-upgrade span {

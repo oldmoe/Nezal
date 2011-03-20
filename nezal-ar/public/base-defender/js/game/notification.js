@@ -29,16 +29,17 @@ var Notification = Class.create({
 Notification.alert = function(message){
   $("alert").innerHTML = game.templatesManager.alert(message);
   $("alert").show();
+  $('interaction').show();
 }
 Notification.notify = function(message){
 	$("notify").innerHTML = game.templatesManager.alert(message);
   $("notify").show();
-	$('interaction').show()
+	$('interaction').show();
 }
 Notification.repair = function(message){
 	if(Notification.repairShown) return 
 	Notification.repairShown = true
 	$("notify").innerHTML = game.templatesManager.notifyRepair(message);
   $("notify").show();
-	$('interaction').show()
+	$('interaction').show();
 }

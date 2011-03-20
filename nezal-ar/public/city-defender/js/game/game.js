@@ -11,6 +11,8 @@ var Game = Class.create({
 	
 	start : function(replay){
 		if(!game.started){
+      Config.ranks = Intro.ranks
+      Config.coins = Intro.userData.coins
 			game.started = true
 			Map.init();
 			if(Intro.userData.newbie)Config = tutorialConfig
@@ -21,18 +23,25 @@ var Game = Class.create({
 			$$('#game #scores').first().show()
 			if(Intro.userData.newbie){
 				$('modalWindow').show()
-				this.scene = new TutorialScene(this.config,40,this.ctx,this.topCtx);
+				this.scene = new TutorialScene(this.config,33,this.ctx,this.topCtx, replay);
 				this.tutorial = new Tutorial(this.scene,this.tutorialCtx)
 				$('gameExit').hide()
 				$('gameReset').hide()
 				$$('#modalWindow #ok #rogerText').first().innerHTML = Text.game.controls.roger
 				$$('.sound').first().observe('click',Sounds.mute)
-				$$('.bookmark').first().observe('click', FBDefender.bookmark)	
+				$$('.music').first().observe('click',Sounds.switchmusic)
 				$$('.snapshot').first().hide()
 			}
 			else{
-				this.scene = new CityDefenderScene(this.config,33,this.ctx,this.topCtx, replay);
-				if(!replay)this.registerHandlers();
+			   if(!replay){this.scene = new DisplayScene(this.config,33,this.ctx,this.topCtx, replay);
+						   this.registerHandlers();
+				}
+				else if(Nezal.replay){
+						 this.scene= new DisplayScene(this.config,33,this.ctx,this.topCtx, replay);
+				}
+				else{
+					this.scene= new CityDefenderScene(this.config,33,replay);
+				}
 			}
 			if(Config.map)Map.bgGrid = Config.map
 			if(Config.mapEntry)Map.entry = Config.mapEntry
@@ -77,7 +86,10 @@ var Game = Class.create({
 			var ind = Config.towers.indexOf(inputNames[i])
 			if(ind!=-1){
 				Config.towers[ind] = replacement[i]
-				var values = Intro.gameData.towers[inputNames[i]].upgrades
+				var values = null
+				if(Nezal.replay)
+						values = JSON.parse(Intro.gameData.towers[inputNames[i]].upgrades)
+				else  values = Intro.gameData.towers[inputNames[i]].upgrades
 				var upgrades = []
 				upgradeValues.each(function(upgradeValue){
 						eval(replacement[i]).prototype[upgradeValue] = values[0][upgradeValue]
@@ -177,8 +189,6 @@ var Game = Class.create({
 		$$('#snapshotWindow #background')[0].src=Loader.images.background['pop_up.png'].getAttribute('data')
 		$('popup').appendChild(Loader.images.background['pop_up.png'])
 		$$('#popup #popupOk').first().appendChild(Loader.images.intro['mission/accept.png'])
-		if(Intro.userData.bookmarked)$$('.bookmark').first().hide()	
-		if(Intro.userData.like)$$('.like').first().hide()
 		if(Sounds.muted)Sounds.mute()
 	},
 	
@@ -209,7 +219,7 @@ var Game = Class.create({
 		$('gameReset').observe('click',function(){game.reset()})	
 		$('gameResume').observe('click', function(){game.scene.resume()})	
 		$$('.sound').first().observe('click',Sounds.mute)
-		$$('.bookmark').first().observe('click', FBDefender.bookmark)
+		$$('.music').first().observe('click',Sounds.switchmusic)
 		$$('.snapshot').first().observe('click',function(){game.scene.takeSnapShot()})
 		$$('.snapshot').first().hide()
 		$$('#snapshotWindow #save').first().observe('click',function(){game.scene.saveSnapshot()})
@@ -218,7 +228,7 @@ var Game = Class.create({
 	},
 	reset : function(replay){
 		game.started = false
-		game.scene.reactor.stop()
+		game.scene.displays = []
 		game.scene.resetScene()
 		$$('#gameElements #gameMenu').first().hide()
 		$('pauseWindow').hide()
@@ -234,6 +244,7 @@ var Game = Class.create({
 		$$('#gameElements .superWeapons div').each(function(div){ 
 			if(div.className != ''){div.stopObserving('click')}
 		})
+		game.scene.reactor.stop()
 		game.start(replay)
 	},
 	
@@ -260,13 +271,13 @@ var Game = Class.create({
 		$('gameExit').stopObserving('click')	
 		$('gameReset').stopObserving('click')	
 		$('gameResume').stopObserving('click')	
-		$$('.bookmark').first().stopObserving('click')	
 		$$('.sound').first().stopObserving('click')
+		$$('.music').first().stopObserving('click')
 	}
 });
 
 var game = new Game()
-function city_defender_start(){
+function city_defender_start(replay){
 		$$("canvas").each(function(canvas){
 			canvas.width = Map.width * Map.pitch
 			canvas.height = Map.height * Map.pitch
@@ -286,7 +297,7 @@ function city_defender_start(){
 		game.canvas = fg
 		game.ctx = fg.getContext('2d')
 		game.topCtx = top.getContext('2d')
-		game.start();
+		game.start(replay);
 		Upgrades.selectDefault();
 		
 }

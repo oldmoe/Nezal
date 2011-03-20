@@ -11,6 +11,7 @@ window.Text = {
     contactUsTrigger : 'contact us',
     contactUsFormTitle : 'Explain your issue :',
     contactUsFormSend : 'Send',
+	makeSure :'Please make sure the call has ended',
     contactUsFormPostSubmissionSuccess : 'We will revise your issue soon. Thanks you for your patience.',
     contactUsFormPostSubmissionFailure : 'Your issue is not posted successfully, please try again later.'
   },
@@ -212,13 +213,14 @@ window.Text = {
             'upgraded',
             'to gain massive tactical advantage on the battle.'
         ],
-        userPrompt : 'Tell your friends about your accomplishment and get 5 coins',
+        userPrompt : 'Tell your friends about your accomplishment',
 		invite : {
             inviteMsg : 'Are you eager enough to defend the Arab land? ',
-            userPrompt : 'invite your friends and earn 200 coins for each one who starts playing.'
+            userPrompt : 'invite your friends and earn 500 coins for each one who starts playing.'
         },
         like : ' Congratulations, you got 500 coins as a gift for liking us.',
-        bookmark : 'Congratulations, you got 500 coins as a gift for bookmarking us.'
+        bookmark : 'Congratulations, you got 500 coins as a gift for bookmarking us.',
+        subscribe : 'Congratulations, you got 500 coins as a gift for subscribing with us.'
     },
 	game : {
 		tutorial : {
