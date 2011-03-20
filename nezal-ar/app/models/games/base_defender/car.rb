@@ -30,11 +30,11 @@ module BD
       end
       super
       if(@target && @moving_path.length == 0)
-        @target.owner["hp"] -=@power
+        @target.hp -=@power
         @attacked = true
       end
-      if (@target.owner["hp"] <= 1)
-        @target.owner["hp"] = 1
+      if (@target.hp <= 1)
+        @target.hp = 1
         @target = nil
       end 
     end
@@ -43,13 +43,13 @@ module BD
       min_index = -1
       min_distance = 9999999
       0.upto(@map.objects.length-1) do |i|
-        next if ( @map.objects[i].owner["hp"] <=1 )
+        next if ( @map.objects[i].hp <=1 )
         building = @map.objects[i] 
         distance_to_building = Util.distance(@coords['x'],@coords['y'],building.owner['coords']['x'],building.owner['coords']['y'])
         if distance_to_building < min_distance
           min_distance = distance_to_building
           min_index = i
-        end
+      end
      end
      if min_index == -1
        @done_attack = true
