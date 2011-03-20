@@ -7,7 +7,8 @@ class CityDefender < Metadata
   WIN_COIN_FACTOR = (1.0/300)
   LIKE_COINS = 500
   BOOKMARK_COINS = 500
-  INVITE_COINS = 100
+  SUBSCRIBE_COINS = 500
+  INVITE_COINS = 500
   
   def self.init_game(game)
     metadata = { 'towers' => {}, 'weapons' => {} , 'creeps' => {} }
@@ -86,14 +87,18 @@ class CityDefender < Metadata
     if metadata['missions'][data['mission'] -1]
       old_score = metadata['missions'][data['mission'] -1]['score']
       metadata['missions'][data['mission'] -1]['score'] = 
-                                                  if metadata['missions'][data['mission'] -1]['score'] > data['score']
-                                                    metadata['missions'][data['mission'] -1]['score']
-                                                  else
-                                                    old_score = metadata['missions'][data['mission'] -1]['score']
-                                                    data['score']
-                                                  end
-      user_campaign.score -= old_score 
-      user_campaign.score += metadata['missions'][data['mission'] -1]['score']
+		  if metadata['missions'][data['mission'] -1]['score'] > data['score']
+			metadata['missions'][data['mission'] -1]['score']
+		  else
+			old_score = metadata['missions'][data['mission'] -1]['score']
+			data['score']
+		  end
+	  if metadata['missions'][data['mission'] -1]['score'] < 100000											
+		user_campaign.score -= old_score 
+		user_campaign.score += metadata['missions'][data['mission'] -1]['score']
+	  else 
+		puts ">>>>>>>CHEATER<<<<<<<<"
+	  end
       puts "======================================================"
       puts data['level']
       puts metadata['levels']
@@ -122,6 +127,7 @@ class CityDefender < Metadata
   
   # Needs a transaction
   def self.unlock(game_profile, data)
+	game_data = self.decode(game_profile.game.metadata)
     profile_data = self.decode(game_profile.metadata)
     if (game_data[data['type']][data['item_id']]['cost'].to_i <= game_profile.user.coins &&
           game_data[data['type']][data['item_id']]['exp'].to_i <= game_profile.exp )
@@ -164,7 +170,7 @@ class CityDefender < Metadata
   # Needs a transaction
   def self.bookmark(profile)
     profile.bookmarked = true
-    profile.user.coins += LIKE_COINS
+    profile.user.coins += BOOKMARK_COINS
     profile.user.save
     profile.save
   end
@@ -172,11 +178,19 @@ class CityDefender < Metadata
   # Needs a transaction  
   def self.like(profile)
     profile.like = true
-    profile.user.coins += BOOKMARK_COINS
+    profile.user.coins += LIKE_COINS
     profile.user.save
     profile.save
   end
   
+  # Needs a transaction  
+  def self.subscribe(profile)
+    profile.subscribed = true
+    profile.user.coins += SUBSCRIBE_COINS
+    profile.user.save
+    profile.save
+  end
+
   def self.reward_invitation(fb_id)
     user = FbUser.where( 'fb_id' => fb_id ).first
     if(user)

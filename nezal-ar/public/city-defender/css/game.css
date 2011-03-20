@@ -448,21 +448,27 @@ textarea{
 
 #gameElements  .sound.controls.on{
 	width: 40px;
-	background-image: url('../images/background/sound_on_button.png');		
-	top:35px
+	background-image: url('../images/intro/sound_on.png');		
+	top:7px
 }
 
 #gameElements  .sound.controls.off{
 	width: 40px;
-	top:35px;
+	top:7px;
 	background:none;
-	background-image: url('../images/background/sound_off_button.png');				
+	background-image: url('../images/intro/sound_off.png');				
 }
 
-#gameElements .like{
+#gameElements .music.controls.on{
 	width: 40px;
-	background-image: url('../images/background/like_button.png');			
-	top:117px;
+	background-image: url('../images/intro/music_on.png');			
+	top:48px;
+}
+#gameElements  .music.controls.off{
+	width: 40px;
+	background:none;
+	background-image: url('../images/intro/music_off.png');			
+	top:48px;
 }
 
 #gameElements  .bookmark{
@@ -881,13 +887,6 @@ position:"absolute";
 #incomingWaves div.wave div.creep img{
 	height: 24px;		
 	margin-top:3px;
-}
-#scores{
-	width :757px;	
-	height:150px;
-	border:none;	
-	position: absolute;
-	top : 550px;
 }
 #planeSilhouette{
 	position:absolute;

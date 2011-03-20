@@ -1,6 +1,7 @@
 var FBConnect = {
 
     appIds : {
+				'ie-city-defender' : "149722381737500",
         		'local-city-defender' : "110196392331352",
         		'city-defender' : "107418339291733",
         		'defenderofarabia' : "122519734470004"
@@ -130,7 +131,7 @@ var FBConnect = {
 	  },
 	  
 	  isFan : function(callback) {
-	      var query = FB.Data.query("SELECT page_id FROM page_fan WHERE uid={0}", FB.getSession().uid);
+	    var query = FB.Data.query("SELECT page_id FROM page_fan WHERE uid={0}", FB.getSession().uid);
         FB.Data.waitOn([query], function(){
             var fan = query.value.find(function(obj){
                 if(obj.page_id == FB._apiKey){
@@ -148,6 +149,14 @@ var FBConnect = {
                       callback();
               });
     },
+	
+	subscribe : function(callback){
+        FB.ui({ method: 'auth.login', perms:'email' },  
+              function(response) {
+                  if(response.perms && response.perms.indexOf('email') > -1)
+                      callback();
+              });
+    }, 
     
     publish : function(attachment, usePrompt, actionLink, successCallback) {
         FB.ui(
@@ -188,7 +197,6 @@ var FBConnect = {
           FB.UIServer.Methods['fbml.dialog'].size.height = 500;*/
           
     }
-
 }
 
 

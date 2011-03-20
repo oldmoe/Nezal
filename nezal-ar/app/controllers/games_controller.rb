@@ -67,7 +67,7 @@ class GamesController < ApplicationController
     data = {
       :camp_data => { :metadata => camp_metadata} , 
       :user_data => { :metadata => user_camp_metadata }
-    }	
+    } 
     JSON.generate(data)
   end
     
@@ -156,7 +156,7 @@ class GamesController < ApplicationController
     @package_coins = @@packages[params["price"]]
     @user.coins += @@packages[params["price"]]
     @user.save
-	payment = Payment.create!({:profile_id=>@game_profile.id,:price=>params['price']})
+  payment = Payment.create!({:profile_id=>@game_profile.id,:price=>params['price']})
     erb :"#{@app_configs["game_name"]}/daopay_confirmation"
   end
   
@@ -199,28 +199,28 @@ class GamesController < ApplicationController
   end
 
   post '/:game_name/:camp_name/:userid/friendsranks' do 
-		response = {:top => []}
-		camp = Campaign.where(:game_id => @game.id, :path => params['camp_name']).first
-		result = @user.ranking camp.id,params['friends']
-		response[:close] = result[:previous].collect{|uc| {:id => uc[:user_service_id], :score => uc[:score] } } + [{:id => result[:user_camp][:user_service_id], :score => result[:user_camp][:score], :rank => result[:rank]}]+ result[:next].collect{|uc| {:id => uc[:user_service_id], :score => uc[:score] } }
-		top_scorers = @user.top_scorers camp.id camp.id, params['friends']
-		top_scorers.each_with_index do |item,index|
-			response[:top].push( {'id'=> top_scorers[index]['user_service_id'],'score'=> top_scorers[index]['score']})			
-		end
-		return  JSON.generate(response)
+    response = {:top => []}
+    camp = Campaign.where(:game_id => @game.id, :path => params['camp_name']).first
+    result = @user.ranking camp.id,params['friends']
+    response[:close] = result[:previous].collect{|uc| {:id => uc[:user_service_id], :score => uc[:score] } } + [{:id => result[:user_camp][:user_service_id], :score => result[:user_camp][:score], :rank => result[:rank]}]+ result[:next].collect{|uc| {:id => uc[:user_service_id], :score => uc[:score] } }
+    top_scorers = @user.top_scorers camp.id camp.id, params['friends']
+    top_scorers.each_with_index do |item,index|
+      response[:top].push( {'id'=> top_scorers[index]['user_service_id'],'score'=> top_scorers[index]['score']})      
+    end
+    return  JSON.generate(response)
   end 
 
-	post '/:game_name/:camp_name/:userid/worldranks' do 
-		response = {:top => []}
-		camp = Campaign.where(:game_id => @game.id, :path => params['camp_name']).first
-		result = @user.ranking camp.id
-		response[:close] = result[:previous].collect{|uc| {:id => uc[:user_service_id], :score => uc[:score] } } + [{:id => result[:user_camp][:user_service_id], :score => result[:user_camp][:score], :rank => result[:rank]}]+ result[:next].collect{|uc| {:id => uc[:user_service_id], :score => uc[:score] } }
-		top_scorers = @user.top_scorers camp.id
-		top_scorers.each_with_index do |item,index|
-			response[:top].push( {'id'=> top_scorers[index]['user_service_id'],'score'=> top_scorers[index]['score']})			
-		end
-	  JSON.generate(response)
-	end
+  post '/:game_name/:camp_name/:userid/worldranks' do 
+    response = {:top => []}
+    camp = Campaign.where(:game_id => @game.id, :path => params['camp_name']).first
+    result = @user.ranking camp.id
+    response[:close] = result[:previous].collect{|uc| {:id => uc[:user_service_id], :score => uc[:score] } } + [{:id => result[:user_camp][:user_service_id], :score => result[:user_camp][:score], :rank => result[:rank]}]+ result[:next].collect{|uc| {:id => uc[:user_service_id], :score => uc[:score] } }
+    top_scorers = @user.top_scorers camp.id
+    top_scorers.each_with_index do |item,index|
+      response[:top].push( {'id'=> top_scorers[index]['user_service_id'],'score'=> top_scorers[index]['score']})      
+    end
+    JSON.generate(response)
+  end
 
   post '/:game_name/payment_issues' do
     Message.create!( { :body => params["body"], "type" => 'payment_issue', :profile_id => @game_profile.id } )

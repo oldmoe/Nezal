@@ -1,7 +1,8 @@
 .pay, .pay img {
-  position: absolute;
-  top: 17px;
-  left: 8px;
+    left: 8px;
+    margin-top: 37px;
+	padding: 33px;
+    text-align: center;
 }
 
 a.pay {
@@ -133,12 +134,13 @@ a img {
 }
 #paymentSuccessModalWindow .content
 {
-  font-size:17px; 
+  font-size:14px; 
   width : 235px;
-  height : 55px;
+  height : 88px;
   position : absolute;
-  top : 60px;
+  top : 43px;
   left : 145px;
+  right:36px;
   z-index : 3001;
   font-family: AdLib, Arial Black, Tahoma;
 }
@@ -154,7 +156,7 @@ a img {
 #paymentSuccessModalWindow #paymentSuccessImage {
   left: 225px;
   position: absolute;
-  top: 20px;
+  top: 8px;
   z-index: 3002;
 }
 #paymentSuccessModalWindow #paymentSuccessOk img{

@@ -1,6 +1,9 @@
 require 'sprockets'
 require 'erb'
 require 'base64'
+require 'net/http'
+require 'uri'
+
 load Dir.pwd + '/lib/jsmin.rb'
 
 
@@ -35,6 +38,7 @@ load Dir.pwd + '/lib/jsmin.rb'
 		"healthSprite.js",
 		"composite_unit_sprite.js",
 		"city_defender_scene.js",
+		"display_scene.js",
 		"tutorial_scene.js",
 		"mapeasy1.js",
 		"config.js",
@@ -45,6 +49,7 @@ load Dir.pwd + '/lib/jsmin.rb'
 		"rockets.js",
 		"ghost_turret.js",
 		"tanks.js",
+		"displays.js",
 		"plane.js",
 		"animation.js",
 		"super_weapon.js",
@@ -63,6 +68,7 @@ load Dir.pwd + '/lib/jsmin.rb'
 }
 
 def bundle
+	total = ''
 	[['base','js'], ['nezal','js'], ['game', 'js'], ['intro', 'css'],['payments', 'js'],['payments', 'css']].each do |folder|
 		STDERR.print "Processing #{folder.join('.')} ... "
 		if folder[0] != 'nezal' && folder[0] != 'payments'
@@ -81,6 +87,7 @@ def bundle
 			jsmin(data_in, data_out)
 			data_out.rewind
 			data_out = data_out.read
+			total<<";"<<data_out if folder[0]!='base'
 		else
 			data_out = conc.to_s
 		end
@@ -94,8 +101,18 @@ def bundle
 			STDERR.puts " DONE"
 		end
 	end
+=begin
+	response = Net::HTTP.post_form(URI.parse('http://closure-compiler.appspot.com/compile'), {
+	'js_code' => total,
+	'compilation_level' => 'SIMPLE_OPTIMIZATIONS',
+	'output_format' => 'text',
+	'output_info' => 'compiled_code'
+	})	 
+	File.open("#{@base}js/all/all.js", "w") do |file|
+				file.write(response.body)
+	end
+=end
 end
-
 def bust_cache(path)
 	buster = File.mtime("#{@base}#{path}").to_i.to_s(36)
 	"#{path}?t=#{buster}"
@@ -171,7 +188,8 @@ def generateDumbImageHTMLFile resourceDir,fileToWrite,id
 						image_id.sub!('/', '#').sub!('/', '#')							
 					end					
 				end
-				fileToWrite.puts "<img id='#{image_id}'  src='../#{image_id.gsub('#','/')}' />"
+				src = "../#{(resourceDir.include?"animations")? 'images/' : ''}#{image_id.gsub('#','/')}"
+				fileToWrite.puts "<img id='#{image_id}'  src='#{src}' />"
 			elsif File.directory? "#{resourceDir}/#{filename}"
 				generateDumbImageHTMLFile "#{resourceDir}/#{filename}",fileToWrite,id
 			end

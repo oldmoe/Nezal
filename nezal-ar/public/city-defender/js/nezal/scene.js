@@ -73,8 +73,7 @@ var Scene = Class.create(_Render, {
 	
 	finish : Nezal.notImplemented('Game#finish'),
 	
-	tick : function(){
-		try{
+	tick : function(){		try{
 			var remainingObjects = []
 			var self = this
 			this.objects.each(function(object){
@@ -91,7 +90,7 @@ var Scene = Class.create(_Render, {
 	_tick : function(){
 		if(!this.running) return
 		this.tick()
-		this.render()
+    this.render()
 		var self = this
 		this.push(1, function(){self._tick()})
 	},

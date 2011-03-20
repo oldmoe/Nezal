@@ -6,11 +6,7 @@ var Loader = {
 	dumb : false,
 	
 	callbacks: {},
-
-	initialize: function (){
-		this.toLoad = ["animations.html", "intro.html", "user.html", "background.html",  "game.html", "english.html", "arabic.html", "french.html"]
-	},
-
+
 	events : {
 		intro : {
 			loaded : false, 
@@ -100,7 +96,6 @@ var Loader = {
 	}	
 	
 }
-Loader.initialize()
 Loader.images ={}
 Loader.sounds = {}
 Loader.animations = {}

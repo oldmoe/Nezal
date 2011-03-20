@@ -25,6 +25,7 @@ var Sounds = {
 	channels : [],
 	maxChannels : 10,
 	muted : false,
+	musicOn : true,
 	mute : function(){
 		Sounds.muted = true
 		soundManager.mute()
@@ -43,6 +44,21 @@ var Sounds = {
 		$$('.sound').first().observe('click',Sounds.mute)
 	},
 	
+	switchmusic : function(){
+		if(Sounds.musicOn){
+			Sounds.musicOn = false
+			Sounds.stopTrack()
+			$$('.music').first().removeClassName('on')
+			$$('.music').first().addClassName('off')
+		}
+		else{
+			Sounds.musicOn = true
+			Sounds.resumeTrack()
+			$$('.music').first().removeClassName('off')
+			$$('.music').first().addClassName('on')
+		}
+	},
+	
 	garbageCollect : function(){
 		newChannels = []
 		time = new Date
@@ -56,7 +72,7 @@ var Sounds = {
 		Sounds.channels = newChannels
 	},
 	resumeTrack : function(){
-		if(!Sounds.gameSounds.game||Sounds.muted)return
+		if(!Sounds.gameSounds.game||Sounds.muted||!Sounds.musicOn)return
 		Sounds.gameSounds.game[0].play()
 	},
 	pauseTrack : function(){
@@ -64,7 +80,7 @@ var Sounds = {
 		Sounds.gameSounds.game[0].pause()
 	},
 	togglePauseTrack : function(){
-		if(!Sounds.gameSounds.game||Sounds.muted)return
+		if(!Sounds.gameSounds.game||Sounds.muted||!Sounds.musicOn)return
 		Sounds.gameSounds.game[0].togglePause()
 	},
 	stopTrack : function(){

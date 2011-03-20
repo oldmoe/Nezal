@@ -2,7 +2,8 @@ var Baloon = Class.create(Sprite,{
 	x : 0,
 	y : 0,
 	
-	initialize : function(num){
+	initialize : function(num,owner){
+		this.owner = owner
 		this.parent = $('gameElements');
 	    this.div = document.createElement('div');
 			this.div.setOpacity(1)
@@ -18,6 +19,8 @@ var Baloon = Class.create(Sprite,{
 		this.text.style.paddingTop = "2px"
 		this.text.style.textAlign = "center"
 		img.style.position = "relative"
+		this.div.style.left = this.owner.x+"px"
+		this.div.style.top = this.owner.y+"px"
 		this.text.style.top = "5px";this.text.style.left = "3px"
 		img.style.top = 0;img.style.left = 0
 		this.div.appendChild(img)
@@ -25,13 +28,16 @@ var Baloon = Class.create(Sprite,{
 		this.parent.appendChild(this.div);
 	},
 	render : function(ctx){
-		this.div.style.left = this.x+"px"
-		this.div.style.top = this.y+"px"
+		if(!this.owner || this.owner.dead){
+				return this.destroy()
+		}
+		this.div.style.left = this.owner.x+"px"
+		this.div.style.top = (this.owner.y-70)+"px"
 	},
 
 	destroy : function ($super){
-		$super()
 		if(this.div)
 		this.parent.removeChild(this.div)
+		$super()
 	}
 })
