@@ -70,7 +70,7 @@ class BaseDefender < Metadata
   
   def self.repair_jobs user_game_profile
     now = Time.now.utc.to_i
-    repair_factor = 1
+    repair_factor = 3
     profile_metadata = user_game_profile.metadata
     building_names = @@game_metadata['buildings'].keys
     building_names.each do |building_name|
@@ -180,6 +180,7 @@ class BaseDefender < Metadata
   end
   
   def self.load_game(game)
+    puts "###########LOAD GAME"
     @@game_metadata = initialize_game_metadata game || {}
   end
   
@@ -198,7 +199,7 @@ class BaseDefender < Metadata
       origin['error'] = user_game_profile['error']
       user_game_profile.metadata= origin
     end
-    
+    puts " ###########LOAD PROFILE"
     @@game_metadata = initialize_game_metadata user_game_profile.game
     BD::Research.init user_game_profile
     calculate_jobs user_game_profile
@@ -283,8 +284,9 @@ class BaseDefender < Metadata
       end
     end
     map.objects.each do |obj|
+      puts "#{obj.inspect}"
       key = self.convert_location(obj.owner['coords'])
-      user_game_profile.metadata[obj.name][key]['hp'] = obj.hp
+      #user_game_profile.metadata[obj.name][key]['hp'] = obj.hp
     end
     return {'valid' => true, 'error' => ''}
   end
