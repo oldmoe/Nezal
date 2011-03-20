@@ -137,7 +137,7 @@ var Map={
 		var retList = []
 		for (var k=0;k<8;k++){
 			var neighbor = Map.getNeighbor(i,j,k)
-			if(neighbor && Map.grid[neighbor[0]][neighbor[1]].value ==0 &&Map.grid[neighbor[0]][neighbor[1]].terrainType==0 ) retList.push(Map.grid[neighbor[0]][neighbor[1]])
+			if(neighbor && (Map.grid[neighbor[0]][neighbor[1]].value ==0 || Map.grid[neighbor[0]][neighbor[1]].target)  &&Map.grid[neighbor[0]][neighbor[1]].terrainType==0 ) retList.push(Map.grid[neighbor[0]][neighbor[1]])
 		}
 		return retList
 	},
@@ -354,7 +354,8 @@ var Map={
 		var astar = new Astar()
 		var srcTiles = Map.tileValue(object.coords.x,object.coords.y)
 		var destTiles = Map.tileValue(x,y)
-		if(Map.grid[destTiles[0]][destTiles[1]].value!=0 && !ignorePlace) destTiles = Map.getNearestEmptyTile(destTiles)
+		Map.grid[destTiles[0]][destTiles[1]].target = true
+	if(Map.grid[destTiles[0]][destTiles[1]].value!=0 && !ignorePlace) destTiles = Map.getNearestEmptyTile(destTiles)
 		var path = astar.getOptimalPath(Map,Map.grid[srcTiles[0]][srcTiles[1]],Map.grid[destTiles[0]][destTiles[1]])
 		for(var i=0;i<Math.ceil(this.mapHeight*2/this.tileHeight)+1;i++){
 				for(var j=0;j<Math.ceil(this.mapWidth/this.tileWidth)+1;j++){
@@ -363,11 +364,12 @@ var Map={
 					this.grid[i][j].parent = null
 				}
 			}
-			
+		Map.grid[destTiles[0]][destTiles[1]].target = false	
 		if(path){
 			object.moving = false;
-			object.movingPath = path;
-			if(callback)object.movementFinishCallback = callback; 
+			//object.movingPath = path;
+			if(callback)object.movementFinishCallback = callback;
+			return path 
 		}
 		
 	},
@@ -388,31 +390,31 @@ var Map={
 	},
 	
 	registerListeners : function(div,owner){
-		div.observe('click',function(){
+		div.observe(game.mouseClickEvent,function(){
 			if(!game.buildingMode.isOn && owner.working){
 				owner.renderPanel()
 				$('building-panel').show();
 				owner.game.buildingMode.selectedBuilding = owner;
 			}
 		})
-		div.observe('mousedown',function(event){
+		div.observe(game.mouseStartEvent,function(event){
 			if (event.button != 2) {
-		  	if (event.preventDefault) {
-		  		event.preventDefault();
-		  	}
-	  	}
+			  	if (event.preventDefault) {
+			  		event.preventDefault();
+			  	}
+	  		}
 		})
     
     var mousemoveCallback = function(mouse){
-      var x = mouse.pointerX();
-      var y = mouse.pointerY();
+      var x = mouse.pointerX() || mouse.touches[0].pageX;
+      var y = mouse.pointerY() || mouse.touches[0].pageY;
       owner.sprites.mouseover.shiftX = x - ( owner.coords.x - Math.round(owner.imgWidth/2) - Map.x ) + 10;
       owner.sprites.mouseover.shiftY = y - ( owner.coords.y -Math.round(owner.imgHeight/2) - Map.y );
       owner.sprites.mouseover.render();
       owner.sprites.mouseover.show();
     }
     
-    div.observe('mousemove', mousemoveCallback);
+    div.observe(game.mouseMoveEvent, mousemoveCallback);
     
 		div.observe('mouseover',function(){
 			if (owner.state != owner.states.NOT_PLACED) {
@@ -422,9 +424,14 @@ var Map={
 		})
 		div.observe('mouseout',function(){
 			owner.sprites.outline.hide();
-      owner.sprites.mouseover.hide();
-      owner.sprites.info.hide();
+		    owner.sprites.mouseover.hide();
+      		owner.sprites.info.hide();
 		})
 	},
+//	checkBusyTiles : function(){
+//		var canvas = document.createElement('canvas')
+//		canvas.setAttribute('width',Map.mapWidth)
+//		canvas.setAttribute('height',Map.map)
+//	}
 	E:0, NE:1, N:2, NW:3, W:4, SW:5, S:6, SE:7 
 }

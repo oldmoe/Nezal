@@ -38,18 +38,20 @@ var BuildingMode = Class.create({
 	_AttachMouseMoveEvent : function(){
 		var self = this;
 		this.buildingMoveObserver = function(mouse){
-			var mapCoords = Map.getRealCoords(mouse.pointerX(), mouse.pointerY());
+			var x =  mouse.pointerX() || mouse.touches[0].pageX;
+			var y = mouse.pointerY() || mouse.touches[0].pageY;
+			var mapCoords = Map.getRealCoords(x,y);
     	self.selectedBuilding.coords.x = mapCoords.x;
 			self.selectedBuilding.coords.y = mapCoords.y;
       self.selectedBuilding.render()
 		}
-		$('gameCanvas').observe('mousemove', this.buildingMoveObserver);
+		$('gameCanvas').observe(game.mouseMoveEvent, this.buildingMoveObserver);
 	},
   
   off : function(){
 		this.moveBuilding = false
     this.isOn = false;
-		$('gameCanvas').stopObserving('mousemove', this.buildingMoveObserver);
+		$('gameCanvas').stopObserving(game.mouseMoveEvent, this.buildingMoveObserver);
 		$('cancelBuilding').hide();
   },
   
@@ -66,11 +68,11 @@ var BuildingMode = Class.create({
 	
   _AttachCanvasClickListener : function(){
     var self = this;
-    $('gameCanvas').observe('click', function(mouse){
+    $('gameCanvas').observe(game.mouseMoveEvent, function(mouse){
       if(self.game.neighborGame)
         return;
-      var x = mouse.pointerX();
-      var y = mouse.pointerY();
+      var x = mouse.pointerX() || mouse.touches[0].pageX;
+      var y = mouse.pointerY() || mouse.touches[0].pageY;
 	  	var mapCoords =  Map.getRealCoords(x,y)
       if(self.isOn) 
         self._ModeOnAction(mapCoords.x, mapCoords.y);
@@ -90,7 +92,7 @@ var BuildingMode = Class.create({
 
 	_AttachCancelBuildingListener : function(){
 		var self = this;
-		$('cancelBuilding').observe('click',function(){self.cancelBuildingMode()})
+		$('cancelBuilding').observe(game.mouseClickEvent,function(){self.cancelBuildingMode()})
 	},
 	
 	repair : function(){
@@ -110,8 +112,8 @@ var BuildingMode = Class.create({
 			game.scene.remove(worker);
 		}
 		var callback1 = function(){
-			Map.moveObject(worker, building.coords.x,building.coords.y-10, callback2, true);
+			worker.movingPath = Map.moveObject(worker, building.coords.x,building.coords.y-10, callback2, true);
 		}
-		Map.moveObject(worker, townHall.coords.x, townHall.coords.y, callback1, true);
+		worker.movingPath = Map.moveObject(worker, townHall.coords.x, townHall.coords.y, callback1, true);
 	}
 });

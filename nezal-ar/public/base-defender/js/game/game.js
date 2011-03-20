@@ -17,7 +17,11 @@ var Game = Class.create({
   quarryFactory : null,
   lumbermillFactory : null,
   neighborGame : null,
-	reInitializationNotifications : [],
+  mouseStartEvent : null,
+  mouseEndEvent : null,
+  mouseClickEvent : null,
+  mouseMoveEvent : null,
+  reInitializationNotifications : [],
   resources : {
     rock : 0,
     lumber : 0
@@ -26,6 +30,18 @@ var Game = Class.create({
   workersStatus : null,
   initialize : function(){
     this.network = new Network();
+	if(!this.isTouchDevice()){
+		this.mouseClickEvent = 'click'
+		this.mouseStartEvent = 'mousedown'
+		this.mouseEndEvent = 'mouseup'
+		this.mouseMoveEvent = 'mousemove'
+		
+	}else{
+		this.mouseClickEvent = 'touchstart'
+		this.mouseStartEvent = 'touchstart'
+		this.mouseEndEvent = 'touchend'
+		this.mouseMoveEvent = 'touchmove'
+	}
   },
 	
 	startLoading : function(){
@@ -204,5 +220,14 @@ var Game = Class.create({
     this.neighborGame = true;
     this.updateGameStatus( this.gameStatus );
     this.scene.adjustNeighborScene();
+  },
+  isTouchDevice: function(){
+  	try {
+  		document.createEvent("TouchEvent");
+  		return true;
+  	} 
+  	catch (e) {
+  		return false;
+  	}
   }
 });
