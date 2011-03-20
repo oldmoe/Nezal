@@ -4,7 +4,6 @@ var StorageDisplay = Class.create(BuildingDisplay, {
     
     var self = this.owner;
     self.game.selectedBuildingPanel = new BuildingPanel(self, function(){return ""});
-    this._AttachUpgradeTrigger();
   }
   
 });
