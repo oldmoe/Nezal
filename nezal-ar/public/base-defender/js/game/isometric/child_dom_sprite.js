@@ -22,14 +22,22 @@ var ChildDomSprite = Class.create(DomImgSprite, {
 
   position : function() {
     var position = {};
-    position.x = this.shiftX;
-    position.y = this.shiftY;
+    position.x = 0;
+    position.y = 0;
     position.zIndex = this.zIndex;
     return position;
   },
 
   setZIndex : function(zIndex){
     this.zIndex = zIndex;
+  },
+
+  setShiftX : function(shiftX){
+    this.shiftX = shiftX;
+  },
+
+  setShiftY : function(shiftY){
+    this.shiftY = shiftY;
   }
 
 });

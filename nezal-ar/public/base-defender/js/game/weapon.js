@@ -1,6 +1,6 @@
 var Weapon = Class.create({
 
-  angle : 5,
+  angle : 0,
   targetAngle : 5,
   imgHeight : 93,
   imgWidth : 64,
@@ -22,15 +22,19 @@ var Weapon = Class.create({
     var self = this;
   	this.game.scene.pushPeriodicalRenderLoop(1,1,2,function() {self.randomDirectionChange()});
   	this.game.scene.pushPeriodicalRenderLoop(2,4,1,function() {self.changeAngle()});
+    this.rock = new Rock(this);
   },
 
   tick : function() {
-    this.attacker = this.checkAttack();
-    if ( this.attacker ) {
-      this.attacked = true;
-      this.angle = Map.getGeneralDirectoin(this.coords.x, this.coords.y, this.attacker.coords.x, this.attacker.coords.y);
-    }else {
-      this.attacked = false;
+    if(this.owner.state == this.owner.states.NORMAL)
+    {
+      this.attacker = this.checkAttack();
+      if ( this.attacker ) {
+        this.attacked = true;
+        this.angle = Map.getGeneralDirectoin(this.coords.x, this.coords.y, this.attacker.coords.x, this.attacker.coords.y);
+      }else {
+        this.attacked = false;
+      }
     }
   },
 
@@ -39,7 +43,7 @@ var Weapon = Class.create({
       return;
     var attack = null;
     var minHp = 50000;
-    var minDistance = 350;
+    var minDistance = 150;
     for( var i = 0 ; i < this.game.creepFactory.registery.length; i++ )
     {
       var creep = this.game.creepFactory.registery[i];
@@ -63,7 +67,8 @@ var Weapon = Class.create({
       this.attacker = null;
       return;
     }      
-    this.attacker.hp -= this.specs.power;
+    if(this.attacker)
+      this.attacker.hp -= this.specs.power;
     this.attacked = false;
     this.attacker = null;
   },

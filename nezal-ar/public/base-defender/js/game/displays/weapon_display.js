@@ -22,6 +22,7 @@ WeaponDisplay = Class.create( Display, {
     this.sprites.weapon.render();
     this.manageStateChange();
     this.owner.game.scene.pushAnimation(this);
+    this.owner.rock.display = new RockDisplay(this.owner.rock, properties, this.container);
   },
 
   createSprites : function(){
@@ -34,16 +35,17 @@ WeaponDisplay = Class.create( Display, {
   manageStateChange : function(){
     var self = this;
     this.owner.owner.stateNotifications[this.owner.owner.states.NOT_PLACED].push(function(){
-      self.sprites.face.hide()
-      self.sprites.weapon.hide()
+      self.sprites.face.hide();
+      self.sprites.weapon.hide();
+      self.owner.rock.display.hide();
     });
     this.owner.owner.stateNotifications[this.owner.owner.states.UNDER_CONSTRUCTION].push(function(){
       self.sprites.face.show()
       self.sprites.weapon.show()
     });
     this.owner.owner.stateNotifications[this.owner.owner.states.UPGRADING].push(function(){
-      self.sprites.face.show()
-      self.sprites.weapon.show()
+      self.sprites.face.show();
+      self.sprites.weapon.show();
     });
     this.owner.owner.stateNotifications[this.owner.owner.states.NORMAL].push(function(){
       self.sprites.face.show()
@@ -51,7 +53,8 @@ WeaponDisplay = Class.create( Display, {
     });
   },
 
-  render : function() {    
+  render : function() {
+    this.owner.rock.display.render();
     this.sprites.weapon.setZIndex(this.displayPriority[this.owner.angle]);
     for(var sprite in this.sprites){
       this.sprites[sprite].render();
@@ -61,14 +64,16 @@ WeaponDisplay = Class.create( Display, {
       this.animated = true;
       var self = this
       condition = function(){
-        return ( self.sprites.weapon.currentAnimationFrame == self.sprites.weapon.noOfAnimationFrames -1 ); 
+        return ( self.sprites.weapon.currentAnimationFrame == self.sprites.weapon.noOfAnimationFrames -1 || self.owner.attacked == false); 
       }
       mainFunc = function(){
         self.sprites.weapon.currentAnimationFrame += 1;
+        self.owner.rock.display.animate();
       } 
       callback = function(){
         self.sprites.weapon.currentAnimationFrame = 0;
         self.animated = false;
+        self.owner.rock.display.stopAnimation();
         self.owner.fire();
       }
       this.owner.game.reactor.pushPeriodicalWithCondition(2 , mainFunc, condition, callback)
