@@ -367,7 +367,7 @@ var Map={
 		Map.grid[destTiles[0]][destTiles[1]].target = false	
 		if(path){
 			object.moving = false;
-			//object.movingPath = path;
+			object.movingPath = path;
 			if(callback)object.movementFinishCallback = callback;
 			return path 
 		}
