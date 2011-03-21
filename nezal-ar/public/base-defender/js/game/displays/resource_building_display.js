@@ -30,18 +30,6 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
     self.game.selectedBuildingPanel = new BuildingPanel(self, function(){
       return self.game.templatesManager.resourceBuildingPanel(self);
     });
-    this._AttachAssignTrigger();
-  },
-  
-  _AttachAssignTrigger: function(){
-    var owner = this.owner;
-    if($$('.building-functions').any()){
-      var trigger = $('assign_worker_trigger');    
-      trigger.observe('click', function(){
-        owner._AssignWorker();
-        owner.game.selectedBuildingPanel.hide();
-      });
-    }
   },
   
   renderPanelButtons: function($super){
@@ -50,8 +38,15 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
     var owner = this.owner;
     $("dom_converter").innerHTML = this.game.templatesManager.resourceBuildingPanelButtons();
     $('panel-buttons-container').appendChild( $("collect_resource_trigger") );
+    $('panel-buttons-container').appendChild( $("assign_worker_trigger") );
+    
     $('collect_resource_trigger').observe('click', function(){
       owner._CollectResources();
+      owner.game.selectedBuildingPanel.hide();
+    });
+    
+    $('assign_worker_trigger').observe('click', function(){
+      owner._AssignWorker();
       owner.game.selectedBuildingPanel.hide();
     });
   }

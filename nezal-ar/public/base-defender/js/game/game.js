@@ -30,18 +30,18 @@ var Game = Class.create({
   workersStatus : null,
   initialize : function(){
     this.network = new Network();
-	if(!this.isTouchDevice()){
-		this.mouseClickEvent = 'click'
-		this.mouseStartEvent = 'mousedown'
-		this.mouseEndEvent = 'mouseup'
-		this.mouseMoveEvent = 'mousemove'
-		
-	}else{
-		this.mouseClickEvent = 'touchstart'
-		this.mouseStartEvent = 'touchstart'
-		this.mouseEndEvent = 'touchend'
-		this.mouseMoveEvent = 'touchmove'
-	}
+  	if(!this.isTouchDevice()){
+  		this.mouseClickEvent = 'click'
+  		this.mouseStartEvent = 'mousedown'
+  		this.mouseEndEvent = 'mouseup'
+  		this.mouseMoveEvent = 'mousemove'
+  		
+  	} else {
+  		this.mouseClickEvent = 'touchstart'
+  		this.mouseStartEvent = 'touchstart'
+  		this.mouseEndEvent = 'touchend'
+  		this.mouseMoveEvent = 'touchmove'
+  	}
   },
 	
 	startLoading : function(){

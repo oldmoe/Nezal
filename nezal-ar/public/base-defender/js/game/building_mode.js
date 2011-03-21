@@ -44,7 +44,7 @@ var BuildingMode = Class.create({
 			var mapCoords = Map.getRealCoords(x,y);
     	self.selectedBuilding.coords.x = mapCoords.x;
 			self.selectedBuilding.coords.y = mapCoords.y;
-      self.selectedBuilding.render()
+      self.selectedBuilding.render();
 		}
 		$('gameCanvas').observe(game.mouseMoveEvent, this.buildingMoveObserver);
 	},
