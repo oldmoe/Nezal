@@ -48,7 +48,7 @@ var WorkerFactory = Class.create({
     //This is needed because the panel may be activated while the building is in progress
     //and the trigger will not exist
     if (trigger) {
-      trigger.observe('click', function(){
+      trigger.observe(game.mouseClickEvent, function(){
         self.buyWorker();
       });
     }

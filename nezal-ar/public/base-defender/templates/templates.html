@@ -47,24 +47,15 @@
       <span class="building-in-progress">Building in progress</span>
     {else}
       <div class="building-functions">
-          <div id="quarry-assign-worker">
-              <span style="">Assign</span>
-              <button id="assign_worker_trigger" style="margin-left: 5px;">
-                  +
-              </button>
-          </div>
-          <span class="desc">
-            workers: ${building.assignedWorkers}/${building.maxWorkers}
-          </span>
-          <div id="quarry-collect">
-              <span style="">Collect</span>
-              <button id="collect_resources_trigger" style="margin-left: 5px;">
-                  +
-              </button>
-          </div>
-          <span class="desc">
-            ${building.resource()}
-          </span>
+        <div id="quarry-assign-worker">
+            <span style="">Assign</span>
+            <button id="assign_worker_trigger" style="margin-left: 5px;">
+                +
+            </button>
+        </div>
+        <span class="desc">
+          workers: ${building.assignedWorkers}/${building.maxWorkers}
+        </span>
       </div>
     {/if}
 </textarea>

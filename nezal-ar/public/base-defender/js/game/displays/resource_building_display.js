@@ -36,6 +36,7 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
       var trigger = $('assign_worker_trigger');    
       trigger.observe('click', function(){
         owner._AssignWorker();
+        owner.game.selectedBuildingPanel.hide();
       });
     }
   },
@@ -48,6 +49,7 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
     $('panel-buttons-container').appendChild( $("collect_resource_trigger") );
     $('collect_resource_trigger').observe('click', function(){
       owner._CollectResources();
+      owner.game.selectedBuildingPanel.hide();
     });
   }
 });

@@ -51,7 +51,7 @@ var Building = Class.create({
 		}
 		mainFunc = function(){
 			if(!self.game.attackManager.attacking)
-				self.hp++
+				self.hp+=3
 		}	
 		callback = function(){
 			self.repairing = false

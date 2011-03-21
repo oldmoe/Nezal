@@ -3,6 +3,7 @@ var MovingObject = Class.create({
 	 moving : false ,
 	 rotating : false,
 	 targetAngle :0,
+	 targetPoint: {x:null,y:null},
 	 angle : 0,
 	 speed : 0.7,
 	 randomMove : false,
@@ -49,8 +50,17 @@ var MovingObject = Class.create({
 				}
 			}
 			if(this.movingPath.length == 0){
-				this.moving = false
-				this.state = 0
+			    if(this.moving){
+					if (Math.abs(this.coords.x - this.targetPoint.x)<0.01 && Math.abs(this.coords.y - this.targetPoint.y)<0.01) {
+						this.moving = false
+						this.state = 0
+					}
+					else {
+						var movements = Util.getNextMove(this.coords.x, this.coords.y, this.targetPoint.x, this.targetPoint.y, this.speed)
+						this.coords.x+=movements[0]
+						this.coords.y+=movements[1]
+					}
+				}
 			} 
 		}
 		else if(this.randomMove){
@@ -58,7 +68,7 @@ var MovingObject = Class.create({
 			if (rand <= 0.05) {
 		  	var x = Math.round(game.scene.map.x + game.scene.map.viewWidth * Math.random())
 		  	var y = Math.round(game.scene.map.y + game.scene.map.viewHeight * Math.random())
-		  	Map.moveObject(this, x, y)
+		  	this.movingPath = Map.moveObject(this, x, y)
 	  	}
 		}
 	},

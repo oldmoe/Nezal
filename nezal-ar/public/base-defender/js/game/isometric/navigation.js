@@ -83,13 +83,11 @@ var Navigation = Class.create({
 		
 		document.body.observe('mousemove',function(e){
 			if(Map.mouseIsDown){
-        $("building-panel").hide();
+        		$("building-panel").hide();
 			 	self.dragDiv.show()
 				Map.dragged = true
 				var dx = e.pointerX() - Map.mouseLocation.x;
 				var dy = e.pointerY() - Map.mouseLocation.y;
-				//console.log(dx);
-				//console.log(dy);
 				Map.move( -dx, -dy);
 				var xLoc = Map.x;
 				var yLoc = Map.y;
@@ -99,4 +97,5 @@ var Navigation = Class.create({
 			}
 		})
 	}
+
 });
