@@ -92,7 +92,7 @@ var QuestsManager = Class.create({
       if($('quest-panel')) $('quest-panel').hide();
       if($('msg')) $('msg').hide();
       if($('questDisplay')) $('questDisplay').hide();
-      if($('emptyQuest')) $('emptyQuest').hide();
+      if($('buildingDisplay')) $('buildingDisplay').hide();
       return;
     }
     /* Handle Quests should check any quests screens to display :
