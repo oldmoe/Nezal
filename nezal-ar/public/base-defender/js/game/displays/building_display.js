@@ -76,8 +76,8 @@ var BuildingDisplay = Class.create(Display, {
     });
     this.owner.stateNotifications[this.owner.states.UNDER_CONSTRUCTION].push(function(){
       var top =  self.owner.coords.y -Math.round(self.imgHeight/2)
-      var left =  self.owner.coords.x -Math.round(self.imgWidth/2);
-      self.progressDisplay = new ProgressDisplay( self.owner.nextLevelBluePrints.time, top - 10, left, self.owner.coords.y );
+      var left =  self.owner.coords.x -48; // half width of the progress bar
+      self.progressDisplay = new ProgressDisplay( self.owner.nextLevelBluePrints.time, top - 12, left, self.owner.coords.y );
       self.sprites.building.show();
       self.sprites.building.setOpacity(0.5);
       self.sprites.building.animated = false;
@@ -91,8 +91,8 @@ var BuildingDisplay = Class.create(Display, {
     });
     this.owner.stateNotifications[this.owner.states.UPGRADING].push(function(){
       var top =  self.owner.coords.y -Math.round(self.imgHeight/2)
-      var left =  self.owner.coords.x -Math.round(self.imgWidth/2);
-      self.progressDisplay = new ProgressDisplay( self.owner.nextLevelBluePrints.time, top, left, self.owner.coords.y );
+      var left =  self.owner.coords.x - 48;
+      self.progressDisplay = new ProgressDisplay( self.owner.nextLevelBluePrints.time, top -12, left, self.owner.coords.y );
       self.sprites.building.show();
       self.sprites.building.setOpacity(0.5);
       self.sprites.building.animated = false;
