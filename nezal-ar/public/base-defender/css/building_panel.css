@@ -40,15 +40,11 @@
   margin-top: 20px;
   margin-left: 5px;
   width: 100px;
+  text-align: center;
 }
 
 .building-functions span {
-  font-size: 12px;
-}
-.building-functions span.desc {
-    width: 100px;
-    display: inline-block;
-    border-bottom: 1px solid ;
+  font-size: 14px;
 }
 
 .building-in-progress {

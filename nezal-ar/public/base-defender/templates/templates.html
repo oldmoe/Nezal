@@ -7,15 +7,6 @@
       <span class="building-in-progress">Building in progress</span>
     {else}
       <div class="building-functions">
-        <div id="townhall-hire-worker">
-          <span style="font-size: 14px;">Train a worker</span>
-          <button id="buy_worker_trigger" style="margin-left: 5px;">
-              +
-          </button>
-          <span>for</span>
-          <span>${coins}</span>
-          <img style="width: 19px;" src="images/icons/coins.png">
-        </div>
       </div>
     {/if}
 </textarea>
@@ -25,12 +16,6 @@
       <span class="building-in-progress">Building in progress</span>
     {else}
       <div class="building-functions">
-          <div id="lumbermill-assign-worker">
-              <span style="">Assign</span>
-              <button id="assign_worker_trigger" style="margin-left: 5px;">
-                  +
-              </button>
-          </div>
           <span class="desc">
             workers: ${building.assignedWorkers}/${building.maxWorkers}
           </span>
@@ -47,12 +32,6 @@
       <span class="building-in-progress">Building in progress</span>
     {else}
       <div class="building-functions">
-        <div id="quarry-assign-worker">
-            <span style="">Assign</span>
-            <button id="assign_worker_trigger" style="margin-left: 5px;">
-                +
-            </button>
-        </div>
         <span class="desc">
           workers: ${building.assignedWorkers}/${building.maxWorkers}
         </span>
@@ -246,6 +225,10 @@
 <textarea style="display:none;" id='resource-building-buttons'>
   <div class="panel-button" id="collect_resource_trigger">
     <span>Collect</span>
+    <img src="${Loader.images.panel['buttons.png'].src}">
+  </div>
+  <div class="panel-button" id="assign_worker_trigger">
+    <span>worker</span>
     <img src="${Loader.images.panel['buttons.png'].src}">
   </div>
 </textarea>
