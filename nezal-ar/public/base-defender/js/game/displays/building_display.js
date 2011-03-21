@@ -153,6 +153,7 @@ var BuildingDisplay = Class.create(Display, {
     $('upgrade_trigger').stopObserving('click');
     $('upgrade_trigger').observe('click', function(){
       owner.upgrade();
+      owner.game.selectedBuildingPanel.hide();
     });
   },
   
