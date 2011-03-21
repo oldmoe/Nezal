@@ -57,7 +57,6 @@ var Game = Class.create({
 	
   initializeGame : function(){
 		var self = this
-		Sounds.play(Sounds.gameSounds.game)
 		var gameElementsImages = ['upper_bar.png','monitor.png','background.png','cancel.png','cancel.png']
 		var friendsImages = ['1st_blank.png']
 		var buildingImages = ['townhall.png']
@@ -86,9 +85,9 @@ var Game = Class.create({
 	},
 	
   start : function(){
-    var self = this;
+	    var self = this;
 		var loaderFinishCallback = function(){
-    	var mapView = ""
+	    var mapView = ""
       var friendIDs = self.network.neighbourIDs();
       var mapping = {};
       var ids = []

@@ -161,8 +161,8 @@ function createBackgroundMusic(){
 	  id: "gameSound",
 	  url: 'sounds/sfx/mp3/intro_background.mp3',
 	  autoLoad: true,
-	  autoPlay: false,
-	  volume: 50,
+	  autoPlay: true,
+	  volume: 30,
 	  loops : 10000
 	});
 	Sounds.gameSounds.game= []
