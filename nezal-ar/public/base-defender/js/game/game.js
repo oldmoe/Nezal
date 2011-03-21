@@ -57,6 +57,7 @@ var Game = Class.create({
 	
   initializeGame : function(){
 		var self = this
+		Sounds.play(Sounds.gameSounds.game)
 		var gameElementsImages = ['upper_bar.png','monitor.png','background.png','cancel.png','cancel.png']
 		var friendsImages = ['1st_blank.png']
 		var buildingImages = ['townhall.png']
@@ -117,6 +118,7 @@ var Game = Class.create({
       });
     //////////////////////////////////
 			self.reInitialize();
+			Sounds.gameSounds.game.volume = 10
 		};
 		
 		var buildingImages = BuildingMode.prototype.buildings.collect(function(building){
