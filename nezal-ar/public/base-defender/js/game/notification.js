@@ -37,9 +37,7 @@ Notification.notify = function(message){
 	$('interaction').show();
 }
 Notification.repair = function(message){
-	if(Notification.repairShown) return 
-	Notification.repairShown = true
 	$("notify").innerHTML = game.templatesManager.notifyRepair(message);
-  $("notify").show();
+  	$("notify").show();
 	$('interaction').show();
 }

@@ -38,7 +38,7 @@ var BuildingPanel = Class.create({
       this.selectedBuilding = null;
     }
     
-    $('close-building-panel').observe('click', closeCallback);
+    $('close-building-panel').observe(game.mouseClickEvent, closeCallback);
     document.observe('keydown', function(event){
       if (event.keyCode == Event.KEY_ESC) {
         closeCallback();

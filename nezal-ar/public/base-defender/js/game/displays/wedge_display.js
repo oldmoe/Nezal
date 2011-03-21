@@ -19,7 +19,9 @@ var WedgeDisplay = Class.create(BuildingDisplay, {
                                                       		height:this.shadowImg.height, zIndex : 1});
 		this.sprites.outline = this.container.newDomImgSprite(this.owner, {img: this.outlineImg, zIndex : 1});
 		this.sprites.building = this.container.newDomImgSprite(this.owner, {img: this.img});
-		this.sprites.health = new DomHealthSprite(this.owner)
+		this.sprites.health = new DomHealthSprite(this.owner, {healthWidth: 50})
+		//this.sprites.skeleton = new DomSkeleton(this.owner)
+		this.sprites.health.shiftY = -20
     this.sprites.info = new DomTextSprite(this.owner, 'textInfo', {centered: true, shiftY: -10});
 
 		this.sprites.building.shiftX = (this.imgWidth - this.img.width)/2;

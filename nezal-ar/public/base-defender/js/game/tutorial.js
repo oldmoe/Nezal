@@ -40,7 +40,7 @@ var Tutorial = Class.create({
                                     $('questDisplay').hide();
                                     self.game.buildingsManager.displayBuildingsPanel({'disabled' : ['quarry', 'lumbermill', 'storage', 'defense_center', 'wedge']});
                                     setTimeout(function(){
-                                        $$('#buildingsPanel #townhall .itemData')[0].observe('click', function(){Hand.hide()});
+                                        $$('#buildingsPanel #townhall .itemData')[0].observe(game.mouseClickEvent, function(){Hand.hide()});
                                         Hand.point(self.game, { 'object' : $$('#buildingsPanel #townhall .itemData')[0], 'rotated' : false });
                                     } , 500);
                                  };
@@ -57,7 +57,7 @@ var Tutorial = Class.create({
     workers : function() { 
       Hand.point(this.self.game, { 'object' : $('workers_game_element'), 'rotated' : true });
       var self = this.self.game.tutorial;
-      $('workers_game_element').observe('click', 
+      $('workers_game_element').observe(game.mouseClickEvent, 
                                               function(){
                                                 Animation.hide('questDisplay');
                                                 Hand.hide();
@@ -85,7 +85,7 @@ var Tutorial = Class.create({
                                     $('questDisplay').hide();
                                     self.game.buildingsManager.displayBuildingsPanel({'disabled' : ['townhall', 'lumbermill', 'storage', 'defense_center', 'wedge']});
                                     setTimeout(function(){
-                                        $$('#buildingsPanel #quarry .itemData')[0].observe('click', function(){Hand.hide()});
+                                        $$('#buildingsPanel #quarry .itemData')[0].observe(game.mouseClickEvent, function(){Hand.hide()});
                                         Hand.point(self.game, { 'object' : $$('#buildingsPanel #quarry .itemData')[0], 'rotated' : false });
                                     } , 500);
                                  };
@@ -95,7 +95,7 @@ var Tutorial = Class.create({
     assigned_workers : function(id){
       var self = this.self.game.tutorial;
       var id = id;
-      $$('#questDisplay .okButton')[0].observe('click', function(){
+      $$('#questDisplay .okButton')[0].observe(game.mouseClickEvent, function(){
             Hand.point(self.game, { 'object' : self.game.quarryFactory.factoryRegistry[id].sprites.building.div, 'rotated' : false });
             $$('#questDisplay .okButton')[0].stopObserving('click');
        });
@@ -122,7 +122,7 @@ var Tutorial = Class.create({
                                     $('questDisplay').hide();
                                     self.game.buildingsManager.displayBuildingsPanel({'disabled' : ['quarry', 'townhall', 'storage', 'defense_center', 'wedge']});
                                     setTimeout(function(){
-                                        $$('#buildingsPanel #lumbermill .itemData')[0].observe('click', function(){Hand.hide()});
+                                        $$('#buildingsPanel #lumbermill .itemData')[0].observe(game.mouseClickEvent, function(){Hand.hide()});
                                         Hand.point(self.game, { 'object' : $$('#buildingsPanel #lumbermill .itemData')[0], 'rotated' : false });
                                     } , 500);
                                  };
@@ -132,7 +132,7 @@ var Tutorial = Class.create({
     assigned_workers : function(id){
       var self = this.self.game.tutorial;
       var id = id;
-      $$('#questDisplay .okButton')[0].observe('click', function(){
+      $$('#questDisplay .okButton')[0].observe(game.mouseClickEvent, function(){
             Hand.point(self.game, { 'object' : self.game.lumbermillFactory.factoryRegistry[id].sprites.building.div, 'rotated' : false });
             $$('#questDisplay .okButton')[0].stopObserving('click');
        });

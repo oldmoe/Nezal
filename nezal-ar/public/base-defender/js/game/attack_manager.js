@@ -1,5 +1,5 @@
 var AttackManager = Class.create({
-	noOfCreeps : 5,
+	noOfCreeps : 8,
 	creepsDone :0,	
 	attacking : false,
 	initialize: function(game){
@@ -35,6 +35,7 @@ var AttackManager = Class.create({
 				}				
 			}
 			this.creeps = {}
+			this.creepsDone = 0
 			this.attacking = false
 			if(attackSuccess){
 				this.showRepairMsg()

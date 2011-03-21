@@ -1,7 +1,7 @@
 var DomImgSprite = Class.create(DomSprite, {
 	animated : false,
 	clickable : false,
-  minAreaZIndex : 10000000,
+	minAreaZIndex : 10000000,
 	initialize : function($super, owner, imgAssets, properties){
     $super(owner, imgAssets, properties);
     //console.log( imgAssets )
