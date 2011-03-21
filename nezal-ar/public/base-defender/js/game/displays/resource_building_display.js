@@ -17,7 +17,10 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
       self.sprites.text.hide()
     });
     this.owner.stateNotifications[this.owner.states.NORMAL].push(function(){
-      self.sprites.text.show()
+      if(self.owner.game.neighborGame == true)
+        self.sprites.text.hide()
+      else
+        self.sprites.text.show()
     });
   },
   

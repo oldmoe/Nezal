@@ -11,6 +11,7 @@ var BuildingMode = Class.create({
     this.game = game;
     this._AttachCanvasClickListener();
 		this._AttachCancelBuildingListener();
+		if($('cancelBuilding')) $('cancelBuilding').hide();
   },
   
   on : function(building, callback){

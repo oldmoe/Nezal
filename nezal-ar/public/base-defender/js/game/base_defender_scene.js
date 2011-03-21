@@ -47,7 +47,6 @@ var BaseDefenderScene = Class.create(Scene, {
 	},
  
   adjustNeighborScene : function(){
-    $('game-panel').hide();
     if(this.game.selectedBuildingPanel){
       this.game.selectedBuildingPanel.hide();
     }

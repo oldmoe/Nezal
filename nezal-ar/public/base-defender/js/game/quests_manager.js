@@ -87,6 +87,14 @@ var QuestsManager = Class.create({
   },
 
   handleQuests : function() {
+    if(this.game.neighborGame == true)
+    {
+      if($('quest-panel')) $('quest-panel').hide();
+      if($('msg')) $('msg').hide();
+      if($('questDisplay')) $('questDisplay').hide();
+      if($('buildingDisplay')) $('buildingDisplay').hide();
+      return;
+    }
     /* Handle Quests should check any quests screens to display :
        if there is any quests notifications, display them one by one.
        else, Check for a mandatory Quest and display it.
