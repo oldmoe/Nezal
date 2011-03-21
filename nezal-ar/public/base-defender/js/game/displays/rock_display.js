@@ -63,6 +63,11 @@ var MovingRock = Class.create({
   },
 
   tick : function() {
+    if(!this.attacker){
+      this.attacker = this.owner.owner.attacker;
+      this.extraXStep = 0;
+      this.extraYStep = 0;
+    }
     if( this.attacker ) {
       var targetX = this.attacker.coords.x + this.attacker.imgWidth/3;
       var targetY = this.attacker.coords.y + this.attacker.imgHeight/2;
@@ -71,22 +76,8 @@ var MovingRock = Class.create({
         this.currentStep = 0;
         this.attacker = null;
         this.display.destroy();
+        return;
       }else {
-/*        var slope = (targetY -this.coords.y)/(targetX -this.coords.x)
-        if(slope == "Infinity")
-        {
-          this.extraXStep = 0;
-          this.extraYStep = this.moveRatio;
-        }else if(slope == "-Infinity"){
-          this.extraXStep = 0;
-          this.extraYStep = -1 * this.moveRatio;
-        }else {
-          if(this.coords.x>targetX)
-            this.extraXStep = -1 * this.moveRatio
-          else
-            this.extraXStep = this.moveRatio;
-          this.extraYStep = Math.ceil(this.extraXStep * slope);
-        }*/
         var move = Util.getNextMove(this.coords.x, this.coords.y, targetX, targetY, 20)
         this.extraXStep = move[0];
         this.extraYStep = move[1];
@@ -104,11 +95,8 @@ var MovingRock = Class.create({
         }
         return;
       }
-    }
-    if(this.owner.owner.attacker){
-      this.attacker = this.owner.owner.attacker;
-      this.extraXStep = 0;
-      this.extraYStep = 0;
+    }else {
+      this.display.destroy();
     }
   }
     
@@ -116,7 +104,7 @@ var MovingRock = Class.create({
 
 var RockDisplay = Class.create( Display, {
 
-  moveSteps : 4,
+  moveSteps : 2,
 
   initialize : function($super,owner,properties, container){
 	  $super(owner,properties)
@@ -134,8 +122,8 @@ var RockDisplay = Class.create( Display, {
 
   render : function() {
     if(this.currentMove == 8 ) this.currentMove = 0;
-    var moveX = (this.owner.position2[this.owner.owner.angle].x - this.owner.position[this.owner.owner.angle].x)/2*this.currentMove;
-    var moveY = (this.owner.position2[this.owner.owner.angle].y - this.owner.position[this.owner.owner.angle].y)/2*this.currentMove;
+    var moveX = (this.owner.position2[this.owner.owner.angle].x - this.owner.position[this.owner.owner.angle].x)/this.moveSteps*this.currentMove;
+    var moveY = (this.owner.position2[this.owner.owner.angle].y - this.owner.position[this.owner.owner.angle].y)/this.moveSteps*this.currentMove;
     this.sprites.rock.setShiftX(this.owner.position[this.owner.owner.angle].x + moveX);
     this.sprites.rock.setShiftY(this.owner.position[this.owner.owner.angle].y + moveY);  
     this.sprites.rock.setZIndex(this.owner.position[this.owner.owner.angle].zIndex);
@@ -150,7 +138,7 @@ var RockDisplay = Class.create( Display, {
 
   animate : function() {
     this.currentMove += 1;
-    if(this.currentMove == 2)
+    if(this.currentMove == this.moveSteps)
     {
       this.sprites.rock.hide();
       var rock = new MovingRock(this.owner);

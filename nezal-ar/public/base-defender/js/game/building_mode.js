@@ -68,6 +68,7 @@ var BuildingMode = Class.create({
 	
   _AttachCanvasClickListener : function(){
     var self = this;
+    $('gameCanvas').stopObserving(game.mouseClickEvent);
     $('gameCanvas').observe(game.mouseClickEvent, function(mouse){
       if(self.game.neighborGame)
         return;

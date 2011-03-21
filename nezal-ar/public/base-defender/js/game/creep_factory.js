@@ -12,7 +12,7 @@ var CreepFactory = Class.create({
 		this.game.scene.push(creep)
 		var displayClass = eval(type+"Display")
 		var creepDisplay = new displayClass(creep)
-		this.game.scene.pushAnimation(creepDisplay);
+		this.game.scene.pushAnimation(creepDisplay)
 		return creep
   }, 
 	
@@ -20,6 +20,8 @@ var CreepFactory = Class.create({
 		var index = this.registery.indexOf(creep)
 		if(index!=-1)this.registery.splice(index,1)
 		index = this.game.scene.remove(creep)
+    var explosion = new Explosion(creep);
+		var explosionClass = new ExplosionDisplay(explosion);
 		creep.destroy()
 	}
   
