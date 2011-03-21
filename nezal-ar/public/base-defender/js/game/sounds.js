@@ -68,7 +68,7 @@ var Sounds = {
 	play : function(store, direct){
 		try{
 			if(!store)return
-			if(Sounds.muted)return
+			if(Sounds.muted)return 
 			if(direct){
 				store[0].play()
 				return 
@@ -110,12 +110,12 @@ var Sounds = {
 }
 
 
-var soundNames = [ ]
+var soundNames = []
 
 function createSounds(){
 	for(var i = 0; i < soundNames.size(); i++){
 		Sounds.gameSounds[soundNames[i]] = []
-		createAudioElements(3, Sounds.gameSounds[soundNames[i]],soundNames[i])
+		//createAudioElements(3, Sounds.gameSounds[soundNames[i]],soundNames[i])
 	}
 	//createAudioElements(1, Sounds.gameSounds.intro,"intro")
 	//createAudioElements(1, Sounds.gameSounds.game,"game")
@@ -159,10 +159,10 @@ function createAudioElements(count, store, url, loops){
 function createBackgroundMusic(){
 	var gameSound = soundManager.createSound({
 	  id: "gameSound",
-	  url: 'sounds/sfx/mp3/game.mp3',
+	  url: 'sounds/sfx/mp3/intro_background.mp3',
 	  autoLoad: true,
-	  autoPlay: false,
-	  volume: 50,
+	  autoPlay: true,
+	  volume: 30,
 	  loops : 10000
 	});
 	Sounds.gameSounds.game= []

@@ -85,9 +85,9 @@ var Game = Class.create({
 	},
 	
   start : function(){
-    var self = this;
+	    var self = this;
 		var loaderFinishCallback = function(){
-    	var mapView = ""
+	    var mapView = ""
       var friendIDs = self.network.neighbourIDs();
       var mapping = {};
       var ids = []
@@ -117,6 +117,7 @@ var Game = Class.create({
       });
     //////////////////////////////////
 			self.reInitialize();
+			Sounds.gameSounds.game.volume = 10
 		};
 		
 		var buildingImages = BuildingMode.prototype.buildings.collect(function(building){
