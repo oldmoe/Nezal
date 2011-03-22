@@ -33,7 +33,7 @@ var QuestsManager = Class.create({
     $$('#quest-panel .clickable').each( function(button){
                                             var id = button.getAttribute('id');
                                             button.observe( 'click', function(){
-																		Sounds.play(Sounds.gameSounds.advisors)
+																		Sounds.play(Sounds.gameSounds.click)
                                                                         game.questsManager.displayQuest(id);
                                                                       });
                                             $$( "#quest-panel #" + id + " .shadow")[0].hide();
@@ -47,7 +47,7 @@ var QuestsManager = Class.create({
     $$('#quest-panel .empty').each( function(button){
                                             var id = button.getAttribute('id');
                                             button.observe( 'click', function(){
-																		Sounds.play(Sounds.gameSounds.advisors)
+																		Sounds.play(Sounds.gameSounds.click)
                                                                         game.questsManager.displayQuestEmptyMsg(id);
                                                                       });
                                             $$( "#quest-panel #" + id + " .shadow")[0].hide();
