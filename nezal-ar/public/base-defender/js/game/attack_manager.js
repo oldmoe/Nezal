@@ -7,9 +7,10 @@ var AttackManager = Class.create({
     var self = this;
 		this.game = game;
     $("sendAttack").stopObserving("click");
-    $("sendAttack").observe("click", function(){
-      self.simulateAttack();
-			$('attackDiv').show()
+    $("sendAttack").observe(game.mouseClickEvent, function(){
+		Sounds.play(Sounds.gameSounds.click)
+      	self.simulateAttack();
+		$('attackDiv').show()
     });
 	},
 	simulateAttack : function(){

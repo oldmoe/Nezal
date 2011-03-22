@@ -117,7 +117,8 @@ var Game = Class.create({
       });
     //////////////////////////////////
 			self.reInitialize();
-			Sounds.gameSounds.game[0].setVolume(10)
+			Sounds.gameSounds.Intro[0].stop()
+			Sounds.play(Sounds.gameSounds.game)
 		};
 		
 		var buildingImages = BuildingMode.prototype.buildings.collect(function(building){
