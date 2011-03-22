@@ -110,12 +110,12 @@ var Sounds = {
 }
 
 
-var soundNames = []
+var soundNames = ['constructions', 'advisors', 'lumber', 'resource_collection','slingshot','explosion']
 
 function createSounds(){
 	for(var i = 0; i < soundNames.size(); i++){
 		Sounds.gameSounds[soundNames[i]] = []
-		//createAudioElements(3, Sounds.gameSounds[soundNames[i]],soundNames[i])
+		createAudioElements(3, Sounds.gameSounds[soundNames[i]],soundNames[i])
 	}
 	//createAudioElements(1, Sounds.gameSounds.intro,"intro")
 	//createAudioElements(1, Sounds.gameSounds.game,"game")

@@ -63,6 +63,7 @@ WeaponDisplay = Class.create( Display, {
     {
       this.animated = true;
       var self = this
+	  Sounds.play(Sounds.gameSounds.slingshot)
       condition = function(){
         return ( self.sprites.weapon.currentAnimationFrame == self.sprites.weapon.noOfAnimationFrames -1 || self.owner.attacked == false); 
       }

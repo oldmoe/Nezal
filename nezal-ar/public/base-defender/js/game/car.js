@@ -24,6 +24,7 @@ var Car = Class.create(MovingObject,{
 			this.hitting = false
 			this.game.attackManager.notifyDoneAttack()
 			this.game.creepFactory.remove(this)
+			Sounds.play(Sounds.gameSounds.explosion)
 			return
 		}  
 		if(!this.target){

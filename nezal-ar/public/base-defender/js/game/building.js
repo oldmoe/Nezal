@@ -113,6 +113,7 @@ var Building = Class.create({
     this.coords['y'] = yBlock;    
     if(this.isValidToBuild(xBlock, yBlock)) {
       var response = this.game.network.upgradeBuilding(this.name, this.coords);
+	  Sounds.play(Sounds.gameSounds.constructions)
       this.game.updateGameStatus(response['gameStatus']);
       return response['done'];
     } else {
