@@ -56,10 +56,10 @@
   font-family: Lds;
   font-size: 16px;
   left: 53px;
-  line-height: 18px;
+  line-height: 14px;
   position: absolute;
   text-align: center;
-  top: 18px;
+  top: 19px;
   width: 49px;
 }
 
@@ -74,9 +74,9 @@
 #coins-amount {
   color: #F23D00;
   font-family: Lds;
-  font-size: 19px;
+  font-size: 18px;
   left: 50px;
-  line-height: 18px;
+  line-height: 14px;
   position: absolute;
   text-align: center;
   top: 20px;
@@ -86,9 +86,9 @@
 #rock-amount {
   color: gold;
   font-family: Lds;
-  font-size: 19px;
+  font-size: 18px;
   left: 45px;
-  line-height: 18px;
+  line-height: 14px;
   position: absolute;
   text-align: center;
   top: 20px;
@@ -98,9 +98,9 @@
 #lumber-amount {
   color: gold;
   font-family: Lds;
-  font-size: 19px;
+  font-size: 18px;
   left: 53px;
-  line-height: 18px;
+  line-height: 14px;
   position: absolute;
   text-align: center;
   top: 20px;
