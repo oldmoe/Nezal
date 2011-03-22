@@ -172,6 +172,11 @@ img{
 	height:410px;
 }
 
+#intro {
+  position : absolute;
+  top : 50px;
+  left : 40px;
+}
 
 .resetAccount {
   height: 50px;
