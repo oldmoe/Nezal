@@ -69,8 +69,8 @@ var MovingRock = Class.create({
       this.extraYStep = 0;
     }
     if( this.attacker ) {
-      var targetX = this.attacker.coords.x + this.attacker.imgWidth/3;
-      var targetY = this.attacker.coords.y + this.attacker.imgHeight/2;
+      var targetX = this.attacker.coords.x + this.attacker.imgWidth/3 - 10;
+      var targetY = this.attacker.coords.y + 2*this.attacker.imgHeight/3;
       if(this.coords.x == targetX && this.coords.y == targetY )
       {
         this.currentStep = 0;
@@ -92,11 +92,13 @@ var MovingRock = Class.create({
           this.currentStep = 0;
           this.attacker = null;
           this.display.destroy();
+          this.owner.game.scene.remove(this);
         }
         return;
       }
     }else {
       this.display.destroy();
+      this.owner.game.scene.remove(this);
     }
   }
     

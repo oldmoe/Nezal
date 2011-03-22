@@ -9,6 +9,8 @@ var Explosion = Class.create({
   initialize : function(owner) {
     this.owner = owner;
     this.coords = this.owner.coords;
+    this.coords.x = this.coords.x ;
+    this.coords.y = this.coords.y + this.owner.imgHeight/2 - this.imgHeight/2;
     this.game = this.owner.game;
     this.angle = 0;
   }
