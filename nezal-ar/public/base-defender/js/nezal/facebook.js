@@ -49,7 +49,7 @@ var FBConnect = {
         fbRoot.setAttribute("id", "fb-root");
         var invite = document.createElement('iframe');
         invite.setAttribute("id", "invite");
-        invite.setAttribute("src", "#");
+        invite.setAttribute("src", "statics/blank.html");
         invite.style.display = 'none';
         document.body.appendChild(fbRoot);
         document.body.appendChild(invite);
