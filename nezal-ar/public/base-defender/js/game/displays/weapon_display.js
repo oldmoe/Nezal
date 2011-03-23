@@ -63,7 +63,7 @@ WeaponDisplay = Class.create( Display, {
     {
       this.animated = true;
       var self = this
-	  Sounds.play(Sounds.gameSounds.slingshot)
+  	  Sounds.play(Sounds.gameSounds.slingshot)
       condition = function(){
         return ( self.sprites.weapon.currentAnimationFrame == self.sprites.weapon.noOfAnimationFrames -1 || self.owner.attacked == false); 
       }
@@ -75,7 +75,6 @@ WeaponDisplay = Class.create( Display, {
         self.sprites.weapon.currentAnimationFrame = 0;
         self.animated = false;
         self.owner.rock.display.stopAnimation();
-        self.owner.fire();
       }
       this.owner.game.reactor.pushPeriodicalWithCondition(2 , mainFunc, condition, callback)
     }

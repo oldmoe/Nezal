@@ -2,29 +2,31 @@ var Rock = Class.create( {
 
   name : "rock",
 
-  imgHeight : 20,
-  imgWidth : 20,
+  imgHeight : 15,
+  imgWidth : 15,
+  width : 15,
+  height : 15,
 
   position : {
-    0 : {x : 17, y : 44, zIndex : 5 }, 
-    1 : {x : 18, y : 36, zIndex : 2 },
-    2 : {x : 10, y : 37, zIndex : 2 },
+    0 : {x : 22, y : 48, zIndex : 5 }, 
+    1 : {x : 24, y : 36, zIndex : 2 },
+    2 : {x : 12, y : 40, zIndex : 2 },
     3 : {x : 26, y : 36, zIndex : 2 }, 
-    4 : {x : 27, y : 44, zIndex : 5 }, 
-    5 : {x : 15, y : 34, zIndex : 2 }, 
-    6 : {x : 17, y : 40, zIndex : 5 }, 
-    7 : {x : 30, y : 32, zIndex : 2 }
+    4 : {x : 29, y : 48, zIndex : 5 }, 
+    5 : {x : 19, y : 35, zIndex : 2 }, 
+    6 : {x : 19, y : 44, zIndex : 5 }, 
+    7 : {x : 30, y : 36, zIndex : 2 }
   },
 
   position2 : {
-    0 : {x : 57, y : 44, zIndex : 5 }, 
-    1 : {x : 42, y : 10, zIndex : 2 },
-    2 : {x : 10, y : 17, zIndex : 2 },
-    3 : {x : 0, y : 10, zIndex : 2 }, 
-    4 : {x : -12, y : 44, zIndex : 5 }, 
-    5 : {x : -3, y : 38, zIndex : 2 }, 
-    6 : {x : 17, y : 54, zIndex : 5 }, 
-    7 : {x : 48, y : 36, zIndex : 2 }
+    0 : {x : 46, y : 44, zIndex : 5 }, 
+    1 : {x : 41, y : 20, zIndex : 2 },
+    2 : {x : 12, y : 25, zIndex : 2 },
+    3 : {x : 6, y : 18, zIndex : 2 }, 
+    4 : {x : 0, y : 44, zIndex : 5 }, 
+    5 : {x : 3, y : 42, zIndex : 2 }, 
+    6 : {x : 19, y : 50, zIndex : 5 }, 
+    7 : {x : 44, y : 42, zIndex : 2 }
   },
 
   initialize : function(owner){
@@ -41,20 +43,21 @@ var Rock = Class.create( {
 
 var MovingRock = Class.create({
     
-  currentStep : 0,
   moveRatio : 10,
   attacker : null,
-  imgHeight : 93,
-  imgWidth : 64,
-  zdim : 31,
+  imgHeight : 15,
+  imgWidth : 15,
+  width : 15,
+  height : 15,
+  zdim : 32,
 
   initialize : function(owner) {
     this.owner = owner;
     this.extraXStep = 0;
     this.extraYStep = 0;
-    this.coords = { x : 0, y : 0}
-    this.coords.x = this.owner.coords.x + this.owner.position2[this.owner.owner.angle].x + this.extraXStep;
-    this.coords.y = this.owner.coords.y + this.owner.position2[this.owner.owner.angle].y + this.extraYStep;
+    this.coords = { x : 0, y : 0};
+    this.coords.x = this.owner.coords.x + this.owner.position2[this.owner.owner.angle].x + this.extraXStep - this.owner.owner.imgWidth/2 + this.imgWidth/2;
+    this.coords.y = this.owner.coords.y + this.owner.position2[this.owner.owner.angle].y + this.extraYStep - this.owner.owner.imgHeight/2 + this.imgHeight/2;
     this.rockImg = Loader.images.weapons["rock.png"];
     this.display =  new DomImgSprite(this, {img: this.rockImg});
     this.attacker = null;
@@ -65,41 +68,36 @@ var MovingRock = Class.create({
   tick : function() {
     if(!this.attacker){
       this.attacker = this.owner.owner.attacker;
-      this.extraXStep = 0;
+      this.extraXStep = 0;this.coords.x
       this.extraYStep = 0;
     }
-    if( this.attacker ) {
-      var targetX = this.attacker.coords.x + this.attacker.imgWidth/3 - 10;
-      var targetY = this.attacker.coords.y + 2*this.attacker.imgHeight/3;
+    if(this.attacker) {
+      var targetX = this.attacker.coords.x;
+      var targetY = this.attacker.coords.y + this.attacker.imgHeight/8;
+      var move = Util.getNextMove(this.coords.x, this.coords.y, targetX, targetY, 20)
+      this.extraXStep = move[0];
+      this.extraYStep = move[1];
+      if( Math.abs(this.extraXStep) > Math.abs(targetX - this.coords.x))
+        this.extraXStep = targetX - this.coords.x
+      if( Math.abs(this.extraYStep) > Math.abs(targetY - this.coords.y))
+        this.extraYStep = targetY - this.coords.y
+      this.coords.x = this.coords.x + this.extraXStep;
+      this.coords.y = this.coords.y + this.extraYStep;
       if(this.coords.x == targetX && this.coords.y == targetY )
       {
-        this.currentStep = 0;
-        this.attacker = null;
-        this.display.destroy();
-        return;
-      }else {
-        var move = Util.getNextMove(this.coords.x, this.coords.y, targetX, targetY, 20)
-        this.extraXStep = move[0];
-        this.extraYStep = move[1];
-        if( Math.abs(this.extraXStep) > Math.abs(targetX - this.coords.x))
-          this.extraXStep = targetX - this.coords.x
-        if( Math.abs(this.extraYStep) > Math.abs(targetY - this.coords.y))
-          this.extraYStep = targetY - this.coords.y
-        this.coords.x = this.coords.x + this.extraXStep;
-        this.coords.y = this.coords.y + this.extraYStep;
-        if(this.coords.x == targetX && this.coords.y == targetY )
-        {
-          this.currentStep = 0;
-          this.attacker = null;
-          this.display.destroy();
-          this.owner.game.scene.remove(this);
-        }
-        return;
+        this.owner.owner.fire();
+        this.destroy();
       }
     }else {
-      this.display.destroy();
-      this.owner.game.scene.remove(this);
+      this.destroy();
     }
+  },
+
+  destroy : function() {
+    this.attacker = null;
+    this.display.destroy();
+    this.owner.game.scene.remove(this);
+    this.owner.display.movingRocks.remove(this);
   }
     
 });
@@ -110,7 +108,6 @@ var RockDisplay = Class.create( Display, {
 
   initialize : function($super,owner,properties, container){
 	  $super(owner,properties)
-		Object.extend(this.owner,properties);
     this.container = container;
     this.createSprites();
     this.currentMove = 0;
@@ -143,6 +140,7 @@ var RockDisplay = Class.create( Display, {
     if(this.currentMove == this.moveSteps)
     {
       this.sprites.rock.hide();
+      console.log("new rock", this.owner.owner.attacked)
       var rock = new MovingRock(this.owner);
       this.movingRocks.push(rock);
       rock.display.show();
