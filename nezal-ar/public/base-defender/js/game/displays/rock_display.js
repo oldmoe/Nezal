@@ -140,7 +140,6 @@ var RockDisplay = Class.create( Display, {
     if(this.currentMove == this.moveSteps)
     {
       this.sprites.rock.hide();
-      console.log("new rock", this.owner.owner.attacked)
       var rock = new MovingRock(this.owner);
       this.movingRocks.push(rock);
       rock.display.show();
