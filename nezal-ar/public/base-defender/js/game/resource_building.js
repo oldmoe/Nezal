@@ -4,6 +4,7 @@ var ResourceBuilding = Class.create(Building, {
   unitPerWorkerTick : null,
   capacity : null,
   producing : true,
+  full : false,
   initialize : function($super, factory, buildingSpecs){
     $super(factory, buildingSpecs);
     this.assignedWorkers = buildingSpecs.assigned_workers || 0;
@@ -14,6 +15,7 @@ var ResourceBuilding = Class.create(Building, {
 			this.unitPerWorkerTick = (this.unitPerWorkerMinute / (60)) * (this.game.reactor.delay / 1000);
       this.capacity = this.currentLevelBluePrints.capacity
     }
+	this.fullObservers = []
   },
 
   resource : function(){
@@ -22,8 +24,9 @@ var ResourceBuilding = Class.create(Building, {
 	
   totalPerTick : function(){
 		var collected = this.unitPerWorkerTick * this.assignedWorkers
-    if (this[this.factory.collect] + collected > this.capacity) {
+    	if (this[this.factory.collect] + collected > this.capacity) {
 			this.producing = false
+			this.full = true
 			return (this.capacity - this[this.factory.collect]);
 		}
 		else {

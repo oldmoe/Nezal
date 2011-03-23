@@ -25,6 +25,7 @@ var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
       this.bubbles.push(bubbleSprite);
     }
         $super(owner,properties);
+		
   },
   
   render : function($super){

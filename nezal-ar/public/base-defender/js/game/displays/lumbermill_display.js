@@ -12,6 +12,7 @@ var LumbermillDisplay = Class.create(ResourceBuildingDisplay, {
             this.animationRepeats * this.sprites.building.noOfAnimationFrames,
             this.animationEverySeconds,
             function(){self.renderAnimation()})
+	this.sprites.attention.shiftY = -15;
   },
     
   createSprites : function(){
