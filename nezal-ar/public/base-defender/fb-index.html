@@ -8,12 +8,17 @@
     <script src="js/nezal/facebook.js" type="text/javascript"></script>
     <script src="js/nezal/carousel.js" type="text/javascript"></script>
     <script>
+		soundManager.useFlashBlock = false;
+		soundManager.bgColor = '#ffffff';
+		soundManager.debugMode = false;
 		soundManager.url = 'swf/';
-		soundManager.flashVersion = 9; // optionsal: shiny features (default = 8)
-		soundManager.useFlashBlock = false; // optionally, enable when you're ready to dive in
-		// enable HTML5 audio support, if you're feeling adventurous.
+		soundManager.wmode = 'transparent'; // hide initial flash of white on everything except firefox/win32
+		soundManager.allowScriptAccess = 'always';
+		soundManager.useFastPolling = true;
+		soundManager.flashVersion = 9;
+		soundManager.flashLoadTimeout = 3000;
 		soundManager.useHTML5Audio = true;
-		soundManager.useGlobalHTML5Audio = true;
+		//soundManager.html5.mp3 = true
 	</script>
     <link type="text/css" href="css/game.css" rel="stylesheet" />
     <link type="text/css" href="css/game_panel.css" rel="stylesheet" />

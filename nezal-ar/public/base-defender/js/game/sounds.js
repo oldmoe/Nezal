@@ -110,7 +110,7 @@ var Sounds = {
 }
 
 
-var soundNames = ['constructions', 'advisors', 'lumber', 'resource_collection','slingshot','explosion','click']
+var soundNames = ['explosion','click','constructions','resource_collection','slingshot']
 
 function createSounds(){
 	for(var i = 0; i < soundNames.size(); i++){
@@ -146,7 +146,7 @@ function createAudioElements(count, store, url, loops){
 	var attributes = {
 	  id: url,
 	  url: 'sounds/sfx/mp3/'+url+'.mp3',
-	  autoLoad: true,
+	//  autoLoad: true,
 	  autoPlay: false,
 	  volume: 50
 	}
@@ -173,6 +173,7 @@ function createBackgroundMusic(){
 	  autoLoad: true,
 	  autoPlay: false,
 	  volume: 10,
+	  loop : "loop",
 	  loops : 10000
 	});
 	Sounds.gameSounds.game= []
@@ -185,3 +186,7 @@ soundManager.onready(function() {
     createSounds()
   } 
 });
+soundManager.ontimeout(function() {
+     createSounds()
+});
+
