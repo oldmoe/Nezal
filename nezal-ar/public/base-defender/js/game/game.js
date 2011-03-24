@@ -213,8 +213,8 @@ var Game = Class.create({
     else{
       var selectedBuilding = this.buildingMode.selectedBuilding;
       if( selectedBuilding && selectedBuilding.state == selectedBuilding.states.NOT_PLACED ){
+        
         var newBuilding = this[selectedBuilding.name.dasherize().camelize() + 'Factory'].newBuilding();
-        console.log(newBuilding);
         this.buildingMode.on( newBuilding, function(){} );
       }
     }

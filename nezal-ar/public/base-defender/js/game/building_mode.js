@@ -22,7 +22,7 @@ var BuildingMode = Class.create({
     this.callback = callback;
     this.selectedBuilding = building;
 		this._AttachMouseMoveEvent();
-    this._AttachCanvasClickListener();
+    //this._AttachCanvasClickListener();
 		$('cancelBuilding').show();
   },
 	
@@ -71,16 +71,15 @@ var BuildingMode = Class.create({
 	},
 	
   _AttachCanvasClickListener : function(){
-    var self = this;
     $('gameCanvas').stopObserving(game.mouseClickEvent);
     $('gameCanvas').observe(game.mouseClickEvent, function(mouse){
-      if(self.game.neighborGame)
+      if(game.neighborGame)
         return;
       var x = mouse.pointerX() || mouse.touches[0].pageX;
       var y = mouse.pointerY() || mouse.touches[0].pageY;
 	  	var mapCoords =  Map.getRealCoords(x,y)
-      if(self.isOn) 
-        self._ModeOnAction(mapCoords.x, mapCoords.y);
+      if(game.buildingMode.isOn) 
+        game.buildingMode._ModeOnAction(mapCoords.x, mapCoords.y);
     });
   },
 	
@@ -91,7 +90,7 @@ var BuildingMode = Class.create({
 		}
     else if (this.selectedBuilding.build(x, y)) {
       this.callback();
-      this.off();
+      //this.off();
     }
   },
 
