@@ -146,7 +146,7 @@ function createAudioElements(count, store, url, loops){
 	var attributes = {
 	  id: url,
 	  url: 'sounds/sfx/mp3/'+url+'.mp3',
-	//  autoLoad: true,
+	  autoLoad: true,
 	  autoPlay: false,
 	  volume: 50
 	}
