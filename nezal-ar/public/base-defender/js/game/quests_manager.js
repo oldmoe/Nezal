@@ -89,18 +89,19 @@ var QuestsManager = Class.create({
   },
 
   handleQuests : function() {
-    if(this.game.neighborGame == true)
-    {
+    if(this.game.neighborGame == true) {
       if($('quest-panel')) $('quest-panel').hide();
       if($('msg')) $('msg').hide();
       if($('questDisplay')) $('questDisplay').hide();
       if($('buildingDisplay')) $('buildingDisplay').hide();
       return;
     }
+    
     /* Handle Quests should check any quests screens to display :
        if there is any quests notifications, display them one by one.
        else, Check for a mandatory Quest and display it.
     */
+    var buildingDisplayShown = $('buildingDisplay').getStyle("display") == "block" ? true : false;
     $('buildingDisplay').hide();
     $('msg').innerHTML = ""
     $('questDisplay').innerHTML = ""
@@ -112,12 +113,16 @@ var QuestsManager = Class.create({
     } else {
       var mandatoryQuest = null;
       mandatoryQuest = this.mandatoryQuest();
-      if(mandatoryQuest!=null)
-      {
+      if(mandatoryQuest!=null) {
         this.displayQuest(mandatoryQuest);
         var tutorialHandle = this.game.tutorial[this.game.user.data.quests.descriptions[mandatoryQuest]['name']];
         if(tutorialHandle)
           tutorialHandle.handle();
+      }
+    }
+    if( $('msg').innerHTML == "" && $('questDisplay').innerHTML == "" ){
+      if( buildingDisplayShown ){
+        $('buildingDisplay').show();
       }
     }
   },

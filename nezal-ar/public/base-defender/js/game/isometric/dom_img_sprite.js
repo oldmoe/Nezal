@@ -50,7 +50,7 @@ var DomImgSprite = Class.create(DomSprite, {
     this.img = img.clone()
     this.div.appendChild(this.img)  
   },
-	
+  
 	render : function($super){
     $super();
     

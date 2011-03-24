@@ -11,7 +11,7 @@ var BuildingMode = Class.create({
     this.game = game;
     this._AttachCanvasClickListener();
 		this._AttachCancelBuildingListener();
-		if($('cancelBuilding')) $('cancelBuilding').hide();
+		//if($('cancelBuilding')) $('cancelBuilding').hide();
   },
   
   on : function(building, callback){
@@ -22,6 +22,7 @@ var BuildingMode = Class.create({
     this.callback = callback;
     this.selectedBuilding = building;
 		this._AttachMouseMoveEvent();
+    this._AttachCanvasClickListener();
 		$('cancelBuilding').show();
   },
 	
@@ -46,12 +47,14 @@ var BuildingMode = Class.create({
 			self.selectedBuilding.coords.y = mapCoords.y;
       self.selectedBuilding.render();
 		}
+    $('gameCanvas').stopObserving(game.mouseMoveEvent);
 		$('gameCanvas').observe(game.mouseMoveEvent, this.buildingMoveObserver);
 	},
   
   off : function(){
 		this.moveBuilding = false
     this.isOn = false;
+    this.selectedBuilding = null;
 		$('gameCanvas').stopObserving(game.mouseMoveEvent, this.buildingMoveObserver);
 		$('cancelBuilding').hide();
   },
@@ -94,6 +97,7 @@ var BuildingMode = Class.create({
 
 	_AttachCancelBuildingListener : function(){
 		var self = this;
+    $('cancelBuilding').stopObserving(game.mouseClickEvent);
 		$('cancelBuilding').observe(game.mouseClickEvent,function(){self.cancelBuildingMode()})
 	},
 	

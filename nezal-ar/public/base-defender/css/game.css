@@ -88,6 +88,7 @@ img{
   left: 684px;
   position: absolute;
   top: 347px;
+  cursor: pointer;
 }
 
 .healthSpan{
