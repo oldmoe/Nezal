@@ -2,6 +2,9 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
   initialize : function($super,owner,properties){
     $super(owner,properties)
     this.sprites.text = new DomTextSprite(owner, 'resource',{centered: true, shiftY: 110});
+	this.attentionImg = Loader.images.icons['attention.png']
+	this.sprites.attention = new DomImgSprite(this.owner,{img:this.attentionImg}, {shiftX : 40,shiftY : -30})
+	this.sprites.attention.hide()
   },
 
   manageStateChange : function($super){
@@ -9,12 +12,15 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
     var self = this;
     this.owner.stateNotifications[this.owner.states.NOT_PLACED].push(function(){
       self.sprites.text.hide()
+	 	 
     });
     this.owner.stateNotifications[this.owner.states.UNDER_CONSTRUCTION].push(function(){
       self.sprites.text.hide()
+	 
     });
     this.owner.stateNotifications[this.owner.states.UPGRADING].push(function(){
       self.sprites.text.hide()
+	  
     });
     this.owner.stateNotifications[this.owner.states.NORMAL].push(function(){
       if(self.owner.game.neighborGame == true)
@@ -22,6 +28,7 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
       else
         self.sprites.text.show()
     });
+	
   },
   
   renderPanel : function($super){
@@ -31,10 +38,13 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
       return self.game.templatesManager.resourceBuildingPanel(self);
     });
   },
-  
+  render : function($super){
+  	$super()
+	if(this.owner.full)this.sprites.attention.show()
+  },
   renderPanelButtons: function($super){
     $super();
-    
+    if(this.owner.full) this.sprites.attention.show()
     var owner = this.owner;
     $("dom_converter").innerHTML = this.game.templatesManager.resourceBuildingPanelButtons();
     $('panel-buttons-container').appendChild( $("collect_resource_trigger") );
