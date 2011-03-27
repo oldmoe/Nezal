@@ -253,8 +253,12 @@
   <img class="wedgesBg" src="${Loader.images.quests['wedgesBg.png'].src}" />
   <img class="buildingsBg" src="${Loader.images.quests['buildingsBg.png'].src}" />
   <img class="buildingPanelLine" src="images/quests/line.png"/>
-  <div onclick="if(currentShift != 0){currentShift--;$$('#interaction .buildings')[0].setStyle({marginLeft : (currentShift*-84) + 'px' })}" class="leftArrowContainer"><img style="margin-left:-60px;" src="images/quests/arrows_horizontal.png"/></div>
-  <div onclick="if(currentShift < maxShift){currentShift++;$$('#interaction .buildings')[0].setStyle({marginLeft : (currentShift*-84) + 'px' })}" class="rightArrowContainer"><img style="margin-left:-90px;" src="images/quests/arrows_horizontal.png"/></div>
+  <div id="leftArrow" class="leftArrowContainer">
+    <img style="margin-left:0;" src="images/quests/arrows_horizontal.png"/>
+   </div>
+  <div id="rightArrow" class="rightArrowContainer">
+    <img style="margin-left:-90px;" src="images/quests/arrows_horizontal.png"/>
+  </div>
   <div id="buildingsTrigger" onclick='$$(".buildingsBg")[0].setStyle({zIndex:10});$$(".wedgesBg")[0].setStyle({zIndex:0});$("buildingsPanel").setStyle({zIndex:11})'>Buildings</div>
   <div id="wedgesTrigger" onclick='//$$(".buildingsBg")[0].setStyle({zIndex:0});$$(".wedgesBg")[0].setStyle({zIndex:10});$("buildingsPanel").setStyle({zIndex:0})'>Wedges</div>
   <div id="closeBuildingPanel" onclick="Animation.hide('buildingDisplay');"></div>

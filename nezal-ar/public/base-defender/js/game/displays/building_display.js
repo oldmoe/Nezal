@@ -148,8 +148,7 @@ var BuildingDisplay = Class.create(Display, {
   
   renderPanelButtons : function(){
     var owner = this.owner;
-    
-    $('panel-buttons-container').innerHTML = this.game.templatesManager.upgradeButton();
+    $('panel-buttons-container').innerHTML = this.game.templatesManager.load("upgrade-button");
     $('upgrade_trigger').stopObserving('click');
     $('upgrade_trigger').observe('click', function(){
       owner.upgrade();

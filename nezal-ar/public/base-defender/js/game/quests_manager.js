@@ -29,7 +29,7 @@ var QuestsManager = Class.create({
   render : function(){
     if(this.game.neighborGame) return;
     var quests = this.nextInCategory();
-    $('quest-panel').innerHTML = this.game.templatesManager.questsList(quests);
+    $('quest-panel').innerHTML = this.game.templatesManager.load("quests-list", {questsList : quests});
     $$('#quest-panel .clickable').each( function(button){
                                             var id = button.getAttribute('id');
                                             button.observe( 'click', function(){
@@ -65,14 +65,15 @@ var QuestsManager = Class.create({
     if($('emptyQuest')) Animation.hide('emptyQuest');
     $('msg').hide();
     $('questDisplay').innerHTML = '';
-    $('questDisplay').innerHTML = this.game.templatesManager.quest(this.game.user.data.quests.descriptions[questId]);
+    $('questDisplay').innerHTML = this.game.templatesManager.load("quest", 
+                                    {quest: this.game.user.data.quests.descriptions[questId]});
     $('questDisplay').show();
     $('interaction').show();
     Animation.show('questScreen');
   },
 
   displayCongratesMsg : function(msg){
-    $('msg').innerHTML = this.game.templatesManager.congrates(msg);
+    $('msg').innerHTML = this.game.templatesManager.load("congrates", {msg : msg});
     $('interaction').show();
     $('msg').show();
     Animation.show('congratesMsg');
@@ -82,7 +83,8 @@ var QuestsManager = Class.create({
     if($('questScreen')) Animation.hide('questScreen');
     $('questDisplay').hide();
     $('msg').innerHTML = '';
-    $('msg').innerHTML = this.game.templatesManager.emptyQuest(category, this.categoryMsgs[category], this.categoryMsgs["noQuest"]);
+    $('msg').innerHTML = this.game.templatesManager.load("empty-quest", 
+                    { category: category, msg: this.categoryMsgs[category], msg2: this.categoryMsgs["noQuest"]});
     $('msg').show();
     $('interaction').show();
     Animation.show('emptyQuest');

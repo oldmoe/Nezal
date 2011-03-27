@@ -25,9 +25,39 @@ var BuildingsManager = Class.create({
 //                      $$('#buildingsPanel #' + item + ' .background')[0].src=Loader.images.quests['inactiveCell.png'].src;
 //                      $$('#buildingsPanel #' + item + ' .itemData')[0].setStyle({cursor : 'default' });
 //                  });
+
+    this.buildingLeftArrowClickEvent();
+    this.buildingrightArrowClickEvent();
+    
     Animation.hide('questDisplay');
     Animation.show('buildingDisplay');
     $('interaction').show();
+  },
+  
+  buildingLeftArrowClickEvent : function(){
+    $("leftArrow").stopObserving("click");
+    $("leftArrow").observe("click", function(){
+      if(currentShift != 0) {
+        currentShift--;
+        $$('#interaction .buildings')[0].setStyle({marginLeft : (currentShift*-84) + 'px' })
+        $$('#rightArrow img')[0].setStyle({marginLeft : '-90px'});
+        if(currentShift == 0)
+          $$('#leftArrow img')[0].setStyle({marginLeft : '0'});
+      }
+    });
+  },
+  
+  buildingrightArrowClickEvent : function(){
+    $("rightArrow").stopObserving("click");
+    $("rightArrow").observe("click", function(){
+      if(currentShift < maxShift) { 
+        currentShift++;
+        $$('#interaction .buildings')[0].setStyle({marginLeft : (currentShift*-84) + 'px' });
+        $$('#leftArrow img')[0].setStyle({marginLeft : '-60px'});
+        if(currentShift == maxShift)
+          $$('#rightArrow img')[0].setStyle({marginLeft : '-30px'});
+      }
+    });
   },
 
   /*

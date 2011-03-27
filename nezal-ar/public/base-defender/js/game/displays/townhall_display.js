@@ -24,7 +24,7 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
       $super();
       var self = this.owner;
       self.game.selectedBuildingPanel = new BuildingPanel(self, function(){
-        return self.game.templatesManager.townhallPanel(self.name, self.inProgress(), self.game.workerFactory.nextWorkerCost());
+        return self.game.templatesManager.load("townhall-panel", {building : self});
       });
       self.game.workerFactory.attachHireTrigger();
 

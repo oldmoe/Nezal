@@ -2,7 +2,7 @@ var ProgressDisplay = Class.create({
   initialize : function(time, top, left, zIndex){
     this.time = time;
     this.elapsed = 0
-    this.html = TrimPath.processDOMTemplate("progress-template");
+    this.html = game.templatesManager.load("progress");
     var div = document.createElement('DIV')
     div.innerHTML = this.html;
     div.addClassName('progressContainer')

@@ -7,10 +7,10 @@ var Notification = Class.create({
   
   showAll : function(){
     var self = this;
-    var notifications = this.game.user.data.notifications.queue;
     var notificationsHTML = "";
-    notifications.each(function(notification){
-      notificationsHTML += self.game.templatesManager.notification(notification.text, notification.id);
+    this.game.user.data.notifications.queue.each(function(notification){
+      notificationsHTML += self.game.templatesManager.load("notification",
+                               {notificationMessage : notification.text, id : notification.id});
     });
     $('gameContainer').insert(notificationsHTML);
     this._AttachNotificationsAckTriggers();
@@ -27,17 +27,17 @@ var Notification = Class.create({
 });
 
 Notification.alert = function(message){
-  $("alert").innerHTML = game.templatesManager.alert(message);
+  $("alert").innerHTML = game.templatesManager.load("alert", {message : message});
   $("alert").show();
   $('interaction').show();
 }
 Notification.notify = function(message){
-	$("notify").innerHTML = game.templatesManager.alert(message);
+	$("notify").innerHTML = game.templatesManager.load("alert", {message : message});
   $("notify").show();
 	$('interaction').show();
 }
 Notification.repair = function(message){
-	$("notify").innerHTML = game.templatesManager.notifyRepair(message);
-  	$("notify").show();
+	$("notify").innerHTML = game.templatesManager.load("repair", {message : message});
+	$("notify").show();
 	$('interaction').show();
 }

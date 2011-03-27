@@ -3,7 +3,7 @@
     <span class="">${remainingTime}</span>
 </textarea>
 <textarea id="townhall-panel">
-    {if buildingInProgress}
+    {if building.inProgress()}
       <span class="building-in-progress">Building in progress</span>
     {else}
       <div class="building-functions">
@@ -48,7 +48,7 @@
 </textarea>
 <textarea id="notification">
   <div class="notification_message_container">
-    <span>${notification_message}</span>
+    <span>${notificationMessage}</span>
     <button id="${id}" class="notification_ok">OK</button>
   </div>
 </textarea>
