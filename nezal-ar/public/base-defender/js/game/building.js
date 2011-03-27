@@ -155,9 +155,13 @@ var Building = Class.create({
   },
   
   textInfo : function(){
-    return this.name.capitalize().replace("_", " ") + " " + this.level;
+    return this.humanizeString(this.name)+ " " + this.level;
   },
 	
+  humanizeString : function(str){
+	return str.capitalize().replace("_", " ") 
+  },
+  
   isValidToUpgrade : function(x,y){
     if(this.game.disableJsValidation)
       return true;
@@ -215,7 +219,15 @@ var Building = Class.create({
       return false;
     }
     /****************************************************************************************/
-    
+    /****************************** Validating dependencies **************************************/
+	var buildingDependencies = this.currentLevelBluePrints.dependency.buildings
+	for(building in buildingDependencies){
+		if(!this.game[building.dasherize().camelize()+"Factory"].buildingExists(buildingDependencies[building])){
+			Notification.alert("Cannot build " + this.name + ", you need a "+ this.humanizeString(building) + " level "+ buildingDependencies[building]);
+			return false
+		}
+	}
+    /****************************************************************************************/		    
     /****************************** Validating resources **************************************/
     var neededRock = this.factory.bluePrints.levels[1].rock - this.game.resources.rock;
     var neededLumber = this.factory.bluePrints.levels[1].lumber - this.game.resources.lumber;

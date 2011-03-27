@@ -11,13 +11,13 @@ var WorkerFactory = Class.create({
 		if(!game.workersStatus) game.workersStatus = {}
 		var townhall = this.game.townhallFactory.getTownhall()
 		for(var i=0;i<this.idleWorkers;i++){
-			var x =0;var y=0;var worker = null;
-			if (game.workersStatus[i]) {
+		  var x =0;var y=0;var worker = null;
+		  if (game.workersStatus[i]) {
 		  	worker = game.workersStatus[i]
 		  }
 		  else {
 				var x =0;var y =0;
-					if (townhall) {
+				if (townhall) {
 		  			x = townhall.coords.x + 30
 		  			y = townhall.coords.y + 30
 		  		}else{
@@ -66,6 +66,11 @@ var WorkerFactory = Class.create({
   },
   
   _ValidateBuyWorker : function(){
+  	if(!this.game.townhallFactory.getTownhall() ||
+	this.game.townhallFactory.getTownhall().state != this.game.townhallFactory.getTownhall().states.NORMAL){
+	  Notification.alert("You need to have a townhall before hiring a worker.");
+      return false;
+	}
     if(this.game.disableJsValidation) return true;
     if (this.game.user.coins >= this.nextWorkerCost()) {
       return true;
