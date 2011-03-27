@@ -15,9 +15,10 @@ var GamePanel = Class.create({
     if(this.game.neighborGame) return;
     var rock = this.game.scene._FormatResourceDisplay(this.game.resources.rock);
     var lumber = this.game.scene._FormatResourceDisplay(this.game.resources.lumber);
-    $('rock-amount').innerHTML = this.game.templatesManager.resourceAmountInGamePanel(rock, this.game.quarryFactory.rockPerMinute);
-    $('lumber-amount').innerHTML = this.game.templatesManager.resourceAmountInGamePanel(lumber, this.game.lumbermillFactory.lumberPerMinute);
-    $('workers-amount').innerHTML = this.game.templatesManager.workersInGamePanel(this.game.workerFactory.idleWorkers, this.game.workerFactory.workers);
+    $('rock-amount').innerHTML = this.game.templatesManager.load("resource-amount-display", {amount : rock});
+    $('lumber-amount').innerHTML = this.game.templatesManager.load("resource-amount-display", {amount : lumber});
+    $('workers-amount').innerHTML = this.game.templatesManager.load("workers-in-game-panel",
+            {idleWorkers : this.game.workerFactory.idleWorkers, totalWorkers : this.game.workerFactory.workers});
     $('coins-amount').innerHTML = this.game.user.coins;
   }
 })

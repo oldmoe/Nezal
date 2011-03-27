@@ -50,7 +50,7 @@ var Game = Class.create({
 		new Loader().load([{images : ['logo.png'], path: 'images/loading/', store: 'loading'}],
 							{onFinish : function(){
 								$('inProgress').show()
-								$('inProgress').innerHTML = self.templatesManager.loadingScreen()
+								$('inProgress').innerHTML = self.templatesManager.load("loadingScreen");
 								self.initializeGame()
 							}})
 	},
@@ -75,7 +75,7 @@ var Game = Class.create({
 					$$('#inProgress #loadingBarFill')[0].style.width = Math.min(progress,88)+"%"
 				},
 				onFinish: function(){
-					$('gameContainer').innerHTML = game.templatesManager.gameElements()
+					$('gameContainer').innerHTML = game.templatesManager.load("gameElements");
 					Map.initializeMapSize()
 					self.questsManager = new QuestsManager(self);
 					$('inProgress').hide()
@@ -102,7 +102,9 @@ var Game = Class.create({
             friendID["name"] = mapping[friendID["service_id"]].name
           else
             friendID["name"] = friendID["service_id"]
-          mapView += self.templatesManager.friendRecord(friendID["user_id"], friendID["service_id"], friendID["name"]);
+          
+          mapView += self.templatesManager.load("friend-record", 
+                    {'friendId' : friendID["user_id"], 'serviceId' : friendID["service_id"], 'friendName' : friendID["name"]} );
         });
         $('friends-ul').innerHTML = mapView;
         var images = {

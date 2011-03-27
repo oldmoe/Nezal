@@ -35,7 +35,7 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
     $super();
     var self = this.owner;
     self.game.selectedBuildingPanel = new BuildingPanel(self, function(){
-      return self.game.templatesManager.resourceBuildingPanel(self);
+      return self.game.templatesManager.load(self.name + "-panel", {building : self});
     });
   },
   render : function($super){
@@ -46,7 +46,7 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
     $super();
     if(this.owner.full) this.sprites.attention.show()
     var owner = this.owner;
-    $("dom_converter").innerHTML = this.game.templatesManager.resourceBuildingPanelButtons();
+    $("dom_converter").innerHTML = this.game.templatesManager.load("resource-building-buttons");
     $('panel-buttons-container').appendChild( $("collect_resource_trigger") );
     $('panel-buttons-container').appendChild( $("assign_worker_trigger") );
     

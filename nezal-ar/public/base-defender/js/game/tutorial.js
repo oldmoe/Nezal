@@ -14,7 +14,8 @@ var Tutorial = Class.create({
       $('buildButton').hide();
       if(!this.game.townhallFactory.townhall){
         serviceProvider.getUserInfo(function(){
-                                      $('msg').innerHTML = this.game.templatesManager.welcome(serviceProvider.user['first_name']);
+                                      $('msg').innerHTML = this.game.templatesManager.load("welcome", 
+                                                                {userName : serviceProvider.user['first_name']});
                                       $('interaction').show();
                                       $('msg').show();  
                                       Animation.show('welcomeMsg');
