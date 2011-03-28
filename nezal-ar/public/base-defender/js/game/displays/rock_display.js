@@ -58,11 +58,11 @@ var MovingRock = Class.create({
     this.coords = { x : 0, y : 0};
     this.coords.x = this.owner.coords.x + this.owner.position2[this.owner.owner.angle].x + this.extraXStep - this.owner.owner.imgWidth/2 + this.imgWidth/2;
     this.coords.y = this.owner.coords.y + this.owner.position2[this.owner.owner.angle].y + this.extraYStep - this.owner.owner.imgHeight/2 + this.imgHeight/2;
-    this.rockImg = Loader.images.weapons["rock.png"];
-    this.display =  new DomImgSprite(this, {img: this.rockImg});
     this.attacker = null;
     var self = this;
     this.owner.game.scene.push(this);
+    this.rockImg = Loader.images.weapons["rock.png"];
+    this.display =  new DomImgSprite(this, {img: this.rockImg});
   },
 
   tick : function() {
@@ -109,14 +109,15 @@ var RockDisplay = Class.create( Display, {
   initialize : function($super,owner,properties, container){
 	  $super(owner,properties)
     this.container = container;
-    this.createSprites();
     this.currentMove = 0;
+    this.createSprites();
   },
 
   createSprites : function() {
+    this.movingRocks = [];
     this.rockImg = Loader.images.weapons["rock.png"];
     this.sprites.rock = this.container.newDomImgSprite(this.owner, {img: this.rockImg});
-    this.movingRocks = [];
+    this.render();
   },
 
   render : function() {

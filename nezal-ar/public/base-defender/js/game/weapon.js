@@ -44,7 +44,7 @@ var Weapon = Class.create({
       return this.attacker;
     var attack = null;
     var minHp = 50000;
-    var minDistance = 150;
+    var minDistance = this.specs.range;
     for( var i = 0 ; i < this.game.creepFactory.registery.length; i++ )
     {
       var creep = this.game.creepFactory.registery[i];

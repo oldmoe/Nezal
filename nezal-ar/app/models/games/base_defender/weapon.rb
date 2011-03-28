@@ -70,7 +70,7 @@ module BD
       @angle = 0
       @rocks = []
       @weapon = BaseDefender.adjusted_game_metadata['buildings']['wedge']['levels'][@owner.owner['level'].to_s]['weapon']
-      @power = BaseDefender.adjusted_game_metadata['weapons'][@weapon]['specs']['power']
+      @specs = BaseDefender.adjusted_game_metadata['weapons'][@weapon]['specs']
       @coords = @owner.owner['coords']
     end
 
@@ -108,7 +108,7 @@ module BD
       end
       attack = nil
       minHp = 50000
-      minDistance = 300
+      minDistance = @specs['range']
       @creeps.each do |creep|
         dist = Util.distance(@coords['x'], @coords['y'], creep.coords['x'], creep.coords['y']);
         if(dist < minDistance)
@@ -123,7 +123,7 @@ module BD
 
     def fire 
       if @attacker
-        @attacker.hp -= @power
+        @attacker.hp -= @specs['power']
       end
     end
 
