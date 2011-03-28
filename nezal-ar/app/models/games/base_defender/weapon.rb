@@ -58,6 +58,75 @@ module BD
       return validation
     end
 
+    attr_accessor :owner, :coords, :angle, :attacker, :rocks
+    # Create a new weapon instance for the wedges to detect the attack
+    # Should take the wedge map building as owner to simulate the attack
+    def initialize(owner, creeps)
+      @creeps = creeps 
+      @owner = owner
+      @attacker = nil
+      @step = 0
+      @tick = 0
+      @angle = 0
+      @rocks = []
+      @weapon = BaseDefender.adjusted_game_metadata['buildings']['wedge']['levels'][@owner.owner['level'].to_s]['weapon']
+      @specs = BaseDefender.adjusted_game_metadata['weapons'][@weapon]['specs']
+      @coords = @owner.owner['coords']
+    end
+
+    def tick      
+      if(@owner.owner['state'] == BD::Building.states['NORMAL'])
+        check_attack()
+        if @attacker
+          @angle = Map.get_general_direction(@coords['x'], @coords['y'], @attacker.coords['x'], @attacker.coords['y'])
+          if ( @tick == 0 )
+            @step += 1
+            if @step == 2
+              @rocks << BD::Rock.new(self, @attacker)
+            end
+            if @step == 7 
+              @attacker = nil
+              @step = 0
+            end
+          end
+          @tick = (@tick + 1 ) % 2
+        end
+        @rocks.each { |rock|  rock.tick }
+      end 
+    end
+
+    def check_attack()
+      if(@owner.owner['hp'] <= 1)
+        @attacker = nil 
+        return
+      end
+      if (@attacker && @attacker.hp > 0)
+        return
+      else 
+        @creeps.delete(@attacker)
+        @attacker = nil
+      end
+      attack = nil
+      minHp = 50000
+      minDistance = @specs['range']
+      @creeps.each do |creep|
+        dist = Util.distance(@coords['x'], @coords['y'], creep.coords['x'], creep.coords['y']);
+        if(dist < minDistance)
+          if(creep.hp < minHp)
+            minHp = creep.hp;
+            attack = creep;
+          end
+        end
+      end
+      @attacker = attack;
+    end
+
+    def fire 
+      if @attacker
+        @attacker.hp -= @specs['power']
+      end
+    end
+
   end
 
 end

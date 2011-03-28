@@ -26,9 +26,7 @@ var Astar = Class.create({
 	},
 	getOptimalPath :function(map, srcNode, dstNode){
 		var openList = []
-		var closedList = []
 		openList.push(srcNode)
-		var goalReached = false
         while(openList.length > 0) {
             var lowInd = 0;
             for(var i=0; i<openList.length; i++) {

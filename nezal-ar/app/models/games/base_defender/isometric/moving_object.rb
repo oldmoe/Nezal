@@ -20,14 +20,14 @@ module BD
     end
     attr_accessor :coords, :moving, :rotating, :target_angle, :angle, :speed, :random_move, :distance_to_next_tile, 
     :no_of_states, :state, :tick_counter, :map, :moving_path  
-    def tick 
+    def tick
       @tick_counter= @tick_counter+1 
       if(@moving_path.length>0)
         if(@target_angle!=@angle)
           change_angle()
           return
         end
-        values = @map.value(@moving_path[@moving_path.length-1]['x'],@moving_path[this.moving_path.length-1]['y'])
+        values = @map.value(@moving_path[@moving_path.length-1].x,@moving_path[@moving_path.length-1].y)
         if(!@moving)
           @moving = true
           @distance_to_next_tile = Util.distance(@coords['x'],@coords['y'],values[0],values[1])  
@@ -41,7 +41,7 @@ module BD
         if(@coords['x'] == values[0] && @coords['y'] == values[1])
           @moving_path.pop()
           if(@moving_path.length>0)
-            values = @map.value(@moving_path[@moving_path.length-1]['x'], @moving_path[@moving_path.length-1]['y'])
+            values = @map.value(@moving_path[@moving_path.length-1].x, @moving_path[@moving_path.length-1].y)
             @target_angle = @map.get_direction(@coords['x'], @coords['y'], values[0], values[1])
           end
         end

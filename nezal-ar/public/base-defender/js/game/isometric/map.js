@@ -333,14 +333,36 @@ var Map={
 	},
 
 	move : function (dx,dy){
-		if(this.x+dx >=0 && this.x+dx < this.mapWidth - this.viewWidth
-		 &&this.y+dy >=0 && this.y+dy < this.mapHeight - this.viewHeight){
-			this.x+=dx
-			this.y+=dy
-			this.div.style.left = -this.x +"px"
-			this.div.style.top = -this.y +"px"
-			this.origin = Map.tileValue(this.x,this.y)
+		if(this.x+dx<0)
+		{
+			this.x=0;
 		}
+		else if (this.x+dx>this.mapWidth-this.viewWidth)
+		{
+			this.x = this.mapWidth - this.viewWidth
+		}
+		else
+		{
+			this.x+=dx;
+			
+		}
+		if(this.y+dy<0)
+		{
+			this.y=0;
+		}
+		else if (this.y+dy>this.mapHeight-this.viewHeight)
+		{
+			this.y = this.mapHeight-this.viewHeight
+		}
+		else
+		{
+			this.y+=dy
+		}
+		this.div.style.left = -this.x +"px"
+		this.div.style.top = -this.y +"px"
+		this.origin = Map.tileValue(this.x,this.y)
+		
+		
 	},
 	
 	stopMovement : function(){

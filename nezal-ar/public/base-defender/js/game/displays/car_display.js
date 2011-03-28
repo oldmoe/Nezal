@@ -5,7 +5,7 @@ var CarDisplay = Class.create(Display,{
   ydim : 93,
   zdim : 10,
   hitFrames : 6,
-  increasing : false,
+  hitFramesIncreasing : true,
   initialize: function($super, owner, properties){
     $super(owner, properties);
     this.owner.owner
@@ -43,8 +43,14 @@ var CarDisplay = Class.create(Display,{
 	this.sprites.body.replaceImg(Loader.images.creeps['car.png'])
   },
   renderHit : function(){
-  	//if(this.owner.game.reactor.ticks %2 ==0)
-	this.sprites.body.currentAnimationFrame = (this.sprites.body.currentAnimationFrame + 1) % this.hitFrames; 
+  	if(this.sprites.body.currentAnimationFrame==0)this.hitFramesIncreasing=true
+	if(this.sprites.body.currentAnimationFrame==this.hitFrames-1)this.hitFramesIncreasing=false
+  	if(this.hitFramesIncreasing){
+		this.sprites.body.currentAnimationFrame = (this.sprites.body.currentAnimationFrame + 1);	
+	}else{
+		this.sprites.body.currentAnimationFrame = (this.sprites.body.currentAnimationFrame - 1);
+	}
+	 
   }
   
   

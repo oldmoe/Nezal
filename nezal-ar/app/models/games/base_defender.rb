@@ -70,7 +70,7 @@ class BaseDefender < Metadata
   
   def self.repair_jobs user_game_profile
     now = Time.now.utc.to_i
-    repair_factor = 3
+    repair_factor = 20
     profile_metadata = user_game_profile.metadata
     building_names = @@game_metadata['buildings'].keys
     building_names.each do |building_name|
@@ -180,7 +180,6 @@ class BaseDefender < Metadata
   end
   
   def self.load_game(game)
-    puts "###########LOAD GAME"
     @@game_metadata = initialize_game_metadata game || {}
   end
   
@@ -199,7 +198,6 @@ class BaseDefender < Metadata
       origin['error'] = user_game_profile['error']
       user_game_profile.metadata= origin
     end
-    puts " ###########LOAD PROFILE"
     @@game_metadata = initialize_game_metadata user_game_profile.game
     BD::Research.init user_game_profile
     calculate_jobs user_game_profile
@@ -258,24 +256,31 @@ class BaseDefender < Metadata
     profile_metadata = user_game_profile.metadata
     map = BD::Map.new profile_metadata['map']
     building_names = @@game_metadata['buildings'].keys
-    building_names.each do |building_name|
-      if(!profile_metadata[building_name].nil?)
-        profile_metadata[building_name].values.each do |building|
-          display = @@game_metadata['buildings'][building_name]['levels'][building['level'].to_s]['display']
-          map_building = BD::MapBuilding.new building,building_name, display['xdim'], display['ydim'], display['zdim'], building['hp']
-          map.add_element map_building
-        end
-      end
-    end
     creeps = []
     creeps_hash.keys.each do |key|
       coords = key.split(':')
       creep_class = eval("BD::"+creeps_hash[key])
       creeps.push(creep_class.new(map,coords[0],coords[1]))
     end
+    weapons = []
+    building_names.each do |building_name|
+      if(!profile_metadata[building_name].nil?)
+        profile_metadata[building_name].values.each do |building|
+          display = @@game_metadata['buildings'][building_name]['levels'][building['level'].to_s]['display']
+          map_building = BD::MapBuilding.new building,building_name, display['xdim'], display['ydim'], display['zdim'], building['hp']
+          map.add_element map_building
+          if building_name == "wedge"
+            weapons << BD::Weapon.new(map_building, creeps)
+          end
+        end
+      end
+    end
     done = false
     while(!done)
       done = true
+      weapons.each do |weapon|
+        weapon.tick
+      end
       creeps.each do |creep|
         if(!creep.done_attack && !creep.dead)
           done = false
@@ -284,9 +289,8 @@ class BaseDefender < Metadata
       end
     end
     map.objects.each do |obj|
-      puts "#{obj.inspect}"
       key = self.convert_location(obj.owner['coords'])
-      #user_game_profile.metadata[obj.name][key]['hp'] = obj.hp
+      user_game_profile.metadata[obj.name][key]['hp'] = obj.hp
     end
     return {'valid' => true, 'error' => ''}
   end

@@ -76,7 +76,43 @@ EOF
     theta = (180-Util.rad_to_deg(Math.acos((@tile_width*@tile_width/4-2*a*a)/(2*a*a))))/2
     theta
   end
-  
+
+  def self.get_general_direction x1,y1,x2,y2
+    dir = 0
+    slope = 0
+    begin 
+      slope = (y1-y2)/(x1-x2)
+      if(slope == 0 && x1 > x2)
+        dir = @@W
+      elsif(slope == 0 && x1 < x2)
+        dir = @@E
+      elsif(slope == -1 && x1 < x2)
+        dir = @@NE
+      elsif(slope == -1 && x1 > x2)
+        dir = @@SW
+      elsif(slope == 1 && x1 > x2)
+        dir = @@NW
+      elsif(slope == 1 && x1 < x2)
+        dir = @@SE
+      elsif(slope < -1 && x1 < x2)
+        dir = @@N
+      elsif(slope < -1 && x1 > x2)
+        dir = @@S
+      elsif(slope > 1 && x1 > x2)
+        dir = @@N
+      elsif(slope > 1 && x1 < x2)
+        dir = @@S
+      end
+    rescue ZeroDivisionError
+      if(y1 > y2)
+        dir = @@N;
+      else
+        dir = @@S;
+      end
+    end
+    return dir;
+  end  
+
   def get_direction x1,y1,x2,y2
     tile1 = tile_value(x1,y1)
     tile2 = tile_value(x2,y2)
@@ -112,7 +148,7 @@ EOF
     ret_list = []
     0.upto(7) do |k|
         neighbor = get_neighbor(i,j,k)
-        if(!neighbor.nil? && @grid[neighbor[0]][neighbor[1]].value ==0 && @grid[neighbor[0]][neighbor[1]].terrain_type==0 ) 
+        if(!neighbor.nil? && (@grid[neighbor[0]][neighbor[1]].value ==0 || @grid[neighbor[0]][neighbor[1]].target)  && @grid[neighbor[0]][neighbor[1]].terrain_type==0 ) 
           ret_list.push(@grid[neighbor[0]][neighbor[1]])
         end
     end
@@ -217,18 +253,18 @@ EOF
     astar = Astar.new
     src_tiles = tile_value(object.coords['x'], object.coords['y'])
     dest_tiles = tile_value(x,y)
-    if(@grid[dest_tiles[0]][dest_tiles[1]].value!=0 && !ignore_place) 
+    @grid[dest_tiles[0]][dest_tiles[1]].target= true
+    if(@grid[dest_tiles[0]][dest_tiles[1]].value!=0 && !options['ignore_place']) 
       dest_tiles = get_nearest_empty_tile(dest_tiles)
     end
     path = astar.get_optimal_path(self,@grid[src_tiles[0]][src_tiles[1]],@grid[dest_tiles[0]][dest_tiles[1]])
-    0.upto((@map_height*2/@tile_height).ceil) do |i|
-      0.upto((@map_width/@tile_width).ceil) do |j|
-          @grid[i][j].g=@grid[i][j].h=@grid[i][j].f=@grid[i][j].visited=
-          @grid[i][j].closed = 0
+    @grid[dest_tiles[0]][dest_tiles[1]].target = false
+    0.upto(@grid.length-1) do |i|
+      0.upto(@grid[0].length-1) do |j|
+          @grid[i][j].g=@grid[i][j].h=@grid[i][j].f=@grid[i][j].visited=@grid[i][j].closed = 0
           @grid[i][j].parent = nil
       end
     end
-      
     if(!path.nil?)
       object.moving = false;
       object.moving_path = path;
