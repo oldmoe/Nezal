@@ -7,7 +7,8 @@ var ProgressDisplay = Class.create({
     div.innerHTML = this.html;
     div.addClassName('progressContainer')
     this.div = $($('gameCanvas').appendChild(div));
-    this.div.setStyle({top:top+"px", left:left+"px",zIndex : zIndex});
+    //We are adding 100 to make sure that the progress bar is always above any parallel building
+    this.div.setStyle({top:top+"px", left:left+"px", zIndex : zIndex+100});
     this.timeContainer = this.div.down('.progressTime')
     this.progressBar = this.div.down('.progressBar')
   },

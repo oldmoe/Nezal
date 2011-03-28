@@ -2,9 +2,9 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
   initialize : function($super,owner,properties){
     $super(owner,properties)
     this.sprites.text = new DomTextSprite(owner, 'resource',{centered: true, shiftY: 110});
-	this.attentionImg = Loader.images.icons['attention.png']
-	this.sprites.attention = new DomImgSprite(this.owner,{img:this.attentionImg}, {shiftX : 40,shiftY : -30})
-	this.sprites.attention.hide()
+  	this.attentionImg = Loader.images.icons['attention.png']
+  	this.sprites.attention = new DomImgSprite(this.owner,{img:this.attentionImg}, {shiftX : 40,shiftY : -30})
+  	this.sprites.attention.hide()
   },
 
   manageStateChange : function($super){
@@ -38,15 +38,17 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
       return self.game.templatesManager.load(self.name + "-panel", {building : self});
     });
   },
+  
   render : function($super){
   	$super()
-	if(this.owner.full)this.sprites.attention.show()
+	 if(this.owner.full)this.sprites.attention.show()
   },
+  
   renderPanelButtons: function($super){
     $super();
     if(this.owner.full) this.sprites.attention.show()
     var owner = this.owner;
-    $("dom_converter").innerHTML = this.game.templatesManager.load("resource-building-buttons");
+    this.game.domConverter.convert( this.game.templatesManager.load("resource-building-buttons") );
     $('panel-buttons-container').appendChild( $("collect_resource_trigger") );
     $('panel-buttons-container').appendChild( $("assign_worker_trigger") );
     

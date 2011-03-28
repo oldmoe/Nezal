@@ -26,7 +26,7 @@ var Game = Class.create({
     rock : 0,
     lumber : 0
   },
-  //Batoota Code
+
   workersStatus : null,
   initialize : function(){
     this.network = new Network();
@@ -78,6 +78,7 @@ var Game = Class.create({
 					$('gameContainer').innerHTML = game.templatesManager.load("gameElements");
 					Map.initializeMapSize()
 					self.questsManager = new QuestsManager(self);
+          self.domConverter = new DomConverter();
 					$('inProgress').hide()
 					$('gameContainer').show()
 					game.start()
