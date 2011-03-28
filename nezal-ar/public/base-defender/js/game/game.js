@@ -29,19 +29,19 @@ var Game = Class.create({
 
   workersStatus : null,
   initialize : function(){
-    this.network = new Network();
+    this.network = new Network(); 
   	if(!this.isTouchDevice()){
   		this.mouseClickEvent = 'click'
   		this.mouseStartEvent = 'mousedown'
   		this.mouseEndEvent = 'mouseup'
   		this.mouseMoveEvent = 'mousemove'
-  		
   	} else {
   		this.mouseClickEvent = 'touchstart'
   		this.mouseStartEvent = 'touchstart'
   		this.mouseEndEvent = 'touchend'
   		this.mouseMoveEvent = 'touchmove'
   	}
+	soundManager.mute()
   },
 	
 	startLoading : function(){
@@ -243,5 +243,27 @@ var Game = Class.create({
   	catch (e) {
   		return false;
   	}
+  },
+  addLoadedImagesToDom : function(){
+  	$$('.loadedImg').each(function(imgSpan){
+		var imgPath = imgSpan.id.split('/')
+		var imgPart = Loader
+		for(var i=0;i<imgPath.length;i++){
+		   imgPart = imgPart[imgPath[i]]
+		}
+		imgSpan.appendChild(imgPart)
+	})
+  },
+  
+   addLoadedImagesToDiv : function(divId){
+  	$$(divId+'.loadedImg').each(function(imgSpan){
+		var imgPath = imgSpan.id.split('/')
+		var imgPart = Loader
+		for(var i=0;i<imgPath.length;i++){
+		   imgPart = imgPart[imgPath[i]]
+		}
+		imgSpan.appendChild(imgPart)
+	})
   }
 });
+

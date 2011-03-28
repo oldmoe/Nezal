@@ -16,7 +16,7 @@ var TownhallFactory = Class.create(BuildingFactory, {
   },
 	getTownhall : function(){
 		for (townhall in this.factoryRegistry){
-   		return this.factoryRegistry[townhall]			
+   			return this.factoryRegistry[townhall]			
 		}
 	}
   

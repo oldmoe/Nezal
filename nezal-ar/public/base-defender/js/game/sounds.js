@@ -184,7 +184,7 @@ soundManager.onready(function() {
   if (soundManager.supported()) {
     // SM2 is ready to go!
     createSounds()
-  } 
+  }
 });
 soundManager.ontimeout(function() {
      createSounds()

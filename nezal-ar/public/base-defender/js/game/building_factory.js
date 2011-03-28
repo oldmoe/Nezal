@@ -36,7 +36,20 @@ var BuildingFactory = Class.create({
 		var display = new this.buildingDisplayClass(building, this.bluePrints['levels'][this.newBuildingSpecs['level']].display)
     return building.init();		
   },
-  
+	
+  buildingExists : function(level){
+  	for (key in this.factoryRegistry) {
+		var building = this.factoryRegistry[key]
+		if (building.state == building.states.NORMAL) {
+			if (!level) 
+				return true
+			if (building.level >= level) 
+				return true
+		}
+	}		
+	return false
+  },
+  	  
   factoryRegistrar : function(coords, building){
     this.factoryRegistry[coords] = building;
     BuildingFactory._GlobalRegistrar(coords, building);

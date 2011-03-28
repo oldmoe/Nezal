@@ -17,7 +17,6 @@ var WorkerDisplay = Class.create(Display,{
   },
   
   render : function(){
-    
     this.sprites.worker.currentAnimationFrame = Math.abs(this.owner.state)
     this.sprites.worker.render();
     this.sprites.shadow.render();
