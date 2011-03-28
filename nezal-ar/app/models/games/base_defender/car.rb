@@ -9,6 +9,7 @@ module BD
       @coords['y'] = initial_y.to_i
       @moving_path = []
       @done_attack = false
+      @target_edge = nil
       @hp = 100
       @range = 4
       @power = 10
@@ -20,7 +21,7 @@ module BD
       @done_attack = false
       @attacked = false
     end
-    attr_accessor :target, :dead, :done_attack, :coords, :moving_path, :attacked
+    attr_accessor :target, :dead, :done_attack, :coords, :moving_path, :attacked, :target_edge
     def tick      
       unless @target
         @target = pick_target 
@@ -55,9 +56,46 @@ module BD
        @done_attack = true
        return nil
      end
-      @map.move_object(self, @map.objects[min_index].owner['coords']['x'] , @map.objects[min_index].owner['coords']['y'])
+      edges = get_building_attack_points @map.objects[min_index]
+      min_edges = []
+      
+      0.upto(1) do |j|
+        min_distance = 999999
+        min_edge = -1
+        0.upto(edges.length-1) do |i|
+          edge = edges[i]
+          d = Util.distance(@coords['x'],@coords['y'],edge['x'],edge['y'])
+          if(d< min_distance)
+            min_distance = d
+            min_edge = i
+          end
+        end
+        min_edges.push(edges[min_edge])
+        edges.delete(edges[min_edge])
+      end
+      @target_edge = min_edges[0]
+      @map.move_object(self, @target_edge['x'] , @target_edge['y'])
       @target_located = true
       return @map.objects[min_index]
     end
+    
+    
+    def get_building_attack_points obj
+      edges = []
+      origin = {
+        'x'=> obj.owner['coords']['x'] - obj.img_width / 2,
+        'y'=> obj.owner['coords']['y'] - obj.img_height / 2
+      }
+      left = Math.sin(Util.deg_to_rad(@map.tile_angle))* obj.xdim
+      right = Math.sin(Util.deg_to_rad(@map.tile_angle))* obj.ydim
+      edges.push({'x'=>origin['x']+obj.img_width/4, 'y'=>origin['y']+obj.zdim+left/2})
+      edges.push({'x'=>origin['x']+obj.img_width*3/4, 'y'=>origin['y']+obj.zdim+right/2})
+      edges.push({'x'=>origin['x']+obj.img_width*3/4, 'y'=>origin['y']+right*3/2+obj.zdim})
+      edges.push({'x'=>origin['x']+obj.img_width/4, 'y'=>origin['y']+obj.zdim+left*3/2})
+      return edges
+    end
+  
+    
   end  
 end
+

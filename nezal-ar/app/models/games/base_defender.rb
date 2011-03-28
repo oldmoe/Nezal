@@ -260,7 +260,15 @@ class BaseDefender < Metadata
       if(!profile_metadata[building_name].nil?)
         profile_metadata[building_name].values.each do |building|
           display = @@game_metadata['buildings'][building_name]['levels'][building['level'].to_s]['display']
-          map_building = BD::MapBuilding.new building,building_name, display['xdim'], display['ydim'], display['zdim'], building['hp']
+          options = {
+            'xdim' => display['xdim'],
+            'ydim' => display['ydim'],
+            'zdim' => display['zdim'],
+            'img_width' => display['imgWidth'],
+            'img_height' => display['imgHeight'],
+            'hp' => building['hp']
+          }
+          map_building = BD::MapBuilding.new building, building_name, options
           map.add_element map_building
         end
       end

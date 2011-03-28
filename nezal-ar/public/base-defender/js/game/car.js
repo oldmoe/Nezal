@@ -88,7 +88,7 @@ var Car = Class.create(MovingObject,{
 			minEdges.push(edges[minEdge])
 			edges.remove(edges[minEdge])
 		}
-		this.targetEdge = minEdges.random()
+		this.targetEdge = minEdges[0]
 		this.movingPath = Map.moveObject(this, this.targetEdge.x , this.targetEdge.y)
 		this.targetLocated = true
 		return Map.objects[minIndex]

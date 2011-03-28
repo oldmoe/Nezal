@@ -51,7 +51,7 @@ EOF
       @objects = []
     end
     attr_accessor :grid, :tile_width, :tile_height, :view_width, :view_height, :map_width, :map_height, :x, :y, :speed,
-      :origin, :row_even_directions, :row_odd_directions, :objects
+      :origin, :row_even_directions, :row_odd_directions, :objects, :tile_angle
     def init_directions
      @row_even_directions[@@N]=[-2,0]
      @row_even_directions[@@S]=[2,0]
@@ -231,6 +231,7 @@ EOF
     end
     if(!path.nil?)
       object.moving = false;
+	    object.target_point = {'x'=>x,'y'=>y}
       object.moving_path = path;
       object.movement_finish_callback = callback if(!callback.nil?) 
     end
