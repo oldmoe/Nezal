@@ -148,7 +148,7 @@ EOF
     ret_list = []
     0.upto(7) do |k|
         neighbor = get_neighbor(i,j,k)
-        if(!neighbor.nil? && @grid[neighbor[0]][neighbor[1]].value ==0 && @grid[neighbor[0]][neighbor[1]].terrain_type==0 ) 
+        if(!neighbor.nil? && (@grid[neighbor[0]][neighbor[1]].value ==0 || @grid[neighbor[0]][neighbor[1]].target)  && @grid[neighbor[0]][neighbor[1]].terrain_type==0 ) 
           ret_list.push(@grid[neighbor[0]][neighbor[1]])
         end
     end
@@ -253,18 +253,18 @@ EOF
     astar = Astar.new
     src_tiles = tile_value(object.coords['x'], object.coords['y'])
     dest_tiles = tile_value(x,y)
-    if(@grid[dest_tiles[0]][dest_tiles[1]].value!=0 && !ignore_place) 
+    @grid[dest_tiles[0]][dest_tiles[1]].target= true
+    if(@grid[dest_tiles[0]][dest_tiles[1]].value!=0 && !options['ignore_place']) 
       dest_tiles = get_nearest_empty_tile(dest_tiles)
     end
     path = astar.get_optimal_path(self,@grid[src_tiles[0]][src_tiles[1]],@grid[dest_tiles[0]][dest_tiles[1]])
-    0.upto((@map_height*2/@tile_height).ceil) do |i|
-      0.upto((@map_width/@tile_width).ceil) do |j|
-          @grid[i][j].g=@grid[i][j].h=@grid[i][j].f=@grid[i][j].visited=
-          @grid[i][j].closed = 0
+    @grid[dest_tiles[0]][dest_tiles[1]].target = false
+    0.upto(@grid.length-1) do |i|
+      0.upto(@grid[0].length-1) do |j|
+          @grid[i][j].g=@grid[i][j].h=@grid[i][j].f=@grid[i][j].visited=@grid[i][j].closed = 0
           @grid[i][j].parent = nil
       end
     end
-      
     if(!path.nil?)
       object.moving = false;
       object.moving_path = path;
