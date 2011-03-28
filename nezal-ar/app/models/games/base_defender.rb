@@ -70,7 +70,7 @@ class BaseDefender < Metadata
   
   def self.repair_jobs user_game_profile
     now = Time.now.utc.to_i
-    repair_factor = 3
+    repair_factor = 20
     profile_metadata = user_game_profile.metadata
     building_names = @@game_metadata['buildings'].keys
     building_names.each do |building_name|
@@ -256,6 +256,13 @@ class BaseDefender < Metadata
     profile_metadata = user_game_profile.metadata
     map = BD::Map.new profile_metadata['map']
     building_names = @@game_metadata['buildings'].keys
+    creeps = []
+    creeps_hash.keys.each do |key|
+      coords = key.split(':')
+      creep_class = eval("BD::"+creeps_hash[key])
+      creeps.push(creep_class.new(map,coords[0],coords[1]))
+    end
+    weapons = []
     building_names.each do |building_name|
       if(!profile_metadata[building_name].nil?)
         profile_metadata[building_name].values.each do |building|
@@ -270,18 +277,18 @@ class BaseDefender < Metadata
           }
           map_building = BD::MapBuilding.new building, building_name, options
           map.add_element map_building
+          if building_name == "wedge"
+            weapons << BD::Weapon.new(map_building, creeps)
+          end
         end
       end
-    end
-    creeps = []
-    creeps_hash.keys.each do |key|
-      coords = key.split(':')
-      creep_class = eval("BD::"+creeps_hash[key])
-      creeps.push(creep_class.new(map,coords[0],coords[1]))
     end
     done = false
     while(!done)
       done = true
+      weapons.each do |weapon|
+        weapon.tick
+      end
       creeps.each do |creep|
         if(!creep.done_attack && !creep.dead)
           done = false

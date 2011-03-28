@@ -76,7 +76,43 @@ EOF
     theta = (180-Util.rad_to_deg(Math.acos((@tile_width*@tile_width/4-2*a*a)/(2*a*a))))/2
     theta
   end
-  
+
+  def self.get_general_direction x1,y1,x2,y2
+    dir = 0
+    slope = 0
+    begin 
+      slope = (y1-y2)/(x1-x2)
+      if(slope == 0 && x1 > x2)
+        dir = @@W
+      elsif(slope == 0 && x1 < x2)
+        dir = @@E
+      elsif(slope == -1 && x1 < x2)
+        dir = @@NE
+      elsif(slope == -1 && x1 > x2)
+        dir = @@SW
+      elsif(slope == 1 && x1 > x2)
+        dir = @@NW
+      elsif(slope == 1 && x1 < x2)
+        dir = @@SE
+      elsif(slope < -1 && x1 < x2)
+        dir = @@N
+      elsif(slope < -1 && x1 > x2)
+        dir = @@S
+      elsif(slope > 1 && x1 > x2)
+        dir = @@N
+      elsif(slope > 1 && x1 < x2)
+        dir = @@S
+      end
+    rescue ZeroDivisionError
+      if(y1 > y2)
+        dir = @@N;
+      else
+        dir = @@S;
+      end
+    end
+    return dir;
+  end  
+
   def get_direction x1,y1,x2,y2
     tile1 = tile_value(x1,y1)
     tile2 = tile_value(x2,y2)
