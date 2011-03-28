@@ -1,21 +1,20 @@
 module BD
   class Node
-    def initialize(x,y)
+    def initialize(x,y)      
       @x=x
       @y=y
       @terrain_type =0 
       @value =0
-      @x=0 
-      @y=0  
       @h=0 
       @g=0 
       @f=0 
+      @target = false
       @closed =false 
       @visited = false 
       @node= nil 
       @parent = nil
     end
-    attr_accessor :x, :y, :terrain_type, :value, :h, :g, :f, :closed, :visited, :node, :parent
+    attr_accessor :x, :y, :terrain_type, :value, :h, :g, :f, :closed, :visited, :node, :parent, :target
   end
   
   class Astar
@@ -23,16 +22,14 @@ module BD
     end
     def get_optimal_path(map, src_node, dst_node)
       open_list = []
-      closed_list = []
       open_list.push(src_node)
-      goal_reached = false
       while(open_list.length > 0) do
          low_ind = 0;
          0.upto(open_list.length-1) do |i|
           low_ind = i if(open_list[i].f < open_list[low_ind].f)
          end
          current_node = open_list[low_ind];
-         if(current_node.x == dst_node.x && current_node.y == dst_node.y) 
+         if(current_node.x == dst_node.x && current_node.y == dst_node.y)
           curr = current_node
           ret = []
           while(!curr.parent.nil?) do

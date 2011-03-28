@@ -33,7 +33,7 @@ module BD
     if(y_diff>0)
       dy*=-1 
     end
-    var movements = [];
+    movements = [];
     movements[0] = dx;
     movements[1] = dy;
     movements[2] = angle
