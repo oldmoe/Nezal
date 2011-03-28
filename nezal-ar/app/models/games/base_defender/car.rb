@@ -20,7 +20,7 @@ module BD
       @done_attack = false
       @attacked = false
     end
-    attr_accessor :target, :dead, :done_attack, :coords, :moving_path, :attacked
+    attr_accessor :target, :dead, :done_attack, :coords, :moving_path, :attacked, :hp
     def tick      
       unless @target
         @target = pick_target 
