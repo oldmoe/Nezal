@@ -124,7 +124,7 @@ var Building = Class.create({
   },
 
   upgrade: function(){
-    if(this.isValidToUpgrade(this.coords.x, this.coords.y)){
+    if(this.isValidToUpgrade()){
       var response = this.game.network.upgradeBuilding(this.name, this.coords);
       this.game.updateGameStatus(response['gameStatus']);
     }
@@ -162,20 +162,20 @@ var Building = Class.create({
 	return str.capitalize().replace("_", " ") 
   },
   
-  isValidToUpgrade : function(x,y){
+  isValidToUpgrade : function(silent){
     if(this.game.disableJsValidation)
       return true;
       
       
     /****************************** Validating workers **************************************/
     if( this.game.workerFactory.idleWorkers == 0 ){
-      Notification.alert("Cannot upgrade " + this.name + ", all your workers are busy!");
+      if(!silent) Notification.alert("Cannot upgrade " + this.name + ", all your workers are busy!");
       return false;
     }
     /****************************** Validating upgrade **************************************/    
     var level = (parseInt(this.level) + 1).toString(); 
     if(!this.factory.bluePrints.levels[level]) {
-      Notification.alert("You have reached max upgrade");
+      if(!silent) Notification.alert("You have reached max upgrade");
       return false;
     }
     /****************************************************************************************/
@@ -186,27 +186,20 @@ var Building = Class.create({
     var neededLumber = this.factory.bluePrints.levels[level].lumber - this.game.resources.lumber;
     
     if( neededRock > 0 && neededLumber > 0 ){
-      Notification.alert("Not enough resources, you need more "+ neededRock +" rock and "+ neededLumber + " lumber");
+      if(!silent) Notification.alert("Not enough resources, you need more "+ neededRock +" rock and "+ neededLumber + " lumber");
       return false;
     }
     
     if(  neededRock > 0 ){
-      Notification.alert("Not enough resources, you need more "+ neededRock +" rock");
+      if(!silent) Notification.alert("Not enough resources, you need more "+ neededRock +" rock");
       return false;
     }
     
     if( neededLumber > 0 ){
-      Notification.alert("Not enough resources, you need more "+ neededLumber +" lumber");
+      if(!silent) Notification.alert("Not enough resources, you need more "+ neededLumber +" lumber");
       return false;
     }
-    /****************************************************************************************/
-   	if(!this.validateLocation(x,y)){
-			Map.addElement(this)
-		}
-		else{
-			return false
-		} 
-	 return true;
+    return true;
   },
 
   isValidToBuild : function(x,y) {
