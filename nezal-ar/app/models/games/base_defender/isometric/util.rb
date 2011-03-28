@@ -21,8 +21,15 @@ module BD
     end
     distance = Util.distance(x1,y1,x2,y2)
     speed = Util.min(speed,distance)
-    tan = (y1 - y2)/(x1-x2);
-    angle = Math.atan(tan);
+    angle = 0
+    if(x1==x2 && y1 > y2)
+      angle = Math::PI/2
+    elsif(x1==x2 && y1 < y2)
+      angle = Math::PI * 1.5
+    else
+      tan = (y1 - y2)/(x1-x2);
+      angle = Math.atan(tan);
+    end
     dy = ((speed * Math.sin(angle))).abs;
     dx = ((speed * Math.cos(angle))).abs;
     x_diff = x1-x2;

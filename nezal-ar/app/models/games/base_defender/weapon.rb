@@ -82,11 +82,9 @@ module BD
           if ( @tick == 0 )
             @step += 1
             if @step == 2
-              puts "Launching Rock"
               @rocks << BD::Rock.new(self, @attacker)
             end
             if @step == 7 
-              puts "Attack done"
               @attacker = nil
               @step = 0
             end
@@ -125,7 +123,6 @@ module BD
 
     def fire 
       if @attacker
-        puts "Firing #{@attacker.hp} #{@power}"
         @attacker.hp -= @power
       end
     end

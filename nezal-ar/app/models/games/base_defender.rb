@@ -70,7 +70,7 @@ class BaseDefender < Metadata
   
   def self.repair_jobs user_game_profile
     now = Time.now.utc.to_i
-    repair_factor = 3
+    repair_factor = 20
     profile_metadata = user_game_profile.metadata
     building_names = @@game_metadata['buildings'].keys
     building_names.each do |building_name|
