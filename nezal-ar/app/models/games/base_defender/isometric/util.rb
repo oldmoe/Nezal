@@ -15,7 +15,11 @@ module BD
   #@x1,@y1 params : coordinates of the object
   #@x2,@y2 params : coordinates of the target
   #@speed param : speed of movement
-  def self.get_next_move(x1,y1,x2,y2,speed) 
+  def self.get_next_move(x1,y1,x2,y2,speed)
+    x1 = x1.to_f
+    x2 = x2.to_f
+    y1 = y1.to_f
+    y2 = y2.to_f
     if(x1==x2&&y1==y2)
       return [0,0,0]
     end

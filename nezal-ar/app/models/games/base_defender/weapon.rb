@@ -8,7 +8,7 @@ module BD
     def self.buy(user_game_profile, wedge_coords, weapon)
       game_metadata = BaseDefender.adjusted_game_metadata
       location_hash = BaseDefender.convert_location(wedge_coords)
-
+      
       validation = validate(user_game_profile.metadata, game_metadata, wedge_coords)
       return validation if validation['valid'] == false
 
@@ -96,7 +96,7 @@ module BD
     end
 
     def check_attack()
-      if(@owner.owner['hp'] <= 1)
+      if(@owner.owner['hp'] <= 0)
         @attacker = nil 
         return
       end

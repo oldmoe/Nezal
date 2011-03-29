@@ -43,7 +43,8 @@ module BD
          neighbors = map.neighbors(current_node);
          0.upto(neighbors.length-1) do |i|
            neighbor = neighbors[i];
-           next if(neighbor.closed) 
+           next if(neighbor.closed)
+           puts "closed #{neighbor.closed} "
            g_score = current_node.g + get_distance(current_node,neighbor)
            g_score_is_best = false
            if(!neighbor.visited) 

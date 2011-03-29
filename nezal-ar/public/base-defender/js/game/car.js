@@ -2,6 +2,7 @@ var Car = Class.create(MovingObject,{
 	hp:100, range:4, power:3,
 	maxHp : 100,
 	speed : 3, 
+	tickCounter :0,
 	name: "car",
 	targetLocated : false,
 	mapDirection : Map.N, 
@@ -19,6 +20,8 @@ var Car = Class.create(MovingObject,{
 	},
 	
 	tick : function($super){
+		//console.log(this.coords.x,this.coords.y, this.hp)
+		this.tickCounter++
 		if(this.hp <=0 ){
 			this.done_attack = true
 			this.hitting = false
@@ -88,7 +91,7 @@ var Car = Class.create(MovingObject,{
 			minEdges.push(edges[minEdge])
 			edges.remove(edges[minEdge])
 		}
-		this.targetEdge = minEdges.random()
+		this.targetEdge = minEdges[0]
 		this.movingPath = Map.moveObject(this, this.targetEdge.x , this.targetEdge.y)
 		this.targetLocated = true
 		return Map.objects[minIndex]

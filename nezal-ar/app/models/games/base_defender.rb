@@ -70,7 +70,7 @@ class BaseDefender < Metadata
   
   def self.repair_jobs user_game_profile
     now = Time.now.utc.to_i
-    repair_factor = 20
+    repair_factor = 40
     profile_metadata = user_game_profile.metadata
     building_names = @@game_metadata['buildings'].keys
     building_names.each do |building_name|
@@ -88,7 +88,8 @@ class BaseDefender < Metadata
                 user_game_profile.metadata[building_name][key]['last_collect'] + ((max_hp-hp)/repair_factor).round
               end
             else 
-              user_game_profile.metadata[building_name][key]['hp'] =  (now - started_repairing_at)* repair_factor
+              user_game_profile.metadata[building_name][key]['hp'] = hp + (now - started_repairing_at)* repair_factor
+              user_game_profile.metadata[building_name][key]['started_repairing_at'] = now
             end
           end
         end
@@ -222,6 +223,7 @@ class BaseDefender < Metadata
     elsif data['event'] == 'notification_ack'
       validation = Notification.delete({:profile => user_game_profile, :id => data['id']})
     elsif data['event'] == 'attack'
+      repair_jobs user_game_profile
       validation = simulate_attack user_game_profile, data['creeps']
     elsif data['event'] == 'repair_buildings'
       validation = repair_buildings user_game_profile  
@@ -267,7 +269,15 @@ class BaseDefender < Metadata
       if(!profile_metadata[building_name].nil?)
         profile_metadata[building_name].values.each do |building|
           display = @@game_metadata['buildings'][building_name]['levels'][building['level'].to_s]['display']
-          map_building = BD::MapBuilding.new building,building_name, display['xdim'], display['ydim'], display['zdim'], building['hp']
+          options = {
+            'xdim' => display['xdim'],
+            'ydim' => display['ydim'],
+            'zdim' => display['zdim'],
+            'img_width' => display['imgWidth'],
+            'img_height' => display['imgHeight'],
+            'hp' => building['hp']
+          }
+          map_building = BD::MapBuilding.new building, building_name, options
           map.add_element map_building
           if building_name == "wedge"
             weapons << BD::Weapon.new(map_building, creeps)
@@ -288,6 +298,7 @@ class BaseDefender < Metadata
         end
       end
     end
+    
     map.objects.each do |obj|
       key = self.convert_location(obj.owner['coords'])
       user_game_profile.metadata[obj.name][key]['hp'] = obj.hp

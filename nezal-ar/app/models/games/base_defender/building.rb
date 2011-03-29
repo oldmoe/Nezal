@@ -55,7 +55,6 @@ module BD
           return {'valid' => false,
                   'error' => "Not enough resources, you need more " + neededRock + " rock"}
         end
-        
         if( neededLumber > 0)
           return {'valid' => false,
                   'error' => "Not enough resources, you need more " + neededLumber + " rock"}

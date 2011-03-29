@@ -17,9 +17,10 @@ module BD
       @coords['y'] = y
       @moving_path = []
       @map = map
+      @target_point = nil
     end
     attr_accessor :coords, :moving, :rotating, :target_angle, :angle, :speed, :random_move, :distance_to_next_tile, 
-    :no_of_states, :state, :tick_counter, :map, :moving_path  
+    :no_of_states, :state, :tick_counter, :map, :moving_path, :target_point
     def tick
       @tick_counter= @tick_counter+1 
       if(@moving_path.length>0)
@@ -46,8 +47,16 @@ module BD
           end
         end
         if(@moving_path.length == 0)
-           @moving = false
-           @state = 0
+         if(@moving)
+          if ((@coords['x'] - @target_point['x']).abs <0.01 && (@coords['y'] - @target_point['y']).abs <0.01) 
+            @moving = false
+            @state = 0
+          else
+            movements = Util.get_next_move(@coords['x'], @coords['y'], @target_point['x'], @target_point['y'], @speed)
+            @coords['x']+=movements[0]
+            @coords['y']+=movements[1]
+          end
+         end
         end
       end
     end

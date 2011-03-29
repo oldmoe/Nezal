@@ -19,7 +19,7 @@ var MovingObject = Class.create({
 		this.shadow = {xdim: 40, ydim: 40, zdim: 0, imgWidth: 50, imgHeight: 31, angle:0};
 		this.shadow.coords = this.coords
 		this.movingPath = []
-		this.game.scene.push(this);
+		//this.game.scene.push(this);
 	 },
 	 
 	 tick : function(){
