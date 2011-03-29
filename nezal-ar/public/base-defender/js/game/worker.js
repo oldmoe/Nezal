@@ -3,7 +3,6 @@ var Worker = Class.create(MovingObject,{
   	$super(game, x, y)
 	//this.speed = this.distanceToNextTile/24
 	this.speed = 1.4905461176219506
-	console.log(this.speed)
   },
   tick : function($super){
 	$super()

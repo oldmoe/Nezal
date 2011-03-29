@@ -1,5 +1,5 @@
 var AttackManager = Class.create({
-	noOfCreeps : 1,
+	noOfCreeps : 10,
 	creepsDone :0,	
 	attacking : false,
 	initialize: function(game){
@@ -29,7 +29,11 @@ var AttackManager = Class.create({
 		var attackSuccess = false
 		if(this.creepsDone == this.noOfCreeps){
 			$('attackDiv').hide()
+			for (creep in this.creeps) {
+				console.log(this.creeps[creep].tickCounter)
+			}
 			for(creep in this.creeps){
+				console.log(this.creeps[creep].tickCounter)
 				if(this.creeps[creep].attacked){
 					attackSuccess = true
 					break

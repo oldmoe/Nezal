@@ -296,6 +296,7 @@ class BaseDefender < Metadata
         end
       end
     end
+    
     map.objects.each do |obj|
       key = self.convert_location(obj.owner['coords'])
       user_game_profile.metadata[obj.name][key]['hp'] = obj.hp

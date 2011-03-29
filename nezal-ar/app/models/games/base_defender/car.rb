@@ -11,6 +11,7 @@ module BD
       @done_attack = false
       @target_edge = nil
       @hp = 100.to_f
+      @tick_counter =0 
       @range = 4.to_f
       @power = 3.to_f
       @speed = 3.to_f
@@ -18,11 +19,15 @@ module BD
       @target_located = false
       @target = nil 
       @dead = false
-      @done_attack = false
       @attacked = false
     end
-    attr_accessor :target, :dead, :done_attack, :coords, :moving_path, :attacked, :target_edge, :hp
+    attr_accessor :target, :dead, :done_attack, :coords, :moving_path, :attacked, :target_edge, :hp, :tick_counter
     def tick
+      @tick_counter = @tick_counter + 1
+      if @hp <= 0 
+       @done_attack = true
+       return nil
+     end
       unless @target
         @target = pick_target 
       end
