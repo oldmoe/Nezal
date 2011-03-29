@@ -96,7 +96,7 @@ module BD
     end
 
     def check_attack()
-      if(@owner.owner['hp'] <= 1)
+      if(@owner.owner['hp'] <= 0)
         @attacker = nil 
         return
       end

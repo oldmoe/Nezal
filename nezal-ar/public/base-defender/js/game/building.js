@@ -47,13 +47,14 @@ var Building = Class.create({
 		this.repairing = true
 		var self = this
 		condition = function(){
-			return self.hp == self.maxHp
+			return self.hp >= self.maxHp
 		}
 		mainFunc = function(){
 			if(!self.game.attackManager.attacking)
 				self.hp+=40
 		}	
 		callback = function(){
+			self.hp = self.maxHp
 			self.repairing = false
 			self.working = true
 			self.setState(self.states.NORMAL)

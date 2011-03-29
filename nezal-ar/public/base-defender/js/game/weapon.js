@@ -37,7 +37,7 @@ var Weapon = Class.create({
   },
 
   checkAttack : function() {
-    if(this.owner.hp <=1)
+    if(this.owner.hp <=0)
       return null;
     if (this.attacker && this.attacker.hp > 0)
       return this.attacker;

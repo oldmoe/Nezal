@@ -1,5 +1,5 @@
 var AttackManager = Class.create({
-	noOfCreeps : 10,
+	noOfCreeps : 3,
 	creepsDone :0,	
 	attacking : false,
 	initialize: function(game){

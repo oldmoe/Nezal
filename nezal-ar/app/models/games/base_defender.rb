@@ -88,7 +88,8 @@ class BaseDefender < Metadata
                 user_game_profile.metadata[building_name][key]['last_collect'] + ((max_hp-hp)/repair_factor).round
               end
             else 
-              user_game_profile.metadata[building_name][key]['hp'] =  (now - started_repairing_at)* repair_factor
+              user_game_profile.metadata[building_name][key]['hp'] = hp + (now - started_repairing_at)* repair_factor
+              user_game_profile.metadata[building_name][key]['started_repairing_at'] = now
             end
           end
         end
@@ -222,6 +223,7 @@ class BaseDefender < Metadata
     elsif data['event'] == 'notification_ack'
       validation = Notification.delete({:profile => user_game_profile, :id => data['id']})
     elsif data['event'] == 'attack'
+      repair_jobs user_game_profile
       validation = simulate_attack user_game_profile, data['creeps']
     elsif data['event'] == 'repair_buildings'
       validation = repair_buildings user_game_profile  

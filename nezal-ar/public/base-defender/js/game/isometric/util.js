@@ -20,8 +20,19 @@ var Util = {
 		if(x1==x2&&y1==y2) return [0,0,0]
 		var distance = Util.distance(x1,y1,x2,y2)
 		speed = Math.min(speed,distance)
-		var tan = (y1 - y2)/(x1-x2);
-		var angle = Math.atan(tan);
+		var angle =0
+		var tan = 0
+		if(x1==x2 && y1 > y2){
+      		angle = Math.PI/2
+    	}
+		else if (x1 == x2 && y1 < y2) {
+			angle = Math.PI * 1.5
+		}
+		else {
+			tan = (y1 - y2) / (x1 - x2);
+			angle = Math.atan(tan);
+		}
+    	
 		var dy = Math.abs((speed * Math.sin(angle)));
 		var dx = Math.abs((speed * Math.cos(angle)));
 		var xDiff = x1-x2;

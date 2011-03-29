@@ -10,11 +10,11 @@ module BD
       @moving_path = []
       @done_attack = false
       @target_edge = nil
-      @hp = 100.to_f
+      @hp = 100.0
       @tick_counter =0 
-      @range = 4.to_f
-      @power = 3.to_f
-      @speed = 3.to_f
+      @range = 4.0
+      @power = 3.0
+      @speed = 3.0
       @name = "car"
       @target_located = false
       @target = nil 
@@ -26,7 +26,7 @@ module BD
       @tick_counter = @tick_counter + 1
       if @hp <= 0 
        @done_attack = true
-       return nil
+       return
      end
       unless @target
         @target = pick_target 
