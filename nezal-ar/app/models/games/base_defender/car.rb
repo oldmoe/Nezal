@@ -79,7 +79,7 @@ module BD
         edges.delete(edges[min_edge])
       end
       @target_edge = min_edges[0]
-      @map.move_object(self, @target_edge['x'] , @target_edge['y'])      
+      @map.move_object(self, @target_edge['x'] , @target_edge['y'])
       @target_located = true
       return @map.objects[min_index]
     end
@@ -93,7 +93,6 @@ module BD
       }
       left = Math.sin(Util.deg_to_rad(@map.tile_angle))* obj.xdim
       right = Math.sin(Util.deg_to_rad(@map.tile_angle))* obj.ydim
-      #puts "#{left},#{right},#{origin['x']},#{origin['y']} #{obj.owner['coords']['x']} #{obj.owner['coords']['y']} #{(obj.img_width/2)} #{(obj.img_height/2)}"
       edges.push({'x'=>origin['x']+obj.img_width/4, 'y'=>origin['y']+obj.zdim+left/2})
       edges.push({'x'=>origin['x']+obj.img_width*3/4, 'y'=>origin['y']+obj.zdim+right/2})
       edges.push({'x'=>origin['x']+obj.img_width*3/4, 'y'=>origin['y']+right*3/2+obj.zdim})

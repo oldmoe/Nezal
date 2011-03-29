@@ -20,6 +20,7 @@ var Car = Class.create(MovingObject,{
 	},
 	
 	tick : function($super){
+		//console.log(this.coords.x,this.coords.y, this.hp)
 		this.tickCounter++
 		if(this.hp <=0 ){
 			this.done_attack = true

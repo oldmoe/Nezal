@@ -262,7 +262,8 @@ EOF
     @grid[dest_tiles[0]][dest_tiles[1]].target = false
     0.upto(@grid.length-1) do |i|
       0.upto(@grid[0].length-1) do |j|
-          @grid[i][j].g=@grid[i][j].h=@grid[i][j].f=@grid[i][j].visited=@grid[i][j].closed = 0
+          @grid[i][j].g=@grid[i][j].h=@grid[i][j].f = 0
+          @grid[i][j].visited=@grid[i][j].closed = false
           @grid[i][j].parent = nil
       end
     end
@@ -270,7 +271,8 @@ EOF
       object.moving = false;
 	    object.target_point = {'x'=>x,'y'=>y}
       object.moving_path = path;
-      object.movement_finish_callback = callback if(!callback.nil?) 
+      object.movement_finish_callback = callback if(!callback.nil?)
+      return path
     end
   end
 
@@ -297,3 +299,5 @@ EOF
   
   end
 end
+
+
