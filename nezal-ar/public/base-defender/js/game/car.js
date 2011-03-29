@@ -103,6 +103,7 @@ var Car = Class.create(MovingObject,{
 	  	}
 			var left = Math.sin(Util.degToRad(Map.tileAngle))* obj.xdim
 			var right = Math.sin(Util.degToRad(Map.tileAngle))* obj.ydim
+		//	console.log(left,right,origin['x'],origin['y'],obj.coords.x, obj.coords.y,obj.imgWidth / 2,obj.imgHeight / 2)
 		//	edges.push({x:origin.x,y:left+obj.zdim})
 			edges.push({x:origin.x+obj.imgWidth/4, y:origin.y+obj.zdim+left/2})
 		//	edges.push({x:origin.x+obj.imgWidth/2, y:origin.y+obj.zdim})

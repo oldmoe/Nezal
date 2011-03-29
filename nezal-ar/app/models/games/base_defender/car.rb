@@ -5,15 +5,15 @@ module BD
       @map = map
       @map_direction = Map.N  
       @coords = {}
-      @coords['x'] = initial_x.to_i
-      @coords['y'] = initial_y.to_i
+      @coords['x'] = initial_x.to_f
+      @coords['y'] = initial_y.to_f
       @moving_path = []
       @done_attack = false
       @target_edge = nil
-      @hp = 100
-      @range = 4
-      @power = 10
-      @speed = 3
+      @hp = 100.to_f
+      @range = 4.to_f
+      @power = 3.to_f
+      @speed = 3.to_f
       @name = "car"
       @target_located = false
       @target = nil 
@@ -21,8 +21,8 @@ module BD
       @done_attack = false
       @attacked = false
     end
-    attr_accessor :target, :dead, :done_attack, :coords, :moving_path, :attacked, :target_edge
-    def tick      
+    attr_accessor :target, :dead, :done_attack, :coords, :moving_path, :attacked, :target_edge, :hp
+    def tick
       unless @target
         @target = pick_target 
       end
@@ -74,7 +74,7 @@ module BD
         edges.delete(edges[min_edge])
       end
       @target_edge = min_edges[0]
-      @map.move_object(self, @target_edge['x'] , @target_edge['y'])
+      @map.move_object(self, @target_edge['x'] , @target_edge['y'])      
       @target_located = true
       return @map.objects[min_index]
     end
@@ -88,6 +88,7 @@ module BD
       }
       left = Math.sin(Util.deg_to_rad(@map.tile_angle))* obj.xdim
       right = Math.sin(Util.deg_to_rad(@map.tile_angle))* obj.ydim
+      #puts "#{left},#{right},#{origin['x']},#{origin['y']} #{obj.owner['coords']['x']} #{obj.owner['coords']['y']} #{(obj.img_width/2)} #{(obj.img_height/2)}"
       edges.push({'x'=>origin['x']+obj.img_width/4, 'y'=>origin['y']+obj.zdim+left/2})
       edges.push({'x'=>origin['x']+obj.img_width*3/4, 'y'=>origin['y']+obj.zdim+right/2})
       edges.push({'x'=>origin['x']+obj.img_width*3/4, 'y'=>origin['y']+right*3/2+obj.zdim})

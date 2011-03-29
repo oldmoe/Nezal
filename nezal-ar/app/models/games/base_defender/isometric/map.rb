@@ -37,15 +37,15 @@ EOF
     
     def initialize_variables
       @grid = []
-      @tile_width=64
-      @tile_height=31
-      @view_width=760
-      @view_height=550
-      @map_width = 1000
-      @map_height = 1000 
-      @x=380,@y=275
-      @speed=2
-      @origin=[0,0]
+      @tile_width=64.0
+      @tile_height=31.0
+      @view_width=760.0
+      @view_height=550.0
+      @map_width = 1000.0
+      @map_height = 1000.0 
+      @x=380.0,@y=275.0
+      @speed=2.0
+      @origin=[0.0,0.0]
       @row_even_directions = {}
       @row_odd_directions = {}
       @objects = []
@@ -81,7 +81,7 @@ EOF
     dir = 0
     slope = 0
     begin 
-      slope = (y1-y2)/(x1-x2)
+      slope = (y1-y2).to_f/(x1-x2).to_f
       if(slope == 0 && x1 > x2)
         dir = @@W
       elsif(slope == 0 && x1 < x2)
@@ -156,8 +156,8 @@ EOF
   end
 
   def tile_value x,y
-    half_x = (x*2/@tile_width).floor
-    half_y = (y*2/@tile_height).floor
+    half_x = ((x*2/@tile_width).floor).to_f
+    half_y = ((y*2/@tile_height).floor).to_f
     half_w = @tile_width/2
     half_h = @tile_height/2
     up = false
@@ -183,7 +183,8 @@ EOF
   end
 
   def value i,j
-    y = ((i-1)*@tile_height/2).floor 
+    y = (((i-1)*@tile_height/2).round).to_f
+    y = 0.0 if(y<0.0)
     x=-((i+1)%2)*@tile_width/2+j*@tile_width+@tile_width/2;
     return [x,y]
   end

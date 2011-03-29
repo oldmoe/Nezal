@@ -1,5 +1,4 @@
 var Weapon = Class.create({
-
   angle : 0,
   targetAngle : 5,
   imgHeight : 93,
