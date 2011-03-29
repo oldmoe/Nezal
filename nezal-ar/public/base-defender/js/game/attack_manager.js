@@ -1,9 +1,9 @@
 var AttackManager = Class.create({
-	noOfCreeps : 8,
+	noOfCreeps : 12,
 	creepsDone :0,	
 	attacking : false,
 	initialize: function(game){
-		this.creeps = {}
+		this.creeps = []
     var self = this;
 		this.game = game;
     $("sendAttack").stopObserving("click");
@@ -15,28 +15,29 @@ var AttackManager = Class.create({
 	},
 	simulateAttack : function(){
 		if(this.attacking) return
-		var creepsHash = {} 
+		var creepsArr = [] 
 		this.attacking = true
 		for(var i=0;i<this.noOfCreeps;i++){
-			var creep = this.game.creepFactory.newCreep("Car")
-			this.creeps[creep.coords.x+ ":"+creep.coords.y] = creep
-			creepsHash[creep.coords.x+ ":"+creep.coords.y] = "Car"
+			var creep = this.game.creepFactory.newCreep("Car",i)
+			this.creeps.push({'x':creep.coords.x,'y':creep.coords.y, 'creep':creep})
+			creepsArr.push({'x':creep.coords.x,'y':creep.coords.y,'type':"Car"})
 		}
-		this.game.network.simulateAttack(creepsHash);
+		this.game.network.simulateAttack(creepsArr);
 	},
 	notifyDoneAttack : function(){
 		this.creepsDone++
 		var attackSuccess = false
 		if(this.creepsDone == this.noOfCreeps){
 			$('attackDiv').hide()
-			for(creep in this.creeps){
-				console.log(this.creeps[creep].tickCounter)
-				if(this.creeps[creep].attacked){
+			for(var i=0;i<this.creeps.length;i++){
+				console.log(this.creeps[i].creep.tickCounter)
+				if (this.creeps[i].creep.attacked) {
 					attackSuccess = true
 					break
-				}				
+				}	
 			}
-			this.creeps = {}
+			
+			this.creeps = []
 			this.creepsDone = 0
 			this.attacking = false
 			if(attackSuccess){
