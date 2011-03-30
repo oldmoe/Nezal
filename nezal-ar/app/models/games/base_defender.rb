@@ -10,7 +10,8 @@ class BaseDefender < Metadata
   @@building_modules = {
     "townhall" => BD::Townhall,
     "storage" => BD::Storage ,
-    "defense_center" => BD::DefenseCenter, 
+    "defense_center" => BD::DefenseCenter,
+    "war_factory" => BD::WarFactory,
     "wedge" => BD::Wedge
   }.merge @@resource_building_modules
   
@@ -254,15 +255,16 @@ class BaseDefender < Metadata
     return {'valid' => true, 'error' => ''}
   end
   
-  def self.simulate_attack user_game_profile, creeps_hash
+  def self.simulate_attack user_game_profile, creeps_coords
     profile_metadata = user_game_profile.metadata
     map = BD::Map.new profile_metadata['map']
     building_names = @@game_metadata['buildings'].keys
     creeps = []
-    creeps_hash.keys.each do |key|
-      coords = key.split(':')
-      creep_class = eval("BD::"+creeps_hash[key])
-      creeps.push(creep_class.new(map,coords[0],coords[1]))
+    i=0
+    creeps_coords.each do |creep|
+      creep_class = eval("BD::"+creep['type'])
+      creeps.push(creep_class.new(map,creep['x'],creep['y'],i))
+      i = i+1
     end
     weapons = []
     building_names.each do |building_name|
@@ -280,7 +282,7 @@ class BaseDefender < Metadata
           map_building = BD::MapBuilding.new building, building_name, options
           map.add_element map_building
           if building_name == "wedge"
-            weapons << BD::Weapon.new(map_building, creeps)
+            weapons << BD::Weapon.new(map_building, creeps.clone)
           end
         end
       end
@@ -292,8 +294,8 @@ class BaseDefender < Metadata
         weapon.tick
       end
       creeps.each do |creep|
-        if(!creep.done_attack && !creep.dead)
-          done = false
+        if(!creep.done_attack)
+          done=false
           creep.tick
         end
       end
