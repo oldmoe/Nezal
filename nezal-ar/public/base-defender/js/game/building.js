@@ -244,7 +244,7 @@ var Building = Class.create({
 			}
 		}
 		else {
-			Notification.alert("Teet");
+			Notification.alert("Error");
 			return false;
 		}
 	}
