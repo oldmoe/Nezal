@@ -62,5 +62,6 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
       owner._AssignWorker();
       owner.game.selectedBuildingPanel.hide();
     });
+    this.renderingPanelButtonsDone();
   }
 });
