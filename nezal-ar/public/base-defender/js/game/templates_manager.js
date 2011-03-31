@@ -14,7 +14,7 @@ var TemplatesManager = Class.create({
     
     document.body.appendChild(templatesRootNode.hide());
   },
-  
+
   load : function(name, params){
     return TrimPath.processDOMTemplate(name + "-template", params);
   },

@@ -5,19 +5,17 @@ var BuildingFactory = Class.create({
   maximumNubmer : null,
   newBuildingSpecs : {'state' : Building.prototype.states.NOT_PLACED, 'level' : 0, 'coords' : {'x' : null, 'y' : null}},
   buildingClass : null,
-	buildingDisplayClass :null,
-	
+  buildingDisplayClass :null,
+  noOfBuildings : 0,
   initialize : function(game){  
     this.buildingClass = eval(this.name.dasherize().capitalize().camelize());  
 		 //To get the class name: "defense_center-> defense-center -> Defence-center -> DefenceCenter"
 		this.buildingDisplayClass = eval(this.name.dasherize().capitalize().camelize() + "Display");
     this.game = game;
-    this.bluePrints = this.game.data.buildings[this.name];
-    this.maximumNubmer = this.game.data.buildings[this.name].maximum_number;
-    
+    this.bluePrints = this.game.data.buildings[this.name];    
     if( this.game.user.data[this.name]){
-      
       for( var buildingInstanceCoords in game.user.data[this.name]){
+	  	this.noOfBuildings++
 				var building = new this.buildingClass(this, this.game.user.data[this.name][buildingInstanceCoords]);
         building.id = buildingInstanceCoords;
         this.factoryRegistrar( buildingInstanceCoords,building);

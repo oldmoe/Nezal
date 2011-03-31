@@ -228,7 +228,34 @@ var Building = Class.create({
 			return false
 		}
 	}
-    /****************************************************************************************/		    
+    /****************************************************************************************/
+    /****************************** Validating max number of buildings **************************************/
+	var limitingBuilding = this.currentLevelBluePrints.limited_by
+	if (limitingBuilding) {
+		var registery = this.game[limitingBuilding.dasherize().camelize() + "Factory"].factoryRegistry
+		var maxLevel = 0;
+		var key = null
+		for (item in registery) {
+			if (registery[item].level > maxLevel) {
+				maxLevel = registery[item].level
+				key = item
+			}
+		}
+		if (key) {
+			var maxNoOfBuildings = registery[key].currentLevelBluePrints.limiting.others[this.name]
+			if (!maxNoOfBuildings) 
+				maxNoOfBuildings = registery[key].currentLevelBluePrints.limiting.global
+			if (maxNoOfBuildings <= this.factory.noOfBuildings) {
+				Notification.alert("You can only build " + maxNoOfBuildings + " " + this.humanizeString(this.name));
+				return false;
+			}
+		}
+		else {
+			Notification.alert("Teet");
+			return false;
+		}
+	}
+	/****************************************************************************************/
     /****************************** Validating resources **************************************/
     var neededRock = this.factory.bluePrints.levels[1].rock - this.game.resources.rock;
     var neededLumber = this.factory.bluePrints.levels[1].lumber - this.game.resources.lumber;

@@ -59,8 +59,49 @@ module BD
           return {'valid' => false,
                   'error' => "Not enough resources, you need more " + neededLumber + " rock"}
         end
-        
-        #validating location # to be reconsidered  after server Map implementation
+        #validating dependencies
+        building_dependencies = game_metadata['buildings'][@name]['levels']['1']['dependency']['buildings']
+        building_dependencies.each do |key,value|
+          found = false
+          user_profile_metadata[key].values.each do |building|
+            if(building['level'] >= value)
+              found = true
+              break
+            end
+          end
+          if(!found)
+            return {'valid' => false,
+                  'error' => "Cannot build " + @name + ", you need a "+ key.gsub('_',' ').capitalize + " level "+value }
+          end
+        end         
+        #validating max no of buildings
+        limiting_building = game_metadata['buildings'][@name]['levels']['1']['limited_by']
+        if(!limiting_building.nil?)
+          max_level = 0 
+          registery = user_profile_metadata[limiting_building]
+          if(registery.nil?)
+                return {'valid' => false,
+                  'error' => "Cannot build " + @name + ", you need a "+ limiting_building.gsub('_',' ').capitalize }
+          end
+          registery.each do |key, value|
+            max_level = value['level'] if(value['level']>max_level)
+          end
+          if(max_level > 0)
+            max_no_of_buildings = game_metadata['buildings'][limiting_building]['levels'][max_level.to_s]['limiting'][@name]
+            if(max_no_of_buildings.nil?)
+              max_no_of_buildings = game_metadata['buildings'][limiting_building]['levels'][max_level.to_s]['limiting']['global']
+            end
+            if(!user_profile_metadata[@name].nil? && max_no_of_buildings<=user_profile_metadata[@name].size)
+              return {'valid' => false,
+                  'error' => "Cannot build " + @name + ", you need a "+ limiting_building.gsub('_',' ').capitalize }
+            end
+          else
+             return {'valid' => false,
+                  'error' => "You can only build " + max_no_of_buildings + " " + @name.gsub('_',' ').capitalize}
+          end
+        end
+    
+         #validating location # to be reconsidered  after server Map implementation
 #        puts "user_profile_metadata['map'][coords['x']][coords['y']] : " + user_profile_metadata['map'][coords['x']][coords['y']].to_s
 #        puts "BaseDefender.land_marks[@can_be_built_on] : " + BaseDefender.land_marks[@can_be_built_on].to_s
 #        puts "coords['x'] : " + coords['x'].to_s
