@@ -21,6 +21,7 @@ var Weapon = Class.create({
   	this.game.scene.pushPeriodicalRenderLoop(1,1,2,function() {self.randomDirectionChange()});
   	this.game.scene.pushPeriodicalRenderLoop(2,4,1,function() {self.changeAngle()});
     this.rock = new Rock(this);
+    this.id = parseInt(Math.random() * 10000);
   },
 
   tick : function() {
@@ -37,7 +38,7 @@ var Weapon = Class.create({
   },
 
   checkAttack : function() {
-    if(this.owner.hp <=0)
+    if(this.owner.hp <=1)
       return null;
     if (this.attacker && this.attacker.hp > 0)
       return this.attacker;
@@ -70,6 +71,7 @@ var Weapon = Class.create({
 		if(this.attacker)
     {
       this.attacker.hp -= this.specs.power;
+      console.log("==================Firing=====================  ", this.attacker.hp)
     }
     this.attacked = false;      
     this.attacker = null;

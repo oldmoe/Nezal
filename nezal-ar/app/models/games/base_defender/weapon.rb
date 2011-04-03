@@ -58,7 +58,7 @@ module BD
       return validation
     end
 
-    attr_accessor :owner, :coords, :angle, :attacker, :rocks
+    attr_accessor :owner, :coords, :angle, :attacker, :rocks, :rock_num
     # Create a new weapon instance for the wedges to detect the attack
     # Should take the wedge map building as owner to simulate the attack
     def initialize(owner, creeps)
@@ -72,6 +72,7 @@ module BD
       @weapon = BaseDefender.adjusted_game_metadata['buildings']['wedge']['levels'][@owner.owner['level'].to_s]['weapon']
       @specs = BaseDefender.adjusted_game_metadata['weapons'][@weapon]['specs']
       @coords = @owner.owner['coords']
+      @animated = false
     end
 
     def tick      
@@ -79,24 +80,37 @@ module BD
         check_attack()
         if @attacker
           @angle = Map.get_general_direction(@coords['x'], @coords['y'], @attacker.coords['x'], @attacker.coords['y'])
-          if ( @tick == 0 )
-            @step += 1
-            if @step == 2
-              @rocks << BD::Rock.new(self, @attacker)
-            end
-            if @step == 7 
-              @attacker = nil
-              @step = 0
-            end
-          end
-          @tick = (@tick + 1 ) % 2
-        end
-        @rocks.each { |rock|  rock.tick }
+        end 
       end 
     end
 
+    def display_tick
+      @rocks.each { |rock| rock.tick }
+      if @attacker
+        if ( @tick == 0 )
+          puts "Weapon Render :: #{self.__id__} #{@step}"
+          if @step == 8
+            @step = 0
+            @tick = 0
+            return
+          end
+          @step += 1
+          if @step == 4
+            rock = BD::Rock.new(self, @attacker)
+            @rocks << rock
+            rock.tick
+          end
+        end
+      elsif @tick == 0
+        @step = 0 
+        @tick = 0
+        return
+      end
+      @tick = (@tick + 1 ) % 1
+    end
+
     def check_attack()
-      if(@owner.owner['hp'] <= 0)
+      if(@owner.owner['hp'] <= 1)
         @attacker = nil 
         return
       end
@@ -122,8 +136,14 @@ module BD
     end
 
     def fire 
+      if(@owner.owner['hp'] <= 1)
+        @attacker = nil 
+        return
+      end
       if @attacker
         @attacker.hp -= @specs['power']
+        puts "========================== Firing ===================== #{@attacker.hp}"
+        @attacker = nil
       end
     end
 

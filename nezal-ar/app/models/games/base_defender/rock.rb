@@ -23,8 +23,8 @@ module BD
       @coords = { x: 0, y: 0}
       img_width = BaseDefender.adjusted_game_metadata['buildings']['wedge']['levels'][@owner.owner.owner['level'].to_s]['display']['imgWidth']
       img_height = BaseDefender.adjusted_game_metadata['buildings']['wedge']['levels'][@owner.owner.owner['level'].to_s]['display']['imgHeight']
-      @coords[:x] = @owner.coords['x'] + POSITION[@owner.angle][:x] + @extraXStep - img_width/2 + IMG_WIDTH/2;
-      @coords[:y] = @owner.coords['y'] + POSITION[@owner.angle][:y] + @extraYStep - img_height/2 + IMG_HEIGHT/2;
+      @coords[:x] = @owner.coords['x'] + POSITION[@owner.angle][:x] + @extraXStep - img_width/2.0 + IMG_WIDTH/2.0;
+      @coords[:y] = @owner.coords['y'] + POSITION[@owner.angle][:y] + @extraYStep - img_height/2.0 + IMG_HEIGHT/2.0;
       @attacker = nil
     end  
 
@@ -36,7 +36,7 @@ module BD
       end
       if @attacker
         target_x = @attacker.coords['x']
-        target_y = @attacker.coords['y'] + 108/8;
+        target_y = @attacker.coords['y'] + 93.0/8.0;
         move = Util.get_next_move(@coords[:x], @coords[:y], target_x, target_y, 20)
         @extraXStep = move[0]
         @extraYStep = move[1]
@@ -48,7 +48,9 @@ module BD
         end
         @coords[:x] = @coords[:x] + @extraXStep
         @coords[:y] = @coords[:y] + @extraYStep
+        puts "Rock tick #{self.__id__}  ::  #{@coords[:x]}  ::  #{@coords[:y]} ::  #{target_x} ::  #{target_y}"
         if(@coords[:x] == target_x && @coords[:y] == target_y )
+          puts "FIREEEEEEEEEEEEE   #{self.__id__}"
           @owner.fire()
           destroy()
         end

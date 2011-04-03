@@ -297,12 +297,17 @@ class BaseDefender < Metadata
           creep.tick
         end
       end
+      weapons.each do |weapon|
+        weapon.display_tick
+      end
     end
-    
+    puts "=====================FINISHED========================="
     map.objects.each do |obj|
+      puts "#{obj.name}  #{obj.hp}"
       key = self.convert_location(obj.owner['coords'])
       user_game_profile.metadata[obj.name][key]['hp'] = obj.hp
     end
+    weapons.each { |weapon| puts weapon.rock_num }
     return {'valid' => true, 'error' => ''}
   end
   

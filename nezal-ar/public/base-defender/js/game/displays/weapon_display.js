@@ -23,6 +23,7 @@ WeaponDisplay = Class.create( Display, {
     this.manageStateChange();
     this.owner.game.scene.pushAnimation(this);
     this.owner.rock.display = new RockDisplay(this.owner.rock, properties, this.container);
+    this.id = parseInt(Math.random() * 10000);
   },
 
   createSprites : function(){
@@ -54,21 +55,23 @@ WeaponDisplay = Class.create( Display, {
   },
 
   render : function() {
-    this.owner.rock.display.render();
     this.sprites.weapon.setZIndex(this.displayPriority[this.owner.angle]);
     for(var sprite in this.sprites){
       this.sprites[sprite].render();
     }
+    this.owner.rock.display.render();
     if(this.owner.attacked == true && this.animated == false)
     {
       this.animated = true;
       var self = this
   	  Sounds.play(Sounds.gameSounds.slingshot)
       condition = function(){
-        return ( self.sprites.weapon.currentAnimationFrame == self.sprites.weapon.noOfAnimationFrames -1 || self.owner.attacked == false); 
+        var status = (self.sprites.weapon.currentAnimationFrame == self.sprites.weapon.noOfAnimationFrames-1);
+        return (status); 
       }
       mainFunc = function(){
         self.sprites.weapon.currentAnimationFrame += 1;
+        console.log("Weapon Render :: ", self.owner.id, self.sprites.weapon.currentAnimationFrame);
         self.owner.rock.display.animate();
       } 
       callback = function(){
@@ -76,7 +79,7 @@ WeaponDisplay = Class.create( Display, {
         self.animated = false;
         self.owner.rock.display.stopAnimation();
       }
-      this.owner.game.reactor.pushPeriodicalWithCondition(2 , mainFunc, condition, callback)
+      this.owner.game.reactor.pushPeriodicalWithCondition(1 , mainFunc, condition, callback)
     }
   },
 
