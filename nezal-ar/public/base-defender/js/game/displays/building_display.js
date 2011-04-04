@@ -150,10 +150,31 @@ var BuildingDisplay = Class.create(Display, {
     var owner = this.owner;
     $('panel-buttons-container').innerHTML = this.game.templatesManager.load("upgrade-button");
     $('upgrade_trigger').stopObserving('click');
-    $('upgrade_trigger').observe('click', function(){
-      owner.upgrade();
-      owner.game.selectedBuildingPanel.hide();
-    });
+    if (!owner.isValidToUpgrade(true)) {
+      $('upgrade_trigger').select("img")[0].setStyle({marginTop : "-75px"});
+      $('upgrade_trigger').setAttribute("disabled", "disabled");
+    } else {
+      $('upgrade_trigger').observe('click', function(){
+        owner.upgrade();
+        owner.game.selectedBuildingPanel.hide();
+      });
+      this.renderingPanelButtonsDone();
+    }
+  },
+  
+  renderingPanelButtonsDone : function(){
+    $$('#panel-buttons-container div').each(function(element){
+      if (element.getAttribute("disabled") != "disabled") {
+        element.stopObserving("mouseover");
+        element.observe("mouseover", function(){
+          element.select("img")[0].setStyle( {marginTop: 0} );
+        });
+        element.stopObserving("mouseout");
+        element.observe("mouseout", function(){
+          element.select("img")[0].setStyle( {marginTop: "-25px"} );
+        });
+      }
+    })
   },
   
   render : function(){

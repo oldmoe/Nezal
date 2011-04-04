@@ -125,7 +125,7 @@ var Building = Class.create({
   },
 
   upgrade: function(){
-    if(this.isValidToUpgrade(this.coords.x, this.coords.y)){
+    if(this.isValidToUpgrade()){
       var response = this.game.network.upgradeBuilding(this.name, this.coords);
       this.game.updateGameStatus(response['gameStatus']);
     }
@@ -163,20 +163,20 @@ var Building = Class.create({
 	return str.capitalize().replace("_", " ") 
   },
   
-  isValidToUpgrade : function(x,y){
+  isValidToUpgrade : function(silent){
     if(this.game.disableJsValidation)
       return true;
       
       
     /****************************** Validating workers **************************************/
     if( this.game.workerFactory.idleWorkers == 0 ){
-      Notification.alert("Cannot upgrade " + this.name + ", all your workers are busy!");
+      if(!silent) Notification.alert("Cannot upgrade " + this.name + ", all your workers are busy!");
       return false;
     }
     /****************************** Validating upgrade **************************************/    
     var level = (parseInt(this.level) + 1).toString(); 
     if(!this.factory.bluePrints.levels[level]) {
-      Notification.alert("You have reached max upgrade");
+      if(!silent) Notification.alert("You have reached max upgrade");
       return false;
     }
     /****************************************************************************************/
@@ -187,27 +187,20 @@ var Building = Class.create({
     var neededLumber = this.factory.bluePrints.levels[level].lumber - this.game.resources.lumber;
     
     if( neededRock > 0 && neededLumber > 0 ){
-      Notification.alert("Not enough resources, you need more "+ neededRock +" rock and "+ neededLumber + " lumber");
+      if(!silent) Notification.alert("Not enough resources, you need more "+ neededRock +" rock and "+ neededLumber + " lumber");
       return false;
     }
     
     if(  neededRock > 0 ){
-      Notification.alert("Not enough resources, you need more "+ neededRock +" rock");
+      if(!silent) Notification.alert("Not enough resources, you need more "+ neededRock +" rock");
       return false;
     }
     
     if( neededLumber > 0 ){
-      Notification.alert("Not enough resources, you need more "+ neededLumber +" lumber");
+      if(!silent) Notification.alert("Not enough resources, you need more "+ neededLumber +" lumber");
       return false;
     }
-    /****************************************************************************************/
-   	if(!this.validateLocation(x,y)){
-			Map.addElement(this)
-		}
-		else{
-			return false
-		} 
-	 return true;
+    return true;
   },
 
   isValidToBuild : function(x,y) {
@@ -228,7 +221,34 @@ var Building = Class.create({
 			return false
 		}
 	}
-    /****************************************************************************************/		    
+    /****************************************************************************************/
+    /****************************** Validating max number of buildings **************************************/
+	var limitingBuilding = this.currentLevelBluePrints.limited_by
+	if (limitingBuilding) {
+		var registery = this.game[limitingBuilding.dasherize().camelize() + "Factory"].factoryRegistry
+		var maxLevel = 0;
+		var key = null
+		for (item in registery) {
+			if (registery[item].level > maxLevel) {
+				maxLevel = registery[item].level
+				key = item
+			}
+		}
+		if (key) {
+			var maxNoOfBuildings = registery[key].currentLevelBluePrints.limiting.others[this.name]
+			if (!maxNoOfBuildings) 
+				maxNoOfBuildings = registery[key].currentLevelBluePrints.limiting.global
+			if (maxNoOfBuildings <= this.factory.noOfBuildings) {
+				Notification.alert("You can only build " + maxNoOfBuildings + " " + this.humanizeString(this.name));
+				return false;
+			}
+		}
+		else {
+			Notification.alert("Error");
+			return false;
+		}
+	}
+	/****************************************************************************************/
     /****************************** Validating resources **************************************/
     var neededRock = this.factory.bluePrints.levels[1].rock - this.game.resources.rock;
     var neededLumber = this.factory.bluePrints.levels[1].lumber - this.game.resources.lumber;

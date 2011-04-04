@@ -1,8 +1,9 @@
 module BD
   class Car < Creep
-    def initialize(map,initial_x, initial_y)
+    def initialize(map,initial_x, initial_y,id)
       super(map,initial_x, initial_y)
       @map = map
+      @id = id
       @map_direction = Map.N  
       @coords = {}
       @coords['x'] = initial_x.to_f
