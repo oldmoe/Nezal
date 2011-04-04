@@ -12,6 +12,7 @@ class BaseDefender < Metadata
     "storage" => BD::Storage ,
     "defense_center" => BD::DefenseCenter,
     "war_factory" => BD::WarFactory,
+    "house" => BD::House,
     "wedge" => BD::Wedge
   }.merge @@resource_building_modules
   

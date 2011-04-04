@@ -12,8 +12,8 @@ var WedgeDisplay = Class.create(BuildingDisplay, {
   },
 
   createSprites : function(){
-    this.container = new DomSpriteContainer(this.owner)
-		this.sprites.base = this.container.newDomImgSprite(this.owner, {img : this.baseImg, width:this.width}, {shiftY: this.zdim});
+	    this.container = new DomSpriteContainer(this.owner)
+		this.sprites.base = this.container.newDomImgSprite(this.owner, {img : this.baseImg, width:this.width}, {shiftY: this.zdim, divClass: "buildingBase"});
 		this.sprites.invalid = this.container.newDomImgSprite(this.owner, {img : this.invalidImg, width:this.width}, {shiftY: this.zdim});
 		this.sprites.shadow = this.container.newDomImgSprite(this.owner, {img: this.shadowImg, width:this.shadowImg.width,
                                                       		height:this.shadowImg.height, zIndex : 1});

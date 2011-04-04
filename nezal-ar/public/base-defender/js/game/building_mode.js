@@ -1,6 +1,6 @@
 var BuildingMode = Class.create({
   game : null,
-  buildings : ['townhall', 'quarry', 'lumbermill','storage','defense_center', 'wedge','war_factory'],
+  buildings : ['townhall', 'quarry', 'lumbermill','storage','defense_center', 'wedge','war_factory','house'],
   inProgressImage : 'progress.png',
   isOn : false,
   selectedBuilding : null,
@@ -19,6 +19,7 @@ var BuildingMode = Class.create({
       this.cancelBuildingMode();
     }
     this.isOn = true;
+	$$('.buildingBase').invoke('show')
     this.callback = callback;
     this.selectedBuilding = building;
 		this._AttachMouseMoveEvent();
@@ -52,9 +53,10 @@ var BuildingMode = Class.create({
 	},
   
   off : function(){
-		this.moveBuilding = false
-    this.isOn = false;
-    this.selectedBuilding = null;
+		this.moveBuilding = false;
+   		this.isOn = false;
+    	this.selectedBuilding = null;
+		$$('.buildingBase').invoke('hide')
 		$('gameCanvas').stopObserving(game.mouseMoveEvent, this.buildingMoveObserver);
 		$('cancelBuilding').hide();
   },
@@ -87,11 +89,13 @@ var BuildingMode = Class.create({
 		if(this.moveBuilding){
 			this.moveBuilding = false;
 			this.selectedBuilding.move(x,y)
+			$$('.buildingBase').invoke('hide')
 		}
-    else if (this.selectedBuilding.build(x, y)) {
-      this.callback();
-      //this.off();
-    }
+    	else if (this.selectedBuilding.build(x, y)) {
+      		this.callback();
+			$$('.buildingBase').invoke('hide')
+      		//this.off();
+    	}
   },
 
 	_AttachCancelBuildingListener : function(){

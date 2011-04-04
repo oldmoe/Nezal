@@ -38,7 +38,7 @@ var WorkerFactory = Class.create({
   },
   
   nextWorkerCost : function(){
-    return this.recruitmentPlans[this.workers + 1].coins;
+    return this.recruitmentPlans.initial_coins * this.recruitmentPlans.factor;
   },
   
   attachHireTrigger : function(){
@@ -72,6 +72,17 @@ var WorkerFactory = Class.create({
       return false;
 	}
     if(this.game.disableJsValidation) return true;
+	
+	var total_workers_allowed = this.recruitmentPlans.initial_allowed
+	var houses = this.game.houseFactory.factoryRegistry
+	var house_data = this.game.data.buildings.house
+	for(house in houses){
+		total_workers_allowed+= house_data.levels[houses[house].level].workers		
+	}
+	if(total_workers_allowed <= this.workers){
+		 Notification.alert("You need to build more houses");
+		 return false;
+	}
     if (this.game.user.coins >= this.nextWorkerCost()) {
       return true;
     } else {

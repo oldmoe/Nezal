@@ -17,7 +17,7 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
     
     createSprites : function($super){
       $super()
-      this.sprites.health.shiftY = 20
+      this.sprites.health.shiftY = 20;
     },
     
     renderPanel : function($super){
@@ -27,11 +27,9 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
         return self.game.templatesManager.load("townhall-panel", {building : self});
       });
       self.game.workerFactory.attachHireTrigger();
-
     },
       
     render : function($super){
-      
       $super()
       if(this.owner.producing && this.owner.working  && this.owner.game.reactor.ticks %4==0) this.renderDoor()
     },  
