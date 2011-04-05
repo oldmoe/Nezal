@@ -1,4 +1,4 @@
-var Weapon = Class.create({
+var Slingshot = Class.create({
   angle : 0,
   targetAngle : 5,
   imgHeight : 93,
@@ -15,7 +15,7 @@ var Weapon = Class.create({
     this.owner = owner;
     var newAngle = Math.round(Math.random() * 10 );
     this.angle = newAngle % 8;
-    this.specs = this.game.data.weapons[this.name].specs;
+    this.specs = this.game.data.buildings[this.owner.name]['levels'][this.owner.level].specs;
 		this.game.scene.push(this);
     var self = this;
   	this.game.scene.pushPeriodicalRenderLoop(1,1,2,function() {self.randomDirectionChange()});

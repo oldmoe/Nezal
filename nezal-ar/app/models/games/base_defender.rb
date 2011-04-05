@@ -8,7 +8,7 @@ class BaseDefender < Metadata
     "lumbermill" => BD::Lumbermill
   }
   @@wedges = {
-    'normal_wedge' => BD::Wedge.new('normal_wedge'),
+    'wedge' => BD::Wedge.new('wedge'),
     'gaddafi' => BD::Wedge.new('gaddafi')
   }
   @@building_modules = ( {
@@ -176,6 +176,8 @@ class BaseDefender < Metadata
   def self.initialize_game_metadata( game )
     #Applying Speed Factor!
     @@building_modules.keys.each do |building_name|
+      puts building_name
+      puts game.metadata['buildings'][building_name]
       building_levels = game.metadata['buildings'][building_name]['levels']
       building_levels.keys.each do |level|
         building_levels[level]['time'] /= @@speed_factor

@@ -1,4 +1,4 @@
-WeaponDisplay = Class.create( Display, {
+SlingshotDisplay = Class.create( Display, {
 
   animated : false,
 
@@ -27,7 +27,7 @@ WeaponDisplay = Class.create( Display, {
   },
 
   createSprites : function(){
-    this.faceImg = Loader.images.buildings['wedge_face.png'];
+    this.faceImg = Loader.images.buildings[this.owner.owner.name + '_face.png'];
     this.weaponImg = Loader.images.weapons[this.owner.name + ".png"];
     this.sprites.face = this.container.newDomImgSprite(this.owner, {img: this.faceImg});
     this.sprites.weapon = this.container.newDomImgSprite(this.owner, {img: this.weaponImg});
@@ -60,6 +60,10 @@ WeaponDisplay = Class.create( Display, {
       this.sprites[sprite].render();
     }
     this.owner.rock.display.render();
+    this.registerAnimation();
+  },
+
+  registerAnimation : function() {
     if(this.owner.attacked == true && this.animated == false)
     {
       this.animated = true;
@@ -79,8 +83,8 @@ WeaponDisplay = Class.create( Display, {
         self.animated = false;
         self.owner.rock.display.stopAnimation();
       }
-      this.owner.game.reactor.pushPeriodicalWithCondition(1 , mainFunc, condition, callback)
-    }
-  },
+      this.owner.game.reactor.pushPeriodicalWithCondition(1 , mainFunc, condition, callback);
+    }    
+  }
 
 });
