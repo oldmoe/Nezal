@@ -251,35 +251,35 @@ var Game = Class.create({
   },
 
   isTouchDevice: function(){
-  	try {
-  		document.createEvent("TouchEvent");
-  		return true;
-  	} 
-  	catch (e) {
-  		return false;
-  	}
+    try {
+      document.createEvent("TouchEvent");
+      return true;
+    } 
+    catch (e) {
+      return false;
+    }
   },
 
   addLoadedImagesToDom : function(){
-  	$$('.loadedImg').each(function(imgSpan){
-		  var imgPath = imgSpan.id.split('/')
-		  var imgPart = Loader
-		  for(var i=0;i<imgPath.length;i++){
-		     imgPart = imgPart[imgPath[i]]
-		  }
-		  imgSpan.appendChild(imgPart)
-	  })
+    $$('.loadedImg').each(function(imgSpan){
+      var imgPath = imgSpan.id.split('/')
+      var imgPart = Loader
+      for(var i=0;i<imgPath.length;i++){
+         imgPart = imgPart[imgPath[i]]
+      }
+      imgSpan.appendChild(imgPart)
+    })
   },
   
   addLoadedImagesToDiv : function(divId){
-    	$$(divId+'.loadedImg').each(function(imgSpan){
-		  var imgPath = imgSpan.id.split('/')
-		  var imgPart = Loader
-		  for(var i=0;i<imgPath.length;i++){
-		     imgPart = imgPart[imgPath[i]]
-		  }
-		  imgSpan.appendChild(imgPart)
-	  })
+    $$(divId+'.loadedImg').each(function(imgSpan){
+      var imgPath = imgSpan.id.split('/')
+      var imgPart = Loader
+      for(var i=0;i<imgPath.length;i++){
+         imgPart = imgPart[imgPath[i]]
+      }
+      imgSpan.appendChild(imgPart)
+    })
   }
 
 });
