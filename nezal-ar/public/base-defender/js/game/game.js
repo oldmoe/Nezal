@@ -13,7 +13,7 @@ var Game = Class.create({
   tutorial : null,
   buildingMode : null,
   townhallFactory : null,
-	creepFactory : null,
+  creepFactory : null,
   quarryFactory : null,
   lumbermillFactory : null,
   neighborGame : null,
@@ -259,7 +259,7 @@ var Game = Class.create({
   		return false;
   	}
   },
-
+public/base-defender/js/game/game.js
   addLoadedImagesToDom : function(){
   	$$('.loadedImg').each(function(imgSpan){
 		  var imgPath = imgSpan.id.split('/')
