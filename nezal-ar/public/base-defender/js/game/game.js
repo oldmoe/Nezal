@@ -69,31 +69,31 @@ var Game = Class.create({
                           "defense_center_info.png", "war_factory_info.png", "house_info.png", 
                           "storage_info.png", "wedge_info.png", "gaddafi_info.png"];
 											
-    new Loader().load([{images : gameElementsImages, path: 'images/game_elements/', store: 'game_elements'},
-                       {images : friendsImages, path: 'images/friends/', store: 'friends'},
-									     {images : questsImages, path: 'images/quests/', store: 'quests'},
-									     {images : panelImages, path: 'images/buildings/panel/', store: 'panel'},
-									     {images : buildingImages, path: 'images/buildings/', store: 'buildings'}
+    new Loader().load([ {images : gameElementsImages, path: 'images/game_elements/', store: 'game_elements'},
+                        {images : friendsImages, path: 'images/friends/', store: 'friends'},
+                        {images : questsImages, path: 'images/quests/', store: 'quests'},
+                        {images : panelImages, path: 'images/buildings/panel/', store: 'panel'},
+                        {images : buildingImages, path: 'images/buildings/', store: 'buildings'}
 	                    ],
                       {
                         onProgress : function(progress){
-                					$$('#inProgress #loadingBarFill')[0].style.width = Math.min(progress,88)+"%"
-			                  },
-		                    onFinish: function(){
-			                    $('gameContainer').innerHTML = game.templatesManager.load("gameElements");
-			                    Map.initializeMapSize()
-			                    self.questsManager = new QuestsManager(self);
+                          $$('#inProgress #loadingBarFill')[0].style.width = Math.min(progress,88)+"%"
+                        },
+                        onFinish: function(){
+                          $('gameContainer').innerHTML = game.templatesManager.load("gameElements");
+                          Map.initializeMapSize()
+                          self.questsManager = new QuestsManager(self);
                           self.domConverter = new DomConverter();
-			                    $('inProgress').hide()
-			                    $('gameContainer').show()
-			                    game.start()
-	                      }
+                          $('inProgress').hide()
+                          $('gameContainer').show()
+                          game.start()
+                        }
                       });
-	},
+  },
 	
   start : function(){
     var self = this;
-		var loaderFinishCallback = function(){
+    var loaderFinishCallback = function(){
         var mapView = ""
         var friendIDs = self.network.neighbourIDs();
         var mapping = {};
@@ -129,23 +129,23 @@ var Game = Class.create({
         Sounds.gameSounds.Intro[0].stop()
         Sounds.play(Sounds.gameSounds.game)
     };	
-		var buildingImages = BuildingMode.prototype.buildings.collect(function(building){
+    var buildingImages = BuildingMode.prototype.buildings.collect(function(building){
       return building + ".png";
     });
-		var wedgeFaceImages = BuildingMode.prototype.wedges.collect(function(building){
+    var wedgeFaceImages = BuildingMode.prototype.wedges.collect(function(building){
       return building + "_face.png";
     });
     buildingImages = buildingImages.concat(wedgeFaceImages);
-		buildingImages.push("lumbermill_saw.png");
-		buildingImages.push("townhall_door.png");
-		buildingImages.push("storage_2.png");
+    buildingImages.push("lumbermill_saw.png");
+    buildingImages.push("townhall_door.png");
+    buildingImages.push("storage_2.png");
 
-		var buildingOutlineImages = BuildingMode.prototype.buildings.collect(function(building){
+    var buildingOutlineImages = BuildingMode.prototype.buildings.collect(function(building){
       return building + "_outline.png";
     });
-		buildingOutlineImages.push("storage_outline_2.png");
+    buildingOutlineImages.push("storage_outline_2.png");
 
-		var buildingShadowImages = BuildingMode.prototype.buildings.collect(function(building){
+    var buildingShadowImages = BuildingMode.prototype.buildings.collect(function(building){
       return building + "_shadow.png";
     });
     
@@ -153,7 +153,7 @@ var Game = Class.create({
       return building + "_moving.png";
     });
 
-		var buildingModeImages = ['2x2_invalid.png', '2x2_base.png','1x1_invalid.png', '1x1_base.png','transparent.png','transparent.png'];
+    var buildingModeImages = ['2x2_invalid.png', '2x2_base.png','1x1_invalid.png', '1x1_base.png','transparent.png','transparent.png'];
 
 
     var iconsImages = [ "lumber.png", "rock.png", "workers.png", "attention.png" ];   
@@ -164,26 +164,26 @@ var Game = Class.create({
                                         return building + "_icon.png";
                                       }));
 
-		var workerImages = ["worker.png", "worker_shadow.png"];
+    var workerImages = ["worker.png", "worker_shadow.png"];
     //var buildingPanelImages = ["panel.png"]
 		
-		var creepsImages = ["car.png",'explosion.png','car_fight.png']
+    var creepsImages = ["car.png",'explosion.png','car_fight.png']
 		//This is duplicated to avoid a problem in the loader that can't deal with an array of a single item
-		var smokeImages = ["smoke_big.png", "smoke_big.png"]
+    var smokeImages = ["smoke_big.png", "smoke_big.png"]
   
     // Weapons Images 
-		var weaponsImages = ["slingshot.png", "rock.png"]
-    new Loader().load([{images : BaseDefenderScene.prototype.textures, path: 'images/textures/', store: 'textures'},
-                       {images : buildingImages, path: 'images/buildings/', store: 'buildings'},
-											 {images : buildingModeImages, path: 'images/buildings/', store: 'buildingModes'},
-											 {images : iconsImages, path: 'images/icons/', store: 'icons'},
-										 	 {images : workerImages, path: 'images/worker/', store: 'worker'},
-											 {images : creepsImages, path: 'images/creeps/', store: 'creeps'},
-                       {images : smokeImages, path: 'images/', store: 'smoke'},
-											 {images : buildingOutlineImages, path: 'images/buildings/outlines/', store: 'buildingOutlines'},
-											 {images : buildingShadowImages, path: 'images/buildings/shadows/', store: 'buildingShadows'},
-											 {images : buildingMovingImages, path: 'images/buildings/moving/', store: 'buildingMoving'},
-											 {images : weaponsImages, path: 'images/weapons/', store: 'weapons'}],
+    var weaponsImages = ["slingshot.png", "rock.png"]
+    new Loader().load([ {images : BaseDefenderScene.prototype.textures, path: 'images/textures/', store: 'textures'},
+                        {images : buildingImages, path: 'images/buildings/', store: 'buildings'},
+                        {images : buildingModeImages, path: 'images/buildings/', store: 'buildingModes'},
+                        {images : iconsImages, path: 'images/icons/', store: 'icons'},
+                        {images : workerImages, path: 'images/worker/', store: 'worker'},
+                        {images : creepsImages, path: 'images/creeps/', store: 'creeps'},
+                        {images : smokeImages, path: 'images/', store: 'smoke'},
+                        {images : buildingOutlineImages, path: 'images/buildings/outlines/', store: 'buildingOutlines'},
+                        {images : buildingShadowImages, path: 'images/buildings/shadows/', store: 'buildingShadows'},
+                        {images : buildingMovingImages, path: 'images/buildings/moving/', store: 'buildingMoving'},
+                        {images : weaponsImages, path: 'images/weapons/', store: 'weapons'}],
                      {onFinish : loaderFinishCallback});
   },
   
@@ -202,7 +202,7 @@ var Game = Class.create({
   },
   
   reflectStatusChange : function(){
-		this.reInitializationNotifications = [];
+    this.reInitializationNotifications = [];
     if(this.reactor) this.reactor.stop();
     this.reactor = new Reactor(80);
     this.reactor.run();
