@@ -259,7 +259,7 @@ var Game = Class.create({
   		return false;
   	}
   },
-public/base-defender/js/game/game.js
+
   addLoadedImagesToDom : function(){
   	$$('.loadedImg').each(function(imgSpan){
 		  var imgPath = imgSpan.id.split('/')
