@@ -42,7 +42,7 @@ var Game = Class.create({
   		this.mouseEndEvent = 'touchend'
   		this.mouseMoveEvent = 'touchmove'
     }
-	  soundManager.mute()
+    soundManager.mute()
   },
 	
   startLoading : function(){
@@ -74,7 +74,7 @@ var Game = Class.create({
                         {images : questsImages, path: 'images/quests/', store: 'quests'},
                         {images : panelImages, path: 'images/buildings/panel/', store: 'panel'},
                         {images : buildingImages, path: 'images/buildings/', store: 'buildings'}
-	                    ],
+                      ],
                       {
                         onProgress : function(progress){
                           $$('#inProgress #loadingBarFill')[0].style.width = Math.min(progress,88)+"%"
@@ -208,23 +208,23 @@ var Game = Class.create({
     this.reactor.run();
     this.attackManager = new AttackManager(this);
     this.user = new User(this);
-  	this.scene = new BaseDefenderScene(this);	
-	  this.resources.rock = this.user.data.rock;
+    this.scene = new BaseDefenderScene(this);	
+    this.resources.rock = this.user.data.rock;
     this.resources.lumber = this.user.data.lumber;
-	  BuildingFactory._GlobalRegistry = {};
-	  this.attackManager = new AttackManager(this);
-	  this.townhallFactory = new TownhallFactory(this);
-	  this.quarryFactory = new QuarryFactory(this);
-	  this.lumbermillFactory = new LumbermillFactory(this);
-	  this.buildingsManager = new BuildingsManager(this);
-	  this.workerFactory = new WorkerFactory(this);
-	  this.storageFactory = new StorageFactory(this);
-	  this.creepFactory = new CreepFactory(this);
-	  this.defenseCenterFactory = new DefenseCenterFactory(this);
-	  this.warFactoryFactory = new WarFactoryFactory(this);
-	  this.houseFactory = new HouseFactory(this);
-		this.wedgeFactory = new WedgeFactory(this);
-		this.gaddafiFactory = new GaddafiFactory(this);
+    BuildingFactory._GlobalRegistry = {};
+    this.attackManager = new AttackManager(this);
+    this.townhallFactory = new TownhallFactory(this);
+    this.quarryFactory = new QuarryFactory(this);
+    this.lumbermillFactory = new LumbermillFactory(this);
+    this.buildingsManager = new BuildingsManager(this);
+    this.workerFactory = new WorkerFactory(this);
+    this.storageFactory = new StorageFactory(this);
+    this.creepFactory = new CreepFactory(this);
+    this.defenseCenterFactory = new DefenseCenterFactory(this);
+    this.warFactoryFactory = new WarFactoryFactory(this);
+    this.houseFactory = new HouseFactory(this);
+    this.wedgeFactory = new WedgeFactory(this);
+    this.gaddafiFactory = new GaddafiFactory(this);
     if( !this.buildingMode )
       this.buildingMode = new BuildingMode(this);
     else{
