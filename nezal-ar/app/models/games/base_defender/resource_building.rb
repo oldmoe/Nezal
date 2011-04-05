@@ -26,9 +26,11 @@ module BD
       last_collect_time =  building['last_collect'] || time_now
       collecting_time = time_now - last_collect_time
       assigned_workers = building['assigned_workers']
+      assigned_workers = 0 if(assigned_workers.nil?)
       building_capacity = game_metadata['buildings'][@name]['levels'][building['level'].to_s]['capacity']
       total_storage = self.calculate_total_storage_left(user_game_profile.metadata, building, game_metadata)
       unit_per_worker_minute = game_metadata['buildings'][@name]['levels'][building['level'].to_s]['unit_per_worker_minute']
+
       total_per_minute = unit_per_worker_minute * assigned_workers
       collected = ((total_per_minute/60.0) * collecting_time).round
       if (building_collected_resources + collected) > building_capacity
@@ -39,7 +41,7 @@ module BD
         remained = user_game_profile.metadata[@collect] - total_storage
         user_game_profile.metadata[@collect] = total_storage
         user_game_profile.metadata[@collect]
-      end      
+      end
       return collected, remained
     end
     

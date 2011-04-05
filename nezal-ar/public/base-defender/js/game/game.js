@@ -148,12 +148,12 @@ var Game = Class.create({
 		var questsImages = [  "msgBg.png", "wedge.png", "button.png", "msgBaloon.png", "questBaloon.png" , "questBg.png", "buildingPanelBg.png",
                           "activeCell.png", "inactiveCell.png", "resources.png", "correct.png", "correct.png", "buildingsBg.png", "wedgesBg.png", 
                           "social.png", "civil.png", "military.png", "circles.png", "hover.png", "animated_circles.gif", "line.png",
-                          "townhall_info.png", "quarry_info.png", "lumbermill_info.png", "defense_center_info.png","war_factory_info.png", "storage_info.png",
+                          "townhall_info.png", "quarry_info.png", "lumbermill_info.png", "defense_center_info.png","war_factory_info.png","house_info.png", "storage_info.png",
                           "wedge_info.png"];
 
     var iconsImages = ["townhall.png", "townhall_icon.png", "quarry_icon.png", "lumbermill_icon.png", "quarry.png",
 		 "lumbermill.png", "lumber.png", "rock.png", "workers.png","storage.png","storage_icon.png",
-		 "defense_center.png","defense_center_icon.png","war_factory.png", "war_factory_icon.png", "wedge_icon.png", "wedge.png","attention.png"];
+		 "defense_center.png","defense_center_icon.png","war_factory.png", "war_factory_icon.png","house.png","house_icon.png", "wedge_icon.png", "wedge.png","attention.png"];
    
 		var workerImages = ["worker.png", "worker_shadow.png"];
     //var buildingPanelImages = ["panel.png"]
@@ -213,6 +213,7 @@ var Game = Class.create({
 	  this.creepFactory = new CreepFactory(this);
 	  this.defenseCenterFactory = new DefenseCenterFactory(this);
 	  this.warFactoryFactory = new WarFactoryFactory(this);
+	  this.houseFactory = new HouseFactory(this);
 		this.wedgeFactory = new WedgeFactory(this);
     if( !this.buildingMode )
       this.buildingMode = new BuildingMode(this);

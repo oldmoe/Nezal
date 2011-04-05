@@ -3,7 +3,21 @@ module BD
     def self.buy_worker(user_game_profile)
       
       current_number_of_workers = user_game_profile.metadata['workers']
-      required_coins = user_game_profile.game.metadata['workers'][(current_number_of_workers+1).to_s]['coins']
+      total_workers_allowed = user_game_profile.game.metadata['workers']['initial_allowed'];
+      house_metadata = user_game_profile.game.metadata['buildings']['house']
+      user_houses = user_game_profile.metadata['house']
+      if(!user_houses.nil?)
+        user_houses.values.each do |house|
+         total_workers_allowed += house_metadata['levels'][house['level'].to_s]['workers']
+       end
+      end
+      if(total_workers_allowed <= current_number_of_workers)
+        return {'valid' => false,
+                'error' => "You need to build more houses"}
+      end
+      
+      factor  = user_game_profile.game.metadata['workers']['factor']
+      required_coins = user_game_profile.game.metadata['workers']['initial_coins'] * factor
       
       validation = validate_buy_worker(user_game_profile.user, required_coins)
       return validation if validation['valid'] == false

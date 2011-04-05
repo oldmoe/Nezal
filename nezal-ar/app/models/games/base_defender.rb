@@ -16,6 +16,7 @@ class BaseDefender < Metadata
     "storage" => BD::Storage ,
     "defense_center" => BD::DefenseCenter,
     "war_factory" => BD::WarFactory,
+    "house" => BD::House
   }.merge @@resource_building_modules ).merge @@wedges
   
   @@game_metadata = nil

@@ -1,5 +1,5 @@
 var AttackManager = Class.create({
-	noOfCreeps : 12,
+	noOfCreeps : 6,
 	creepsDone :0,	
 	attacking : false,
 	initialize: function(game){
@@ -8,9 +8,9 @@ var AttackManager = Class.create({
 		this.game = game;
     $("sendAttack").stopObserving("click");
     $("sendAttack").observe(game.mouseClickEvent, function(){
-		Sounds.play(Sounds.gameSounds.click)
+		Sounds.play(Sounds.gameSounds.click);
       	self.simulateAttack();
-		$('attackDiv').show()
+		$('attackDiv').show();
     });
 	},
 	simulateAttack : function(){

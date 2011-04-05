@@ -51,7 +51,7 @@ var BuildingsManager = Class.create({
     $("rightArrow").stopObserving("click");
     $("rightArrow").observe("click", function(){
       if(currentShift < maxShift) { 
-        currentShift += 2;
+        currentShift += 3;
         $$('#interaction .buildings')[0].setStyle({marginLeft : (currentShift*-84) + 'px' });
         $$('#leftArrow img')[0].setStyle({marginLeft : '-60px'});
         if(currentShift == maxShift)
