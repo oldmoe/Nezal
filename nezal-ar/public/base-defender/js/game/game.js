@@ -28,6 +28,7 @@ var Game = Class.create({
   },
 
   workersStatus : null,
+
   initialize : function(){
     this.network = new Network(); 
   	if(!this.isTouchDevice()){
@@ -40,7 +41,8 @@ var Game = Class.create({
   		this.mouseStartEvent = 'touchstart'
   		this.mouseEndEvent = 'touchend'
   		this.mouseMoveEvent = 'touchmove'
-  	}
+  }
+
 	soundManager.mute()
   },
 	
@@ -86,7 +88,7 @@ var Game = Class.create({
 	},
 	
   start : function(){
-	    var self = this;
+    var self = this;
 		var loaderFinishCallback = function(){
 	    var mapView = ""
       var friendIDs = self.network.neighbourIDs();
@@ -197,20 +199,20 @@ var Game = Class.create({
     this.reactor.run();
     this.attackManager = new AttackManager(this);
     this.user = new User(this);
-	this.scene = new BaseDefenderScene(this);	
-	this.resources.rock = this.user.data.rock;
+  	this.scene = new BaseDefenderScene(this);	
+	  this.resources.rock = this.user.data.rock;
     this.resources.lumber = this.user.data.lumber;
-	BuildingFactory._GlobalRegistry = {};
-	this.attackManager = new AttackManager(this);
-	this.townhallFactory = new TownhallFactory(this);
-	this.quarryFactory = new QuarryFactory(this);
-	this.lumbermillFactory = new LumbermillFactory(this);
-	this.buildingsManager = new BuildingsManager(this);
-	this.workerFactory = new WorkerFactory(this);
-	this.storageFactory = new StorageFactory(this);
-	this.creepFactory = new CreepFactory(this);
-	this.defenseCenterFactory = new DefenseCenterFactory(this);
-	this.warFactoryFactory = new WarFactoryFactory(this);
+	  BuildingFactory._GlobalRegistry = {};
+	  this.attackManager = new AttackManager(this);
+	  this.townhallFactory = new TownhallFactory(this);
+	  this.quarryFactory = new QuarryFactory(this);
+	  this.lumbermillFactory = new LumbermillFactory(this);
+	  this.buildingsManager = new BuildingsManager(this);
+	  this.workerFactory = new WorkerFactory(this);
+	  this.storageFactory = new StorageFactory(this);
+	  this.creepFactory = new CreepFactory(this);
+	  this.defenseCenterFactory = new DefenseCenterFactory(this);
+	  this.warFactoryFactory = new WarFactoryFactory(this);
 		this.wedgeFactory = new WedgeFactory(this);
     if( !this.buildingMode )
       this.buildingMode = new BuildingMode(this);

@@ -7,13 +7,16 @@ class BaseDefender < Metadata
     "quarry" => BD::Quarry,
     "lumbermill" => BD::Lumbermill
   }
-  @@building_modules = {
+  @@wedges = {
+    'normal_wedge' => BD::Wedge.new('normal_wedge'),
+    'gaddafi' => BD::Wedge.new('gaddafi')
+  }
+  @@building_modules = ( {
     "townhall" => BD::Townhall,
     "storage" => BD::Storage ,
     "defense_center" => BD::DefenseCenter,
     "war_factory" => BD::WarFactory,
-    "wedge" => BD::Wedge
-  }.merge @@resource_building_modules
+  }.merge @@resource_building_modules ).merge @@wedges
   
   @@game_metadata = nil
   

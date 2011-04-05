@@ -86,15 +86,15 @@ module BD
 
     def display_tick
       @rocks.each { |rock| rock.tick }
-      if @attacker
+      if @attacker || @step > 0
         if ( @tick == 0 )
+          @step += 1
           puts "Weapon Render :: #{self.__id__} #{@step}"
           if @step == 8
             @step = 0
             @tick = 0
             return
           end
-          @step += 1
           if @step == 4
             rock = BD::Rock.new(self, @attacker)
             @rocks << rock
