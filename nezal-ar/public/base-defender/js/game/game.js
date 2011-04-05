@@ -45,49 +45,49 @@ var Game = Class.create({
 	  soundManager.mute()
   },
 	
-	startLoading : function(){
-		var self = this
-		this.templatesManager = new TemplatesManager(this.network);
-		new Loader().load([{images : ['logo.png'], path: 'images/loading/', store: 'loading'}],
-							{onFinish : function(){
-								$('inProgress').show()
-								$('inProgress').innerHTML = self.templatesManager.load("loadingScreen");
-								self.initializeGame()
-							}})
-	},
+  startLoading : function(){
+    var self = this
+    this.templatesManager = new TemplatesManager(this.network);
+    new Loader().load([{images : ['logo.png'], path: 'images/loading/', store: 'loading'}],
+                      {onFinish : function(){
+                        $('inProgress').show()
+                        $('inProgress').innerHTML = self.templatesManager.load("loadingScreen");
+                        self.initializeGame()
+                      }});
+  },
 	
   initializeGame : function(){
-		var self = this
-		var gameElementsImages = ['upper_bar.png','monitor.png','background.png','cancel.png','cancel.png']
-		var friendsImages = ['1st_blank.png']
-		var buildingImages = ['townhall.png']
-		var panelImages = ['buttons.png']
-		var questsImages = [  "msgBg.png", "wedge.png", "button.png", "msgBaloon.png", "questBaloon.png" , "questBg.png", "buildingPanelBg.png",
+    var self = this
+    var gameElementsImages = ['upper_bar.png','monitor.png','background.png','cancel.png','cancel.png']
+    var friendsImages = ['1st_blank.png']
+    var buildingImages = ['townhall.png']
+    var panelImages = ['buttons.png']
+    var questsImages = [  "msgBg.png", "wedge.png", "button.png", "msgBaloon.png", "questBaloon.png" , "questBg.png", "buildingPanelBg.png",
                           "activeCell.png", "inactiveCell.png", "resources.png", "correct.png", "buildingsBg.png", "wedgesBg.png", 
                           'button.png','cursor.png',"social.png", "civil.png", "military.png", "circles.png", "hover.png", "animated_circles.gif", 
                           "line.png", "townhall_info.png", "quarry_info.png", "lumbermill_info.png",
                           "defense_center_info.png", "war_factory_info.png", "house_info.png", 
                           "storage_info.png", "wedge_info.png", "gaddafi_info.png"];
-													
-		new Loader().load([{images : gameElementsImages, path: 'images/game_elements/', store: 'game_elements'},
+											
+    new Loader().load([{images : gameElementsImages, path: 'images/game_elements/', store: 'game_elements'},
                        {images : friendsImages, path: 'images/friends/', store: 'friends'},
-											 {images : questsImages, path: 'images/quests/', store: 'quests'},
-											 {images : panelImages, path: 'images/buildings/panel/', store: 'panel'},
-											 {images : buildingImages, path: 'images/buildings/', store: 'buildings'}
-			                ],
+									     {images : questsImages, path: 'images/quests/', store: 'quests'},
+									     {images : panelImages, path: 'images/buildings/panel/', store: 'panel'},
+									     {images : buildingImages, path: 'images/buildings/', store: 'buildings'}
+	                    ],
                       {
                         onProgress : function(progress){
                 					$$('#inProgress #loadingBarFill')[0].style.width = Math.min(progress,88)+"%"
-  				              },
-				                onFinish: function(){
-					                $('gameContainer').innerHTML = game.templatesManager.load("gameElements");
-					                Map.initializeMapSize()
-					                self.questsManager = new QuestsManager(self);
+			                  },
+		                    onFinish: function(){
+			                    $('gameContainer').innerHTML = game.templatesManager.load("gameElements");
+			                    Map.initializeMapSize()
+			                    self.questsManager = new QuestsManager(self);
                           self.domConverter = new DomConverter();
-					                $('inProgress').hide()
-					                $('gameContainer').show()
-					                game.start()
-    	                  }
+			                    $('inProgress').hide()
+			                    $('gameContainer').show()
+			                    game.start()
+	                      }
                       });
 	},
 	
