@@ -1,4 +1,4 @@
-WeaponDisplay = Class.create( Display, {
+SlingshotDisplay = Class.create( Display, {
 
   animated : false,
 
@@ -23,10 +23,11 @@ WeaponDisplay = Class.create( Display, {
     this.manageStateChange();
     this.owner.game.scene.pushAnimation(this);
     this.owner.rock.display = new RockDisplay(this.owner.rock, properties, this.container);
+    this.id = parseInt(Math.random() * 10000);
   },
 
   createSprites : function(){
-    this.faceImg = Loader.images.buildings['wedge_face.png'];
+    this.faceImg = Loader.images.buildings[this.owner.owner.name + '_face.png'];
     this.weaponImg = Loader.images.weapons[this.owner.name + ".png"];
     this.sprites.face = this.container.newDomImgSprite(this.owner, {img: this.faceImg});
     this.sprites.weapon = this.container.newDomImgSprite(this.owner, {img: this.weaponImg});
@@ -54,21 +55,27 @@ WeaponDisplay = Class.create( Display, {
   },
 
   render : function() {
-    this.owner.rock.display.render();
     this.sprites.weapon.setZIndex(this.displayPriority[this.owner.angle]);
     for(var sprite in this.sprites){
       this.sprites[sprite].render();
     }
+    this.owner.rock.display.render();
+    this.registerAnimation();
+  },
+
+  registerAnimation : function() {
     if(this.owner.attacked == true && this.animated == false)
     {
       this.animated = true;
       var self = this
   	  Sounds.play(Sounds.gameSounds.slingshot)
       condition = function(){
-        return ( self.sprites.weapon.currentAnimationFrame == self.sprites.weapon.noOfAnimationFrames -1 || self.owner.attacked == false); 
+        var status = (self.sprites.weapon.currentAnimationFrame == self.sprites.weapon.noOfAnimationFrames-1);
+        return (status); 
       }
       mainFunc = function(){
         self.sprites.weapon.currentAnimationFrame += 1;
+        console.log("Weapon Render :: ", self.owner.id, self.sprites.weapon.currentAnimationFrame);
         self.owner.rock.display.animate();
       } 
       callback = function(){
@@ -76,8 +83,8 @@ WeaponDisplay = Class.create( Display, {
         self.animated = false;
         self.owner.rock.display.stopAnimation();
       }
-      this.owner.game.reactor.pushPeriodicalWithCondition(2 , mainFunc, condition, callback)
-    }
-  },
+      this.owner.game.reactor.pushPeriodicalWithCondition(1 , mainFunc, condition, callback);
+    }    
+  }
 
 });

@@ -88,4 +88,19 @@ label
   margin-bottom : 5px;
   display : block;
 }
-
+.success {
+  background-color: #66CC00;
+  border: 1px solid;
+  border-radius: 10px 10px 10px 10px;
+  display: inline-block;
+  margin-top: 5px;
+  padding: 5px;
+}
+.error {
+  background-color: #FFF8F6;
+  border: 1px solid;
+  border-radius: 10px 10px 10px 10px;
+  display: inline-block;
+  margin-top: 5px;
+  padding: 5px;
+}

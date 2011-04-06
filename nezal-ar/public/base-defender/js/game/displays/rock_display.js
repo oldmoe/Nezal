@@ -60,9 +60,10 @@ var MovingRock = Class.create({
     this.coords.y = this.owner.coords.y + this.owner.position2[this.owner.owner.angle].y + this.extraYStep - this.owner.owner.imgHeight/2 + this.imgHeight/2;
     this.attacker = null;
     var self = this;
-    this.owner.game.scene.push(this);
     this.rockImg = Loader.images.weapons["rock.png"];
     this.display =  new DomImgSprite(this, {img: this.rockImg});
+    this.id = parseInt(Math.random() * 10000);
+    this.tick();
   },
 
   tick : function() {
@@ -83,8 +84,11 @@ var MovingRock = Class.create({
         this.extraYStep = targetY - this.coords.y
       this.coords.x = this.coords.x + this.extraXStep;
       this.coords.y = this.coords.y + this.extraYStep;
+      this.display.render();
+      console.log("Rock Tich ", this.id, " :: ", this.coords.x, " :: ", this.coords.y, " :: ", targetX, " :: ", targetY)
       if(this.coords.x == targetX && this.coords.y == targetY )
       {
+        console.log("FIREEEEEEEEEE  ", this.id)
         this.owner.owner.fire();
         this.destroy();
       }
@@ -96,7 +100,6 @@ var MovingRock = Class.create({
   destroy : function() {
     this.attacker = null;
     this.display.destroy();
-    this.owner.game.scene.remove(this);
     this.owner.display.movingRocks.remove(this);
   }
     
@@ -104,7 +107,7 @@ var MovingRock = Class.create({
 
 var RockDisplay = Class.create( Display, {
 
-  moveSteps : 2,
+  moveSteps : 4,
 
   initialize : function($super,owner,properties, container){
 	  $super(owner,properties)
@@ -132,7 +135,7 @@ var RockDisplay = Class.create( Display, {
 		}
     for(var i = 0; i< this.movingRocks.length; i++)
     {
-      this.movingRocks[i].display.render();
+      this.movingRocks[i].tick();
     }
   },
 
@@ -146,10 +149,7 @@ var RockDisplay = Class.create( Display, {
       rock.display.show();
     }
     if(this.currentMove == 8)
-    {
       this.currentMove = 0;
-      this.sprites.rock.show();
-    }
   },
 
   stopAnimation : function(){

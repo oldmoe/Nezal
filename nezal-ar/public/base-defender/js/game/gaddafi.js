@@ -1,4 +1,4 @@
-var Wedge = Class.create(Building, {
+var Gaddafi = Class.create(Building, {
   
   weapon : null,
 

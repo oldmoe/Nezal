@@ -1,4 +1,4 @@
-<LABEL for="new_game">Add New Building</LABEL>
+<!--LABEL class="label" for="new_game">Add New Building</LABEL>
 <form id="new_building" action="/<%=AdminController::ADMIN_URL%>/<%=@game.name%>/metadata" method="post" enctype="multipart/form-data">
   <input type="hidden" name="_method" value="put"/>
   <div class="form_row">  
@@ -8,21 +8,68 @@
   <div class="form_row">
     <LABEL for="max_buildings">Maximum Allowed Buildings</LABEL>
 	  <textarea name='max_buildings' type="text"></textarea>  
-  </div>	  
-  <div class="form_row">
+  </div>
+ 
     <input type="submit" value="Save" class="submit"/>
   </div>
-</form> 
+</form--> 
 
-<% @game.metadata.each_pair do | key, val | %>
-  <div class="game">
-    <div>   
-      <%= key %>
-      <br/>
-      <% @game.metadata[key].each_key do | key | %>
-        <%= key %>
-        <br/>
-      <% end %>
-    </div>
-  </div>
-<% end %>
+<script type='text/javascript'>
+  deleteAllUserProfiles = function(){
+    new Ajax.Request('/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/user_game_profiles', {
+      method: 'put',
+      onSuccess: function(response){
+        $('requestStatus').innerHTML = "Deleted successfully"
+        $('requestStatus').className = "success"
+      },
+      onFailure: function(response){
+        $('requestStatus').innerHTML = "Error, cannot delete!"
+        $('requestStatus').className = "error"
+      }
+    })
+  };    
+</script>
+
+<button onclick="if(confirm('Delete ALL user game profiles? ( can not delete more than 50 )')) deleteAllUserProfiles();"> Delete ALL user game profiles </button>
+ We currently have <%= UserGameProfile.count %> Player(s)
+ <br/>
+ <span id="requestStatus"></span>
+
+<div class="game">
+  <% game_element = "buildings" %>
+  <% @game.metadata[game_element].each_key do | building_name | %>
+    <label style="font-size: 20px; color:orange;"><%= building_name.capitalize %></label>
+	  <% if @game.metadata[game_element][building_name]["levels"].present? %>
+		  <div id="<%=building_name%>">
+        <% @game.metadata[game_element][building_name]["levels"].each_key do |level|%>
+          <% if level != "0" %>
+  				  <a href="edit/building/<%= building_name %>/level/<%=level%>">Level <%= level %></a>
+            <% if level == (@game.metadata[game_element][building_name]["levels"].size-1).to_s && level != "1" %>
+    			    <form id="delete_level_<%=level%>" 
+                    action="/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/building/<%=building_name%>/level/<%=level%>" 
+                    method="POST" 
+                    style="display:inline">
+                          <input type="hidden" name="_method" value="put"/>
+                          <a style="margin-left: 25px;" 
+                             href="javascript:void(0)" 
+                             onclick="if(confirm('Delete <%=building_name%> level <%=level%>?')) $('delete_level_<%=level%>').submit(); return false;" 
+                             class="submit_links"> Delete </a>
+              </form>
+            <% end %> 
+  				  <br/>
+          <% end %>
+			  <%end%>
+  		  <form id="add_<%=building_name%>_level" 
+              action="/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/building/<%=building_name%>/level/new" 
+              method="POST" 
+              style="display:inline">
+                  <input type="hidden" name="_method" value="post"/>
+                  <a href="javascript:void(0)" 
+                     onclick="$('add_<%=building_name%>_level').submit(); return false;" 
+                     class="submit_links"> Add next level </a>
+        </form> 
+	    </div>
+	  <% end %>
+    <br/>
+  <% end %>
+</div>
