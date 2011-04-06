@@ -58,7 +58,7 @@ var Game = Class.create({
   initializeGame : function(){
 		var self = this
 		var gameElementsImages = ['upper_bar.png','monitor.png','background.png','cancel.png','cancel.png']
-		var friendsImages = ['1st_blank.png']
+		var friendsImages = ['1st_blank.png', 'bar.png']
 		var buildingImages = ['townhall.png']
 		var panelImages = ['buttons.png']
 		var questsImages = [  "msgBg.png", "wedge.png", "button.png", "msgBaloon.png", "questBaloon.png" , "questBg.png", "buildingPanelBg.png",
@@ -76,6 +76,7 @@ var Game = Class.create({
 				},
 				onFinish: function(){
 					$('gameContainer').innerHTML = game.templatesManager.load("gameElements");
+					self.addLoadedImagesToDiv('gameContainer')
 					Map.initializeMapSize()
 					self.questsManager = new QuestsManager(self);
           self.domConverter = new DomConverter();
@@ -167,6 +168,7 @@ var Game = Class.create({
 											 {images : buildingModeImages, path: 'images/buildings/', store: 'buildingModes'},
 											 {images : iconsImages, path: 'images/icons/', store: 'icons'},
 										 	 {images : workerImages, path: 'images/worker/', store: 'worker'},
+											 {images : questsImages, path: 'images/quests/', store: 'quests'},
 											 {images : creepsImages, path: 'images/creeps/', store: 'creeps'},
                        {images : smokeImages, path: 'images/', store: 'smoke'},
 											 {images : buildingOutlineImages, path: 'images/buildings/outlines/', store: 'buildingOutlines'},
@@ -253,18 +255,30 @@ var Game = Class.create({
 		for(var i=0;i<imgPath.length;i++){
 		   imgPart = imgPart[imgPath[i]]
 		}
+		console.log(imgPart)
 		imgSpan.appendChild(imgPart)
 	})
   },
   
    addLoadedImagesToDiv : function(divId){
-  	$$(divId+'.loadedImg').each(function(imgSpan){
-		var imgPath = imgSpan.id.split('/')
+  	$$('#'+divId+' .loadedImg').each(function(imgSpan){
+		var classes = null
+		if(imgSpan.getAttribute('imgClasses')){
+			var classes = imgSpan.getAttribute('imgClasses').split('-')
+		}
+		var imgPath = imgSpan.getAttribute('imgSrc').split('/')
 		var imgPart = Loader
 		for(var i=0;i<imgPath.length;i++){
 		   imgPart = imgPart[imgPath[i]]
 		}
-		imgSpan.appendChild(imgPart)
+		var img = imgPart.clone()
+		if (classes) {
+			for (var i = 0; i < classes.length; i++) {
+				img.addClassName(classes[i])
+			}
+		}
+		if(imgSpan.getAttribute('imgId')) img.id = imgSpan.getAttribute('imgId')
+		imgSpan.appendChild(img)
 	})
   }
 });

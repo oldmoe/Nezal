@@ -18,6 +18,8 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
     createSprites : function($super){
       $super()
       this.sprites.health.shiftY = 20;
+	  this.sprites.clickSprite.shiftY = 30
+	  this.sprites.clickSprite.setImgHeight(135)
     },
     
     renderPanel : function($super){

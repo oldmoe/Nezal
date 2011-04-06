@@ -35,7 +35,7 @@ var BuildingDisplay = Class.create(Display, {
     this.sprites.base = new DomImgSprite(this.owner, {img : this.baseImg}, {shiftY: this.zdim, divClass: "buildingBase"});
     this.sprites.invalid = new DomImgSprite(this.owner, {img : this.invalidImg}, {shiftY: this.zdim});
     this.sprites.shadow = new DomImgSprite(this.owner, {img: this.shadowImg, width:this.shadowImg.width,
-    height:this.shadowImg.height});
+    height:this.shadowImg.height, zIndex :1});
     this.sprites.outline = new DomImgSprite(this.owner, {img: this.outlineImg});
     this.sprites.health = new DomHealthSprite(this.owner)
     this.sprites.shadow.shiftX = this.imgWidth - this.shadowImg.width
@@ -149,6 +149,7 @@ var BuildingDisplay = Class.create(Display, {
   renderPanelButtons : function(){
     var owner = this.owner;
     $('panel-buttons-container').innerHTML = this.game.templatesManager.load("upgrade-button");
+	this.owner.game.addLoadedImagesToDiv('panel-buttons-container')
     $('upgrade_trigger').stopObserving('click');
     if (!owner.isValidToUpgrade(true)) {
       $('upgrade_trigger').select("img")[0].setStyle({marginTop : "-75px"});

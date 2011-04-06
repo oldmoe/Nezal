@@ -19,6 +19,7 @@ var BuildingsManager = Class.create({
       buildings[i] = this.game.data.buildings[i]['levels'][1];
     }
     $('buildingDisplay').innerHTML = this.game.templatesManager.buildingsPanel(buildings);
+	this.game.addLoadedImagesToDiv('buildingDisplay')
     var disabled = params['disabled'] || [];
 //    disabled.each(function(item){
 //                      $$('#buildingsPanel #' + item + ' .itemData')[0].onclick=function(){}

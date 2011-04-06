@@ -3,10 +3,19 @@
     <span class="">${remainingTime}</span>
 </textarea>
 <textarea id="townhall-panel">
-    {if building.inProgress()}
+    {if buildingInProgress}
       <span class="building-in-progress">Building in progress</span>
     {else}
       <div class="building-functions">
+        <div id="townhall-hire-worker">
+          <span style="font-size: 14px;">Train a worker</span>
+          <button id="buy_worker_trigger" style="margin-left: 5px;">
+              +
+          </button>
+          <span>for</span>
+          <span>${coins}</span>
+          <img style="width: 19px;" src="images/icons/coins.png">
+        </div>
       </div>
     {/if}
 </textarea>
@@ -16,6 +25,12 @@
       <span class="building-in-progress">Building in progress</span>
     {else}
       <div class="building-functions">
+          <div id="lumbermill-assign-worker">
+              <span style="">Assign</span>
+              <button id="assign_worker_trigger" style="margin-left: 5px;">
+                  +
+              </button>
+          </div>
           <span class="desc">
             workers: ${building.assignedWorkers}/${building.maxWorkers}
           </span>
@@ -24,7 +39,7 @@
 </textarea>
 
 <textarea id="resource-amount-display">
-  ${amount}
+  ${amount} <!--span title="+${resourcePerMinute} per minute">(+${resourcePerMinute})</span-->
 </textarea>
 
 <textarea id="quarry-panel">
@@ -32,9 +47,24 @@
       <span class="building-in-progress">Building in progress</span>
     {else}
       <div class="building-functions">
-        <span class="desc">
-          workers: ${building.assignedWorkers}/${building.maxWorkers}
-        </span>
+          <div id="quarry-assign-worker">
+              <span style="">Assign</span>
+              <button id="assign_worker_trigger" style="margin-left: 5px;">
+                  +
+              </button>
+          </div>
+          <span class="desc">
+            workers: ${building.assignedWorkers}/${building.maxWorkers}
+          </span>
+          <div id="quarry-collect">
+              <span style="">Collect</span>
+              <button id="collect_resources_trigger" style="margin-left: 5px;">
+                  +
+              </button>
+          </div>
+          <span class="desc">
+            ${building.resource()}
+          </span>
       </div>
     {/if}
 </textarea>
@@ -48,7 +78,7 @@
 </textarea>
 <textarea id="notification">
   <div class="notification_message_container">
-    <span>${notificationMessage}</span>
+    <span>${notification_message}</span>
     <button id="${id}" class="notification_ok">OK</button>
   </div>
 </textarea>
@@ -111,39 +141,39 @@
 
 <textarea style="display:none;" id='gameElements'>
  			<div class="topGameElement" id="rock_game_element">
-        <span class="loadedImg" imgSrc ="images/game_elements/upper_bar.png"></span>
+        <img src="${Loader.images.game_elements['upper_bar.png'].src}" />
         <span id="rock-amount" ></span>
       </div>
       <div class="topGameElement" id="lumber_game_element">
-        <span class="loadedImg" imgSrc ="images/game_elements/upper_bar.png"></span>
+        <img src="${Loader.images.game_elements['upper_bar.png'].src}" />
         <span id="lumber-amount" ></span>
       </div>
       
       <div class="topGameElement" id="xp_bar">
-        <span class="loadedImg" imgSrc ="images/game_elements/upper_bar.png"></span>
+        <img src="${Loader.images.game_elements['upper_bar.png'].src}" />
       </div>
       
 	  	<div class="topGameElement" id="coins_game_element">
-	  		<span class="loadedImg" imgSrc ="images/game_elements/upper_bar.png"></span>
+	  		<img src="${Loader.images.game_elements['upper_bar.png'].src}" />
 				<span id="coins-amount" ></span>
 	  	</div>
 			<div class="topGameElement" id="workers_game_element">
-				<span class="loadedImg" imgSrc ="images/game_elements/upper_bar.png"></span>
+				<img src="${Loader.images.game_elements['upper_bar.png'].src}" />
 				<span id="workers-amount" ></span>
 			</div>
 			
 			<div class="gameElement" id="monitor" style="display:none;">
-				<span class="loadedImg" imgSrc ="images/game_elements/monitor.png"></span>
+				<img src="${Loader.images.game_elements['monitor.png'].src}" />
 			</div>
 			
-			<div  class="gameElement" id="monitorGlass" style="display:none;"></div>
-			<div  class="gameElement" id="monitorButton" style="display:none;"></div>
+			<div style="display:none;" class="gameElement" id="monitorGlass"></div>
+			<div style="display:none;" class="gameElement" id="monitorButton"></div>
 			
 	    <div class="gameElement" id="cancelBuilding" style="display:none;">
-			<span class="loadedImg" imgSrc ="images/game_elements/cancel.png"></span>
-		</div>
+	    		<img src="${Loader.images.game_elements['cancel.png'].src}" />
+			</div>
 			 <div id="mapView">
-		<span class="loadedImg" imgSrc ="images/friends/bar.png"></span>
+			 	<img id="friendsBackground" src="images/friends/bar.png">
         <div id="friends">
           <div class="left">
             <img src="" />
@@ -157,7 +187,7 @@
           </div>
         </div>
         <div id="home" onclick="Javascript:game.reInitialize(function(){game.scene.render()})">
-          <span class="loadedImg" imgSrc ="images/friends/1st_blank.png"></span>
+          <img src="${Loader.images.friends['1st_blank.png'].src}" />
           <div class="photoContainer">
             <img class='photo' src="${Loader.images.buildings['townhall.png'].src}"/>
           </div>	
@@ -178,14 +208,21 @@
         <div id="panel-buttons-container"></div>
         <div id="building-panel-contents"></div>
       </div>
+      
+      <div id="establish-townhall-container" style="display:none;">
+        <span>Establish your town</span>
+        <div id="establish-townhall">
+          <img id="establish-townhall-img" src="${Loader.images.buildings['townhall.png'].src}"></img>
+        </div>
+      </div>
 
       <div id="buildButton" style="display:none;">
-	  <span class="loadedImg" imgSrc ="images/quests/button.png"></span>
+        <img src="${Loader.images.quests['button.png'].src}"/>
         <div id="buildText" class="yellowText"> build </div>
       </div>
       
       <div id="sendAttack">
-        <span class="loadedImg" imgSrc ="images/quests/button.png"></span>
+        <img src="${Loader.images.quests['button.png'].src}"/>
         <div id="sendAttackText" class="yellowText"> attack me </div>
       </div>
       
@@ -198,12 +235,12 @@
 				<div id="notify" style="display:none;"> </div>
       </div>
       <div id="reset" class="resetAccount">
-        <span class="loadedImg" imgSrc ="images/quests/button.png"></span>
+        <img src="${Loader.images.quests['button.png'].src}"/>
         <div id="resetText" class="yellowText" onclick="game.network.resetEmpire();"> Reset </div>
       </div>
       
       <div id="hand" style="display:none;position:absolute;z-index:11;">
-        <span class="loadedImg" imgSrc ="images/quests/cursor.png"></span>
+        <img src="${Loader.images.quests['cursor.png'].src}"></img>
       </div>
 			
 </textarea>
@@ -220,14 +257,9 @@
     <span>Collect</span>
     <img src="${Loader.images.panel['buttons.png'].src}">
   </div>
-  <div class="panel-button" id="assign_worker_trigger">
-    <span>worker</span>
-    <img src="${Loader.images.panel['buttons.png'].src}">
-  </div>
 </textarea>
 
 <textarea style="display:none;" id='loadingScreen'>
-  <div id="intro">
 	    <img id="logo" src="${Loader.images.loading['logo.png'].src}"/>
 		  <div id="loadingBarEmpty">
 	  	  <div id="loadingBarLeft"> </div>
@@ -236,5 +268,4 @@
 	 		</div>
   		<div id="fileName"> </div>
   		<div id="loadingPercentage"> </div>
-  </div>
 </textarea>

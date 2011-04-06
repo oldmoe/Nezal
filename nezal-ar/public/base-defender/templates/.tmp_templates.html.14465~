@@ -1,0 +1,159 @@
+<!-- Note that every template id is appended by "-template" when the templateManager.js load this file -->
+<textarea id="building-remaining-time">
+    <span class="">${remainingTime}</span>
+</textarea>
+<textarea id="townhall-panel">
+    <div class="building-presentation">
+        <span>Townhall</span>
+        <div class="building-presentation-crop">
+          <img src="images/buildings/townhall.png"></img>
+        </div>
+    </div>{if buildingInProgress}<span class="building-in-progress">Building in progress</span>
+    {else}
+    <div class="building-functions">
+        <div id="townhall-hire-worker">
+            <span>Train a worker</span>
+            <button id="buy_worker_trigger">
+                +
+            </button>
+            <span>for</span>
+            <span>${coins}</span>
+            <img style="width: 19px;" src="images/icons/coins.png">
+        </div>
+        <div id="townhall-upgrade">
+            <span>Upgrade </span>
+            <button id="upgrade_trigger">
+                +
+            </button>
+            <span>for</span>
+            <span>${coins}</span>
+            <img style="width: 19px;" src="images/icons/coins.png">
+        </div>
+        <div id="townhall-build-new-building">
+            <div id="build-quarry" class="townhall-new-building">
+                <img class="icon" src="images/buildings/quarry.png">
+                </img><span>Quarry</span>
+            </div>
+            <div id="build-lumbermill" class="townhall-new-building">
+                <img class="icon" src="images/buildings/lumbermill.png">
+                </img><span class="new-building-name">Lumbermill</span>
+            </div>
+						<div id="build-storage" class="townhall-new-building">
+                <img class="icon" src="images/buildings/storage.png">
+                </img><span class="new-building-name">Storage</span>
+            </div>
+						<div id="build-defense_center" class="townhall-new-building">
+                <img class="icon" src="images/buildings/defense_center.png">
+                </img><span class="new-building-name">Defense Center</span>
+            </div>
+        </div>
+    </div>
+    {/if}
+</textarea>
+
+<textarea id="lumbermill-panel">
+    <div class="building-presentation">
+        <span>Lumbermill</span>
+        <img src="images/buildings/lumbermill.png">
+        </img>
+    </div>
+    {if building.inProgress()}
+    <span class="building-in-progress">Building in progress</span>
+    {else}
+    <div class="building-functions">
+        <div id="lumbermill-assign-worker">
+            <span style="">Assign a worker</span>
+            <button id="assign_worker_trigger" style="margin-left: 5px;">
+                +
+            </button>
+        </div>
+        <span class="desc">
+          Collection workers : ${building.assignedWorkers} / ${building.maxWorkers}
+        </span>
+        <div id="lumbermill-collect">
+            <span style="">Collect Lumber</span>
+            <button id="collect_resources_trigger" style="margin-left: 5px;">
+                +
+            </button>
+        </div>
+        <span class="desc">
+          Lumber : ${building.resource()}
+        </span>
+        <div id="lumbermill-upgrade">
+            <span style="">Upgrade Building</span>
+            <button id="upgrade_trigger" style="margin-left: 5px;">
+                +
+            </button>
+        </div>
+    </div>
+    {/if}
+</textarea>
+
+<textarea id="resource-amount-display">
+  ${amount} <!--span title="+${resourcePerMinute} per minute">(+${resourcePerMinute})</span-->
+</textarea>
+
+<textarea id="quarry-panel">
+    <div class="building-presentation">
+        <span>Quarry</span>
+        <img src="images/buildings/quarry.png">
+        </img>
+    </div>
+    {if building.inProgress()}
+    <span class="building-in-progress">Building in progress</span>
+    {else}
+    <div class="building-functions">
+        <div id="quarry-assign-worker">
+            <span style="">Assign a worker</span>
+            <button id="assign_worker_trigger" style="margin-left: 5px;">
+                +
+            </button>
+        </div>
+        <span class="desc">
+          Collection workers : ${building.assignedWorkers} / ${building.maxWorkers}
+        </span>
+        <div id="quarry-collect">
+            <span style="">Collect Rock</span>
+            <button id="collect_resources_trigger" style="margin-left: 5px;">
+                +
+            </button>
+        </div>
+        <span class="desc">
+          Rock : ${building.resource()}
+        </span>
+        <div id="quarry-upgrade">
+            <span style="">Upgrade Building</span>
+            <button id="upgrade_trigger" style="margin-left: 5px;">
+                +
+            </button>
+        </div>
+    </div>
+    {/if}
+</textarea>
+
+<textarea id="friend-record">
+  <li title='Visit' class='friend' onclick="Javascript:game.loadUserEmpire(${friendId})">
+    <img src="images/friends/1st_blank.png" />
+    <img class='photo' src='http://graph.facebook.com/${serviceId}/picture' />	
+    <div class='name' >${friendName.split(' ')[0]}</div>
+  </li>
+</textarea>
+<textarea id="notification">
+  <div class="notification_message_container">
+    <span>${notification_message}</span>
+    <button id="${id}" class="notification_ok">OK</button>
+  </div>
+</textarea>
+
+<textarea style="display:none;" id='progress'>
+     <div class='progressBarContainer'>
+       <div class='progressBar'>
+       </div>
+     </div>
+     <div class='progressTime'></div>
+</textarea>
+
+<textarea style="display:none;" id='workers-in-game-panel'>
+     <span id="idleWorkersGameElement">${idleWorkers}</span> / <span id="totalWorkersGameElement">${totalWorkers}</span>
+</textarea>
+
