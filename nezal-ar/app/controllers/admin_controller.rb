@@ -40,6 +40,14 @@ class AdminController < ApplicationController
     erb "#{@app_configs['game_name']}/show".to_sym , {:layout => :app}
   end
   
+  # Serve the game metadata edit metadata of specific buildings
+  get '/:game_name/metadata/edit/building/:name/level/:level' do 
+    @game = Game.find_by_name(params[:game_name])
+	@building_name = params[:name]
+    @level = params[:level]
+	erb "#{@app_configs['game_name']}/building".to_sym , {:layout => :app}
+  end
+  
   # Serve the game object metadata
   get '/:game_name/metadata' do 
     @game = Game.find_by_name(params[:game_name])
@@ -48,7 +56,7 @@ class AdminController < ApplicationController
   end
   
   # Edit game metadata 
-  put '/:game_name/metadata' do 
+  put '/:game_name/metadata' do
     @game = Game.find_by_name(params[:game_name])
     klass = self.get_helper_klass
     data = params["data"] 
@@ -63,6 +71,14 @@ class AdminController < ApplicationController
     @game.ranks << Rank.new({:name => params["name"], :lower_exp => params["lower_exp"], :upper_exp => params["upper_exp"]})
     @game.save
     redirect "/#{ADMIN_URL}/#{@game.name}"
+  end
+  
+  # Delete all user game profiles
+  # DANGEROUS METHOD !!!!!!!!!!!
+  put '/:game_id/user_game_profiles' do
+    if( UserGameProfile.count < 50 )
+      UserGameProfile.delete_all(["game_id = ?", Game.find_by_name(params[:game_id])])
+    end
   end
   
   # Delete a rank
@@ -96,7 +112,33 @@ class AdminController < ApplicationController
     @game.save
     redirect "/#{ADMIN_URL}/#{@game.name}"
   end
-
+  
+  # Delete a level
+  put '/:game_name/building/:building_name/level/:level' do
+    @game = Game.where(:name => params["game_name"]).first
+    @building_name = params[:building_name]
+    @level = params[:level]
+    
+    # Get yr building hash, make sure there is a building with that name &  is has levels, then delete the required level
+    building = @game.metadata['buildings'][@building_name]
+    if building && building['levels']
+       building['levels'].delete(@level)
+    end
+    @game.save
+    redirect "/#{ADMIN_URL}/#{@game.name}/metadata/edit"
+  end
+  
+  #Add new Level
+  
+  post '/:game_name/building/:building_name/level/new' do
+  	@game = Game.where(:name => params["game_name"]).first 
+  	building = @game.metadata['buildings'][params[:building_name]]
+  	@newLevel = building['levels'].size
+  	building['levels'][@newLevel] = building['levels'][building['levels'].keys.last]
+  	@game.save
+  	redirect "/#{ADMIN_URL}/#{@game.name}/metadata/edit"
+  end
+  
   # Serve the campaign metadata edit page
   get '/:game_name/campaigns/:camp_id/metadata/edit' do 
     @camp = Campaign.find(params["camp_id"])
