@@ -111,39 +111,39 @@
 
 <textarea style="display:none;" id='gameElements'>
  			<div class="topGameElement" id="rock_game_element">
-        <img src="${Loader.images.game_elements['upper_bar.png'].src}" />
+        <span class="loadedImg" imgSrc ="images/game_elements/upper_bar.png"></span>
         <span id="rock-amount" ></span>
       </div>
       <div class="topGameElement" id="lumber_game_element">
-        <img src="${Loader.images.game_elements['upper_bar.png'].src}" />
+        <span class="loadedImg" imgSrc ="images/game_elements/upper_bar.png"></span>
         <span id="lumber-amount" ></span>
       </div>
       
       <div class="topGameElement" id="xp_bar">
-        <img src="${Loader.images.game_elements['upper_bar.png'].src}" />
+        <span class="loadedImg" imgSrc ="images/game_elements/upper_bar.png"></span>
       </div>
       
 	  	<div class="topGameElement" id="coins_game_element">
-	  		<img src="${Loader.images.game_elements['upper_bar.png'].src}" />
+	  		<span class="loadedImg" imgSrc ="images/game_elements/upper_bar.png"></span>
 				<span id="coins-amount" ></span>
 	  	</div>
 			<div class="topGameElement" id="workers_game_element">
-				<img src="${Loader.images.game_elements['upper_bar.png'].src}" />
+				<span class="loadedImg" imgSrc ="images/game_elements/upper_bar.png"></span>
 				<span id="workers-amount" ></span>
 			</div>
 			
 			<div class="gameElement" id="monitor" style="display:none;">
-				<img src="${Loader.images.game_elements['monitor.png'].src}" />
+				<span class="loadedImg" imgSrc ="images/game_elements/monitor.png"></span>
 			</div>
 			
 			<div  class="gameElement" id="monitorGlass" style="display:none;"></div>
 			<div  class="gameElement" id="monitorButton" style="display:none;"></div>
 			
 	    <div class="gameElement" id="cancelBuilding" style="display:none;">
-	    		<img src="${Loader.images.game_elements['cancel.png'].src}" />
-			</div>
+			<span class="loadedImg" imgSrc ="images/game_elements/cancel.png"></span>
+		</div>
 			 <div id="mapView">
-			 	<img id="friendsBackground" src="images/friends/bar.png">
+		<span class="loadedImg" imgSrc ="images/friends/bar.png"></span>
         <div id="friends">
           <div class="left">
             <img src="" />
@@ -157,7 +157,7 @@
           </div>
         </div>
         <div id="home" onclick="Javascript:game.reInitialize(function(){game.scene.render()})">
-          <img src="${Loader.images.friends['1st_blank.png'].src}" />
+          <span class="loadedImg" imgSrc ="images/friends/1st_blank.png"></span>
           <div class="photoContainer">
             <img class='photo' src="${Loader.images.buildings['townhall.png'].src}"/>
           </div>	
@@ -178,21 +178,14 @@
         <div id="panel-buttons-container"></div>
         <div id="building-panel-contents"></div>
       </div>
-      
-      <div id="establish-townhall-container" style="display:none;">
-        <span>Establish your town</span>
-        <div id="establish-townhall">
-          <img id="establish-townhall-img" src="${Loader.images.buildings['townhall.png'].src}"></img>
-        </div>
-      </div>
 
       <div id="buildButton" style="display:none;">
-        <img src="${Loader.images.quests['button.png'].src}"/>
+	  <span class="loadedImg" imgSrc ="images/quests/button.png"></span>
         <div id="buildText" class="yellowText"> build </div>
       </div>
       
       <div id="sendAttack">
-        <img src="${Loader.images.quests['button.png'].src}"/>
+        <span class="loadedImg" imgSrc ="images/quests/button.png"></span>
         <div id="sendAttackText" class="yellowText"> attack me </div>
       </div>
       
@@ -205,12 +198,12 @@
 				<div id="notify" style="display:none;"> </div>
       </div>
       <div id="reset" class="resetAccount">
-        <img src="${Loader.images.quests['button.png'].src}"/>
+        <span class="loadedImg" imgSrc ="images/quests/button.png"></span>
         <div id="resetText" class="yellowText" onclick="game.network.resetEmpire();"> Reset </div>
       </div>
       
       <div id="hand" style="display:none;position:absolute;z-index:11;">
-        <img src="${Loader.images.quests['cursor.png'].src}"></img>
+        <span class="loadedImg" imgSrc ="images/quests/cursor.png"></span>
       </div>
 			
 </textarea>

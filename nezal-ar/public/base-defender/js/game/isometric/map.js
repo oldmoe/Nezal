@@ -442,13 +442,15 @@ var Map={
 		div.observe('mouseover',function(){
 			if (owner.state != owner.states.NOT_PLACED) {
 	  		owner.sprites.outline.show();
-        owner.sprites.info.show();
+	        owner.sprites.info.show();
+			if(owner.sprites.text)owner.sprites.text.show()
 	  	}
 		})
 		div.observe('mouseout',function(){
 			owner.sprites.outline.hide();
 		    owner.sprites.mouseover.hide();
       		owner.sprites.info.hide();
+			if(owner.sprites.text)owner.sprites.text.hide()
 		})
 	},
 //	checkBusyTiles : function(){

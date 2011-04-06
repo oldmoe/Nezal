@@ -24,7 +24,7 @@ var MovingObject = Class.create({
 	 
 	 tick : function(){
 	 		this.tickCounter++
-	 		if(this.movingPath.length>0){
+	 		if(this.movingPath && this.movingPath.length>0){
 			if(this.targetAngle!=this.angle){
 				this.changeAngle();
 				return

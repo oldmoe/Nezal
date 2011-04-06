@@ -52,6 +52,7 @@ var Game = Class.create({
                       {onFinish : function(){
                         $('inProgress').show()
                         $('inProgress').innerHTML = self.templatesManager.load("loadingScreen");
+						self.addLoadedImagesToDiv('inProgress')
                         self.initializeGame()
                       }});
   },
@@ -59,7 +60,7 @@ var Game = Class.create({
   initializeGame : function(){
     var self = this
     var gameElementsImages = ['upper_bar.png','monitor.png','background.png','cancel.png','cancel.png']
-    var friendsImages = ['1st_blank.png']
+    var friendsImages = ['1st_blank.png', 'bar.png']
     var buildingImages = ['townhall.png']
     var panelImages = ['buttons.png']
     var questsImages = [  "msgBg.png", "wedge.png", "button.png", "msgBaloon.png", "questBaloon.png" , "questBg.png", "buildingPanelBg.png",
@@ -81,6 +82,7 @@ var Game = Class.create({
                         },
                         onFinish: function(){
                           $('gameContainer').innerHTML = game.templatesManager.load("gameElements");
+						  self.addLoadedImagesToDiv('gameContainer')
                           Map.initializeMapSize()
                           self.questsManager = new QuestsManager(self);
                           self.domConverter = new DomConverter();
@@ -172,19 +174,19 @@ var Game = Class.create({
     var smokeImages = ["smoke_big.png", "smoke_big.png"]
   
     // Weapons Images 
-    var weaponsImages = ["slingshot.png", "rock.png"]
-    new Loader().load([ {images : BaseDefenderScene.prototype.textures, path: 'images/textures/', store: 'textures'},
-                        {images : buildingImages, path: 'images/buildings/', store: 'buildings'},
-                        {images : buildingModeImages, path: 'images/buildings/', store: 'buildingModes'},
-                        {images : iconsImages, path: 'images/icons/', store: 'icons'},
-                        {images : workerImages, path: 'images/worker/', store: 'worker'},
-                        {images : creepsImages, path: 'images/creeps/', store: 'creeps'},
-                        {images : smokeImages, path: 'images/', store: 'smoke'},
-                        {images : buildingOutlineImages, path: 'images/buildings/outlines/', store: 'buildingOutlines'},
-                        {images : buildingShadowImages, path: 'images/buildings/shadows/', store: 'buildingShadows'},
-                        {images : buildingMovingImages, path: 'images/buildings/moving/', store: 'buildingMoving'},
-                        {images : weaponsImages, path: 'images/weapons/', store: 'weapons'}],
-                     {onFinish : loaderFinishCallback});
+		var weaponsImages = ["slingshot.png", "rock.png"]
+    new Loader().load([{images : BaseDefenderScene.prototype.textures, path: 'images/textures/', store: 'textures'},
+                       {images : buildingImages, path: 'images/buildings/', store: 'buildings'},
+											 {images : buildingModeImages, path: 'images/buildings/', store: 'buildingModes'},
+											 {images : iconsImages, path: 'images/icons/', store: 'icons'},
+										 	 {images : workerImages, path: 'images/worker/', store: 'worker'},
+											 {images : creepsImages, path: 'images/creeps/', store: 'creeps'},
+                       {images : smokeImages, path: 'images/', store: 'smoke'},
+											 {images : buildingOutlineImages, path: 'images/buildings/outlines/', store: 'buildingOutlines'},
+											 {images : buildingShadowImages, path: 'images/buildings/shadows/', store: 'buildingShadows'},
+											 {images : buildingMovingImages, path: 'images/buildings/moving/', store: 'buildingMoving'},
+											 {images : weaponsImages, path: 'images/weapons/', store: 'weapons'}],
+      {onFinish : loaderFinishCallback});
   },
   
   reInitialize : function(callback){
@@ -260,26 +262,32 @@ var Game = Class.create({
     }
   },
 
-  addLoadedImagesToDom : function(){
-    $$('.loadedImg').each(function(imgSpan){
-      var imgPath = imgSpan.id.split('/')
-      var imgPart = Loader
-      for(var i=0;i<imgPath.length;i++){
-         imgPart = imgPart[imgPath[i]]
-      }
-      imgSpan.appendChild(imgPart)
-    })
-  },
   
-  addLoadedImagesToDiv : function(divId){
-    $$(divId+'.loadedImg').each(function(imgSpan){
-      var imgPath = imgSpan.id.split('/')
-      var imgPart = Loader
-      for(var i=0;i<imgPath.length;i++){
-         imgPart = imgPart[imgPath[i]]
-      }
-      imgSpan.appendChild(imgPart)
-    })
+  
+   addLoadedImagesToDiv : function(divId){
+  	$$('#'+divId+' .loadedImg').each(function(imgSpan){
+		var classes = null
+		if(imgSpan.getAttribute('imgClasses')){
+			var classes = imgSpan.getAttribute('imgClasses').split('-')
+		}
+		var imgPath = imgSpan.getAttribute('imgSrc').split('/')
+		var imgPart = Loader
+		for(var i=0;i<imgPath.length;i++){
+		   imgPart = imgPart[imgPath[i]]
+		}
+		var img = imgPart.clone()
+		var parent = imgSpan.parentNode
+		img = parent.insertBefore(img, imgSpan)
+		parent.removeChild(imgSpan)
+		if(imgSpan.getAttribute('imgId')) img.id = imgSpan.getAttribute('imgId')
+		if (classes) {
+			for (var i = 0; i < classes.length; i++) {
+				img.addClassName(classes[i])
+			}
+		}
+		
+		
+	})
   }
 
 });

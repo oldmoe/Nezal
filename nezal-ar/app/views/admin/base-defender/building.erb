@@ -1,0 +1,54 @@
+<script type='text/javascript'>
+  var name = "<%=@building_name%>"
+  var data = <%=JSON.generate(@game.metadata)%>
+  var buildingLevel = data.buildings[name].levels[<%=@level%>]
+  var formRowTemplate = function(attrName, attrValue){
+    var div = document.createElement('div');
+    div.addClassName('form_row');
+    div.innerHTML = '<LABEL for="' + attrName + '">' + attrName + '</LABEL>' +
+                    '<textarea id="' + attrName + '" type="text">' + attrValue + '</textarea>';
+    return div;
+  }
+  var onButtonClick = function(e){
+    $$('#buildingAttributes div textarea').each( function(textarea){
+      if( textarea.id.startsWith("spec_") ){
+        buildingLevel["specs"][textarea.id.split("_")[1]] = parseInt(textarea.value);
+      } else {
+        buildingLevel[textarea.id] = parseInt(textarea.value);
+      }
+    } );
+    new Ajax.Request( '/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/metadata' , {
+                       method : 'put',
+                       parameters : { "data" : JSON.stringify(data) },
+                       onSuccess : function(response){
+                         $('requestStatus').innerHTML = "Saved successfully"
+                         $('requestStatus').className = "success"
+                       },
+                       onFailure : function(response){
+                         $('requestStatus').innerHTML = "Error, your changes are not saved!"
+                         $('requestStatus').className = "error"
+                       }
+                       
+                   });    
+  }
+</script>
+
+<label class="label"><%= @building_name.capitalize %> level <%= @level %></label>
+<div id="buildingAttributes"></div>
+<input type="button" value="Save" class="submit" onClick = "onButtonClick()"/> or 
+<a href='/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/metadata/edit'>Go back</a>
+<br/>
+<span id="requestStatus"></span>
+<script type='text/javascript'>  
+for( attrName in buildingLevel ){
+  var attrValue = buildingLevel[attrName];
+  if( typeof attrValue != "object" )
+    $('buildingAttributes').appendChild( formRowTemplate(attrName, attrValue) );
+  else if( attrName == "specs" ){
+    console.log(attrValue);
+    for (specName in attrValue) {
+      $('buildingAttributes').appendChild(formRowTemplate("spec_" + specName, attrValue[specName]));
+    }
+  }
+}
+</script>
