@@ -70,7 +70,7 @@ module BD
       @angle = 0
       @rocks = []
       @weapon = BaseDefender.adjusted_game_metadata['buildings']['wedge']['levels'][@owner.owner['level'].to_s]['weapon']
-      @specs = BaseDefender.adjusted_game_metadata['weapons'][@weapon]['specs']
+      @specs = BaseDefender.adjusted_game_metadata['buildings']['wedge']['levels'][@owner.owner['level'].to_s]['specs']
       @coords = @owner.owner['coords']
       @animated = false
     end
@@ -79,34 +79,34 @@ module BD
       if(@owner.owner['state'] == BD::Building.states['NORMAL'])
         check_attack()
         if @attacker
+          puts "Weapon Tick :: #{self.__id__}"
           @angle = Map.get_general_direction(@coords['x'], @coords['y'], @attacker.coords['x'], @attacker.coords['y'])
         end 
       end 
     end
 
     def display_tick
-      @rocks.each { |rock| rock.tick }
-      if @attacker || @step > 0
-        if ( @tick == 0 )
-          @step += 1
-          puts "Weapon Render :: #{self.__id__} #{@step}"
-          if @step == 8
-            @step = 0
-            @tick = 0
-            return
-          end
-          if @step == 4
-            rock = BD::Rock.new(self, @attacker)
-            @rocks << rock
-            rock.tick
-          end
-        end
-      elsif @tick == 0
-        @step = 0 
-        @tick = 0
-        return
+      if @attacker == false
+        @step = 0
       end
-      @tick = (@tick + 1 ) % 1
+      if @attacker || @animated == false
+        @animated = true
+      end
+      if @attacker && @animated
+        @step += 1
+#        puts "Weapon Render :: #{self.__id__} #{@step}"
+        if @step == 4
+          rock = BD::Rock.new(self, @attacker)
+          @rocks << rock
+          rock.tick
+        end
+        if @step == 9
+          @step = 0
+          @animated = false
+        end
+
+      end
+      @rocks.each { |rock| rock.tick }
     end
 
     def check_attack()
@@ -142,7 +142,7 @@ module BD
       end
       if @attacker
         @attacker.hp -= @specs['power']
-        puts "========================== Firing ===================== #{@attacker.hp}"
+#        puts "========================== Firing ===================== #{@attacker.hp}"
         @attacker = nil
       end
     end

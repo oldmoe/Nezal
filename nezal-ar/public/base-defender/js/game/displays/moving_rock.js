@@ -1,0 +1,64 @@
+var MovingRock = Class.create({
+    
+  moveRatio : 10,
+  attacker : null,
+  imgHeight : 15,
+  imgWidth : 15,
+  width : 15,
+  height : 15,
+  zdim : 32,
+
+  initialize : function(owner) {
+    this.owner = owner;
+    this.extraXStep = 0;
+    this.extraYStep = 0;
+    this.coords = { x : 0, y : 0};
+    this.coords.x = this.owner.coords.x + this.owner.position2[this.owner.owner.angle].x + this.extraXStep - this.owner.owner.imgWidth/2 + this.imgWidth/2;
+    this.coords.y = this.owner.coords.y + this.owner.position2[this.owner.owner.angle].y + this.extraYStep - this.owner.owner.imgHeight/2 + this.imgHeight/2;
+    this.attacker = null;
+    var self = this;
+    this.rockImg = Loader.images.weapons["rock.png"];
+    this.display =  new DomImgSprite(this, {img: this.rockImg});
+    this.id = parseInt(Math.random() * 10000);
+    this.tick();
+  },
+
+  tick : function() {
+    if(!this.attacker){
+      this.attacker = this.owner.owner.attacker;
+      this.extraXStep = 0;this.coords.x
+      this.extraYStep = 0;
+    }
+    if(this.attacker) {
+      var targetX = this.attacker.coords.x;
+      var targetY = this.attacker.coords.y + this.attacker.imgHeight/8;
+      var move = Util.getNextMove(this.coords.x, this.coords.y, targetX, targetY, 20)
+      this.extraXStep = move[0];
+      this.extraYStep = move[1];
+      if( Math.abs(this.extraXStep) > Math.abs(targetX - this.coords.x))
+        this.extraXStep = targetX - this.coords.x
+      if( Math.abs(this.extraYStep) > Math.abs(targetY - this.coords.y))
+        this.extraYStep = targetY - this.coords.y
+      this.coords.x = this.coords.x + this.extraXStep;
+      this.coords.y = this.coords.y + this.extraYStep;
+      this.display.render();
+//      console.log("Rock Tich ", this.id, " :: ", this.coords.x, " :: ", this.coords.y, " :: ", targetX, " :: ", targetY)
+      if(this.coords.x == targetX && this.coords.y == targetY )
+      {
+//        console.log("FIREEEEEEEEEE  ", this.id)
+        this.owner.owner.fire();
+        this.destroy();
+      }
+    }else {
+      this.destroy();
+    }
+  },
+
+  destroy : function() {
+    this.attacker = null;
+    this.display.destroy();
+    this.owner.display.movingRocks.remove(this);
+  }
+    
+});
+

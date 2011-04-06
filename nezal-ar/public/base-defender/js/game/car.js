@@ -59,7 +59,7 @@ var Car = Class.create(MovingObject,{
 			this.target.setState(this.target.states.NORMAL)
 			this.target = null
 		} 
-    console.log(this.id, " :: ", this.coords.x,this.coords.y, this.hp)
+//    console.log(this.id, " :: ", this.coords.x,this.coords.y, this.hp)
 	},
 		
 	pickTarget : function(){

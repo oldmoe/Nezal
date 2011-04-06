@@ -55,15 +55,41 @@ SlingshotDisplay = Class.create( Display, {
   },
 
   render : function() {
+    this.registerAnimation();
     this.sprites.weapon.setZIndex(this.displayPriority[this.owner.angle]);
     for(var sprite in this.sprites){
       this.sprites[sprite].render();
     }
     this.owner.rock.display.render();
-    this.registerAnimation();
   },
 
   registerAnimation : function() {
+    if(this.owner.attacked == false)
+    {
+      this.sprites.weapon.currentAnimationFrame = 0;
+      this.animated = false;
+      this.owner.rock.display.stopAnimation();
+    }  
+    else if(this.owner.attacked == true && this.animated == false)
+    {
+      this.animated = true;
+      Sounds.play(Sounds.gameSounds.slingshot)
+    }
+    if(this.owner.attacked == true && this.animated == true)
+    {
+      this.sprites.weapon.currentAnimationFrame += 1;
+//      console.log("Weapon Render :: ", this.sprites.weapon.currentAnimationFrame, "  ::  ", this.owner.id);
+      this.owner.rock.display.animate();   	 
+      if(this.sprites.weapon.currentAnimationFrame == this.sprites.weapon.noOfAnimationFrames)
+      {
+        this.sprites.weapon.currentAnimationFrame = 0;
+        this.animated = false;
+        this.owner.rock.display.stopAnimation();
+      }
+    }    
+  }
+
+/*  registerAnimation : function() {
     if(this.owner.attacked == true && this.animated == false)
     {
       this.animated = true;
@@ -85,6 +111,6 @@ SlingshotDisplay = Class.create( Display, {
       }
       this.owner.game.reactor.pushPeriodicalWithCondition(1 , mainFunc, condition, callback);
     }    
-  }
+  }*/
 
 });

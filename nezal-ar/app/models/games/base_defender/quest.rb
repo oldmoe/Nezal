@@ -99,7 +99,6 @@ module BD
           user_game_profile.metadata['quests']['descriptions'][id] = quest.metadata
           user_game_profile.metadata['quests']['descriptions'][id]['status'] = self.status(user_game_profile, quest)
           user_game_profile.metadata['quests']['descriptions'][id]['name'] = quest.name
-          puts user_game_profile.metadata['quests']['descriptions'][id]
         end
       end
       user_game_profile.save

@@ -1,4 +1,5 @@
 var Slingshot = Class.create({
+
   angle : 0,
   targetAngle : 5,
   imgHeight : 93,
@@ -29,6 +30,7 @@ var Slingshot = Class.create({
     {
       this.attacker = this.checkAttack();
       if ( this.attacker ) {
+//        console.log("Weapon Tick :: ", this.id);
         this.attacked = true;
         this.angle = Map.getGeneralDirectoin(this.coords.x, this.coords.y, this.attacker.coords.x, this.attacker.coords.y);
       }else {
@@ -45,7 +47,7 @@ var Slingshot = Class.create({
     var attack = null;
     var minHp = 50000;
     var minDistance = this.specs.range;
-    for( var i = 0 ; i < this.game.creepFactory.registery.length; i++ )
+    for( var i = 0; i < this.game.creepFactory.registery.length; i++ )
     {
       var creep = this.game.creepFactory.registery[i];
       var dist = Util.distance(this.coords.x, this.coords.y, creep.coords.x, creep.coords.y);
@@ -71,7 +73,7 @@ var Slingshot = Class.create({
 		if(this.attacker)
     {
       this.attacker.hp -= this.specs.power;
-      console.log("==================Firing=====================  ", this.attacker.hp)
+//      console.log("==================Firing=====================  ", this.attacker.hp)
     }
     this.attacked = false;      
     this.attacker = null;

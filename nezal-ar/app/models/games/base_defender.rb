@@ -176,8 +176,6 @@ class BaseDefender < Metadata
   def self.initialize_game_metadata( game )
     #Applying Speed Factor!
     @@building_modules.keys.each do |building_name|
-      puts building_name
-      puts game.metadata['buildings'][building_name]
       building_levels = game.metadata['buildings'][building_name]['levels']
       building_levels.keys.each do |level|
         building_levels[level]['time'] /= @@speed_factor
@@ -315,7 +313,6 @@ class BaseDefender < Metadata
       key = self.convert_location(obj.owner['coords'])
       user_game_profile.metadata[obj.name][key]['hp'] = obj.hp
     end
-    weapons.each { |weapon| puts weapon.rock_num }
     return {'valid' => true, 'error' => ''}
   end
   
