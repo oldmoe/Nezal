@@ -285,13 +285,19 @@ class BaseDefender < Metadata
           }
           map_building = BD::MapBuilding.new building, building_name, options
           map.add_element map_building
-          if building_name == "wedge"
+          if @@wedges[building_name]
             weapons << BD::Weapon.new(map_building, creeps.clone)
           end
         end
       end
     end
     done = false
+    weapons.each do |weapon|
+      weapon.tick
+    end
+    weapons.each do |weapon|
+      weapon.display_tick
+    end
     while(!done)
       done = true
       weapons.each do |weapon|

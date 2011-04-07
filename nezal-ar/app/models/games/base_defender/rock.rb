@@ -48,9 +48,8 @@ module BD
         end
         @coords[:x] = @coords[:x] + @extraXStep
         @coords[:y] = @coords[:y] + @extraYStep
-#        puts "Rock tick #{self.__id__}  ::  #{@coords[:x]}  ::  #{@coords[:y]} ::  #{target_x} ::  #{target_y}"
+        puts "Rock tick #{self.__id__}  ::  #{@coords[:x]}  ::  #{@coords[:y]} ::  #{target_x} ::  #{target_y}"
         if(@coords[:x] == target_x && @coords[:y] == target_y )
-#          puts "FIREEEEEEEEEEEEE   #{self.__id__}"
           @owner.fire()
           destroy()
         end

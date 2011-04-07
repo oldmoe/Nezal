@@ -79,7 +79,6 @@ module BD
       if(@owner.owner['state'] == BD::Building.states['NORMAL'])
         check_attack()
         if @attacker
-          puts "Weapon Tick :: #{self.__id__}"
           @angle = Map.get_general_direction(@coords['x'], @coords['y'], @attacker.coords['x'], @attacker.coords['y'])
         end 
       end 
@@ -94,7 +93,6 @@ module BD
       end
       if @attacker && @animated
         @step += 1
-#        puts "Weapon Render :: #{self.__id__} #{@step}"
         if @step == 4
           rock = BD::Rock.new(self, @attacker)
           @rocks << rock
@@ -142,7 +140,7 @@ module BD
       end
       if @attacker
         @attacker.hp -= @specs['power']
-#        puts "========================== Firing ===================== #{@attacker.hp}"
+        puts "========================== Firing ===================== #{@attacker.hp}"
         @attacker = nil
       end
     end

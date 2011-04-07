@@ -95,7 +95,9 @@ var RockDisplay = Class.create( Display, {
 
   hide : function() {
     for(var sprite in this.sprites){
+      console.log('hidden')
 			this.sprites[sprite].hide();
+      console.log('hidden', this.sprites[sprite].div)
 		}
     for(var i = 0; i< this.movingRocks.length; i++)
     {
