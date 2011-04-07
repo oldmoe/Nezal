@@ -3,6 +3,7 @@ var DomTextSprite = Class.create(DomSprite, {
   minZIndex : 10000,  
   initialize : function($super, owner, textAssets, properties){
     $super(owner, textAssets, properties);
+	this.div.style.display = "none"
     this.textAssets = textAssets;
     this.span = $(document.createElement('SPAN'));
     this.div.appendChild(this.span);

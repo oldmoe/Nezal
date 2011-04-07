@@ -54,8 +54,8 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
     
     $('collect_resource_trigger').observe('click', function(){
 	  Sounds.play(Sounds.gameSounds.resource_collection)
+	  owner.game.selectedBuildingPanel.hide();
       owner._CollectResources();
-      owner.game.selectedBuildingPanel.hide();
     });
     
     $('assign_worker_trigger').observe('click', function(){
