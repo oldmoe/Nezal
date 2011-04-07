@@ -42,7 +42,7 @@ var Game = Class.create({
   		this.mouseEndEvent = 'touchend'
   		this.mouseMoveEvent = 'touchmove'
     }
-    soundManager.mute()
+    //soundManager.mute()
   },
 	
   startLoading : function(){
@@ -68,7 +68,7 @@ var Game = Class.create({
                           'button.png','cursor.png',"social.png", "civil.png", "military.png", "circles.png", "hover.png", "animated_circles.gif", 
                           "line.png", "townhall_info.png", "quarry_info.png", "lumbermill_info.png",
                           "defense_center_info.png", "war_factory_info.png", "house_info.png", 
-                          "storage_info.png", "wedge_info.png", "gaddafi_info.png"];
+                          "storage_info.png", "wedge_info.png", "gaddafi_info.png", "resources_needed_for_building.png"];
 											
     new Loader().load([ {images : gameElementsImages, path: 'images/game_elements/', store: 'game_elements'},
                         {images : friendsImages, path: 'images/friends/', store: 'friends'},

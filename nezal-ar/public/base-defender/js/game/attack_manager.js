@@ -41,6 +41,7 @@ var AttackManager = Class.create({
 			this.creepsDone = 0
 			this.attacking = false
 			if(attackSuccess){
+					console.log('!!!!!!!')
 				this.showRepairMsg()
 			}else{
 				this.showDefendCongratsMsg()

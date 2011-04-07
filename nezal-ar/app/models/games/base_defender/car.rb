@@ -1,9 +1,10 @@
 module BD
   class Car < Creep
-    def initialize(map,initial_x, initial_y,id)
+    def initialize(map,initial_x, initial_y,id,game_metadata)
       super(map,initial_x, initial_y)
       @map = map
       @id = id
+      @specs = game_metadata['creeps']['car']
       @map_direction = Map.N  
       @coords = {}
       @coords['x'] = initial_x.to_f
@@ -11,11 +12,11 @@ module BD
       @moving_path = []
       @done_attack = false
       @target_edge = nil
-      @hp = 100.0
+      @hp = @specs['hp']
       @tick_counter =0 
       @range = 4.0
-      @power = 3.0
-      @speed = 3.0
+      @power = @specs['power']
+      @speed = @specs['speed']
       @name = "car"
       @target_located = false
       @target = nil 
