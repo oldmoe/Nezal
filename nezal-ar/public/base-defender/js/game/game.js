@@ -174,7 +174,7 @@ var Game = Class.create({
     var smokeImages = ["smoke_big.png", "smoke_big.png"]
   
     // Weapons Images 
-		var weaponsImages = ["slingshot.png", "rock.png"]
+		var weaponsImages = ["slingshot.png", "rock.png", "green_book.png"]
     new Loader().load([{images : BaseDefenderScene.prototype.textures, path: 'images/textures/', store: 'textures'},
                        {images : buildingImages, path: 'images/buildings/', store: 'buildings'},
 											 {images : buildingModeImages, path: 'images/buildings/', store: 'buildingModes'},

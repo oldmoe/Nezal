@@ -21,7 +21,8 @@ SlingshotDisplay = Class.create( Display, {
     this.sprites.face.render();
     this.sprites.weapon.render();
     this.owner.game.scene.pushAnimation(this);
-    this.owner.rock.display = new RockDisplay(this.owner.rock, properties, this.container);
+    this.shotClass = eval((this.owner.owner.shot + '_display').dasherize().capitalize().camelize())
+    this.owner.shot.display = new this.shotClass(this.owner.shot, properties, this.container);
     this.manageStateChange();
     this.id = parseInt(Math.random() * 10000);
   },
@@ -38,7 +39,7 @@ SlingshotDisplay = Class.create( Display, {
     this.owner.owner.stateNotifications[this.owner.owner.states.NOT_PLACED].push(function(){
       self.sprites.face.hide();
       self.sprites.weapon.hide();
-      self.owner.rock.display.hide();
+      self.owner.shot.display.hide();
     });
     this.owner.owner.stateNotifications[this.owner.owner.states.UNDER_CONSTRUCTION].push(function(){
       self.sprites.face.show()
@@ -60,7 +61,7 @@ SlingshotDisplay = Class.create( Display, {
     for(var sprite in this.sprites){
       this.sprites[sprite].render();
     }
-    this.owner.rock.display.render();
+    this.owner.shot.display.render();
   },
 
   registerAnimation : function() {
@@ -70,7 +71,7 @@ SlingshotDisplay = Class.create( Display, {
       {
         this.sprites.weapon.currentAnimationFrame = 0;
         this.animated = false;
-        this.owner.rock.display.stopAnimation();
+        this.owner.shot.display.stopAnimation();
       }  
       else if(this.owner.attacked == true && this.animated == false)
       {
@@ -80,12 +81,12 @@ SlingshotDisplay = Class.create( Display, {
       if(this.owner.attacked == true && this.animated == true)
       {
         this.sprites.weapon.currentAnimationFrame += 1;
-        this.owner.rock.display.animate();   	 
+        this.owner.shot.display.animate();   	 
         if(this.sprites.weapon.currentAnimationFrame == this.sprites.weapon.noOfAnimationFrames)
         {
           this.sprites.weapon.currentAnimationFrame = 0;
           this.animated = false;
-          this.owner.rock.display.stopAnimation();
+          this.owner.shot.display.stopAnimation();
         }
       }
     }    

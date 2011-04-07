@@ -21,7 +21,8 @@ var Slingshot = Class.create({
     var self = this;
   	this.game.scene.pushPeriodicalRenderLoop(1,1,2,function() {self.randomDirectionChange()});
   	this.game.scene.pushPeriodicalRenderLoop(2,4,1,function() {self.changeAngle()});
-    this.rock = new Rock(this);
+    this.shotClass = eval(this.owner.shot.dasherize().capitalize().camelize())
+    this.shot = new this.shotClass(this);
     this.id = parseInt(Math.random() * 10000);
   },
 

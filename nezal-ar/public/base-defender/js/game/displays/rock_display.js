@@ -50,11 +50,12 @@ var RockDisplay = Class.create( Display, {
     this.container = container;
     this.currentMove = 0;
     this.createSprites();
+    this.movingRockClass = eval(('moving_' + this.owner.owner.owner.shot).dasherize().capitalize().camelize())
   },
 
   createSprites : function() {
     this.movingRocks = [];
-    this.rockImg = Loader.images.weapons["rock.png"];
+    this.rockImg = Loader.images.weapons[this.owner.owner.owner.shot + ".png"];
     this.sprites.rock = this.container.newDomImgSprite(this.owner, {img: this.rockImg});
     this.render();
   },
@@ -80,7 +81,7 @@ var RockDisplay = Class.create( Display, {
     if(this.currentMove == this.moveSteps)
     {
       this.sprites.rock.hide();
-      var rock = new MovingRock(this.owner);
+      var rock = new this.movingRockClass(this.owner);
       this.movingRocks.push(rock);
       rock.display.show();
     }
@@ -95,9 +96,7 @@ var RockDisplay = Class.create( Display, {
 
   hide : function() {
     for(var sprite in this.sprites){
-      console.log('hidden')
 			this.sprites[sprite].hide();
-      console.log('hidden', this.sprites[sprite].div)
 		}
     for(var i = 0; i< this.movingRocks.length; i++)
     {
