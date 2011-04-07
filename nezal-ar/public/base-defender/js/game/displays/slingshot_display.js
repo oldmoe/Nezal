@@ -20,9 +20,9 @@ SlingshotDisplay = Class.create( Display, {
     Object.extend(this.owner,properties)
     this.sprites.face.render();
     this.sprites.weapon.render();
-    this.manageStateChange();
     this.owner.game.scene.pushAnimation(this);
     this.owner.rock.display = new RockDisplay(this.owner.rock, properties, this.container);
+    this.manageStateChange();
     this.id = parseInt(Math.random() * 10000);
   },
 
@@ -64,27 +64,29 @@ SlingshotDisplay = Class.create( Display, {
   },
 
   registerAnimation : function() {
-    if(this.owner.attacked == false)
+    if(this.owner.owner.state == this.owner.owner.states.NORMAL)
     {
-      this.sprites.weapon.currentAnimationFrame = 0;
-      this.animated = false;
-      this.owner.rock.display.stopAnimation();
-    }  
-    else if(this.owner.attacked == true && this.animated == false)
-    {
-      this.animated = true;
-      Sounds.play(Sounds.gameSounds.slingshot)
-    }
-    if(this.owner.attacked == true && this.animated == true)
-    {
-      this.sprites.weapon.currentAnimationFrame += 1;
-//      console.log("Weapon Render :: ", this.sprites.weapon.currentAnimationFrame, "  ::  ", this.owner.id);
-      this.owner.rock.display.animate();   	 
-      if(this.sprites.weapon.currentAnimationFrame == this.sprites.weapon.noOfAnimationFrames)
+      if(this.owner.attacked == false)
       {
         this.sprites.weapon.currentAnimationFrame = 0;
         this.animated = false;
         this.owner.rock.display.stopAnimation();
+      }  
+      else if(this.owner.attacked == true && this.animated == false)
+      {
+        this.animated = true;
+        Sounds.play(Sounds.gameSounds.slingshot)
+      }
+      if(this.owner.attacked == true && this.animated == true)
+      {
+        this.sprites.weapon.currentAnimationFrame += 1;
+        this.owner.rock.display.animate();   	 
+        if(this.sprites.weapon.currentAnimationFrame == this.sprites.weapon.noOfAnimationFrames)
+        {
+          this.sprites.weapon.currentAnimationFrame = 0;
+          this.animated = false;
+          this.owner.rock.display.stopAnimation();
+        }
       }
     }    
   }

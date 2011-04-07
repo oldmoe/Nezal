@@ -30,7 +30,6 @@ var Slingshot = Class.create({
     {
       this.attacker = this.checkAttack();
       if ( this.attacker ) {
-//        console.log("Weapon Tick :: ", this.id);
         this.attacked = true;
         this.angle = Map.getGeneralDirectoin(this.coords.x, this.coords.y, this.attacker.coords.x, this.attacker.coords.y);
       }else {
@@ -73,7 +72,7 @@ var Slingshot = Class.create({
 		if(this.attacker)
     {
       this.attacker.hp -= this.specs.power;
-//      console.log("==================Firing=====================  ", this.attacker.hp)
+      console.log("==================Firing=====================  ", this.attacker.hp)
     }
     this.attacked = false;      
     this.attacker = null;

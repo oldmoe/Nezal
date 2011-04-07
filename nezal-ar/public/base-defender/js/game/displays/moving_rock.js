@@ -42,10 +42,9 @@ var MovingRock = Class.create({
       this.coords.x = this.coords.x + this.extraXStep;
       this.coords.y = this.coords.y + this.extraYStep;
       this.display.render();
-//      console.log("Rock Tich ", this.id, " :: ", this.coords.x, " :: ", this.coords.y, " :: ", targetX, " :: ", targetY)
+      console.log("Rock Tich ", this.id, " :: ", this.coords.x, " :: ", this.coords.y, " :: ", targetX, " :: ", targetY)
       if(this.coords.x == targetX && this.coords.y == targetY )
       {
-//        console.log("FIREEEEEEEEEE  ", this.id)
         this.owner.owner.fire();
         this.destroy();
       }
