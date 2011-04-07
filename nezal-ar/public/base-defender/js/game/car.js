@@ -1,15 +1,20 @@
 var Car = Class.create(MovingObject,{
-	hp:100, range:4, power:3,
-	maxHp : 100,
-	speed : 3, 
+	hp:0, range:0, power:0,
+	maxHp : 0,
+	speed : 0, 
 	tickCounter :0,
 	name: "car",
 	targetLocated : false,
 	mapDirection : Map.N, 
 	done_attack : false,
 	attacked : false,
+	specs : null,
 	initialize : function(game){
 		this.target = null
+		this.specs  = game.data.creeps.car
+		this.hp = this.maxHp =  this.specs.hp
+		this.speed = this.specs.speed
+		this.power = this.specs.power
 		this.hitting = false
 		this.game = game
 		this.coords = {}
@@ -17,7 +22,7 @@ var Car = Class.create(MovingObject,{
 		this.movingPath = []
 		this.startHittingObservers = []
 		this.finishHittingObservers = []
-    this.id = parseInt(Math.random() * 10000);
+    	this.id = parseInt(Math.random() * 10000);
 	},
 	
 	tick : function($super){
@@ -47,7 +52,7 @@ var Car = Class.create(MovingObject,{
 			this.notifyStartHitting()
 			this.angle = Map.getGeneralDirectoin(this.coords.x, this.coords.y, this.target.coords.x, this.target.coords.y);
 			this.target.hp -=this.power
-//      console.log("** Car Firing ** :: ", this.target.id, this.target.hp)
+	//      console.log("** Car Firing ** :: ", this.target.id, this.target.hp)
 			this.attacked = true
 		}else{
 			this.hitting = false

@@ -267,7 +267,7 @@ class BaseDefender < Metadata
     i=0
     creeps_coords.each do |creep|
       creep_class = eval("BD::"+creep['type'])
-      creeps.push(creep_class.new(map,creep['x'],creep['y'],i))
+      creeps.push(creep_class.new(map,creep['x'],creep['y'],i,@@game_metadata))
       i = i+1
     end
     weapons = []
