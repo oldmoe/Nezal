@@ -2,17 +2,21 @@
 
 <textarea style="display:none;" id='welcome'>
   <div id='welcomeMsg' style="display:none;">
-    <img class="background" src="${Loader.images.quests['msgBg.png'].src}"/>
+  <span class="loadedImg" imgClasses="background" imgSrc="images/quests/msgBg.png">
+		  </span>
     <div class="msgBGImgs">
-      <img class="wedge" src="${Loader.images.quests['wedge.png'].src}"/>
-      <img class="bubble" src="${Loader.images.quests['msgBaloon.png'].src}"/>
+    	  <span class="loadedImg" imgClasses="wedge" imgSrc="images/quests/wedge.png">
+		  </span>
+		  <span class="loadedImg" imgClasses="bubble" imgSrc="images/quests/msgBaloon.png">
+		  </span>
     </div>
     <div class="close" onclick="Animation.hide('msg'); game.questsManager.handleQuests();">
     </div>
     <div class="okButtonWrapper">
       <div class="alignDiv"> </div>
       <div class="okButton" onclick="Animation.hide('msg'); game.questsManager.handleQuests();">
-        <img class="okImage" src="${Loader.images.quests['button.png'].src}"/>
+      	 <span class="loadedImg" imgClasses="okImage" imgSrc="images/quests/button.png">
+		  </span>
         <div class="okText yellowText"> OK </div>
       </div>
     </div>
@@ -27,7 +31,8 @@
 
 <textarea style="display:none;" id='quest'>
   <div id='questScreen' style="display:none;">
-    <img class="background" src="${Loader.images.quests['questBg.png'].src}"/>
+     <span class="loadedImg" imgClasses="background" imgSrc="images/quests/questBg.png">
+		  </span>
     <div class="close" onclick="Animation.hide('questDisplay');">
     </div>
     <div class="title">
@@ -40,7 +45,8 @@
           <div class="condition">          
             <div class="image">
               <div class="alignDiv" style="width:30px;"></div>
-              <img src="${Loader.images.icons[building_index+'.png'].src}"/>        
+			  <span class="loadedImg" imgClasses="" imgSrc="images/icons/${building_index+'.png'}">
+		  </span>
             </div>
             <div class="desc">
               <div class="text"> 
@@ -223,7 +229,8 @@
   {for building in buildings}
     <div class="buildingInfo" id="${building_index}_info" style="display:none;">
       <div class="buildingName">${building_index}</div>
-      <img class="resourcesNeeded" src="images/quests/resources_needed_for_building.png"><img>
+	  <span class="loadedImg" imgClasses="resourcesNeeded" imgSrc="images/quests/resources_needed_for_building.png">
+		  </span>
       <div class="cost">
         <div class="text"> 
           {if building['lumber']}
@@ -249,11 +256,17 @@
       </div>
     </div>
   {/for}
-  <img class="buildingPanelBg" src="${Loader.images.quests['buildingPanelBg.png'].src}"/>
-  <img class="wedgesBg" src="${Loader.images.quests['wedgesBg.png'].src}" />
-  <img class="buildingsBg" src="${Loader.images.quests['buildingsBg.png'].src}" />
-  <img class="buildingPanelLine" src="images/quests/line.png"/>
+    <span class="loadedImg" imgClasses="buildingPanelBg" imgSrc="images/quests/buildingPanelBg.png">
+		  </span>
+	<span class="loadedImg" imgClasses="wedgesBg" imgSrc="images/quests/wedgesBg.png">
+		  </span>	  	  
+	<span class="loadedImg" imgClasses="buildingsBg" imgSrc="images/quests/buildingsBg.png">
+	  </span>	  	  
+    <span class="loadedImg" imgClasses="buildingPanelLine" imgSrc="images/quests/line.png">
+	  </span>	  	  
+		 
   <div id="leftArrow" class="leftArrowContainer">
+  	
     <img style="margin-left:0;" src="images/quests/arrows_horizontal.png"/>
    </div>
   <div id="rightArrow" class="rightArrowContainer">

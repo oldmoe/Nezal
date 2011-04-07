@@ -45,10 +45,6 @@ module BD
         @target.hp = 1
         @target = nil
       end
-<<<<<<< HEAD
-      puts "#{self.__id__}  ::  #{self.coords['x']} #{self.coords['y']} #{self.hp}"
-=======
->>>>>>> c4a2f1efcf95a54025e57d2d73162dca8dcb82d6
     end
     
     def pick_target

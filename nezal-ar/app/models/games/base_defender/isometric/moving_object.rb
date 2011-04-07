@@ -23,7 +23,7 @@ module BD
     :no_of_states, :state, :tick_counter, :map, :moving_path, :target_point
     def tick
       @tick_counter= @tick_counter+1 
-      if(@moving_path.length>0)
+      if(!@moving_path.nil? && @moving_path.length>0)
         if(@target_angle!=@angle)
           change_angle()
           return

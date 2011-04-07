@@ -24,18 +24,19 @@ var Building = Class.create({
     this.remainingBuildTime = buildingSpecs.remainingTime;
     this.currentLevelBluePrints = this.factory.bluePrints['levels'][this.level];
     this.nextLevelBluePrints = this.factory.bluePrints['levels'][this.level+1];
-		this.maxHp = this.currentLevelBluePrints.hp
-		if(buildingSpecs.hp!=null)this.hp = buildingSpecs.hp;
-		else{
-			this.hp = this.maxHp;
-		} 
-		if(this.hp<this.maxHp){
-			this.working = false
-			if(!buildingSpecs.started_repairing_at) this.game.attackManager.showRepairMsg()
-		} 
-		if(buildingSpecs.started_repairing_at > 0){
-			this.startRepairing()
-		}
+	if(this.level>0)this.maxHp = this.currentLevelBluePrints.hp
+	else this.maxHp = this.nextLevelBluePrints.hp
+	if(buildingSpecs.hp!=null)this.hp = buildingSpecs.hp;
+	else{
+		this.hp = this.maxHp;
+	} 
+	if(this.hp<this.maxHp ){
+		this.working = false
+		if(!buildingSpecs.started_repairing_at) this.game.attackManager.showRepairMsg()
+	} 
+	if(buildingSpecs.started_repairing_at > 0){
+		this.startRepairing()
+	}
     this.initialState = buildingSpecs.state;
     this.stateNotifications = {};
     for(var state in this.states){
