@@ -66,7 +66,7 @@ module BD
         building_dependencies.each do |key,value|
           found = false
           user_profile_metadata[key].values.each do |building|
-            if(building['level'] >= value)
+            if(building['level'] >= value.to_i)
               found = true
               break
             end
