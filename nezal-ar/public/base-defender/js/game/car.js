@@ -11,7 +11,12 @@ var Car = Class.create(MovingObject,{
 	specs : null,
 	initialize : function(game){
 		this.target = null
-		this.specs  = game.data.creeps.car
+//		this.specs  = game.data.creeps.car
+    this.specs = {
+                "hp" : 100,
+                "power" : 3,
+                "speed" : 3,
+            }
 		this.hp = this.maxHp =  this.specs.hp
 		this.speed = this.specs.speed
 		this.power = this.specs.power

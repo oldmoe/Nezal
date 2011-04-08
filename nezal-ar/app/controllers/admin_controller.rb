@@ -43,9 +43,9 @@ class AdminController < ApplicationController
   # Serve the game metadata edit metadata of specific buildings
   get '/:game_name/metadata/edit/building/:name/level/:level' do 
     @game = Game.find_by_name(params[:game_name])
-	@building_name = params[:name]
+	  @building_name = params[:name]
     @level = params[:level]
-	erb "#{@app_configs['game_name']}/building".to_sym , {:layout => :app}
+	  erb "#{@app_configs['game_name']}/building".to_sym , {:layout => :app}
   end
   
   # Serve the game object metadata

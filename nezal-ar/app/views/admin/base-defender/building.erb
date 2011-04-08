@@ -2,53 +2,187 @@
   var name = "<%=@building_name%>"
   var data = <%=JSON.generate(@game.metadata)%>
   var buildingLevel = data.buildings[name].levels[<%=@level%>]
-  var formRowTemplate = function(attrName, attrValue){
-    var div = document.createElement('div');
-    div.addClassName('form_row');
-    div.innerHTML = '<LABEL for="' + attrName + '">' + attrName + '</LABEL>' +
-                    '<textarea id="' + attrName + '" type="text">' + attrValue + '</textarea>';
-    return div;
-  }
-  var onButtonClick = function(e){
-    $$('#buildingAttributes div textarea').each( function(textarea){
-      if( textarea.id.startsWith("spec_") ){
-        buildingLevel["specs"][textarea.id.split("_")[1]] = parseInt(textarea.value);
-      } else {
-        buildingLevel[textarea.id] = parseInt(textarea.value);
-      }
-    } );
-    new Ajax.Request( '/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/metadata' , {
-                       method : 'put',
-                       parameters : { "data" : JSON.stringify(data) },
-                       onSuccess : function(response){
-                         $('requestStatus').innerHTML = "Saved successfully"
-                         $('requestStatus').className = "success"
-                       },
-                       onFailure : function(response){
-                         $('requestStatus').innerHTML = "Error, your changes are not saved!"
-                         $('requestStatus').className = "error"
-                       }
-                       
-                   });    
+  var buildingNames = new Hash(data.buildings).keys();
+  var maxBuildingLevel = 0;
+  var idGenerator = 0;
+  buildingNames.each(function(buildingName){
+    var maxLevel = new Hash(data.buildings[buildingName].levels).keys().last();
+    if(maxBuildingLevel < maxLevel) maxBuildingLevel = maxLevel;
+  });
+  var allBuildingLevels = [];
+  for(var i=1; i<=maxBuildingLevel; i++){
+    allBuildingLevels.push(i);
   }
 </script>
 
+
+<!-------------------- Templates -------------------->
+<textarea id="basicRow" style="display:none;">
+  <div class="form_row">
+    <LABEL for="${attrName}">${attrName}</LABEL>
+    <textarea id="${attrName}" type="text">${attrValue}</textarea>
+  </div>
+</textarea>
+
+<textarea id="comboRow" style="display:none;">
+  <div class="form_row">
+    <LABEL for="${attrName}">${attrName}</LABEL>
+    <select id="${attrName}">
+      <option value="" {if attrValue=="" || attrValue == null} SELECTED {/if}></option>
+      {for buildingName in buildingNames}
+        <option value="${buildingName}" {if attrValue == buildingName} SELECTED {/if}>${buildingName}</option>
+      {/for}
+    </select>
+  </div>
+</textarea>
+
+<textarea id="newDependencyUnit" style="display:none;">
+  <div id="${idGenerator}">
+    <select>
+    {for buildingName in buildingNames}
+      <option value="${buildingName}">${buildingName}</option>
+    {/for}
+    </select>
+    <select>
+    {for level in allBuildingLevels}
+      <option value="${level}">${level}</option>
+    {/for}
+    </select>
+    <a style="margin-left:10px" href="javascript:void(0)" onclick="$('${idGenerator}').remove(); //${idGenerator++}">X</a>
+    <br>
+  </div>
+</textarea>
+
+<textarea id="populateTwins" style="display:none;">
+  {for building in buildings.keys()}
+    <div id="${idGenerator}">
+      <select>
+      {for buildingName in buildingNames}
+        <option value="${buildingName}" {if buildingName == building} SELECTED {/if}>${buildingName}</option>
+      {/for}
+      </select>
+      <select>
+      {for level in allBuildingLevels}
+        <option value="${level}" {if level == buildings.get(building)} SELECTED {/if}>${level}</option>
+      {/for}
+      </select>
+      <a style="margin-left:10px" href="javascript:void(0)" onclick="$('${idGenerator}').remove(); //${idGenerator++}">X</a>
+      <br>
+    </div>
+  {/for}
+</textarea>
+
+<textarea id="dependencyRow" style="display:none;">
+  <div class="">
+    <LABEL>Dependencies</LABEL><br>
+    <LABEL style="margin-left: 20px;">Buildings</LABEL><br>
+    <div id="buildingDependencies" style="margin-left: 40px;">
+    </div>
+    <a style="display:block;margin: 0px 0px 20px 40px;" 
+       href="javascript:void(0)" 
+       onclick="$('buildingDependencies').innerHTML += TrimPath.processDOMTemplate('newDependencyUnit');">Add new</a>
+  </div>
+</textarea>
+
+<textarea id="limitingRow" style="display:none;">
+  <div class="">
+    <label>Limiting</label><br>
+    <div id="othersLimited" style="margin-left: 40px;">
+    </div>
+    <a style="display:block;margin: 0px 0px 20px 40px;" 
+       href="javascript:void(0)" 
+       onclick="$('othersLimited').innerHTML += TrimPath.processDOMTemplate('newDependencyUnit');">Add new</a>
+    <label style="float:left;margin-left: 20px;width:auto;" for="global">Global</label>
+    <textarea style="float:none;width:auto;" id="global" type="text">1</textarea>
+  </div>
+</textarea>
+<!---------------- End Templates -------------------->
+
 <label class="label"><%= @building_name.capitalize %> level <%= @level %></label>
 <div id="buildingAttributes"></div>
-<input type="button" value="Save" class="submit" onClick = "onButtonClick()"/> or 
+<input type="button" value="Save" id="submit" class="submit"/> or 
 <a href='/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/metadata/edit'>Go back</a>
 <br/>
 <span id="requestStatus"></span>
+
+
 <script type='text/javascript'>  
+$("submit").observe("click", function(e){
+  $$('#buildingAttributes div.form_row textarea').each( function(textarea){
+    if( textarea.id.startsWith("spec_") ){
+      buildingLevel["specs"][textarea.id.split("_")[1]] = parseInt(textarea.value);
+    } else {
+      buildingLevel[textarea.id] = parseInt(textarea.value);
+    }
+  } );
+  
+  $$('#buildingAttributes div select#limited_by').each( function(select){
+    buildingLevel[select.id] = select[select.selectedIndex].value
+    if( select[select.selectedIndex].value == "" )
+      buildingLevel[select.id] = null;
+  });
+  
+  buildingLevel["dependency"]["buildings"] = {};
+  var dependenciesList = $$('#buildingDependencies select');
+  for(var i=0; i<dependenciesList.length; i+=2){
+    var depBuildingSelect = dependenciesList[i];
+    var depBuildingName = depBuildingSelect[depBuildingSelect.selectedIndex].value;
+    var depBuildingLevelSelect = dependenciesList[i+1];
+    var depBuildingLevel = depBuildingLevelSelect[depBuildingLevelSelect.selectedIndex].value;
+    buildingLevel["dependency"]["buildings"][depBuildingName] = depBuildingLevel;
+  }
+  
+  buildingLevel["limiting"]["global"] = parseInt($("global").value);
+  buildingLevel["limiting"]["others"] = {};
+  var buildingsList = $$('#othersLimited select');
+  for(var i=0; i<buildingsList.length; i+=2){
+    var limBuildingSelect = buildingsList[i];
+    var limBuildingName = limBuildingSelect[limBuildingSelect.selectedIndex].value;
+    var limBuildingLevelSelect = buildingsList[i+1];
+    var limBuildingLevel = limBuildingLevelSelect[limBuildingLevelSelect.selectedIndex].value;
+    buildingLevel["limiting"]["others"][limBuildingName] = limBuildingLevel;
+  }
+  
+  new Ajax.Request( '/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/metadata' , {
+                     method : 'put',
+                     parameters : { "data" : JSON.stringify(data) },
+                     onSuccess : function(response){
+                       $('requestStatus').innerHTML = "Saved successfully"
+                       $('requestStatus').className = "success"
+                     },
+                     onFailure : function(response){
+                       $('requestStatus').innerHTML = "Error, your changes are not saved!"
+                       $('requestStatus').className = "error"
+                     }
+                     
+                 });    
+});
+  
 for( attrName in buildingLevel ){
   var attrValue = buildingLevel[attrName];
-  if( typeof attrValue != "object" )
-    $('buildingAttributes').appendChild( formRowTemplate(attrName, attrValue) );
-  else if( attrName == "specs" ){
-    console.log(attrValue);
+  if( attrName == "limited_by" ){
+     $('buildingAttributes').innerHTML += TrimPath.processDOMTemplate("comboRow", {attrName : attrName, attrValue : attrValue});
+  } else if(attrName == "dependency"){
+    $('buildingAttributes').innerHTML += TrimPath.processDOMTemplate("dependencyRow");
+    $('buildingDependencies').innerHTML = TrimPath.processDOMTemplate("populateTwins", {buildings : new Hash(attrValue["buildings"])});
+  } else if(attrName == "limiting"){
+    $('buildingAttributes').innerHTML += TrimPath.processDOMTemplate("limitingRow", {global : attrValue["global"]});
+    $('othersLimited').innerHTML = TrimPath.processDOMTemplate("populateTwins", {buildings : new Hash(attrValue["others"])});
+  } else if( attrName == "specs" ){
     for (specName in attrValue) {
-      $('buildingAttributes').appendChild(formRowTemplate("spec_" + specName, attrValue[specName]));
+      $('buildingAttributes').innerHTML += TrimPath.processDOMTemplate("basicRow", {attrName : "spec_" + specName, attrValue : attrValue[specName]});
     }
-  }
+  } else if( typeof attrValue != "object" )
+    $('buildingAttributes').innerHTML += TrimPath.processDOMTemplate("basicRow", {attrName : attrName, attrValue : attrValue});
 }
 </script>
+<style>
+  select {
+    float: none;
+    width: auto;
+  }
+  
+  #main {
+    min-height: 0;
+  }
+</style>
