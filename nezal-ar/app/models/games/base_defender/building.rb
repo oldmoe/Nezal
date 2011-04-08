@@ -89,9 +89,9 @@ module BD
             max_level = value['level'] if(value['level']>max_level)
           end
           if(max_level > 0)
-            max_no_of_buildings = game_metadata['buildings'][limiting_building]['levels'][max_level.to_s]['limiting'][building_name]
+            max_no_of_buildings = game_metadata['buildings'][limiting_building]['levels'][max_level.to_s]['limiting']['others'][building_name].to_i
             if(max_no_of_buildings.nil?)
-              max_no_of_buildings = game_metadata['buildings'][limiting_building]['levels'][max_level.to_s]['limiting']['global']
+              max_no_of_buildings = game_metadata['buildings'][limiting_building]['levels'][max_level.to_s]['limiting']['global'].to_i
             end
             if(!user_profile_metadata[building_name].nil? && max_no_of_buildings<=user_profile_metadata[building_name].size)
               return {'valid' => false,
