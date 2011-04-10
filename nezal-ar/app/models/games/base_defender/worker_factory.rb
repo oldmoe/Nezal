@@ -8,7 +8,9 @@ module BD
       user_houses = user_game_profile.metadata['house']
       if(!user_houses.nil?)
         user_houses.values.each do |house|
-         total_workers_allowed += house_metadata['levels'][house['level'].to_s]['workers']
+         if(house['state']==BD::Building.states['NORMAL'])
+          total_workers_allowed += house_metadata['levels'][house['level'].to_s]['workers']
+         end
        end
       end
       if(total_workers_allowed <= current_number_of_workers)

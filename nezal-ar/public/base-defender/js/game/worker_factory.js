@@ -77,6 +77,7 @@ var WorkerFactory = Class.create({
 	var houses = this.game.houseFactory.factoryRegistry
 	var house_data = this.game.data.buildings.house
 	for(house in houses){
+		if(houses[house].state == houses[house].states.NORMAL)
 		total_workers_allowed+= house_data.levels[houses[house].level].workers		
 	}
 	if(total_workers_allowed <= this.workers){

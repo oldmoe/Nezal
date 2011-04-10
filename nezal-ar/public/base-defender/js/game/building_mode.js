@@ -15,12 +15,22 @@ var BuildingMode = Class.create({
 		//if($('cancelBuilding')) $('cancelBuilding').hide();
   },
   
+  showBuildingBases : function(){
+  	Map.objects.each(function(building){
+		building.sprites.base.show()
+	})
+  },
+  hideBuildingBases : function(){
+  	Map.objects.each(function(building){
+		building.sprites.base.hide()
+	})
+  },
   on : function(building, callback){
     if( this.selectedBuilding && this.selectedBuilding.state == 0 ){
       this.cancelBuildingMode();
     }
     this.isOn = true;
-	$$('.buildingBase').invoke('show')
+	this.showBuildingBases()
     this.callback = callback;
     this.selectedBuilding = building;
 		this._AttachMouseMoveEvent();
@@ -57,7 +67,7 @@ var BuildingMode = Class.create({
 		this.moveBuilding = false;
    		this.isOn = false;
     	this.selectedBuilding = null;
-		$$('.buildingBase').invoke('hide')
+		this.hideBuildingBases()
 		$('gameCanvas').stopObserving(game.mouseMoveEvent, this.buildingMoveObserver);
 		$('cancelBuilding').hide();
   },
@@ -90,11 +100,11 @@ var BuildingMode = Class.create({
 		if(this.moveBuilding){
 			this.moveBuilding = false;
 			this.selectedBuilding.move(x,y)
-			$$('.buildingBase').invoke('hide')
+			this.hideBuildingBases()
 		}
     	else if (this.selectedBuilding.build(x, y)) {
       		this.callback();
-			$$('.buildingBase').invoke('hide')
+			this.hideBuildingBases()
       		//this.off();
     	}
   },

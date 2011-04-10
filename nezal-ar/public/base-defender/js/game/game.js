@@ -155,7 +155,7 @@ var Game = Class.create({
       return building + "_moving.png";
     });
 
-    var buildingModeImages = ['2x2_invalid.png', '2x2_base.png','1x1_invalid.png', '1x1_base.png','transparent.png','transparent.png'];
+    var buildingModeImages = ['3x3_invalid.png','3x3_base.png','2x2_invalid.png', '2x2_base.png','1x1_invalid.png', '1x1_base.png','transparent.png','transparent.png'];
 
 
     var iconsImages = [ "lumber.png", "rock.png", "workers.png", "attention.png" ];   
@@ -237,6 +237,7 @@ var Game = Class.create({
         this.buildingMode.on( newBuilding, function(){} );
       }
     }
+	soundManager.mute()
     this.tutorial = new Tutorial(this);
     this.tutorial.fire();
     this.reInitializationNotifications.each(function(fn){fn()});

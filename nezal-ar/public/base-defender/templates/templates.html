@@ -88,16 +88,16 @@
 
 
 <textarea style="display:none;" id='repair'>
-  <div id='alertMsg'>
+  <div id='repairMsg'>
     <img class="background" src="${Loader.images.quests['msgBg.png'].src}"/>
     <div class="msgBGImgs">
       <img class="wedge" src="${Loader.images.quests['wedge.png'].src}"/>
       <img class="bubble" src="${Loader.images.quests['msgBaloon.png'].src}"/>
     </div>
-    <div class="close" onclick="$('alertMsg').hide();">
+    <div class="close" onclick="$('repairMsg').hide();">
     </div>
     <div class="okButtonWrapper">
-      <div class="okButton" onclick="$('alertMsg').hide();game.buildingMode.repair();">
+      <div class="okButton" onclick="$('repairMsg').hide();game.buildingMode.repair();">
         <img class="okImage" src="${Loader.images.quests['button.png'].src}"/>
         <div class="okText yellowText"> Repair </div>
       </div>

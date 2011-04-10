@@ -45,28 +45,28 @@ var DomSkeleton = Class.create(DomSprite, {
 				var right = Math.sin(Util.degToRad(Map.tileAngle))* this.owner.ydim
 				this.ctx.beginPath();
 				
-				this.ctx.moveTo(this.owner.imgWidth/4,this.owner.zdim+left/2)
-				this.ctx.lineTo(this.owner.imgWidth*3/4,this.owner.zdim+right/2)
-				this.ctx.lineTo(this.owner.imgWidth*3/4,right*3/2+this.owner.zdim)
-				this.ctx.lineTo(this.owner.imgWidth/4,this.owner.zdim+left*3/2)
-				this.ctx.lineTo(this.owner.imgWidth/4,this.owner.zdim+left/2)
+//				this.ctx.moveTo(this.owner.imgWidth/4,this.owner.zdim+left/2)
+//				this.ctx.lineTo(this.owner.imgWidth*3/4,this.owner.zdim+right/2)
+//				this.ctx.lineTo(this.owner.imgWidth*3/4,right*3/2+this.owner.zdim)
+//				this.ctx.lineTo(this.owner.imgWidth/4,this.owner.zdim+left*3/2)
+//				this.ctx.lineTo(this.owner.imgWidth/4,this.owner.zdim+left/2)
 
-//				this.ctx.lineTo(0,left)
-//				this.ctx.lineTo(Math.round(this.owner.imgWidth/2),2*left)
-//				this.ctx.lineTo(this.owner.imgWidth,right)
-//				this.ctx.lineTo(this.owner.imgWidth,right+this.owner.zdim)
-//				this.ctx.lineTo(Math.round(this.owner.imgWidth/2),this.owner.zdim);
-//				this.ctx.lineTo(0,left + this.owner.zdim);
-//				this.ctx.lineTo(Math.round(this.owner.imgWidth/2),2*left+this.owner.zdim)
-//				this.ctx.lineTo(this.owner.imgWidth,right+this.owner.zdim)
-//				this.ctx.moveTo(Math.round(this.owner.imgWidth/2),0);
-//				this.ctx.lineTo(Math.round(this.owner.imgWidth/2),this.owner.zdim);
-//				this.ctx.moveTo(Math.round(this.owner.imgWidth/2),0);
-//				this.ctx.lineTo(Math.round(this.owner.imgWidth/2),this.owner.zdim);
-//				this.ctx.moveTo(Math.round(this.owner.imgWidth/2),0);
-//				this.ctx.lineTo(this.owner.imgWidth,right)
-//				this.ctx.moveTo(0,left);
-//				this.ctx.lineTo(0,left + this.owner.zdim);
+				this.ctx.lineTo(0,left)
+				this.ctx.lineTo(Math.round(this.owner.imgWidth/2),2*left)
+				this.ctx.lineTo(this.owner.imgWidth,right)
+				this.ctx.lineTo(this.owner.imgWidth,right+this.owner.zdim)
+				this.ctx.lineTo(Math.round(this.owner.imgWidth/2),this.owner.zdim);
+				this.ctx.lineTo(0,left + this.owner.zdim);
+				this.ctx.lineTo(Math.round(this.owner.imgWidth/2),2*left+this.owner.zdim)
+				this.ctx.lineTo(this.owner.imgWidth,right+this.owner.zdim)
+				this.ctx.moveTo(Math.round(this.owner.imgWidth/2),0);
+				this.ctx.lineTo(Math.round(this.owner.imgWidth/2),this.owner.zdim);
+				this.ctx.moveTo(Math.round(this.owner.imgWidth/2),0);
+				this.ctx.lineTo(Math.round(this.owner.imgWidth/2),this.owner.zdim);
+				this.ctx.moveTo(Math.round(this.owner.imgWidth/2),0);
+				this.ctx.lineTo(this.owner.imgWidth,right)
+				this.ctx.moveTo(0,left);
+				this.ctx.lineTo(0,left + this.owner.zdim);
 				this.ctx.closePath()
 				this.ctx.stroke();
         this.div.setStyle({

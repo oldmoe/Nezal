@@ -7,6 +7,10 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
     doorFrames : 6,
     initialize : function($super,owner,properties){
       $super(owner,properties)
+	  this.sprites.base.shiftX = -8
+	  this.sprites.base.div.style.width = "171px"
+	  this.sprites.invalid.shiftX = -8
+	  this.sprites.invalid.div.style.width = "185px"
       var self = this;
       this.owner.game.scene.pushPeriodicalRenderLoop(
               this.tickDelay,
