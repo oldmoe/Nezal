@@ -18,7 +18,6 @@ var BuildingDisplay = Class.create(Display, {
     if(!this.outlineImg) this.outlineImg = Loader.images.buildingOutlines[this.owner.name+"_outline.png"];
 
     var buildImgName = this.noOfXTiles+"x"+this.noOfYTiles
-	console.log(buildImgName)
     this.invalidImg =  Loader.images.buildingModes[buildImgName+"_invalid.png"];
     this.baseImg = Loader.images.buildingModes[buildImgName+'_base.png'];
     this.shadowImg = Loader.images.buildingShadows[this.owner.name+"_shadow.png"];
