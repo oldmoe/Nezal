@@ -26,7 +26,7 @@ var LumbermillDisplay = Class.create(ResourceBuildingDisplay, {
     this.sprites.shadow = new DomImgSprite(this.owner, {img: this.shadowImg, width:this.shadowImg.width,
                                                         height:this.shadowImg.height, zIndex :1});
     this.sprites.outline = new DomImgSprite(this.owner, {img: this.outlineImg});
-    this.sprites.health = new DomHealthSprite(this.owner)
+    this.sprites.health = new DomMeterSprite(this.owner,{styleClass:{empty:'healthEmpty',full:'healthFull'}})
     this.sprites.shadow.shiftX = this.imgWidth - this.shadowImg.width
     this.sprites.shadow.shiftY = this.imgHeight - this.shadowImg.height
       this.sprites.info = new DomTextSprite(this.owner, 'textInfo', {centered: true, shiftY: -10});

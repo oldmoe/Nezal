@@ -11,6 +11,7 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
 		meterFunc: function(){
 			return self.owner.getResourceMeterLength()
 		},
+		styleClass:{empty:'resourceEmpty',full:'resourceFull'},
 		shiftX: this.owner.imgWidth / 2,
 		shiftY: 40,
 		height : 60

@@ -11,20 +11,23 @@ var DomMeterSprite = Class.create(DomSprite, {
 		this.fullSpan = $(document.createElement('DIV'));
 		this.div.appendChild(this.emptySpan);
     	this.div.appendChild(this.fullSpan);
-		this.fullSpan.addClassName('healthSpan');
-		this.emptySpan.addClassName('healthSpan');
+		if(properties.styleClass){
+			this.fullSpan.addClassName(properties.styleClass.full);
+			this.emptySpan.addClassName(properties.styleClass.empty);	
+		}
+		
 		this.emptySpan.setStyle({'position':'absolute'
 													, top : '0px'
 													, left: '0px'
 													, height:this.height+"px"
 													, width:this.width+"px"
-													,background:"red"});
+													});
 		this.fullSpan.setStyle({'position':'absolute'
 													, top : '0px'
 													, left: '0px'
 													, height:this.height+"px"
 													, width:this.width+"px"
-													,background:"green"});
+													});
 		this.setMeterStyle()
 		this.div.style.width = this.width + "px";													
 		this.div.style.height = this.height + "px";													
@@ -49,9 +52,11 @@ var DomMeterSprite = Class.create(DomSprite, {
 			if (this.getMeterLength() == 1) {
 				this.div.hide()
 				return
+			}else{
+				this.div.show()
 			}
 		}
-		this.div.show()
+		//this.div.show()
     try{
       if(this.owner.dead){
         return this.destroy();

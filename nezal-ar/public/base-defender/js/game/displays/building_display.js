@@ -37,7 +37,7 @@ var BuildingDisplay = Class.create(Display, {
     this.sprites.shadow = new DomImgSprite(this.owner, {img: this.shadowImg, width:this.shadowImg.width,
     height:this.shadowImg.height, zIndex :1});
     this.sprites.outline = new DomImgSprite(this.owner, {img: this.outlineImg});
-    this.sprites.health = new DomMeterSprite(this.owner)
+    this.sprites.health = new DomMeterSprite(this.owner,{styleClass:{empty:'healthEmpty',full:'healthFull'}})
     this.sprites.shadow.shiftX = this.imgWidth - this.shadowImg.width
     this.sprites.shadow.shiftY = this.imgHeight - this.shadowImg.height
     this.sprites.info = new DomTextSprite(this.owner, 'textInfo', {centered: true, shiftY: -10});
@@ -70,6 +70,9 @@ var BuildingDisplay = Class.create(Display, {
       self.sprites.base.show();
       self.sprites.outline.hide();
       self.sprites.info.hide();
+	  if (self.sprites.resourceMeter) {
+	  	self.sprites.resourceMeter.hide()
+	  }
       if(self.sprites.text)self.sprites.text.hide()
       self.sprites.mouseover.hide();
       self.sprites.invalid.hide();
@@ -84,6 +87,7 @@ var BuildingDisplay = Class.create(Display, {
       self.sprites.base.hide();
       self.sprites.outline.hide();
       self.sprites.info.hide();
+	  if(self.sprites.resourceMeter)self.sprites.resourceMeter.hide()
       if(self.sprites.text)self.sprites.text.hide()
       self.sprites.mouseover.hide();
       if(self.sprites.moving) self.sprites.moving.hide();
@@ -97,6 +101,7 @@ var BuildingDisplay = Class.create(Display, {
       self.sprites.building.setOpacity(0.5);
       self.sprites.building.animated = false;
       self.sprites.base.hide();
+	  if(self.sprites.resourceMeter)self.sprites.resourceMeter.hide()
       self.sprites.outline.hide();
       self.sprites.info.hide();
       if(self.sprites.text)self.sprites.text.hide()
@@ -114,6 +119,7 @@ var BuildingDisplay = Class.create(Display, {
       self.sprites.base.hide();
       self.sprites.outline.hide();
       self.sprites.info.hide();
+	  if(self.sprites.resourceMeter)self.sprites.resourceMeter.show()
       if (self.sprites.text) {
         self.sprites.text.hide()
       }

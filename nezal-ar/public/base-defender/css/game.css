@@ -91,13 +91,24 @@ img{
   cursor: pointer;
 }
 
-.healthSpan{
+.healthEmpty, .healthFull{
   -moz-border-radius : 8px;
   -webkit-border-radius : 8px;
   -o-border-radius : 8px;
   border-radius : 8px;
 }
-
+.healthEmpty{
+	background-color:red;
+}
+.healthFull{
+	background-color:green;
+}
+.resourceEmpty{
+	background-color:blue;	
+}
+.resourceFull{
+	background-color:green;	
+}
 #sendAttack {
   bottom: 0px;
   height: 53px;
