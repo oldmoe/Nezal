@@ -112,7 +112,11 @@ $("submit").observe("click", function(e){
     if( textarea.id.startsWith("spec_") ){
       buildingLevel["specs"][textarea.id.split("_")[1]] = parseInt(textarea.value);
     } else {
+      console.log(textarea.id);
       buildingLevel[textarea.id] = parseInt(textarea.value);
+      if( isNaN(buildingLevel[textarea.id]) ){
+        buildingLevel[textarea.id] = textarea.value;
+      }
     }
   } );
   
