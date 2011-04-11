@@ -45,14 +45,14 @@
           <% if level != "0" %>
   				  <a href="edit/building/<%= building_name %>/level/<%=level%>">Level <%= level %></a>
             <% if level == (@game.metadata[game_element][building_name]["levels"].size-1).to_s && level != "1" %>
-    			    <form id="delete_level_<%=level%>" 
+    			    <form id="delete_<%=building_name%>_level_<%=level%>" 
                     action="/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/building/<%=building_name%>/level/<%=level%>" 
                     method="POST" 
                     style="display:inline">
                           <input type="hidden" name="_method" value="put"/>
                           <a style="margin-left: 25px;" 
                              href="javascript:void(0)" 
-                             onclick="if(confirm('Delete <%=building_name%> level <%=level%>?')) $('delete_level_<%=level%>').submit(); return false;" 
+                             onclick="if(confirm('Delete <%=building_name%> level <%=level%>?')) $('delete_<%=building_name%>_level_<%=level%>').submit(); return false;" 
                              class="submit_links"> Delete </a>
               </form>
             <% end %> 
