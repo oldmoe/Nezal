@@ -1,14 +1,14 @@
 var DomHealthSprite = Class.create(DomSprite, {
-  healthWidth : 80,
-	healthHeight : 7,
+  width : 80,
+	height : 7,
 	
   initialize : function($super, owner, properties){
     $super(owner, properties);
 		if (properties) {
-			if (properties.healthWidth) 
-				this.healthWidth = properties.healthWidth
-			if (properties.healthHeight) 
-				this.healthHeight = properties.healthHeight
+			if (properties.width) 
+				this.width = properties.width
+			if (properties.height) 
+				this.height = properties.height
 		}
     this.maxHpSpan = $(document.createElement('SPAN'));
 		this.hpSpan = $(document.createElement('SPAN'));
@@ -17,14 +17,14 @@ var DomHealthSprite = Class.create(DomSprite, {
 		this.hpSpan.addClassName('healthSpan');
 		this.maxHpSpan.addClassName('healthSpan');
 		this.maxHpSpan.setStyle({'position':'absolute'
-													, height:this.healthHeight+"px"
-													, width:this.healthWidth+"px"
+													, height:this.height+"px"
+													, width:this.width+"px"
 													,background:"red"});
 		this.hpSpan.setStyle({'position':'absolute'
-													, height:this.healthHeight+"px"
-													, width:Math.round(this.owner.hp*this.healthWidth/this.owner.maxHp)+"px"
+													, height:this.height+"px"
+													, width:Math.round(this.owner.hp*this.width/this.owner.maxHp)+"px"
 													,background:"green"});
-		this.div.style.width = this.healthWidth + "px";													
+		this.div.style.width = this.width + "px";													
   },
   
   render : function($super){
@@ -38,11 +38,11 @@ var DomHealthSprite = Class.create(DomSprite, {
       if(this.owner.dead){
         return this.destroy();
       }
-      this.div.setStyle({left : this.owner.coords.x -Math.round(this.healthWidth/2)+this.shiftX + "px",
+      this.div.setStyle({left : this.owner.coords.x -Math.round(this.width/2)+this.shiftX + "px",
                          top : this.owner.coords.y -Math.round(this.owner.imgHeight/2)+this.shiftY + "px",
                          zIndex : this.owner.coords.y});
-  		this.maxHpSpan.setStyle({width:this.healthWidth+"px"})
-			this.hpSpan.setStyle({width:Math.round(this.owner.hp*this.healthWidth/this.owner.maxHp)+"px"})
+  		this.maxHpSpan.setStyle({width:this.width+"px"})
+			this.hpSpan.setStyle({width:Math.round(this.owner.hp*this.width/this.owner.maxHp)+"px"})
     }catch(e){
  //     console.log('Sprite#render: ',e)
     }

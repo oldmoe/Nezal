@@ -157,11 +157,18 @@ var Building = Class.create({
   },
   
   textInfo : function(){
-    return this.humanizeString(this.name)+ " " + this.level;
+    return this.humanizeString(this.name)+ "<br/>Level " + this.level;
   },
 	
   humanizeString : function(str){
 	return str.capitalize().replace("_", " ") 
+  },
+  
+  getMeterFunc: function(){
+  	var self = this
+	return function(){
+	  	return self.hp/self.maxHp	
+	}
   },
   
   isValidToUpgrade : function(silent){

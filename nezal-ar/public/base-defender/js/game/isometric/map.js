@@ -440,9 +440,9 @@ var Map={
     div.observe(game.mouseMoveEvent, mousemoveCallback);
     
 		div.observe('mouseover',function(){
-			if (owner.state != owner.states.NOT_PLACED) {
+		if (owner.state != owner.states.NOT_PLACED) {
 	  		owner.sprites.outline.show();
-	        owner.sprites.info.show();
+			if (owner.state == owner.states.NORMAL)owner.sprites.info.show();
 			if(owner.sprites.text)owner.sprites.text.show()
 	  	}
 		})

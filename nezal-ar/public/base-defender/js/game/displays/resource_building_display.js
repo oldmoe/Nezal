@@ -1,9 +1,20 @@
 var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
   initialize : function($super,owner,properties){
     $super(owner,properties)
-    this.sprites.text = new DomTextSprite(owner, 'resource',{centered: true, shiftY: 110});
+	var self = this
+    this.sprites.text = new DomTextSprite(owner, 'resourceInfo',{centered: true, shiftY: 110});
+	//this.sprites.timeToFill = new DomTextSprite(owner, 'remainingTime',{centered: true, shiftY: 130});
   	this.attentionImg = Loader.images.icons['attention.png']
   	this.sprites.attention = new DomImgSprite(this.owner,{img:this.attentionImg}, {shiftX : 40,shiftY : -30})
+	this.sprites.resourceMeter = new DomMeterSprite(this.owner, {
+		orientation: "vertical",
+		meterFunc: function(){
+			return self.owner.getResourceMeterLength()
+		},
+		shiftX: this.owner.imgWidth / 2,
+		shiftY: 40,
+		height : 60
+	})
   	this.sprites.attention.hide()
   },
 

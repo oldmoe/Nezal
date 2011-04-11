@@ -28,6 +28,10 @@ var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
 	this.sprites.clickSprite.shiftY = 10
 	this.sprites.clickSprite.shiftX = 5
 	this.sprites.clickSprite.setImgHeight(87)
+	this.sprites.resourceMeter.shiftX-=7
+	this.sprites.resourceMeter.shiftY-=20
+	this.sprites.info.shiftY = -30
+	this.sprites.text.shiftY -= 10
   },
   
   render : function($super){
