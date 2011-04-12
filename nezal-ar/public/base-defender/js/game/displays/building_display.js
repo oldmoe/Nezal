@@ -256,7 +256,6 @@ var BuildingDisplay = Class.create(Display, {
 	  var self = this;
       this.smokes.each(function(smoke){
         smoke.owner.yMovement -= 1;
-		console.log(self.noOfXTiles)
 		if(self.noOfXTiles!=1)smoke.shiftY = smoke.owner.yMovement+self.owner.imgWidth/2-40;
 		else smoke.shiftY = smoke.owner.yMovement+self.owner.imgWidth/2+10;
         if (smoke.owner.yMovement < -self.smokeElevation) {

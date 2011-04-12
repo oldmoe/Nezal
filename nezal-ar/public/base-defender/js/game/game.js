@@ -68,7 +68,7 @@ var Game = Class.create({
                           "activeCell.png", "inactiveCell.png", "resources.png", "correct.png", "buildingsBg.png", "wedgesBg.png", 
                           'button.png','cursor.png',"social.png", "civil.png", "military.png", "circles.png", "hover.png", "animated_circles.gif", 
                           "line.png", "townhall_info.png", "quarry_info.png", "lumbermill_info.png",
-                          "defense_center_info.png", "war_factory_info.png", "house_info.png", 
+                          "defense_center_info.png", "war_factory_info.png", "house_info.png", "palm_info.png",
                           "storage_info.png", "wedge_info.png", "gaddafi_info.png", "resources_needed_for_building.png"];
 											
     new Loader().load([ {images : gameElementsImages, path: 'images/game_elements/', store: 'game_elements'},
@@ -228,6 +228,7 @@ var Game = Class.create({
     this.defenseCenterFactory = new DefenseCenterFactory(this);
     this.warFactoryFactory = new WarFactoryFactory(this);
     this.houseFactory = new HouseFactory(this);
+	this.palmFactory = new PalmFactory(this);
     this.wedgeFactory = new WedgeFactory(this);
     this.gaddafiFactory = new GaddafiFactory(this);
     if( !this.buildingMode )
@@ -240,7 +241,6 @@ var Game = Class.create({
         this.buildingMode.on( newBuilding, function(){} );
       }
     }
-	soundManager.mute()
     this.tutorial = new Tutorial(this);
     this.tutorial.fire();
     this.reInitializationNotifications.each(function(fn){fn()});
