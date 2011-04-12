@@ -44,14 +44,15 @@ var WedgeDisplay = Class.create(BuildingDisplay, {
     $super()
     var self = this;
     this.owner.stateNotifications[this.owner.states.UNDER_CONSTRUCTION].push(function(){
-      self.sprites.building.setOpacity(1);
-      self.owner.weapon.container.setOpacity(0.5);
+      self.owner.weapon.container.hide();
     });
     this.owner.stateNotifications[this.owner.states.UPGRADING].push(function(){
       self.sprites.building.setOpacity(1);
+	  self.owner.weapon.container.show()
       self.owner.weapon.container.setOpacity(0.5);
     });
     this.owner.stateNotifications[this.owner.states.NORMAL].push(function(){
+	  self.owner.weapon.container.show()
       if(self.owner.working)
       {
         self.sprites.building.setOpacity(1);
