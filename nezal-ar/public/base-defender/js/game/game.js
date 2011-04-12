@@ -21,6 +21,7 @@ var Game = Class.create({
   mouseEndEvent : null,
   mouseClickEvent : null,
   mouseMoveEvent : null,
+  zoomFactor : 1,
   reInitializationNotifications : [],
   resources : {
     rock : 0,
@@ -155,7 +156,9 @@ var Game = Class.create({
       return building + "_moving.png";
     });
 
-    var buildingModeImages = ['3x3_invalid.png','3x3_base.png','2x2_invalid.png', '2x2_base.png','1x1_invalid.png', '1x1_base.png','transparent.png','transparent.png'];
+    var buildingModeImages = ['3x3_invalid.png','3x3_base.png','2x2_invalid.png', '2x2_base.png','1x1_invalid.png',
+	 '1x1_base.png','construction_tile_1x1.png','construction_tile_2x2.png','construction_tile_3x3.png','construction_smoke.png',
+	 'transparent.png','transparent.png'];
 
 
     var iconsImages = [ "lumber.png", "rock.png", "workers.png", "attention.png" ];   

@@ -11,10 +11,17 @@ var BuildingMode = Class.create({
   initialize : function(game){
     this.game = game;
     this._AttachCanvasClickListener();
-		this._AttachCancelBuildingListener();
+	this._AttachCancelBuildingListener();
+	this._AttachZoomListener();
 		//if($('cancelBuilding')) $('cancelBuilding').hide();
   },
   
+  _AttachZoomListener : function(){
+  	var self = this
+  	$('zoom').observe('click',function(){
+		self.zoom()
+	})
+  },
   showBuildingBases : function(){
   	Map.objects.each(function(building){
 		building.sprites.base.show()
@@ -55,9 +62,13 @@ var BuildingMode = Class.create({
 			var x =  mouse.pointerX() || mouse.touches[0].pageX;
 			var y = mouse.pointerY() || mouse.touches[0].pageY;
 			var mapCoords = Map.getRealCoords(x,y);
-    	self.selectedBuilding.coords.x = mapCoords.x;
+			if(self.game.zoomFactor ==0.5){
+					mapCoords.x+= mapCoords.x - Map.mapWidth/2
+					mapCoords.y+= mapCoords.y - Map.mapHeight/2 
+			}
+	    	self.selectedBuilding.coords.x = mapCoords.x;
 			self.selectedBuilding.coords.y = mapCoords.y;
-      self.selectedBuilding.render();
+      		self.selectedBuilding.render();
 		}
     $('gameCanvas').stopObserving(game.mouseMoveEvent);
 		$('gameCanvas').observe(game.mouseMoveEvent, this.buildingMoveObserver);
@@ -92,17 +103,17 @@ var BuildingMode = Class.create({
       var y = mouse.pointerY() || mouse.touches[0].pageY;
 	  	var mapCoords =  Map.getRealCoords(x,y)
       if(game.buildingMode.isOn) 
-        game.buildingMode._ModeOnAction(mapCoords.x, mapCoords.y);
+        game.buildingMode._ModeOnAction();
     });
   },
 	
-  _ModeOnAction : function(x, y){
+  _ModeOnAction : function(){
 		if(this.moveBuilding){
 			this.moveBuilding = false;
-			this.selectedBuilding.move(x,y)
+			this.selectedBuilding.move(this.selectedBuilding.coords.x,this.selectedBuilding.coords.y)
 			this.hideBuildingBases()
 		}
-    	else if (this.selectedBuilding.build(x, y)) {
+    	else if (this.selectedBuilding.build(this.selectedBuilding.coords.x, this.selectedBuilding.coords.y)) {
       		this.callback();
 			this.hideBuildingBases()
       		//this.off();
@@ -120,6 +131,21 @@ var BuildingMode = Class.create({
 		this.game.updateGameStatus(response['gameStatus']);
 	},
 	
+	zoom : function(){
+		if(game.zoomFactor ==1){
+			game.zoomFactor = 0.5
+			$('gameCanvas').addClassName('zoomed')
+			$('zoom').removeClassName('in')
+			$('zoom').addClassName('out')
+		}else{
+			game.zoomFactor = 1
+			$('gameCanvas').removeClassName('zoomed')
+			$('zoom').removeClassName('out')
+			$('zoom').addClassName('in')
+		}
+		Map.centerMap(game.zoomFactor) 
+	},
+		
 	collect : function(building){
 		var townHall = this.game.townhallFactory.townhall;
 		var worker  = new Worker(game,building.coords.x,building.coords.y-10);
