@@ -183,7 +183,14 @@ var BuildingDisplay = Class.create(Display, {
     var owner = this.owner;
     $('panel-buttons-container').innerHTML = this.game.templatesManager.load("upgrade-button");
 	this.owner.game.addLoadedImagesToDiv('panel-buttons-container')
+	this.game.domConverter.convert(this.game.templatesManager.load("move-button"))
+	$('panel-buttons-container').appendChild($('move_trigger'));
     $('upgrade_trigger').stopObserving('click');
+	$('move_trigger').stopObserving('click');
+	$('move_trigger').observe('click',function(){
+		owner.game.selectedBuildingPanel.hide();
+		owner.game.buildingMode.move()
+	});
     if (!owner.isValidToUpgrade(true)) {
       $('upgrade_trigger').select("img")[0].setStyle({marginTop : "-75px"});
       $('upgrade_trigger').setAttribute("disabled", "disabled");

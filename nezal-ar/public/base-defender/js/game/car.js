@@ -78,7 +78,7 @@ var Car = Class.create(MovingObject,{
 			if(Map.objects[i].hp<=1)continue;
 			var building = Map.objects[i] 
 			var distanceToBuilding = Util.distance(this.coords.x,this.coords.y,building.coords.x,building.coords.y)
-			if(distanceToBuilding < minDistance){
+			if(building.name!='palm' && distanceThoBuilding < minDistance){
 				minDistance = distanceToBuilding
 				minIndex = i
 			}

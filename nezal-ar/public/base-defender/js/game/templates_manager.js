@@ -21,7 +21,7 @@ var TemplatesManager = Class.create({
   
   buildingsPanel : function(buildings){
     currentShift = 0;
-    maxShift = 4;
+    maxShift = 5;
     return this.load("buildings-panel", {'buildings' : buildings});
   }
 });

@@ -43,6 +43,9 @@ var WedgeDisplay = Class.create(BuildingDisplay, {
    manageStateChange : function($super){
     $super()
     var self = this;
+	this.owner.stateNotifications[this.owner.states.NOT_PLACED].push(function(){
+      self.sprites.moving.show();
+    });
     this.owner.stateNotifications[this.owner.states.UNDER_CONSTRUCTION].push(function(){
       self.owner.weapon.container.hide();
     });

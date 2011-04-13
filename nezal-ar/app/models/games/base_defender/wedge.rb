@@ -16,7 +16,10 @@ module BD
     def upgrade(user_game_profile, coords)
       self.class.upgrade(user_game_profile, coords, @name)
     end
-
+    
+    def move(user_game_profile, name, coords, oldCoords)
+      self.class.move(user_game_profile, name, coords, oldCoords)
+    end
   end
 
 end
