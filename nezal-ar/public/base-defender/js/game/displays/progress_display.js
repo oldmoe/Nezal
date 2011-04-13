@@ -35,25 +35,8 @@ var ProgressDisplay = Class.create({
   },
   
   timeRemaining : function(){
-    var string = ''
     var remainingTime = this.time - this.elapsed;
-    var seconds = remainingTime % 60
-    remainingTime = ((remainingTime - seconds) / 60)
-    var minutes = remainingTime % 60
-    remainingTime = ((remainingTime - minutes) / 60)
-    var hours = remainingTime % 24
-    remainingTime = ((remainingTime - hours) / 24)
-    var days = Math.floor(remainingTime)
-    if(days > 0){
-      string = days + 'd ' + hours + 'h'
-    }else if(hours > 0){
-      string = hours + 'h ' + minutes + 'm'      
-    }else if(minutes > 0){
-      string = minutes + 'm ' + seconds + 's'
-    }else{
-      string = seconds + ' seconds'
-    }
-    return string;
+  	return Util.timeDisplay(remainingTime)
   }
   
 })

@@ -13,13 +13,14 @@ var WedgeDisplay = Class.create(BuildingDisplay, {
 
   createSprites : function(){
     this.container = new DomSpriteContainer(this.owner)
+		this.sprites.underConstruction = new DomImgSprite(this.owner, {img: this.constructionImg}, {shiftY: this.zdim})
 		this.sprites.base = this.container.newDomImgSprite(this.owner, {img : this.baseImg, width:this.width}, {shiftY: this.zdim, divClass: "buildingBase"});
 		this.sprites.invalid = this.container.newDomImgSprite(this.owner, {img : this.invalidImg, width:this.width}, {shiftY: this.zdim});
 		this.sprites.shadow = this.container.newDomImgSprite(this.owner, {img: this.shadowImg, width:this.shadowImg.width,
                                                       		height:this.shadowImg.height, zIndex : 1});
 		this.sprites.outline = this.container.newDomImgSprite(this.owner, {img: this.outlineImg, zIndex : 1});
 		this.sprites.building = this.container.newDomImgSprite(this.owner, {img: this.img});
-		this.sprites.health = new DomHealthSprite(this.owner, {healthWidth: 50})
+		this.sprites.health = new DomMeterSprite(this.owner,{styleClass:{empty:'healthEmpty',full:'healthFull'},'width':50})
 		//this.sprites.skeleton = new DomSkeleton(this.owner)
 		this.sprites.health.shiftY = -20
     this.sprites.info = new DomTextSprite(this.owner, 'textInfo', {centered: true, shiftY: -10});
@@ -43,14 +44,15 @@ var WedgeDisplay = Class.create(BuildingDisplay, {
     $super()
     var self = this;
     this.owner.stateNotifications[this.owner.states.UNDER_CONSTRUCTION].push(function(){
-      self.sprites.building.setOpacity(1);
-      self.owner.weapon.container.setOpacity(0.5);
+      self.owner.weapon.container.hide();
     });
     this.owner.stateNotifications[this.owner.states.UPGRADING].push(function(){
       self.sprites.building.setOpacity(1);
+	  self.owner.weapon.container.show()
       self.owner.weapon.container.setOpacity(0.5);
     });
     this.owner.stateNotifications[this.owner.states.NORMAL].push(function(){
+	  self.owner.weapon.container.show()
       if(self.owner.working)
       {
         self.sprites.building.setOpacity(1);

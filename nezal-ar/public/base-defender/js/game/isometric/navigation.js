@@ -82,7 +82,7 @@ var Navigation = Class.create({
 		})
 		
 		document.body.observe('mousemove',function(e){
-			if(Map.mouseIsDown){
+			if(Map.mouseIsDown && game.zoomFactor==1){
         		$("building-panel").hide();
 			 	self.dragDiv.show()
 				Map.dragged = true

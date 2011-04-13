@@ -3,7 +3,7 @@ var Map={
 	tileWidth:64,
 	tileHeight:31,
 	viewWidth:760,
-	viewHeight:670,
+	viewHeight:550,
 	mapWidth : 1000,
 	mapHeight : 1000,	
 	hoverX :0,
@@ -48,8 +48,11 @@ var Map={
 		Map.mapWidth = backgroundImg.width;
 		Map.div.style.height =  backgroundImg.height + "px";
 		Map.mapHeight = backgroundImg.height;
+		Map.centerMap(1)
 	},
-	centerMap : function(){
+	centerMap : function(zoomFactor){
+		Map.x = 0
+		Map.y=0
 		Map.move(Map.mapWidth/2-Map.viewWidth/2,Map.mapHeight/2-Map.viewHeight/2)
 	},
 	
@@ -440,9 +443,9 @@ var Map={
     div.observe(game.mouseMoveEvent, mousemoveCallback);
     
 		div.observe('mouseover',function(){
-			if (owner.state != owner.states.NOT_PLACED) {
-	  		owner.sprites.outline.show();
-	        owner.sprites.info.show();
+		if (owner.state != owner.states.NOT_PLACED) {
+	  		if (owner.state != owner.states.UNDER_CONSTRUCTION)owner.sprites.outline.show();
+			if (owner.state == owner.states.NORMAL)owner.sprites.info.show();
 			if(owner.sprites.text)owner.sprites.text.show()
 	  	}
 		})

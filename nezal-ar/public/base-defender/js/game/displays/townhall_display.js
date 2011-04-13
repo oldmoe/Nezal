@@ -11,6 +11,9 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
 	  this.sprites.base.div.style.width = "171px"
 	  this.sprites.invalid.shiftX = -8
 	  this.sprites.invalid.div.style.width = "185px"
+	  this.sprites.underConstruction.shiftX = -15
+	  this.sprites.underConstruction.div.style.width = "196px"
+	  this.sprites.underConstruction.render()
       var self = this;
       this.owner.game.scene.pushPeriodicalRenderLoop(
               this.tickDelay,
@@ -66,7 +69,7 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
         this.sprites.building.currentAnimationFrame = (this.sprites.building.currentAnimationFrame - 1);
     },
     renderAnimation : function(){
-      
+		      
       if (!this.sprites.building.animated && !this.owner.producing) {
         this.sprites.building.currentAnimationFrame = 0
       }

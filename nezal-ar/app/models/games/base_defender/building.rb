@@ -124,10 +124,10 @@ module BD
         if building.present?
           building['coords'] = coords
           user_game_profile.metadata[name][coords_str] = building
+          return {'valid' => true, 'error' => ''}
         else
           return {'valid' => false, 'error' => "There is no #{name} in this location"}
         end
-        return {'valid' => true, 'error' => ''}
       end
 
       def upgrade(user_game_profile, coords, name=nil)

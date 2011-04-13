@@ -1,11 +1,11 @@
 var WorkerDisplay = Class.create(Display,{
-  imgWidth : 64,
-  imgHeight : 93,
-  xdim : 64,
-  ydim : 93,
-  zdim : 70,
   initialize: function($super, owner, properties){
     $super(owner, properties);
+    this.imgWidth = 64 * this.owner.game.zoomFactor
+    this.imgHeight = 93 * this.owner.game.zoomFactor
+    this.xdim = 64 * this.owner.game.zoomFactor
+    this.ydim = 93 * this.owner.game.zoomFactor
+    this.zdim = 70 * this.owner.game.zoomFactor
     this.noOfXTiles = Math.ceil(this.xdim / Map.tileIsoLength);
     this.noOfYTiles = Math.ceil(this.ydim / Map.tileIsoLength);
     this.owner = owner;

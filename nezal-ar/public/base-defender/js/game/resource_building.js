@@ -18,10 +18,22 @@ var ResourceBuilding = Class.create(Building, {
 	this.fullObservers = []
   },
 
-  resource : function(){
-    return this.factory.collect + " : " + parseInt(this[this.factory.collect]);
+  resourceInfo : function(){
+  	if(!this.capacity)return ''
+    var data = parseInt(this[this.factory.collect])+"/"+ this.capacity
+	if (!this.isFull() && this.assignedWorkers!=0) {
+		data += "<br/>Full in " + this.remainingTime();
+	}
+	return data
+  },
+  isFull : function(){
+  	   return parseInt(this[this.factory.collect]) == this.capacity
   },
 	
+  getResourceMeterLength : function(){
+  	return  parseInt(this[this.factory.collect]) / this.capacity	
+  },
+  	
   totalPerTick : function(){
 		var collected = this.unitPerWorkerTick * this.assignedWorkers
     	if (this[this.factory.collect] + collected > this.capacity) {
@@ -34,10 +46,15 @@ var ResourceBuilding = Class.create(Building, {
 			return collected;
 		}
   },
+  
+  remainingTime : function(){
+  	var seconds = Math.round((this.capacity-this[this.factory.collect])*60/ (this.assignedWorkers*this.unitPerWorkerMinute))
+	return Util.timeDisplay(seconds) 
+  },
 
 	tick : function($super){
 		if(!this.working || !this.owner.producing) return
-    $super();
+    	$super();
 		if (this.state == this.states.NORMAL) {
 			this[this.factory.collect] += this.totalPerTick();
 		}

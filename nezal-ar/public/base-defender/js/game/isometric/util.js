@@ -99,6 +99,26 @@ var Util = {
 	 },
 	 distance : function(x1,y1,x2,y2){
 		return Math.sqrt(Math.pow(x1-x2,2)+Math.pow(y1-y2,2))
+	 },
+	 timeDisplay : function(remainingTime){
+	 	var string = ''
+	 	var seconds = remainingTime % 60
+	    remainingTime = ((remainingTime - seconds) / 60)
+	    var minutes = remainingTime % 60
+	    remainingTime = ((remainingTime - minutes) / 60)
+	    var hours = remainingTime % 24
+	    remainingTime = ((remainingTime - hours) / 24)
+	    var days = Math.floor(remainingTime)
+	    if(days > 0){
+	      string = days + 'd ' + hours + 'h'
+	    }else if(hours > 0){
+	      string = hours + 'h ' + minutes + 'm'      
+	    }else if(minutes > 0){
+	      string = minutes + 'm ' + seconds + 's'
+	    }else{
+	      string = seconds + ' seconds'
+	    }
+	    return string;
 	 }
 }
 

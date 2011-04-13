@@ -20,13 +20,14 @@ var LumbermillDisplay = Class.create(ResourceBuildingDisplay, {
   },
     
   createSprites : function(){
-    this.sawImg = Loader.images.buildings['lumbermill_saw.png'];
+  	this.sawImg = Loader.images.buildings['lumbermill_saw.png'];
+	this.sprites.underConstruction = new DomImgSprite(this.owner, {img: this.constructionImg}, {shiftY: this.zdim})
     this.sprites.base = new DomImgSprite(this.owner, {img : this.baseImg}, {shiftY: this.zdim, divClass: "buildingBase"});
     this.sprites.invalid = new DomImgSprite(this.owner, {img : this.invalidImg}, {shiftY: this.zdim});
     this.sprites.shadow = new DomImgSprite(this.owner, {img: this.shadowImg, width:this.shadowImg.width,
                                                         height:this.shadowImg.height, zIndex :1});
     this.sprites.outline = new DomImgSprite(this.owner, {img: this.outlineImg});
-    this.sprites.health = new DomHealthSprite(this.owner)
+    this.sprites.health = new DomMeterSprite(this.owner,{styleClass:{empty:'healthEmpty',full:'healthFull'}})
     this.sprites.shadow.shiftX = this.imgWidth - this.shadowImg.width
     this.sprites.shadow.shiftY = this.imgHeight - this.shadowImg.height
       this.sprites.info = new DomTextSprite(this.owner, 'textInfo', {centered: true, shiftY: -10});
