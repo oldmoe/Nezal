@@ -134,18 +134,18 @@ var Building = Class.create({
 	
 	move : function(x,y){
 		this.coords['x'] = x;
-    this.coords['y'] = y;
-    if(this.validateLocation(x,y)){
-      var response = this.game.network.moveBuilding(this.name, this.coords, this.oldCoords);
-      this.game.updateGameStatus(response['gameStatus']);
-      return response['done'];
-    }else{
-      return false;
-    }
+	    this.coords['y'] = y;
+	    if(this.validateLocation(x,y)){
+	      var response = this.game.network.moveBuilding(this.name, this.coords, this.oldCoords);
+	      this.game.updateGameStatus(response['gameStatus']);
+	      return response['done'];
+	    }else{
+	      return false;
+	    }
 	},
   
 	inProgress : function(){
-    return this.state == this.states.UNDER_CONSTRUCTION || this.state == this.states.UPGRADING;		
+    	return this.state == this.states.UNDER_CONSTRUCTION || this.state == this.states.UPGRADING;		
 	},
 	
   elapsedTime : function(){

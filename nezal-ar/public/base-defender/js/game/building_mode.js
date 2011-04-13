@@ -34,13 +34,13 @@ var BuildingMode = Class.create({
 	})
   },
   on : function(building, callback){
-    if( this.selectedBuilding && this.selectedBuilding.state == 0 ){
-      this.cancelBuildingMode();
-    }
-    this.isOn = true;
-	this.showBuildingBases()
-    this.callback = callback;
-    this.selectedBuilding = building;
+//    if( this.selectedBuilding && this.selectedBuilding.state == 0 ){
+//      this.cancelBuildingMode();
+//    }
+	    this.isOn = true;
+		this.showBuildingBases()
+	    this.callback = callback;
+	    this.selectedBuilding = building;
 		this._AttachMouseMoveEvent();
     //this._AttachCanvasClickListener();
 		$('cancelBuilding').show();
@@ -113,6 +113,7 @@ var BuildingMode = Class.create({
 			this.moveBuilding = false;
 			this.selectedBuilding.move(this.selectedBuilding.coords.x,this.selectedBuilding.coords.y)
 			this.hideBuildingBases()
+			this.cancelBuildingMode()
 		}
     	else if (this.selectedBuilding.build(this.selectedBuilding.coords.x, this.selectedBuilding.coords.y)) {
       		this.callback();
