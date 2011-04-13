@@ -27,7 +27,7 @@ var Car = Class.create(MovingObject,{
 		this.movingPath = []
 		this.startHittingObservers = []
 		this.finishHittingObservers = []
-    	this.id = parseInt(Math.random() * 10000);
+  	this.id = parseInt(Math.random() * 10000);
 	},
 	
 	tick : function($super){
@@ -55,6 +55,7 @@ var Car = Class.create(MovingObject,{
 		if(this.target && this.movingPath.length == 0){
 			this.hitting = true
 			this.notifyStartHitting()
+//      console.log("Car Fire :: ", this.id, " :: ", this.hp, " :: ", this.coords.x , " :: ", this.coords.y);
 			this.angle = Map.getGeneralDirectoin(this.coords.x, this.coords.y, this.target.coords.x, this.target.coords.y);
 			this.target.hp -=this.power
 			this.attacked = true
@@ -68,7 +69,8 @@ var Car = Class.create(MovingObject,{
 			this.target.setState(this.target.states.NORMAL)
 			this.target = null
 		} 
-//    console.log( this.coords.x , " :: ", this.coords.y)
+//    console.log("Car Tick :: ", this.id, " :: ", this.hp, " :: ", this.coords.x , " :: ", this.coords.y);
+ 
 	},
 		
 	pickTarget : function(){

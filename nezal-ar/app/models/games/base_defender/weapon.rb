@@ -58,7 +58,7 @@ module BD
       return validation
     end
 
-    attr_accessor :owner, :coords, :angle, :attacker, :rocks, :rock_num
+    attr_accessor :owner, :coords, :angle, :attacker, :rocks, :rock_num, :specs
     # Create a new weapon instance for the wedges to detect the attack
     # Should take the wedge map building as owner to simulate the attack
     def initialize(owner, creeps)
@@ -73,11 +73,13 @@ module BD
       @specs = BaseDefender.adjusted_game_metadata['buildings']['wedge']['levels'][@owner.owner['level'].to_s]['specs']
       @coords = @owner.owner['coords']
       @animated = false
+      @move_steps = 2
     end
 
     def tick      
       if(@owner.owner['state'] == BD::Building.states['NORMAL'])
         check_attack()
+        
         if @attacker
           @angle = Map.get_general_direction(@coords['x'], @coords['y'], @attacker.coords['x'], @attacker.coords['y'])
         end 
@@ -85,48 +87,54 @@ module BD
     end
 
     def display_tick
-      if @attacker == false
-        @step = 0
-      end
-      if @attacker || @animated == false
-        @animated = true
-      end
-      if @attacker && @animated
-        @step += 1
-        if @step == 4
-          rock = BD::Rock.new(self, @attacker)
-          @rocks << rock
-          rock.tick
-        end
-        if @step == 9
+      if(@owner.owner['state'] == BD::Building.states['NORMAL'])
+        if @attacker == nil
           @step = 0
-          @animated = false
         end
-
+        if @attacker && @animated == false
+          @animated = true
+        end
+        if @attacker && @animated
+          @step += 1
+          if @step == @move_steps
+            rock = BD::Rock.new(self, @attacker)
+            @rocks << rock
+          end
+          if @step == 9
+            @step = 0
+            @animated = false
+            fire
+          end
+        end
       end
-      @rocks.each { |rock| rock.tick }
+      @rocks.each do |rock| 
+                    if(!rock.done) 
+                      rock.tick 
+                    end
+                  end
     end
 
     def check_attack()
-      if(@owner.owner['hp'] <= 1)
+      if(@owner.hp <= 1)
         @attacker = nil 
         return
       end
       if (@attacker && @attacker.hp > 0)
         return
-      else 
-        @creeps.delete(@attacker)
+      else
         @attacker = nil
       end
       attack = nil
       minHp = 50000
       minDistance = @specs['range']
       @creeps.each do |creep|
-        dist = Util.distance(@coords['x'], @coords['y'], creep.coords['x'], creep.coords['y']);
-        if(dist < minDistance)
-          if(creep.hp < minHp)
-            minHp = creep.hp;
-            attack = creep;
+        if creep.hp > 0 
+          dist = Util.distance(@coords['x'], @coords['y'], creep.coords['x'], creep.coords['y']);
+          if(dist < minDistance)
+            if(creep.hp < minHp)
+              minHp = creep.hp;
+              attack = creep;
+            end
           end
         end
       end
@@ -134,15 +142,7 @@ module BD
     end
 
     def fire 
-      if(@owner.owner['hp'] <= 1)
-        @attacker = nil 
-        return
-      end
-      if @attacker
-        @attacker.hp -= @specs['power']
-        puts "========================== Firing ===================== #{@attacker.hp}"
-        @attacker = nil
-      end
+      @attacker = nil
     end
 
   end

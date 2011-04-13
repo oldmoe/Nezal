@@ -64,7 +64,7 @@ var Game = Class.create({
     var buildingImages = ['townhall.png']
     var panelImages = ['buttons.png']
     var questsImages = [  "msgBg.png", "wedge.png", "button.png", "msgBaloon.png", "questBaloon.png" , "questBg.png", "buildingPanelBg.png",
-                          "activeCell.png", "inactiveCell.png", "resources.png", "correct.png", "buildingsBg.png", "wedgesBg.png", 
+                          "resources.png", "correct.png", "buildingsBg.png", "wedgesBg.png", 
                           'button.png','cursor.png',"social.png", "civil.png", "military.png", "circles.png", "hover.png", "animated_circles.gif", 
                           "line.png", "townhall_info.png", "quarry_info.png", "lumbermill_info.png",
                           "defense_center_info.png", "war_factory_info.png", "house_info.png", 

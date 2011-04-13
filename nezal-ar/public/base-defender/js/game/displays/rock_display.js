@@ -43,7 +43,7 @@ var Rock = Class.create( {
 
 var RockDisplay = Class.create( Display, {
 
-  moveSteps : 4,
+  moveSteps : 2,
 
   initialize : function($super,owner,properties, container){
 	  $super(owner,properties)
@@ -61,7 +61,6 @@ var RockDisplay = Class.create( Display, {
   },
 
   render : function() {
-    if(this.currentMove == 9 ) this.currentMove = 0;
     var moveX = (this.owner.position2[this.owner.owner.angle].x - this.owner.position[this.owner.owner.angle].x)/this.moveSteps*this.currentMove;
     var moveY = (this.owner.position2[this.owner.owner.angle].y - this.owner.position[this.owner.owner.angle].y)/this.moveSteps*this.currentMove;
     this.sprites.rock.setShiftX(this.owner.position[this.owner.owner.angle].x + moveX);
@@ -86,7 +85,9 @@ var RockDisplay = Class.create( Display, {
       rock.display.show();
     }
     if(this.currentMove == 9)
+    {
       this.currentMove = 0;
+    }
   },
 
   stopAnimation : function(){

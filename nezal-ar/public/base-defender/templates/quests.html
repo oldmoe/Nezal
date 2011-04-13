@@ -212,17 +212,34 @@
 <!-- THIS PART IS NOT RELATED TO QUESTS .. IT IS THE BUILDING PANEL & HANDLING -->
 <textarea style="display:none;" id='buildings-panel'>
   <div id='buildingsPanel'>
-    <div class="buildings">
+    <div id="buildings" class="buildings">
       {for building in buildings}
+        {if (building.defense==false)}
         <div id="${building_index}" 
              onmouseout="$('${building_index}_info').hide();$('${building_index}_image').setStyle({height:'75px'})" 
              onmouseover="$('${building_index}_info').show();$('${building_index}_image').setStyle({height:'90px'})"
              class="item">     
           <div  class="itemData" onclick="Animation.hide('buildingDisplay');game.buildingsManager.build('${building_index}')">  
           </div>
-		 <span imgId="${building_index}_image"  class="loadedImg" imgClasses="background" imgSrc="images/quests/${building_index}_info.png">
-		  </span>    
+          <span imgId="${building_index}_image"  class="loadedImg" imgClasses="background" imgSrc="images/quests/${building_index}_info.png">
+          </span>    
         </div>
+        {/if}
+      {/for}
+    </div>
+    <div id="defense" class="buildings" style="display:none;">
+      {for building in buildings}
+        {if (building.defense==true)}
+        <div id="${building_index}" 
+             onmouseout="$('${building_index}_info').hide();$('${building_index}_image').setStyle({height:'75px'})" 
+             onmouseover="$('${building_index}_info').show();$('${building_index}_image').setStyle({height:'90px'})"
+             class="item">     
+          <div  class="itemData" onclick="Animation.hide('buildingDisplay');game.buildingsManager.build('${building_index}')">  
+          </div>
+          <span imgId="${building_index}_image"  class="loadedImg" imgClasses="background" imgSrc="images/quests/${building_index}_info.png">
+          </span>    
+        </div>
+        {/if}
       {/for}
     </div>
   </div>
@@ -256,24 +273,27 @@
       </div>
     </div>
   {/for}
-    <span class="loadedImg" imgClasses="buildingPanelBg" imgSrc="images/quests/buildingPanelBg.png">
-		  </span>
+  <span class="loadedImg" imgClasses="buildingPanelBg" imgSrc="images/quests/buildingPanelBg.png">
+  </span>
 	<span class="loadedImg" imgClasses="wedgesBg" imgSrc="images/quests/wedgesBg.png">
-		  </span>	  	  
+  </span>	  	  
 	<span class="loadedImg" imgClasses="buildingsBg" imgSrc="images/quests/buildingsBg.png">
-	  </span>	  	  
-    <span class="loadedImg" imgClasses="buildingPanelLine" imgSrc="images/quests/line.png">
-	  </span>	  	  
+  </span>	  	  
+  <span class="loadedImg" imgClasses="buildingPanelLine" imgSrc="images/quests/line.png">
+  </span>	  	  
 		 
   <div id="leftArrow" class="leftArrowContainer">
-  	
     <img style="margin-left:0;" src="images/quests/arrows_horizontal.png"/>
-   </div>
+  </div>
   <div id="rightArrow" class="rightArrowContainer">
     <img style="margin-left:-90px;" src="images/quests/arrows_horizontal.png"/>
   </div>
-  <div id="buildingsTrigger" onclick='$$(".buildingsBg")[0].setStyle({zIndex:10});$$(".wedgesBg")[0].setStyle({zIndex:0});$("buildingsPanel").setStyle({zIndex:11})'>Buildings</div>
-  <div id="wedgesTrigger" onclick='//$$(".buildingsBg")[0].setStyle({zIndex:0});$$(".wedgesBg")[0].setStyle({zIndex:10});$("buildingsPanel").setStyle({zIndex:0})'>Wedges</div>
+  <div id="buildingsTrigger" class="buildingPanelTriggers activeTrigger" onclick="game.buildingsManager.displayBuildingsTab()">
+    Buildings
+  </div>
+  <div id="defenseTrigger" class="buildingPanelTriggers inactiveTrigger" onclick="game.buildingsManager.displayDefenseTab()">
+    Defense
+  </div>
   <div id="closeBuildingPanel" onclick="Animation.hide('buildingDisplay');"></div>
 </textarea>
 

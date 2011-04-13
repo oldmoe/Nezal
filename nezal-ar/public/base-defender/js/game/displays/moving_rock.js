@@ -21,7 +21,8 @@ var MovingRock = Class.create({
     this.rockImg = Loader.images.weapons[this.owner.owner.owner.shot + '.png'];
     this.display =  new DomImgSprite(this, {img: this.rockImg});
     this.id = parseInt(Math.random() * 10000);
-    this.tick();
+//    this.tick();
+    console.log("New Rock :: ", this.id, " :: ",  this.coords.x, " :: ", this.coords.y, " :: ", this.owner.owner.angle);
   },
 
   tick : function() {
@@ -43,10 +44,11 @@ var MovingRock = Class.create({
       this.coords.x = this.coords.x + this.extraXStep;
       this.coords.y = this.coords.y + this.extraYStep;
       this.display.render();
-//      console.log("Rock Tich ", this.id, " :: ", this.coords.x, " :: ", this.coords.y, " :: ", targetX, " :: ", targetY)
       if(this.coords.x == targetX && this.coords.y == targetY )
       {
-        this.owner.owner.fire();
+        console.log("Rock Fire ", this.id," :: ", this.attacker.id, " :: ", this.attacker.coords.x, " :: ", this.attacker.coords.y, " :: ",  this.coords.x, " :: ", this.coords.y)
+        this.attacker.hp -= this.owner.owner.specs.power;
+        console.log("=============================== FIREEEEEE =========================", this.attacker.hp);
         this.destroy();
       }
     }else {

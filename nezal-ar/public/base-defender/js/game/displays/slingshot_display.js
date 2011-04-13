@@ -87,6 +87,7 @@ SlingshotDisplay = Class.create( Display, {
           this.sprites.weapon.currentAnimationFrame = 0;
           this.animated = false;
           this.owner.shot.display.stopAnimation();
+          this.owner.fire();
         }
       }
     }    
