@@ -41,7 +41,9 @@ var Tutorial = Class.create({
       var buildButtonCallBack = function(){
                                     Hand.hide();
                                     $('questDisplay').hide();
-                                    self.game.buildingsManager.displayBuildingsPanel({'disabled' : ['quarry', 'lumbermill', 'storage', 'defense_center', 'wedge']});
+                                    var disabled =  BuildingMode.prototype.buildings.clone();
+                                    disabled.remove('townhall');
+                                    self.game.buildingsManager.displayBuildingsPanel({'disabled' : disabled});
                                     setTimeout(function(){
                                         $$('#buildingsPanel #townhall .itemData')[0].observe(game.mouseClickEvent, function(){Hand.hide()});
                                         Hand.point(self.game, { 'object' : $$('#buildingsPanel #townhall .itemData')[0], 'rotated' : false });
@@ -86,7 +88,9 @@ var Tutorial = Class.create({
       var buildButtonCallBack = function(){
                                     Hand.hide();
                                     $('questDisplay').hide();
-                                    self.game.buildingsManager.displayBuildingsPanel({'disabled' : ['townhall', 'lumbermill', 'storage', 'defense_center', 'wedge']});
+                                    var disabled =  BuildingMode.prototype.buildings.clone();
+                                    disabled.remove('quarry');
+                                    self.game.buildingsManager.displayBuildingsPanel({'disabled' : disabled});
                                     setTimeout(function(){
                                         $$('#buildingsPanel #quarry .itemData')[0].observe(game.mouseClickEvent, function(){Hand.hide()});
                                         Hand.point(self.game, { 'object' : $$('#buildingsPanel #quarry .itemData')[0], 'rotated' : false });
@@ -123,7 +127,9 @@ var Tutorial = Class.create({
       var buildButtonCallBack = function(){
                                     Hand.hide();
                                     $('questDisplay').hide();
-                                    self.game.buildingsManager.displayBuildingsPanel({'disabled' : ['quarry', 'townhall', 'storage', 'defense_center', 'wedge']});
+                                    var disabled =  BuildingMode.prototype.buildings.clone();
+                                    disabled.remove('lumbermill');
+                                    self.game.buildingsManager.displayBuildingsPanel({'disabled' : disabled});
                                     setTimeout(function(){
                                         $$('#buildingsPanel #lumbermill .itemData')[0].observe(game.mouseClickEvent, function(){Hand.hide()});
                                         Hand.point(self.game, { 'object' : $$('#buildingsPanel #lumbermill .itemData')[0], 'rotated' : false });

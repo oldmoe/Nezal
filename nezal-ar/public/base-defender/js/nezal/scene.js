@@ -30,6 +30,8 @@ var Scene = Class.create({
 	},
 	
 	tick : function(){
+/*    if(game.attackManager.attacking)
+      console.log("New Loop")*/
 		try{
 			var remainingObjects = []
 			var self = this

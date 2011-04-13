@@ -82,7 +82,7 @@ var Carousel = Class.create( {
             var step = -1 * (newIndex - this.currIndex) * this.width;
             this.currIndex = newIndex;
             var carousel = this;
-            new Effect.Move(this.ulId, {x: step, y: 0, mode: 'relative', duration: 0.5, afterFinish : function(){ carousel.enabled = true; } })
+            new Effect.Move(this.ulId, {x: step, y: 0, mode: 'relative', duration: 0.3, afterFinish : function(){ carousel.enabled = true; } })
             this.checkButtons();
         }
     },
@@ -92,7 +92,7 @@ var Carousel = Class.create( {
             index = this.listSize - this.displayCount
         var distance = (this.currIndex - index) * this.width;
         this.currIndex = index;
-        new Effect.Move(this.ulId, {x:distance, y: 0, mode: 'relative', duration: 0.5, afterFinish : function(){ }})
+        new Effect.Move(this.ulId, {x:distance, y: 0, mode: 'relative', duration: 0.3, afterFinish : function(){ }})
         this.checkButtons();
     },
     
