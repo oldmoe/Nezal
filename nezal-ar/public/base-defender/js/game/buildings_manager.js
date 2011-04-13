@@ -1,10 +1,14 @@
 var BuildingsManager = Class.create({
 
+  currentShift : 0,
+
+  maxShift : 5 ,
+
   initialize : function(game){
     this.game = game
     this.displayBuildButton(function(){
       game.buildingsManager.displayBuildingsPanel({'disabled' : []});
-	  Sounds.play(Sounds.gameSounds.click)
+  	  Sounds.play(Sounds.gameSounds.click);
     })
   },
 
@@ -17,9 +21,10 @@ var BuildingsManager = Class.create({
     var buildings = {};
     for ( var i in this.game.data.buildings) {
       buildings[i] = this.game.data.buildings[i]['levels'][1];
+      buildings[i]['defense'] = this.game.data.buildings[i]['defense'];
     }
-    $('buildingDisplay').innerHTML = this.game.templatesManager.buildingsPanel(buildings);
-	this.game.addLoadedImagesToDiv('buildingDisplay')
+    $('buildingDisplay').innerHTML = this.game.templatesManager.load("buildings-panel", {'buildings' : buildings});
+  	this.game.addLoadedImagesToDiv('buildingDisplay')
     var disabled = params['disabled'] || [];
 //    disabled.each(function(item){
 //                      $$('#buildingsPanel #' + item + ' .itemData')[0].onclick=function(){}
@@ -36,26 +41,28 @@ var BuildingsManager = Class.create({
   },
   
   buildingLeftArrowClickEvent : function(){
+    var self = this;
     $("leftArrow").stopObserving("click");
     $("leftArrow").observe("click", function(){
-      if(currentShift != 0) {
-        currentShift -= 5;
-        $$('#interaction .buildings')[0].setStyle({marginLeft : (currentShift*-84) + 'px' })
+      if(self.currentShift != 0) {
+        self.currentShift -= 5;
+        $$('#interaction .buildings')[0].setStyle({marginLeft : (self.currentShift*-84) + 'px' })
         $$('#rightArrow img')[0].setStyle({marginLeft : '-90px'});
-        if(currentShift == 0)
+        if(self.currentShift == 0)
           $$('#leftArrow img')[0].setStyle({marginLeft : '0'});
       }
     });
   },
   
   buildingrightArrowClickEvent : function(){
+    var self = this;
     $("rightArrow").stopObserving("click");
     $("rightArrow").observe("click", function(){
-      if(currentShift < maxShift) { 
-        currentShift += 5;
-        $$('#interaction .buildings')[0].setStyle({marginLeft : (currentShift*-84) + 'px' });
+      if(self.currentShift < self.maxShift) { 
+        self.currentShift += 5;
+        $$('#interaction .buildings')[0].setStyle({marginLeft : (self.currentShift*-84) + 'px' });
         $$('#leftArrow img')[0].setStyle({marginLeft : '-60px'});
-        if(currentShift == maxShift)
+        if(self.currentShift == self.maxShift)
           $$('#rightArrow img')[0].setStyle({marginLeft : '-30px'});
       }
     });
@@ -72,6 +79,31 @@ var BuildingsManager = Class.create({
   
   build : function(building){
     this.game.buildingMode.on(this.game[building.dasherize().camelize() + 'Factory'].newBuilding(), function(){});
+  },
+
+  displayDefenseTab : function(){
+    $$(".buildingsBg")[0].setStyle({zIndex:0});
+    $$(".wedgesBg")[0].setStyle({zIndex:10});
+    $("buildingsPanel").setStyle({zIndex:11});
+    $("buildingsTrigger").removeClassName('activeTrigger');
+    $("buildingsTrigger").addClassName('inactiveTrigger');
+    $("defenseTrigger").removeClassName('inactiveTrigger');
+    $("defenseTrigger").addClassName('activeTrigger');
+    $$("#buildingsPanel #buildings")[0].hide();
+    $$("#buildingsPanel #defense")[0].show();
+  },
+
+  displayBuildingsTab : function(){
+    $$(".buildingsBg")[0].setStyle({zIndex:10});
+    $$(".wedgesBg")[0].setStyle({zIndex:0});
+    $("buildingsPanel").setStyle({zIndex:11});
+    $("defenseTrigger").removeClassName('activeTrigger');
+    $("defenseTrigger").addClassName('inactiveTrigger');
+    $("buildingsTrigger").removeClassName('inactiveTrigger');
+    $("buildingsTrigger").addClassName('activeTrigger');
+    $$("#buildingsPanel #defense")[0].hide();
+    $$("#buildingsPanel #buildings")[0].show();
   }
 
 })
+

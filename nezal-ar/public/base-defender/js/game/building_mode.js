@@ -97,6 +97,7 @@ var BuildingMode = Class.create({
 	
   _AttachCanvasClickListener : function(){
     $('gameCanvas').stopObserving(game.mouseClickEvent);
+	var self = this
     $('gameCanvas').observe(game.mouseClickEvent, function(mouse){
       if(game.neighborGame)
         return;
@@ -104,18 +105,19 @@ var BuildingMode = Class.create({
       var y = mouse.pointerY() || mouse.touches[0].pageY;
 	  	var mapCoords =  Map.getRealCoords(x,y)
       if(game.buildingMode.isOn) 
-        game.buildingMode._ModeOnAction();
+        self._ModeOnAction(self.selectedBuilding.coords.x,self.selectedBuilding.coords.y);
     });
   },
 	
-  _ModeOnAction : function(){
+  _ModeOnAction : function(x,y){
 		if(this.moveBuilding){
-			this.moveBuilding = false;
-			this.selectedBuilding.move(this.selectedBuilding.coords.x,this.selectedBuilding.coords.y)
-			this.hideBuildingBases()
-			this.cancelBuildingMode()
+			if (this.selectedBuilding.move(x,y)) {
+				this.moveBuilding = false;
+				this.hideBuildingBases()
+				this.cancelBuildingMode()
+			}
 		}
-    	else if (this.selectedBuilding.build(this.selectedBuilding.coords.x, this.selectedBuilding.coords.y)) {
+    	else if (this.selectedBuilding.build(x,y)) {
       		this.callback();
 			this.hideBuildingBases()
       		//this.off();

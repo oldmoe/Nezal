@@ -12,9 +12,31 @@
  
     <input type="submit" value="Save" class="submit"/>
   </div>
-</form--> 
+</form-->
 
 <script type='text/javascript'>
+  var data = <%=JSON.generate(@game.metadata)%>
+  for(i in data.buildings)
+  {
+    data.buildings[i]['defense'] = false;
+  }
+  ['wedge', 'gaddafi'].each(function(name){
+                              data.buildings[name]['defense'] = true;
+                            });
+  new Ajax.Request( '/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/metadata' , {
+                     method : 'put',
+                     parameters : { "data" : JSON.stringify(data) },
+                     onSuccess : function(response){
+                       $('requestStatus').innerHTML = "Saved successfully"
+                       $('requestStatus').className = "success"
+                     },
+                     onFailure : function(response){
+                       $('requestStatus').innerHTML = "Error, your changes are not saved!"
+                       $('requestStatus').className = "error"
+                     }
+                     
+                 });    
+
   deleteAllUserProfiles = function(){
     new Ajax.Request('/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/user_game_profiles', {
       method: 'put',

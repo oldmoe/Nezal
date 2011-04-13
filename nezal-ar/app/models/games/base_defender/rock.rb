@@ -15,6 +15,8 @@ module BD
 
     IMG_WIDTH = 15
     IMG_HEIGHT = 15
+  
+    attr_reader :done
 
     def initialize(owner, creep)
       @owner = owner
@@ -26,6 +28,8 @@ module BD
       @coords[:x] = @owner.coords['x'] + POSITION[@owner.angle][:x] + @extraXStep - img_width/2.0 + IMG_WIDTH/2.0;
       @coords[:y] = @owner.coords['y'] + POSITION[@owner.angle][:y] + @extraYStep - img_height/2.0 + IMG_HEIGHT/2.0;
       @attacker = nil
+      @done = false
+      puts "New Rock :: #{self.__id__} :: #{@coords[:x]} :: #{@coords[:y]} :: #{@owner.angle}"
     end  
 
     def tick
@@ -48,18 +52,15 @@ module BD
         end
         @coords[:x] = @coords[:x] + @extraXStep
         @coords[:y] = @coords[:y] + @extraYStep
-        puts "Rock tick #{self.__id__}  ::  #{@coords[:x]}  ::  #{@coords[:y]} ::  #{target_x} ::  #{target_y}"
         if(@coords[:x] == target_x && @coords[:y] == target_y )
-          @owner.fire()
-          destroy()
+          @done = true
+          puts "Rock Fire #{self.__id__} :: #{@attacker.__id__} :: #{@attacker.coords['x']} :: #{@attacker.coords['y']} :: #{@coords[:x]}  ::  #{@coords[:y]}"
+          @attacker.hp -= @owner.specs['power']
+          puts "================================== FIREEEEEEEEEEEEE ====================== #{@attacker.hp}"
         end
       else
-        destroy()
+        @done = true
       end
-    end
-
-    def destroy
-      @owner.rocks.delete(self)
     end
 
   end  

@@ -42,7 +42,7 @@ var Slingshot = Class.create({
   checkAttack : function() {
     if(this.owner.hp <=1)
       return null;
-    if (this.attacker && this.attacker.hp > 0)
+    if (this.attacker || this.attacke <=0)
       return this.attacker;
     var attack = null;
     var minHp = 50000;
@@ -50,13 +50,16 @@ var Slingshot = Class.create({
     for( var i = 0; i < this.game.creepFactory.registery.length; i++ )
     {
       var creep = this.game.creepFactory.registery[i];
-      var dist = Util.distance(this.coords.x, this.coords.y, creep.coords.x, creep.coords.y);
-      if(dist < minDistance)
+      if(creep.hp > 0 )
       {
-        if(creep.hp < minHp)
+        var dist = Util.distance(this.coords.x, this.coords.y, creep.coords.x, creep.coords.y);
+        if(dist < minDistance)
         {
-          minHp = creep.hp;
-          attack = creep;
+          if(creep.hp < minHp)
+          {
+            minHp = creep.hp;
+            attack = creep;
+          }
         }
       }
     }
@@ -64,17 +67,6 @@ var Slingshot = Class.create({
   },
 
   fire : function() {
-    if( this.owner.hp <=1 )
-    {
-      this.attacked = false;
-      this.attacker = null;
-      return;
-    }
-		if(this.attacker)
-    {
-      this.attacker.hp -= this.specs.power;
-      console.log("==================Firing=====================  ", this.attacker.hp)
-    }
     this.attacked = false;      
     this.attacker = null;
   },

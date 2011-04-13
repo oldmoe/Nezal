@@ -144,33 +144,36 @@
   z-index: 10;
 }
 
-#interaction #wedgesTrigger {
+#interaction .buildingPanelTriggers {
   color: gold;
   cursor: pointer;
-  font-size: 28px;
   height: 40px;
-  left: 300px;
   line-height: 48px;
-  position: absolute;
   text-align: center;
-  top: 70px;
   width: 150px;
   z-index: 10;
 }
 
-#interaction #buildingsTrigger {
-  color: gold;
-  cursor: pointer;
+#interaction .inactiveTrigger {
+  font-size: 20px;
+  font-family: Lds;
+}
+
+#interaction .activeTrigger {
+  font-size: 24px;
   font-family: showG;
-  font-size: 19px;
-  height: 40px;
-  left: 140px;
-  line-height: 48px;
+}
+
+#interaction #defenseTrigger {
+  left: 300px;
   position: absolute;
-  text-align: center;
   top: 70px;
-  width: 150px;
-  z-index: 10;
+}
+
+#interaction #buildingsTrigger {
+  left: 150px;
+  position: absolute;
+  top: 70px;
 }
     
 #interaction #buildingsPanel .item {

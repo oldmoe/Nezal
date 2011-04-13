@@ -4,7 +4,12 @@ module BD
       super(map,initial_x, initial_y)
       @map = map
       @id = id
-      @specs = game_metadata['creeps']['car']
+#      @specs = game_metadata['creeps']['car']
+      @specs = {
+                "hp" => 100,
+                "power" => 3,
+                "speed" => 3
+            }
       @map_direction = Map.N  
       @coords = {}
       @coords['x'] = initial_x.to_f
@@ -27,9 +32,9 @@ module BD
     def tick
       @tick_counter = @tick_counter + 1
       if @hp <= 0 
-       @done_attack = true
-       return
-     end
+        @done_attack = true
+        return
+      end
       unless @target
         @target = pick_target 
       end
@@ -39,12 +44,19 @@ module BD
       super
       if(@target && @moving_path.length == 0)
         @target.hp -=@power
+#        puts "Car Fire :: #{self.__id__} :: #{self.hp} :: #{@coords['x']} :: #{@coords['y']} "
         @attacked = true
       end
       if (@target.hp <= 1)
         @target.hp = 1
         @target = nil
       end
+#      puts "Car Tick :: #{self.__id__} :: #{self.hp} :: #{@coords['x']} :: #{@coords['y']} "
+=begin
+      if @hp > 0 
+        puts "Car Tick Fire :: #{self.__id__} :: #{self.hp} :: #{@coords['x']} :: #{@coords['y']} "
+      end
+=end
     end
     
     def pick_target

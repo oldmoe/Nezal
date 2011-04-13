@@ -287,7 +287,7 @@ class BaseDefender < Metadata
           map_building = BD::MapBuilding.new building, building_name, options
           map.add_element map_building
           if @@wedges[building_name]
-            weapons << BD::Weapon.new(map_building, creeps.clone)
+            weapons << BD::Weapon.new(map_building, creeps)
           end
         end
       end
@@ -305,9 +305,9 @@ class BaseDefender < Metadata
         weapon.tick
       end
       creeps.each do |creep|
+        creep.tick
         if(!creep.done_attack)
           done=false
-          creep.tick
         end
       end
       weapons.each do |weapon|
