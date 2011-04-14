@@ -36,13 +36,15 @@ var Slingshot = Class.create({
       }else {
         this.attacked = false;
       }
+/*      if(game.attackManager.attacking)
+        console.log("Weapon Tick :: ", this.id, this.coords);*/
     }
   },
 
   checkAttack : function() {
     if(this.owner.hp <=1)
       return null;
-    if (this.attacker || this.attacke <=0)
+    if (this.attacker && this.attacker.hp > 0)
       return this.attacker;
     var attack = null;
     var minHp = 50000;

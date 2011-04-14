@@ -294,12 +294,14 @@ class BaseDefender < Metadata
     end
     done = false
     weapons.each do |weapon|
+      puts weapon.coords
       weapon.tick
     end
     weapons.each do |weapon|
       weapon.display_tick
     end
     while(!done)
+      puts "=======================New LOOP=================="
       done = true
       weapons.each do |weapon|
         weapon.tick
