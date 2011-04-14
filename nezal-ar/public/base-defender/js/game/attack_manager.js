@@ -6,6 +6,23 @@ var AttackManager = Class.create({
 		this.creeps = []
 	    var self = this;
 		this.game = game;
+		if (this.game.user.data.notifications) {
+			var notifications = this.game.user.data.notifications.queue.findAll(function(n){
+				return n['type'] == 'attack';
+			});
+			if (notifications) {
+				notifications.each(function(notification){
+					attacker_id = notification.data.attacker_id
+					result = []
+					serviceProvider.getUsersInfo([attacker_id], result, function(){
+						notification.text = TrimPath.parseTemplate(notification.text).process({
+							name: result[attacker_id].name
+						})
+						Notification.notify(notification.text)
+					})
+				})
+			}
+		}
 	    $("sendAttack").stopObserving("click");
 	    $("sendAttack").observe(game.mouseClickEvent, function(){
 			Sounds.play(Sounds.gameSounds.click);

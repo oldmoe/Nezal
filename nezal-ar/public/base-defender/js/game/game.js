@@ -214,8 +214,8 @@ var Game = Class.create({
     if(this.reactor) this.reactor.stop();
     this.reactor = new Reactor(80);
     this.reactor.run();
-    this.attackManager = new AttackManager(this);
     this.user = new User(this);
+	this.attackManager = new AttackManager(this);
     this.scene = new BaseDefenderScene(this);	
     this.resources.rock = this.user.data.rock;
     this.resources.lumber = this.user.data.lumber;

@@ -266,13 +266,24 @@ class BaseDefender < Metadata
     if(!data['user_id'].nil?)
       neighbor_profile = BD::Neighbor.neighbor_profile(user_game_profile, data)
       profile_metadata  = neighbor_profile.metadata
-      validation = simulate_attack profile_metadata, data
+      attack_result = simulate_attack profile_metadata, data
+      if(attack_result['attack_success'])
+         puts "ATTTTTTAAAAAACK SUCCESS"
+         Notification.new( {:metadata => profile_metadata, :notification_type => "attack",
+                         :notification_text => "You have been attacked by ${name}, click 'repair' to repair your buildings.",
+                        :notification_data =>{:attacker_id => user_game_profile['user_id']} })
+      else
+        puts "ATTTTTTAAAAAACK FAILED"
+        Notification.new( {:metadata => profile_metadata, :notification_type => "attack",
+                         :notification_text => "You have been attacked by ${name}, but your defenses crushed the attackers before they harm your base.",
+                        :notification_data =>{:attacker_id => user_game_profile['user_id']} })
+      end
       neighbor_profile.save
     else
       profile_metadata = user_game_profile.metadata
-      validation = simulate_attack profile_metadata, data
+      attack_result = simulate_attack profile_metadata, data
     end
-    validation
+    attack_result['validation']
   end
   
   def self.simulate_attack profile_metadata, data
@@ -330,12 +341,18 @@ class BaseDefender < Metadata
       end
     end
     puts "=====================FINISHED========================="
+    attack_success = false
+    creeps.each do |creep|
+      if(creep.attacked)
+        attack_success=true
+      end
+    end
     map.objects.each do |obj|
       puts "#{obj.name}  #{obj.hp}"
       key = self.convert_location(obj.owner['coords'])
       profile_metadata[obj.name][key]['hp'] = obj.hp
     end
-    return {'valid' => true, 'error' => ''}
+    return {'attack_success'=> attack_success, 'validation'=>{'valid' => true, 'error' => ''}}
   end
   
   def self.buy_worker(user_game_profile)
@@ -380,14 +397,15 @@ class BaseDefender < Metadata
   def self.init_game_profile(user_game_profile)
     user_game_profile.metadata= 
     {'townhall' => nil,
-                   'lumbermill' => nil,
-                   'quarry' => nil,
-                   'workers' => 1,
-                   'idle_workers' => 1,
-                   'rock' => 50000,
-                   'lumber' => 50000,
-                   'notifications' => {'id_generator' => 0, 'queue' => []},
-                   'map' => (0..72).to_a.map{(0..24).to_a.map{0}}
+     'lumbermill' => nil,
+     'quarry' => nil,
+     'workers' => 1,
+     'idle_workers' => 1,
+     'rock' => 50000,
+     'lumber' => 50000,
+     'notifications' => {'id_generator' => 0, 'queue' => []},
+     'attacks' => {},
+     'map' => (0..72).to_a.map{(0..24).to_a.map{0}}
     }
   end
 end
