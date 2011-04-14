@@ -207,9 +207,9 @@ class BaseDefender < Metadata
     end
     
     @@game_metadata = initialize_game_metadata user_game_profile.game
-    if( user_game_profile['helping_power'].nil? )
-      user_game_profile.metadata['helping_power'] = @@game_metadata['xp_levels']["1"]["max_helping_power"]
-    end
+#    if( user_game_profile['helping_power'].nil? )
+#      user_game_profile.metadata['helping_power'] = @@game_metadata['xp_levels']["1"]["max_helping_power"]
+#    end
     BD::Research.init user_game_profile
     calculate_jobs user_game_profile
     BD::Quest::assess_user_quests user_game_profile
