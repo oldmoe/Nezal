@@ -36,8 +36,8 @@ var Hand = {
     var position = Element.cumulativeOffset(this.obj);
     this.topOffset = position[1] - 60 * this.direction;
     this.leftOffset = position[0] - 25;
-    this.topOffset = this.topOffset + 8*this.moveDirection*this.direction;
-    this.leftOffset = this.leftOffset + 8*this.moveDirection;
+    this.topOffset = this.topOffset + 6*this.moveDirection*this.direction;
+    this.leftOffset = this.leftOffset + 6*this.moveDirection;
     $('hand').setStyle({zIndex : 1001,  top : this.topOffset + "px", left : this.leftOffset + "px" });
     this.moveDirection *= -1;
   },
