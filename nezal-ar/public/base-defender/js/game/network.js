@@ -91,7 +91,10 @@ var Network = Class.create({
   },
 
 	simulateAttack : function(creeps){
-		return this.contactTheBoss({ 'event' : 'attack','creeps': creeps})	
+		if(!game.neighborGame)
+			return this.contactTheBoss({ 'event' : 'attack','creeps': creeps})
+		else 	
+			return this.contactTheBoss({ 'event' : 'attack','creeps': creeps ,'user_id':game.visitedNeighborId})
 	},
 	
 	repairBuildings : function(){

@@ -13,7 +13,6 @@ var WedgeDisplay = Class.create(BuildingDisplay, {
 
   createSprites : function(){
     this.container = new DomSpriteContainer(this.owner)
-		this.sprites.underConstruction = new DomImgSprite(this.owner, {img: this.constructionImg}, {shiftY: this.zdim})
 		this.sprites.base = this.container.newDomImgSprite(this.owner, {img : this.baseImg, width:this.width}, {shiftY: this.zdim, divClass: "buildingBase"});
 		this.sprites.invalid = this.container.newDomImgSprite(this.owner, {img : this.invalidImg, width:this.width}, {shiftY: this.zdim});
 		this.sprites.shadow = this.container.newDomImgSprite(this.owner, {img: this.shadowImg, width:this.shadowImg.width,
@@ -37,12 +36,16 @@ var WedgeDisplay = Class.create(BuildingDisplay, {
 		this.sprites.clickSprite = new DomImgSprite(this.owner,{img : this.transparentImg, area:this.area}, {clickable: true});
 		this.sprites.clickSprite.img.setStyle({width:this.imgWidth+"px",height:this.imgHeight+"px"})
     this.sprites.mouseover = new DomImgSprite(this.owner, {img: this.mouseoverImg});
+	this.sprites.underConstruction = new DomImgSprite(this.owner, {img: this.constructionImg}, {shiftY: this.zdim})
     this.container.render();
   },
 
    manageStateChange : function($super){
     $super()
     var self = this;
+	this.owner.stateNotifications[this.owner.states.NOT_PLACED].push(function(){
+      self.sprites.moving.show();
+    });
     this.owner.stateNotifications[this.owner.states.UNDER_CONSTRUCTION].push(function(){
       self.owner.weapon.container.hide();
     });

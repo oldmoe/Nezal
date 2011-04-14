@@ -4,14 +4,14 @@ var AttackManager = Class.create({
 	attacking : false,
 	initialize: function(game){
 		this.creeps = []
-    var self = this;
+	    var self = this;
 		this.game = game;
-    $("sendAttack").stopObserving("click");
-    $("sendAttack").observe(game.mouseClickEvent, function(){
-		Sounds.play(Sounds.gameSounds.click);
-      	self.simulateAttack();
-		$('attackDiv').show();
-    });
+	    $("sendAttack").stopObserving("click");
+	    $("sendAttack").observe(game.mouseClickEvent, function(){
+			Sounds.play(Sounds.gameSounds.click);
+	      	self.simulateAttack();
+			$('attackDiv').show();
+	    });
 	},
 	simulateAttack : function(){
 		if(this.attacking) return
@@ -41,9 +41,11 @@ var AttackManager = Class.create({
 			this.creepsDone = 0
 			this.attacking = false
 			if(attackSuccess){
-					console.log('!!!!!!!')
-				this.showRepairMsg()
+				console.log('!!!!!!!')
+			    if(this.game.neighborGame) this.showAttackSuccessMsg()
+				else this.showRepairMsg()
 			}else{
+				if(this.game.neighborGame) this.showAttackFailMsg()
 				this.showDefendCongratsMsg()
 			}
 		}	
@@ -53,6 +55,11 @@ var AttackManager = Class.create({
 	},
 	showDefendCongratsMsg : function(){
 		Notification.notify("You have successfully defended your city")
+	},
+	showAttackSuccessMsg : function(){
+		Notification.notify("Well done! you ate him.")
+	},
+	showAttackFailMsg : function(){
+		Notification.notify("Attack failed, try again later.")
 	}
-	
 })

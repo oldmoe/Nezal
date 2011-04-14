@@ -18,5 +18,4 @@ var TemplatesManager = Class.create({
   load : function(name, params){
     return TrimPath.processDOMTemplate(name + "-template", params);
   }
-
 });

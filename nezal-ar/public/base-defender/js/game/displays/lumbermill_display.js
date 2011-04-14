@@ -21,7 +21,6 @@ var LumbermillDisplay = Class.create(ResourceBuildingDisplay, {
     
   createSprites : function(){
   	this.sawImg = Loader.images.buildings['lumbermill_saw.png'];
-	this.sprites.underConstruction = new DomImgSprite(this.owner, {img: this.constructionImg}, {shiftY: this.zdim})
     this.sprites.base = new DomImgSprite(this.owner, {img : this.baseImg}, {shiftY: this.zdim, divClass: "buildingBase"});
     this.sprites.invalid = new DomImgSprite(this.owner, {img : this.invalidImg}, {shiftY: this.zdim});
     this.sprites.shadow = new DomImgSprite(this.owner, {img: this.shadowImg, width:this.shadowImg.width,
@@ -36,6 +35,7 @@ var LumbermillDisplay = Class.create(ResourceBuildingDisplay, {
       this.sprites.mouseover = new DomImgSprite(this.owner, {img: this.mouseoverImg});
     this.sprites.clickSprite = new DomImgSprite(this.owner,{img: this.transparentImg,area:this.area}, {clickable: true});
       this.sprites.clickSprite.img.setStyle({width:this.imgWidth+"px",height:this.imgHeight+"px"})
+	  this.sprites.underConstruction = new DomImgSprite(this.owner, {img: this.constructionImg}, {shiftY: this.zdim})
     //this.sprites.skeleton = new DomSkeleton(this.owner)
   },
    manageStateChange : function($super){
