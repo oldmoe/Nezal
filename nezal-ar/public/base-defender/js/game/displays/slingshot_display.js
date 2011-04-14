@@ -90,6 +90,8 @@ SlingshotDisplay = Class.create( Display, {
           this.owner.fire();
         }
       }
+/*      if(game.attackManager.attacking)
+        console.log("Weapon Render :: ", this.owner.id, " :: " , this.sprites.weapon.currentAnimationFrame, " :: ", this.animated);*/
     }    
   }
 

@@ -39,6 +39,7 @@ module BD
         @target = pick_target 
       end
       unless(@target)
+        @done_attack = true
         return
       end
       super

@@ -27,17 +27,14 @@ module BD
       img_height = BaseDefender.adjusted_game_metadata['buildings']['wedge']['levels'][@owner.owner.owner['level'].to_s]['display']['imgHeight']
       @coords[:x] = @owner.coords['x'] + POSITION[@owner.angle][:x] + @extraXStep - img_width/2.0 + IMG_WIDTH/2.0;
       @coords[:y] = @owner.coords['y'] + POSITION[@owner.angle][:y] + @extraYStep - img_height/2.0 + IMG_HEIGHT/2.0;
-      @attacker = nil
       @done = false
+      @attacker = @owner.attacker
+      @extraXStep = 0
+      @extraYStep = 0
       puts "New Rock :: #{self.__id__} :: #{@coords[:x]} :: #{@coords[:y]} :: #{@owner.angle}"
     end  
 
     def tick
-      if(!@attacker)
-        @attacker = @owner.attacker
-        @extraXStep = 0
-        @extraYStep = 0
-      end
       if @attacker
         target_x = @attacker.coords['x']
         target_y = @attacker.coords['y'] + 93.0/8.0;
@@ -52,6 +49,7 @@ module BD
         end
         @coords[:x] = @coords[:x] + @extraXStep
         @coords[:y] = @coords[:y] + @extraYStep
+        puts "Rock Tick #{self.__id__} :: #{@attacker.__id__} :: #{@attacker.coords['x']} :: #{@attacker.coords['y']} :: #{@coords[:x]}  ::  #{@coords[:y]}"
         if(@coords[:x] == target_x && @coords[:y] == target_y )
           @done = true
           puts "Rock Fire #{self.__id__} :: #{@attacker.__id__} :: #{@attacker.coords['x']} :: #{@attacker.coords['y']} :: #{@coords[:x]}  ::  #{@coords[:y]}"

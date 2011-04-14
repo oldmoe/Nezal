@@ -26,7 +26,7 @@ var BuildingsManager = Class.create({
       buildings[i] = this.game.data.buildings[i]['levels'][1];
       buildings[i]['defense'] = this.game.data.buildings[i]['defense'];
     }
-    $('buildingDisplay').innerHTML = this.game.templatesManager.load("buildings-panel", {'buildings' : buildings});
+    $('buildingDisplay').innerHTML = this.game.templatesManager.load("buildings-panel", {'buildings' : buildings, 'disabled' : params['disabled']});
 
     if(this.buildingsCarousel)
       this.buildingsCarousel.destroy();      
