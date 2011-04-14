@@ -222,8 +222,10 @@
           {if (building.defense==false)}
           <li>
             <div id="${building_index}" 
+                {if (disabled.indexOf(building_index) < 0)}
                  onmouseout="$('${building_index}_info').hide();$('${building_index}_image').setStyle({height:'75px'})" 
                  onmouseover="$('${building_index}_info').show();$('${building_index}_image').setStyle({height:'90px'})"
+                {/if}
                  class="item">     
               <div  class="itemData" onclick="Animation.hide('buildingDisplay');game.buildingsManager.build('${building_index}')">  
               </div>
@@ -249,8 +251,10 @@
           {if (building.defense==true)}
           <li>
             <div id="${building_index}" 
+                {if (disabled.indexOf(building_index) < 0)}
                  onmouseout="$('${building_index}_info').hide();$('${building_index}_image').setStyle({height:'75px'})" 
                  onmouseover="$('${building_index}_info').show();$('${building_index}_image').setStyle({height:'90px'})"
+                {/if}
                  class="item">     
               <div  class="itemData" onclick="Animation.hide('buildingDisplay');game.buildingsManager.build('${building_index}')">  
               </div>
