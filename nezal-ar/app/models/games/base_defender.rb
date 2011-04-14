@@ -205,7 +205,11 @@ class BaseDefender < Metadata
       origin['error'] = user_game_profile['error']
       user_game_profile.metadata= origin
     end
+    
     @@game_metadata = initialize_game_metadata user_game_profile.game
+#    if( user_game_profile['helping_power'].nil? )
+#      user_game_profile.metadata['helping_power'] = @@game_metadata['xp_levels']["1"]["max_helping_power"]
+#    end
     BD::Research.init user_game_profile
     calculate_jobs user_game_profile
     BD::Quest::assess_user_quests user_game_profile
@@ -380,16 +384,20 @@ class BaseDefender < Metadata
   end
   
   def self.init_game_profile(user_game_profile)
-    user_game_profile.metadata= 
-    {'townhall' => nil,
-                   'lumbermill' => nil,
-                   'quarry' => nil,
-                   'workers' => 1,
-                   'idle_workers' => 1,
-                   'rock' => 50000,
-                   'lumber' => 50000,
-                   'notifications' => {'id_generator' => 0, 'queue' => []},
-                   'map' => (0..72).to_a.map{(0..24).to_a.map{0}}
+    user_game_profile.metadata = {
+      'townhall' => nil,
+      'lumbermill' => nil,
+      'quarry' => nil,
+      'workers' => 1,
+      'idle_workers' => 1,
+      'rock' => 50000,
+      'lumber' => 50000,
+      'notifications' => {'id_generator' => 0, 'queue' => []},
+      'map' => (0..72).to_a.map{(0..24).to_a.map{0}},
+      'xp_info' => {
+        'xp_level' => 1,
+        'xp' => 0
+      }
     }
   end
 end
