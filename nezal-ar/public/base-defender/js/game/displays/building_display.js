@@ -80,7 +80,7 @@ var BuildingDisplay = Class.create(Display, {
       var self = this;
       this.sprites.moreButton = new DomImgSprite(this.owner, {img: this.buttonImg, zIndex : this.sprites.base.minAreaZIndex + 1100});
       this.sprites.moreButton.shiftX = (this.imgWidth - this.buttonImg.width)/2+2;
-      this.sprites.moreButton.shiftY = this.imgHeight - this.buttonImg.height - 10;
+      this.sprites.moreButton.shiftY = this.imgHeight - this.buttonImg.height - 15;
       this.owner.moreButtonText = function(){ return "more"};
       this.sprites.moreButtonText = new DomTextSprite(this.owner, 'moreButtonText',
                                                       {centered: true, shiftY: this.sprites.moreButton.shiftY, 
