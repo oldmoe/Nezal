@@ -27,7 +27,9 @@
 	height :113px;			
 }
 #friends .right, .left{
-	margin-top : 20px;
+	margin-top : 15px;
+  width : 30px;
+  overflow : hidden;
 }
 #friends-ul {
 	margin : 0px;
@@ -37,7 +39,20 @@
 	float : left;
 	list-style : none;			
 }
-
+#friends .leftOff {
+  margin-left : 0px;
+}
+#friends .leftOn {
+  margin-left : -60px;
+  cursor : pointer;
+}
+#friends .rightOff {
+  margin-left : -30px;
+}
+#friends .rightOn {
+  margin-left : -90px;
+  cursor : pointer;
+}
 
 #friends .friend{
   cursor: pointer;

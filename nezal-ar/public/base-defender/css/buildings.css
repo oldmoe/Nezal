@@ -62,33 +62,13 @@
   display:inline-block;
 }
 
-#interaction .leftArrowContainer {
-  left: 140px;
-  overflow: hidden;
-  position: absolute;
-  top: 150px;
-  width: 30px;
-  cursor: pointer;
-  z-index: 10;
-}
-
-#interaction .rightArrowContainer {
-  left: 620px;
-  overflow: hidden;
-  position: absolute;
-  top: 150px;
-  width: 30px;
-  cursor: pointer;
-  z-index: 10;
-}
-
 #interaction #buildingsPanel {
   height: 100px;
-  left: 185px;
+  left: 145px;
   overflow: hidden;
   position: absolute;
   top: 140px;
-  width: 420px;
+  width: 530px;
 }
 
 #interaction .buildingInfo {
@@ -179,12 +159,12 @@
 #interaction #buildingsPanel .item {
   float: left;
   height: 78px;
+  width: 84px;
   margin-bottom: 11px;
   margin-top: 11px;
   overflow: visible;
   position: relative;
   text-align: center;
-  width: 84px;
 }
 
 #interaction .buildingPanelLine {
@@ -198,6 +178,7 @@
   position : relative;
   top : -77px;
   height : 75px;
+  float : none;
 }
 #interaction #buildingsPanel .item .itemData {  
   cursor: pointer;
@@ -248,5 +229,48 @@
 }
 #interaction #buildingDisplay .buildButton .alignDiv {
   width : 83%;
+}
+
+
+#buildings div, #buildings ul, #defense div, #defense ul{
+	float :left;	
+	border:none;
+}
+#buildings-container, #defense-container {
+	width : 420px;
+	overflow: hidden;
+	height : 100px;
+}
+#buildings-ul, #defense-ul{
+	width : 2000px;
+	height :100px;			
+	margin : 0px;
+	padding : 0px;
+}
+#buildings .right, #buildings .left, #defense .right, #defense .left{
+  width : 30px;
+  margin : 10px 10px 0px 10px;
+  text-align : center;
+  overflow : hidden;
+}
+#buildings li, #defense li {
+	float : left;
+	list-style : none;			
+  height: 89px;
+  width: 84px;
+}
+#buildingsPanel .leftOff {
+  margin-left : 0px;
+}
+#buildingsPanel .leftOn {
+  margin-left : -60px;
+  cursor : pointer;
+}
+#buildingsPanel .rightOff {
+  margin-left : -30px;
+}
+#buildingsPanel .rightOn {
+  margin-left : -90px;
+  cursor : pointer;
 }
 

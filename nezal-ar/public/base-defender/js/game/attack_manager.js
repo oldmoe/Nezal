@@ -4,14 +4,14 @@ var AttackManager = Class.create({
 	attacking : false,
 	initialize: function(game){
 		this.creeps = []
-    var self = this;
+	    var self = this;
 		this.game = game;
-    $("sendAttack").stopObserving("click");
-    $("sendAttack").observe(game.mouseClickEvent, function(){
-		Sounds.play(Sounds.gameSounds.click);
-      	self.simulateAttack();
-		$('attackDiv').show();
-    });
+	    $("sendAttack").stopObserving("click");
+	    $("sendAttack").observe(game.mouseClickEvent, function(){
+			Sounds.play(Sounds.gameSounds.click);
+	      	self.simulateAttack();
+			$('attackDiv').show();
+	    });
 	},
 	simulateAttack : function(){
 		if(this.attacking) return
