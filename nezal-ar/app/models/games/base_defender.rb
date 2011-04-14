@@ -363,16 +363,18 @@ class BaseDefender < Metadata
   end
   
   def self.init_game_profile(user_game_profile)
-    user_game_profile.metadata= 
-    {'townhall' => nil,
-                   'lumbermill' => nil,
-                   'quarry' => nil,
-                   'workers' => 1,
-                   'idle_workers' => 1,
-                   'rock' => 50000,
-                   'lumber' => 50000,
-                   'notifications' => {'id_generator' => 0, 'queue' => []},
-                   'map' => (0..72).to_a.map{(0..24).to_a.map{0}}
+    user_game_profile.metadata = {
+     'townhall' => nil,
+     'lumbermill' => nil,
+     'quarry' => nil,
+     'workers' => 1,
+     'idle_workers' => 1,
+     'rock' => 50000,
+     'lumber' => 50000,
+     'notifications' => {'id_generator' => 0, 'queue' => []},
+     'map' => (0..72).to_a.map{(0..24).to_a.map{0}},
+     'xp_level' => 1,
+     'xp' => 0
     }
   end
 end

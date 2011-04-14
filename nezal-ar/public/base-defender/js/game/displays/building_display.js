@@ -182,7 +182,7 @@ var BuildingDisplay = Class.create(Display, {
   renderPanelButtons : function(){
     var owner = this.owner;
     $('panel-buttons-container').innerHTML = this.game.templatesManager.load("upgrade-button");
-	this.owner.game.addLoadedImagesToDiv('panel-buttons-container')
+	  this.owner.game.addLoadedImagesToDiv('panel-buttons-container')
     $('upgrade_trigger').stopObserving('click');
     if (!owner.isValidToUpgrade(true)) {
       $('upgrade_trigger').select("img")[0].setStyle({marginTop : "-75px"});
