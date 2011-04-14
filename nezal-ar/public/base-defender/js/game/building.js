@@ -140,6 +140,7 @@ var Building = Class.create({
 	      this.game.updateGameStatus(response['gameStatus']);
 	      return response['done'];
 	    }else{
+		  //this.game.reInitialize()
 	      return false;
 	    }
 	},

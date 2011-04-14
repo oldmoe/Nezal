@@ -15,6 +15,12 @@ module BD
           }
       end
       
+      def neighbor_profile(profile, data)
+        user_id = data['user_id']
+        neighbor_user_profile = UserGameProfile.where('game_id'=> profile.game.id, 'user_id'=> user_id).first
+        BaseDefender.load_game_profile( neighbor_user_profile )
+        return neighbor_user_profile
+      end
       def friends( profile )
         UserGameProfile.where('game_id'=> profile.game.id).all.collect do |p|
           { :user_id => p.user_id, :service_id => p.user.service_id } unless p.user_id == profile.user.id

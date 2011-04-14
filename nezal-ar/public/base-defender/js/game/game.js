@@ -255,6 +255,7 @@ var Game = Class.create({
   loadUserEmpire : function(user_id){
     this.gameStatus.user_data = this.network.neighbourEmpire(user_id);
     this.neighborGame = true;
+	this.visitedNeighborId = user_id
     this.updateGameStatus( this.gameStatus );
     this.scene.adjustNeighborScene();
   },

@@ -11,15 +11,15 @@ var BuildingsManager = Class.create({
     this.game = game
     this.displayBuildButton(function(){
       game.buildingsManager.displayBuildingsPanel({'disabled' : []});
-  	  Sounds.play(Sounds.gameSounds.click);
+   Sounds.play(Sounds.gameSounds.click);
     })
   },
 
   /*
-   * Params will include : hash { 'disable', 'listeners'}
-      - disabled list : disables clicks on items named in disbaled array.
-      - listeners : hash of listeners to attach to certain items.
-   */
+* Params will include : hash { 'disable', 'listeners'}
+- disabled list : disables clicks on items named in disbaled array.
+- listeners : hash of listeners to attach to certain items.
+*/
   displayBuildingsPanel : function(params){
     var buildings = {};
     for ( var i in this.game.data.buildings) {
@@ -42,15 +42,15 @@ var BuildingsManager = Class.create({
                       $$('#buildingsPanel #' + item + ' .itemData')[0].setStyle({cursor : 'default' });
                       $$('#buildingsPanel #' + item + ' span')[0].setAttribute('imgSrc', 'images/quests/'+item+'_info_dimmed.png');
                   });
-  	this.game.addLoadedImagesToDiv('buildingDisplay');
+   this.game.addLoadedImagesToDiv('buildingDisplay');
     Animation.hide('questDisplay');
     Animation.show('buildingDisplay');
     $('interaction').show();
   },
   
   /*
-   * Params will include : The param list to be passed on to displayBuildingsPanel
-   */
+* Params will include : The param list to be passed on to displayBuildingsPanel
+*/
   displayBuildButton : function(onclick){
     $('buildButton').stopObserving(game.mouseClickEvent);
     $('buildButton').observe(game.mouseClickEvent, onclick);
@@ -86,4 +86,5 @@ var BuildingsManager = Class.create({
   }
 
 })
+
 

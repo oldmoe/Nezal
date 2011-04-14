@@ -50,7 +50,6 @@ var BuildingDisplay = Class.create(Display, {
   },
   
   createSprites : function(){
-  		this.sprites.underConstruction = new DomImgSprite(this.owner, {img: this.constructionImg}, {shiftY: this.zdim})
 	    this.sprites.base = new DomImgSprite(this.owner, {img : this.baseImg}, {shiftY: this.zdim, divClass: "buildingBase"});
 	    this.sprites.invalid = new DomImgSprite(this.owner, {img : this.invalidImg}, {shiftY: this.zdim});
 	    this.sprites.shadow = new DomImgSprite(this.owner, {img: this.shadowImg, width:this.shadowImg.width,
@@ -70,6 +69,7 @@ var BuildingDisplay = Class.create(Display, {
 	      this.sprites.moving = new DomImgSprite(this.owner, {img: this.movingImg});
 	    this.sprites.clickSprite = new DomImgSprite(this.owner,{img : this.transparentImg, area:this.area}, {clickable: true});
 	    this.sprites.clickSprite.img.setStyle({width:this.imgWidth+"px",height:this.imgHeight+"px"})
+		this.sprites.underConstruction = new DomImgSprite(this.owner, {img: this.constructionImg}, {shiftY: this.zdim})
 	
   },
   
@@ -183,7 +183,14 @@ var BuildingDisplay = Class.create(Display, {
     var owner = this.owner;
     $('panel-buttons-container').innerHTML = this.game.templatesManager.load("upgrade-button");
 	this.owner.game.addLoadedImagesToDiv('panel-buttons-container')
+	this.game.domConverter.convert(this.game.templatesManager.load("move-button"))
+	$('panel-buttons-container').appendChild($('move_trigger'));
     $('upgrade_trigger').stopObserving('click');
+	$('move_trigger').stopObserving('click');
+	$('move_trigger').observe('click',function(){
+		owner.game.selectedBuildingPanel.hide();
+		owner.game.buildingMode.move()
+	});
     if (!owner.isValidToUpgrade(true)) {
       $('upgrade_trigger').select("img")[0].setStyle({marginTop : "-75px"});
       $('upgrade_trigger').setAttribute("disabled", "disabled");

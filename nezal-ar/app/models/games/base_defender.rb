@@ -230,7 +230,7 @@ class BaseDefender < Metadata
       validation = Notification.delete({:profile => user_game_profile, :id => data['id']})
     elsif data['event'] == 'attack'
       repair_jobs user_game_profile
-      validation = simulate_attack user_game_profile, data['creeps']
+      validation = initialize_simulate_attack user_game_profile, data
     elsif data['event'] == 'repair_buildings'
       validation = repair_buildings user_game_profile  
     end
@@ -260,8 +260,23 @@ class BaseDefender < Metadata
     return {'valid' => true, 'error' => ''}
   end
   
-  def self.simulate_attack user_game_profile, creeps_coords
-    profile_metadata = user_game_profile.metadata
+  def self.initialize_simulate_attack user_game_profile, data
+    profile_metadata = nil
+    validation = nil
+    if(!data['user_id'].nil?)
+      neighbor_profile = BD::Neighbor.neighbor_profile(user_game_profile, data)
+      profile_metadata  = neighbor_profile.metadata
+      validation = simulate_attack profile_metadata, data
+      neighbor_profile.save
+    else
+      profile_metadata = user_game_profile.metadata
+      validation = simulate_attack profile_metadata, data
+    end
+    validation
+  end
+  
+  def self.simulate_attack profile_metadata, data
+    creeps_coords = data['creeps']
     map = BD::Map.new profile_metadata['map']
     building_names = @@game_metadata['buildings'].keys
     creeps = []
@@ -320,7 +335,7 @@ class BaseDefender < Metadata
     map.objects.each do |obj|
       puts "#{obj.name}  #{obj.hp}"
       key = self.convert_location(obj.owner['coords'])
-      user_game_profile.metadata[obj.name][key]['hp'] = obj.hp
+      profile_metadata[obj.name][key]['hp'] = obj.hp
     end
     return {'valid' => true, 'error' => ''}
   end
