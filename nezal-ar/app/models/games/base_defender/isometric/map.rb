@@ -109,6 +109,12 @@ EOF
       else
         dir = @@S;
       end
+    rescue FloatDomainError
+      if(y1 > y2)
+        dir = @@N;
+      else
+        dir = @@S;
+      end
     end
     return dir;
   end  

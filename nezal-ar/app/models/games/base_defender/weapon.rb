@@ -79,10 +79,10 @@ module BD
     def tick      
       if(@owner.owner['state'] == BD::Building.states['NORMAL'])
         check_attack()
-        
         if @attacker
           @angle = Map.get_general_direction(@coords['x'], @coords['y'], @attacker.coords['x'], @attacker.coords['y'])
         end 
+#        puts "Weapon Tick :: #{self.__id__} "
       end 
     end
 
@@ -90,8 +90,8 @@ module BD
       if(@owner.owner['state'] == BD::Building.states['NORMAL'])
         if @attacker == nil
           @step = 0
-        end
-        if @attacker && @animated == false
+          @animated = false
+        elsif @attacker && @animated == false
           @animated = true
         end
         if @attacker && @animated
@@ -106,6 +106,7 @@ module BD
             fire
           end
         end
+#        puts "Weapon Render :: #{self.__id__} :: #{@step} :: #{@animated}"
       end
       @rocks.each do |rock| 
                     if(!rock.done) 
@@ -121,8 +122,6 @@ module BD
       end
       if (@attacker && @attacker.hp > 0)
         return
-      else
-        @attacker = nil
       end
       attack = nil
       minHp = 50000
