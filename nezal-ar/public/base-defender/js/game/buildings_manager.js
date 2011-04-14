@@ -28,16 +28,14 @@ var BuildingsManager = Class.create({
     }
     $('buildingDisplay').innerHTML = this.game.templatesManager.load("buildings-panel", {'buildings' : buildings});
 
-    if(!this.buildingsCarousel)
-    {
-      this.buildingsCarousel = new Carousel("buildings", this.images, 5);
-      this.buildingsCarousel.checkButtons();
-    }
-    if(!this.defenseCarousel)
-    {
-      this.defenseCarousel = new Carousel("defense", this.images, 5);
-      this.defenseCarousel.checkButtons();
-    }
+    if(this.buildingsCarousel)
+      this.buildingsCarousel.destroy();      
+    if(this.defenseCarousel)
+      this.defenseCarousel.destroy();
+    this.defenseCarousel = new Carousel("defense", this.images, 5);
+    this.buildingsCarousel = new Carousel("buildings", this.images, 5);
+    this.defenseCarousel.checkButtons();
+    this.buildingsCarousel.checkButtons();
     var disabled = params['disabled'] || [];
     disabled.each(function(item){
                       $$('#buildingsPanel #' + item + ' .itemData')[0].onclick=function(){}
