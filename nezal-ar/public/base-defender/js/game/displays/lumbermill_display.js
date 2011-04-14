@@ -19,24 +19,10 @@ var LumbermillDisplay = Class.create(ResourceBuildingDisplay, {
 	this.sprites.clickSprite.setImgHeight(82)
   },
     
-  createSprites : function(){
+  createSprites : function($super){
+    $super();
   	this.sawImg = Loader.images.buildings['lumbermill_saw.png'];
-    this.sprites.base = new DomImgSprite(this.owner, {img : this.baseImg}, {shiftY: this.zdim, divClass: "buildingBase"});
-    this.sprites.invalid = new DomImgSprite(this.owner, {img : this.invalidImg}, {shiftY: this.zdim});
-    this.sprites.shadow = new DomImgSprite(this.owner, {img: this.shadowImg, width:this.shadowImg.width,
-                                                        height:this.shadowImg.height, zIndex :1});
-    this.sprites.outline = new DomImgSprite(this.owner, {img: this.outlineImg});
-    this.sprites.health = new DomMeterSprite(this.owner,{styleClass:{empty:'healthEmpty',full:'healthFull'}})
-    this.sprites.shadow.shiftX = this.imgWidth - this.shadowImg.width
-    this.sprites.shadow.shiftY = this.imgHeight - this.shadowImg.height
-      this.sprites.info = new DomTextSprite(this.owner, 'textInfo', {centered: true, shiftY: -10});
-    this.sprites.building = new DomImgSprite(this.owner, {img: this.img});
     this.sprites.saw = new DomImgSprite(this.owner, {img: this.sawImg});
-      this.sprites.mouseover = new DomImgSprite(this.owner, {img: this.mouseoverImg});
-    this.sprites.clickSprite = new DomImgSprite(this.owner,{img: this.transparentImg,area:this.area}, {clickable: true});
-      this.sprites.clickSprite.img.setStyle({width:this.imgWidth+"px",height:this.imgHeight+"px"})
-	  this.sprites.underConstruction = new DomImgSprite(this.owner, {img: this.constructionImg}, {shiftY: this.zdim})
-    //this.sprites.skeleton = new DomSkeleton(this.owner)
   },
    manageStateChange : function($super){
     $super()

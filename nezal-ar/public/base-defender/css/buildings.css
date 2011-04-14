@@ -125,23 +125,23 @@
 }
 
 #interaction .buildingPanelTriggers {
-  color: gold;
+  color: #fff78c;
   cursor: pointer;
   height: 40px;
   line-height: 48px;
   text-align: center;
   width: 150px;
   z-index: 10;
+  text-shadow: -1px 2px 1px black;
+  font-family: showG;
 }
 
 #interaction .inactiveTrigger {
   font-size: 20px;
-  font-family: Lds;
 }
 
 #interaction .activeTrigger {
-  font-size: 24px;
-  font-family: showG;
+  font-size: 22px;
 }
 
 #interaction #defenseTrigger {
@@ -272,5 +272,21 @@
 #buildingsPanel .rightOn {
   margin-left : -90px;
   cursor : pointer;
+}
+
+.buildingName {
+  color : white;
+  font-family : ShowG;
+  font-size : 13px;
+}
+.moreButtonText {
+  color : gold;
+  font-family : ShowG;
+  font-size : 12px;
+  line-height : 24px;
+  width : 63px;
+  height : 24px;
+  cursor : pointer;
+  display: inline-block;
 }
 

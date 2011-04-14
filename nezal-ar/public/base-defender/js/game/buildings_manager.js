@@ -11,7 +11,7 @@ var BuildingsManager = Class.create({
     this.game = game
     this.displayBuildButton(function(){
       game.buildingsManager.displayBuildingsPanel({'disabled' : []});
-   Sounds.play(Sounds.gameSounds.click);
+      Sounds.play(Sounds.gameSounds.click);
     })
   },
 

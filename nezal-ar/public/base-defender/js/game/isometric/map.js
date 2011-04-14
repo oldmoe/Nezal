@@ -418,9 +418,7 @@ var Map={
 	registerListeners : function(div,owner){
 		div.observe(game.mouseClickEvent,function(){
 			if(!game.buildingMode.isOn && owner.working){
-				owner.renderPanel()
-				$('building-panel').show();
-				owner.game.buildingMode.selectedBuilding = owner;
+				owner.defaultAction();
 			}
 		})
 		div.observe(game.mouseStartEvent,function(event){
@@ -443,10 +441,14 @@ var Map={
     div.observe(game.mouseMoveEvent, mousemoveCallback);
     
 		div.observe('mouseover',function(){
-		if (owner.state != owner.states.NOT_PLACED) {
+	  	if (owner.state != owner.states.NOT_PLACED) {
 	  		if (owner.state != owner.states.UNDER_CONSTRUCTION)owner.sprites.outline.show();
-			if (owner.state == owner.states.NORMAL)owner.sprites.info.show();
-			if(owner.sprites.text)owner.sprites.text.show()
+  			if (owner.state == owner.states.NORMAL)owner.sprites.info.show();
+	  		if(owner.sprites.text)owner.sprites.text.show()
+        if(owner.state == owner.states.NORMAL && owner.sprites.moreButtonText) 
+          owner.sprites.moreButtonText.show();
+        if(owner.state == owner.states.NORMAL && owner.sprites.moreButton) 
+          owner.sprites.moreButton.show();
 	  	}
 		})
 		div.observe('mouseout',function(){
@@ -454,6 +456,47 @@ var Map={
 		    owner.sprites.mouseover.hide();
       		owner.sprites.info.hide();
 			if(owner.sprites.text)owner.sprites.text.hide()
+      if(owner.state == owner.states.NORMAL && owner.sprites.moreButtonText) 
+        owner.sprites.moreButtonText.hide();
+      if(owner.state == owner.states.NORMAL && owner.sprites.moreButtonText) 
+        owner.sprites.moreButton.hide();
+		})
+	},
+
+	registerSpecialListeners : function(div,owner, clickCall){
+		div.observe(game.mouseClickEvent,function(){
+			if(!game.buildingMode.isOn && owner.working){
+				owner[clickCall]();
+			}
+		})
+		div.observe(game.mouseStartEvent,function(event){
+			if (event.button != 2) {
+			  	if (event.preventDefault) {
+			  		event.preventDefault();
+			  	}
+	  		}
+		})
+    
+		div.observe('mouseover',function(){
+	  	if (owner.state != owner.states.NOT_PLACED) {
+	  		if (owner.state != owner.states.UNDER_CONSTRUCTION)owner.sprites.outline.show();
+  			if (owner.state == owner.states.NORMAL)owner.sprites.info.show();
+	  		if(owner.sprites.text)owner.sprites.text.show()
+        if(owner.state == owner.states.NORMAL && owner.sprites.moreButtonText) 
+          owner.sprites.moreButtonText.show();
+        if(owner.state == owner.states.NORMAL && owner.sprites.moreButton) 
+          owner.sprites.moreButton.show();
+	  	}
+		})
+		div.observe('mouseout',function(){
+			owner.sprites.outline.hide();
+		    owner.sprites.mouseover.hide();
+      		owner.sprites.info.hide();
+			if(owner.sprites.text)owner.sprites.text.hide()
+      if(owner.state == owner.states.NORMAL && owner.sprites.moreButtonText) 
+        owner.sprites.moreButtonText.hide();
+      if(owner.state == owner.states.NORMAL && owner.sprites.moreButtonText) 
+        owner.sprites.moreButton.hide();
 		})
 	},
 //	checkBusyTiles : function(){

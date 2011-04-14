@@ -6,14 +6,15 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
     doorClosing : false,
     doorFrames : 6,
     initialize : function($super,owner,properties){
+      this.defaultAction = this.renderBuildingMenu;
       $super(owner,properties)
-	  this.sprites.base.shiftX = -8
-	  this.sprites.base.div.style.width = "171px"
-	  this.sprites.invalid.shiftX = -8
-	  this.sprites.invalid.div.style.width = "185px"
-	  this.sprites.underConstruction.shiftX = -15
-	  this.sprites.underConstruction.div.style.width = "196px"
-	  this.sprites.underConstruction.render()
+	    this.sprites.base.shiftX = -8
+	    this.sprites.base.div.style.width = "171px"
+	    this.sprites.invalid.shiftX = -8
+	    this.sprites.invalid.div.style.width = "185px"
+	    this.sprites.underConstruction.shiftX = -15
+	    this.sprites.underConstruction.div.style.width = "196px"
+	    this.sprites.underConstruction.render()
       var self = this;
       this.owner.game.scene.pushPeriodicalRenderLoop(
               this.tickDelay,
@@ -25,9 +26,9 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
     createSprites : function($super){
       $super()
       this.sprites.health.shiftY = 20;
-	  this.sprites.clickSprite.shiftY = 38
-	  this.sprites.clickSprite.shiftX = -9
-	  this.sprites.clickSprite.setImgHeight(135)
+  	  this.sprites.clickSprite.shiftY = 38
+  	  this.sprites.clickSprite.shiftX = -9
+  	  this.sprites.clickSprite.setImgHeight(135)
     },
     
     renderPanel : function($super){
@@ -76,5 +77,11 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
       else if(!this.owner.producing){
         this.sprites.building.currentAnimationFrame = (this.sprites.building.currentAnimationFrame + 1) % this.sprites.building.noOfAnimationFrames;
       }
+    },
+    
+    renderBuildingMenu : function(){
+      Sounds.play(Sounds.gameSounds.click);
+      this.game.buildingsManager.displayBuildingsPanel({'disabled' : []});
     }
+
 });
