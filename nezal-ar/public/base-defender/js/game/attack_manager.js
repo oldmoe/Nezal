@@ -41,9 +41,11 @@ var AttackManager = Class.create({
 			this.creepsDone = 0
 			this.attacking = false
 			if(attackSuccess){
-					console.log('!!!!!!!')
-				this.showRepairMsg()
+				console.log('!!!!!!!')
+			    if(this.game.neighborGame) this.showAttackSuccessMsg()
+				else this.showRepairMsg()
 			}else{
+				if(this.game.neighborGame) this.showAttackFailMsg()
 				this.showDefendCongratsMsg()
 			}
 		}	
@@ -53,6 +55,11 @@ var AttackManager = Class.create({
 	},
 	showDefendCongratsMsg : function(){
 		Notification.notify("You have successfully defended your city")
+	},
+	showAttackSuccessMsg : function(){
+		Notification.notify("Well done! you ate him.")
+	},
+	showAttackFailMsg : function(){
+		Notification.notify("Attack failed, try again later.")
 	}
-	
 })
