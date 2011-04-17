@@ -445,10 +445,8 @@ var Map={
 	  		if (owner.state != owner.states.UNDER_CONSTRUCTION)owner.sprites.outline.show();
   			if (owner.state == owner.states.NORMAL)owner.sprites.info.show();
 	  		if(owner.sprites.text)owner.sprites.text.show()
-        if(owner.state == owner.states.NORMAL && owner.sprites.moreButtonText) 
-          owner.sprites.moreButtonText.show();
-        if(owner.state == owner.states.NORMAL && owner.sprites.moreButton) 
-          owner.sprites.moreButton.show();
+        if(owner.state == owner.states.NORMAL && owner.sprites.moreContainer) 
+          owner.sprites.moreContainer.show();
 	  	}
 		})
 		div.observe('mouseout',function(){
@@ -456,10 +454,8 @@ var Map={
 		    owner.sprites.mouseover.hide();
       		owner.sprites.info.hide();
 			if(owner.sprites.text)owner.sprites.text.hide()
-      if(owner.state == owner.states.NORMAL && owner.sprites.moreButtonText) 
-        owner.sprites.moreButtonText.hide();
-      if(owner.state == owner.states.NORMAL && owner.sprites.moreButtonText) 
-        owner.sprites.moreButton.hide();
+      if(owner.state == owner.states.NORMAL && owner.sprites.moreContainer) 
+        owner.sprites.moreContainer.hide();
 		})
 	},
 
@@ -482,10 +478,8 @@ var Map={
 	  		if (owner.state != owner.states.UNDER_CONSTRUCTION)owner.sprites.outline.show();
   			if (owner.state == owner.states.NORMAL)owner.sprites.info.show();
 	  		if(owner.sprites.text)owner.sprites.text.show()
-        if(owner.state == owner.states.NORMAL && owner.sprites.moreButtonText) 
-          owner.sprites.moreButtonText.show();
-        if(owner.state == owner.states.NORMAL && owner.sprites.moreButton) 
-          owner.sprites.moreButton.show();
+        if(owner.state == owner.states.NORMAL && owner.sprites.moreContainer) 
+          owner.sprites.moreContainer.show();
 	  	}
 		})
 		div.observe('mouseout',function(){
@@ -493,10 +487,8 @@ var Map={
 		    owner.sprites.mouseover.hide();
       		owner.sprites.info.hide();
 			if(owner.sprites.text)owner.sprites.text.hide()
-      if(owner.state == owner.states.NORMAL && owner.sprites.moreButtonText) 
-        owner.sprites.moreButtonText.hide();
-      if(owner.state == owner.states.NORMAL && owner.sprites.moreButtonText) 
-        owner.sprites.moreButton.hide();
+      if(owner.state == owner.states.NORMAL && owner.sprites.moreContainer) 
+        owner.sprites.moreContainer.hide();
 		})
 	},
 //	checkBusyTiles : function(){

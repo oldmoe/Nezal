@@ -78,15 +78,17 @@ var BuildingDisplay = Class.create(Display, {
     if(this.defaultAction != this.renderPanel)
     {
       var self = this;
-      this.sprites.moreButton = new DomImgSprite(this.owner, {img: this.buttonImg, zIndex : this.sprites.base.minAreaZIndex + 1100});
-      this.sprites.moreButton.shiftX = (this.imgWidth - this.buttonImg.width)/2+2;
-      this.sprites.moreButton.shiftY = this.imgHeight - this.buttonImg.height - 15;
+      this.sprites.moreContainer = new DomSpriteContainer(this.owner, {zIndex : this.sprites.base.minAreaZIndex + 1100,
+                                                          width :this.buttonImg.width, height : this.buttonImg.height });
+      this.sprites.moreContainer.shiftX = (this.imgWidth - this.buttonImg.width)/2+2;
+      this.sprites.moreContainer.shiftY = this.imgHeight - this.buttonImg.height - 15;
+      this.sprites.moreButton = this.sprites.moreContainer.newDomImgSprite(this.owner, {img: this.buttonImg});
       this.owner.moreButtonText = function(){ return "more"};
-      this.sprites.moreButtonText = new DomTextSprite(this.owner, 'moreButtonText',
-                                                      {centered: true, shiftY: this.sprites.moreButton.shiftY, 
-                                                       zIndex : this.sprites.base.minAreaZIndex + 1100, styleClass : 'moreButtonText'});
+      this.sprites.moreButtonText = this.sprites.moreContainer.newDomTextSprite(this.owner, 'moreButtonText',
+                                                      {centered: true, styleClass : 'moreButtonText',
+                                                        width :this.buttonImg.width, height : this.buttonImg.height });
       this.moreButtonAction = this.renderPanel;
-      Map.registerSpecialListeners(this.sprites.moreButtonText.div,this.owner, 'renderPanel');      
+      Map.registerSpecialListeners(this.sprites.moreContainer.div,this.owner, 'renderPanel');      
     }
   },
   
@@ -114,8 +116,7 @@ var BuildingDisplay = Class.create(Display, {
       if(self.sprites.text)self.sprites.text.hide();
       self.sprites.mouseover.hide();
       self.sprites.invalid.hide();
-      if(self.sprites.moreButton) self.sprites.moreButton.hide();
-      if(self.sprites.moreButtonText) self.sprites.moreButtonText.hide();
+      if(self.sprites.moreContainer) self.sprites.moreContainer.hide();
     });
     this.owner.stateNotifications[this.owner.states.UNDER_CONSTRUCTION].push(function(){
 	    self.createUnderConstructionElements()
@@ -135,8 +136,7 @@ var BuildingDisplay = Class.create(Display, {
       self.sprites.mouseover.hide();
       if(self.sprites.moving) self.sprites.moving.hide();
       self.sprites.invalid.hide();
-      if(self.sprites.moreButton) self.sprites.moreButton.hide();
-      if(self.sprites.moreButtonText) self.sprites.moreButtonText.hide();
+      if(self.sprites.moreContainer) self.sprites.moreButton.hide();
     });
     this.owner.stateNotifications[this.owner.states.UPGRADING].push(function(){
       var top =  self.owner.coords.y -Math.round(self.imgHeight/2)
@@ -154,8 +154,7 @@ var BuildingDisplay = Class.create(Display, {
       self.sprites.mouseover.hide();
       if(self.sprites.moving) self.sprites.moving.hide();
       self.sprites.invalid.hide();
-      if(self.sprites.moreButton) self.sprites.moreButton.hide();
-      if(self.sprites.moreButtonText) self.sprites.moreButtonText.hide();
+      if(self.sprites.moreContainer) self.sprites.moreButton.hide();
     });
     this.owner.stateNotifications[this.owner.states.NORMAL].push(function(){
       self.sprites.building.show();
@@ -176,8 +175,9 @@ var BuildingDisplay = Class.create(Display, {
       self.sprites.mouseover.hide();
       if(self.sprites.moving) self.sprites.moving.hide();
       self.sprites.invalid.hide();
-      if(self.sprites.moreButton) self.sprites.moreButton.hide();
-      if(self.sprites.moreButtonText) self.sprites.moreButtonText.hide();
+      if(self.sprites.moreContainer) self.sprites.moreContainer.hide();
+      if(self.sprites.moreButton) self.sprites.moreButton.show();
+      if(self.sprites.moreButtonText) self.sprites.moreButtonText.show();
     });
   },
   

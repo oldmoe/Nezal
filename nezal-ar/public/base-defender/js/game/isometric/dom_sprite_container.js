@@ -7,16 +7,16 @@ var DomSpriteContainer = Class.create(DomSprite, {
     this.div.addClassName('DomSpriteContainer');
   },
 
-  newDomSprite : function(owner, assets, properties){
-    if(!assets)  assets = {};
-    assets.container = this.div;
-    return new ChildDomSprite(owner, assets, properties);
+  newDomTextSprite : function(owner, assets, properties){
+    if(!properties)  properties = {};
+    properties.container = this.div;
+    return new ChildDomTextSprite(owner, assets, properties);
   },
 
   newDomImgSprite : function(owner, assets, properties){
     if(!assets)  assets = {};
     assets.container = this.div;
-    return new ChildDomSprite(owner, assets, properties);
-  },
+    return new ChildDomImgSprite(owner, assets, properties);
+  }
 
 });

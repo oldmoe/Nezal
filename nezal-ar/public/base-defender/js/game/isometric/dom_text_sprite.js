@@ -2,7 +2,7 @@ var DomTextSprite = Class.create(DomSprite, {
   centered : true,
   minZIndex : 10000,  
   initialize : function($super, owner, textAssets, properties){
-    $super(owner, textAssets, properties);
+    $super(owner, properties, properties);
   	this.div.style.display = "none"
     this.textAssets = textAssets;
     this.span = $(document.createElement('SPAN'));
@@ -27,8 +27,9 @@ var DomTextSprite = Class.create(DomSprite, {
         return this.destroy();
       }
       this.span.innerHTML = this.owner[this.textAssets]();
-      this.div.setStyle({ left : this.owner.coords.x -Math.round(this.owner.imgWidth/2)+this.shiftX + "px",
-                          top : this.owner.coords.y -Math.round(this.owner.imgHeight/2)+this.shiftY + "px",
+      var position = this.position();
+      this.div.setStyle({ left : position.x + this.shiftX + "px",
+                          top :  position.y + this.shiftY +"px",
                           zIndex : this.minZIndex + this.owner.coords.y, 
                           height : 40+"px"});
       this.span.setStyle({                  
