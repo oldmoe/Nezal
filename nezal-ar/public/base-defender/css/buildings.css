@@ -63,8 +63,8 @@
 }
 
 #interaction #buildingsPanel {
-  height: 100px;
-  left: 145px;
+  height: 150px;
+  left: 140px;
   overflow: hidden;
   position: absolute;
   top: 140px;
@@ -85,6 +85,7 @@
   font-family: showg;
   font-size: 25px;
   text-align: center;
+  text-shadow: -2px 2px 1px black;
 }
 
 #interaction .buildingInfo .resourcesNeeded {
@@ -94,7 +95,7 @@
     
 #interaction #buildingsPanel .buildings {
   position: absolute;
-  z-index: 10;
+  z-index: 11;
 }
 #interaction .buildingPanelBg {
   margin-left: 105px;
@@ -158,10 +159,10 @@
     
 #interaction #buildingsPanel .item {
   float: left;
-  height: 78px;
-  width: 84px;
-  margin-bottom: 11px;
-  margin-top: 11px;
+  height: 130px;
+  width: 100%;
+  margin-bottom: 3px;
+  margin-top: 14px;
   overflow: visible;
   position: relative;
   text-align: center;
@@ -171,28 +172,46 @@
   position: absolute;
   top: 250px;
   left: 135px;
-  z-index: 10;
+  z-index : 10;
 }
 
 #interaction #buildingsPanel .item .background {
   position : relative;
-  top : -77px;
+  top : -130px;
   height : 75px;
   float : none;
+  z-index : 100;
 }
+#interaction #buildingsPanel .item .hover {
+  position : relative;
+  top : -235px;
+  left : -8px;
+  width : 100px;
+  float : none;
+  z-index : 50;
+}
+#interaction #buildingsPanel .item .hoverArrow {
+  float: none;
+  position: absolute;
+  top: 91px;
+  width: 46px;
+  z-index: 120;
+  left: 20px;
+}
+
 #interaction #buildingsPanel .item .itemData {  
   cursor: pointer;
   height: 100%;
   position: relative;
   text-align: center;
   width: 100%;
-  z-index: 10;
+  z-index: 200;
 }
 #interaction #buildingsPanel .item .itemData .name {  
-    font-size: 17px;
-    height: 20px;
-    padding-top: 5px;
-    text-transform: capitalize;
+  font-size: 17px;
+  height: 20px;
+  padding-top: 5px;
+  text-transform: capitalize;
 }
 #interaction #buildingsPanel .item .itemData .image{  
   height : 74px;
@@ -239,11 +258,12 @@
 #buildings-container, #defense-container {
 	width : 420px;
 	overflow: hidden;
-	height : 100px;
+  padding: 0 5px;
+  width: 420px;
 }
 #buildings-ul, #defense-ul{
 	width : 2000px;
-	height :100px;			
+	height :150px;			
 	margin : 0px;
 	padding : 0px;
 }
@@ -256,7 +276,7 @@
 #buildings li, #defense li {
 	float : left;
 	list-style : none;			
-  height: 89px;
+  height: 140px;
   width: 84px;
 }
 #buildingsPanel .leftOff {

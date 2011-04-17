@@ -87,7 +87,7 @@ var BuildingDisplay = Class.create(Display, {
     this.staticSprites.moreButtonText = this.staticSprites.moreContainer.newDomTextSprite(this.owner, 'moreButtonText',
                                                     {centered: true, styleClass : 'moreButtonText', divClass : 'moreButtonText',
                                                       width :this.buttonImg.width, height : this.buttonImg.height });
-    Map.registerSpecialListeners(this.staticSprites.moreContainer.div,this.owner, 'renderPanel');      
+    Map.registerSpecialListeners(this.staticSprites.moreContainer.div, this.owner, 'renderPanel');
     for(var sprite in this.staticSprites){
       this.staticSprites[sprite].render();
     }
