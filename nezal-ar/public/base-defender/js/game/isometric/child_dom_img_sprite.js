@@ -1,4 +1,4 @@
-var ChildDomSprite = Class.create(DomImgSprite, {
+var ChildDomImgSprite = Class.create(DomImgSprite, {
   shiftX : 0,
   shiftY : 0,
   container : null,

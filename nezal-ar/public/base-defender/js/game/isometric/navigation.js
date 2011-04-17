@@ -19,8 +19,20 @@ var Navigation = Class.create({
 			document.body.appendChild(this.dragDiv);
 			this.attachMapDraggableEvent();
 			this.attachTouchEvents();
+			this.attackAttackDivEvents();
 		}
   	},
+	attackAttackDivEvents : function(){
+		var self = this
+		$('attackDiv').observe('mousedown',function(e){
+			var x = e.pointerX() || e.touches[0].pageX 
+			var y = e.pointerY() || e.touches[0].pageY
+			 e.preventDefault();
+			 Map.mouseIsDown = true
+			 Map.mouseLocation = {x:x, y:y}
+		});
+		
+	},
 	attachTouchEvents : function(){
 		var self = this
 		this.map.div.observe('touchstart',function(e){

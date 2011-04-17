@@ -106,7 +106,7 @@ class BaseDefender < Metadata
     return validation  
   end
   
-  def self.resource_collection_jobs(user_game_profile)
+   def self.resource_collection_jobs(user_game_profile)
     #This is the case in the first load of user profile
     if user_game_profile.metadata['last_loaded'].nil?
       return
@@ -121,6 +121,7 @@ class BaseDefender < Metadata
         #Looping on every resource building instance
         resource_building.keys.each do |building_instance_coords|
           resource_building_instance = resource_building[building_instance_coords]
+          next if(resource_building_instance['state'] == BD::Building.states['UPGRADING'])
           collects = resource_building_module.collects
           resource_building_level = resource_building_instance['level']
           resource_building_instance[collects] = 0 if resource_building_instance[collects].nil?
@@ -137,15 +138,16 @@ class BaseDefender < Metadata
       end
     end
   end
-  
+   
   def self.building_jobs(user_game_profile)
     metadata = user_game_profile.metadata
     @@building_modules.keys.each do |building_name|
-      if( metadata[building_name].present? )
+      building = metadata[building_name]
+      if( building.present? )
         metadata[building_name].keys.each do |building_instance_coords|
-          if(metadata[building_name][building_instance_coords]['state'] == BD::Building.states['UNDER_CONSTRUCTION'] || 
-            metadata[building_name][building_instance_coords]['state'] == BD::Building.states['UPGRADING'])
-            building_job(user_game_profile, metadata[building_name][building_instance_coords], building_name , @@game_metadata['buildings'][building_name] )
+          coords = building[building_instance_coords]
+          if ['UNDER_CONSTRUCTION', 'UPGRADING'].find{|state| BD::Building.states[state] == coords['state'] } 
+            building_job(user_game_profile, coords, building_name , @@game_metadata['buildings'][building_name] )
           end
         end
       end
@@ -165,6 +167,10 @@ class BaseDefender < Metadata
       building['startedBuildingAt'] = nil
       metadata['idle_workers'] += 1
       if @@building_modules[building_name].respond_to? 'assign_worker'
+        #        @@building_modules[building_name].assign_worker(user_game_profile, building['coords']) 
+      end
+      if building.key?('last_collect')
+        building['last_collect'] = now
         #        @@building_modules[building_name].assign_worker(user_game_profile, building['coords']) 
       end
       Notification.new( {:metadata => metadata, :notification_type => "building", :notification_text => building_name + " construction is completed!"} )
@@ -205,7 +211,11 @@ class BaseDefender < Metadata
       origin['error'] = user_game_profile['error']
       user_game_profile.metadata= origin
     end
+    
     @@game_metadata = initialize_game_metadata user_game_profile.game
+#    if( user_game_profile['helping_power'].nil? )
+#      user_game_profile.metadata['helping_power'] = @@game_metadata['xp_levels']["1"]["max_helping_power"]
+#    end
     BD::Research.init user_game_profile
     calculate_jobs user_game_profile
     BD::Quest::assess_user_quests user_game_profile
@@ -217,6 +227,7 @@ class BaseDefender < Metadata
   def self.edit_game_profile(user_game_profile, data)
     data = self.decode(data)
     if data['event'] == 'upgrade'
+      resource_collection_jobs user_game_profile
       validation = upgrade_building(user_game_profile, data)
     elsif data['event'] == 'move' 
       validation = move_building(user_game_profile, data)
@@ -405,7 +416,11 @@ class BaseDefender < Metadata
      'lumber' => 50000,
      'notifications' => {'id_generator' => 0, 'queue' => []},
      'attacks' => {},
-     'map' => (0..72).to_a.map{(0..24).to_a.map{0}}
+     'map' => (0..72).to_a.map{(0..24).to_a.map{0}},
+      'xp_info' => {
+        'xp_level' => 1,
+        'xp' => 0
+      }
     }
   end
 end

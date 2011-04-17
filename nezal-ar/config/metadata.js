@@ -3,18 +3,22 @@ data={
     "townhall":{
       "levels":{
             "0" : { "dependency" :{"buildings":{}}, "limited_by":null,"limiting":{"global":3,"others":{"lumbermill":2}},
-            "hp": 1000, "time" : 0,
-            "display":{"xdim":48,"ydim":52,"zdim":100,"imgWidth":160,"imgHeight":186,     "area":"57,123,124,98,132,31,128,12,112,20,108,35,75,21,65,11,57,0,49,17,1,40,7,92,54,123"},"storageCapacity":20000
+                    "hp": 1000, "time" : 0,
+                    "display":{"xdim":48,"ydim":52,"zdim":100,"imgWidth":160,"imgHeight":186,
+                               "area":"57,123,124,98,132,31,128,12,112,20,108,35,75,21,65,11,57,0,49,17,1,40,7,92,54,123"},
+                    "storageCapacity":50000
             },
-            "1" : { "dependency" :{"buildings":{}}, "limited_by":null,"limiting":{"global":3,"others":{"lumbermill":2}}, 
-            "hp": 1000,"rock":4000,"lumber":2000,"time":15,
-            "display":{"xdim":48,"ydim":52,"zdim":100,"imgWidth":160,"imgHeight":186,     "area":"57,123,124,98,132,31,128,12,112,20,108,35,75,21,65,11,57,0,49,17,1,40,7,92,54,123"},
-                    "storageCapacity":20000
+            "1" : { "dependency" :{"buildings":{}}, "limited_by":null,"limiting":{"global":3,"others":{"lumbermill":2}},
+                    "hp": 1000,"rock":4000,"lumber":2000,"time":15,
+                    "display":{"xdim":48,"ydim":52,"zdim":100,"imgWidth":160,"imgHeight":186,
+                               "area":"57,123,124,98,132,31,128,12,112,20,108,35,75,21,65,11,57,0,49,17,1,40,7,92,54,123"},
+                    "storageCapacity":50000
             },
             "2" : { "dependency" :{"buildings":{}}, "limited_by":null,"limiting":{"global":3,"others":{"lumbermill":2}},
-            "hp": 2000,"rock":3000,"lumber":3000,"time":15,
-            "display":{"xdim":48,"ydim":52,"zdim":100,"imgWidth":160,"imgHeight":186,     "area":"57,123,124,98,132,31,128,12,112,20,108,35,75,21,65,11,57,0,49,17,1,40,7,92,54,123"},
-                    "storageCapacity":24000
+                    "hp": 2000,"rock":3000,"lumber":3000,"time":15,
+                    "display":{"xdim":48,"ydim":52,"zdim":100,"imgWidth":160,"imgHeight":186,
+                               "area":"57,123,124,98,132,31,128,12,112,20,108,35,75,21,65,11,57,0,49,17,1,40,7,92,54,123"},
+                    "storageCapacity":60000
             }
       }
     },
@@ -22,21 +26,21 @@ data={
       "levels":{
         "0" : {
           "dependency" :{"buildings":{"townhall":1}}, "limited_by":"townhall","limiting":{"global":3,"others":{}},
-          "hp": 800,
-          "time" : 0,
-          "display"  : {"xdim":35,"ydim":35,"zdim":31,"imgWidth":124,"imgHeight":93,"area":"9,26,10,21,19,15,33,8,65,11,79,14,94,34,115,55,110,64,84,79,78,91,58,94,56,84,47,84,10,69,5,52,11,37"}
+          "hp": 800, "time" : 0,
+          "display"  : {"xdim":35,"ydim":35,"zdim":31,"imgWidth":124,"imgHeight":93,
+                        "area":"9,26,10,21,19,15,33,8,65,11,79,14,94,34,115,55,110,64,84,79,78,91,58,94,56,84,47,84,10,69,5,52,11,37"}
         },
         "1":{
           "dependency" :{"buildings":{"townhall":1}}, "limited_by":null,"limiting":{"global":3,"others":{}},
-          "hp": 800, "rock":2000, "lumber":2000, "time":15,
-          "max_workers":1, "unit_per_worker_minute":20, "capacity":1000,
-          "display" : {"xdim":35,"ydim":35,"zdim":31,"imgWidth":124,"imgHeight":93,"area":"9,26,10,21,19,15,33,8,65,11,79,14,94,34,115,55,110,64,84,79,78,91,58,94,56,84,47,84,10,69,5,52,11,37"}
+          "hp": 800, "rock":2000, "lumber":2000, "time":15, "max_workers":1, "unit_per_worker_minute":20, "capacity":1000,
+          "display" : {"xdim":35,"ydim":35,"zdim":31,"imgWidth":124,"imgHeight":93,
+                       "area":"9,26,10,21,19,15,33,8,65,11,79,14,94,34,115,55,110,64,84,79,78,91,58,94,56,84,47,84,10,69,5,52,11,37"}
         },
         "2":{ 
           "dependency" :{"buildings":{"townhall":1}}, "limited_by":null,"limiting":{"global":3,"others":{}}, 
-          "hp": 5000,"rock":2000,"lumber":2000,"time":15,
-          "max_workers":1,"unit_per_worker_minute":20,"capacity":1000,
-          "display":{"xdim":35,"ydim":35,"zdim":31,"imgWidth":124,"imgHeight":93,"area":"9,26,10,21,19,15,33,8,65,11,79,14,94,34,115,55,110,64,84,79,78,91,58,94,56,84,47,84,10,69,5,52,11,37"}
+          "hp": 5000,"rock":2000,"lumber":2000,"time":15,"max_workers":1,"unit_per_worker_minute":20,"capacity":1000,
+          "display":{"xdim":35,"ydim":35,"zdim":31,"imgWidth":124,"imgHeight":93,
+                     "area":"9,26,10,21,19,15,33,8,65,11,79,14,94,34,115,55,110,64,84,79,78,91,58,94,56,84,47,84,10,69,5,52,11,37"}
         }
       }
     },
@@ -45,27 +49,32 @@ data={
         "0" : {
           "dependency" :{"buildings":{"townhall":1}}, "limited_by":"townhall","limiting":{"global":3,"others":{}},
           "hp": 800,"time" : 0,
-          "display":{"xdim":35,"ydim":35,"zdim":62,"imgWidth":124,"imgHeight":124, "area":"97,79,89,42,104,31,107,19,98,5,83,4,66,0,52,12,35,4,29,9,25,29,18,26,17,12,6,17,0,69,17,74,25,81,40,81,92,81"}},
+          "display":{"xdim":35,"ydim":35,"zdim":62,"imgWidth":124,"imgHeight":124,
+                     "area":"97,79,89,42,104,31,107,19,98,5,83,4,66,0,52,12,35,4,29,9,25,29,18,26,17,12,6,17,0,69,17,74,25,81,40,81,92,81"}},
         "1" : {
           "dependency" :{"buildings":{"townhall":1}}, "limited_by":"townhall","limiting":{"global":3,"others":{}},
           "hp": 800, "rock":2000, "lumber":3000, "time":15,
           "max_workers":1,"unit_per_worker_minute":20,"capacity":1000,
-          "display":{"xdim":35,"ydim":35,"zdim":62,"imgWidth":124,"imgHeight":124, "area":"97,79,89,42,104,31,107,19,98,5,83,4,66,0,52,12,35,4,29,9,25,29,18,26,17,12,6,17,0,69,17,74,25,81,40,81,92,81"}}
+          "display":{"xdim":35,"ydim":35,"zdim":62,"imgWidth":124,"imgHeight":124,
+                     "area":"97,79,89,42,104,31,107,19,98,5,83,4,66,0,52,12,35,4,29,9,25,29,18,26,17,12,6,17,0,69,17,74,25,81,40,81,92,81"}}
         }
     },
     "storage":{
       "levels":{
         "0":{ "dependency" :{"buildings":{"townhall":1}}, "limited_by":null,"limiting":{"global":3,"others":{}},
               "hp": 700,"time": 0 ,
-              "display":{"xdim":17, "ydim":17, "zdim":124, "imgWidth":64, "imgHeight":155,   "area":"2,133,5,116,8,101,10,86,8,73,7,58,10,41,18,33,26,28,26,18,36,19,37,29,51,41,54,59,52,75,52,92,52,108,56,124,56,139,35,148,22,147,14,145,6,140"}
+              "display":{"xdim":17, "ydim":17, "zdim":124, "imgWidth":64, "imgHeight":155,
+                         "area":"2,133,5,116,8,101,10,86,8,73,7,58,10,41,18,33,26,28,26,18,36,19,37,29,51,41,54,59,52,75,52,92,52,108,56,124,56,139,35,148,22,147,14,145,6,140"}
         },
         "1":{ "dependency" :{"buildings":{"townhall":1}}, "limited_by":null,"limiting":{"global":3,"others":{}},
               "hp": 700,"rock":1000,"lumber":1000,"time":15,"storageCapacity":2000,
-              "display":{"xdim":17, "ydim":17, "zdim":124, "imgWidth":64,"imgHeight":155, "area":"2,133,5,116,8,101,10,86,8,73,7,58,10,41,18,33,26,28,26,18,36,19,37,29,51,41,54,59,52,75,52,92,52,108,56,124,56,139,35,148,22,147,14,145,6,140"}
+              "display":{"xdim":17, "ydim":17, "zdim":124, "imgWidth":64,"imgHeight":155,
+                         "area":"2,133,5,116,8,101,10,86,8,73,7,58,10,41,18,33,26,28,26,18,36,19,37,29,51,41,54,59,52,75,52,92,52,108,56,124,56,139,35,148,22,147,14,145,6,140"}
         },
         "2":{ "dependency" :{"buildings":{"townhall":1}}, "limited_by":null,"limiting":{"global":3,"others":{}}, 
               "hp": 1000,"rock":1000,"lumber":1000,"time":15,"storageCapacity":2000,
-              "display":{"xdim":17, "ydim":17, "zdim":124, "imgWidth":64,"imgHeight":155, "area":"61,138,40,150,20,150,2,140,1,91,9,66,13,38,28,27,36,16,50,33,60,48,62,64,55,77,58,97,61,121"}
+              "display":{"xdim":17, "ydim":17, "zdim":124, "imgWidth":64,"imgHeight":155, 
+                         "area":"61,138,40,150,20,150,2,140,1,91,9,66,13,38,28,27,36,16,50,33,60,48,62,64,55,77,58,97,61,121"}
         }
       }
   },
@@ -89,12 +98,14 @@ data={
               "dependency" :{"buildings":{"townhall":1}}, "limited_by":null,"limiting":{"global":3,"others":{}},
               "hp": 800,
               "time" : 0,
-              "display"  : {"xdim":35,"ydim":35,"zdim":93,"imgWidth":124,"imgHeight":155,"area":"101,118,102,111,102,91,104,77,107,72,84,61,81,60,67,21,63,14,38,17,45,20,45,28,42,37,52,44,47,61,21,70,18,73,25,99,21,85,13,101,10,123,48,141,79,128"}
+              "display" : {"xdim":35,"ydim":35,"zdim":93,"imgWidth":124,"imgHeight":155,
+                           "area":"101,118,102,111,102,91,104,77,107,72,84,61,81,60,67,21,63,14,38,17,45,20,45,28,42,37,52,44,47,61,21,70,18,73,25,99,21,85,13,101,10,123,48,141,79,128"}
         },
         "1":{
               "dependency" :{"buildings":{"townhall":1}}, "limited_by":null,"limiting":{"global":3,"others":{}},
               "hp": 800, "rock":2000, "lumber":2000, "time":15,
-              "display" : {"xdim":35,"ydim":35,"zdim":93,"imgWidth":124,"imgHeight":155,"area":"101,118,102,111,102,91,104,77,107,72,84,61,81,60,67,21,63,14,38,17,45,20,45,28,42,37,52,44,47,61,21,70,18,73,25,99,21,85,13,101,10,123,48,141,79,128"}
+              "display" : {"xdim":35,"ydim":35,"zdim":93,"imgWidth":124,"imgHeight":155,
+                           "area":"101,118,102,111,102,91,104,77,107,72,84,61,81,60,67,21,63,14,38,17,45,20,45,28,42,37,52,44,47,61,21,70,18,73,25,99,21,85,13,101,10,123,48,141,79,128"}
         }
       }
   },
@@ -105,13 +116,15 @@ data={
             "dependency" :{"buildings":{"townhall":1}}, "limited_by":null,"limiting":{"global":3,"others":{}},
             "hp": 800,
             "time" : 0,
-            "display"  : {"xdim":35,"ydim":35,"zdim":93,"imgWidth":124,"imgHeight":155,"area":"109,116,104,106,104,94,86,85,90,49,76,41,63,30,52,28,48,17,45,14,43,27,30,39,17,56,18,62,28,88,25,104,16,101,22,116,20,122,54,136,106,117"}
+            "display" : {"xdim":35,"ydim":35,"zdim":93,"imgWidth":124,"imgHeight":155,
+                         "area":"109,116,104,106,104,94,86,85,90,49,76,41,63,30,52,28,48,17,45,14,43,27,30,39,17,56,18,62,28,88,25,104,16,101,22,116,20,122,54,136,106,117"}
       },
       "1":{
             "workers" : 2,
             "dependency" :{"buildings":{"townhall":1}}, "limited_by":null,"limiting":{"global":3,"others":{}},
             "hp": 800, "rock":2000, "lumber":2000, "time":15,
-            "display" : {"xdim":35,"ydim":35,"zdim":93,"imgWidth":124,"imgHeight":155,"area":"109,116,104,106,104,94,86,85,90,49,76,41,63,30,52,28,48,17,45,14,43,27,30,39,17,56,18,62,28,88,25,104,16,101,22,116,20,122,54,136,106,117"}
+            "display" : {"xdim":35,"ydim":35,"zdim":93,"imgWidth":124,"imgHeight":155,
+                         "area":"109,116,104,106,104,94,86,85,90,49,76,41,63,30,52,28,48,17,45,14,43,27,30,39,17,56,18,62,28,88,25,104,16,101,22,116,20,122,54,136,106,117"}
       }
       }
   },
@@ -196,6 +209,16 @@ data={
           "power" : 10,
           "speed" : 3,
       }
+  },
+  "xp_levels" : {
+    "1" :{"max_helping_power" : 5, "helping_power_unit_every" : 1800, "max_xp" : 100},
+    "2" :{"max_helping_power" : 6, "helping_power_unit_every" : 1800, "max_xp" : 400},
+    "3" :{"max_helping_power" : 7, "helping_power_unit_every" : 1800, "max_xp" : 1000},
+    "4" :{"max_helping_power" : 8, "helping_power_unit_every" : 1800, "max_xp" : 1800},
+    "5" :{"max_helping_power" : 9, "helping_power_unit_every" : 1800, "max_xp" : 3000},
+    "6" :{"max_helping_power" : 10, "helping_power_unit_every" : 1800, "max_xp" : 5000},
+    "7" :{"max_helping_power" : 11, "helping_power_unit_every" : 1800, "max_xp" : 8000},
+    "8" :{"max_helping_power" : 12, "helping_power_unit_every" : 1800, "max_xp" : 12000}
   }
 }
 

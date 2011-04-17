@@ -1,11 +1,12 @@
 var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
   initialize : function($super,owner,properties){
+    this.defaultAction = this.collectResources;
     $super(owner,properties)
-	var self = this
+	  var self = this
     this.sprites.text = new DomTextSprite(owner, 'resourceInfo',{centered: true, shiftY: 110});
   	this.attentionImg = Loader.images.icons['attention.png']
   	this.sprites.attention = new DomImgSprite(this.owner,{img:this.attentionImg}, {shiftX : 40,shiftY : -30})
-	this.sprites.resourceMeter = new DomMeterSprite(this.owner, {
+  	this.sprites.resourceMeter = new DomMeterSprite(this.owner, {
 		orientation: "vertical",
 		meterFunc: function(){
 			return self.owner.getResourceMeterLength()
@@ -57,14 +58,14 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
     $super();
     if(this.owner.full) this.sprites.attention.show()
     var owner = this.owner;
+    var self = this;
     this.game.domConverter.convert( this.game.templatesManager.load("resource-building-buttons") );
     $('panel-buttons-container').appendChild( $("collect_resource_trigger") );
     $('panel-buttons-container').appendChild( $("assign_worker_trigger") );
     
     $('collect_resource_trigger').observe('click', function(){
-	  Sounds.play(Sounds.gameSounds.resource_collection)
-	  owner.game.selectedBuildingPanel.hide();
-      owner._CollectResources();
+	    owner.game.selectedBuildingPanel.hide();
+      self.collectResources();
     });
     
     $('assign_worker_trigger').observe('click', function(){
@@ -72,5 +73,13 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
       owner.game.selectedBuildingPanel.hide();
     });
     this.renderingPanelButtonsDone();
+  },
+
+  collectResources : function(){
+	  Sounds.play(Sounds.gameSounds.resource_collection)
+    if(this.owner.assignedWorkers > 0)
+      this.owner._CollectResources();
+    else
+      this.owner._AssignWorker();
   }
 });

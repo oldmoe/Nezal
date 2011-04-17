@@ -134,21 +134,21 @@ module BD
         building_name = name || @name
         location_hash = BaseDefender.convert_location(coords)
         game_metadata = user_game_profile.game.metadata
-        
-        validation = validate_upgrade(user_game_profile.metadata, game_metadata, coords, building_name)
+        user_metadata = user_game_profile.metadata
+        validation = validate_upgrade(user_metadata, game_metadata, coords, building_name)
         return validation if validation['valid'] == false      
-
-        current_level = user_game_profile.metadata[building_name][location_hash]['level']
+        building = user_game_profile.metadata[building_name][location_hash]
+        current_level = building['level']
         
-        user_game_profile.metadata['idle_workers'] -= 1
-        user_game_profile.metadata[building_name][location_hash]['startedBuildingAt'] = Time.now.utc.to_i
-        user_game_profile.metadata[building_name][location_hash]['state'] = states['UPGRADING']
-        user_game_profile.metadata[building_name][location_hash]['coords'] = coords
-        user_game_profile.metadata[building_name][location_hash]['hp'] = game_metadata['buildings'][building_name]['levels'][(current_level+1).to_s]['hp']
-        
-        user_game_profile.metadata['rock'] -= game_metadata['buildings'][building_name]['levels'][(current_level+1).to_s]['rock']
-        user_game_profile.metadata['lumber'] -= game_metadata['buildings'][building_name]['levels'][(current_level+1).to_s]['lumber']
-        
+        user_metadata['idle_workers'] -= 1
+        building['startedBuildingAt'] = Time.now.utc.to_i
+        building['state'] = states['UPGRADING']
+        building['coords'] = coords
+        building_level_info = game_metadata['buildings'][building_name]['levels'][(current_level+1).to_s]
+        building['hp'] = building_level_info['hp']      
+        user_metadata['rock'] -= building_level_info['rock']
+        user_metadata['lumber'] -= building_level_info['lumber']
+          
         user_game_profile.save
         puts "upgrading " + building_name
         return validation
@@ -197,7 +197,7 @@ module BD
 
         return {'valid' => true, 'error' => ''}
       end
-
+      
     end
   end
 end
