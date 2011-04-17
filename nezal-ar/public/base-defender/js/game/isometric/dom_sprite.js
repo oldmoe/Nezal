@@ -6,6 +6,7 @@ var DomSprite = Class.create(Sprite, {
   	properties = properties || {}
     this.createDiv();
     this.div.addClassName('DomSprite');
+		if(properties.divClass)this.div.addClassName(properties.divClass)
     this.owner = owner;
 	var z =0 ;
 	if(assets && assets.zIndex){
