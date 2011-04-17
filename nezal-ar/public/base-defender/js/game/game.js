@@ -197,6 +197,7 @@ var Game = Class.create({
   
   reInitialize : function(callback){
     this.neighborGame = false;
+	$('home').hide()
     this.gameStatus = this.network.initializeGame();
     this.data = this.gameStatus.game_data.metadata;
     this.reflectStatusChange();
@@ -253,6 +254,7 @@ var Game = Class.create({
   },
   
   loadUserEmpire : function(user_id){
+  	$('home').show()
     this.gameStatus.user_data = this.network.neighbourEmpire(user_id);
     this.neighborGame = true;
 	this.visitedNeighborId = user_id

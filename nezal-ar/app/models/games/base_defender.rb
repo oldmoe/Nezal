@@ -267,17 +267,15 @@ class BaseDefender < Metadata
       neighbor_profile = BD::Neighbor.neighbor_profile(user_game_profile, data)
       profile_metadata  = neighbor_profile.metadata
       attack_result = simulate_attack profile_metadata, data
+      notification_text = ''
       if(attack_result['attack_success'])
-         puts "ATTTTTTAAAAAACK SUCCESS"
-         Notification.new( {:metadata => profile_metadata, :notification_type => "attack",
-                         :notification_text => "You have been attacked by ${name}, click 'repair' to repair your buildings.",
-                        :notification_data =>{:attacker_id => user_game_profile['user_id']} })
+        notification_text = "You have been attacked by ${name}, prepare your defenses better to defend yourself."
       else
-        puts "ATTTTTTAAAAAACK FAILED"
-        Notification.new( {:metadata => profile_metadata, :notification_type => "attack",
-                         :notification_text => "You have been attacked by ${name}, but your defenses crushed the attackers before they harm your base.",
-                        :notification_data =>{:attacker_id => user_game_profile['user_id']} })
+        notification_text = "You have been attacked by ${name}, but your defenses crushed the attackers before they harm your base."
       end
+          Notification.new( {:metadata => profile_metadata, :notification_type => "attack",
+                         :notification_text => notification_text,
+                        :notification_data =>{:attacker_id => user_game_profile.user.service_id} })
       neighbor_profile.save
     else
       profile_metadata = user_game_profile.metadata

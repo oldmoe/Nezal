@@ -42,3 +42,8 @@ Notification.repair = function(message){
 	$("notify").show();
 	$('interaction').show();
 }
+Notification.attackNotification = function(msg){
+	$("notify").innerHTML = game.templatesManager.load("attackNotification", {msg : msg});
+	$("notify").show();
+	$('interaction').show();
+}

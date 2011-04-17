@@ -108,6 +108,28 @@
   </div>
 </textarea>
 
+<textarea style="display:none;" id='attackNotification'>
+  <div id='attackNotificationrMsg'>
+    <img class="background" src="${Loader.images.quests['msgBg.png'].src}"/>
+    <div class="msgBGImgs">
+      <img class="wedge" src="${Loader.images.quests['wedge.png'].src}"/>
+      <img class="bubble" src="${Loader.images.quests['msgBaloon.png'].src}"/>
+    </div>
+    <div class="close" onclick="Animation.hide('attackNotificationrMsg'); game.questsManager.ackCongratesMsgs(${msg['id']});">
+    </div>
+    <div class="okButtonWrapper">
+      <div class="okButton" onclick="Animation.hide('attackNotificationrMsg'); game.questsManager.ackCongratesMsgs(${msg['id']});">
+        <img class="okImage" src="${Loader.images.quests['button.png'].src}"/>
+        <div class="okText yellowText"> Ok </div>
+      </div>
+    </div>
+    <div class="text blueText">
+      <span>${msg.text}</span>
+    </div>
+  </div>
+</textarea>
+
+
 
 <textarea style="display:none;" id='gameElements'>
  			<div class="topGameElement" id="rock_game_element">
@@ -156,15 +178,14 @@
             <img src="" />
           </div>
         </div>
-        <div id="home" onclick="Javascript:game.reInitialize(function(){game.scene.render()})">
+      </div>
+      <div id="home" style="display:none;" onclick="Javascript:game.reInitialize(function(){game.scene.render()})">
           <span class="loadedImg" imgSrc ="images/friends/1st_blank.png"></span>
           <div class="photoContainer">
             <img class='photo' src="${Loader.images.buildings['townhall.png'].src}"/>
           </div>	
           <div class='name'>Home</div>
         </div>
-      </div>
-      
 			<div id="attackDiv" style="display:none;">
 				<div id ="attackTxt"> warning you are under attack</div>
 			</div>
