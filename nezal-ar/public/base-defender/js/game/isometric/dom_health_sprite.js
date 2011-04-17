@@ -4,13 +4,7 @@ var DomHealthSprite = Class.create(DomSprite, {
 	
   initialize : function($super, owner, properties){
     $super(owner, properties);
-		if (properties) {
-			if (properties.width) 
-				this.width = properties.width
-			if (properties.height) 
-				this.height = properties.height
-		}
-    this.maxHpSpan = $(document.createElement('SPAN'));
+	    this.maxHpSpan = $(document.createElement('SPAN'));
 		this.hpSpan = $(document.createElement('SPAN'));
 		this.div.appendChild(this.maxHpSpan);
     this.div.appendChild(this.hpSpan);

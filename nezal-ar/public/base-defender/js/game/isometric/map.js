@@ -461,7 +461,9 @@ var Map={
 
 	registerSpecialListeners : function(div,owner, clickCall){
 		div.observe(game.mouseClickEvent,function(){
+			console.log('here')
 			if(!game.buildingMode.isOn && owner.working){
+				console.log('here')
 				owner[clickCall]();
 			}
 		})

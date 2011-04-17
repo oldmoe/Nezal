@@ -2,8 +2,8 @@ var DomSpriteContainer = Class.create(DomSprite, {
 
   div : null, 
 
-  initialize : function($super, owner, assets, properties){
-    $super(owner, assets, properties);
+  initialize : function($super, owner, properties){
+    $super(owner, null, properties);
     this.div.addClassName('DomSpriteContainer');
   },
 

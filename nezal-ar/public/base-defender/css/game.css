@@ -96,10 +96,10 @@ img{
 	left: 423px;
     position: absolute;
 	cursor:pointer;
-    top: 500px;
+    top: 595px;
 	width:50px;
 	height:50px;
-    z-index: 2;
+    z-index: 65;
 }
 #zoom.in{
 	background-image:url('../images/icons/zoom-in.jpg')
