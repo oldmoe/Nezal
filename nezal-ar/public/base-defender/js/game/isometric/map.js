@@ -445,8 +445,8 @@ var Map={
 	  		if (owner.state != owner.states.UNDER_CONSTRUCTION)owner.sprites.outline.show();
   			if (owner.state == owner.states.NORMAL)owner.sprites.info.show();
 	  		if(owner.sprites.text)owner.sprites.text.show()
-        if(owner.state == owner.states.NORMAL && owner.sprites.moreContainer) 
-          owner.sprites.moreContainer.show();
+        if(owner.state == owner.states.NORMAL && owner.staticSprites.moreContainer) 
+          owner.staticSprites.moreContainer.show();
 	  	}
 		})
 		div.observe('mouseout',function(){
@@ -454,8 +454,8 @@ var Map={
 		    owner.sprites.mouseover.hide();
       		owner.sprites.info.hide();
 			if(owner.sprites.text)owner.sprites.text.hide()
-      if(owner.state == owner.states.NORMAL && owner.sprites.moreContainer) 
-        owner.sprites.moreContainer.hide();
+      if(owner.state == owner.states.NORMAL && owner.staticSprites.moreContainer) 
+        owner.staticSprites.moreContainer.hide();
 		})
 	},
 
@@ -480,8 +480,8 @@ var Map={
 	  		if (owner.state != owner.states.UNDER_CONSTRUCTION)owner.sprites.outline.show();
   			if (owner.state == owner.states.NORMAL)owner.sprites.info.show();
 	  		if(owner.sprites.text)owner.sprites.text.show()
-        if(owner.state == owner.states.NORMAL && owner.sprites.moreContainer) 
-          owner.sprites.moreContainer.show();
+        if(owner.state == owner.states.NORMAL && owner.staticSprites.moreContainer) 
+          owner.staticSprites.moreContainer.show();
 	  	}
 		})
 		div.observe('mouseout',function(){
@@ -489,8 +489,8 @@ var Map={
 		    owner.sprites.mouseover.hide();
       		owner.sprites.info.hide();
 			if(owner.sprites.text)owner.sprites.text.hide()
-      if(owner.state == owner.states.NORMAL && owner.sprites.moreContainer) 
-        owner.sprites.moreContainer.hide();
+      if(owner.state == owner.states.NORMAL && owner.staticSprites.moreContainer) 
+        owner.staticSprites.moreContainer.hide();
 		})
 	},
 //	checkBusyTiles : function(){

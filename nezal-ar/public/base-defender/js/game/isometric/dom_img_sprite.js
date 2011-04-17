@@ -14,7 +14,6 @@ var DomImgSprite = Class.create(DomSprite, {
 				 }
 			})
 		}
-		if(this.divClass)this.div.addClassName(this.divClass)
     if( imgAssets.shadeImg )
       this.shadeImg = imgAssets.shadeImg.clone();
 		this.div.appendChild(this.img)
