@@ -5,6 +5,7 @@ var TownhallFactory = Class.create(BuildingFactory, {
   factoryRegistry : {},
   
   initialize : function($super, game){
+  	this.factoryRegistry = {}
     $super(game);
     for (var buildingInstanceCoords in this.factoryRegistry) {
       this.townhall = this.factoryRegistry[buildingInstanceCoords];
@@ -15,9 +16,7 @@ var TownhallFactory = Class.create(BuildingFactory, {
     return this.newBuilding();
   },
 	getTownhall : function(){
-		for (townhall in this.factoryRegistry){
-   			return this.factoryRegistry[townhall]			
-		}
+		return this.townhall
 	}
   
 });
