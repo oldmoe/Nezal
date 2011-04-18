@@ -218,6 +218,7 @@ var BuildingDisplay = Class.create(Display, {
   	$('move_trigger').observe('click',function(){
   		owner.game.selectedBuildingPanel.hide();
   		owner.game.buildingMode.move()
+		owner.game.buildingMode.moveMode = true
   	});
     if (!owner.isValidToUpgrade(true)) {
       $('upgrade_trigger').select("img")[0].setStyle({marginTop : "-75px"});

@@ -60,7 +60,7 @@ var Game = Class.create({
 	
   initializeGame : function(){
     var self = this
-    var gameElementsImages = ['upper_bar.png','monitor.png','background.png','cancel.png','button.png']
+    var gameElementsImages = ['upper_bar.png','monitor.png','background.png','cancel.png','button.png','move.png']
     var friendsImages = ['1st_blank.png', 'bar.png']
     var buildingImages = ['townhall.png']
     var panelImages = ['buttons.png']
