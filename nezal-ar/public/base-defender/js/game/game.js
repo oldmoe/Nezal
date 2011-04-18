@@ -67,7 +67,7 @@ var Game = Class.create({
     var questsImages = [  "msgBg.png", "wedge.png", "button.png", "msgBaloon.png", "questBaloon.png" , "questBg.png", "buildingPanelBg.png",
                           "resources.png", "correct.png", "buildingsBg.png", "wedgesBg.png", 
                           'button.png','cursor.png',"social.png", "civil.png", "military.png", "circles.png", "hover.png", "animated_circles.gif", 
-                          "line.png", "resources_needed_for_building.png"];
+                          "line.png", "resources_needed_for_building.png", "building_hover.png", "building_hover_arrow.png", "empty.png"];
     questsImages = questsImages.concat(BuildingMode.prototype.buildings.collect(function(building){
                                                                       return building + "_info.png";
                                                                   }));
@@ -272,32 +272,29 @@ var Game = Class.create({
     }
   },
 
-  
-  
-   addLoadedImagesToDiv : function(divId){
-  	$$('#'+divId+' .loadedImg').each(function(imgSpan){
-		var classes = null
-		if(imgSpan.getAttribute('imgClasses')){
-			var classes = imgSpan.getAttribute('imgClasses').split('-')
-		}
-		var imgPath = imgSpan.getAttribute('imgSrc').split('/')
-		var imgPart = Loader
-		for(var i=0;i<imgPath.length;i++){
-		   imgPart = imgPart[imgPath[i]]
-		}
-		var img = imgPart.clone()
-		var parent = imgSpan.parentNode
-		img = parent.insertBefore(img, imgSpan)
-		parent.removeChild(imgSpan)
-		if(imgSpan.getAttribute('imgId')) img.id = imgSpan.getAttribute('imgId')
-		if (classes) {
-			for (var i = 0; i < classes.length; i++) {
-				img.addClassName(classes[i])
-			}
-		}
-		
-		
-	})
+  addLoadedImagesToDiv : function(divId){
+    $$('#'+divId+' .loadedImg').each(function(imgSpan){
+      var classes = null
+      if(imgSpan.getAttribute('imgClasses')){
+	      var classes = imgSpan.getAttribute('imgClasses').split('-')
+      }
+      var imgPath = imgSpan.getAttribute('imgSrc').split('/')
+      var imgPart = Loader
+      for(var i=0;i<imgPath.length;i++){
+         imgPart = imgPart[imgPath[i]]
+      }
+      var img = imgPart.clone()
+      var parent = imgSpan.parentNode
+      img = parent.insertBefore(img, imgSpan)
+      parent.removeChild(imgSpan)
+      if(imgSpan.getAttribute('imgId')) img.id = imgSpan.getAttribute('imgId')
+      if(imgSpan.getAttribute('hidden')=="true") img.setStyle({ "display" : 'none'});
+      if (classes) {
+	      for (var i = 0; i < classes.length; i++) {
+		      img.addClassName(classes[i])
+	      }
+      }
+    })
   }
 
 });
