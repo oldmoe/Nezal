@@ -39,6 +39,30 @@ var Hand = {
     this.topOffset = this.topOffset + 6*this.moveDirection*this.direction;
     this.leftOffset = this.leftOffset + 6*this.moveDirection;
     $('hand').setStyle({zIndex : 1001,  top : this.topOffset + "px", left : this.leftOffset + "px" });
+    var parents = this.obj.ancestors();
+    var visible = true;
+    for(var i = 0; i < parents.length; i++)
+    {
+      parent = parents[i];
+      parentOffset = Element.cumulativeOffset(parent);
+      if(parent.getStyle('overflow') == 'hidden')
+      {
+        if(position.top < parentOffset.top || position.top > parentOffset.top + parent.getStyle('height'))
+        {
+          visible = false;
+          break;
+        }
+        if(position.left < parentOffset.left || position.left > parentOffset.left + parent.getStyle('height'))
+        {
+          visible = false;
+          break;
+        }
+      }
+    }
+    if(visible)
+      $('hand').show();      
+    else
+      $('hand').hide();
     this.moveDirection *= -1;
   },
 
