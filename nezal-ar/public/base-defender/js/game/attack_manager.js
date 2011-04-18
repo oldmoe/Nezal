@@ -6,6 +6,11 @@ var AttackManager = Class.create({
 		this.creeps = []
 	    var self = this;
 		this.game = game;
+		//if (this.game.user.data.notifications) {
+		if (!this.game.neighborGame) {
+			this.showAttackNotifications()
+		}
+		//}
 	    $("sendAttack").stopObserving("click");
 	    $("sendAttack").observe(game.mouseClickEvent, function(){
 			Sounds.play(Sounds.gameSounds.click);
@@ -30,7 +35,6 @@ var AttackManager = Class.create({
 		if(this.creepsDone == this.noOfCreeps){
 			$('attackDiv').hide()
 			for(var i=0;i<this.creeps.length;i++){
-				console.log(this.creeps[i].creep.tickCounter)
 				if (this.creeps[i].creep.attacked) {
 					attackSuccess = true
 					break
@@ -41,7 +45,6 @@ var AttackManager = Class.create({
 			this.creepsDone = 0
 			this.attacking = false
 			if(attackSuccess){
-				console.log('!!!!!!!')
 			    if(this.game.neighborGame) this.showAttackSuccessMsg()
 				else this.showRepairMsg()
 			}else{
@@ -49,6 +52,29 @@ var AttackManager = Class.create({
 				this.showDefendCongratsMsg()
 			}
 		}	
+	},
+	showAttackNotifications : function(){
+		var notifications = this.game.user.data.notifications.queue.findAll(function(n){
+				return n['type'] == 'attack';
+			});
+			if (notifications) {
+				notifications.each(function(notification){
+					attacker_id = notification.data.attacker_id
+					result = []
+					result[attacker_id] = { "index" : 0 };
+					serviceProvider.getUsersInfo([attacker_id], result, function(){
+						if (result[attacker_id].name) {
+							notification.text = TrimPath.parseTemplate(notification.text).process({
+								name: result[attacker_id].name
+							})
+							Notification.attackNotification({
+								text: notification.text,
+								id: notification.id
+							})
+						}
+					})
+				})
+			}		
 	},
 	showRepairMsg : function(){
 		Notification.repair("You Have been attacked, Click repair to start repairing your buildings")

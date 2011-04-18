@@ -60,7 +60,7 @@ var Game = Class.create({
 	
   initializeGame : function(){
     var self = this
-    var gameElementsImages = ['upper_bar.png','monitor.png','background.png','cancel.png','button.png']
+    var gameElementsImages = ['upper_bar.png','monitor.png','background.png','cancel.png','button.png','move.png']
     var friendsImages = ['1st_blank.png', 'bar.png']
     var buildingImages = ['townhall.png']
     var panelImages = ['buttons.png']
@@ -197,6 +197,7 @@ var Game = Class.create({
   
   reInitialize : function(callback){
     this.neighborGame = false;
+	$('home').hide()
     this.gameStatus = this.network.initializeGame();
     this.data = this.gameStatus.game_data.metadata;
     this.reflectStatusChange();
@@ -214,8 +215,8 @@ var Game = Class.create({
     if(this.reactor) this.reactor.stop();
     this.reactor = new Reactor(80);
     this.reactor.run();
-    this.attackManager = new AttackManager(this);
     this.user = new User(this);
+	this.attackManager = new AttackManager(this);
     this.scene = new BaseDefenderScene(this);	
     this.resources.rock = this.user.data.rock;
     this.resources.lumber = this.user.data.lumber;
@@ -253,6 +254,7 @@ var Game = Class.create({
   },
   
   loadUserEmpire : function(user_id){
+  	$('home').show()
     this.gameStatus.user_data = this.network.neighbourEmpire(user_id);
     this.neighborGame = true;
 	this.visitedNeighborId = user_id

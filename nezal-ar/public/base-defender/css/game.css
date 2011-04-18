@@ -96,17 +96,29 @@ img{
 	left: 423px;
     position: absolute;
 	cursor:pointer;
-    top: 500px;
+    top: 495px;
 	width:50px;
 	height:50px;
-    z-index: 2;
+    z-index: 65;
 }
+
 #zoom.in{
 	background-image:url('../images/icons/zoom-in.jpg')
 }
 #zoom.out{
 	background-image:url('../images/icons/zoom-out.jpg')
 }
+
+#move{
+	left: 360px;
+    position: absolute;
+	cursor:pointer;
+    top: 495px;
+	width:50px;
+	height:50px;
+    z-index: 65;
+}
+
 #zoom img{
 	width : 55px
 }

@@ -8,19 +8,30 @@ var BuildingMode = Class.create({
   selectedBuilding : null,
   callback : null,
   buildingMoveObserver : null,
-	moveBuilding : false,
+  moveBuilding : false,
+  buildingClicked : false,
+  moveMode : false,
   initialize : function(game){
     this.game = game;
     this._AttachCanvasClickListener();
 	this._AttachCancelBuildingListener();
 	this._AttachZoomListener();
-		//if($('cancelBuilding')) $('cancelBuilding').hide();
+	this._AttachMoveListener();
   },
   
   _AttachZoomListener : function(){
   	var self = this
   	$('zoom').observe('click',function(){
 		self.zoom()
+	})
+  },
+  
+  _AttachMoveListener : function(){
+  	var self = this
+  	$('move').observe('click',function(){
+		self.moveMode = true
+		self.showBuildingBases()
+		$('cancelBuilding').show();
 	})
   },
   showBuildingBases : function(){
@@ -33,20 +44,8 @@ var BuildingMode = Class.create({
 		building.sprites.base.hide()
 	})
   },
-  on : function(building, callback){
-//    if( this.selectedBuilding && this.selectedBuilding.state == 0 ){
-//      this.cancelBuildingMode();
-//    }
-	    this.isOn = true;
-		this.showBuildingBases()
-	    this.callback = callback;
-	    this.selectedBuilding = building;
-		this._AttachMouseMoveEvent();
-    //this._AttachCanvasClickListener();
-		$('cancelBuilding').show();
-  },
-	
-	move: function(){
+
+	move : function(){
 		if(!this.selectedBuilding)return
 		this.moveBuilding = true;
 		Map.objects.remove(this.selectedBuilding);
@@ -54,8 +53,16 @@ var BuildingMode = Class.create({
 		this.selectedBuilding.oldCoords.x = this.selectedBuilding.coords.x;
 		this.selectedBuilding.oldCoords.y = this.selectedBuilding.coords.y;
 		this.selectedBuilding.setState(this.selectedBuilding.states.NOT_PLACED);
-		this.on(this.selectedBuilding);
+		this.on(this.selectedBuilding)
 	},
+	on : function(building, callback){
+	    this.isOn = true;
+		this.showBuildingBases()
+	    this.callback = callback;
+	    this.selectedBuilding = building;
+		this._AttachMouseMoveEvent();
+		$('cancelBuilding').show();
+    },
 	
 	_AttachMouseMoveEvent : function(){
 		var self = this;
@@ -63,7 +70,7 @@ var BuildingMode = Class.create({
 			var x =  mouse.pointerX() || mouse.touches[0].pageX;
 			var y = mouse.pointerY() || mouse.touches[0].pageY;
 			var mapCoords = Map.getRealCoords(x,y);
-			if(self.game.zoomFactor ==0.5){
+			if(self.game.zoomFactor == 0.5){
 					mapCoords.x+= mapCoords.x - Map.mapWidth/2
 					mapCoords.y+= mapCoords.y - Map.mapHeight/2 
 			}
@@ -79,9 +86,7 @@ var BuildingMode = Class.create({
 		this.moveBuilding = false;
    		this.isOn = false;
     	this.selectedBuilding = null;
-		this.hideBuildingBases()
 		$('gameCanvas').stopObserving(game.mouseMoveEvent, this.buildingMoveObserver);
-		$('cancelBuilding').hide();
   },
   
 	cancelBuildingMode : function(){
@@ -91,14 +96,22 @@ var BuildingMode = Class.create({
 		else {
 			this.selectedBuilding.destroy();
 			this.selectedBuilding = null;
+			if (!this.moveMode) {
+				this.hideBuildingBases()
+				$('cancelBuilding').hide();
+			}
 		}	
 		this.off();
 	},
 	
   _AttachCanvasClickListener : function(){
-    $('gameCanvas').stopObserving(game.mouseClickEvent);
 	var self = this
+    $('gameCanvas').stopObserving(game.mouseClickEvent);
     $('gameCanvas').observe(game.mouseClickEvent, function(mouse){
+		if(self.buildingClicked){
+			self.buildingClicked = false
+			return
+		}
       if(game.neighborGame)
         return;
       var x = mouse.pointerX() || mouse.touches[0].pageX;
@@ -113,13 +126,14 @@ var BuildingMode = Class.create({
 		if(this.moveBuilding){
 			if (this.selectedBuilding.move(x,y)) {
 				this.moveBuilding = false;
-				this.hideBuildingBases()
 				this.cancelBuildingMode()
+				this.showBuildingBases()
 			}
 		}
     	else if (this.selectedBuilding.build(x,y)) {
       		this.callback();
 			this.hideBuildingBases()
+			$('cancelBuilding').hide()
       		//this.off();
     	}
   },
@@ -127,7 +141,18 @@ var BuildingMode = Class.create({
 	_AttachCancelBuildingListener : function(){
 		var self = this;
     $('cancelBuilding').stopObserving(game.mouseClickEvent);
-		$('cancelBuilding').observe(game.mouseClickEvent,function(){self.cancelBuildingMode()})
+		$('cancelBuilding').observe(game.mouseClickEvent,
+			function(){
+				if (self.moveMode) {
+					self.moveMode = false
+					self.hideBuildingBases()
+				}
+				if (self.selectedBuilding) {
+					self.cancelBuildingMode()
+				}
+				$('cancelBuilding').hide()
+			}
+	    )
 	},
 	
 	repair : function(){

@@ -1,6 +1,6 @@
 var DomSprite = Class.create(Sprite, {
-  shiftX : 2,
-  shiftY : 2,
+  shiftX : 0,
+  shiftY : 0,
   shiftZ : 0,
   initialize : function(owner, assets, properties){
   	properties = properties || {}
@@ -9,15 +9,15 @@ var DomSprite = Class.create(Sprite, {
 		if(properties.divClass)this.div.addClassName(properties.divClass)
     this.owner = owner;
 	var z =0 ;
-	if(assets && assets.zIndex){
-		z = assets.zIndex
+	if(properties.zIndex){
+		z = properties.zIndex
 		this.zIndex = z
 	}  
 	else var z = this.owner.coords.y + this.owner.zdim
     this.div.setStyle ({zIndex :(z)});
-		if(assets && assets.width)this.div.style.width = assets.width + "px";
+		if(properties.width)this.div.style.width = properties.width + "px";
     else this.div.style.width = this.owner.imgWidth + "px";
-		if(assets && assets.height)this.div.style.height = assets.height + "px";
+		if(properties.height)this.div.style.height = properties.height + "px";
     else this.div.style.height =  this.owner.imgHeight + "px";
     Object.extend( this, properties );
   },

@@ -136,6 +136,7 @@ var Building = Class.create({
 		this.coords['x'] = x;
 	    this.coords['y'] = y;
 	    if(this.validateLocation(x,y)){
+		  this.setState(this.states.NORMAL)
 	      var response = this.game.network.moveBuilding(this.name, this.coords, this.oldCoords);
 	      this.game.updateGameStatus(response['gameStatus']);
 	      return response['done'];

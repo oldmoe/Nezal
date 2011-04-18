@@ -20,7 +20,7 @@
   {
     data.buildings[i]['defense'] = false;
   }
-  ['wedge', 'gaddafi'].each(function(name){
+  ['wedge', 'gaddafi','palm'].each(function(name){
                               data.buildings[name]['defense'] = true;
                             });
   new Ajax.Request( '/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/metadata' , {

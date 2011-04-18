@@ -418,7 +418,17 @@ var Map={
 	registerListeners : function(div,owner){
 		div.observe(game.mouseClickEvent,function(){
 			if(!game.buildingMode.isOn && owner.working){
-				owner.defaultAction();
+				if (!owner.game.buildingMode.moveMode) {
+					owner.defaultAction();
+				}else{
+					if(owner.game.selectedBuildingPanel){
+						owner.game.selectedBuildingPanel.hide();
+					}
+					owner.game.buildingMode.selectedBuilding = owner
+					owner.game.buildingMode.move()
+					owner.game.buildingMode.buildingClicked = true
+				}
+				
 			}
 		})
 		div.observe(game.mouseStartEvent,function(event){
