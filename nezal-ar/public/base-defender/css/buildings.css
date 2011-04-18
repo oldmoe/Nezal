@@ -88,11 +88,6 @@
   text-align: center;
   text-shadow: -2px 2px 1px black;
 }
-
-#interaction .buildingInfo .resourcesNeeded {
-  margin-left: 200px;
-  margin-top: 20px;
-}
     
 #interaction #buildingsPanel .buildings {
   position: absolute;
@@ -162,9 +157,7 @@
   float: left;
   height: 130px;
   width: 80px;
-  margin : 0px 4px;
-  margin-bottom: 3px;
-  padding-top: 14px;
+  margin : 14px 4px 3px 4px;
   overflow: visible;
   position: relative;
   text-align: center;
@@ -186,7 +179,7 @@
 }
 #interaction #buildingsPanel .item .hover {
   position : relative;
-  top : -234px;
+  top : -232px;
   left : -8px;
   width : 98px;
   float : none;
@@ -195,7 +188,7 @@
 #interaction #buildingsPanel .item .hoverArrow {
   float: none;
   position: absolute;
-  top: 104px;
+  top: 90px;
   width: 46px;
   z-index: 120;
   left: 21px;
@@ -218,36 +211,53 @@
 #interaction #buildingsPanel .item .itemData .image{  
   height : 74px;
 }
-#interaction #buildingsPanel .item .disabledMsgText{  
+#interaction #buildingsPanel .item .disabledMsgBackground{  
   background: white;
-  opacity: 0.9;
+  border-radius: 5px 5px 5px 5px;
+  font-family: verdana;
+  font-size: 11px;
+  height: 90px;
+  opacity: 0.7;
   position: absolute;
-  top: 20px;
+  top: 14px;
   width: 82px;
   z-index: 200;
-  font-family : verdana;
-  font-size : 11px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  -khtml-border-radius: 5px;
-  border-radius: 5px;
+}
+#interaction #buildingsPanel .item .disabledMsgText{  
+  font-family: verdana;
+  font-size: 11px;
+  height: 80px;
+  position: absolute;
+  text-shadow: 0 1px 1px #326479;
+  font-weight : bold;
+  top: 19px;
+  width: 82px;
+  z-index: 200;
 }
 #interaction #buildingsPanel .item .itemData .image img{  
   width: 68px;
   height: 74px;
 }
 
-#interaction #buildingDisplay .cost{  
-  color: white;
-  margin-left: 197px;
-  position: relative;
-  text-align: left;
+#interaction #buildingDisplay .cost {
+    color: white;
+    left: 343px;
+    position: absolute;
+    top: 100px;
+    width: 200px;
 }
 #interaction #buildingDisplay .cost .text{
   display: inline-block;
   font-size: 14px;
   text-align: center;
-  width: 14%;
+  width: 23%;
+}
+#interaction .buildingInfo .resourcesNeeded {
+  position: absolute;
+  text-align: left;
+  left: 350px;
+  width : 176px;
+  margin-top: 20px;
 }
 #interaction #buildingsPanel .item .inactive {
   cursor : not-allowed;
