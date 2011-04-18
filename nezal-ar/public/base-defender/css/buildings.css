@@ -157,9 +157,7 @@
   float: left;
   height: 130px;
   width: 80px;
-  margin : 0px 4px;
-  margin-bottom: 3px;
-  padding-top: 14px;
+  margin : 14px 4px 3px 4px;
   overflow: visible;
   position: relative;
   text-align: center;
@@ -181,7 +179,7 @@
 }
 #interaction #buildingsPanel .item .hover {
   position : relative;
-  top : -234px;
+  top : -232px;
   left : -8px;
   width : 98px;
   float : none;
@@ -190,7 +188,7 @@
 #interaction #buildingsPanel .item .hoverArrow {
   float: none;
   position: absolute;
-  top: 104px;
+  top: 90px;
   width: 46px;
   z-index: 120;
   left: 21px;
