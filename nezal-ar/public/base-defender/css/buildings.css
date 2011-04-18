@@ -69,6 +69,7 @@
   position: absolute;
   top: 140px;
   width: 530px;
+  z-index : 12;
 }
 
 #interaction .buildingInfo {
@@ -162,7 +163,7 @@
   height: 130px;
   width: 100%;
   margin-bottom: 3px;
-  margin-top: 14px;
+  padding-top: 14px;
   overflow: visible;
   position: relative;
   text-align: center;
@@ -185,7 +186,7 @@
 #interaction #buildingsPanel .item .hover {
   position : relative;
   top : -235px;
-  left : -8px;
+  left : -9px;
   width : 100px;
   float : none;
   z-index : 50;
@@ -193,10 +194,10 @@
 #interaction #buildingsPanel .item .hoverArrow {
   float: none;
   position: absolute;
-  top: 91px;
+  top: 104px;
   width: 46px;
   z-index: 120;
-  left: 20px;
+  left: 21px;
 }
 
 #interaction #buildingsPanel .item .itemData {  
@@ -263,7 +264,7 @@
 }
 #buildings-ul, #defense-ul{
 	width : 2000px;
-	height :150px;			
+	height :100%;			
 	margin : 0px;
 	padding : 0px;
 }
@@ -276,8 +277,9 @@
 #buildings li, #defense li {
 	float : left;
 	list-style : none;			
-  height: 140px;
-  width: 84px;
+  height: 100%;
+  width: 82px;
+  margin : 0px 1px;
 }
 #buildingsPanel .leftOff {
   margin-left : 0px;
