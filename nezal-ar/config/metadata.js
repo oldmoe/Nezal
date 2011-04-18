@@ -134,13 +134,13 @@ data={
 						  "dependency" :{"buildings":{"townhall":1}}, "limited_by":null,"limiting":{"global":3,"others":{}},
 						  "hp": 1000, "time": 2, 
 						  "display":{ "xdim":17,"ydim":17,"zdim":62,"imgWidth":64,"imgHeight":93,
-								  "area" : "1,1"} 
+								  "area" : "51,83,63,37,61,24,42,8,17,3,9,20,0,38,10,73,29,90,50,86"} 
 					},
 					"1":{
 						  "dependency" :{"buildings":{"townhall":1}}, "limited_by":null,"limiting":{"global":3,"others":{}},
 						  "hp": 1000, "time": 2,  "rock" : 100, "lumber" : 100,
 						  "display":{ "xdim":17,"ydim":17,"zdim":62,"imgWidth":64,"imgHeight":93,
-								  "area" : "1,1"} 
+								  "area" : "51,83,63,37,61,24,42,8,17,3,9,20,0,38,10,73,29,90,50,86"} 
 					}
 		  }
    },
