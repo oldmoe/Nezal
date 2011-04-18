@@ -36,6 +36,7 @@ var BuildingPanel = Class.create({
     var closeCallback = function(){
       $('building-panel').hide();
       game.selectedBuildingPanel = null;
+	  game.buildingMode.selectedBuilding = null;
       this.selectedBuilding = null;
     }
     

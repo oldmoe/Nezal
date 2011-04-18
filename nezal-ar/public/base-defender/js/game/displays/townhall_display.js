@@ -33,6 +33,8 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
 	  this.sprites.flag = new DomImgSprite({coords:this.owner.coords,imgWidth:this.flagImgWidth, imgHeight: this.flagImgHeight, zdim:this.flagZDim}
 	  ,{img: this.flagImg},{shiftY:-32,shiftX:2})
       this.sprites.health.shiftY = 20;
+	  this.sprites.clickSprite.shiftY = 40
+	  this.sprites.clickSprite.shiftX = -10
   	  this.sprites.clickSprite.setImgHeight(135)
     },
     
