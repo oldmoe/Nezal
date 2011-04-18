@@ -76,21 +76,18 @@ var BuildingDisplay = Class.create(Display, {
     this.sprites.clickSprite = new DomImgSprite(this.owner,{img : this.transparentImg, area:this.area}, {clickable: true});
     this.sprites.clickSprite.img.setStyle({width:this.imgWidth+"px",height:this.imgHeight+"px"})
 		this.sprites.underConstruction = new DomImgSprite(this.owner, {img: this.constructionImg}, {shiftY: this.zdim})
-    if(this.defaultAction != this.renderPanel)
-    {
-      this.staticSprites.moreContainer = new DomSpriteContainer(this.owner, {zIndex : this.sprites.clickSprite.minAreaZIndex + 1100,
-                                                          width :this.buttonImg.width, height : this.buttonImg.height });
-      this.staticSprites.moreContainer.shiftX = (this.imgWidth - this.buttonImg.width)/2+2;
-      this.staticSprites.moreContainer.shiftY = this.imgHeight - this.buttonImg.height - 15;
-      this.staticSprites.moreButton = this.staticSprites.moreContainer.newDomImgSprite(this.owner, { img: this.buttonImg,
-                                                                                         width :this.buttonImg.width,
-                                                                                         height : this.buttonImg.height });
-      this.owner.moreButtonText = function(){ return "menu"};
-      this.staticSprites.moreButtonText = this.staticSprites.moreContainer.newDomTextSprite(this.owner, 'moreButtonText',
-                                                      {centered: true, styleClass : 'moreButtonText', divClass : 'moreButtonText',
+    this.staticSprites.moreContainer = new DomSpriteContainer(this.owner, {zIndex : this.sprites.clickSprite.minAreaZIndex + 1100,
                                                         width :this.buttonImg.width, height : this.buttonImg.height });
-      Map.registerSpecialListeners(this.staticSprites.moreContainer.div,this.owner, 'renderPanel');      
-    }
+    this.staticSprites.moreContainer.shiftX = (this.imgWidth - this.buttonImg.width)/2+2;
+    this.staticSprites.moreContainer.shiftY = this.imgHeight - this.buttonImg.height - 15;
+    this.staticSprites.moreButton = this.staticSprites.moreContainer.newDomImgSprite(this.owner, { img: this.buttonImg,
+                                                                                       width :this.buttonImg.width,
+                                                                                       height : this.buttonImg.height });
+    this.owner.moreButtonText = function(){ return "menu"};
+    this.staticSprites.moreButtonText = this.staticSprites.moreContainer.newDomTextSprite(this.owner, 'moreButtonText',
+                                                    {centered: true, styleClass : 'moreButtonText', divClass : 'moreButtonText',
+                                                      width :this.buttonImg.width, height : this.buttonImg.height });
+    Map.registerSpecialListeners(this.staticSprites.moreContainer.div, this.owner, 'renderPanel');
     for(var sprite in this.staticSprites){
       this.staticSprites[sprite].render();
     }

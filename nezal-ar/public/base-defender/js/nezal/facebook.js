@@ -32,7 +32,6 @@ var FBConnect = {
 	  },
 	  
 	  getUsersInfo : function(ids, result, callback){
-	  		console.log(ids)
 			var	query2 = FB.Data.query("SELECT name,uid FROM user WHERE uid IN ({0})", ids);
 			FB.Data.waitOn([query2], function(){
 				if(!query2.value.length) 
