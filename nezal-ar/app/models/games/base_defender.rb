@@ -243,7 +243,9 @@ class BaseDefender < Metadata
       repair_jobs user_game_profile
       validation = initialize_simulate_attack user_game_profile, data
     elsif data['event'] == 'repair_buildings'
-      validation = repair_buildings user_game_profile  
+      validation = repair_buildings user_game_profile
+    elsif data['event'] == 'reward_bag'
+      validation = add_reward_bag user_game_profile, data
     end
     
     user_game_profile['error'] = validation['error'] unless validation['valid']
@@ -405,6 +407,10 @@ class BaseDefender < Metadata
     return validation
   end
   
+  def self.add_reward_bag user_game_profile, data
+    user_game_profile['reward_bag']  
+  end
+  
   def self.init_game_profile(user_game_profile)
     user_game_profile.metadata= 
     {'townhall' => nil,
@@ -414,6 +420,7 @@ class BaseDefender < Metadata
      'idle_workers' => 1,
      'rock' => 50000,
      'lumber' => 50000,
+     'reward_bags' => {},
      'notifications' => {'id_generator' => 0, 'queue' => []},
      'attacks' => {},
      'map' => (0..72).to_a.map{(0..24).to_a.map{0}},
