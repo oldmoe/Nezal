@@ -1,7 +1,7 @@
 var BuildingMode = Class.create({
   game : null,
-  buildings : ['townhall', 'quarry', 'lumbermill','storage','defense_center', 'palm',
-  'wedge','war_factory','house', 'gaddafi'],
+  buildings : ['townhall', 'quarry', 'lumbermill','storage','defense_center',
+  'palm','wedge','war_factory','house', 'gaddafi'],
   wedges : ['wedge', 'gaddafi'],
   inProgressImage : 'progress.png',
   isOn : false,
@@ -47,6 +47,11 @@ var BuildingMode = Class.create({
 
 	move : function(){
 		if(!this.selectedBuilding)return
+		if(this.selectedBuilding.state!=this.selectedBuilding.states.NORMAL){
+			Notification.alert("Can't move building.")
+			this.selectedBuilding = null
+			return 
+		} 
 		this.moveBuilding = true;
 		Map.objects.remove(this.selectedBuilding);
 		this.selectedBuilding.oldCoords = {};
@@ -145,11 +150,11 @@ var BuildingMode = Class.create({
 			function(){
 				if (self.moveMode) {
 					self.moveMode = false
-					self.hideBuildingBases()
 				}
 				if (self.selectedBuilding) {
 					self.cancelBuildingMode()
 				}
+				self.hideBuildingBases()
 				$('cancelBuilding').hide()
 			}
 	    )

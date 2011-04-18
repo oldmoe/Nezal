@@ -128,6 +128,22 @@ data={
       }
       }
   },
+   "palm" : {
+		"levels":{
+					"0":{ 
+						  "dependency" :{"buildings":{"townhall":1}}, "limited_by":null,"limiting":{"global":3,"others":{}},
+						  "hp": 1000, "time": 2, 
+						  "display":{ "xdim":17,"ydim":17,"zdim":62,"imgWidth":64,"imgHeight":93,
+								  "area" : "1,1"} 
+					},
+					"1":{
+						  "dependency" :{"buildings":{"townhall":1}}, "limited_by":null,"limiting":{"global":3,"others":{}},
+						  "hp": 1000, "time": 2,  "rock" : 100, "lumber" : 100,
+						  "display":{ "xdim":17,"ydim":17,"zdim":62,"imgWidth":64,"imgHeight":93,
+								  "area" : "1,1"} 
+					}
+		  }
+   },
   "wedge" : {
     "levels":{
         "0":{ 
@@ -149,22 +165,6 @@ data={
         }
       }
   },
-   "palm" : {
-		"levels":{
-					"0":{ 
-						  "dependency" :{"buildings":{"townhall":1}}, "limited_by":null,"limiting":{"global":3,"others":{}},
-						  "hp": 1000, "time": 2, 
-						  "display":{ "xdim":17,"ydim":17,"zdim":62,"imgWidth":64,"imgHeight":93,
-								  "area" : "1,1"} 
-					},
-					"1":{
-						  "dependency" :{"buildings":{"townhall":1}}, "limited_by":null,"limiting":{"global":3,"others":{}},
-						  "hp": 1000, "time": 2,  "rock" : 100, "lumber" : 100,
-						  "display":{ "xdim":17,"ydim":17,"zdim":62,"imgWidth":64,"imgHeight":93,
-								  "area" : "1,1"} 
-					}
-		  }
-   },
   "gaddafi" : {
     "levels":{
       "0":{ 

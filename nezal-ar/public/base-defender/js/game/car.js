@@ -181,6 +181,12 @@ var Car = Class.create(MovingObject,{
 		this.finishHittingObservers.each(function(observer){
 			observer()
 		})
-	}	
+	},
+	getMeterFunc: function(){
+  	  var self = this
+	  return function(){
+	    	return self.hp/self.maxHp	
+	  }
+  },	
 })
 

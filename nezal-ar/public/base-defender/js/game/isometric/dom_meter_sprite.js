@@ -49,7 +49,7 @@ var DomMeterSprite = Class.create(DomSprite, {
   render : function($super){
     $super();
 		if (this.hideWhenFull) {
-			if (this.getMeterLength() == 1) {
+			if (this.meterFunc() == 1) {
 				this.div.hide()
 				return
 			}else{

@@ -31,7 +31,7 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
     createSprites : function($super){
       $super()
 	  this.sprites.flag = new DomImgSprite({coords:this.owner.coords,imgWidth:this.flagImgWidth, imgHeight: this.flagImgHeight, zdim:this.flagZDim}
-	  ,{img: this.flagImg},{shiftY:-40,shiftX:2})
+	  ,{img: this.flagImg},{shiftY:22,shiftX:93,zIndex:this.owner.coords.y+this.owner.zdim})
       this.sprites.health.shiftY = 20;
 	  this.sprites.clickSprite.shiftY = 40
 	  this.sprites.clickSprite.shiftX = -10
@@ -49,6 +49,9 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
       
     render : function($super){
       $super()
+	  if(this.owner.game.reactor.ticks %2==0){
+	  	 this.sprites.flag.currentAnimationFrame = (this.sprites.flag.currentAnimationFrame + 1) % this.flagFrames;
+	  }
       if(this.owner.producing && this.owner.working  && this.owner.game.reactor.ticks %4==0) this.renderDoor()
     },  
     
@@ -77,13 +80,11 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
         this.sprites.building.currentAnimationFrame = (this.sprites.building.currentAnimationFrame - 1);
     },
     renderAnimation : function(){
-		      
       if (!this.sprites.building.animated && !this.owner.producing) {
         this.sprites.building.currentAnimationFrame = 0
       }
       else if(!this.owner.producing){
         this.sprites.building.currentAnimationFrame = (this.sprites.building.currentAnimationFrame + 1) % this.sprites.building.noOfAnimationFrames;
-		this.sprites.flag.currentAnimationFrame = (this.sprites.flag.currentAnimationFrame + 1) % this.flagFrames;
       }
     },
     
