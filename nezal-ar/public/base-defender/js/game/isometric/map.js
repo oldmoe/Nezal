@@ -417,7 +417,7 @@ var Map={
 	
 	registerListeners : function(div,owner){
 		div.observe(game.mouseClickEvent,function(){
-			if(!game.buildingMode.isOn && owner.working){
+			if(!game.buildingMode.isOn && owner.working && owner.state == owner.states.NORMAL){
 				if (!owner.game.buildingMode.moveMode) {
 					owner.defaultAction();
 				}else{
@@ -471,7 +471,7 @@ var Map={
 
 	registerSpecialListeners : function(div,owner, clickCall){
 		div.observe(game.mouseClickEvent,function(){
-			if(!game.buildingMode.isOn && owner.working){
+			if(!game.buildingMode.isOn && owner.working && owner.state == owner.states.NORMAL){
 				owner[clickCall]();
 			}
 		})
