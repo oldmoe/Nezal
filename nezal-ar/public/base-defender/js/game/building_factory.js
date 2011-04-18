@@ -48,6 +48,85 @@ var BuildingFactory = Class.create({
 	  return false
   },
   	  
+  isDependenciesMet : function(level){
+    var result = {valid : true, msg : ''};
+	  var buildingDependencies = this.bluePrints.levels[level].dependency.buildings
+	  for(building in buildingDependencies){
+		  if(!this.game[building.dasherize().camelize()+"Factory"].buildingExists(buildingDependencies[building])){
+//			  Notification.alert();
+        result['valid'] = false;
+        result['msg'] = "Cannot build " + this.name + ", you need a "+ this.humanizeString(building) + " level "+ buildingDependencies[building];
+			  return result;
+		  }
+	  }
+    return result;
+  },
+
+  hasEnoughResources : function(level){
+    var result = {valid : true, msg : ''};
+	  /**************************Validate Max number of buildings*******************************/
+    var limitingBuilding = this.bluePrints.levels[level].limited_by
+	  if (limitingBuilding) {
+		  var registery = this.game[limitingBuilding.dasherize().camelize() + "Factory"].factoryRegistry
+		  var maxLevel = 0;
+		  var key = null
+		  for (item in registery) {
+			  if (registery[item].level > maxLevel) {
+				  maxLevel = registery[item].level
+				  key = item
+			  }
+		  }
+		  if (key) {
+			  var maxNoOfBuildings = registery[key].currentLevelBluePrints.limiting.others[this.name]
+			  if (!maxNoOfBuildings) 
+				  maxNoOfBuildings = registery[key].currentLevelBluePrints.limiting.global
+			  if (maxNoOfBuildings <= this.noOfBuildings) {
+//				  Notification.alert();
+          result.valid = false;
+          result.msg = "You can only build " + maxNoOfBuildings + " " + this.humanizeString(this.name);
+				  return result;
+			  }
+		  }
+		  else {
+        result.valid = false;
+        result.msg = "Error";
+			  return result;
+		  }
+	  }
+    /****************************** Validating resources **************************************/
+    var neededRock = this.bluePrints.levels[level].rock - this.game.resources.rock;
+    var neededLumber = this.bluePrints.levels[level].lumber - this.game.resources.lumber;
+    
+    if( neededRock > 0 && neededLumber > 0 ){
+      result.valid = false;
+      result.msg = "Not enough resources, you need more "+ neededRock +" rock and "+ neededLumber + " lumber";
+      return result;
+    }
+    
+    if(  neededRock > 0 ){
+      result.valid = false;
+      result.msg = "Not enough resources, you need more "+ neededRock +" rock";
+      return result;
+    }
+    
+    if( neededLumber > 0 ){
+      result.valid = false;
+      result.msg = "Not enough resources, you need more "+ neededLumber +" lumber";
+      return result;
+    }
+    /****************************** Validating workers **************************************/
+    if( this.game.workerFactory.idleWorkers == 0 ){
+      result.valid = false;
+      result.msg = "All your workers are busy!";
+      return result;
+    }
+    return result;
+  },
+
+  humanizeString : function(str){
+  	return str.capitalize().replace("_", " ") 
+  },
+
   factoryRegistrar : function(coords, building){
     this.factoryRegistry[coords] = building;
     BuildingFactory._GlobalRegistrar(coords, building);

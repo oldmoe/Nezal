@@ -22,11 +22,24 @@ var BuildingsManager = Class.create({
 */
   displayBuildingsPanel : function(params){
     var buildings = {};
+    var disabled = [];
     for ( var i in this.game.data.buildings) {
-      buildings[i] = this.game.data.buildings[i]['levels'][1];
-      buildings[i]['defense'] = this.game.data.buildings[i]['defense'];
+      if(this.game[i.dasherize().camelize() + 'Factory'].isDependenciesMet(1).valid)
+      {
+        buildings[i] = this.game.data.buildings[i]['levels'][1];
+        buildings[i]['defense'] = this.game.data.buildings[i]['defense'];
+      }
     }
-    $('buildingDisplay').innerHTML = this.game.templatesManager.load("buildings-panel", {'buildings' : buildings, 'disabled' : params['disabled']});
+    for ( var i in buildings) {
+      var valid = this.game[i.dasherize().camelize() + 'Factory'].hasEnoughResources(1);
+      if(!valid.valid)
+      {
+        buildings[i]['msg'] = valid.msg;
+        disabled.push(i);
+      }
+    }
+    disabled = (params['disabled'] || []).concat(disabled);
+    $('buildingDisplay').innerHTML = this.game.templatesManager.load("buildings-panel", {'buildings' : buildings, 'disabled' : disabled});
 
     if(this.buildingsCarousel)
       this.buildingsCarousel.destroy();      
@@ -36,11 +49,13 @@ var BuildingsManager = Class.create({
     this.buildingsCarousel = new Carousel("buildings", this.images, 5);
     this.defenseCarousel.checkButtons();
     this.buildingsCarousel.checkButtons();
-    var disabled = params['disabled'] || [];
     disabled.each(function(item){
-                      $$('#buildingsPanel #' + item + ' .itemData')[0].onclick=function(){}
-                      $$('#buildingsPanel #' + item + ' .itemData')[0].setStyle({cursor : 'default' });
-                      $$('#buildingsPanel #' + item + ' span')[0].setAttribute('imgSrc', 'images/quests/'+item+'_info_dimmed.png');
+                      if($$('#buildingsPanel #' + item)[0])
+                      {
+                        $$('#buildingsPanel #' + item + ' .itemData')[0].onclick=function(){}
+                        $$('#buildingsPanel #' + item + ' .itemData')[0].setStyle({cursor : 'default' });
+                        $$('#buildingsPanel #' + item + ' span')[0].setAttribute('imgSrc', 'images/quests/'+item+'_info_dimmed.png');
+                      }
                   });
    this.game.addLoadedImagesToDiv('buildingDisplay');
     Animation.hide('questDisplay');
@@ -64,7 +79,6 @@ var BuildingsManager = Class.create({
   displayDefenseTab : function(){
     $$(".buildingsBg")[0].setStyle({zIndex:0});
     $$(".wedgesBg")[0].setStyle({zIndex:10});
-    $("buildingsPanel").setStyle({zIndex:11});
     $("buildingsTrigger").removeClassName('activeTrigger');
     $("buildingsTrigger").addClassName('inactiveTrigger');
     $("defenseTrigger").removeClassName('inactiveTrigger');
@@ -76,7 +90,6 @@ var BuildingsManager = Class.create({
   displayBuildingsTab : function(){
     $$(".buildingsBg")[0].setStyle({zIndex:10});
     $$(".wedgesBg")[0].setStyle({zIndex:0});
-    $("buildingsPanel").setStyle({zIndex:11});
     $("defenseTrigger").removeClassName('activeTrigger');
     $("defenseTrigger").addClassName('inactiveTrigger');
     $("buildingsTrigger").removeClassName('inactiveTrigger');
