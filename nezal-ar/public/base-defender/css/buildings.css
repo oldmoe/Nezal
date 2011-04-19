@@ -251,6 +251,7 @@
   font-size: 14px;
   text-align: center;
   width: 23%;
+  vertical-align: top;
 }
 #interaction .buildingInfo .resourcesNeeded {
   position: absolute;

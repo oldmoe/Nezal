@@ -259,7 +259,7 @@
         {/for}
         <li>
           <div class="item">
-            <div  class="itemData"> </div>
+            <div  class="itemData" style="cursor:auto;"> </div>
             <span class="loadedImg" imgSrc="images/quests/empty.png" imgClasses="background" >
           </div>
         </li>
@@ -316,7 +316,7 @@
         {/for}
         <li>
           <div class="item">
-            <div  class="itemData"> </div>
+            <div  class="itemData" style="cursor:auto;"> </div>
             <span class="loadedImg" imgSrc="images/quests/empty.png" imgClasses="background" >
           </div>
         </li>
@@ -329,7 +329,7 @@
   </div>
   {for building in buildings}
     <div class="buildingInfo" id="${building_index}_info" style="display:none;">
-      <div class="buildingName">${building_index}</div>
+      <div class="buildingName">${game[building_index.dasherize().camelize() + 'Factory'].humanizeString(building_index)}</div>
   	  <span class="loadedImg" imgClasses="resourcesNeeded" imgSrc="images/quests/resources_needed_for_building.png">
 	    </span>
       <div  class="cost">
@@ -356,7 +356,7 @@
         </div>
         <div class="text"> 
           {if building['time']}
-            ${building['time']}
+            ${Util.timeDisplay(building['time'])}
           {else}
             0
           {/if}
