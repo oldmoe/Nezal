@@ -79,7 +79,10 @@ class AdminController < ApplicationController
   # But for now we put it here till we figure out what urls belong to helpers
   # and what urls belong to main AdminController
   get '/:game_name/metadata/edit' do 
+	puts "Inside Get metadata game"
     @game = Game.find_by_name(params[:game_name])
+	puts @game
+	puts "#{@app_configs['game_name']}/show".to_sym
     erb "#{@app_configs['game_name']}/show".to_sym , {:layout => :app}
   end
   

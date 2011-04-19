@@ -150,9 +150,9 @@ class GamesController < ApplicationController
     logger = Logger.new( logfile )
     offer_id = 'efl3ru5v71w42nzr97fivqtjf'
     secretMerchantKey = "dfgjbt7idwah2w0ua8wzppah2"
-    api_server_name = "api.sandbox.jambool.com"
+    api_server_name = "api.jambool.com"
     api_server_port = :defaults
-    is_production = false
+    is_production = true
     
     payments_client = PaymentsClient.new(api_server_name, api_server_port, offer_id, secretMerchantKey, logger, is_production)
     
