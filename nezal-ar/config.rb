@@ -1,4 +1,4 @@
-worker_processes 8
+worker_processes 4
 listen 8000
 pid "tmp/pids/unicorn.pid"
 stderr_path "log/unicorn.stderr.log"
