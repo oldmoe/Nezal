@@ -213,13 +213,13 @@
 }
 #interaction #buildingsPanel .item .disabledMsgBackground{  
   background: white;
-  border-radius: 5px 5px 5px 5px;
+  border-radius: 8px 8px 8px 8px;
   font-family: verdana;
   font-size: 11px;
   height: 90px;
   opacity: 0.7;
   position: absolute;
-  top: 14px;
+  top: 0px;
   width: 82px;
   z-index: 200;
 }
@@ -230,7 +230,7 @@
   position: absolute;
   text-shadow: 0 1px 1px #326479;
   font-weight : bold;
-  top: 19px;
+  top: 5px;
   width: 82px;
   z-index: 200;
 }
