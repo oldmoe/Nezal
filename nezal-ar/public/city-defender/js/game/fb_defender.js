@@ -1,6 +1,6 @@
 FBDefender = {
     
-    imagesUrl : 'http://studio.nezal.com/fb-games/city-defender/images/',
+    imagesUrl : 'http://defender.nezal.com/fb-games/city-defender/images/',
     
     gameName : function(){
       return Text.gameName;  

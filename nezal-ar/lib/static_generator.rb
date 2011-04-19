@@ -24,7 +24,7 @@ STDERR.puts "Generating campaign list for #{@game_name}"
 
 def generate_campaigns
 	game = Game.find_by_name(@game_name)
-	campaigns = Campaign.select(:name, :path).where(:game_id => game.id).order(:id).all.collect{|c|{name:c.name, path:c.path}}.reverse
+	campaigns = Campaign.where(:game_id => game.id).order(:id).all.collect{|c|{name:c.name, path:c.path}}.reverse
 	puts campaigns.inspect
 	campaigns.shift
 	campaigns.each do |campaign|
