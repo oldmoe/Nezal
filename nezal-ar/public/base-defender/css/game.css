@@ -132,9 +132,10 @@ img{
 	background-color:red;
 }
 #gameCanvas.zoomed{
-	-moz-transform:scale(0.5);
+	-moz-transform:scale(0.501);
 	-webkit-transform:scale(0.5);
 	-o-transform:scale(0.5);
+	-ms-transform:scale(0.5);
 }
 .healthFull{
 	background-color:green;
@@ -244,4 +245,34 @@ img{
   text-align: center;
   text-shadow: -3px -3px 1px black;
   top: -50px;
+}
+.resourceBarEmpty{
+	height: 20px;
+    margin-left: 50px;
+    margin-top: -5px;
+    width: 60px;
+    z-index: 1001;
+}
+.resourceBarEmpty div{
+	float:left;
+}
+#lumberBar.resourceBarEmpty{
+	margin-left: 44px;
+}
+.resourceBarLeft{
+	width:5px;
+	height:20px;
+	margin-left:-5px;
+	background-image : url('../images/game_elements/resource_bar_left.png')
+}
+.resourceBarMiddle{
+	height:20px;
+	width:1%;
+	background-repeat:repeat-x;
+	background-image : url('../images/game_elements/resource_bar_middle.png')
+}
+.resourceBarRight{
+	width:5px;
+	height:20px;
+	background-image : url('../images/game_elements/resource_bar_right.png')
 }

@@ -28,7 +28,7 @@ var BuildingPanel = Class.create({
     }
     
     this._AttachBuildingPanelCloseListeners();
-    $('building-panel-contents').innerHTML = templater();
+    $$('#building-panel .menuBody')[0].innerHTML = templater();
   },
   
   _AttachBuildingPanelCloseListeners : function(){

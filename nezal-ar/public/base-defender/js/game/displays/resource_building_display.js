@@ -63,15 +63,24 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
     $('panel-buttons-container').appendChild( $("collect_resource_trigger") );
     $('panel-buttons-container').appendChild( $("assign_worker_trigger") );
     
-    $('collect_resource_trigger').observe('click', function(){
-	    owner.game.selectedBuildingPanel.hide();
-      self.collectResources();
+    $('collect_resource_trigger').observe('moousedown', function(){
+		$('collect_resource_trigger').select("img")[0].setStyle( {marginTop: "-50px"} );
     });
+	$('collect_resource_trigger').observe('mouseup',function(){
+		$('collect_resource_trigger').select("img")[0].setStyle( {marginTop: "-25px"} );
+		owner.game.selectedBuildingPanel.hide();
+      	self.collectResources();
+	})
     
-    $('assign_worker_trigger').observe('click', function(){
-      owner._AssignWorker();
-      owner.game.selectedBuildingPanel.hide();
+    $('assign_worker_trigger').observe('mousedown', function(){
+	  $('assign_worker_trigger').select("img")[0].setStyle( {marginTop: "-50px"} );
     });
+	$('assign_worker_trigger').observe('mouseup',function(){
+		$('assign_worker_trigger').select("img")[0].setStyle( {marginTop: "-25px"} );
+		owner._AssignWorker();
+      	owner.game.selectedBuildingPanel.hide();
+	})
+    
     this.renderingPanelButtonsDone();
   },
 

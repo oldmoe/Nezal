@@ -136,9 +136,12 @@ var BuildingMode = Class.create({
 			}
 		}
     	else if (this.selectedBuilding.build(x,y)) {
+			if (this.selectedBuilding.name != 'palm') {
+				this.hideBuildingBases()
+				this.off()
+				$('cancelBuilding').hide()
+			}
       		this.callback();
-			this.hideBuildingBases()
-			$('cancelBuilding').hide()
       		//this.off();
     	}
   },

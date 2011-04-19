@@ -1,5 +1,5 @@
 var BuildingDisplay = Class.create(Display, {
-  panelWidth : 210,
+  panelWidth : 350,
   numberOfSmokes : 3,
   smokes : null,
   smokeImg : null,
@@ -192,11 +192,11 @@ var BuildingDisplay = Class.create(Display, {
   },
   
   renderPanel : function(){
-    var rightLimit = this.panelWidth + this.owner.coords.x - Map.x + Math.round(this.owner.imgWidth / 2);
+    var rightLimit = this.panelWidth + this.owner.coords.x - Map.x;
     if( rightLimit < Map.viewWidth ) {
-      var left = this.owner.coords.x - Map.x + Math.round(this.owner.imgWidth / 2);
+      var left = this.owner.coords.x - Map.x;
     } else {
-      var left = this.owner.coords.x - Map.x - this.panelWidth - Math.round(this.owner.imgWidth / 2);
+      var left = this.owner.coords.x - Map.x - this.panelWidth;
     }
     var topLimit = this.owner.coords.y - Map.y - Math.round(this.owner.imgHeight / 2);
     if( topLimit > 55 ) {
@@ -219,21 +219,37 @@ var BuildingDisplay = Class.create(Display, {
   	this.owner.game.addLoadedImagesToDiv('panel-buttons-container')
   	this.game.domConverter.convert(this.game.templatesManager.load("move-button"))
   	$('panel-buttons-container').appendChild($('move_trigger'));
-    $('upgrade_trigger').stopObserving('click');
-  	$('move_trigger').stopObserving('click');
-  	$('move_trigger').observe('click',function(){
-  		owner.game.selectedBuildingPanel.hide();
+    $('upgrade_trigger').stopObserving('mousedown');
+  	$('move_trigger').stopObserving('mousedown');
+	$('upgrade_trigger').stopObserving('mouseup');
+  	$('move_trigger').stopObserving('mouseup');
+  	$('move_trigger').observe('mousedown',function(){
+		$('move_trigger').select("img")[0].setStyle( {marginTop: "-50px"} );
+  	});
+	$('move_trigger').observe('mouseup',function(){
+		$('move_trigger').select("img")[0].setStyle( {marginTop: "-25px"} );
+		owner.game.selectedBuildingPanel.hide();
   		owner.game.buildingMode.move()
 		owner.game.buildingMode.moveMode = true
-  	});
+	})
+	$('move_trigger').observe('mouseover',function(){
+		
+	})
+	$('move_trigger').observe('mouseout',function(){
+		
+	})
     if (!owner.isValidToUpgrade(true)) {
       $('upgrade_trigger').select("img")[0].setStyle({marginTop : "-75px"});
       $('upgrade_trigger').setAttribute("disabled", "disabled");
     }else {
-      $('upgrade_trigger').observe('click', function(){
-        owner.upgrade();
-        owner.game.selectedBuildingPanel.hide();
+      $('upgrade_trigger').observe('mousedown', function(){
+	  	$('upgrade_trigger').select("img")[0].setStyle( {marginTop: "-50px"} );
       });
+	  $('upgrade_trigger').observe('mouseup',function(){
+		$('upgrade_trigger').select("img")[0].setStyle( {marginTop: "-25px"} );
+		owner.upgrade();
+        owner.game.selectedBuildingPanel.hide();
+	  })
       this.renderingPanelButtonsDone();
     }
   },

@@ -12,12 +12,13 @@ var ResourceBuilding = Class.create(Building, {
     if (this.level > 0) {
       this.maxWorkers = this.currentLevelBluePrints.max_workers;
       this.unitPerWorkerMinute = this.currentLevelBluePrints.unit_per_worker_minute
-			this.unitPerWorkerTick = (this.unitPerWorkerMinute / (60)) * (this.game.reactor.delay / 1000);
+	  this.unitPerWorkerTick = (this.unitPerWorkerMinute / (60)) * (this.game.reactor.delay / 1000);
       this.capacity = this.currentLevelBluePrints.capacity
     }
 	this.fullObservers = []
   },
-
+	
+  
   resourceInfo : function(){
   	if(!this.capacity)return ''
     var data = parseInt(this[this.factory.collect])+"/"+ this.capacity

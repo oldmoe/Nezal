@@ -33,10 +33,30 @@
 }
 
 #building-panel {
-  background-image: url("../images/buildings/panel/panel.png");
   position : absolute;
   width : 210px;
   height : 130px;
+  z-index : 100;
+}
+#building-panel .menuContainer{
+	width:350px;
+}
+#building-panel .menuTop{
+	background-repeat : no-repeat;
+	background-image : url('../images/buildings/panel/menu_top.png');
+	height : 27px;
+}
+#building-panel .menuBottom{
+	background-repeat : no-repeat;
+	background-image : url('../images/buildings/panel/menu_bottom.png');
+	height : 20px;				
+}
+#building-panel .menuBody{
+	background-image : url('../images/buildings/panel/menu_body.png');
+	background-repeat : repeat-y;
+	padding-left:90px;
+	padding-right: 25px;
+	min-height:83px;
 }
 .building-functions {
   float : left;

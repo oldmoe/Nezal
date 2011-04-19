@@ -43,7 +43,7 @@ var Game = Class.create({
   		this.mouseEndEvent = 'touchend'
   		this.mouseMoveEvent = 'touchmove'
     }
-    //soundManager.mute()
+    soundManager.mute()
   },
 	
   startLoading : function(){
@@ -223,11 +223,11 @@ var Game = Class.create({
     BuildingFactory._GlobalRegistry = {};
     this.attackManager = new AttackManager(this);
     this.townhallFactory = new TownhallFactory(this);
+	this.storageFactory = new StorageFactory(this);
     this.quarryFactory = new QuarryFactory(this);
     this.lumbermillFactory = new LumbermillFactory(this);
     this.buildingsManager = new BuildingsManager(this);
     this.workerFactory = new WorkerFactory(this);
-    this.storageFactory = new StorageFactory(this);
     this.creepFactory = new CreepFactory(this);
     this.defenseCenterFactory = new DefenseCenterFactory(this);
     this.warFactoryFactory = new WarFactoryFactory(this);
