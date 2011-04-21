@@ -148,10 +148,14 @@
 	  	<div class="topGameElement" id="coins_game_element">
 	  		<span class="loadedImg" imgSrc ="images/game_elements/upper_bar.png"></span>
 				<span id="coins-amount" ></span>
+        <span class="loadedImg" imgId="add_coins" imgSrc ="images/game_elements/button.png"></span>
+        <span id="add-coins-text"> Add </span>
 	  	</div>
 			<div class="topGameElement" id="workers_game_element">
 				<span class="loadedImg" imgSrc ="images/game_elements/upper_bar.png"></span>
-				<span id="workers-amount" ></span>
+				<span id="workers-amount"></span>
+        <span class="loadedImg" imgId="hire_worker" imgSrc ="images/game_elements/button.png"></span>
+        <span id="hire-worker-text"> Hire </span>
 			</div>
 			
 			<div class="gameElement" id="monitor" style="display:none;">
@@ -205,9 +209,17 @@
         <div id="panel-buttons-container"></div>
         <div id="building-panel-contents"></div>
       </div>
+      
+      <div id="workers-panel" style="display:none;">
+        <div id="worker-panel-image-container">
+          <img src="images/worker/worker_image.png"></img>
+        </div>
+        <div id="workers-panel-contents">
+        </div>
+      </div>
 
       <div id="buildButton" style="display:none;">
-	  <span class="loadedImg" imgSrc ="images/quests/button.png"></span>
+	      <span class="loadedImg" imgSrc ="images/quests/button.png"></span>
         <div id="buildText" class="yellowText"> build </div>
       </div>
       
@@ -234,6 +246,28 @@
       </div>
 			
 </textarea>
+
+<textarea style="display:none;" id='worker-menu-contents'>
+  <div id="worker-panel-resources-img-container">
+    <img src="images/quests/resources_needed_for_building.png">
+  </div>
+  <div id="worker-panel-cost" {if workerFactory.notEnoughCoins()} class="red" {/if}>
+    <span>${workerFactory.nextWorkerCost()}</span>
+  </div>
+  <div id="worker-panel-hire-limit">
+    <span title="Build more houses to increase this limit">Total allowed : ${workerFactory.totalWorkersAllowed()}</span>
+  </div>
+  {if workerFactory.notEnoughHousing(true)}
+  <div id="not-enough-housing" class="red">
+    Not enough housing
+  </div>
+  {/if}
+  <div id="hire-worker-button">
+    <img {if !workerFactory.validateBuyWorker(true)} class="disabled" {/if} src="images/buildings/panel/buttons.png">
+    <span>Hire</span>
+  </div>
+</textarea>
+
 
 <textarea style="display:none;" id='upgrade-button'>
   <div class="panel-button" id="upgrade_trigger">

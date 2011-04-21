@@ -37,6 +37,7 @@
 #coins_game_element {
   right: 131px;
   width: 125px;
+  height: 66px;
 }
 #coins_game_element img {
   margin-left: -493px;
@@ -46,7 +47,39 @@
   cursor: pointer;
   right: 5px;
   width: 120px;
+  height: 66px;
 }
+
+#workers_game_element #hire_worker {
+  position: absolute;
+  right: 8px;
+  top: 42px;
+  margin: 0;
+}
+
+#coins_game_element #add_coins {
+  position: absolute;
+  right: 16px;
+  top: 42px;
+  margin: 0;
+}
+
+#workers_game_element #hire-worker-text, #coins_game_element #add-coins-text {
+  color: #FCED70;
+  cursor: pointer;
+  font-family: ShowG;
+  font-size: 15px;
+  height: 24px;
+  line-height: 24px;
+  position: absolute;
+  right: 21px;
+  top: 43px;
+}
+
+#coins_game_element #add-coins-text {
+  right: 33px;
+}
+
 #workers_game_element img {
   margin-left: -627px;
 }

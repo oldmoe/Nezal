@@ -35,7 +35,7 @@
 #building-panel {
   background-image: url("../images/buildings/panel/panel.png");
   position : absolute;
-  width : 210px;
+  width : 250px;
   height : 130px;
 }
 .building-functions {

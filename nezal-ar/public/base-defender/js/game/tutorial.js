@@ -63,10 +63,14 @@ var Tutorial = Class.create({
       Hand.point(this.self.game, { 'object' : $('workers_game_element'), 'rotated' : true });
       var self = this.self.game.tutorial;
       $('workers_game_element').observe(game.mouseClickEvent, 
-                                              function(){
-                                                Animation.hide('questDisplay');
-                                                Hand.hide();
-                                              });
+                                        function(){
+                                          Animation.hide('questDisplay');
+                                          Hand.hide();
+                                          Hand.point(self.game, { 'object' : $('hire-worker-button'), 'rotated' : true });
+                                          $('hire-worker-button').observe(game.mouseClickEvent, function(){
+                                            Hand.hide();
+                                          });
+                                        });
     }
   },
 
