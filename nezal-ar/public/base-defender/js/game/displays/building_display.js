@@ -245,8 +245,8 @@ var BuildingDisplay = Class.create(Display, {
 		owner.upgrade();
         $('building-panel').hide();
 	  })
-      this.renderingPanelButtonsDone();
     }
+	this.renderingPanelButtonsDone();
   },
   
   renderingPanelButtonsDone : function(){
