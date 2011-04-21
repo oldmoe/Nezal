@@ -260,6 +260,7 @@ var BuildingDisplay = Class.create(Display, {
         element.stopObserving("mouseover");
         element.observe("mouseover", function(){
           element.select("img")[0].setStyle( {marginTop: 0} );
+		  $$('#building-panel .menuBody')[0].innerHTML = game.templatesManager.load('menuUpgrade');
         });
         element.stopObserving("mouseout");
         element.observe("mouseout", function(){
