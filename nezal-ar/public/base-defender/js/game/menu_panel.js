@@ -1,5 +1,5 @@
 var MenuPanel = Class.create({
-  
+  menuTransparentImageShift:-19,
   initialize : function(name, templater, templatingCallback){
     this.name = name;
     if( !$$("#" + name + "-panel #close-" + name + "-panel")[0] ){
@@ -17,7 +17,7 @@ var MenuPanel = Class.create({
         areaID : "close-" + name + "-panel",
         transparentImageStyle : {
           position: "absolute",
-          right: "-19px",
+          right: this.menuTransparentImageShift+"px",
           top: 0
         }
       });

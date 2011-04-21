@@ -133,7 +133,6 @@ var BuildingDisplay = Class.create(Display, {
       self.sprites.building.hide();
 	    self.sprites.shadow.hide();
 	    self.sprites.underConstruction.show();
-      //self.sprites.building.setOpacity(0.5);
       self.sprites.building.animated = false;
       self.sprites.base.hide();
       self.sprites.outline.hide();

@@ -1,4 +1,5 @@
 var WorkerPanel = Class.create(MenuPanel, {
+	menuTransparentImageShift:0,
   initialize : function($super){
     var self = this;
     var afterTemplatingCallback = function(){
