@@ -5,10 +5,10 @@ var GamePanel = Class.create({
   initialize : function(game){
 		this.game = game;
     var self = this;
-    $('workers_game_element').stopObserving('click');
+    $('workers_game_element').stopObserving(game.mouseClickEvent);
     $('workers_game_element').observe(game.mouseClickEvent,
                                       function(){
-                                        self.game.workerFactory.buyWorker() 
+                                        self.game.workerPanel.render();
                                       })
 	},
 	getTotalStorageCapacity : function(){

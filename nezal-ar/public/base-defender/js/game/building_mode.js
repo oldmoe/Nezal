@@ -198,5 +198,17 @@ var BuildingMode = Class.create({
 			worker.movingPath = Map.moveObject(worker, building.coords.x,building.coords.y-10, callback2, true);
 		}
 		worker.movingPath = Map.moveObject(worker, townHall.coords.x, townHall.coords.y, callback1, true);
+	},
+	fillBuildingPanel : function(owner){
+		$$('#building-panel .menuBody')[0].innerHTML = ""
+		this.game.domConverter.convert(game.templatesManager.load('menuUpgrade',
+		  owner.getUpgradeSpecs()))
+		  $$('#building-panel .menuBody')[0].appendChild($('upgradeDesc'))
+		  this.game.domConverter.convert(game.templatesManager.load('menuMove'))
+		  $$('#building-panel .menuBody')[0].appendChild($('moveDesc'))
+		  this.game.domConverter.convert(game.templatesManager.load('menuCollect'))
+		  $$('#building-panel .menuBody')[0].appendChild($('collect_resourceDesc'))
+		  this.game.domConverter.convert(game.templatesManager.load('menuWorker'))
+		  $$('#building-panel .menuBody')[0].appendChild($('assign_workerDesc')) 
 	}
 });

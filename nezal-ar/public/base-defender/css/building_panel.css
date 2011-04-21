@@ -34,7 +34,7 @@
 
 #building-panel {
   position : absolute;
-  width : 210px;
+  width : 250px;
   height : 130px;
   z-index : 100;
 }
@@ -57,9 +57,10 @@
 	padding-left:93px;
 	padding-right: 25px;
 	min-height:83px;
+	margin-top: -10px;
 }
 
-#building-panel .menuBody .notSufficient{
+#building-panel .menuBody .invalid{
 	color : red;
 }
 #building-panel .menuBody #upgradeDesc{
@@ -68,6 +69,7 @@
 }
 #building-panel .menuBody #upgradeDesc #upgradeTitle{
 	font-weight:bold;
+	font-size:14px;
 	padding-bottom:10px;
 }
 #building-panel .menuBody #upgradeDesc .resourcesImg{
@@ -92,14 +94,20 @@
 }
 #building-panel .menuBody #upgradeDesc .resourcesValue .time{
 	width:24px;
-	margin-left:12px;
+	margin-left:11px;
 }
-#building-panel .menuBody #requirements ul, #gains ul{
+#building-panel .menuBody #requirements,#building-panel .menuBody #gains, #building-panel .menuBody #errorMessages{
+	padding-top:9px;
+}
+#building-panel .menuBody #requirements .title{
+	font-weight:bold;
+}
+#building-panel .menuBody #requirements ul,#building-panel .menuBody #gains ul{
 	  margin-left: -9px;
-	  margin-top: 3px;
+	  margin-top: 0px;
 	  margin-bottom:0px;
 }
-#building-panel .menuBody #requirements ul li .requirementKey,#gains ul li .gainKey{
+#building-panel .menuBody #requirements ul li .requirementKey,#building-panel .menuBody #gains ul li .gainKey{
 	font-weight:bold;
 }
 .building-functions {
@@ -123,4 +131,11 @@
 
 img.icon {
 	height : 32px;
+}
+.menuBody #moveDesc,.menuBody #collect_resourceDesc, .menuBody #assign_workerDesc{
+	position:absolute;
+	visibility:hidden;
+	top:23px;
+	font-size:12px;
+	font-weight:bold;
 }

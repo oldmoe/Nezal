@@ -51,10 +51,10 @@ var Game = Class.create({
     this.templatesManager = new TemplatesManager(this.network);
     new Loader().load([{images : ['logo.png'], path: 'images/loading/', store: 'loading'}],
                       {onFinish : function(){
-                        $('inProgress').show()
+                        $('inProgress').show();
                         $('inProgress').innerHTML = self.templatesManager.load("loadingScreen");
-						self.addLoadedImagesToDiv('inProgress')
-                        self.initializeGame()
+						            self.addLoadedImagesToDiv('inProgress');
+                        self.initializeGame();
                       }});
   },
 	
@@ -216,7 +216,7 @@ var Game = Class.create({
     this.reactor = new Reactor(80);
     this.reactor.run();
     this.user = new User(this);
-	this.attackManager = new AttackManager(this);
+	  this.attackManager = new AttackManager(this);
     this.scene = new BaseDefenderScene(this);	
     this.resources.rock = this.user.data.rock;
     this.resources.lumber = this.user.data.lumber;
@@ -232,7 +232,8 @@ var Game = Class.create({
     this.defenseCenterFactory = new DefenseCenterFactory(this);
     this.warFactoryFactory = new WarFactoryFactory(this);
     this.houseFactory = new HouseFactory(this);
-	this.palmFactory = new PalmFactory(this);
+    this.workerPanel = new WorkerPanel();
+	  this.palmFactory = new PalmFactory(this);
     this.wedgeFactory = new WedgeFactory(this);
     this.gaddafiFactory = new GaddafiFactory(this);
     if( !this.buildingMode )

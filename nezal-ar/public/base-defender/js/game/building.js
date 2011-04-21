@@ -227,6 +227,55 @@ var Building = Class.create({
 			return false;
 		} 
     return true;
+  },
+  getUpgradeSpecs: function(){
+  	var upgradeSpecs = {
+  		level: 0,
+  		rock: 0,
+  		wood: 0,
+  		gold: 0,
+  		time: 0,
+  		requirements: {},
+  		gains: {},
+  		maxUpgrade: false,
+  		workersNotEnough: false,
+  	}
+  	if (this.game.workerFactory.idleWorkers == 0) {
+  		upgradeSpecs['workersNotEnough'] = true
+  	}
+  	
+  	var level = (parseInt(this.level) + 1).toString();
+  	if (!this.factory.bluePrints.levels[level]) {
+  		upgradeSpecs['maxUpgrade'] = true
+  		return upgradeSpecs
+  	}
+  	upgradeSpecs['level'] = level
+	upgradeSpecs['rock'] = {}
+	upgradeSpecs['lumber'] = {}
+  	upgradeSpecs['rock'].value = this.factory.bluePrints.levels[level].rock
+	upgradeSpecs['lumber'].value = this.factory.bluePrints.levels[level].lumber
+	upgradeSpecs['notEnoughResources'] = false
+	upgradeSpecs['dependenciesInvalid'] = false
+	if(this.game.resources.rock>upgradeSpecs['rock'].value){
+		upgradeSpecs['rock'].valid = true	
+	}else{
+		upgradeSpecs['notEnoughResources'] = true
+		upgradeSpecs['rock'].valid = false
+	}
+	if(this.game.resources.lumber>upgradeSpecs['lumber'].value){
+		upgradeSpecs['lumber'].valid = true
+	}else{
+		upgradeSpecs['notEnoughResources'] = true
+		upgradeSpecs['lumber'].valid = false
+	}	 
+  	
+	upgradeSpecs['time'] = Util.timeDisplay(this.nextLevelBluePrints.time).gsub('seconds','s')
+	upgradeSpecs['requirements'] = this.factory.getDependenciesValidations(level)
+	upgradeSpecs['requirements'].each(function(requirement){
+		if(!requirement.valid){
+			upgradeSpecs['dependenciesInvalid'] = true
+		}
+	})
+  	return upgradeSpecs
   }
-  
 });

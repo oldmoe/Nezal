@@ -68,7 +68,7 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
     });
 	$('collect_resource_trigger').observe('mouseup',function(){
 		$('collect_resource_trigger').select("img")[0].setStyle( {marginTop: "-25px"} );
-		owner.game.selectedBuildingPanel.hide();
+		$('building-panel').hide();
       	self.collectResources();
 	})
     
@@ -78,9 +78,10 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
 	$('assign_worker_trigger').observe('mouseup',function(){
 		$('assign_worker_trigger').select("img")[0].setStyle( {marginTop: "-25px"} );
 		owner._AssignWorker();
-      	owner.game.selectedBuildingPanel.hide();
+      	$('building-panel').hide();
 	})
-    
+    this.registerHoverEvents('collect_resource')
+	this.registerHoverEvents('assign_worker')
     this.renderingPanelButtonsDone();
   },
 

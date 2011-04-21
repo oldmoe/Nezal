@@ -55,7 +55,7 @@ var WorkerFactory = Class.create({
   },
   
   buyWorker : function(){
-    if(this._ValidateBuyWorker()){
+    if(this.validateBuyWorker()){
 			var buyWorkerCallback = function(){
 	  		var response = this.game.network.buyWorker();
 	  		this.game.updateGameStatus(response['gameStatus']);
@@ -65,31 +65,46 @@ var WorkerFactory = Class.create({
     }
   },
   
-  _ValidateBuyWorker : function(){
-  	if(!this.game.townhallFactory.getTownhall() ||
-	this.game.townhallFactory.getTownhall().state != this.game.townhallFactory.getTownhall().states.NORMAL){
-	  Notification.alert("You need to have a townhall before hiring a worker.");
-      return false;
-	}
+  totalWorkersAllowed : function(){
+    var total_workers_allowed = this.recruitmentPlans.initial_allowed
+    var houses = this.game.houseFactory.factoryRegistry
+    var house_data = this.game.data.buildings.house
+    for(house in houses){
+      if(houses[house].state == houses[house].states.NORMAL)
+      total_workers_allowed+= house_data.levels[houses[house].level].workers    
+    }
+    
+    return total_workers_allowed;
+  },
+  
+  notEnoughCoins : function(){
+    return this.game.user.coins < this.nextWorkerCost();
+  },
+  
+  notEnoughHousing : function(){
+    return this.totalWorkersAllowed() <= this.workers;
+  },
+  
+  validateBuyWorker : function(silent){
     if(this.game.disableJsValidation) return true;
+
+  	if(!this.game.townhallFactory.getTownhall() ||
+	       this.game.townhallFactory.getTownhall().state != this.game.townhallFactory.getTownhall().states.NORMAL){
+	    if(!silent) Notification.alert("You need to have a townhall before hiring a worker.");
+      return false;
+	  }
 	
-	var total_workers_allowed = this.recruitmentPlans.initial_allowed
-	var houses = this.game.houseFactory.factoryRegistry
-	var house_data = this.game.data.buildings.house
-	for(house in houses){
-		if(houses[house].state == houses[house].states.NORMAL)
-		total_workers_allowed+= house_data.levels[houses[house].level].workers		
-	}
-	if(total_workers_allowed <= this.workers){
-		 Notification.alert("You need to build more houses");
-		 return false;
-	}
-    if (this.game.user.coins >= this.nextWorkerCost()) {
-      return true;
-    } else {
+  	if( this.notEnoughHousing() ){
+  		 if(!silent) Notification.alert("Not enough housing. You need to build more houses");
+  		 return false;
+  	}
+    
+    if( this.notEnoughCoins() ) {
       var remainingRequiredCoins = this.nextWorkerCost() - this.game.user.coins;
-      Notification.alert("Not enough coins, you need " + remainingRequiredCoins + " more coins!");
+      if(!silent) Notification.alert("Not enough coins, you need " + remainingRequiredCoins + " more coins!");
       return false;
     }
+    
+    return true;
   }
 });

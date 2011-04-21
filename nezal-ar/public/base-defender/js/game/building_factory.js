@@ -34,7 +34,23 @@ var BuildingFactory = Class.create({
 		var display = new this.buildingDisplayClass(building, this.bluePrints['levels'][this.newBuildingSpecs['level']].display)
     return building.init();		
   },
-	
+  getDependenciesValidations : function(level){
+	 var result = [];
+	  var buildingDependencies = this.bluePrints.levels[level].dependency.buildings;
+	  for(building in buildingDependencies){
+	  	 var buildingValidation = {}
+		 result.push(buildingValidation)
+		 buildingValidation['building'] = building.capitalize()
+		 buildingValidation['level'] = buildingDependencies[building]
+		 if (!this.game[building.dasherize().camelize() + "Factory"].buildingExists(buildingDependencies[building])) {
+		 	buildingValidation['valid'] = false
+		 }
+		 else {
+		 	buildingValidation['valid'] = true
+		 }
+	  }
+    return result;
+  },
   buildingExists : function(level){
   	for (key in this.factoryRegistry) {
 		  var building = this.factoryRegistry[key]

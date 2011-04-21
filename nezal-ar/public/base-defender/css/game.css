@@ -248,16 +248,17 @@ img{
 }
 .resourceBarEmpty{
 	height: 20px;
-    margin-left: 50px;
-    margin-top: -5px;
+    left: 54px;
+    position: absolute;
+    top: 18px;
     width: 60px;
-    z-index: 1001;
+    z-index: 1;
 }
 .resourceBarEmpty div{
 	float:left;
 }
-#lumberBar.resourceBarEmpty{
-	margin-left: 44px;
+#rockBar.resourceBarEmpty{
+	left:48px;
 }
 .resourceBarLeft{
 	width:5px;

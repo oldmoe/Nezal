@@ -472,6 +472,7 @@ var Map={
 	registerSpecialListeners : function(div,owner, clickCall){
 		div.observe(game.mouseClickEvent,function(){
 			if(!game.buildingMode.isOn && owner.working && owner.state == owner.states.NORMAL){
+				game.buildingMode.fillBuildingPanel(owner)
 				owner[clickCall]();
 			}
 		})

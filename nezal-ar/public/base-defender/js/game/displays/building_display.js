@@ -228,16 +228,11 @@ var BuildingDisplay = Class.create(Display, {
   	});
 	$('move_trigger').observe('mouseup',function(){
 		$('move_trigger').select("img")[0].setStyle( {marginTop: "-25px"} );
-		owner.game.selectedBuildingPanel.hide();
+		$('building-panel').hide();
   		owner.game.buildingMode.move()
 		owner.game.buildingMode.moveMode = true
 	})
-	$('move_trigger').observe('mouseover',function(){
-		
-	})
-	$('move_trigger').observe('mouseout',function(){
-		
-	})
+	
     if (!owner.isValidToUpgrade(true)) {
       $('upgrade_trigger').select("img")[0].setStyle({marginTop : "-75px"});
       $('upgrade_trigger').setAttribute("disabled", "disabled");
@@ -248,28 +243,40 @@ var BuildingDisplay = Class.create(Display, {
 	  $('upgrade_trigger').observe('mouseup',function(){
 		$('upgrade_trigger').select("img")[0].setStyle( {marginTop: "-25px"} );
 		owner.upgrade();
-        owner.game.selectedBuildingPanel.hide();
+        $('building-panel').hide();
 	  })
       this.renderingPanelButtonsDone();
     }
   },
   
   renderingPanelButtonsDone : function(){
-    $$('#panel-buttons-container div').each(function(element){
-      if (element.getAttribute("disabled") != "disabled") {
-        element.stopObserving("mouseover");
+	  var self = this
+	  this.registerHoverEvents('upgrade')
+	  this.registerHoverEvents('move')
+  },
+  registerHoverEvents : function(elementName){
+  		var element = $(elementName+'_trigger')
+  	 	element.stopObserving("mouseover");
         element.observe("mouseover", function(){
-          element.select("img")[0].setStyle( {marginTop: 0} );
-		  $$('#building-panel .menuBody')[0].innerHTML = game.templatesManager.load('menuUpgrade');
+		 if (element.getAttribute("disabled") != "disabled") {
+		 	element.select("img")[0].setStyle({
+		 		marginTop: 0
+		 	});
+		 }
+		 $$('.menuBody .menuItem').each(function(element){
+		 	element.style.visibility = "hidden"
+		 }) 
+		 $(elementName+'Desc').style.visibility = "visible"
         });
         element.stopObserving("mouseout");
         element.observe("mouseout", function(){
-          element.select("img")[0].setStyle( {marginTop: "-25px"} );
+		  if (element.getAttribute("disabled") != "disabled") {
+		  	element.select("img")[0].setStyle({
+		  		marginTop: "-25px"
+		  	});
+		  }
         });
-      }
-    })
   },
-  
   render : function(){
   	if (this.owner.state == this.owner.states.UNDER_CONSTRUCTION)this.renderUnderConstruction()
     if (this.owner.state == this.owner.states.UNDER_CONSTRUCTION || this.owner.state == this.owner.states.UPGRADING ) {
