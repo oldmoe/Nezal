@@ -40,7 +40,7 @@ var BuildingFactory = Class.create({
 	  for(building in buildingDependencies){
 	  	 var buildingValidation = {}
 		 result.push(buildingValidation)
-		 buildingValidation['building'] = building.capitalize()
+		 buildingValidation['building'] = this.humanizeString(building.capitalize())
 		 buildingValidation['level'] = buildingDependencies[building]
 		 if (!this.game[building.dasherize().camelize() + "Factory"].buildingExists(buildingDependencies[building])) {
 		 	buildingValidation['valid'] = false
