@@ -270,7 +270,7 @@ var Building = Class.create({
 		upgradeSpecs['lumber'].valid = false
 	}	 
   	
-	upgradeSpecs['time'] = Util.timeDisplay(this.nextLevelBluePrints.time).gsub('seconds','s')
+	upgradeSpecs['time'] = Util.timeDisplay(this.nextLevelBluePrints.time).gsub('seconds','s').gsub(' ','')
 	upgradeSpecs['requirements'] = this.factory.getDependenciesValidations(level)
 	upgradeSpecs['requirements'].each(function(requirement){
 		if(!requirement.valid){
