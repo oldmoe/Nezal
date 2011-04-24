@@ -25,6 +25,18 @@ var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
       this.bubbles.push(bubbleSprite);
     }
         $super(owner,properties);
+		this.sprites.resourceMeter = new DomResourceMeter(this.owner, {
+			meterFunc: function(){
+				return self.owner.getResourceMeterLength()
+			},
+			styleClass:{empty:'resourceEmpty',full:'resourceFull'},
+			shiftX: this.owner.imgWidth / 2,
+			shiftY: 28,
+			height : 60,
+			emptyImg : Loader.images.game_elements['resource_meter_background.png'],
+			fullImg : Loader.images.game_elements['resource_meter_rock.png']
+		})
+	
 	this.sprites.clickSprite.shiftY = 10
 	this.sprites.clickSprite.shiftX = 5
 	this.sprites.clickSprite.setImgHeight(87)

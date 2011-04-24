@@ -12,6 +12,17 @@ var LumbermillDisplay = Class.create(ResourceBuildingDisplay, {
             this.animationRepeats * this.sprites.building.noOfAnimationFrames,
             this.animationEverySeconds,
             function(){self.renderAnimation()})
+		this.sprites.resourceMeter = new DomResourceMeter(this.owner, {
+			meterFunc: function(){
+				return self.owner.getResourceMeterLength()
+			},
+			styleClass:{empty:'resourceEmpty',full:'resourceFull'},
+			shiftX: this.owner.imgWidth / 2,
+			shiftY: 28,
+			height : 60,
+			emptyImg : Loader.images.game_elements['resource_meter_background.png'],
+			fullImg : Loader.images.game_elements['resource_meter_wood.png']
+		})
 	this.sprites.attention.shiftY = -15;
 	this.sprites.clickSprite.shiftX = 18
 	this.sprites.clickSprite.shiftY = 22

@@ -6,16 +6,6 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
     this.sprites.text = new DomTextSprite(owner, 'resourceInfo',{centered: true, shiftY: 110});
   	this.attentionImg = Loader.images.icons['attention.png']
   	this.sprites.attention = new DomImgSprite(this.owner,{img:this.attentionImg}, {shiftX : 40,shiftY : -30})
-  	this.sprites.resourceMeter = new DomMeterSprite(this.owner, {
-		orientation: "vertical",
-		meterFunc: function(){
-			return self.owner.getResourceMeterLength()
-		},
-		styleClass:{empty:'resourceEmpty',full:'resourceFull'},
-		shiftX: this.owner.imgWidth / 2,
-		shiftY: 40,
-		height : 60
-	})
   	this.sprites.attention.hide()
   },
 
