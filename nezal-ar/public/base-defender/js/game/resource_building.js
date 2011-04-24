@@ -53,7 +53,7 @@ var ResourceBuilding = Class.create(Building, {
 	return Util.timeDisplay(seconds) 
   },
 
-	tick : function($super){
+   tick : function($super){
 		if(!this.working || !this.owner.producing) return
     	$super();
 		if (this.state == this.states.NORMAL) {

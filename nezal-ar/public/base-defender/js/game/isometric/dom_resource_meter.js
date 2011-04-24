@@ -1,17 +1,22 @@
 var DomResourceMeter = Class.create(DomMeterSprite, {
 	 initialize: function($super, owner, properties){
+	 	this.emptyImg = null
+		this.fullImg = null
 		properties = properties || {}
 		this.orientation = properties['orientation'] = 'vertical'
 		this.width = 7
 		this.height = properties['height']= 85
 		this.meterFunc = properties['meterFunc'] || this.owner.getMeterFunc()
 		this.hideWhenFull = properties['hideWhenFull']
-    	this.emptySpan = $(document.createElement('DIV'));
-		this.emptySpan.appendChild(properties.emptyImg.clone())
-		this.fullSpan = $(document.createElement('DIV'));
-		this.fullSpan.appendChild(properties.fullImg.clone())
-		this.fullSpan.style.position = "absolute"
 		this.domSpriteInitialize(owner, properties);
+		this.emptyImg = properties.emptyImg.clone()
+		this.fullImg = properties.fullImg.clone()
+    	this.emptySpan = $(document.createElement('DIV'));
+		this.emptySpan.appendChild(this.emptyImg)
+		this.fullSpan = $(document.createElement('DIV'));
+		this.fullSpan.appendChild(this.fullImg)
+		this.fullSpan.style.position = "absolute"
+		this.fullSpan.style.overflow = "hidden"
 		this.div.appendChild(this.emptySpan);
     	this.div.appendChild(this.fullSpan); 
 	 },
@@ -33,5 +38,11 @@ var DomResourceMeter = Class.create(DomMeterSprite, {
 			if(properties.height)this.div.style.height = properties.height + "px";
 	    else this.div.style.height =  this.owner.imgHeight + "px";
 	    Object.extend( this, properties );
-	 }	
+	 },
+	 setMeterStyle : function(){
+	    var height = this.getMeterLength()
+		this.fullSpan.setStyle({height:height+"px", top:this.height-height+"px"})
+		this.fullImg.setStyle({marginTop:height - this.height+"px"})																
+	 }
+  	
 })
