@@ -12,10 +12,10 @@
 }
 
 #buildButton {
-  bottom: 1px;
-  height: 53px;
-  position: absolute;
-  right: 20px;
+	bottom: 0px;
+	height: 53px;
+	position: absolute;
+	right: 171px;
 }
 
 #buildButton #buildText{

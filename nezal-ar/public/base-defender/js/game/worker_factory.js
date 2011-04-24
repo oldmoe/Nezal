@@ -38,7 +38,7 @@ var WorkerFactory = Class.create({
   },
   
   nextWorkerCost : function(){
-    return this.recruitmentPlans.initial_coins * this.recruitmentPlans.factor;
+    return this.recruitmentPlans.initial_coins * (this.workers + 1) * this.recruitmentPlans.factor;
   },
   
   attachHireTrigger : function(){

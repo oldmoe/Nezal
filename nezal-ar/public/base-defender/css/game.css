@@ -91,37 +91,6 @@ img{
   cursor: pointer;
 }
 
-
-#zoom{
-	left: 423px;
-    position: absolute;
-	cursor:pointer;
-    top: 495px;
-	width:50px;
-	height:50px;
-    z-index: 65;
-}
-
-#zoom.in{
-	background-image:url('../images/icons/zoom-in.jpg')
-}
-#zoom.out{
-	background-image:url('../images/icons/zoom-out.jpg')
-}
-
-#move{
-	left: 360px;
-    position: absolute;
-	cursor:pointer;
-    top: 495px;
-	width:50px;
-	height:50px;
-    z-index: 65;
-}
-
-#zoom img{
-	width : 55px
-}
 .healthEmpty, .healthFull{
   -moz-border-radius : 8px;
   -webkit-border-radius : 8px;
@@ -147,10 +116,10 @@ img{
 	background-color:green;	
 }
 #sendAttack {
-  bottom: 0px;
-  height: 53px;
-  position: absolute;
-  right: 150px;
+   	bottom: 0;
+    height: 53px;
+    position: absolute;
+    right: 294px
 }
 
 #sendAttack #sendAttackText {
@@ -276,4 +245,34 @@ img{
 	width:5px;
 	height:20px;
 	background-image : url('../images/game_elements/resource_bar_right.png')
+}
+#controlPanel .controlContainer{
+	position:absolute;
+}
+#controlPanel .controlContainer img{
+	position:absolute;
+}
+#controlPanel #sound{
+	left:17px;
+	top:32px;
+}
+#controlPanel #move{
+	left:60px;
+	top:32px;
+}
+#controlPanel #zoom{
+	left:101px;
+	top:32px;
+}
+#controlPanel #music{
+	left:17px;
+	top:64px;
+}
+#controlPanel{
+    left: 582px;
+    position: absolute;
+    bottom:0px;
+}
+#controlPanel .controlContainer{
+	cursor:pointer;
 }

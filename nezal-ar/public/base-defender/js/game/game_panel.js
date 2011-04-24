@@ -4,12 +4,38 @@
 var GamePanel = Class.create({
   initialize : function(game){
 		this.game = game;
-    var self = this;
-    $('workers_game_element').stopObserving(game.mouseClickEvent);
-    $('workers_game_element').observe(game.mouseClickEvent,
-                                      function(){
-                                        self.game.workerPanel.render();
-                                      })
+	    var self = this;
+	    $('workers_game_element').stopObserving(game.mouseClickEvent);
+	    $('workers_game_element').observe(game.mouseClickEvent,
+	                                      function(){
+	                                        self.game.workerPanel.render();
+	                                      })
+	     $$('#controlPanel .controlContainer').each(function(div){
+			div.observe('mousedown',function(){
+				$$('#'+div.id+" .controlClick")[0].show()
+			})
+			div.observe('mouseup',function(){
+				$$('#'+div.id+" .controlClick")[0].hide()
+			})
+			div.observe('mouseover',function(){
+				$$('#'+div.id+" .controlHover")[0].show()
+			})
+			div.observe('mouseup',function(){
+				$$('#'+div.id+" .controlHover")[0].hide()
+			})
+		})
+		$$('#controlPanel .controlHover').invoke('hide')
+		$$('#controlPanel .controlClick').invoke('hide')
+		$$('#controlPanel #sound')[0].observe('mouseup',function(){
+			if(Sounds.muted){
+				Sounds.soundOn()
+			}else{
+				Sounds.mute()
+			}
+		})
+		$$('#controlPanel #music')[0].observe('mouseup',function(){
+			Sounds.switchmusic()
+		})									  
 	},
 	getTotalStorageCapacity : function(){
 		if(!game.townhallFactory.getTownhall()) return null;

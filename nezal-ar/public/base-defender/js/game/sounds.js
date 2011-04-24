@@ -7,33 +7,21 @@ var Sounds = {
 	mute : function(){
 		Sounds.muted = true
 		soundManager.mute()
-		$$('.sound').first().stopObserving('click')
-		$$('.sound').first().removeClassName('on')
-		$$('.sound').first().addClassName('off')
-		$$('.sound').first().observe('click',Sounds.soundOn)
 	},
 	
 	soundOn: function(){
 		Sounds.muted = false
 		soundManager.unmute()
-		$$('.sound').first().stopObserving('click')
-		$$('.sound').first().removeClassName('off')
-		$$('.sound').first().addClassName('on')
-		$$('.sound').first().observe('click',Sounds.mute)
 	},
 	
 	switchmusic : function(){
 		if(Sounds.musicOn){
 			Sounds.musicOn = false
 			Sounds.stopTrack()
-			$$('.music').first().removeClassName('on')
-			$$('.music').first().addClassName('off')
 		}
 		else{
 			Sounds.musicOn = true
 			Sounds.resumeTrack()
-			$$('.music').first().removeClassName('off')
-			$$('.music').first().addClassName('on')
 		}
 	},
 	
