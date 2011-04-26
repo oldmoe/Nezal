@@ -363,7 +363,11 @@ class BaseDefender < Metadata
     map.objects.each do |obj|
       puts "#{obj.name}  #{obj.hp}"
       key = self.convert_location(obj.owner['coords'])
-      profile_metadata[obj.name][key]['hp'] = obj.hp
+      if(obj.name=='palm' && obj.hp <=1)
+        profile_metadata[obj.name].delete(key)
+      else
+        profile_metadata[obj.name][key]['hp'] = obj.hp
+      end
     end
     return {'attack_success'=> attack_success, 'validation'=>{'valid' => true, 'error' => ''}}
   end

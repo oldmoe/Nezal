@@ -21,7 +21,7 @@ var CreepFactory = Class.create({
 		var index = this.registery.indexOf(creep)
 		if(index!=-1)this.registery.splice(index,1)
 		index = this.game.scene.remove(creep)
-    var explosion = new Explosion(creep);
+    	var explosion = new Explosion(creep);
 		var explosionClass = new ExplosionDisplay(explosion);
 		creep.destroy()
 	}

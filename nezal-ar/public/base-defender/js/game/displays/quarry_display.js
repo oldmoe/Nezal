@@ -30,8 +30,8 @@ var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
 				return self.owner.getResourceMeterLength()
 			},
 			styleClass:{empty:'resourceEmpty',full:'resourceFull'},
-			shiftX: this.owner.imgWidth / 2,
-			shiftY: 28,
+			shiftX: this.owner.imgWidth /2+3,
+			shiftY: 31,
 			height : 60,
 			emptyImg : Loader.images.game_elements['resource_meter_background.png'],
 			fullImg : Loader.images.game_elements['resource_meter_rock.png']
@@ -44,6 +44,7 @@ var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
 	this.sprites.resourceMeter.shiftY-=20
 	this.sprites.info.shiftY = -30
 	this.sprites.text.shiftY -= 10
+	this.render();
   },
   
   render : function($super){

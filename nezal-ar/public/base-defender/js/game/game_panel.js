@@ -20,13 +20,24 @@ var GamePanel = Class.create({
 			div.observe('mouseover',function(){
 				$$('#'+div.id+" .controlHover")[0].show()
 			})
+			div.observe('mouseout',function(){
+				$$('#'+div.id+" .controlHover")[0].hide()
+			})
 			div.observe('mouseup',function(){
 				$$('#'+div.id+" .controlHover")[0].hide()
 			})
 		})
-		$$('#controlPanel .controlHover').invoke('hide')
-		$$('#controlPanel .controlClick').invoke('hide')
+		
 		$$('#controlPanel #sound')[0].observe('mouseup',function(){
+			if($$('#controlPanel #sound')[0].getAttribute('clicked')=='true'){
+				$$('#controlPanel #sound')[0].setAttribute('clicked','false')
+				$$('#controlPanel #sound .controlClicked')[0].hide()
+				$$('#controlPanel #sound .controlButton')[0].show()
+			}else{
+				$$('#controlPanel #sound .controlClicked')[0].show()
+				$$('#controlPanel #sound .controlButton')[0].hide()
+				$$('#controlPanel #sound')[0].setAttribute('clicked','true')
+			}
 			if(Sounds.muted){
 				Sounds.soundOn()
 			}else{
@@ -34,13 +45,22 @@ var GamePanel = Class.create({
 			}
 		})
 		$$('#controlPanel #music')[0].observe('mouseup',function(){
+			if($$('#controlPanel #music')[0].getAttribute('clicked')=='true'){
+				$$('#controlPanel #music')[0].setAttribute('clicked','false')
+				$$('#controlPanel #music .controlClicked')[0].hide()
+				$$('#controlPanel #music .controlButton')[0].show()
+			}else{
+				$$('#controlPanel #music .controlClicked')[0].show()
+				$$('#controlPanel #music .controlButton')[0].hide()
+				$$('#controlPanel #music')[0].setAttribute('clicked','true')
+			}
 			Sounds.switchmusic()
 		})									  
 	},
 	getTotalStorageCapacity : function(){
 		if(!game.townhallFactory.getTownhall()) return null;
 		var totalCapacity = game.townhallFactory.getTownhall().storageCapacity
-		var storages = game.storageFactory.factoryRegistery
+		var storages = game.storageFactory.factoryRegistry
 		for(key in storages){
 			totalCapacity +=storages[key].storageCapacity
 		}
@@ -63,8 +83,26 @@ var GamePanel = Class.create({
 				width: '' + Math.min(83, Math.round(lumberValue * 100 / totalCapacity)) + '%'
 			})
 		}
+		if(rockValue==totalCapacity){
+			$('rock-amount').style.color = 'red'
+			$$('#rockBar .resourceBarRight')[0].addClassName('full')
+		}
+		else{
+			$('rock-amount').style.color = 'gold'
+			$$('#rockBar .resourceBarRight')[0].removeClassName('full')
+		} 
 	    $('rock-amount').innerHTML = this.game.templatesManager.load("resource-amount-display", {amount : rock});
+		
+		if(lumberValue==totalCapacity){
+			$('lumber-amount').style.color = 'red'
+			$$('#lumberBar .resourceBarRight')[0].addClassName('full')
+		}
+		else{
+		    $('lumber-amount').style.color = 'gold'
+			$$('#lumberBar .resourceBarRight')[0].removeClassName('full')
+		} 
 	    $('lumber-amount').innerHTML = this.game.templatesManager.load("resource-amount-display", {amount : lumber});
+		
 	    $('workers-amount').innerHTML = this.game.templatesManager.load("workers-in-game-panel",
 	            {idleWorkers : this.game.workerFactory.idleWorkers, totalWorkers : this.game.workerFactory.workers});
 	    $('coins-amount').innerHTML = this.game.user.coins;

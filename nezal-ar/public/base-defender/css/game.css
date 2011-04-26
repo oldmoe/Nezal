@@ -244,6 +244,9 @@ img{
 .resourceBarRight{
 	width:5px;
 	height:20px;
+
+}
+.resourceBarRight.full{
 	background-image : url('../images/game_elements/resource_bar_right.png')
 }
 #controlPanel .controlContainer{
@@ -253,19 +256,19 @@ img{
 	position:absolute;
 }
 #controlPanel #sound{
-	left:17px;
-	top:32px;
+	left:16px;
+	top:29px;
 }
 #controlPanel #move{
 	left:60px;
-	top:32px;
+	top:29px;
 }
 #controlPanel #zoom{
-	left:101px;
-	top:32px;
+	left:104px;
+	top:29px;
 }
 #controlPanel #music{
-	left:17px;
+	left:16px;
 	top:64px;
 }
 #controlPanel{

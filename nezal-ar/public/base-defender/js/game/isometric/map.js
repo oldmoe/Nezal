@@ -489,7 +489,7 @@ var Map={
 	  		if (owner.state != owner.states.UNDER_CONSTRUCTION)owner.sprites.outline.show();
   			if (owner.state == owner.states.NORMAL)owner.sprites.info.show();
 	  		if(owner.sprites.text)owner.sprites.text.show()
-        if(owner.state == owner.states.NORMAL && owner.staticSprites.moreContainer) 
+        if(owner.state == owner.states.NORMAL && owner.staticSprites.moreContainer && !owner.game.buildingMode.moveMode) 
           owner.staticSprites.moreContainer.show();
 	  	}
 		})
