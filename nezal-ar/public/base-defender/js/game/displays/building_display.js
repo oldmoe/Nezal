@@ -257,24 +257,23 @@ var BuildingDisplay = Class.create(Display, {
   		var element = $(elementName+'_trigger')
   	 	element.stopObserving("mouseover");
         element.observe("mouseover", function(){
-		 if (element.getAttribute("disabled") != "disabled") {
-		 	element.select("img")[0].setStyle({
-		 		marginTop: 0
-		 	});
-		 }
+		 $$('#panel-buttons-container .panel-button').each(function(div){
+		 	div.removeClassName('hovered')
+		 })
+		 element.addClassName('hovered')
 		 $$('.menuBody .menuItem').each(function(element){
 		 	element.style.visibility = "hidden"
 		 }) 
 		 $(elementName+'Desc').style.visibility = "visible"
         });
-        element.stopObserving("mouseout");
-        element.observe("mouseout", function(){
-		  if (element.getAttribute("disabled") != "disabled") {
-		  	element.select("img")[0].setStyle({
-		  		marginTop: "-25px"
-		  	});
-		  }
-        });
+//        element.stopObserving("mouseout");
+//        element.observe("mouseout", function(){
+//		  if (element.getAttribute("disabled") != "disabled") {
+//		  	element.select("img")[0].setStyle({
+//		  		marginTop: "-25px"
+//		  	});
+//		  }
+//        });
   },
   render : function(){
   	if (this.owner.state == this.owner.states.UNDER_CONSTRUCTION)this.renderUnderConstruction()

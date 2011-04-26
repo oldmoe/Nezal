@@ -62,7 +62,8 @@ var Game = Class.create({
     var self = this
     var gameElementsImages = ['upper_bar.png','monitor.png','background.png','cancel.png','button.png','move.png','flag.png'
 	,'zoom.png','hover.png','sound.png','music.png','control_button.png','click.png','panel_background.png',
-	'resource_meter_background.png','resource_meter_rock.png','resource_meter_wood.png','button_clicked.png']
+	'resource_meter_background.png','resource_meter_rock.png','resource_meter_wood.png','button_clicked.png',
+	'building_menu_hover.png']
     var friendsImages = ['1st_blank.png', 'bar.png']
     var buildingImages = ['townhall.png']
     var panelImages = ['buttons.png']
