@@ -12,11 +12,11 @@
 }
 
 #buildButton {
-  bottom: -16px;
+  bottom: -6px;
   cursor: pointer;
   height: 60px;
   position: absolute;
-  right: 155px;
+  right: 163px;
 }
 
 #buildButton.hover {
@@ -25,7 +25,7 @@
 }
 
 #buildButton img {
-  width: 67%;
+  width: 90%;
 }
 
 #buildButton.hover img {
@@ -33,7 +33,7 @@
 }
 
 #buildButton #buildText{
-  color: #FCED70;
+  color: white;
   cursor: pointer;
   display: block;
   font-family: showg;
@@ -42,12 +42,12 @@
   position: relative;
   text-align: center;
   text-shadow: -3px -3px 1px black;
-  top: -30px;
-  left: -10px;
+  top: -35px;
+  left: -1px;
 }
 
 #buildButton.hover #buildText{
-  top: -40px;
+  top: -38px;
   left: 0;
   font-size: 15px;
 }
