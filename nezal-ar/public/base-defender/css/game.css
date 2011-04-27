@@ -135,7 +135,6 @@ img{
 	font-family: ShowG;
     position: relative;
     text-align: center;
-    text-shadow: -3px -3px 1px black;
     top: -42px;
 }
 
@@ -214,8 +213,7 @@ img{
 	font-family: ShowG;
 	line-height: 50px;
 	position: relative;
-	text-align: center;
-	text-shadow: -3px -3px 1px black;
+	text-align: center;	
 	top: -42px;
 }
 .resourceBarEmpty{
