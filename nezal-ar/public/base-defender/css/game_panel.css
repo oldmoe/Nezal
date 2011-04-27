@@ -37,6 +37,7 @@
 #coins_game_element {
   right: 131px;
   width: 125px;
+  top:6px;
   height: 66px;
 }
 #coins_game_element img {
@@ -53,7 +54,7 @@
 #workers_game_element #hire_worker {
   position: absolute;
   right: 8px;
-  top: 42px;
+  top: 41px;
   margin: 0;
 }
 
@@ -69,11 +70,11 @@
   cursor: pointer;
   font-family: ShowG;
   font-size: 15px;
-  height: 24px;
-  line-height: 24px;
+  height: 13px;
+  line-height: 14px;
   position: absolute;
   right: 21px;
-  top: 43px;
+  top: 46px;
 }
 
 #coins_game_element #add-coins-text {
