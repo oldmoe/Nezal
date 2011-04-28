@@ -4,8 +4,8 @@ var DomResourceMeter = Class.create(DomMeterSprite, {
 		this.fullImg = null
 		properties = properties || {}
 		this.orientation = properties['orientation'] = 'vertical'
-		this.width = 7
-		this.height = properties['height']= 85
+		this.width = 18
+		this.height = properties['height']= 67
 		this.meterFunc = properties['meterFunc'] || this.owner.getMeterFunc()
 		this.hideWhenFull = properties['hideWhenFull']
 		this.domSpriteInitialize(owner, properties);

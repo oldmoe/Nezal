@@ -72,6 +72,9 @@ var ResourceBuilding = Class.create(Building, {
   _CollectResources: function(){
     var response = this.game.network.collectResources(this.name, this.coords);
     this.game.updateGameStatus(response['gameStatus']);
+	if(this.game.resources[this.factory.collect]== this.factory.getTotalStorageCapacity()){
+		Notification.alert('You need more storage. Try to build or upgrade your storage buildings.')
+	}
   },
   
   _ValidateAssignWorker: function(){

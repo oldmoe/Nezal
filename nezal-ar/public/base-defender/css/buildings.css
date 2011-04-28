@@ -12,23 +12,44 @@
 }
 
 #buildButton {
-	bottom: 0px;
-	height: 53px;
-	position: absolute;
-	right: 171px;
+  bottom: -6px;
+  cursor: pointer;
+  height: 60px;
+  position: absolute;
+  right: 163px;
+}
+
+#buildButton.hover {
+  bottom: 0;
+  right: 170px;
+}
+
+#buildButton img {
+  width: 90%;
+}
+
+#buildButton.hover img {
+  width: 100%;
 }
 
 #buildButton #buildText{
-  color: #FCED70;
+  color: white;
   cursor: pointer;
   display: block;
   font-family: showg;
-  font-size: 25px;
-  line-height: 50px;
+  font-size: 12px;
+  line-height: 20px;
   position: relative;
   text-align: center;
   text-shadow: -3px -3px 1px black;
-  top: -50px;
+  top: -35px;
+  left: -1px;
+}
+
+#buildButton.hover #buildText{
+  top: -38px;
+  left: 0;
+  font-size: 15px;
 }
 
 #interaction {

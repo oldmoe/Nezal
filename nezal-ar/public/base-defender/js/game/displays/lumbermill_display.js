@@ -17,7 +17,7 @@ var LumbermillDisplay = Class.create(ResourceBuildingDisplay, {
 				return self.owner.getResourceMeterLength()
 			},
 			styleClass:{empty:'resourceEmpty',full:'resourceFull'},
-			shiftX: this.owner.imgWidth / 2,
+			shiftX: this.owner.imgWidth / 2 + 3,
 			shiftY: 28,
 			height : 60,
 			emptyImg : Loader.images.game_elements['resource_meter_background.png'],
@@ -28,6 +28,7 @@ var LumbermillDisplay = Class.create(ResourceBuildingDisplay, {
 	this.sprites.clickSprite.shiftY = 22
 	this.sprites.clickSprite.setImgWidth(108)
 	this.sprites.clickSprite.setImgHeight(82)
+	this.render();
   },
     
   createSprites : function($super){

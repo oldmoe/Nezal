@@ -67,6 +67,11 @@ var Car = Class.create(MovingObject,{
 			this.target.hp = 1
 			this.target.working = false
 			this.target.setState(this.target.states.NORMAL)
+			if(this.target.name == 'palm'){
+				Map.objects.remove(this.target);
+				game.scene.objects.remove(this.target)
+				this.target.destroy()
+			}
 			this.target = null
 		} 
 //    console.log("Car Tick :: ", this.id, " :: ", this.hp, " :: ", this.coords.x , " :: ", this.coords.y);

@@ -29,21 +29,26 @@ var Notification = Class.create({
 
 Notification.alert = function(message){
   $("alert").innerHTML = game.templatesManager.load("alert", {message : message});
-  $("alert").show();
+  $('alert').hide()
+  Animation.show("alert")
   $('interaction').show();
 }
 Notification.notify = function(message){
 	$("notify").innerHTML = game.templatesManager.load("alert", {message : message});
-    $("notify").show();
+	$("notify").hide()
 	$('interaction').show();
+	Animation.show("notify")
 }
 Notification.repair = function(message){
 	$("notify").innerHTML = game.templatesManager.load("repair", {message : message});
-	$("notify").show();
+	$("notify").hide()
 	$('interaction').show();
+	Animation.show("notify")
 }
 Notification.attackNotification = function(msg){
 	$("notify").innerHTML = game.templatesManager.load("attackNotification", {msg : msg});
-	$("notify").show();
+	$("notify").hide()
 	$('interaction').show();
+	Animation.show("notify")
+	
 }

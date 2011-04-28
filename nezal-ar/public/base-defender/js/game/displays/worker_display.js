@@ -14,6 +14,7 @@ var WorkerDisplay = Class.create(Display,{
     Object.extend(this.owner,this);
     this.sprites.worker = new DomImgSprite(owner, {img : this.img});
     this.sprites.shadow = new DomImgSprite(owner.shadow, {img : this.shadowImg}, {shiftY: 40, shiftX: 0});
+	this.render()
   },
   
   render : function(){

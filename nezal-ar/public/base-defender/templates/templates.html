@@ -72,10 +72,10 @@
       <img class="wedge" src="${Loader.images.quests['wedge.png'].src}"/>
       <img class="bubble" src="${Loader.images.quests['msgBaloon.png'].src}"/>
     </div>
-    <div class="close" onclick="$('alertMsg').hide();">
+    <div class="close" onclick="Animation.hide('alertMsg');">
     </div>
     <div class="okButtonWrapper">
-      <div class="okButton" onclick="$('alertMsg').hide();">
+      <div class="okButton" onclick="Animation.hide('alertMsg')">
         <img class="okImage" src="${Loader.images.quests['button.png'].src}"/>
         <div class="okText yellowText"> OK </div>
       </div>
@@ -94,10 +94,10 @@
       <img class="wedge" src="${Loader.images.quests['wedge.png'].src}"/>
       <img class="bubble" src="${Loader.images.quests['msgBaloon.png'].src}"/>
     </div>
-    <div class="close" onclick="$('repairMsg').hide();">
+    <div class="close" onclick="Animation.hide('repairMsg')">
     </div>
     <div class="okButtonWrapper">
-      <div class="okButton" onclick="$('repairMsg').hide();game.buildingMode.repair();">
+      <div class="okButton" onclick="Animation.hide('repairMsg');game.buildingMode.repair();">
         <img class="okImage" src="${Loader.images.quests['button.png'].src}"/>
         <div class="okText yellowText"> Repair </div>
       </div>
@@ -233,37 +233,39 @@
   	<div id="controlPanel">
   		<span class="loadedImg" imgId="controlsBackground" imgSrc ="images/game_elements/panel_background.png"></span>
 		<div class="controlContainer" id="sound">
-			<span class="loadedImg" imgClasses="controlHover" imgSrc ="images/game_elements/hover.png"></span>
+			<span class="loadedImg" imgClasses="controlHover" imgStyle="display:none;" imgSrc ="images/game_elements/hover.png"></span>
 			<span class="loadedImg" imgClasses="controlButton" imgSrc ="images/game_elements/control_button.png"></span>
-			<span class="loadedImg" imgClasses="controlClick" imgSrc ="images/game_elements/click.png"></span>
+			<span class="loadedImg" imgClasses="controlClicked" imgStyle="display:none;" imgSrc ="images/game_elements/button_clicked.png"></span>
+			<span class="loadedImg" imgClasses="controlClick" imgStyle="display:none;" imgSrc ="images/game_elements/click.png"></span>
 			<span class="loadedImg" imgClasses="controlImg" imgSrc ="images/game_elements/sound.png"></span>
 		</div>
 		<div class="controlContainer" id="move">
-			<span class="loadedImg" imgClasses="controlHover" imgSrc ="images/game_elements/hover.png"></span>
+			<span class="loadedImg" imgClasses="controlHover" imgStyle="display:none;" imgSrc="images/game_elements/hover.png"></span>
 			<span class="loadedImg" imgClasses="controlButton" imgSrc ="images/game_elements/control_button.png"></span>
-			<span class="loadedImg" imgClasses="controlClick" imgSrc ="images/game_elements/click.png"></span>
+			<span class="loadedImg" imgClasses="controlClick" imgStyle="display:none;" imgSrc ="images/game_elements/click.png"></span>
 			<span class="loadedImg" imgClasses="controlImg" imgSrc ="images/game_elements/move.png"></span>
 		</div>
 		<div class="controlContainer" id="zoom">
-			<span class="loadedImg" imgClasses="controlHover" imgSrc ="images/game_elements/hover.png"></span>
+			<span class="loadedImg" imgClasses="controlHover" imgStyle="display:none;" imgSrc ="images/game_elements/hover.png"></span>
 			<span class="loadedImg" imgClasses="controlButton" imgSrc ="images/game_elements/control_button.png"></span>
-			<span class="loadedImg" imgClasses="controlClick" imgSrc ="images/game_elements/click.png"></span>
+			<span class="loadedImg" imgClasses="controlClick" imgStyle="display:none;" imgSrc ="images/game_elements/click.png"></span>
 			<span class="loadedImg" imgClasses="controlImg" imgSrc ="images/game_elements/zoom.png"></span>
 		</div>
 		<div class="controlContainer" id="music"> 
-			<span class="loadedImg" imgClasses="controlHover" imgSrc ="images/game_elements/hover.png"></span>
+			<span class="loadedImg" imgClasses="controlHover" imgStyle="display:none;" imgSrc ="images/game_elements/hover.png"></span>
 			<span class="loadedImg" imgClasses="controlButton" imgSrc ="images/game_elements/control_button.png"></span>
-			<span class="loadedImg" imgClasses="controlClick" imgSrc ="images/game_elements/click.png"></span>
+			<span class="loadedImg" imgClasses="controlClicked" imgStyle="display:none;" imgSrc ="images/game_elements/button_clicked.png"></span>
+			<span class="loadedImg" imgClasses="controlClick" imgStyle="display:none;" imgSrc ="images/game_elements/click.png"></span>
 			<span class="loadedImg" imgClasses="controlImg" imgSrc ="images/game_elements/music.png"></span>
 		</div>
 	</div>	
       <div id="buildButton" style="display:none;">
-	      <span class="loadedImg" imgSrc ="images/quests/button.png"></span>
+	      <span class="loadedImg" imgSrc ="images/game_elements/build_button.png"></span>
         <div id="buildText" class="yellowText"> build </div>
       </div>
       
       <div id="sendAttack">
-        <span class="loadedImg" imgSrc ="images/quests/button.png"></span>
+        <span class="loadedImg" imgSrc ="images/game_elements/button.png"></span>
         <div id="sendAttackText" class="yellowText"> Attack </div>
       </div>
       
@@ -276,7 +278,7 @@
 				<div id="notify" style="display:none;"> </div>
       </div>
       <div id="reset" class="resetAccount">
-        <span class="loadedImg" imgSrc ="images/quests/button.png"></span>
+        <span class="loadedImg" imgSrc ="images/game_elements/button.png"></span>
         <div id="resetText" class="yellowText" onclick="game.network.resetEmpire();"> Reset </div>
       </div>
       
@@ -309,7 +311,7 @@
 
 
 <textarea style="display:none;" id='upgrade-button'>
-  <div class="panel-button" id="upgrade_trigger">
+  <div class="panel-button hovered" id="upgrade_trigger">
     <span>Upgrade</span>
     <img src="${Loader.images.panel['buttons.png'].src}">
   </div>
