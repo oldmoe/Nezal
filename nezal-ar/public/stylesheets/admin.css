@@ -1,5 +1,8 @@
-
-#game #backLink
+body
+{
+  font-family : verdana;
+}
+#backLink
 {
   float : right; 
 }
@@ -82,11 +85,12 @@ label
 }
 .label
 {
-  color :Chocolate;
-  font-size : 14px;
-  font-weight : bold;
-  margin-bottom : 5px;
-  display : block;
+  color: Chocolate;
+  display: block;
+  font-family: Verdana;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 5px;
 }
 .success {
   background-color: #66CC00;
@@ -103,4 +107,20 @@ label
   display: inline-block;
   margin-top: 5px;
   padding: 5px;
+}
+.separator 
+{
+  border-radius: 10px 10px 10px 10px;
+  border-top: 3px solid;
+  height: 20px;
+  width: 100%;
+  margin : 10px 0px;
+}
+.languageList
+{
+  margin: 15px 0px;
+}
+.subItem
+{
+  padding : 0px 15px;
 }

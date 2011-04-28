@@ -1,6 +1,7 @@
 <script type='text/javascript'>
   var name = "<%=@building_name%>"
   var data = <%=JSON.generate(@game.metadata)%>
+  var level = <%=@level%>
   var buildingLevel = data.buildings[name].levels[<%=@level%>]
   var buildingNames = new Hash(data.buildings).keys();
   var maxBuildingLevel = 0;
@@ -15,14 +16,129 @@
   }
 </script>
 
+<script type='text/javascript'>
+  var Language = {
+    
+    metadata : null,
 
+    initialize : function(){
+      new Ajax.Request( '/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/locale/metadata' , {
+                       method : 'get',
+                       onSuccess : function(response){
+                          Language.metadata = JSON.parse(response.responseText);
+                          Language.display();
+                       }
+                      });
+    },
+
+    saveToServer : function(){
+      new Ajax.Request( '/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/locale/metadata' , {
+                        method : 'put',
+                        parameters : { "data" : JSON.stringify(this.metadata) },
+                        onSuccess : function(response){
+                          Language.showSuccessMsg();
+                          Language.initialize();  
+                        },
+                        onFailure : function(response){
+                          Language.showErrorMsg();
+                        }
+                       
+                   });    
+    },
+
+    display : function(){
+      var defaultLang = null;
+      for (defaultLang in data.languages) break;
+      $('globalData').innerHTML = TrimPath.processDOMTemplate("globalDataTemplate", { languages : data.languages,
+                                                                                      defaultLang : defaultLang,
+                                                                                      data : this.metadata[defaultLang].buildings[name] });
+    },
+    
+    save : function(){
+      var language = $('language').value;
+      this.metadata[language].buildings[name].name = $('name').value;
+      this.metadata[language].buildings[name].desc = $('description').value;
+      this.metadata[language].buildings[name].upgrade_desc[level]  = $('levelDesc').value;
+      this.saveToServer();
+    },
+
+    changeLanguage : function(){
+      var defaultLang = $('language').value;      
+      $('globalData').innerHTML = TrimPath.processDOMTemplate("globalDataTemplate", { languages : data.languages,
+                                                                                      defaultLang : defaultLang,
+                                                                                      data : this.metadata[defaultLang].buildings[name] });
+    },
+
+    showSuccessMsg : function(){
+      $('langReqStatus').innerHTML = "Saved successfully"
+      $('langReqStatus').className = "success"
+      $('langReqStatus').show();
+      window.setTimeout( function(){$('langReqStatus').hide()}, 5000 )
+    },
+
+    showErrorMsg : function(){
+      $('langReqStatus').innerHTML = "Error, your changes are not saved!"
+      $('langReqStatus').className = "error"
+      $('langReqStatus').show();
+      window.setTimeout( function(){$('langReqStatus').hide()}, 10000 )
+    }
+
+  };
+</script>
+
+<div id="backLink">
+  <a href="/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/metadata/edit">
+    Back
+  </a>
+</div>
+<div class="separator"></div>
+<LABEL for="globalData" class="label">Building Text</LABEL>
+<div id="globalData" class="subItem " style="width:70%;">
+</div>
+<div id="langReqStatus">
+</div>
+<div class="separator"></div>
+<!----------- Building Descr iption Template -------->
+<div id="globalDataTemplate" style="display:none;" >
+  <div class="form_row">
+    <LABEL for="language">Language</LABEL>
+    <select id="language" onChange="Language.changeLanguage();">
+      {for language in languages}
+        {if (language_index==defaultLang)} 
+          <option value="${language_index}" SELECTED>
+            ${language_index}
+          </option>
+        {else}  
+          <option value="${language_index}">
+            ${language_index}
+          </option>
+        {/if}
+      {/for}
+    </select>
+  </div>
+  <div class="form_row">
+    <LABEL for="name">Name </LABEL>
+    <INPUT type="text" id="name" name='name' value="${data.name}">
+  </div>
+  <div class="form_row">
+    <LABEL for="description"> Description </LABEL>
+    <textarea id="description" name="description" type="text">${data.desc}</textarea>
+  </div>
+  <div class="form_row">
+    <LABEL for="levelDesc"> Level Description </LABEL>
+    <textarea id="levelDesc" name="levelDesc" type="text">${data.upgrade_desc[level]}</textarea>
+  </div>
+  <div class="form_row">  
+    <input class="submit" type="submit" value="Save" onclick="Language.save();">
+  </div>
+</div>
 <!-------------------- Templates -------------------->
-<textarea id="basicRow" style="display:none;">
+<div id="basicRow" style="display:none;">
   <div class="form_row">
     <LABEL for="${attrName}">${attrName}</LABEL>
     <textarea id="${attrName}" type="text">${attrValue}</textarea>
   </div>
-</textarea>
+</div>
 
 <textarea id="comboRow" style="display:none;">
   <div class="form_row">
@@ -99,7 +215,7 @@
 <!---------------- End Templates -------------------->
 
 <label class="label"><%= @building_name.capitalize %> level <%= @level %></label>
-<div id="buildingAttributes"></div>
+<div id="buildingAttributes" class="subItem" style="width : 70%;"></div>
 <input type="button" value="Save" id="submit" class="submit"/> or 
 <a href='/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/metadata/edit'>Go back</a>
 <br/>
@@ -179,6 +295,8 @@ for( attrName in buildingLevel ){
   } else if( typeof attrValue != "object" )
     $('buildingAttributes').innerHTML += TrimPath.processDOMTemplate("basicRow", {attrName : attrName, attrValue : attrValue});
 }
+
+Language.initialize();
 </script>
 <style>
   select {

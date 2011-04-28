@@ -345,6 +345,16 @@
   font-family : ShowG;
   font-size : 13px;
 }
+.buildingDesc {
+  color: #FFF78C;
+  height: 100px;
+  left: 30px;
+  position: absolute;
+  top: 40px;
+  width: 280px;
+  text-shadow: -1px 1px 1px black;
+  font-size: 25px;
+}
 .moreButtonText {
   color : #fced70;
   font-family : ShowG;
