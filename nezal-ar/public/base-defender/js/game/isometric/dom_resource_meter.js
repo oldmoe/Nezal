@@ -14,6 +14,7 @@ var DomResourceMeter = Class.create(DomMeterSprite, {
     	this.emptySpan = $(document.createElement('DIV'));
 		this.emptySpan.appendChild(this.emptyImg)
 		this.fullSpan = $(document.createElement('DIV'));
+    this.fullImg.style.position = 'absolute'
 		this.fullSpan.appendChild(this.fullImg)
 		this.fullSpan.style.position = "absolute"
 		this.fullSpan.style.overflow = "hidden"
@@ -40,9 +41,9 @@ var DomResourceMeter = Class.create(DomMeterSprite, {
 	    Object.extend( this, properties );
 	 },
 	 setMeterStyle : function(){
-	    var height = this.getMeterLength()
-		this.fullSpan.setStyle({height:height+"px", top:this.height-height+"px"})
-		this.fullImg.setStyle({marginTop:height - this.height+"px"})																
+	  var height = this.getMeterLength()
+		this.fullSpan.setStyle({height:height+"px",width:this.width+"px", top:this.height-height+"px"})
+		this.fullImg.setStyle({top:(height - this.height)+"px"})																
 	 }
   	
 })
