@@ -10,7 +10,10 @@
   font-family: "Showg";
   src: url("fonts/SHOWG.TTF");
 }
-
+@font-face {
+  font-family: "Cairo";
+  src: url("fonts/CAIRO_.TTF");
+}
 .yellowText {
   color: #FAC200;
 }
