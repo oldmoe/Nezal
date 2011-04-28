@@ -8,7 +8,7 @@ require 'require_all'
 require "#{Dir.pwd}/config/setup.rb"
 require_all "#{Dir.pwd}/app/models/"
 require_all "#{Dir.pwd}/app/controllers/"
-require_all "#{Dir.pwd}/lib/"
+require_all "#{Dir.pwd}/lib/language_manager"
 
 Yajl::Encoder.enable_json_gem_compatability
 
