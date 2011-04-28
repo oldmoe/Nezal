@@ -231,6 +231,7 @@
       </div>
 		
   	<div id="controlPanel">
+  	  <div id="openControl" opened="false"></div>
   		<span class="loadedImg" imgId="controlsBackground" imgSrc ="images/game_elements/panel_background.png"></span>
 		<div class="controlContainer" id="sound">
 			<span class="loadedImg" imgClasses="controlHover" imgStyle="display:none;" imgSrc ="images/game_elements/hover.png"></span>
@@ -248,6 +249,7 @@
 		<div class="controlContainer" id="zoom">
 			<span class="loadedImg" imgClasses="controlHover" imgStyle="display:none;" imgSrc ="images/game_elements/hover.png"></span>
 			<span class="loadedImg" imgClasses="controlButton" imgSrc ="images/game_elements/control_button.png"></span>
+      <span class="loadedImg" imgClasses="controlClicked" imgStyle="display:none;" imgSrc ="images/game_elements/button_clicked.png"></span>
 			<span class="loadedImg" imgClasses="controlClick" imgStyle="display:none;" imgSrc ="images/game_elements/click.png"></span>
 			<span class="loadedImg" imgClasses="controlImg" imgSrc ="images/game_elements/zoom.png"></span>
 		</div>
@@ -441,5 +443,9 @@
 	</div>
 </textarea>
 
-
+<textarea id="collectAnimation" style="display:none;">
+<div class="collectionAnimation">
+	<img src='images/icons/${building_name}_icon.png'><div id="text">${Math.round(collected)}</div>
+</div>
+</textarea>
 

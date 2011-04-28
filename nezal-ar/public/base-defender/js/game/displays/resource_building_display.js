@@ -76,10 +76,42 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
   },
 
   collectResources : function(){
-	  Sounds.play(Sounds.gameSounds.resource_collection)
-    if(this.owner.assignedWorkers > 0)
-      this.owner._CollectResources();
-    else
-      this.owner._AssignWorker();
+    var owner = this.owner
+    if(owner.assignedWorkers > 0){
+      var checkFullErrorMessage = function(){
+        if (owner.game.resources[owner.factory.collect] == owner.factory.getTotalStorageCapacity()) {
+          Notification.alert('You need more storage. Try to build or upgrade your storage buildings.')
+          return true
+        }
+        return false
+      }
+      if(checkFullErrorMessage())return 
+      Sounds.play(Sounds.gameSounds.resource_collection)
+      var collected = owner[owner.factory.collect]
+      var currentResources = owner.game.resources[owner.factory.collect]
+      var totalStorage =  owner.factory.getTotalStorageCapacity()
+      if (collected + currentResources >  totalStorage) {
+        collected = totalStorage - currentResources 
+      }
+      owner._CollectResources();
+      this._CollectionAnimation(collected)
+      checkFullErrorMessage()
+    }else
+      owner._AssignWorker();
+  },
+  _CollectionAnimation : function(collected){
+    var owner = this.owner
+    var html = owner.game.templatesManager.load("collectAnimation",{
+      building_name: owner.name,
+      collected: collected
+    })
+    owner.game.domConverter.convert(html)
+    var collectionDiv = $$('.collectionAnimation')[$$('.collectionAnimation').length-1]
+    collectionDiv.setStyle({
+      'top': owner.coords.y + "px",
+      'left': (owner.coords.x - 15) + "px"
+    })
+    $('gameCanvas').appendChild(collectionDiv)
+    Animation.springFade(collectionDiv, -105)
   }
 });

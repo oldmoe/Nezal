@@ -1,6 +1,3 @@
-/**
- * @author nomier
- */
 var GamePanel = Class.create({
   initialize : function(game){
 		this.game = game;
@@ -9,53 +6,7 @@ var GamePanel = Class.create({
 	    $('workers_game_element').observe(game.mouseClickEvent,
 	                                      function(){
 	                                        self.game.workerPanel.render();
-	                                      })
-	     $$('#controlPanel .controlContainer').each(function(div){
-			div.observe('mousedown',function(){
-				$$('#'+div.id+" .controlClick")[0].show()
-			})
-			div.observe('mouseup',function(){
-				$$('#'+div.id+" .controlClick")[0].hide()
-			})
-			div.observe('mouseover',function(){
-				$$('#'+div.id+" .controlHover")[0].show()
-			})
-			div.observe('mouseout',function(){
-				$$('#'+div.id+" .controlHover")[0].hide()
-			})
-			div.observe('mouseup',function(){
-				$$('#'+div.id+" .controlHover")[0].hide()
-			})
-		})
-		
-		$$('#controlPanel #sound')[0].observe('mouseup',function(){
-			if($$('#controlPanel #sound')[0].getAttribute('clicked')=='true'){
-				$$('#controlPanel #sound')[0].setAttribute('clicked','false')
-				$$('#controlPanel #sound .controlClicked')[0].hide()
-				$$('#controlPanel #sound .controlButton')[0].show()
-			}else{
-				$$('#controlPanel #sound .controlClicked')[0].show()
-				$$('#controlPanel #sound .controlButton')[0].hide()
-				$$('#controlPanel #sound')[0].setAttribute('clicked','true')
-			}
-			if(Sounds.muted){
-				Sounds.soundOn()
-			}else{
-				Sounds.mute()
-			}
-		})
-		$$('#controlPanel #music')[0].observe('mouseup',function(){
-			if($$('#controlPanel #music')[0].getAttribute('clicked')=='true'){
-				$$('#controlPanel #music')[0].setAttribute('clicked','false')
-				$$('#controlPanel #music .controlClicked')[0].hide()
-				$$('#controlPanel #music .controlButton')[0].show()
-			}else{
-				$$('#controlPanel #music .controlClicked')[0].show()
-				$$('#controlPanel #music .controlButton')[0].hide()
-				$$('#controlPanel #music')[0].setAttribute('clicked','true')
-			}
-			Sounds.switchmusic()
-		})									  
+	                                      })									  
 	},
 	getTotalStorageCapacity : function(){
 		if(!game.townhallFactory.getTownhall()) return null;

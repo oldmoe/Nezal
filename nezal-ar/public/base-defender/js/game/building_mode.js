@@ -14,26 +14,9 @@ var BuildingMode = Class.create({
   initialize : function(game){
     this.game = game;
     this._AttachCanvasClickListener();
-	this._AttachCancelBuildingListener();
-	this._AttachZoomListener();
-	this._AttachMoveListener();
+	  this._AttachCancelBuildingListener();
   },
   
-  _AttachZoomListener : function(){
-  	var self = this
-  	$('zoom').observe('click',function(){
-		self.zoom()
-	})
-  },
-  
-  _AttachMoveListener : function(){
-  	var self = this
-  	$('move').observe('click',function(){
-		self.moveMode = true
-		self.showBuildingBases()
-		$('cancelBuilding').show();
-	})
-  },
   showBuildingBases : function(){
   	Map.objects.each(function(building){
 		building.sprites.base.show()
@@ -166,21 +149,6 @@ var BuildingMode = Class.create({
 	repair : function(){
 		var response = this.game.network.repairBuildings();
 		this.game.updateGameStatus(response['gameStatus']);
-	},
-	
-	zoom : function(){
-		if(game.zoomFactor ==1){
-			game.zoomFactor = 0.5
-			$('gameCanvas').addClassName('zoomed')
-			$('zoom').removeClassName('in')
-			$('zoom').addClassName('out')
-		}else{
-			game.zoomFactor = 1
-			$('gameCanvas').removeClassName('zoomed')
-			$('zoom').removeClassName('out')
-			$('zoom').addClassName('in')
-		}
-		Map.centerMap(game.zoomFactor) 
 	},
 		
 	collect : function(building){

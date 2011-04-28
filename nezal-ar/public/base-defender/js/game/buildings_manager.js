@@ -13,14 +13,6 @@ var BuildingsManager = Class.create({
       game.buildingsManager.displayBuildingsPanel({'disabled' : []});
       Sounds.play(Sounds.gameSounds.click);
     });
-    
-    $('buildButton').observe("mouseover", function(){
-      $('buildButton').addClassName("hover");
-    });
-    
-    $('buildButton').observe("mouseout", function(){
-      $('buildButton').removeClassName("hover");
-    });
   },
 
   /*

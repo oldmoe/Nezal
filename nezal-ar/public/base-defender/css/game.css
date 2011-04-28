@@ -35,7 +35,6 @@ img{
 	width:760px;
 	z-index:64;
 }
-
 #attackDiv #attackTxt{
 	color:red;
 	font-size:15px;
@@ -250,6 +249,13 @@ img{
 .resourceBarRight.full{
 	background-image : url('../images/game_elements/resource_bar_right.png')
 }
+#controlPanel #openControl{
+    cursor: pointer;
+    height: 25px;
+    position: absolute;
+    right: 11px;
+    width: 48px;
+}    
 #controlPanel .controlContainer{
 	position:absolute;
 }
@@ -275,8 +281,26 @@ img{
 #controlPanel{
     left: 582px;
     position: absolute;
-    bottom:0px;
+    top:518px;
 }
 #controlPanel .controlContainer{
 	cursor:pointer;
 }
+.collectionAnimation{
+	position : absolute;
+	width : 100px;
+  z-index:100000000;
+}
+.collectionAnimation img{
+	float : left;
+	margin-right : 4px;
+	width:32px;
+}
+.collectionAnimation div{
+	padding-top:2px;
+	font-weight : bold;
+	font-family : verdana;
+	font-size : 14px;
+	color:white;
+	text-shadow : 2px 2px black;
+} 
