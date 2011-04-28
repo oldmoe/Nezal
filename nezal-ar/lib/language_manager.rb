@@ -1,6 +1,7 @@
 class LanguageManager
   
   def self.load_data(game_name, language)
+    generate_language_file(game_name, language)
     file_path = File.join(self.path(game_name), language+'.html')
     content = JSON.parse(File.read(file_path))
   end
