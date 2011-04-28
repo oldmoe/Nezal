@@ -1,66 +1,122 @@
-<!--LABEL class="label" for="new_game">Add New Building</LABEL>
-<form id="new_building" action="/<%=AdminController::ADMIN_URL%>/<%=@game.name%>/metadata" method="post" enctype="multipart/form-data">
-  <input type="hidden" name="_method" value="put"/>
-  <div class="form_row">  
-    <LABEL for="name">Name</LABEL>
-    <INPUT type="text" id="name" name='name'><BR>
-  </div>
-  <div class="form_row">
-    <LABEL for="max_buildings">Maximum Allowed Buildings</LABEL>
-	  <textarea name='max_buildings' type="text"></textarea>  
-  </div>
- 
-    <input type="submit" value="Save" class="submit"/>
-  </div>
-</form-->
-
 <script type='text/javascript'>
-  var data = <%=JSON.generate(@game.metadata)%>
-  for(i in data.buildings)
-  {
-    data.buildings[i]['defense'] = false;
-  }
-  ['wedge', 'gaddafi','palm'].each(function(name){
-                              data.buildings[name]['defense'] = true;
-                            });
-  new Ajax.Request( '/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/metadata' , {
-                     method : 'put',
-                     parameters : { "data" : JSON.stringify(data) },
+
+var Game = {
+  
+  metadata : null,
+
+  initialize : function(){
+    new Ajax.Request( '/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/metadata' , {
+                     method : 'get',
                      onSuccess : function(response){
-                       $('requestStatus').innerHTML = "Saved successfully"
-                       $('requestStatus').className = "success"
-                     },
-                     onFailure : function(response){
-                       $('requestStatus').innerHTML = "Error, your changes are not saved!"
-                       $('requestStatus').className = "error"
+                        Game.metadata = JSON.parse(response.responseText)
+                        if(!Game.metadata['languages']) 
+                          Game.metadata['languages'] = {};
+                        Game.displayLanguages();
                      }
+                    });
+  },
+
+  displayLanguages : function(){
+    $('languages').innerHTML = TrimPath.processDOMTemplate("languageTemplate");
+  }, 
+
+  deleteLanguage : function(lang){
+    delete(this.metadata.languages[lang]);
+    this.saveToServer();
+  },
+
+  addLanguage : function(lang){
+    this.metadata.languages[lang] = {};
+    this.saveToServer();
+  },
+
+  saveToServer : function(){
+    new Ajax.Request( '/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/metadata' , {
+                      method : 'put',
+                      parameters : { "data" : JSON.stringify(this.metadata) },
+                      onSuccess : function(response){
+                        Game.showSuccessMsg();
+                        Game.initialize();  
+                      },
+                      onFailure : function(response){
+                        Game.showErrorMsg();
+                      }
                      
                  });    
+  },
 
-  deleteAllUserProfiles = function(){
-    new Ajax.Request('/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/user_game_profiles', {
-      method: 'put',
-      onSuccess: function(response){
-        $('requestStatus').innerHTML = "Deleted successfully"
-        $('requestStatus').className = "success"
-      },
-      onFailure: function(response){
-        $('requestStatus').innerHTML = "Error, cannot delete!"
-        $('requestStatus').className = "error"
-      }
-    })
-  };    
+  showSuccessMsg : function(){
+    $('langReqStatus').innerHTML = "Saved successfully"
+    $('langReqStatus').className = "success"
+    $('langReqStatus').show();
+    window.setTimeout( function(){$('langReqStatus').hide()}, 5000 )
+  },
+
+  showErrorMsg : function(){
+    $('langReqStatus').innerHTML = "Error, your changes are not saved!"
+    $('langReqStatus').className = "error"
+    $('langReqStatus').show();
+    window.setTimeout( function(){$('langReqStatus').hide()}, 10000 )
+  }
+
+};
+
+var data = <%=JSON.generate(@game.metadata)%>
+for(i in data.buildings)
+{
+  data.buildings[i]['defense'] = false;
+}
+['wedge', 'gaddafi','palm'].each(function(name){
+                            data.buildings[name]['defense'] = true;
+                          });
+new Ajax.Request( '/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/metadata' , {
+                   method : 'put',
+                   parameters : { "data" : JSON.stringify(data) },
+                   onSuccess : function(response){
+                     $('requestStatus').innerHTML = "Saved successfully"
+                     $('requestStatus').className = "success"
+                   },
+                   onFailure : function(response){
+                     $('requestStatus').innerHTML = "Error, your changes are not saved!"
+                     $('requestStatus').className = "error"
+                   }
+                   
+               });    
+
+deleteAllUserProfiles = function(){
+  new Ajax.Request('/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/user_game_profiles', {
+    method: 'put',
+    onSuccess: function(response){
+      $('requestStatus').innerHTML = "Deleted successfully"
+      $('requestStatus').className = "success"
+    },
+    onFailure: function(response){
+      $('requestStatus').innerHTML = "Error, cannot delete!"
+      $('requestStatus').className = "error"
+    }
+  })
+};    
 </script>
+
+<div id="backLink">   
+  <a href="/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/">
+    Back
+  </a>
+</div>
 
 <button onclick="if(confirm('Delete ALL user game profiles? ( can not delete more than 50 )')) deleteAllUserProfiles();"> Delete ALL user game profiles </button>
  We currently have <%= UserGameProfile.count %> Player(s)
  <br/>
  <span id="requestStatus"></span>
 
+<div class="separator"></div>
+
+<LABEL for="game" class="label">Buildings</LABEL>
+
 <div class="game">
   <% game_element = "buildings" %>
   <% @game.metadata[game_element].each_key do | building_name | %>
-    <label style="font-size: 20px; color:orange;"><%= building_name.capitalize %></label>
+    <label style="font-size: 15px; color:orange;"><%= building_name.capitalize %></label>
 	  <% if @game.metadata[game_element][building_name]["levels"].present? %>
 		  <div id="<%=building_name%>">
         <% @game.metadata[game_element][building_name]["levels"].each_key do |level|%>
@@ -95,3 +151,34 @@
     <br/>
   <% end %>
 </div>
+
+
+<div class="separator"></div>
+
+<div id='languages' style="width:60%;">
+</div>
+
+<!-------------------- Language Template -------------------->
+<span id="langReqStatus"></span>
+<textarea id="languageTemplate" style="display:none;">
+    <LABEL for="lang" class="label">Supported Languages</LABEL>
+    <div class="languageList subItem">
+    {for language in Game.metadata.languages}
+	    <a href="" class="column">${language_index}</a>
+	    <a href="javascript:void(0)" onclick="Game.deleteLanguage('${language_index}');">Delete</a>
+      <br/>
+    {/for}
+    </div>
+    <LABEL for="lang" class="label">New Language</LABEL>
+    <div id="addLang" class="form_row subItem">  
+      <LABEL for="lang">Languege</LABEL>
+      <INPUT type="text" id="lang" name='lang'>
+    </div>
+    <div class="form_row">  
+      <input class="submit" type="submit" value="Add" onclick="Game.addLanguage($$('#languages #addLang #lang')[0].value);">
+    </div>
+</textarea>
+<!-------------------- End Of Template ---------------------->
+<script type='text/javascript'>
+Game.initialize();
+</script>

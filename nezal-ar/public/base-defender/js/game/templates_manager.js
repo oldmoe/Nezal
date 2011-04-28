@@ -1,3 +1,4 @@
+var Text = {}
 var TemplatesManager = Class.create({
   initialize : function(network){
     var templatesRootNode = document.createElement('div');
@@ -8,6 +9,12 @@ var TemplatesManager = Class.create({
         templatesRootNode.innerHTML += responseText;
         templatesRootNode.select('textarea').each(function(node){
           node.setAttribute('id', node.getAttribute('id') + "-template");
+        });
+        /* Fetch the locale based file for texts .. 
+           Should be inhanced to get the user locale and fetch the appropriate file accordingly 
+        */
+        network.fetchTemplate( "statics/english.html", function(responseText){
+          Text = JSON.parse(responseText);
         });
       });
     });

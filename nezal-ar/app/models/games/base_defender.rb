@@ -1,7 +1,7 @@
 require "json"
-#require_all "#{Dir.pwd}/app/models/games/base_defender/"
 
 class BaseDefender < Metadata
+  @@game_name = 'base-defender'
   @@speed_factor = 1
   @@resource_building_modules = {
     "quarry" => BD::Quarry,
@@ -411,19 +411,56 @@ class BaseDefender < Metadata
     user_game_profile['reward_bag']  
   end
   
+  def self.init_language_data(game)
+    load_game(game)
+    if @@game_metadata['languages']
+      @@game_metadata['languages'].each_key do |lang|
+        data = LanguageManager.load_data(@@game_name, lang)
+        data['buildings'] ||= {}
+        data['quests'] ||= {}
+        @@game_metadata['buildings'].keys.each do |key|
+          data['buildings'][key] ||= { 'name' => '', 'desc' => '', 'upgrade_desc' => {} } 
+        end
+        LanguageManager.save_data(@@game_name, lang, data)
+      end
+    end
+  end
+
+  def self.get_language_data(game)
+    load_game(game)
+    init_language_data(game)
+    data = {}
+    if @@game_metadata['languages']
+      @@game_metadata['languages'].each_key do |lang|
+        data[lang] = LanguageManager.load_data(@@game_name, lang)
+      end
+    end
+    data
+  end
+
+  def self.save_language_data(game, language, data)
+    load_game(game)
+    data = JSON.parse(data)
+    if @@game_metadata['languages']
+      @@game_metadata['languages'].each_key do |lang|
+        LanguageManager.save_data(@@game_name, lang, data[lang])
+      end
+    end
+  end
+
   def self.init_game_profile(user_game_profile)
     user_game_profile.metadata= 
-    {'townhall' => nil,
-     'lumbermill' => nil,
-     'quarry' => nil,
-     'workers' => 1,
-     'idle_workers' => 1,
-     'rock' => 50000,
-     'lumber' => 50000,
-     'reward_bags' => {},
-     'notifications' => {'id_generator' => 0, 'queue' => []},
-     'attacks' => {},
-     'map' => (0..72).to_a.map{(0..24).to_a.map{0}},
+    { 'townhall' => nil,
+      'lumbermill' => nil,
+      'quarry' => nil,
+      'workers' => 1,
+      'idle_workers' => 1,
+      'rock' => 50000,
+      'lumber' => 50000,
+      'reward_bags' => {},
+      'notifications' => {'id_generator' => 0, 'queue' => []},
+      'attacks' => {},
+      'map' => (0..72).to_a.map{(0..24).to_a.map{0}},
       'xp_info' => {
         'xp_level' => 1,
         'xp' => 0

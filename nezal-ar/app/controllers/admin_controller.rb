@@ -128,8 +128,7 @@ class AdminController < ApplicationController
     redirect "/#{ADMIN_URL}/#{@game.name}/metadata/edit"
   end
   
-  #Add new Level
-  
+  # Add new Level
   post '/:game_name/building/:building_name/level/new' do
   	@game = Game.where(:name => params["game_name"]).first 
   	building = @game.metadata['buildings'][params[:building_name]]
@@ -214,6 +213,30 @@ class AdminController < ApplicationController
     klass = self.get_helper_klass
     klass.edit_quest(@quest, params["data"])
     ''
+  end
+
+  # Get Language data
+  get '/:game_name/locale/metadata' do 
+    @game = Game.where(:name => params["game_name"]).first
+    klass = self.get_helper_klass
+    Metadata.encode(klass.get_language_data(@game))
+  end
+
+  # Edit Language data
+  put '/:game_name/locale/metadata' do 
+    @game = Game.where(:name => params["game_name"]).first
+    klass = self.get_helper_klass
+    klass.save_language_data(@game, params[:language], params['data'])
+    ''
+  end
+
+  # Serve Language edit page
+  get '/:game_name/locale/:language/edit' do 
+    @game = Game.where(:name => params["game_name"]).first
+    klass = self.get_helper_klass
+    @language = params[:language]
+    @data = klass.get_language_data(@game)
+    erb "#{@app_configs['game_name']}/language".to_sym , {:layout => :app}
   end
 
   get '/:game_name/stats' do

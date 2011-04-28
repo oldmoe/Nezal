@@ -70,6 +70,9 @@ class Metadata
     quest.metadata    
   end
   
+  def self.init_language_data    
+  end
+
   def self.process_request(profile, data)
   end
   

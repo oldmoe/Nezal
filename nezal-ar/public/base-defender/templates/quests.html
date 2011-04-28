@@ -329,7 +329,8 @@
   </div>
   {for building in buildings}
     <div class="buildingInfo" id="${building_index}_info" style="display:none;">
-      <div class="buildingName">${game[building_index.dasherize().camelize() + 'Factory'].humanizeString(building_index)}</div>
+      <div class="buildingName">${Text.buildings[building_index]['name']}</div>
+      <div class="buildingDesc"> ${Text.buildings[building_index]['desc']}</div>
   	  <span class="loadedImg" imgClasses="resourcesNeeded" imgSrc="images/quests/resources_needed_for_building.png">
 	    </span>
       <div  class="cost">
