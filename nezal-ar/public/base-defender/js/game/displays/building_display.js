@@ -71,9 +71,9 @@ var BuildingDisplay = Class.create(Display, {
     this.sprites.shadow.shiftY = this.imgHeight - this.shadowImg.height
     this.sprites.info = new DomTextSprite(this.owner, 'textInfo', {centered: true, shiftY: -10, styleClass : 'buildingName'});
     this.sprites.building = new DomImgSprite(this.owner, {img: this.img});
-    this.sprites.building.shiftX = (this.imgWidth - this.img.width)/2+2;
+    this.sprites.building.shiftX = (this.imgWidth - this.img.width)/2;
     this.sprites.base.shiftX = (this.imgWidth - this.img.width)/2+2;
-    this.sprites.invalid.shiftX = (this.imgWidth - this.img.width)/2+2;
+    this.sprites.invalid.shiftX = (this.imgWidth - this.img.width)/2;
     this.sprites.mouseover = new DomImgSprite(this.owner, {img: this.mouseoverImg});
     //this.sprites.skeleton = new DomSkeleton(this.owner)
     if(this.movingImg)

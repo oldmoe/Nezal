@@ -15,7 +15,7 @@ module BD
         game_metadata = BaseDefender.adjusted_game_metadata
         location_hash = BaseDefender.convert_location(coords)
         
-        validation = validateBuilding(user_game_profile.metadata, game_metadata, coords, building_name)
+        validation = validate_building(user_game_profile.metadata, game_metadata, coords, building_name)
         return validation if validation['valid'] == false
         
         user_game_profile.metadata['idle_workers'] -= 1
@@ -34,7 +34,7 @@ module BD
         return validation
       end
       
-      def validateBuilding(user_profile_metadata, game_metadata, coords, name=nil)
+      def validate_building(user_profile_metadata, game_metadata, coords, name=nil)
         building_name = name || @name
         #validating workers
         if( user_profile_metadata['idle_workers'] == 0 )
@@ -62,7 +62,26 @@ module BD
                   'error' => "Not enough resources, you need more " + neededLumber + " rock"}
         end
         #validating dependencies
-        building_dependencies = game_metadata['buildings'][building_name]['levels']['1']['dependency']['buildings']
+        dependencies_valid = validate_dependencies user_profile_metadata, game_metadata, building_name, '1'
+        if(!dependencies_valid['valid'])
+          return dependencies_valid
+        end
+         #validating location # to be reconsidered  after server Map implementation
+#        puts "user_profile_metadata['map'][coords['x']][coords['y']] : " + user_profile_metadata['map'][coords['x']][coords['y']].to_s
+#        puts "BaseDefender.land_marks[@can_be_built_on] : " + BaseDefender.land_marks[@can_be_built_on].to_s
+#        puts "coords['x'] : " + coords['x'].to_s
+#        puts "coords['y'] : " + coords['y'].to_s
+#        
+#        if(user_profile_metadata['map'][coords['y']][coords['x']] != BaseDefender.land_marks[@can_be_built_on])
+#          return {'valid' => false,
+#                  'error' => @name + " can be built on "+ @can_be_built_on +" only!"}
+#        end
+        
+        return {'valid' => true, 'error' => ''}
+      end
+      
+      def validate_dependencies user_profile_metadata, game_metadata, building_name, level
+        building_dependencies = game_metadata['buildings'][building_name]['levels'][level]['dependency']['buildings']
         building_dependencies.each do |key,value|
           found = false
           user_profile_metadata[key].values.each do |building|
@@ -77,7 +96,7 @@ module BD
           end
         end         
         #validating max no of buildings
-        limiting_building = game_metadata['buildings'][building_name]['levels']['1']['limited_by']
+        limiting_building = game_metadata['buildings'][building_name]['levels'][level]['limited_by']
         if(!limiting_building.nil?)
           max_level = 0 
           registery = user_profile_metadata[limiting_building]
@@ -95,26 +114,14 @@ module BD
             end
             if(!user_profile_metadata[building_name].nil? && max_no_of_buildings<=user_profile_metadata[building_name].size)
               return {'valid' => false,
-                  'error' => "Cannot build " + building_name + ", you need a "+ limiting_building.gsub('_',' ').capitalize }
+                  'error' => "Cannot build more than #{user_profile_metadata[building_name].size} #{building_name}."}
             end
           else
              return {'valid' => false,
                   'error' => "You can only build " + max_no_of_buildings + " " + building_name.gsub('_',' ').capitalize}
           end
         end
-    
-         #validating location # to be reconsidered  after server Map implementation
-#        puts "user_profile_metadata['map'][coords['x']][coords['y']] : " + user_profile_metadata['map'][coords['x']][coords['y']].to_s
-#        puts "BaseDefender.land_marks[@can_be_built_on] : " + BaseDefender.land_marks[@can_be_built_on].to_s
-#        puts "coords['x'] : " + coords['x'].to_s
-#        puts "coords['y'] : " + coords['y'].to_s
-#        
-#        if(user_profile_metadata['map'][coords['y']][coords['x']] != BaseDefender.land_marks[@can_be_built_on])
-#          return {'valid' => false,
-#                  'error' => @name + " can be built on "+ @can_be_built_on +" only!"}
-#        end
-        
-        return {'valid' => true, 'error' => ''}
+        return {'valid' => true, 'error'=>''}
       end
       
       def move(user_game_profile, name, coords, old_coords)
@@ -178,15 +185,15 @@ module BD
           neededLumber = game_metadata['buildings'][building_name]['levels'][(current_level+1).to_s]['lumber'] - user_profile_metadata['lumber'];
           if( neededRock > 0 && neededLumber > 0 )
             return {'valid' => false,
-                    'error' => "Not enough resources, you need more "+ neededRock +" rock and "+ neededLumber + " lumber"}
+                    'error' => "Not enough resources, you need more #{neededRock} rock and #{neededLumber} lumber"}
           end
           if( neededRock > 0)
             return {'valid' => false,
-                    'error' => "Not enough resources, you need more " + neededRock + " rock"}
+                    'error' => "Not enough resources, you need more #{neededRock} rock"}
           end
           if( neededLumber > 0)
             return {'valid' => false,
-                    'error' => "Not enough resources, you need more " + neededLumber + " rock"}
+                    'error' => "Not enough resources, you need more #{neededLumber} rock"}
           end
           # TODO : In here should come a part to check the dependency chain.
           # make sure that the user have met the conditions required for that upgrade.
@@ -194,7 +201,10 @@ module BD
           return {'valid' => false,
                   'error' => "Max upgrade level reached"}
         end
-
+        dependencies_valid = validate_dependencies(user_profile_metadata, game_metadata, building_name, (current_level+1).to_s)
+        if(!dependencies_valid['valid'])
+          return dependencies_valid
+        end
         return {'valid' => true, 'error' => ''}
       end
       

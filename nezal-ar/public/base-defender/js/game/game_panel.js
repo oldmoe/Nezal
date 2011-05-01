@@ -27,11 +27,13 @@ var GamePanel = Class.create({
 	    var lumber = this.game.scene._FormatResourceDisplay(lumberValue);
 		var totalCapacity = this.getTotalStorageCapacity()
 		if (totalCapacity) {
+      var rockStyleWidth = Math.max(Math.round((rockValue*100/ totalCapacity)-4),0)
 			$$('#rockBar .resourceBarMiddle')[0].setStyle({
-				width: Math.min(83, Math.round(rockValue * 100 / totalCapacity)) + '%'
+				width: Math.min(83,rockStyleWidth) + '%'
 			})
+      var lumberStyleWidth = Math.max(Math.round((lumberValue * 100 / totalCapacity)-4),0)
 			$$('#lumberBar .resourceBarMiddle')[0].setStyle({
-				width: '' + Math.min(83, Math.round(lumberValue * 100 / totalCapacity)) + '%'
+				width: '' + Math.min(83,lumberStyleWidth) + '%'
 			})
 		}
 		if(rockValue==totalCapacity){

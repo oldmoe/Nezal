@@ -207,7 +207,9 @@ var Building = Class.create({
       if(!silent) Notification.alert("Not enough resources, you need more "+ neededLumber +" lumber");
       return false;
     }
-    return true;
+    /****************************** Validating dependencies *********************************/
+    var result = this.factory.isDependenciesMet(this.level+1);
+    return result.valid
   },
 
   isValidToBuild : function(x,y) {
@@ -278,5 +280,16 @@ var Building = Class.create({
 		}
 	})
   	return upgradeSpecs
+  },
+  getUpgradableSpecs : function(){
+    var upgradableSpecs = {}
+    for(property in this.currentLevelBluePrints){
+      if(currentLevelBluePrints[property].upgradable){
+        upgradableSpecs[property]= {}
+        upgradableSpecs[property]['from'] = this.currentLevelBluePrints[property]
+        upgradableSpecs[property]['to'] = this.nextLevelBluePrints[property] 
+      }
+    }
+    return upgradableSpecs
   }
 });
