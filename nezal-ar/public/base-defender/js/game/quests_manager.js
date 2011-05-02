@@ -30,26 +30,12 @@ var QuestsManager = Class.create({
     if(this.game.neighborGame) return;
     var quests = this.nextInCategory();
     $('quest-panel').innerHTML = this.game.templatesManager.load("quests-list", {questsList : quests});
-	this.game.addLoadedImagesToDiv('quest-panel')
+  	this.game.addLoadedImagesToDiv('quest-panel');
     $$('#quest-panel .clickable').each( function(button){
                                             var id = button.getAttribute('id');
                                             button.observe( 'click', function(){
 																		Sounds.play(Sounds.gameSounds.click)
                                                                         game.questsManager.displayQuest(id);
-                                                                      });
-                                            $$( "#quest-panel #" + id + " .shadow")[0].hide();
-                                            button.observe( 'mouseover', function(){
-                                                                           $$( "#quest-panel #" + id + " .shadow")[0].show();
-                                                                        });
-                                            button.observe( 'mouseout', function(){
-                                                                           $$("#quest-panel #" + id + " .shadow")[0].hide();
-                                                                        });
-                              });
-    $$('#quest-panel .empty').each( function(button){
-                                            var id = button.getAttribute('id');
-                                            button.observe( 'click', function(){
-																		Sounds.play(Sounds.gameSounds.click)
-                                                                        game.questsManager.displayQuestEmptyMsg(id);
                                                                       });
                                             $$( "#quest-panel #" + id + " .shadow")[0].hide();
                                             button.observe( 'mouseover', function(){
