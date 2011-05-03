@@ -58,7 +58,8 @@
        <div class='progressBar'>
        </div>
      </div>
-     <div class='progressTime'></div>
+     <div class="progressAction" style="display:none;"></div>
+     <div class='progressTime' ></div>
 </textarea>
 
 <textarea style="display:none;" id='workers-in-game-panel'>
@@ -393,17 +394,19 @@
 				 </ul>
 			   </div>
 		   {/if}
-		 <!--  <div id="gains">
-		     <div class="title"> Gains </div>
-			 <ul>
-			 	{for gain in gains}
-				<li>
-				 <span class="gainKey"> ${gain_index} </span>
-				 <span class="gainValue"> ${gain} </span>
-				</li>
-				{/for}
-			 </ul>
-		   </div> -->
+       {if gains.length > 0}
+  		   <div id="gains">
+  		     <div class="title"> Gains </div>
+  			   <ul>
+    			 	{for gain in gains}
+      				<li>
+      				 <span class="gainKey"> ${gain.name}: </span>
+      				 <span class="gainValue"> From ${gain.from} to ${gain.to}</span>
+      				</li>
+    				{/for}
+  			   </ul>
+  		   </div>
+       {/if}
 		   <div id="errorMessages">
 			   {if workersNotEnough}
 			   		<div id="workers" class="invalid">

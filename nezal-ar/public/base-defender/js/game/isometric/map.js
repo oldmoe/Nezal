@@ -457,6 +457,11 @@ var Map={
 	  		if(owner.sprites.text)owner.sprites.text.show()
         if(owner.state == owner.states.NORMAL && owner.staticSprites.moreContainer) 
           owner.staticSprites.moreContainer.show();
+        if(owner.progressDisplays[0]){
+          progressDisplay = owner.progressDisplays[0] 
+          progressDisplay.actionContainer.show()
+          progressDisplay.timeContainer.hide()
+        }
 	  	}
 		})
 		div.observe('mouseout',function(){
@@ -466,6 +471,11 @@ var Map={
 			if(owner.sprites.text)owner.sprites.text.hide()
       if(owner.state == owner.states.NORMAL && owner.staticSprites.moreContainer) 
         owner.staticSprites.moreContainer.hide();
+      if(owner.progressDisplays[0]){
+          progressDisplay = owner.progressDisplays[0] 
+          progressDisplay.actionContainer.hide()
+          progressDisplay.timeContainer.show()
+        }
 		})
 	},
 
@@ -487,7 +497,7 @@ var Map={
 		div.observe('mouseover',function(){
 	  	if (owner.state != owner.states.NOT_PLACED) {
 	  		if (owner.state != owner.states.UNDER_CONSTRUCTION)owner.sprites.outline.show();
-  			if (owner.state == owner.states.NORMAL)owner.sprites.info.show();
+        owner.sprites.info.show();
 	  		if(owner.sprites.text)owner.sprites.text.show()
         if(owner.state == owner.states.NORMAL && owner.staticSprites.moreContainer && !owner.game.buildingMode.moveMode) 
           owner.staticSprites.moreContainer.show();

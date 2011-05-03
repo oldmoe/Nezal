@@ -8,6 +8,7 @@ var BuildingDisplay = Class.create(Display, {
   smokeSmallSizeLimit : 5,
   smokeLargeSizeLimit : 23,
   smokeInitialXShift : 0,
+  progressDisplays : [] ,
   initialize : function($super,owner,properties){
     $super(owner,properties)
 	  if (this.owner.state == this.owner.states.UNDER_CONSTRUCTION)this.createUnderContructionElements()
@@ -49,6 +50,7 @@ var BuildingDisplay = Class.create(Display, {
     this.buttonImg = Loader.images.game_elements['button.png'];
     this.mapTiles =[];
     this.staticSprites = {};
+    this.progressDisplays = [];
     Object.extend(this.owner,this); 
     this.createSprites()  
     this.render();
@@ -66,7 +68,6 @@ var BuildingDisplay = Class.create(Display, {
     this.sprites.invalid = new DomImgSprite(this.owner, {img : this.invalidImg}, {shiftY: this.zdim});
     this.sprites.shadow = new DomImgSprite(this.owner, {img: this.shadowImg}, {width:this.shadowImg.width, height:this.shadowImg.height, zIndex :1});
     this.sprites.outline = new DomImgSprite(this.owner, {img: this.outlineImg});
-    this.sprites.health = new DomMeterSprite(this.owner,{styleClass:{empty:'healthEmpty',full:'healthFull'}})
     this.sprites.shadow.shiftX = this.imgWidth - this.shadowImg.width
     this.sprites.shadow.shiftY = this.imgHeight - this.shadowImg.height
     this.sprites.info = new DomTextSprite(this.owner, 'textInfo', {centered: true, shiftY: -10, styleClass : 'buildingName'});
@@ -80,6 +81,8 @@ var BuildingDisplay = Class.create(Display, {
       this.sprites.moving = new DomImgSprite(this.owner, {img: this.movingImg});
     this.sprites.clickSprite = new DomImgSprite(this.owner,{img : this.transparentImg, area:this.area}, {clickable: true});
     this.sprites.clickSprite.img.setStyle({width:this.imgWidth+"px",height:this.imgHeight+"px"})
+    this.sprites.health = new DomMeterSprite(this.owner,{styleClass:{empty:'healthEmpty',full:'healthFull'},
+    shiftY:this.imgHeight/2,shiftZ:1000})
 		this.sprites.underConstruction = new DomImgSprite(this.owner, {img: this.constructionImg}, {shiftY: this.zdim})
     this.staticSprites.moreContainer = new DomSpriteContainer(this.owner, {zIndex : this.sprites.clickSprite.minAreaZIndex + 1100,
                                                         width :this.buttonImg.width, height : this.buttonImg.height });
@@ -129,7 +132,9 @@ var BuildingDisplay = Class.create(Display, {
 	    self.createUnderConstructionElements()
       var top =  self.owner.coords.y -Math.round(self.imgHeight/4)
       var left =  self.owner.coords.x -48; // half width of the progress bar
-      self.progressDisplay = new ProgressDisplay( self.owner.nextLevelBluePrints.time, top, left, self.owner.coords.y );
+      self.progressDisplay = new ProgressDisplay( 
+      self.owner.nextLevelBluePrints.time, top, left, self.owner.coords.y, 'Building');
+      self.progressDisplays.push(self.progressDisplay)
       self.sprites.building.hide();
 	    self.sprites.shadow.hide();
 	    self.sprites.underConstruction.show();
@@ -146,10 +151,12 @@ var BuildingDisplay = Class.create(Display, {
       if(self.staticSprites.moreContainer) self.staticSprites.moreButton.hide();
     });
     this.owner.stateNotifications[this.owner.states.UPGRADING].push(function(){
-      var top =  self.owner.coords.y -Math.round(self.imgHeight/2)
+      var top =  self.owner.coords.y
       var left =  self.owner.coords.x - 48;
   	  self.sprites.underConstruction.hide();
-      self.progressDisplay = new ProgressDisplay( self.owner.nextLevelBluePrints.time, top -12, left, self.owner.coords.y );
+      self.progressDisplay = new ProgressDisplay( 
+      self.owner.nextLevelBluePrints.time, top -12, left, self.owner.coords.y ,'Upgrading');
+      self.progressDisplays.push(self.progressDisplay)
       self.sprites.building.show();
       self.sprites.building.setOpacity(0.5);
       self.sprites.building.animated = false;

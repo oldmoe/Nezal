@@ -170,7 +170,7 @@ var BuildingMode = Class.create({
 	fillBuildingPanel : function(owner){
 		$$('#building-panel .menuBody')[0].innerHTML = ""
 		this.game.domConverter.convert(game.templatesManager.load('menuUpgrade',
-		  owner.getUpgradeSpecs()))
+		  owner.getUpgradeSpecs(),owner.getUpgradableSpecs()))
 		  $$('#building-panel .menuBody')[0].appendChild($('upgradeDesc'))
 		  this.game.domConverter.convert(game.templatesManager.load('menuMove'))
 		  $$('#building-panel .menuBody')[0].appendChild($('moveDesc'))

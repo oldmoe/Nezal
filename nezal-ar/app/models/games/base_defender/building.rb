@@ -66,6 +66,10 @@ module BD
         if(!dependencies_valid['valid'])
           return dependencies_valid
         end
+        max_no_valid = validate_max_no_of_buildings user_profile_metadata, game_metadata, building_name, '1'
+        if(!max_no_valid['valid'])
+          return max_no_valid
+        end
          #validating location # to be reconsidered  after server Map implementation
 #        puts "user_profile_metadata['map'][coords['x']][coords['y']] : " + user_profile_metadata['map'][coords['x']][coords['y']].to_s
 #        puts "BaseDefender.land_marks[@can_be_built_on] : " + BaseDefender.land_marks[@can_be_built_on].to_s
@@ -94,8 +98,11 @@ module BD
             return {'valid' => false,
                   'error' => "Cannot build " + building_name + ", you need a "+ key.gsub('_',' ').capitalize + " level "+value }
           end
-        end         
-        #validating max no of buildings
+        end 
+        return {'valid' => true, 'error'=>''}
+      end
+      
+      def validate_max_no_of_buildings user_profile_metadata, game_metadata, building_name, level
         limiting_building = game_metadata['buildings'][building_name]['levels'][level]['limited_by']
         if(!limiting_building.nil?)
           max_level = 0 
