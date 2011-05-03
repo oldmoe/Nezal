@@ -453,7 +453,7 @@ var Map={
 		div.observe('mouseover',function(){
 	  	if (owner.state != owner.states.NOT_PLACED) {
 	  		if (owner.state != owner.states.UNDER_CONSTRUCTION)owner.sprites.outline.show();
-  			if (owner.state == owner.states.NORMAL)owner.sprites.info.show();
+        owner.sprites.info.show();
 	  		if(owner.sprites.text)owner.sprites.text.show()
         if(owner.state == owner.states.NORMAL && owner.staticSprites.moreContainer) 
           owner.staticSprites.moreContainer.show();
@@ -461,8 +461,8 @@ var Map={
 		})
 		div.observe('mouseout',function(){
 			owner.sprites.outline.hide();
-		    owner.sprites.mouseover.hide();
-      		owner.sprites.info.hide();
+	    owner.sprites.mouseover.hide();
+  		owner.sprites.info.hide();
 			if(owner.sprites.text)owner.sprites.text.hide()
       if(owner.state == owner.states.NORMAL && owner.staticSprites.moreContainer) 
         owner.staticSprites.moreContainer.hide();
