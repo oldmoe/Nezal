@@ -54,7 +54,7 @@ var BuildingFactory = Class.create({
   buildingExists : function(level){
   	for (key in this.factoryRegistry) {
 		  var building = this.factoryRegistry[key]
-		  if (building.state == building.states.NORMAL) {
+		  if (building.state == building.states.NORMAL || building.state == building.states.UPGRADING) {
 			  if (!level) 
 				  return true
 			  if (building.level >= level) 
