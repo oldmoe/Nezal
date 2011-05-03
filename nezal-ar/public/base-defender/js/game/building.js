@@ -163,7 +163,7 @@ var Building = Class.create({
   },
 	
   humanizeString : function(str){
-  	return str.underscore().capitalize().replace("_", " ") 
+  	return str.underscore().capitalize().gsub("_", " ") 
   },
   
   getMeterFunc: function(){
