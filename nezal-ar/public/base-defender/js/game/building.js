@@ -159,11 +159,11 @@ var Building = Class.create({
   },
   
   textInfo : function(){
-    return this.humanizeString(this.name)+ "<br/>Level " + this.level;
+    return this.humanizeString(this.name)+ " [" + this.level + "]";
   },
 	
   humanizeString : function(str){
-  	return str.capitalize().replace("_", " ") 
+  	return str.underscore().capitalize().replace("_", " ") 
   },
   
   getMeterFunc: function(){
@@ -279,16 +279,22 @@ var Building = Class.create({
 			upgradeSpecs['dependenciesInvalid'] = true
 		}
 	})
+  upgradeSpecs['gains'] = this.getUpgradableSpecs()
   	return upgradeSpecs
   },
   getUpgradableSpecs : function(){
-    var upgradableSpecs = {}
-    for(property in this.currentLevelBluePrints){
-      if(currentLevelBluePrints[property].upgradable){
-        upgradableSpecs[property]= {}
-        upgradableSpecs[property]['from'] = this.currentLevelBluePrints[property]
-        upgradableSpecs[property]['to'] = this.nextLevelBluePrints[property] 
-      }
+    var upgradableSpecs = []
+    var buildingData = game.data.buildings[this.name]
+    if(!buildingData['displayable']) return upgradableSpecs
+    for(property in buildingData['displayable']){
+        if (this.currentLevelBluePrints[property] && buildingData['displayable'][property] &&
+         this.currentLevelBluePrints[property] != this.nextLevelBluePrints[property]) {
+          var upgradableSpec = []
+          upgradableSpec.name = this.humanizeString(property)
+          upgradableSpec.from = this.currentLevelBluePrints[property]
+          upgradableSpec.to = this.nextLevelBluePrints[property]
+          upgradableSpecs.push(upgradableSpec)
+        }
     }
     return upgradableSpecs
   }
