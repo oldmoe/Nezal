@@ -457,6 +457,11 @@ var Map={
 	  		if(owner.sprites.text)owner.sprites.text.show()
         if(owner.state == owner.states.NORMAL && owner.staticSprites.moreContainer) 
           owner.staticSprites.moreContainer.show();
+        if(owner.progressDisplays[0]){
+          progressDisplay = owner.progressDisplays[0] 
+          progressDisplay.actionContainer.hide()
+          progressDisplay.timeContainer.show()
+        }
 	  	}
 		})
 		div.observe('mouseout',function(){
@@ -466,6 +471,11 @@ var Map={
 			if(owner.sprites.text)owner.sprites.text.hide()
       if(owner.state == owner.states.NORMAL && owner.staticSprites.moreContainer) 
         owner.staticSprites.moreContainer.hide();
+      if(owner.progressDisplays[0]){
+          progressDisplay = owner.progressDisplays[0] 
+          progressDisplay.actionContainer.show()
+          progressDisplay.timeContainer.hide()
+        }
 		})
 	},
 

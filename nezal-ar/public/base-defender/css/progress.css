@@ -3,7 +3,7 @@
   width : 100px;
   height : 16px;
 }
-.progressTime {
+.progressTime , .progressAction{
   font-family : verdana;
   font-weight : bold;
   font-size : 10px;
@@ -14,6 +14,7 @@
   height : 14px;
   color : white;
 }
+
 .progressBarContainer {
   -moz-border-radius : 4px;
   -webkit-border-radius : 4px;

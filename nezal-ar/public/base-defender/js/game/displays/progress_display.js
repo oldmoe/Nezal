@@ -1,5 +1,5 @@
 var ProgressDisplay = Class.create({
-  initialize : function(time, top, left, zIndex){
+  initialize : function(time, top, left, zIndex, type){
     this.time = time;
     this.elapsed = 0
     this.html = game.templatesManager.load("progress");
@@ -10,6 +10,8 @@ var ProgressDisplay = Class.create({
     //We are adding 100 to make sure that the progress bar is always above any parallel building
     this.div.setStyle({top:top+"px", left:left+"px", zIndex : zIndex+100});
     this.timeContainer = this.div.down('.progressTime')
+    this.actionContainer = this.div.down('.progressAction')
+    this.actionContainer.innerHTML = type
     this.progressBar = this.div.down('.progressBar')
   },
   

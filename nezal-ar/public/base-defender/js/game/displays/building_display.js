@@ -8,6 +8,7 @@ var BuildingDisplay = Class.create(Display, {
   smokeSmallSizeLimit : 5,
   smokeLargeSizeLimit : 23,
   smokeInitialXShift : 0,
+  progressDisplays : [] ,
   initialize : function($super,owner,properties){
     $super(owner,properties)
 	  if (this.owner.state == this.owner.states.UNDER_CONSTRUCTION)this.createUnderContructionElements()
@@ -49,6 +50,7 @@ var BuildingDisplay = Class.create(Display, {
     this.buttonImg = Loader.images.game_elements['button.png'];
     this.mapTiles =[];
     this.staticSprites = {};
+    this.progressDisplays = [];
     Object.extend(this.owner,this); 
     this.createSprites()  
     this.render();
@@ -129,7 +131,9 @@ var BuildingDisplay = Class.create(Display, {
 	    self.createUnderConstructionElements()
       var top =  self.owner.coords.y -Math.round(self.imgHeight/4)
       var left =  self.owner.coords.x -48; // half width of the progress bar
-      self.progressDisplay = new ProgressDisplay( self.owner.nextLevelBluePrints.time, top, left, self.owner.coords.y );
+      self.progressDisplay = new ProgressDisplay( 
+      self.owner.nextLevelBluePrints.time, top, left, self.owner.coords.y, 'Building');
+      self.progressDisplays.push(self.progressDisplay)
       self.sprites.building.hide();
 	    self.sprites.shadow.hide();
 	    self.sprites.underConstruction.show();
@@ -146,10 +150,12 @@ var BuildingDisplay = Class.create(Display, {
       if(self.staticSprites.moreContainer) self.staticSprites.moreButton.hide();
     });
     this.owner.stateNotifications[this.owner.states.UPGRADING].push(function(){
-      var top =  self.owner.coords.y -Math.round(self.imgHeight/2)
+      var top =  self.owner.coords.y
       var left =  self.owner.coords.x - 48;
   	  self.sprites.underConstruction.hide();
-      self.progressDisplay = new ProgressDisplay( self.owner.nextLevelBluePrints.time, top -12, left, self.owner.coords.y );
+      self.progressDisplay = new ProgressDisplay( 
+      self.owner.nextLevelBluePrints.time, top -12, left, self.owner.coords.y ,'Upgrading');
+      self.progressDisplays.push(self.progressDisplay)
       self.sprites.building.show();
       self.sprites.building.setOpacity(0.5);
       self.sprites.building.animated = false;

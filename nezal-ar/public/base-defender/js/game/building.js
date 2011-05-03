@@ -259,13 +259,13 @@ var Building = Class.create({
 	upgradeSpecs['lumber'].value = this.factory.bluePrints.levels[level].lumber
 	upgradeSpecs['notEnoughResources'] = false
 	upgradeSpecs['dependenciesInvalid'] = false
-	if(this.game.resources.rock>upgradeSpecs['rock'].value){
+	if(this.game.resources.rock>=upgradeSpecs['rock'].value){
 		upgradeSpecs['rock'].valid = true	
 	}else{
 		upgradeSpecs['notEnoughResources'] = true
 		upgradeSpecs['rock'].valid = false
 	}
-	if(this.game.resources.lumber>upgradeSpecs['lumber'].value){
+	if(this.game.resources.lumber>=upgradeSpecs['lumber'].value){
 		upgradeSpecs['lumber'].valid = true
 	}else{
 		upgradeSpecs['notEnoughResources'] = true
