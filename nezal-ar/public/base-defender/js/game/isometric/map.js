@@ -459,8 +459,8 @@ var Map={
           owner.staticSprites.moreContainer.show();
         if(owner.progressDisplays[0]){
           progressDisplay = owner.progressDisplays[0] 
-          progressDisplay.actionContainer.hide()
-          progressDisplay.timeContainer.show()
+          progressDisplay.actionContainer.show()
+          progressDisplay.timeContainer.hide()
         }
 	  	}
 		})
@@ -473,8 +473,8 @@ var Map={
         owner.staticSprites.moreContainer.hide();
       if(owner.progressDisplays[0]){
           progressDisplay = owner.progressDisplays[0] 
-          progressDisplay.actionContainer.show()
-          progressDisplay.timeContainer.hide()
+          progressDisplay.actionContainer.hide()
+          progressDisplay.timeContainer.show()
         }
 		})
 	},

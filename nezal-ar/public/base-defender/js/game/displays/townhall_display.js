@@ -42,7 +42,7 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
       shiftX: 93,
       zIndex: this.owner.coords.y + this.owner.zdim
     })
-    this.sprites.health.shiftY = 20;
+    this.sprites.health.shiftY += 20;
 	  this.sprites.clickSprite.shiftY = 40;
 	  this.sprites.clickSprite.shiftX = -10;
 	  this.sprites.clickSprite.setImgHeight(135);
