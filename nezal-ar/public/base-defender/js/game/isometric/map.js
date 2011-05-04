@@ -419,6 +419,7 @@ var Map={
 		div.observe(game.mouseClickEvent,function(){
 			if(!game.buildingMode.isOn && owner.working && owner.state == owner.states.NORMAL){
 				if (!owner.game.buildingMode.moveMode) {
+				  game.buildingMode.fillBuildingPanel(owner)
 					owner.defaultAction();
 				}else{
 					if(owner.game.selectedBuildingPanel){

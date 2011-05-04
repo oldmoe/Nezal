@@ -263,25 +263,18 @@ var BuildingDisplay = Class.create(Display, {
   registerHoverEvents : function(elementName){
   		var element = $(elementName+'_trigger')
   	 	element.stopObserving("mouseover");
-        element.observe("mouseover", function(){
-		 $$('#panel-buttons-container .panel-button').each(function(div){
-		 	div.removeClassName('hovered')
-		 })
-		 element.addClassName('hovered')
-		 $$('.menuBody .menuItem').each(function(element){
-		 	element.style.visibility = "hidden"
-		 }) 
-		 $(elementName+'Desc').style.visibility = "visible"
-        });
-//        element.stopObserving("mouseout");
-//        element.observe("mouseout", function(){
-//		  if (element.getAttribute("disabled") != "disabled") {
-//		  	element.select("img")[0].setStyle({
-//		  		marginTop: "-25px"
-//		  	});
-//		  }
-//        });
+      element.observe("mouseover", function(){
+  		  $$('#panel-buttons-container .panel-button').each(function(div){
+  		 	 div.removeClassName('hovered')
+  		  })
+  		  element.addClassName('hovered')
+  		  $$('.menuBody .menuItem').each(function(element){
+  		 	 element.style.visibility = "hidden"
+  		  }) 
+  		  $(elementName+'Desc').style.visibility = "visible"
+      });
   },
+  
   render : function(){
   	if (this.owner.state == this.owner.states.UNDER_CONSTRUCTION)this.renderUnderConstruction()
     if (this.owner.state == this.owner.states.UNDER_CONSTRUCTION || this.owner.state == this.owner.states.UPGRADING ) {
