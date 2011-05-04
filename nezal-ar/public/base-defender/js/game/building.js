@@ -159,7 +159,10 @@ var Building = Class.create({
   },
   
   textInfo : function(){
-    return this.humanizeString(this.name)+ " [" + this.level + "]";
+    if(this.state == this.states.UNDER_CONSTRUCTION)
+      return this.humanizeString(this.name);
+    else
+      return this.humanizeString(this.name) + " [" + this.level + "]";
   },
 	
   humanizeString : function(str){

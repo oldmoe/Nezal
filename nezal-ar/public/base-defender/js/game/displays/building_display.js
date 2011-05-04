@@ -61,10 +61,10 @@ var BuildingDisplay = Class.create(Display, {
   createSprites : function(){
   	if(this.owner.name=='townhall'){
 		this.sprites.base = new DomImgSprite(this.owner, {img : this.baseImg}, {shiftY: this.zdim, shiftX:-9, divClass: "buildingBase"});
-	}
-    else{
-		this.sprites.base = new DomImgSprite(this.owner, {img : this.baseImg}, {shiftY: this.zdim, divClass: "buildingBase"});
-	}
+	  }
+      else{
+		  this.sprites.base = new DomImgSprite(this.owner, {img : this.baseImg}, {shiftY: this.zdim, divClass: "buildingBase"});
+	  }
     this.sprites.invalid = new DomImgSprite(this.owner, {img : this.invalidImg}, {shiftY: this.zdim});
     this.sprites.shadow = new DomImgSprite(this.owner, {img: this.shadowImg}, {width:this.shadowImg.width, height:this.shadowImg.height, zIndex :1});
     this.sprites.outline = new DomImgSprite(this.owner, {img: this.outlineImg});
@@ -122,7 +122,7 @@ var BuildingDisplay = Class.create(Display, {
 	    if (self.sprites.resourceMeter) {
 	    	self.sprites.resourceMeter.hide()
 	    }
-	  if(self.sprites.flag)self.sprites.flag.hide()	
+	    if(self.sprites.flag)self.sprites.flag.hide()	
       if(self.sprites.text)self.sprites.text.hide();
       self.sprites.mouseover.hide();
       self.sprites.invalid.hide();
@@ -144,7 +144,7 @@ var BuildingDisplay = Class.create(Display, {
       self.sprites.info.hide();
 	    if(self.sprites.resourceMeter)self.sprites.resourceMeter.hide()
       if(self.sprites.text)self.sprites.text.hide()
-	  if(self.sprites.flag)self.sprites.flag.hide()
+	    if(self.sprites.flag)self.sprites.flag.hide()
       self.sprites.mouseover.hide();
       if(self.sprites.moving) self.sprites.moving.hide();
       self.sprites.invalid.hide();
@@ -161,7 +161,7 @@ var BuildingDisplay = Class.create(Display, {
       self.sprites.building.setOpacity(0.5);
       self.sprites.building.animated = false;
       self.sprites.base.hide();
-	  if(self.sprites.flag)self.sprites.flag.show()
+	    if(self.sprites.flag)self.sprites.flag.show()
 	    if(self.sprites.resourceMeter)self.sprites.resourceMeter.hide()
       self.sprites.outline.hide();
       self.sprites.info.hide();
