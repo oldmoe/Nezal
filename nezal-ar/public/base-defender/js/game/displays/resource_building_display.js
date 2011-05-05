@@ -3,7 +3,7 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
     this.defaultAction = this.collectResources;
     $super(owner,properties)
 	  var self = this
-    this.sprites.text = new DomTextSprite(owner, 'resourceInfo',{centered: true, shiftY: 110});
+    this.sprites.text = new DomTextSprite(owner, 'resourceInfo',{centered: true, shiftY: 110, styleClass:'resourceText'});
   	this.attentionImg = Loader.images.icons['attention.png']
   	this.sprites.attention = new DomImgSprite(this.owner,{img:this.attentionImg}, {shiftX : 40,shiftY : -30})
   	this.sprites.attention.hide()
