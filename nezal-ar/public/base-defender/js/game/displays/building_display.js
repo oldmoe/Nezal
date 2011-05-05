@@ -276,7 +276,7 @@ var BuildingDisplay = Class.create(Display, {
   
   render : function(){
     if( this.defaultAction ) {
-      this.sprites.clickSprite.setCursor('url(images/buildings/transparent.png), none')
+      this.sprites.clickSprite.setCursor('url(images/buildings/transparent1x1.png), none')
     } else if ( this.clickValid ) {
       this.sprites.clickSprite.setCursor("pointer");
     }
