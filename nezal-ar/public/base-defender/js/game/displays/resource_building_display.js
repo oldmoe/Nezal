@@ -41,23 +41,20 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
   
   createSprites : function($super){
     $super();
-    this.sprites.defaultCollect = this.sprites.mouseover;
-    
     this.assignWorkerImg = Loader.images.default_actions["assign_worker.png"];
     this.sprites.defaultAssign = new DomImgSprite(this.owner, {img: this.assignWorkerImg});
     this.sprites.defaultAssign.img.setStyle({width:"40px"});
     this.sprites.defaultAssign.hide();
-    this.sprites.defaultCollect.hide();
   },
   
   render : function($super){
+    $super();
+    
     if( this.owner.assignedWorkers > 0) {
-      this.sprites.defaultMouseover = this.sprites.defaultCollect;
+      this.sprites.defaultMouseover = this.sprites.mouseover;
     } else {
       this.sprites.defaultMouseover = this.sprites.defaultAssign;
     }
-    
-    $super();
 	  
     if(this.owner.full) this.sprites.attention.show();
   },
