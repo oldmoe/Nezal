@@ -39,14 +39,32 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
     });
   },
   
+  createSprites : function($super){
+    $super();
+    this.sprites.defaultCollect = this.sprites.mouseover;
+    
+    this.assignWorkerImg = Loader.images.default_actions["assign_worker.png"];
+    this.sprites.defaultAssign = new DomImgSprite(this.owner, {img: this.assignWorkerImg});
+    this.sprites.defaultAssign.img.setStyle({width:"40px"});
+    this.sprites.defaultAssign.hide();
+    this.sprites.defaultCollect.hide();
+  },
+  
   render : function($super){
-  	$super()
-	 if(this.owner.full)this.sprites.attention.show()
+    if( this.owner.assignedWorkers > 0) {
+      this.sprites.mouseover = this.sprites.defaultCollect;
+    } else {
+      this.sprites.mouseover = this.sprites.defaultAssign;
+    }
+    
+    $super();
+	  
+    if(this.owner.full)this.sprites.attention.show();
   },
   
   renderPanelButtons: function($super){
     $super();
-    if(this.owner.full) this.sprites.attention.show()
+    if(this.owner.full) this.sprites.attention.show();
     var owner = this.owner;
     var self = this;
     this.game.domConverter.convert( this.game.templatesManager.load("resource-building-buttons") );
@@ -54,30 +72,30 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
     $('panel-buttons-container').appendChild( $("assign_worker_trigger") );
     
     $('collect_resource_trigger').observe('moousedown', function(){
-		$('collect_resource_trigger').select("img")[0].setStyle( {marginTop: "-50px"} );
+		  $('collect_resource_trigger').select("img")[0].setStyle( {marginTop: "-50px"} );
     });
-	$('collect_resource_trigger').observe('mouseup',function(){
-		$('collect_resource_trigger').select("img")[0].setStyle( {marginTop: "-25px"} );
-		$('building-panel').hide();
-      	self.collectResources();
-	})
+  	$('collect_resource_trigger').observe('mouseup',function(){
+  		$('collect_resource_trigger').select("img")[0].setStyle( {marginTop: "-25px"} );
+  		$('building-panel').hide();
+        	self.collectResources();
+  	})
     
     $('assign_worker_trigger').observe('mousedown', function(){
-	  $('assign_worker_trigger').select("img")[0].setStyle( {marginTop: "-50px"} );
+	    $('assign_worker_trigger').select("img")[0].setStyle( {marginTop: "-50px"} );
     });
-	$('assign_worker_trigger').observe('mouseup',function(){
-		$('assign_worker_trigger').select("img")[0].setStyle( {marginTop: "-25px"} );
-		owner._AssignWorker();
-      	$('building-panel').hide();
-	})
-    this.registerHoverEvents('collect_resource')
-	this.registerHoverEvents('assign_worker')
+	  $('assign_worker_trigger').observe('mouseup',function(){
+		  $('assign_worker_trigger').select("img")[0].setStyle( {marginTop: "-25px"} );
+		  owner._AssignWorker();
+      $('building-panel').hide();
+	  })
+    this.registerHoverEvents('collect_resource');
+	  this.registerHoverEvents('assign_worker');
     this.renderingPanelButtonsDone();
   },
 
   collectResources : function(){
     var owner = this.owner
-    if(owner.assignedWorkers > 0){
+    if (owner.assignedWorkers > 0) {
       var checkFullErrorMessage = function(){
         if (owner.game.resources[owner.factory.collect] == owner.factory.getTotalStorageCapacity()) {
           Notification.alert('You need more storage. Try to build or upgrade your storage buildings.')
@@ -85,19 +103,20 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
         }
         return false
       }
-      if(checkFullErrorMessage())return 
-      Sounds.play(Sounds.gameSounds.resource_collection)
+      if (checkFullErrorMessage()) 
+        return Sounds.play(Sounds.gameSounds.resource_collection)
       var collected = owner[owner.factory.collect]
       var currentResources = owner.game.resources[owner.factory.collect]
-      var totalStorage =  owner.factory.getTotalStorageCapacity()
-      if (collected + currentResources >  totalStorage) {
-        collected = totalStorage - currentResources 
+      var totalStorage = owner.factory.getTotalStorageCapacity()
+      if (collected + currentResources > totalStorage) {
+        collected = totalStorage - currentResources;
       }
       owner._CollectResources();
-      this._CollectionAnimation(collected)
-      checkFullErrorMessage()
-    }else
+      this._CollectionAnimation(collected);
+      checkFullErrorMessage();
+    } else {
       owner._AssignWorker();
+    }
   },
   _CollectionAnimation : function(collected){
     var owner = this.owner
