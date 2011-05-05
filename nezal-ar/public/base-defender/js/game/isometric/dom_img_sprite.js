@@ -23,15 +23,8 @@ var DomImgSprite = Class.create(DomSprite, {
 		this.noOfDirections = 8
 		this.img.setStyle({height:"auto"});
 		if(this.clickable){
-				this.img.setAttribute('usemap','#'+this.owner.coords.x+"-"+this.owner.coords.y)
-				this.map = $(document.createElement('map'));
-				this.map.setAttribute('name',this.owner.coords.x+"-"+this.owner.coords.y)
-				this.clickDiv = $(document.createElement('area'));
-				this.clickDiv.setAttribute('shape','poly');
-				this.clickDiv.setAttribute('coords', imgAssets.area);
+				this.clickDiv =this.img
 				Map.registerListeners(this.clickDiv,this.owner);
-				$('gameCanvas').appendChild(this.map);
-				this.map.appendChild(this.clickDiv);
 		}
 	},
   
