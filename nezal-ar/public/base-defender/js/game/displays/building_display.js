@@ -10,10 +10,10 @@ var BuildingDisplay = Class.create(Display, {
   smokeInitialXShift : 0,
   progressDisplays : [] ,
   initialize : function($super,owner,properties){
-    $super(owner,properties)
-	  if (this.owner.state == this.owner.states.UNDER_CONSTRUCTION)this.createUnderContructionElements()
-      this.noOfXTiles = Math.ceil(this.xdim / Map.tileIsoLength)
-      this.noOfYTiles = Math.ceil(this.ydim / Map.tileIsoLength)
+    $super(owner,properties);
+	  if (this.owner.state == this.owner.states.UNDER_CONSTRUCTION)this.createUnderContructionElements();
+    this.noOfXTiles = Math.ceil(this.xdim / Map.tileIsoLength);
+    this.noOfYTiles = Math.ceil(this.ydim / Map.tileIsoLength);
 	  if (this.noOfXTiles == 1) {
 		  this.smokeInitialXShift = 58
 	  }else if (this.noOfXTiles == 2) {
@@ -52,14 +52,14 @@ var BuildingDisplay = Class.create(Display, {
     this.staticSprites = {};
     this.progressDisplays = [];
     Object.extend(this.owner,this); 
-    this.createSprites()  
+    this.createSprites();
     this.render();
     this.manageStateChange();
 
   },
   
   createSprites : function(){
-  	if(this.owner.name=='townhall'){
+  	if(this.owner.name == 'townhall'){
 		this.sprites.base = new DomImgSprite(this.owner, {img : this.baseImg}, {shiftY: this.zdim, shiftX:-9, divClass: "buildingBase"});
 	  }
       else{
@@ -103,7 +103,9 @@ var BuildingDisplay = Class.create(Display, {
   
   manageStateChange : function(){
     var self = this;
+    this.sprites.mouseover.hide();
     this.owner.stateNotifications[this.owner.states.NOT_PLACED].push(function(){
+      self.clickValid = true;
       if(self.sprites.moving)
       {
         self.sprites.moving.setOpacity(0.5);
@@ -124,12 +126,12 @@ var BuildingDisplay = Class.create(Display, {
 	    }
 	    if(self.sprites.flag)self.sprites.flag.hide()	
       if(self.sprites.text)self.sprites.text.hide();
-      self.sprites.mouseover.hide();
       self.sprites.invalid.hide();
       if(self.staticSprites.moreContainer) self.staticSprites.moreContainer.hide();
     });
     this.owner.stateNotifications[this.owner.states.UNDER_CONSTRUCTION].push(function(){
-	    self.createUnderConstructionElements()
+	    self.createUnderConstructionElements();
+      self.clickValid = false;
       var top =  self.owner.coords.y -Math.round(self.imgHeight/4)
       var left =  self.owner.coords.x -48; // half width of the progress bar
       self.progressDisplay = new ProgressDisplay( 
@@ -145,13 +147,13 @@ var BuildingDisplay = Class.create(Display, {
 	    if(self.sprites.resourceMeter)self.sprites.resourceMeter.hide()
       if(self.sprites.text)self.sprites.text.hide()
 	    if(self.sprites.flag)self.sprites.flag.hide()
-      self.sprites.mouseover.hide();
       if(self.sprites.moving) self.sprites.moving.hide();
       self.sprites.invalid.hide();
       if(self.staticSprites.moreContainer) self.staticSprites.moreButton.hide();
     });
     this.owner.stateNotifications[this.owner.states.UPGRADING].push(function(){
-      var top =  self.owner.coords.y
+      self.clickValid = false;
+      var top =  self.owner.coords.y;
       var left =  self.owner.coords.x - 48;
   	  self.sprites.underConstruction.hide();
       self.progressDisplay = new ProgressDisplay( 
@@ -166,12 +168,12 @@ var BuildingDisplay = Class.create(Display, {
       self.sprites.outline.hide();
       self.sprites.info.hide();
       if(self.sprites.text)self.sprites.text.hide()
-      self.sprites.mouseover.hide();
       if(self.sprites.moving) self.sprites.moving.hide();
       self.sprites.invalid.hide();
       if(self.staticSprites.moreContainer) self.staticSprites.moreButton.hide();
     });
     this.owner.stateNotifications[this.owner.states.NORMAL].push(function(){
+      self.clickValid = true;
       self.sprites.building.show();
       if(self.owner.working)
         self.sprites.building.setOpacity(1);
@@ -183,12 +185,9 @@ var BuildingDisplay = Class.create(Display, {
       self.sprites.outline.hide();
 	    self.sprites.shadow.show();
       self.sprites.info.hide();
-	    if(self.sprites.resourceMeter)self.sprites.resourceMeter.show()
-      if (self.sprites.text) {
-        self.sprites.text.hide()
-      }
-	  if(self.sprites.flag)self.sprites.flag.show()
-      self.sprites.mouseover.hide();
+	    if(self.sprites.resourceMeter) self.sprites.resourceMeter.show()
+      if (self.sprites.text) self.sprites.text.hide();
+	    if(self.sprites.flag) self.sprites.flag.show();
       if(self.sprites.moving) self.sprites.moving.hide();
       self.sprites.invalid.hide();
       if(self.staticSprites.moreContainer) self.staticSprites.moreContainer.hide();
@@ -276,7 +275,13 @@ var BuildingDisplay = Class.create(Display, {
   },
   
   render : function(){
-  	if (this.owner.state == this.owner.states.UNDER_CONSTRUCTION)this.renderUnderConstruction()
+    if( this.defaultAction ) {
+      this.sprites.clickSprite.setCursor('url(images/buildings/transparent.png), none')
+    } else if ( this.clickValid ) {
+      this.sprites.clickSprite.setCursor("pointer");
+    }
+    
+  	if (this.owner.state == this.owner.states.UNDER_CONSTRUCTION) this.renderUnderConstruction();
     if (this.owner.state == this.owner.states.UNDER_CONSTRUCTION || this.owner.state == this.owner.states.UPGRADING ) {
       this.progressDisplay.render( this.owner.elapsedTime() );
     } else if (this.owner.state == this.owner.states.NOT_PLACED) {

@@ -35,6 +35,10 @@ var DomImgSprite = Class.create(DomSprite, {
 		}
 	},
   
+  setCursor : function( style ){
+    this.img.setStyle({cursor : style});
+  },
+  
   setImgWidth : function(width){
 		this.imgWidth = width
     this.img.setStyle({width:(width + "px")});
