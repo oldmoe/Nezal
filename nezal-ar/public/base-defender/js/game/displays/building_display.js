@@ -75,20 +75,28 @@ var BuildingDisplay = Class.create(Display, {
     this.sprites.outline = new DomImgSprite(this.owner, {img: this.outlineImg});
     this.sprites.shadow.shiftX = this.imgWidth - this.shadowImg.width
     this.sprites.shadow.shiftY = this.imgHeight - this.shadowImg.height
-    if (this.noOfXTiles != 1) 
+    if (this.noOfXTiles == 3) 
       this.sprites.info = new DomTextSprite(this.owner, 'textInfo', {
         centered: true,
         shiftY: -10,
         styleClass: 'buildingName'
       });
-    else 
+    else if(this.noOfXTiles == 2)
+      this.sprites.info = new DomTextSprite(this.owner, 'textInfo', {
+        centered: true,
+        shiftY: -10,
+        styleClass: 'buildingName',
+        width : 140,
+        shiftX : this.owner.imgWidth/2-70
+      });
+    else
       this.sprites.info = new DomTextSprite(this.owner, 'textInfo', {
         centered: true,
         shiftY: -10,
         styleClass: 'buildingName',
         width : 100,
         shiftX : this.owner.imgWidth/2-50
-      });
+      }); 
     this.sprites.building = new DomImgSprite(this.owner, {img: this.img});
     this.sprites.building.shiftX = (this.imgWidth - this.img.width)/2;
     this.sprites.base.shiftX = (this.imgWidth - this.img.width)/2+2;

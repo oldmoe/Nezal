@@ -23,12 +23,12 @@ var LumbermillDisplay = Class.create(ResourceBuildingDisplay, {
 			emptyImg : Loader.images.game_elements['resource_meter_background.png'],
 			fullImg : Loader.images.game_elements['resource_meter_wood.png']
 		})
-	this.sprites.attention.shiftY = -15;
-	this.sprites.clickSprite.shiftX = 18
-	this.sprites.clickSprite.shiftY = 22
-	this.sprites.clickSprite.setImgWidth(108)
-	this.sprites.clickSprite.setImgHeight(82)
-	this.render();
+  	this.sprites.attention.shiftY = -15;
+  	this.sprites.clickSprite.shiftX = 18
+  	this.sprites.clickSprite.shiftY = 22
+  	this.sprites.clickSprite.setImgWidth(108)
+  	this.sprites.clickSprite.setImgHeight(82)
+	  this.render();
   },
     
   createSprites : function($super){
