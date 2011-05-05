@@ -70,7 +70,20 @@ var BuildingDisplay = Class.create(Display, {
     this.sprites.outline = new DomImgSprite(this.owner, {img: this.outlineImg});
     this.sprites.shadow.shiftX = this.imgWidth - this.shadowImg.width
     this.sprites.shadow.shiftY = this.imgHeight - this.shadowImg.height
-    this.sprites.info = new DomTextSprite(this.owner, 'textInfo', {centered: true, shiftY: -10, styleClass : 'buildingName'});
+    if (this.noOfXTiles != 1) 
+      this.sprites.info = new DomTextSprite(this.owner, 'textInfo', {
+        centered: true,
+        shiftY: -10,
+        styleClass: 'buildingName'
+      });
+    else 
+      this.sprites.info = new DomTextSprite(this.owner, 'textInfo', {
+        centered: true,
+        shiftY: -10,
+        styleClass: 'buildingName',
+        width : 100,
+        shiftX : this.owner.imgWidth/2-50
+      });
     this.sprites.building = new DomImgSprite(this.owner, {img: this.img});
     this.sprites.building.shiftX = (this.imgWidth - this.img.width)/2;
     this.sprites.base.shiftX = (this.imgWidth - this.img.width)/2+2;
@@ -132,8 +145,8 @@ var BuildingDisplay = Class.create(Display, {
     this.owner.stateNotifications[this.owner.states.UNDER_CONSTRUCTION].push(function(){
 	    self.createUnderConstructionElements();
       self.clickValid = false;
-      var top =  self.owner.coords.y -Math.round(self.imgHeight/4)
-      var left =  self.owner.coords.x -48; // half width of the progress bar
+      var top =  self.owner.coords.y
+      var left =  self.owner.coords.x -  37; // half width of the progress bar
       self.progressDisplay = new ProgressDisplay( 
       self.owner.nextLevelBluePrints.time, top, left, self.owner.coords.y, 'Building');
       self.progressDisplays.push(self.progressDisplay)
@@ -153,8 +166,8 @@ var BuildingDisplay = Class.create(Display, {
     });
     this.owner.stateNotifications[this.owner.states.UPGRADING].push(function(){
       self.clickValid = false;
-      var top =  self.owner.coords.y;
-      var left =  self.owner.coords.x - 48;
+      var top =  self.owner.coords.y+Math.round(self.imgHeight/2) - 50
+      var left =  self.owner.coords.x - 37;
   	  self.sprites.underConstruction.hide();
       self.progressDisplay = new ProgressDisplay( 
       self.owner.nextLevelBluePrints.time, top -12, left, self.owner.coords.y ,'Upgrading');

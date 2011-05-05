@@ -1,6 +1,6 @@
 .progressContainer {
   position : absolute;
-  width : 100px;
+  width : 77px;
   height : 16px;
 }
 .progressTime , .progressAction{
@@ -22,7 +22,7 @@
   border-radius : 4px;
   background-color: #999;
   position : absolute;
-  width: 96px;
+  width: 74px;
   height: 12px;
   border : 2px solid black;
 }

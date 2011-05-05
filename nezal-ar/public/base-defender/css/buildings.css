@@ -340,10 +340,17 @@
   cursor : pointer;
 }
 
-.buildingName {
-  color : white;
-  font-family : ShowG;
-  font-size : 13px;
+.DomSprite .buildingName {
+    background-color: #3E7A94;
+    border-radius: 5px 5px 5px 5px;
+    color: white;
+    font-family: verdana;
+    font-size: 11px;
+    padding: 2px;
+}
+
+.DomSprite .resourceText {
+    color: #FF9900;
 }
 .buildingDesc {
   color: #FFF78C;
