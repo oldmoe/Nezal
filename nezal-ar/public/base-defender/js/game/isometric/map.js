@@ -441,10 +441,7 @@ var Map={
 		})
     
     var mousemoveCallback = function(mouse){
-      var showMouseMove = true;
-      showMouseMove = showMouseMove && (owner.state != owner.states.NOT_PLACED);
-      showMouseMove = showMouseMove && (owner.state != owner.states.UNDER_CONSTRUCTION);
-      if( showMouseMove ) {
+      if( owner.state == owner.states.NORMAL ) {
         var x = mouse.pointerX() || mouse.touches[0].pageX;
         var y = mouse.pointerY() || mouse.touches[0].pageY;
         owner.sprites.mouseover.shiftX = x - (owner.coords.x - Math.round(owner.imgWidth / 2) - Map.x);

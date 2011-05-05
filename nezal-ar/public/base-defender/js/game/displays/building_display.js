@@ -88,7 +88,6 @@ var BuildingDisplay = Class.create(Display, {
     this.sprites.building.shiftX = (this.imgWidth - this.img.width)/2;
     this.sprites.base.shiftX = (this.imgWidth - this.img.width)/2+2;
     this.sprites.invalid.shiftX = (this.imgWidth - this.img.width)/2;
-    this.sprites.mouseover = new DomImgSprite(this.owner, {img: this.mouseoverImg});
     //this.sprites.skeleton = new DomSkeleton(this.owner)
     if(this.movingImg)
       this.sprites.moving = new DomImgSprite(this.owner, {img: this.movingImg});
@@ -96,7 +95,8 @@ var BuildingDisplay = Class.create(Display, {
     this.sprites.clickSprite.img.setStyle({width:this.imgWidth+"px",height:this.imgHeight+"px"})
     this.sprites.health = new DomMeterSprite(this.owner,{styleClass:{empty:'healthEmpty',full:'healthFull'},
     shiftY:this.imgHeight/2,shiftZ:1000})
-		this.sprites.underConstruction = new DomImgSprite(this.owner, {img: this.constructionImg}, {shiftY: this.zdim})
+		this.sprites.underConstruction = new DomImgSprite(this.owner, {img: this.constructionImg}, {shiftY: this.zdim});
+    this.sprites.mouseover = new DomImgSprite(this.owner, {img: this.mouseoverImg});
     this.staticSprites.moreContainer = new DomSpriteContainer(this.owner, {zIndex : this.sprites.clickSprite.minAreaZIndex + 1100,
                                                         width :this.buttonImg.width, height : this.buttonImg.height });
     this.staticSprites.moreContainer.shiftX = (this.imgWidth - this.buttonImg.width)/2+2;
@@ -118,7 +118,6 @@ var BuildingDisplay = Class.create(Display, {
     var self = this;
     this.sprites.mouseover.hide();
     this.owner.stateNotifications[this.owner.states.NOT_PLACED].push(function(){
-      self.clickValid = true;
       if(self.sprites.moving)
       {
         self.sprites.moving.setOpacity(0.5);
@@ -144,7 +143,6 @@ var BuildingDisplay = Class.create(Display, {
     });
     this.owner.stateNotifications[this.owner.states.UNDER_CONSTRUCTION].push(function(){
 	    self.createUnderConstructionElements();
-      self.clickValid = false;
       var top =  self.owner.coords.y
       var left =  self.owner.coords.x -  37; // half width of the progress bar
       self.progressDisplay = new ProgressDisplay( 
@@ -165,7 +163,6 @@ var BuildingDisplay = Class.create(Display, {
       if(self.staticSprites.moreContainer) self.staticSprites.moreButton.hide();
     });
     this.owner.stateNotifications[this.owner.states.UPGRADING].push(function(){
-      self.clickValid = false;
       var top =  self.owner.coords.y+Math.round(self.imgHeight/2) - 50
       var left =  self.owner.coords.x - 37;
   	  self.sprites.underConstruction.hide();
@@ -186,7 +183,6 @@ var BuildingDisplay = Class.create(Display, {
       if(self.staticSprites.moreContainer) self.staticSprites.moreButton.hide();
     });
     this.owner.stateNotifications[this.owner.states.NORMAL].push(function(){
-      self.clickValid = true;
       self.sprites.building.show();
       if(self.owner.working)
         self.sprites.building.setOpacity(1);
@@ -288,14 +284,15 @@ var BuildingDisplay = Class.create(Display, {
   },
   
   render : function(){
-    if( this.defaultAction ) {
-      this.sprites.clickSprite.setCursor('url(images/buildings/transparent1x1.png), none')
-    } else if ( this.clickValid ) {
+    if( (this.owner.state == this.owner.states.NOT_PLACED) || ( this.defaultAction && (this.owner.state == this.owner.states.NORMAL) ) ) {
+      this.sprites.clickSprite.setCursor('url(images/buildings/transparent1x1.png), none');
+    } else {
       this.sprites.clickSprite.setCursor("pointer");
     }
     
   	if (this.owner.state == this.owner.states.UNDER_CONSTRUCTION) this.renderUnderConstruction();
     if (this.owner.state == this.owner.states.UNDER_CONSTRUCTION || this.owner.state == this.owner.states.UPGRADING ) {
+      this.sprites.clickSprite.setCursor("default");
       this.progressDisplay.render( this.owner.elapsedTime() );
     } else if (this.owner.state == this.owner.states.NOT_PLACED) {
       if( this.owner.locationValid ){
