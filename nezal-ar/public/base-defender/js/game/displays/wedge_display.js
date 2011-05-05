@@ -22,7 +22,20 @@ var WedgeDisplay = Class.create(BuildingDisplay, {
 		this.sprites.health = new DomMeterSprite(this.owner,{styleClass:{empty:'healthEmpty',full:'healthFull'},'width':50})
 		//this.sprites.skeleton = new DomSkeleton(this.owner)
 		this.sprites.health.shiftY = -20
-    this.sprites.info = new DomTextSprite(this.owner, 'textInfo', {centered: true, shiftY: -30, styleClass : 'buildingName'});
+    if (this.noOfXTiles != 1) 
+      this.sprites.info = new DomTextSprite(this.owner, 'textInfo', {
+        centered: true,
+        shiftY: -10,
+        styleClass: 'buildingName'
+      });
+    else 
+      this.sprites.info = new DomTextSprite(this.owner, 'textInfo', {
+        centered: true,
+        shiftY: -10,
+        styleClass: 'buildingName',
+        width : 100,
+        shiftX : this.owner.imgWidth/2-50
+      });
 		this.sprites.building.shiftX = (this.imgWidth - this.img.width)/2;
 		this.sprites.shadow.shiftX = this.imgWidth - this.shadowImg.width;
 		this.sprites.shadow.shiftY = this.imgHeight - this.shadowImg.height;
@@ -35,14 +48,16 @@ var WedgeDisplay = Class.create(BuildingDisplay, {
 		this.sprites.clickSprite = new DomImgSprite(this.owner,{img : this.transparentImg, area:this.area}, {clickable: true});
 		this.sprites.clickSprite.img.setStyle({width:this.imgWidth+"px",height:this.imgHeight+"px"})
     this.sprites.mouseover = new DomImgSprite(this.owner, {img: this.mouseoverImg});
-	this.sprites.underConstruction = new DomImgSprite(this.owner, {img: this.constructionImg}, {shiftY: this.zdim})
+    this.sprites.mouseover.hide();
+    this.sprites.defaultMouseover = this.sprites.mouseover;
+	  this.sprites.underConstruction = new DomImgSprite(this.owner, {img: this.constructionImg}, {shiftY: this.zdim});
     this.container.render();
   },
 
    manageStateChange : function($super){
     $super()
     var self = this;
-	this.owner.stateNotifications[this.owner.states.NOT_PLACED].push(function(){
+	  this.owner.stateNotifications[this.owner.states.NOT_PLACED].push(function(){
       self.sprites.moving.show();
     });
     this.owner.stateNotifications[this.owner.states.UNDER_CONSTRUCTION].push(function(){
@@ -50,11 +65,11 @@ var WedgeDisplay = Class.create(BuildingDisplay, {
     });
     this.owner.stateNotifications[this.owner.states.UPGRADING].push(function(){
       self.sprites.building.setOpacity(1);
-	  self.owner.weapon.container.show()
+	    self.owner.weapon.container.show();
       self.owner.weapon.container.setOpacity(0.5);
     });
     this.owner.stateNotifications[this.owner.states.NORMAL].push(function(){
-	  self.owner.weapon.container.show()
+	    self.owner.weapon.container.show()
       if(self.owner.working)
       {
         self.sprites.building.setOpacity(1);

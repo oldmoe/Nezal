@@ -52,14 +52,14 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
   
   render : function($super){
     if( this.owner.assignedWorkers > 0) {
-      this.sprites.mouseover = this.sprites.defaultCollect;
+      this.sprites.defaultMouseover = this.sprites.defaultCollect;
     } else {
-      this.sprites.mouseover = this.sprites.defaultAssign;
+      this.sprites.defaultMouseover = this.sprites.defaultAssign;
     }
     
     $super();
 	  
-    if(this.owner.full)this.sprites.attention.show();
+    if(this.owner.full) this.sprites.attention.show();
   },
   
   renderPanelButtons: function($super){

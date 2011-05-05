@@ -44,6 +44,7 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
     })
     this.sprites.health.shiftY += 20;
 	  this.sprites.clickSprite.shiftY = 40;
+    this.sprites.info.shiftY = 10;
 	  this.sprites.clickSprite.shiftX = -10;
 	  this.sprites.clickSprite.setImgHeight(135);
   },

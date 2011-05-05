@@ -78,7 +78,7 @@ var Game = Class.create({
     questsImages = questsImages.concat(BuildingMode.prototype.buildings.collect(function(building){
                                                                       return building + "_info_dimmed.png";
                                                                   }));
-    var specialDefaultActionImages = ['assign_worker.png']
+    var specialDefaultActionImages = ['assign_worker.png', 'move.png']
     new Loader().load([ {images : gameElementsImages, path: 'images/game_elements/', store: 'game_elements'},
                         {images : friendsImages, path: 'images/friends/', store: 'friends'},
                         {images : questsImages, path: 'images/quests/', store: 'quests'},

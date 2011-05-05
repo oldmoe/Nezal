@@ -46,13 +46,18 @@ var BuildingDisplay = Class.create(Display, {
     this.shadowImg = Loader.images.buildingShadows[this.owner.name+"_shadow.png"];
     this.movingImg = Loader.images.buildingMoving[this.owner.name+"_moving.png"];
     this.mouseoverImg = Loader.images.icons[this.owner.name+"_icon.png"];
+    this.moveImg = Loader.images.default_actions["move.png"];
     this.transparentImg = Loader.images.buildingModes['transparent.png'];
     this.buttonImg = Loader.images.game_elements['button.png'];
     this.mapTiles =[];
     this.staticSprites = {};
     this.progressDisplays = [];
     Object.extend(this.owner,this); 
+    
     this.createSprites();
+    this.sprites.defaultMove = new DomImgSprite(this.owner, {img: this.moveImg});
+    this.sprites.defaultMove.hide();
+    
     this.render();
     this.manageStateChange();
 
@@ -97,6 +102,8 @@ var BuildingDisplay = Class.create(Display, {
     shiftY:this.imgHeight/2,shiftZ:1000})
 		this.sprites.underConstruction = new DomImgSprite(this.owner, {img: this.constructionImg}, {shiftY: this.zdim});
     this.sprites.mouseover = new DomImgSprite(this.owner, {img: this.mouseoverImg});
+    this.sprites.mouseover.hide();
+    this.sprites.defaultMouseover = this.sprites.mouseover;
     this.staticSprites.moreContainer = new DomSpriteContainer(this.owner, {zIndex : this.sprites.clickSprite.minAreaZIndex + 1100,
                                                         width :this.buttonImg.width, height : this.buttonImg.height });
     this.staticSprites.moreContainer.shiftX = (this.imgWidth - this.buttonImg.width)/2+2;
@@ -116,7 +123,6 @@ var BuildingDisplay = Class.create(Display, {
   
   manageStateChange : function(){
     var self = this;
-    this.sprites.mouseover.hide();
     this.owner.stateNotifications[this.owner.states.NOT_PLACED].push(function(){
       if(self.sprites.moving)
       {
@@ -235,17 +241,17 @@ var BuildingDisplay = Class.create(Display, {
   	$('panel-buttons-container').appendChild($('move_trigger'));
     $('upgrade_trigger').stopObserving('mousedown');
   	$('move_trigger').stopObserving('mousedown');
-	$('upgrade_trigger').stopObserving('mouseup');
+	  $('upgrade_trigger').stopObserving('mouseup');
   	$('move_trigger').stopObserving('mouseup');
   	$('move_trigger').observe('mousedown',function(){
-		$('move_trigger').select("img")[0].setStyle( {marginTop: "-50px"} );
+		  $('move_trigger').select("img")[0].setStyle( {marginTop: "-50px"} );
   	});
-	$('move_trigger').observe('mouseup',function(){
-		$('move_trigger').select("img")[0].setStyle( {marginTop: "-25px"} );
-		$('building-panel').hide();
-  		owner.game.buildingMode.move()
-		owner.game.buildingMode.moveMode = true
-	})
+	  $('move_trigger').observe('mouseup',function(){
+  		$('move_trigger').select("img")[0].setStyle( {marginTop: "-25px"} );
+  		$('building-panel').hide();
+  		owner.game.buildingMode.move();
+		  owner.game.buildingMode.moveMode = true;
+	  })
 	
     if (!owner.isValidToUpgrade(true)) {
       $('upgrade_trigger').select("img")[0].setStyle({marginTop : "-75px"});
@@ -253,14 +259,14 @@ var BuildingDisplay = Class.create(Display, {
     }else {
       $('upgrade_trigger').observe('mousedown', function(){
 	  	$('upgrade_trigger').select("img")[0].setStyle( {marginTop: "-50px"} );
-      });
+    });
 	  $('upgrade_trigger').observe('mouseup',function(){
-		$('upgrade_trigger').select("img")[0].setStyle( {marginTop: "-25px"} );
-		owner.upgrade();
-        $('building-panel').hide();
+		  $('upgrade_trigger').select("img")[0].setStyle( {marginTop: "-25px"} );
+		  owner.upgrade();
+      $('building-panel').hide();
 	  })
     }
-	this.renderingPanelButtonsDone();
+	  this.renderingPanelButtonsDone();
   },
   
   renderingPanelButtonsDone : function(){
@@ -288,6 +294,12 @@ var BuildingDisplay = Class.create(Display, {
       this.sprites.clickSprite.setCursor('url(images/buildings/transparent1x1.png), none');
     } else {
       this.sprites.clickSprite.setCursor("pointer");
+    }
+    
+    if( this.owner.game.buildingMode && this.owner.game.buildingMode.moveMode ){
+      this.sprites.defaultMouseover = this.sprites.defaultMove;
+    } else {
+      this.sprites.defaultMouseover = this.sprites.mouseover;
     }
     
   	if (this.owner.state == this.owner.states.UNDER_CONSTRUCTION) this.renderUnderConstruction();

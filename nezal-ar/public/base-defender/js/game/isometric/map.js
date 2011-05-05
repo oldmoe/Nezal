@@ -444,10 +444,10 @@ var Map={
       if( owner.state == owner.states.NORMAL ) {
         var x = mouse.pointerX() || mouse.touches[0].pageX;
         var y = mouse.pointerY() || mouse.touches[0].pageY;
-        owner.sprites.mouseover.shiftX = x - (owner.coords.x - Math.round(owner.imgWidth / 2) - Map.x);
-        owner.sprites.mouseover.shiftY = y - (owner.coords.y - Math.round(owner.imgHeight / 2) - Map.y);
-        owner.sprites.mouseover.render();
-        owner.sprites.mouseover.show();
+        owner.sprites.defaultMouseover.shiftX = x - (owner.coords.x - Math.round(owner.imgWidth / 2) - Map.x);
+        owner.sprites.defaultMouseover.shiftY = y - (owner.coords.y - Math.round(owner.imgHeight / 2) - Map.y);
+        owner.sprites.defaultMouseover.render();
+        owner.sprites.defaultMouseover.show();
       }
     }
     
@@ -455,11 +455,10 @@ var Map={
     
 		div.observe('mouseover',function(){
 	  	if (owner.state != owner.states.NOT_PLACED) {
-	  		if (owner.state != owner.states.UNDER_CONSTRUCTION)owner.sprites.outline.show();
+	  		if (owner.state != owner.states.UNDER_CONSTRUCTION) owner.sprites.outline.show();
         owner.sprites.info.show();
-	  		if(owner.sprites.text)owner.sprites.text.show()
-        if(owner.state == owner.states.NORMAL && owner.staticSprites.moreContainer) 
-          owner.staticSprites.moreContainer.show();
+	  		if(owner.sprites.text) owner.sprites.text.show()
+        if(owner.state == owner.states.NORMAL && owner.staticSprites.moreContainer && !owner.game.buildingMode.moveMode) owner.staticSprites.moreContainer.show();
         if(owner.progressDisplays[0]){
           progressDisplay = owner.progressDisplays[0] 
           progressDisplay.actionContainer.show()
@@ -469,7 +468,7 @@ var Map={
 		})
 		div.observe('mouseout',function(){
 			owner.sprites.outline.hide();
-	    owner.sprites.mouseover.hide();
+	    owner.sprites.defaultMouseover.hide();
   		owner.sprites.info.hide();
 			if(owner.sprites.text)owner.sprites.text.hide()
       if(owner.state == owner.states.NORMAL && owner.staticSprites.moreContainer) 
@@ -513,8 +512,8 @@ var Map={
 		})
 		div.observe('mouseout',function(){
 			owner.sprites.outline.hide();
-		    owner.sprites.mouseover.hide();
-      		owner.sprites.info.hide();
+	    owner.sprites.defaultMouseover.hide();
+  		owner.sprites.info.hide();
 			if(owner.sprites.text)owner.sprites.text.hide()
       if(owner.progressDisplays[0]){
           progressDisplay = owner.progressDisplays[0] 
