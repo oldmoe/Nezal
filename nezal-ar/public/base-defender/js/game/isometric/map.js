@@ -441,12 +441,17 @@ var Map={
 		})
     
     var mousemoveCallback = function(mouse){
-      var x = mouse.pointerX() || mouse.touches[0].pageX;
-      var y = mouse.pointerY() || mouse.touches[0].pageY;
-      owner.sprites.mouseover.shiftX = x - ( owner.coords.x - Math.round(owner.imgWidth/2) - Map.x ) + 10;
-      owner.sprites.mouseover.shiftY = y - ( owner.coords.y -Math.round(owner.imgHeight/2) - Map.y );
-      owner.sprites.mouseover.render();
-      owner.sprites.mouseover.show();
+      var showMouseMove = true;
+      showMouseMove = showMouseMove && (owner.state != owner.states.NOT_PLACED);
+      showMouseMove = showMouseMove && (owner.state != owner.states.UNDER_CONSTRUCTION);
+      if( showMouseMove ) {
+        var x = mouse.pointerX() || mouse.touches[0].pageX;
+        var y = mouse.pointerY() || mouse.touches[0].pageY;
+        owner.sprites.mouseover.shiftX = x - (owner.coords.x - Math.round(owner.imgWidth / 2) - Map.x);
+        owner.sprites.mouseover.shiftY = y - (owner.coords.y - Math.round(owner.imgHeight / 2) - Map.y);
+        owner.sprites.mouseover.render();
+        owner.sprites.mouseover.show();
+      }
     }
     
     div.observe(game.mouseMoveEvent, mousemoveCallback);
