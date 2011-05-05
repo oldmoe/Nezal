@@ -47,15 +47,17 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
     this.sprites.defaultAssign.hide();
   },
   
+  defaultActionSprite : function(){
+    if( this.owner.assignedWorkers > 0) {
+      return this.sprites.defaultMouseover = this.sprites.mouseover;
+    } else {
+      return this.sprites.defaultMouseover = this.sprites.defaultAssign;
+    }
+  },
+  
   render : function($super){
     $super();
     
-    if( this.owner.assignedWorkers > 0) {
-      this.sprites.defaultMouseover = this.sprites.mouseover;
-    } else {
-      this.sprites.defaultMouseover = this.sprites.defaultAssign;
-    }
-	  
     if(this.owner.full) this.sprites.attention.show();
   },
   

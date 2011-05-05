@@ -289,6 +289,10 @@ var BuildingDisplay = Class.create(Display, {
       });
   },
   
+  defaultActionSprite : function(){
+    return this.sprites.mouseover;
+  },
+  
   render : function(){
     if( (this.owner.state == this.owner.states.NOT_PLACED) || ( this.defaultAction && (this.owner.state == this.owner.states.NORMAL) ) ) {
       this.sprites.clickSprite.setCursor('url(images/buildings/transparent1x1.png), none');
@@ -299,7 +303,7 @@ var BuildingDisplay = Class.create(Display, {
     if( this.owner.game.buildingMode && this.owner.game.buildingMode.moveMode ){
       this.sprites.defaultMouseover = this.sprites.defaultMove;
     } else {
-      this.sprites.defaultMouseover = this.sprites.mouseover;
+      this.sprites.defaultMouseover = this.defaultActionSprite();
     }
     
   	if (this.owner.state == this.owner.states.UNDER_CONSTRUCTION) this.renderUnderConstruction();
