@@ -2,7 +2,6 @@ var Text = {}
 var TemplatesManager = Class.create({
   initialize : function(network){
     var templatesRootNode = document.createElement('div');
-    
     network.fetchTemplate( "templates/templates.html", function(responseText){
       templatesRootNode.innerHTML = responseText;
       network.fetchTemplate( "templates/quests.html", function(responseText){

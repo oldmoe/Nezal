@@ -347,6 +347,7 @@
     font-family: verdana;
     font-size: 11px;
     padding: 2px;
+    text-shadow: none;
 }
 
 .DomSprite .resourceText {
