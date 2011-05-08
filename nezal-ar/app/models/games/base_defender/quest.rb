@@ -35,8 +35,19 @@ module BD
     #                    Then the user is assigned the next quest and rewarded with the quest rewards as described above.
     def self.edit_quest(quest, data)
       quest_data = Metadata.decode(data)
+      if quest_data['name']
+        quest.name = quest_data['name']
+      end
+      if quest_data['primal']
+        quest.primal = quest_data['primal']
+      end
+      if quest_data['parent'] && (quest_data['parent'].is_a? Integer)
+        quest.parent = quest_data['parent']
+      elsif quest_data['parent']
+        quest.parent = nil
+      end
       quest.metadata ||= { :conditions => {}, :rewards => {} }
-      quest_data.each_pair { |key, val| quest.metadata[key] = val }
+      quest.metadata = quest_data['metadata']
       quest.save
     end
 

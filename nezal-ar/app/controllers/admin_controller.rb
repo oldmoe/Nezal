@@ -196,6 +196,7 @@ class AdminController < ApplicationController
 
   # Serve the quest metadata edit page
   get '/:game_name/quests/:quest_id/metadata/edit' do 
+    @game = Game.where(:name => params["game_name"]).first
     @quest = Quest.find(params["quest_id"])
     erb "#{@app_configs['game_name']}/quest".to_sym , {:layout => :app}
   end
