@@ -203,7 +203,7 @@ class BaseDefender < Metadata
   def self.edit_quest(quest, data)
     BD::Quest::edit_quest(quest, data)
   end
-  
+
   def self.load_game_profile(user_game_profile)
     #reading a -maybe- attached error message from the object and porting it to the metadata!
     if(user_game_profile['error'])
@@ -222,6 +222,8 @@ class BaseDefender < Metadata
     #### TODO We need to check why they need the stringified one 
     #### and see what we gonna do about that
     user_game_profile.metadata || {}
+    user_game_profile.metadata['quests']['descriptions'] = BD::Quest::load_quests(user_game_profile)
+    user_game_profile.metadata
   end
   
   def self.edit_game_profile(user_game_profile, data)

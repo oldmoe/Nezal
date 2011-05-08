@@ -102,16 +102,6 @@ module BD
           user_game_profile.metadata['quests']['conquered'].delete(id) if (quests && quests.length > 0)
         end
       end
-      ################ This should be removed after we move texts to locales ################
-      user_game_profile.metadata['quests']['descriptions'] = {}
-      user_game_profile.metadata['quests']['current'].each do | id |
-        quest = ::Quest.where(:id=>id).first
-        if quest
-          user_game_profile.metadata['quests']['descriptions'][id] = quest.metadata
-          user_game_profile.metadata['quests']['descriptions'][id]['status'] = self.status(user_game_profile, quest)
-          user_game_profile.metadata['quests']['descriptions'][id]['name'] = quest.name
-        end
-      end
       user_game_profile.save
     end
 
@@ -190,7 +180,7 @@ module BD
 
     def self.reward(user_game_profile, quest)
       Notification.new( {:metadata => user_game_profile.metadata, :notification_type => "quest",
-                         :notification_text => quest.metadata['congratesMsg'], :notification_data => {:rewards => quest.metadata['rewards']} })
+                          :notification_data => {:rewards => quest.metadata['rewards'], :id => quest.id} })
       if quest.metadata['rewards']['exp']
         user_game_profile.exp = user_game_profile.exp.to_i + quest.metadata['rewards']['exp']
       end
@@ -203,6 +193,19 @@ module BD
           user_game_profile.metadata[reward] += quest.metadata['rewards'][reward].to_i
         end
       end
+    end
+
+    def self.load_quests user_game_profile
+      descriptions = {}
+      user_game_profile.metadata['quests']['current'].each do | id |
+        quest = ::Quest.where(:id=>id).first
+        if quest
+          descriptions[id] = quest.metadata
+          descriptions[id]['status'] = self.status(user_game_profile, quest)
+          descriptions[id]['name'] = quest.name
+        end
+      end
+      descriptions
     end
 
   end
