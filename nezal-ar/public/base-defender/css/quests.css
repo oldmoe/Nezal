@@ -196,7 +196,6 @@
   cursor : pointer;
 }
 #quest-panel {
-  height: 300px;
   padding: 0 10px;
   position: absolute;
   top: 95px;
