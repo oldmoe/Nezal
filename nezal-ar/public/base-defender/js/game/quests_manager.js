@@ -34,7 +34,7 @@ var QuestsManager = Class.create({
     $$('#quest-panel .clickable').each( function(button){
                                             var id = button.getAttribute('id');
                                             button.observe( 'click', function(){
-																		Sounds.play(Sounds.gameSounds.click)
+																		                                    Sounds.play(Sounds.gameSounds.click)
                                                                         game.questsManager.displayQuest(id);
                                                                       });
                                             $$( "#quest-panel #" + id + " .shadow")[0].hide();
@@ -53,7 +53,8 @@ var QuestsManager = Class.create({
     $('msg').hide();
     $('questDisplay').innerHTML = '';
     $('questDisplay').innerHTML = this.game.templatesManager.load("quest", 
-                                    {quest: this.game.user.data.quests.descriptions[questId]});
+                                    {quest: this.game.user.data.quests.descriptions[questId],
+                                     text : Text.quests[questId]});
     this.game.addLoadedImagesToDiv('questDisplay')									
     $('questDisplay').show();
     $('interaction').show();
@@ -61,8 +62,9 @@ var QuestsManager = Class.create({
   },
 
   displayCongratesMsg : function(msg){
+    msg.text = Text.quests[msg['data']['id']]['congratesMsg']
     $('msg').innerHTML = this.game.templatesManager.load("congrates", {msg : msg});
-	this.game.addLoadedImagesToDiv('msg')
+  	this.game.addLoadedImagesToDiv('msg')
     $('interaction').show();
     $('msg').show();
     Animation.show('congratesMsg');
@@ -74,7 +76,7 @@ var QuestsManager = Class.create({
     $('msg').innerHTML = '';
     $('msg').innerHTML = this.game.templatesManager.load("empty-quest", 
                     { category: category, msg: this.categoryMsgs[category], msg2: this.categoryMsgs["noQuest"]});
-	this.game.addLoadedImagesToDiv('msg')				
+  	this.game.addLoadedImagesToDiv('msg')				
     $('msg').show();
     $('interaction').show();
     Animation.show('emptyQuest');

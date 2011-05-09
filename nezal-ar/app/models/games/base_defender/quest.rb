@@ -35,8 +35,19 @@ module BD
     #                    Then the user is assigned the next quest and rewarded with the quest rewards as described above.
     def self.edit_quest(quest, data)
       quest_data = Metadata.decode(data)
+      if quest_data['name']
+        quest.name = quest_data['name']
+      end
+      if quest_data['primal']
+        quest.primal = quest_data['primal']
+      end
+      if quest_data['parent'] && (quest_data['parent'].is_a? Integer)
+        quest.parent = quest_data['parent']
+      elsif quest_data['parent']
+        quest.parent = nil
+      end
       quest.metadata ||= { :conditions => {}, :rewards => {} }
-      quest_data.each_pair { |key, val| quest.metadata[key] = val }
+      quest.metadata = quest_data['metadata']
       quest.save
     end
 
@@ -89,16 +100,6 @@ module BD
           # If that was not end of chain, remove it .. else keep it for next quests
           quests = ::Quest.where(:parent => id).all
           user_game_profile.metadata['quests']['conquered'].delete(id) if (quests && quests.length > 0)
-        end
-      end
-      ################ This should be removed after we move texts to locales ################
-      user_game_profile.metadata['quests']['descriptions'] = {}
-      user_game_profile.metadata['quests']['current'].each do | id |
-        quest = ::Quest.where(:id=>id).first
-        if quest
-          user_game_profile.metadata['quests']['descriptions'][id] = quest.metadata
-          user_game_profile.metadata['quests']['descriptions'][id]['status'] = self.status(user_game_profile, quest)
-          user_game_profile.metadata['quests']['descriptions'][id]['name'] = quest.name
         end
       end
       user_game_profile.save
@@ -179,7 +180,7 @@ module BD
 
     def self.reward(user_game_profile, quest)
       Notification.new( {:metadata => user_game_profile.metadata, :notification_type => "quest",
-                         :notification_text => quest.metadata['congratesMsg'], :notification_data => {:rewards => quest.metadata['rewards']} })
+                          :notification_data => {:rewards => quest.metadata['rewards'], :id => quest.id} })
       if quest.metadata['rewards']['exp']
         user_game_profile.exp = user_game_profile.exp.to_i + quest.metadata['rewards']['exp']
       end
@@ -192,6 +193,19 @@ module BD
           user_game_profile.metadata[reward] += quest.metadata['rewards'][reward].to_i
         end
       end
+    end
+
+    def self.load_quests user_game_profile
+      descriptions = {}
+      user_game_profile.metadata['quests']['current'].each do | id |
+        quest = ::Quest.where(:id=>id).first
+        if quest
+          descriptions[id] = quest.metadata
+          descriptions[id]['status'] = self.status(user_game_profile, quest)
+          descriptions[id]['name'] = quest.name
+        end
+      end
+      descriptions
     end
 
   end

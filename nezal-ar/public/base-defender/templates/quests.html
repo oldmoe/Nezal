@@ -36,7 +36,7 @@
     <div class="close" onclick="Animation.hide('questDisplay');">
     </div>
     <div class="title">
-      <span class="text yellowText"> ${quest.title} </span>
+      <span class="text yellowText"> ${text.title} </span>
     </div>
     <div class="conditions">
       <div class="container">
@@ -51,13 +51,13 @@
             <div class="desc">
               <div class="text"> 
                 {if quest['status']['buildings'][building_index][condition_index]['status'] < 1 }
-                <div class="condMsg blueText"> ${quest['conditionMsgs'][building_index][condition_index]} </div>
+                <div class="condMsg blueText"> ${text['conditionMsgs'][building_index][condition_index]} </div>
                 <div class="condStatus"> 
                   ${quest['status']['buildings'][building_index][condition_index]['value']} /
                   ${quest['status']['buildings'][building_index][condition_index]['target']}
                 </div>
                 {else}
-                <div class="condMsg redText"> ${quest['conditionMsgs'][building_index][condition_index]} </div>
+                <div class="condMsg redText"> ${text['conditionMsgs'][building_index][condition_index]} </div>
                 <div class="condStatus"> 
                   <img style="width:28px;" src="${Loader.images.quests['correct.png'].src}"/>
                 </div>
@@ -76,13 +76,13 @@
           <div class="desc">
             <div class="text"> 
               {if quest['status']['resources'][condition_index]['status'] < 1 }
-              <div class="condMsg blueText"> ${quest['conditionMsgs'][condition_index]} </div>
+              <div class="condMsg blueText"> ${text['conditionMsgs'][condition_index]} </div>
               <div class="condStatus"> 
                 ${quest['status']['resources'][condition_index]['value']} /
                 ${quest['status']['resources'][condition_index]['target']}
               </div>
               {else}
-              <div class="condMsg redText"> ${quest['conditionMsgs'][condition_index]} </div>
+              <div class="condMsg redText"> ${text['conditionMsgs'][condition_index]} </div>
               <div class="condStatus"> 
                 <img style="width:28px;" src="${Loader.images.quests['correct.png'].src}"/>
               </div>
@@ -99,7 +99,7 @@
         <div class="bubble">
           <img src="${Loader.images.quests['questBaloon.png'].src}"/>
           <div class="bubbleText blueText">
-            <div style="display : table-cell;vertical-align:middle;height: 82px;"> ${quest.description} </div>
+            <div style="display : table-cell;vertical-align:middle;height: 82px;"> ${text.description} </div>
           </div>
         </div>
       </div>
