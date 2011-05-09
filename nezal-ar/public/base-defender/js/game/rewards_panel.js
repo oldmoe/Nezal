@@ -8,6 +8,10 @@ var RewardsPanel = Class.create({
 		this.game = game;
     this.rewards = this.game.user.data.reward_bags.queue
     this.noOfRewards = this.rewards.length
+    var self = this
+    this.rewards.each(function(reward){
+      reward['valid'] = self.validateReward(reward)
+    })
     var data = {rewards:this.rewards,
 							buttons:{'next':this.createButton({text:'Next'}), 'back':this.createButton({'text':'Back'}), 'use':this.createButton({text:'Use'})}
 				   }
@@ -15,7 +19,7 @@ var RewardsPanel = Class.create({
 		$('rewardsContainer').innerHTML = game.templatesManager.load('rewards', data);
     this.rewardsDiv = $$('#rewardsContainer #rewards')[0]
     this.rewardsDiv.setStyle({width:this.rewardWidth*this.rewards.length+"px"})
-    var self = this
+    
     $('rewardsBag').observe(game.mouseClickEvent,function(){
       $('rewardsContainer').show()
     })
@@ -53,17 +57,22 @@ var RewardsPanel = Class.create({
       this.rewardsDiv.setStyle({marginLeft:this.left+'px'})
     }
   },
-  useReward:function(id){
+  validateReward : function(reward){
     var totalStorage = this.game.quarryFactory.getTotalStorageCapacity()
+    reward_data = reward.reward_data
+     if(reward_data.rock+game.resources.rock <=totalStorage && 
+        reward_data.lumber+game.resources.lumber <= totalStorage){
+       return true
+     }
+    else return false
+  },
+  useReward:function(id){
+    var self = this
     this.rewards.each(function(reward){
       if(reward.id==id){
-        reward_data = reward.reward_data
-        console.log(reward_data.rock,game.resources.rock,totalStorage)
-        console.log(reward_data.lumber,game.resources.lumber,totalStorage)
-        if(reward_data.rock+game.resources.rock <=totalStorage && 
-        reward_data.lumber+game.resources.lumber <= totalStorage){
-          this.game.network.useReward(id)
-          this.game.reInitialize()
+        if(self.validateReward(reward)){
+          self.game.network.useReward(id)
+          self.game.reInitialize()
         }else{
           Notification.alert('You need more storage. Try to build or upgrade your storage buildings.')
         }
