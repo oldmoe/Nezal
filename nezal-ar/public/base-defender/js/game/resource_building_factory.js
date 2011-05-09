@@ -13,14 +13,14 @@ var ResourceBuildingFactory = Class.create(BuildingFactory, {
     //this._CollectResources();
   },
   	getTotalStorageCapacity : function(){
-		if(!game.townhallFactory.getTownhall()) return null;
-		var totalCapacity = game.townhallFactory.getTownhall().storageCapacity
-		var storages = game.storageFactory.factoryRegistry
-		for(key in storages){
-			totalCapacity +=storages[key].storageCapacity
-		}
-		this.totalStorageCapacity = totalCapacity
-		return totalCapacity
+  		if(!game.townhallFactory.getTownhall()) return null;
+  		var totalCapacity = game.townhallFactory.getTownhall().storageCapacity
+  		var storages = game.storageFactory.factoryRegistry
+  		for(key in storages){
+  			totalCapacity +=storages[key].storageCapacity
+  		}
+  		this.totalStorageCapacity = totalCapacity
+  		return totalCapacity
   	}
   
 //  _CollectResources : function(){

@@ -106,8 +106,7 @@ var BuildingDisplay = Class.create(Display, {
       this.sprites.moving = new DomImgSprite(this.owner, {img: this.movingImg});
     this.sprites.clickSprite = new DomImgSprite(this.owner,{img : this.transparentImg, area:this.area}, {clickable: true});
     this.sprites.clickSprite.img.setStyle({width:this.imgWidth+"px",height:this.imgHeight+"px"})
-    this.sprites.health = new DomMeterSprite(this.owner,{styleClass:{empty:'healthEmpty',full:'healthFull'},
-    shiftY:this.imgHeight/2,shiftZ:1000})
+    this.sprites.health = new DomMeterSprite(this.owner,{styleClass:{empty:'healthEmpty',full:'healthFull'},shiftZ:1000})
 		this.sprites.underConstruction = new DomImgSprite(this.owner, {img: this.constructionImg}, {shiftY: this.zdim});
     this.sprites.mouseover = new DomImgSprite(this.owner, {img: this.mouseoverImg});
     this.sprites.mouseover.hide();

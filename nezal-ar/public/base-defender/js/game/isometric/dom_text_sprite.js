@@ -5,7 +5,7 @@ var DomTextSprite = Class.create(DomSprite, {
     $super(owner, properties, properties);
   	this.div.style.display = "none"
     this.textAssets = textAssets;
-    this.span = $(document.createElement('DIV'));
+    this.span = $(document.createElement('SPAN'));
     this.div.appendChild(this.span);
     this.span.innerHTML = this.owner[textAssets]();
     if( this.centered ){

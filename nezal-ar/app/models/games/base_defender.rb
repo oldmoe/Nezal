@@ -241,6 +241,8 @@ class BaseDefender < Metadata
       validation = collect_building(user_game_profile, data)
     elsif data['event'] == 'notification_ack'
       validation = Notification.delete({:profile => user_game_profile, :id => data['id']})
+    elsif data['event'] == 'use_reward'
+      validation = RewardBag.use({:profile => user_game_profile, :id => data['id']})
     elsif data['event'] == 'attack'
       repair_jobs user_game_profile
       validation = initialize_simulate_attack user_game_profile, data
@@ -463,7 +465,8 @@ class BaseDefender < Metadata
       'idle_workers' => 1,
       'rock' => 50000,
       'lumber' => 50000,
-      'reward_bags' => {},
+      'reward_bags' => {'id_generator' => 4, 'queue' => [{:id=>1,:reward_data=>{:gold=>0,:rock=>100,:lumber=>100}},
+      {:id=>2,:reward_data=>{:gold=>0,:rock=>100,:lumber=>200}},{:id=>3,:reward_data=>{:gold=>0,:rock=>200,:lumber=>100}}]},
       'notifications' => {'id_generator' => 0, 'queue' => []},
       'attacks' => {},
       'map' => (0..72).to_a.map{(0..24).to_a.map{0}},
