@@ -15,6 +15,7 @@
   bottom: 0px;
   cursor: pointer;
   height: 60px;
+  width: 64px;
   position: absolute;
   right: 177px;
 }
@@ -25,11 +26,11 @@
 }
 
 #buildButton img {
-  width: 90%;
+  width: 60px;
 }
 
 #buildButton:hover img {
-  width: 100%;
+  width: 64px;
 }
 
 #buildButton #buildText{
@@ -48,8 +49,8 @@
 
 #buildButton:hover #buildText{
   top: -38px;
-  left: 0;
-  font-size: 15px;
+  left: 3px;
+  font-size: 14px;
 }
 
 #interaction {
