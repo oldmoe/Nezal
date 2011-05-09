@@ -82,6 +82,10 @@ var Network = Class.create({
     return this.contactTheBoss({ 'event' :'buy_worker'});
   },
   
+  useReward : function(rewardId){
+    return this.contactTheBoss({ 'event' :'use_reward','id':rewardId});
+  },
+  
   assignWorker : function(name, coords){
     return this.contactTheBoss({ 'event' :'assign_worker', 'building' : name, 'coords' : coords });
   },

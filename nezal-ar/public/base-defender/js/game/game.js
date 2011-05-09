@@ -252,6 +252,7 @@ var Game = Class.create({
         this.buildingMode.on( newBuilding, function(){} );
       }
     }
+    this.rewardsPanel = new RewardsPanel(this)
     this.controlsPanel = new ControlsPanel(this)
     this.tutorial = new Tutorial(this);
     this.tutorial.fire();

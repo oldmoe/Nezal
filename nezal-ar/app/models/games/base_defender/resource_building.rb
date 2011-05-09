@@ -28,7 +28,7 @@ module BD
       assigned_workers = building['assigned_workers']
       assigned_workers = 0 if(assigned_workers.nil?)
       building_capacity = game_metadata['buildings'][@name]['levels'][building['level'].to_s]['capacity']
-      total_storage = self.calculate_total_storage_left(user_game_profile.metadata, building, game_metadata)
+      total_storage = self.calculate_total_storage(user_game_profile.metadata, game_metadata)
       unit_per_worker_minute = game_metadata['buildings'][@name]['levels'][building['level'].to_s]['unit_per_worker_minute']
 
       total_per_minute = unit_per_worker_minute * assigned_workers
@@ -45,7 +45,7 @@ module BD
       return collected, remained
     end
     
-    def self.calculate_total_storage_left(profile_metadata, building, game_metadata)
+    def self.calculate_total_storage(profile_metadata, game_metadata)
       total_storage = 0
       profile_metadata['townhall'].values.each do |townhall|
         total_storage += game_metadata['buildings']['townhall']['levels'][townhall['level'].to_s]['storageCapacity'].to_i

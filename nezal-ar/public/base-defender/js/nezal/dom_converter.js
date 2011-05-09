@@ -5,5 +5,10 @@ var DomConverter = Class.create({
   
   convert : function(htmlSnippet){
     $('dom_converter').innerHTML = htmlSnippet;
+  },
+  getHTML : function(child){
+    $('dom_converter').innerHTML = '';
+    $('dom_converter').appendChild(child);
+    return $('dom_converter').innerHTML
   }
 });

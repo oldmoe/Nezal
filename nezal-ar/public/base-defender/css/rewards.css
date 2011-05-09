@@ -1,0 +1,91 @@
+#rewardsBag{
+  position:absolute;
+  left: 10px;
+  top: 362px;
+  z-index:1;
+  cursor:pointer;
+}
+#rewardsBag img{
+  width:50px; 
+}
+#rewards .reward .closeRewards{
+    background-color: Sienna;
+    cursor: pointer;
+    left: 165px;
+    position: absolute;
+    top: 5px;
+}
+#rewardsContainer{
+  width:185px;
+  overflow:hidden;
+  position: absolute;
+  z-index: 1;
+  left: 304px;
+  top: 161px;
+  background-color: SlateGray;
+  border-radius: 12px 12px 12px 12px;
+}
+#rewards .reward{
+  float:left;
+  width:185px;
+  height:154px;
+}
+
+
+#rewards .rewardText{
+	color: #FCED70;
+    padding-top: 2px;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    z-index: 0;
+}
+
+#rewards .rewardControl{
+	float: left;
+    height: 20px;
+    margin-right: 55px;
+    margin-top: 12px;
+    width: 63px;
+}
+#rewards .useReward{
+	margin-left: 57px;
+}
+#rewards .next{
+  margin-right:0px;
+}
+#rewards .rewardValue{
+  margin-left : 61px;
+}
+a.defualtButton {
+    color : #FCED70;
+    background: transparent url('../images/game_elements/button.png') no-repeat  scroll top right;
+    display: block;
+	  width : 63px;
+    font: bold 13px showG, arial, sans-serif;
+    height: 24px;
+	  text-align:center;
+	  cursor:pointer;
+    text-decoration: none;
+}
+
+a.defualtButton .defaultButtonText {
+    background: transparent url('../images/game_elements/button.png') no-repeat;
+    display: block;
+    line-height: 12px;
+    padding: 5px 0 5px 0px;
+} 
+a.defualtButton:active {
+    background-position: bottom right;
+    color: #000;
+    outline: none; /* hide dotted outline in Firefox */
+}
+
+a.defualtButton:active .defaultButtonText {
+    padding: 6px 0 4px 0px; /* push text down 1px */
+} 
+a.defualtButton:hover {
+    background-position: bottom right;
+    color: #FFF;
+    outline: none; /* hide dotted outline in Firefox */
+}
