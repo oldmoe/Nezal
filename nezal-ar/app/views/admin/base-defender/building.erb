@@ -191,7 +191,7 @@
   </div>
 </textarea>
 
-<textarea id="populateTwins" style="display:none;">
+<textarea id="populateLimTwins" style="display:none;">
   {for building in buildings.keys()}
     <div id="${idGenerator}">
       <select>
@@ -200,6 +200,25 @@
       {/for}
       </select>
       <input type="text" value="${buildings.get(building)}">
+      <a style="margin-left:10px" href="javascript:void(0)" onclick="$('${idGenerator}').remove(); //${idGenerator++}">X</a>
+      <br>
+    </div>
+  {/for}
+</textarea>
+
+<textarea id="populateDepTwins" style="display:none;">
+  {for building in buildings.keys()}
+    <div id="${idGenerator}">
+      <select>
+      {for buildingName in buildingNames}
+        <option value="${buildingName}" {if buildingName == building} SELECTED {/if}>${buildingName}</option>
+      {/for}
+      </select>
+      <select>
+      {for level in allBuildingLevels}
+        <option value="${level}" {if level == buildings.get(building)} SELECTED {/if}>${level}</option>
+      {/for}
+      </select>
       <a style="margin-left:10px" href="javascript:void(0)" onclick="$('${idGenerator}').remove(); //${idGenerator++}">X</a>
       <br>
     </div>
@@ -306,10 +325,10 @@ for( attrName in buildingLevel ){
      $('buildingAttributes').innerHTML += TrimPath.processDOMTemplate("comboRow", {attrName : attrName, attrValue : attrValue});
   } else if(attrName == "dependency"){
     $('buildingAttributes').innerHTML += TrimPath.processDOMTemplate("dependencyRow");
-    $('buildingDependencies').innerHTML = TrimPath.processDOMTemplate("populateTwins", {buildings : new Hash(attrValue["buildings"])});
+    $('buildingDependencies').innerHTML = TrimPath.processDOMTemplate("populateDepTwins", {buildings : new Hash(attrValue["buildings"])});
   } else if(attrName == "limiting"){
     $('buildingAttributes').innerHTML += TrimPath.processDOMTemplate("limitingRow", {global : attrValue["global"]});
-    $('othersLimited').innerHTML = TrimPath.processDOMTemplate("populateTwins", {buildings : new Hash(attrValue["others"])});
+    $('othersLimited').innerHTML = TrimPath.processDOMTemplate("populateLimTwins", {buildings : new Hash(attrValue["others"])});
   } else if( attrName == "specs" ){
     for (specName in attrValue) {
       $('buildingAttributes').innerHTML += TrimPath.processDOMTemplate("basicRow", {attrName : "spec_" + specName, attrValue : attrValue[specName]});
