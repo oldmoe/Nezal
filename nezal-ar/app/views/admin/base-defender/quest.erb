@@ -429,105 +429,61 @@ var Quest = {
 
 </div>
 
-
+<%= erb :language %>
 
 <script type='text/javascript'>
-  var Language = {
-    
-    metadata : null,
 
-    initialize : function(){
-      new Ajax.Request( '/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/locale/metadata' , {
-                       method : 'get',
-                       onSuccess : function(response){
-                          Language.metadata = JSON.parse(response.responseText);
-                          Language.display();
-                       }
-                      });
-    },
-
-    initializeHash : function(){
-      for(defaultLang in Language.metadata)
-      {
-        if(!Language.metadata[defaultLang].quests) Language.metadata[defaultLang].quests = {};
-        if(!Language.metadata[defaultLang].quests[Quest.id]) Language.metadata[defaultLang].quests[Quest.id]={};
-        if(!Language.metadata[defaultLang].quests[Quest.id]['conditionMsgs']) Language.metadata[defaultLang].quests[Quest.id]['conditionMsgs']={};
-        for(var building in Quest.metadata.conditions.buildings)
-        {
-          if(!Language.metadata[defaultLang].quests[Quest.id].conditionMsgs[building])
-            Language.metadata[defaultLang].quests[Quest.id].conditionMsgs[building] = {};
-        }
-      }
-    },
-
-    saveToServer : function(){
-      new Ajax.Request( '/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/locale/metadata' , {
-                        method : 'put',
-                        parameters : { "data" : JSON.stringify(this.metadata) },
-                        onSuccess : function(response){
-                          Language.showSuccessMsg();
-                          Language.initialize();  
-                        },
-                        onFailure : function(response){
-                          Language.showErrorMsg();
-                        }
-                       
-                   });    
-    },
-
-    display : function(){
-      var defaultLang = null;
-      for (defaultLang in Language.metadata) break;
-      this.initializeHash();
-      $('globalData').innerHTML = TrimPath.processDOMTemplate("globalDataTemplate", { languages : Language.metadata	,
-                                                                                      defaultLang : defaultLang,
-                                                                                      data : this.metadata[defaultLang].quests[Quest.name] });
-    },
-    
-    save : function(){
-      var language = $('language').value;
-      this.metadata[language].quests[Quest.id].title = $$('#globalData #title')[0].value;
-      this.metadata[language].quests[Quest.id].description = $$('#globalData #description')[0].value;
-      this.metadata[language].quests[Quest.id].congratesMsg = $$('#globalData #congratesMsg')[0].value;
-      this.metadata[language].quests[Quest.id].conditionMsgs = {};
-      $$('#globalData .building_condition_msg input').each(function(input){
-                                                            if(!Language.metadata[language].quests[Quest.id].conditionMsgs[input.id])
-                                                              Language.metadata[language].quests[Quest.id].conditionMsgs[input.id] = {};
-                                                            var building = input.id.split('__')[0];
-                                                            var cond = input.id.split('__')[1];
-                                                            if(!Language.metadata[language].quests[Quest.id].conditionMsgs[building])
-                                                              Language.metadata[language].quests[Quest.id].conditionMsgs[building] = {};
-                                                            Language.metadata[language].quests[Quest.id].conditionMsgs[building][cond] = input.value;
-                                                          });
-      $$('#globalData .resource_condition_msg input').each(function(input){
-                                                            Language.metadata[language].quests[Quest.id].conditionMsgs[input.id] = input.value;
-                                                          });
-      this.saveToServer();
-    },
-
-    changeLanguage : function(){
-      var defaultLang = $('language').value; 
-      this.initializeHash();
-      $('globalData').innerHTML = TrimPath.processDOMTemplate("globalDataTemplate", { languages : data.languages,
-                                                                                      defaultLang : defaultLang,
-                                                                                      data : this.metadata[defaultLang].quests[Quest.id] });
-    },
-
-    showSuccessMsg : function(){
-      $('langReqStatus').innerHTML = "Saved successfully"
-      $('langReqStatus').className = "success"
-      $('langReqStatus').show();
-      window.setTimeout( function(){$('langReqStatus').hide()}, 5000 )
-    },
-
-    showErrorMsg : function(){
-      $('langReqStatus').innerHTML = "Error, your changes are not saved!"
-      $('langReqStatus').className = "error"
-      $('langReqStatus').show();
-      window.setTimeout( function(){$('langReqStatus').hide()}, 10000 )
+Language.initializeHash = function(){
+  for(defaultLang in Language.metadata)
+  {
+    if(!Language.metadata[defaultLang].quests) Language.metadata[defaultLang].quests = {};
+    if(!Language.metadata[defaultLang].quests[Quest.id]) Language.metadata[defaultLang].quests[Quest.id]={};
+    if(!Language.metadata[defaultLang].quests[Quest.id]['conditionMsgs']) Language.metadata[defaultLang].quests[Quest.id]['conditionMsgs']={};
+    for(var building in Quest.metadata.conditions.buildings)
+    {
+      if(!Language.metadata[defaultLang].quests[Quest.id].conditionMsgs[building])
+        Language.metadata[defaultLang].quests[Quest.id].conditionMsgs[building] = {};
     }
+  }
+}
 
-  };
+Language.display = function(){
+  var defaultLang = null;
+  for (defaultLang in Language.metadata) break;
+  this.initializeHash();
+  $('globalData').innerHTML = TrimPath.processDOMTemplate("globalDataTemplate", { languages : Language.metadata	,
+                                                                                  defaultLang : defaultLang,
+                                                                                  data : this.metadata[defaultLang].quests[Quest.name] });
+}
+
+Language.save = function(){
+  var language = $('language').value;
+  this.metadata[language].quests[Quest.id].title = $$('#globalData #title')[0].value;
+  this.metadata[language].quests[Quest.id].description = $$('#globalData #description')[0].value;
+  this.metadata[language].quests[Quest.id].congratesMsg = $$('#globalData #congratesMsg')[0].value;
+  this.metadata[language].quests[Quest.id].conditionMsgs = {};
+  $$('#globalData .building_condition_msg input').each(function(input){
+                                                        if(!Language.metadata[language].quests[Quest.id].conditionMsgs[input.id])
+                                                          Language.metadata[language].quests[Quest.id].conditionMsgs[input.id] = {};
+                                                        var building = input.id.split('__')[0];
+                                                        var cond = input.id.split('__')[1];
+                                                        if(!Language.metadata[language].quests[Quest.id].conditionMsgs[building])
+                                                          Language.metadata[language].quests[Quest.id].conditionMsgs[building] = {};
+                                                        Language.metadata[language].quests[Quest.id].conditionMsgs[building][cond] = input.value;
+                                                      });
+  $$('#globalData .resource_condition_msg input').each(function(input){
+                                                        Language.metadata[language].quests[Quest.id].conditionMsgs[input.id] = input.value;
+                                                      });
+  this.saveToServer();
+}
+
+Language.changeLanguage = function(){
+  var defaultLang = $('language').value; 
+  this.initializeHash();
+  $('globalData').innerHTML = TrimPath.processDOMTemplate("globalDataTemplate", { languages : data.languages,
+                                                                                  defaultLang : defaultLang,
+                                                                                  data : this.metadata[defaultLang].quests[Quest.id] });
+}
 </script>
 
 <!----------- Quest Description Template -------->

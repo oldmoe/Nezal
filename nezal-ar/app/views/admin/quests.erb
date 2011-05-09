@@ -1,4 +1,15 @@
+<%= erb :language %>
 <script type='text/javascript'>
+Language.display = function(){
+    Quests.arrange ();
+}
+Language.deleteQuest = function(questId){
+    for(lang in Language.metadata)
+    {
+      delete(Language.metadata[lang].quests[questId]);
+    }
+    Language.saveToServer();
+}
 var Quests = {
     gameName: "<%=@game.name%>",
     arrange : function() {
@@ -8,15 +19,18 @@ var Quests = {
                                             if(parent && parent.length>0)
                                             {
                                                 var quest = $(id);
-                                                console.log(quest);
                                                 quest.setStyle("padding-left : 10px;")
                                                 $(parent).insert(quest);
                                             }
                                         });  
-        } 
+    },
+    remove : function(questId){
+      Language.deleteQuest(questId);
+      document.getElementById('delete_quest_' + questId).submit()
+    } 
 }
 $(document).observe('dom:loaded',function(){
-    Quests.arrange ();
+    Language.initialize();
 });
 </script>
 
@@ -72,7 +86,7 @@ $(document).observe('dom:loaded',function(){
           </span>
           <form id="delete_quest_<%=quest.id%>" action="/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/quests/<%=quest.id%>" method="POST" style="display:inline">
             <input type="hidden" name="_method" value="put"/>
-            <a href="#" onclick="document.getElementById('delete_quest_<%=quest.id%>').submit(); return false;" class="submit_links"> x </a>
+            <a href="#" onclick="Quests.remove(<%=quest.id%>);" class="submit_links"> x </a>
           </form> 
         </div>
       <% end %>

@@ -1,0 +1,52 @@
+<script type='text/javascript'>
+  var Language = {
+    
+    metadata : null,
+
+    initialize : function(){
+      new Ajax.Request( '/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/locale/metadata' , {
+                       method : 'get',
+                       onSuccess : function(response){
+                          Language.metadata = JSON.parse(response.responseText);
+                          Language.display();
+                       }
+                      });
+    },
+
+    saveToServer : function(){
+      new Ajax.Request( '/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/locale/metadata' , {
+                        method : 'put',
+                        parameters : { "data" : JSON.stringify(this.metadata) },
+                        onSuccess : function(response){
+                          Language.showSuccessMsg();
+                          Language.initialize();  
+                        },
+                        onFailure : function(response){
+                          Language.showErrorMsg();
+                        }
+                       
+                   });    
+    },
+
+    showSuccessMsg : function(){
+      $('langReqStatus').innerHTML = "Saved successfully"
+      $('langReqStatus').className = "success"
+      $('langReqStatus').show();
+      window.setTimeout( function(){$('langReqStatus').hide()}, 5000 )
+    },
+
+    showErrorMsg : function(){
+      $('langReqStatus').innerHTML = "Error, your changes are not saved!"
+      $('langReqStatus').className = "error"
+      $('langReqStatus').show();
+      window.setTimeout( function(){$('langReqStatus').hide()}, 10000 )
+    },
+
+    display : function(){
+
+    }
+
+  };
+Language.initialize();
+</script>
+

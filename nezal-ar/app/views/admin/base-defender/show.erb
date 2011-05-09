@@ -164,7 +164,7 @@ deleteAllUserProfiles = function(){
     <LABEL for="lang" class="label">Supported Languages</LABEL>
     <div class="languageList subItem">
     {for language in Game.metadata.languages}
-	    <a href="" class="column">${language_index}</a>
+	    <a href="/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/locale/${language}/edit" class="column">${language_index}</a>
 	    <a href="javascript:void(0)" onclick="Game.deleteLanguage('${language_index}');">Delete</a>
       <br/>
     {/for}

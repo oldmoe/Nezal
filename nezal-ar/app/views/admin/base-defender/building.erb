@@ -16,74 +16,32 @@
   }
 </script>
 
+<%= erb :language %>
+
 <script type='text/javascript'>
-  var Language = {
+
+Language.display = function(){
+  var defaultLang = null;
+  for (defaultLang in data.languages) break;
+  $('globalData').innerHTML = TrimPath.processDOMTemplate("globalDataTemplate", { languages : data.languages,
+                                                                                  defaultLang : defaultLang,
+                                                                                  data : this.metadata[defaultLang].buildings[name] });
+}
     
-    metadata : null,
+Language.save = function(){
+  var language = $('language').value;
+  this.metadata[language].buildings[name].name = $('name').value;
+  this.metadata[language].buildings[name].desc = $('description').value;
+  this.metadata[language].buildings[name].upgrade_desc[level]  = $('levelDesc').value;
+  this.saveToServer();
+}
 
-    initialize : function(){
-      new Ajax.Request( '/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/locale/metadata' , {
-                       method : 'get',
-                       onSuccess : function(response){
-                          Language.metadata = JSON.parse(response.responseText);
-                          Language.display();
-                       }
-                      });
-    },
-
-    saveToServer : function(){
-      new Ajax.Request( '/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/locale/metadata' , {
-                        method : 'put',
-                        parameters : { "data" : JSON.stringify(this.metadata) },
-                        onSuccess : function(response){
-                          Language.showSuccessMsg();
-                          Language.initialize();  
-                        },
-                        onFailure : function(response){
-                          Language.showErrorMsg();
-                        }
-                       
-                   });    
-    },
-
-    display : function(){
-      var defaultLang = null;
-      for (defaultLang in data.languages) break;
-      $('globalData').innerHTML = TrimPath.processDOMTemplate("globalDataTemplate", { languages : data.languages,
-                                                                                      defaultLang : defaultLang,
-                                                                                      data : this.metadata[defaultLang].buildings[name] });
-    },
-    
-    save : function(){
-      var language = $('language').value;
-      this.metadata[language].buildings[name].name = $('name').value;
-      this.metadata[language].buildings[name].desc = $('description').value;
-      this.metadata[language].buildings[name].upgrade_desc[level]  = $('levelDesc').value;
-      this.saveToServer();
-    },
-
-    changeLanguage : function(){
-      var defaultLang = $('language').value;      
-      $('globalData').innerHTML = TrimPath.processDOMTemplate("globalDataTemplate", { languages : data.languages,
-                                                                                      defaultLang : defaultLang,
-                                                                                      data : this.metadata[defaultLang].buildings[name] });
-    },
-
-    showSuccessMsg : function(){
-      $('langReqStatus').innerHTML = "Saved successfully"
-      $('langReqStatus').className = "success"
-      $('langReqStatus').show();
-      window.setTimeout( function(){$('langReqStatus').hide()}, 5000 )
-    },
-
-    showErrorMsg : function(){
-      $('langReqStatus').innerHTML = "Error, your changes are not saved!"
-      $('langReqStatus').className = "error"
-      $('langReqStatus').show();
-      window.setTimeout( function(){$('langReqStatus').hide()}, 10000 )
-    }
-
-  };
+Language.changeLanguage = function(){
+  var defaultLang = $('language').value;      
+  $('globalData').innerHTML = TrimPath.processDOMTemplate("globalDataTemplate", { languages : data.languages,
+                                                                                  defaultLang : defaultLang,
+                                                                                  data : this.metadata[defaultLang].buildings[name] });
+}
 </script>
 
 <div id="backLink">
