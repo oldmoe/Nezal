@@ -208,12 +208,12 @@ var Game = Class.create({
   	$('home').hide()
     this.gameStatus = this.network.initializeGame();
     this.data = this.gameStatus.game_data.metadata;
-    this.reflectStatusChange();
     var self = this;
-    Language.getLanguage(game.user.locale, function() {
+    Language.getLanguage(this.gameStatus.user_data.locale, function() {
       var language = Language.userLanguage;
       self.network.fetchTemplate( "statics/" + language + ".html", function(responseText){
         Text = JSON.parse(responseText);
+        self.reflectStatusChange();
         self.scene.render();
       });
     });
@@ -225,8 +225,8 @@ var Game = Class.create({
       var language = Language.userLanguage;
       self.network.fetchTemplate( "statics/" + language + ".html", function(responseText){
         Text = JSON.parse(responseText);
+        self.reflectStatusChange();
         self.scene.render();
-        this.reflectStatusChange();
       });
     });
   },
