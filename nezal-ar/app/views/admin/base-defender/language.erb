@@ -1,52 +1,91 @@
+<%= erb :language %>
 <script type='text/javascript'>
-  var Language = {
-    
-    metadata : null,
+var lang = "<%=@language%>"
 
-    initialize : function(){
-      new Ajax.Request( '/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/locale/metadata' , {
-                       method : 'get',
-                       onSuccess : function(response){
-                          Language.metadata = JSON.parse(response.responseText);
-                          Language.display();
-                       }
-                      });
-    },
+Language.addWord = function() {
+  var label = $$('#addWord #word')[0].value;
+  var value =  $$('#addWord #translation')[0].value;
+  Language.metadata[lang]['labels'][label] = value;
+  Language.saveToServer();
+  window.location = window.location;
+}
 
-    saveToServer : function(){
-      new Ajax.Request( '/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/locale/metadata' , {
-                        method : 'put',
-                        parameters : { "data" : JSON.stringify(this.metadata) },
-                        onSuccess : function(response){
-                          Language.showSuccessMsg();
-                          Language.initialize();  
-                        },
-                        onFailure : function(response){
-                          Language.showErrorMsg();
-                        }
-                       
-                   });    
-    },
+Language.deleteWord = function(word) {
+  delete(Language.metadata[lang]['labels'][word]);
+  Language.saveToServer();
+  window.location = window.location;
+}
 
-    showSuccessMsg : function(){
-      $('langReqStatus').innerHTML = "Saved successfully"
-      $('langReqStatus').className = "success"
-      $('langReqStatus').show();
-      window.setTimeout( function(){$('langReqStatus').hide()}, 5000 )
-    },
+Language.save = function() {
+  for(var item in Language.metadata[lang]['labels'])
+  {
+    var translation = $$('#basicData #translation_' + item)[0].value;
+    Language.metadata[lang]['labels'][item] = translation;
+  }
+  Language.saveToServer();
+  window.location = window.location;
+}
 
-    showErrorMsg : function(){
-      $('langReqStatus').innerHTML = "Error, your changes are not saved!"
-      $('langReqStatus').className = "error"
-      $('langReqStatus').show();
-      window.setTimeout( function(){$('langReqStatus').hide()}, 10000 )
-    },
+Language.display = function() {
+  if(!Language.metadata[lang]['labels'])
+    Language.metadata[lang]['labels'] = {};
+  $('basicData').innerHTML = TrimPath.processDOMTemplate("itemsTemplate");
+}
 
-    display : function(){
-
-    }
-
-  };
 Language.initialize();
 </script>
 
+<div id="game">
+  <div id="backLink"> 
+    <a href="/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/metadata/edit">
+      Back
+    </a>
+  </div>
+  <div id="game_name">
+    Buttons & Menu Labels : 
+    <span class="title" style="color :  DarkOliveGreen;">
+      <%=@language%> 
+    </span>
+  </div>
+  <div class="separator"></div>
+  <div id="addWord" class="subItem">
+    <LABEL class="label"> Add a word </LABEL>
+    <br/>
+    <div class="form_row subItem">
+      <LABEL for="word">Word </LABEL>
+      <INPUT type="text" id="word" name='word'>
+      <LABEL for="translation">Translation </LABEL>
+      <INPUT type="text" id="translation" name='translation'>
+    </div>
+    <div class="form_row subItem">  
+      <input class="submit" type="submit" value="Save" onclick="Language.addWord();">
+    </div>
+  </div>
+  <div class="separator"></div>
+  <div id='basicData' class="subItem">
+  </div>
+  <div id="langReqStatus">
+  </div>
+
+</div>
+
+<!-----------  Items Template ------------------->
+<div id="itemsTemplate" style="display:none;" >
+  <LABEL class="label">List of existing words </LABEL>
+  <br/>
+  <div class="subItem">
+    {for word in Language.metadata[lang]['labels']}
+      <div class="form_row">
+        <LABEL for="translation" style="width:15%;"> ${word_index} </LABEL>
+        <INPUT type="text" id="translation_${word_index}" name='translation' value="${word}">
+        <a href="" onclick="Language.deleteWord('${word_index}'); return false;" style="font-weight:bold; margin-left:10px;">
+          x
+        </a>
+      </div>
+    {/for}
+    <div class="form_row">  
+      <input class="submit" type="submit" value="Save" onclick="Language.save();">
+    </div>
+  </div>
+</div>
+<!----------------------------------------------->
