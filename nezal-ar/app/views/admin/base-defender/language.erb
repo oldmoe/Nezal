@@ -29,6 +29,11 @@ Language.save = function() {
 Language.display = function() {
   if(!Language.metadata[lang]['labels'])
     Language.metadata[lang]['labels'] = {};
+  for(var item in Language.metadata['english']['labels'])
+  {
+    if(!Language.metadata[lang]['labels'][item])
+      Language.metadata[lang]['labels'][item] = '';
+  }
   $('basicData').innerHTML = TrimPath.processDOMTemplate("itemsTemplate");
 }
 
