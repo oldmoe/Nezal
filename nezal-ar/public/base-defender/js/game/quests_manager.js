@@ -54,7 +54,7 @@ var QuestsManager = Class.create({
     $('questDisplay').innerHTML = '';
     $('questDisplay').innerHTML = this.game.templatesManager.load("quest", 
                                     {quest: this.game.user.data.quests.descriptions[questId],
-                                     text : Text.quests[questId]});
+                                     text : Text.quests[questId] || {'conditionMsgs' : {}} });
     this.game.addLoadedImagesToDiv('questDisplay')									
     $('questDisplay').show();
     $('interaction').show();
@@ -62,7 +62,8 @@ var QuestsManager = Class.create({
   },
 
   displayCongratesMsg : function(msg){
-    msg.text = Text.quests[msg['data']['id']]['congratesMsg']
+    if(Text.quests[msg['data']['id']])
+      msg.text = Text.quests[msg['data']['id']]['congratesMsg']
     $('msg').innerHTML = this.game.templatesManager.load("congrates", {msg : msg});
   	this.game.addLoadedImagesToDiv('msg')
     $('interaction').show();
@@ -100,7 +101,7 @@ var QuestsManager = Class.create({
     $('msg').innerHTML = ""
     $('questDisplay').innerHTML = ""
     this.render();
-    var notifications = this.game.user.data.notifications.queue.findAll(function(n) { return n['type'] == 'quest'; });
+    var notifications = this.game.user.data.notifications.queue.findAll(function(n) { return n['type'] ==   'quest'; });
     if( notifications && notifications.length > 0 ) {
 			$('interaction').hide();
       this.displayCongratesMsg(notifications.first());

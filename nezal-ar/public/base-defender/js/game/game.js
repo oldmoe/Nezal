@@ -211,11 +211,18 @@ var Game = Class.create({
     var self = this;
     Language.getLanguage(this.gameStatus.user_data.locale, function() {
       var language = Language.userLanguage;
-      self.network.fetchTemplate( "statics/" + language + ".html", function(responseText){
-        Text = JSON.parse(responseText);
+      if(!Language[language])
+      {
+        self.network.fetchTemplate( "statics/" + language + ".html", function(responseText){
+          Language[language] = responseText;
+          Text = JSON.parse(responseText);
+          self.reflectStatusChange();
+          self.scene.render();
+        });
+      }else{
         self.reflectStatusChange();
         self.scene.render();
-      });
+      }
     });
   },
 
