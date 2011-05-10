@@ -480,7 +480,7 @@ Language.save = function(){
 Language.changeLanguage = function(){
   var defaultLang = $('language').value; 
   this.initializeHash();
-  $('globalData').innerHTML = TrimPath.processDOMTemplate("globalDataTemplate", { languages : data.languages,
+  $('globalData').innerHTML = TrimPath.processDOMTemplate("globalDataTemplate", { languages : Language.metadata,
                                                                                   defaultLang : defaultLang,
                                                                                   data : this.metadata[defaultLang].quests[Quest.id] });
 }
