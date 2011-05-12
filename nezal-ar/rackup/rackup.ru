@@ -1,5 +1,4 @@
 require 'erb'
-require 'rack/router'
 require 'rack/file'
 require 'sinatra'
 require 'yajl/json_gem'
@@ -16,7 +15,7 @@ use	Rack::MethodOverride
 
 use Rack::Static, :urls => [ "/stylesheets", "/javascripts", "/favicon.ico", "/game_images", "/html/facebook"], :root => "public"  
 
-router = Rack::Router.new(nil) do |r|
+app = Rack::Builder.new do
   app_configs = {}
   FB_CONFIGS::each { | app_config | app_configs[app_config[1]['name']] = app_config[1]['game_name'] }
   app_configs.each_pair do | app, game_name|
@@ -25,19 +24,28 @@ router = Rack::Router.new(nil) do |r|
     sub_dirs.delete("..")
     sub_dirs.each do |sub_dir|
       if ::File.directory?(::File.join("public" , game_name, sub_dir))
-        r.map "/fb-games/" + app + "/" + sub_dir, :to => Rack::File.new( ::File.join("public" , game_name, sub_dir))
-        r.map "/k-games/" + app + "/" + sub_dir, :to => Rack::File.new( ::File.join("public" , game_name, sub_dir))  
-        r.map "/" + app + "/" + sub_dir, :to => Rack::File.new( ::File.join("public" , game_name, sub_dir))
-      else
-        use Rack::Static, :urls => [ ::File.join( "/" + game_name, sub_dir) ] , :root => "public"
+        map "/fb-games/" + app + "/" + sub_dir do
+          run Rack::File.new( ::File.join("public" , game_name, sub_dir))
+        end
+        map "/k-games/" + app + "/" + sub_dir do
+          run Rack::File.new( ::File.join("public" , game_name, sub_dir))  
+        end
+        map "/" + app + "/" + sub_dir do
+          run Rack::File.new( ::File.join("public" , game_name, sub_dir))
+        end
       end
     end
   end
-  r.map "/nezal-admin", :to => AdminController
-  r.map "/fb-games/users", :to => UsersController
-  r.map "/fb-games", :to => GamesController
-  r.map "/k-games", :to => GamesController
+  app_configs.values.uniq.each do | game_name|
+    admin_class_name = ActiveSupport::Inflector.camelize(game_name.sub("-", "_") + '_admin_controller')
+    admin_class = Kernel.const_get(admin_class_name)
+    map "/nezal-admin" do run admin_class end
+    game_class_name = ActiveSupport::Inflector.camelize(game_name.sub("-", "_") + '_controller')
+    game_class = Kernel.const_get(game_class_name)
+    map "/fb-games" do run game_class end
+    map "/k-games" do run game_class end
+  end
+  map "/fb-games/users" do run UsersController end
 end
 
-run router
-
+run app

@@ -27,7 +27,7 @@ var Game = {
 
   addLanguage : function(lang){
     this.metadata.languages[lang] = {};
-    this.saveToServer();
+    this.initLanguage(lang);
   },
 
   saveToServer : function(){
@@ -36,13 +36,23 @@ var Game = {
                       parameters : { "data" : JSON.stringify(this.metadata) },
                       onSuccess : function(response){
                         Game.showSuccessMsg();
-                        Game.initialize();  
+                        Game.initialize();
                       },
                       onFailure : function(response){
                         Game.showErrorMsg();
                       }
                      
                  });    
+  },
+
+  initLanguage : function(lang){
+    new Ajax.Request( '/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/locale/metadata/init' , {
+                        method : 'put',
+                        parameters : { "language" : lang },
+                        onSuccess : function(response){
+                          Game.saveToServer();
+                        }
+                    })  
   },
 
   showSuccessMsg : function(){
@@ -99,7 +109,7 @@ deleteAllUserProfiles = function(){
 </script>
 
 <div id="backLink">   
-  <a href="/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/">
+  <a href="/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>">
     Back
   </a>
 </div>

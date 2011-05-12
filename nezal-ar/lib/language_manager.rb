@@ -4,6 +4,7 @@ class LanguageManager
     generate_language_file(game_name, language)
     file_path = File.join(self.path(game_name), language+'.html')
     content = JSON.parse(File.read(file_path))
+    content
   end
 
   def self.save_data(game_name, language, data)
@@ -12,7 +13,6 @@ class LanguageManager
     file = File.new(file_path, 'w')      
     file.write(JSON.generate(data))
     file.close
-    puts load_data(game_name, language)
   end
 
   def self.generate_language_file(game_name, language)

@@ -4,24 +4,33 @@
     metadata : null,
 
     initialize : function(){
-      new Ajax.Request( '/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/locale/metadata' , {
+      console.log("Initing")
+      new Ajax.Request( '/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/locale/metadata' + '?' + Math.random(), {
                        method : 'get',
                        onSuccess : function(response){
+                          console.log("Initing Succeeded updating then display")
                           Language.metadata = JSON.parse(response.responseText);
                           Language.display();
                        }
                       });
     },
 
-    saveToServer : function(){
+    saveToServer : function(options){
+      var options = options;
+      console.log("Saving To server")
       new Ajax.Request( '/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/locale/metadata' , {
                         method : 'put',
                         parameters : { "data" : JSON.stringify(this.metadata) },
                         onSuccess : function(response){
+                          if(options && options['successCallback'])
+                            options['successCallback']();
                           Language.showSuccessMsg();
+                          console.log("Saving Succeeded going to reinitialize now")
                           Language.initialize();  
                         },
                         onFailure : function(response){
+                          if(options && options['failureCallback'])
+                            options['failureCallback']();
                           Language.showErrorMsg();
                         }
                        
