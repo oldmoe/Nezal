@@ -7,6 +7,7 @@ var RewardsPanel = Class.create({
   initialize : function(game){
 		this.game = game;
     this.rewards = this.game.user.data.reward_bags.queue
+    if(!this.rewards)return
     this.noOfRewards = this.rewards.length
     var self = this
     this.rewards.each(function(reward){
