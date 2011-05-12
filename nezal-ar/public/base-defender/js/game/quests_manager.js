@@ -23,7 +23,7 @@ var QuestsManager = Class.create({
   },
 
   initialize : function(game){
-    this.game = game
+    this.game = game;
   },
 
   render : function(){
@@ -83,12 +83,32 @@ var QuestsManager = Class.create({
     Animation.show('emptyQuest');
   },
 
+  hideQuests : function(){
+    if($('quest-panel')) 
+    { 
+      $('quest-panel').innerHTML = '';
+      $('quest-panel').hide();
+    }
+    if($('msg'))
+    {
+      $('msg').innerHTML = '';
+      $('msg').hide();
+    }
+    if($('questDisplay'))
+    {
+      $('questDisplay').innerHTML = '';
+      $('questDisplay').hide();
+    }
+    if($('buildingDisplay'))
+    {
+      $('buildingDisplay').innerHTML = '';
+      $('buildingDisplay').hide();
+    }
+  },
+
   handleQuests : function() {
     if(this.game.neighborGame == true) {
-      if($('quest-panel')) $('quest-panel').hide();
-      if($('msg')) $('msg').hide();
-      if($('questDisplay')) $('questDisplay').hide();
-      if($('buildingDisplay')) $('buildingDisplay').hide();
+      this.hideQuests();
       return;
     }
     
