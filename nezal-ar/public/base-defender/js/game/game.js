@@ -283,7 +283,9 @@ var Game = Class.create({
     if(!this.neighborGame)this.rewardsPanel = new RewardsPanel(this)
     this.controlsPanel = new ControlsPanel(this)
     this.tutorial = new Tutorial(this);
-    this.tutorial.fire();
+    if(!game.neighborGame) {
+      this.tutorial.fire();
+    }
     this.reInitializationNotifications.each(function(fn){fn()});
 /*    if(!this.neighborGame)
       new Notification(this).showAll();*/

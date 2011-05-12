@@ -64,12 +64,20 @@ var BuildingsManager = Class.create({
   },
   
   /*
-* Params will include : The param list to be passed on to displayBuildingsPanel
-*/
+  * Params will include : The param list to be passed on to displayBuildingsPanel
+  */
   displayBuildButton : function(onclick){
     $('buildButton').stopObserving(game.mouseClickEvent);
     $('buildButton').observe(game.mouseClickEvent, onclick);
     $('buildButton').show();
+  },
+
+  hideBuildButton : function(){
+    if($('buildButton'))
+    {
+      $('buildButton').hide();
+      $('buildButton').stopObserving(game.mouseClickEvent);
+    }
   },
   
   build : function(building){
