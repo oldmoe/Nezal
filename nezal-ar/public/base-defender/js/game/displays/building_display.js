@@ -158,8 +158,11 @@ var BuildingDisplay = Class.create(Display, {
 	    self.createUnderConstructionElements();
       var top =  self.owner.coords.y
       var left =  self.owner.coords.x -  37; // half width of the progress bar
-      self.progressDisplay = new ProgressDisplay( 
-      self.owner.nextLevelBluePrints.time, top, left, self.owner.coords.y, 'Building');
+      self.progressDisplay = new ProgressDisplay( self.owner.nextLevelBluePrints.time,
+                                                  top, 
+                                                  left, 
+                                                  self.owner.coords.y, 
+                                                  'Building');
       self.progressDisplays.push(self.progressDisplay)
       self.sprites.building.hide();
 	    self.sprites.shadow.hide();

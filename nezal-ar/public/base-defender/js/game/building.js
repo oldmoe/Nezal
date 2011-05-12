@@ -2,7 +2,6 @@ var Building = Class.create({
   factory : null,
   level : null,
   remainingBuildTime : null,
-  _LoadTime : null,
   coords : {x : null, y : null},
   currentLevelBluePrints : null,
 	hp : 0,
@@ -18,7 +17,6 @@ var Building = Class.create({
     this.game = factory.game;
     this.canBeBuiltOn = factory.canBeBuiltOn;
     this.factory = factory;
-    this._LoadTime = new Date().getTime();
     this.level = buildingSpecs.level;
     this.coords = buildingSpecs.coords;
     this.remainingBuildTime = buildingSpecs.remainingTime;
@@ -152,7 +150,7 @@ var Building = Class.create({
 	
   elapsedTime : function(){
     if(this.inProgress()){
-     return this.nextLevelBluePrints.time - ( this.remainingBuildTime - Math.ceil((new Date().getTime() - this._LoadTime)/1000) );
+     return this.nextLevelBluePrints.time - ( this.remainingBuildTime - Math.ceil((new Date().getTime() - this.game.loadTime)/1000) );
     }else{
       return 0;
     }

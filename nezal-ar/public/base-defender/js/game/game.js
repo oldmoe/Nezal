@@ -29,10 +29,12 @@ var Game = Class.create({
     rock : 0,
     lumber : 0
   },
+  loadTime : null,
 
   workersStatus : null,
 
   initialize : function(){
+    this.loadTime = new Date().getTime();
     this.network = new Network(); 
   	if(!this.isTouchDevice()){
   		this.mouseClickEvent = 'click'
