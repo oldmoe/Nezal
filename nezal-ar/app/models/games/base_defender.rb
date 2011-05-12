@@ -419,24 +419,36 @@ class BaseDefender < Metadata
     user_game_profile['reward_bag']  
   end
   
-  def self.init_language_data(game)
+  def self.init_language_data(game, lang)
     load_game(game)
-    if @@game_metadata['languages']
-      @@game_metadata['languages'].each_key do |lang|
-        data = LanguageManager.load_data(@@game_name, lang)
-        data['buildings'] ||= {}
-        data['quests'] ||= {}
-        @@game_metadata['buildings'].keys.each do |key|
-          data['buildings'][key] ||= { 'name' => '', 'desc' => '', 'upgrade_desc' => {} } 
+    data = LanguageManager.load_data(@@game_name, lang)
+    data['buildings'] ||= {}
+    data['quests'] ||= {}
+    @@game_metadata['buildings'].keys.each do |key|
+      data['buildings'][key] ||= { 'name' => '', 'desc' => '', 'upgrade_desc' => {} } 
+    end
+    game.quests.each do |quest|
+      data['quests'][quest.id] ||= {}
+      data['quests'][quest.id]['conditionMsgs'] ||= {}
+      if quest.metadata['conditions']['buildings']
+        quest.metadata['conditions']['buildings'].each_pair do |building, hash|
+          data['quests'][quest.id]['conditionMsgs'][building] ||= {}
+          hash.keys.each do |key|
+            data['quests'][quest.id]['conditionMsgs'][building][key] = ''
+          end
         end
-        LanguageManager.save_data(@@game_name, lang, data)
+      end
+      if quest.metadata['conditions']['resources']
+        quest.metadata['conditions']['resources'].keys do |key|
+          data['quests'][quest.id]['conditionMsgs'][key] = ''
+        end
       end
     end
+    LanguageManager.save_data(@@game_name, lang, data)
   end
 
-  def self.get_language_data(game)
+  def self.load_language_data(game)
     load_game(game)
-    init_language_data(game)
     data = {}
     if @@game_metadata['languages']
       @@game_metadata['languages'].each_key do |lang|
@@ -446,7 +458,7 @@ class BaseDefender < Metadata
     data
   end
 
-  def self.save_language_data(game, language, data)
+  def self.edit_language_data(game, language, data)
     load_game(game)
     data = JSON.parse(data)
     if @@game_metadata['languages']

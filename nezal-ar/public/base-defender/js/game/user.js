@@ -7,6 +7,7 @@ var User = Class.create({
     this.data = game.gameStatus.user_data.metadata;
     this.newbie = game.gameStatus.user_data.newbie;
     this.coins = game.gameStatus.user_data.coins;
+    this.locale = game.gameStatus.user_data.locale;
   }
    
 });

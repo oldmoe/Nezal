@@ -1,0 +1,3 @@
+class BaseDefenderController < GamesController
+
+end

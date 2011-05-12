@@ -1,3 +1,5 @@
+var Text = {}
+
 var Game = Class.create({
   disableJsValidation: false,
   templatesManager : null,
@@ -203,11 +205,37 @@ var Game = Class.create({
   
   reInitialize : function(callback){
     this.neighborGame = false;
-	$('home').hide()
+  	$('home').hide()
     this.gameStatus = this.network.initializeGame();
     this.data = this.gameStatus.game_data.metadata;
-    this.reflectStatusChange();
-    this.scene.render();
+    var self = this;
+    Language.getLanguage(this.gameStatus.user_data.locale, function() {
+      var language = Language.userLanguage;
+      if(!Language[language])
+      {
+        self.network.fetchTemplate( "statics/" + language + ".html", function(responseText){
+          Language[language] = responseText;
+          Text = JSON.parse(responseText);
+          self.reflectStatusChange();
+          self.scene.render();
+        });
+      }else{
+        self.reflectStatusChange();
+        self.scene.render();
+      }
+    });
+  },
+
+  selectLanguage : function(lang){
+    var self = this;
+    Language.select(lang, function(){
+      var language = Language.userLanguage;
+      self.network.fetchTemplate( "statics/" + language + ".html", function(responseText){
+        Text = JSON.parse(responseText);
+        self.reflectStatusChange();
+        self.scene.render();
+      });
+    });
   },
   
   updateGameStatus : function(gameStatus){
@@ -229,7 +257,7 @@ var Game = Class.create({
     BuildingFactory._GlobalRegistry = {};
     this.attackManager = new AttackManager(this);
     this.townhallFactory = new TownhallFactory(this);
-	this.storageFactory = new StorageFactory(this);
+  	this.storageFactory = new StorageFactory(this);
     this.quarryFactory = new QuarryFactory(this);
     this.lumbermillFactory = new LumbermillFactory(this);
     this.buildingsManager = new BuildingsManager(this);
@@ -266,7 +294,7 @@ var Game = Class.create({
   	$('home').show()
     this.gameStatus.user_data = this.network.neighbourEmpire(user_id);
     this.neighborGame = true;
-	this.visitedNeighborId = user_id
+    this.visitedNeighborId = user_id
     this.updateGameStatus( this.gameStatus );
     this.scene.adjustNeighborScene();
   },

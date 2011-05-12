@@ -306,3 +306,21 @@ img{
 	color:white;
 	text-shadow : 2px 2px black;
 } 
+.languageSelector {
+  color: #FCED70;
+  cursor: pointer;
+  display: block;
+  font-family: ShowG;
+  font-size: 13px;
+  line-height: 30px;
+  position: absolute;
+  top: 420px; 
+  left : 10px;
+  text-align: center;
+  background : #326479;
+  opacity: 0.8;
+  -moz-border-radius : 8px;
+  -webkit-border-radius : 8px;
+  -o-border-radius : 8px;
+  border-radius : 8px;
+}

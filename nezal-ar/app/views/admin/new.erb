@@ -1,4 +1,9 @@
-<LABEL for="new_game">Add New Game</LABEL>
+<div id="backLink">   
+  <a href="/<%=AdminController::ADMIN_URL%>/">
+    Back
+  </a>
+</div>
+<div class="label">Add New Game</div>
 <form id="new_game" action="/<%=AdminController::ADMIN_URL%>/" method="post" enctype="multipart/form-data">
   <div class="form_row">  
     <LABEL for="name">Name</LABEL>

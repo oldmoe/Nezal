@@ -21,6 +21,7 @@ var Quest = {
                             resources : ['lumber', 'rock', 'workers'] };        
         this.gameMetadata = <%=Metadata.encode(@game.metadata)%>;
         Quest.display();
+        Language.initialize();
     },
 
     saveToServer : function(){
@@ -434,17 +435,46 @@ var Quest = {
 <script type='text/javascript'>
 
 Language.initializeHash = function(){
+  var updated = false;
   for(defaultLang in Language.metadata)
   {
-    if(!Language.metadata[defaultLang].quests) Language.metadata[defaultLang].quests = {};
-    if(!Language.metadata[defaultLang].quests[Quest.id]) Language.metadata[defaultLang].quests[Quest.id]={};
-    if(!Language.metadata[defaultLang].quests[Quest.id]['conditionMsgs']) Language.metadata[defaultLang].quests[Quest.id]['conditionMsgs']={};
+    if(!Language.metadata[defaultLang].quests)
+    {
+      updated = true;
+      Language.metadata[defaultLang].quests = {};
+    }
+    if(!Language.metadata[defaultLang].quests[Quest.id])
+    {
+      updated = true;
+      Language.metadata[defaultLang].quests[Quest.id]={};
+    }
+    if(!Language.metadata[defaultLang].quests[Quest.id]['conditionMsgs'])
+    {
+      updated = true;
+      Language.metadata[defaultLang].quests[Quest.id]['conditionMsgs']={};
+    }
     for(var building in Quest.metadata.conditions.buildings)
     {
       if(!Language.metadata[defaultLang].quests[Quest.id].conditionMsgs[building])
+      {
         Language.metadata[defaultLang].quests[Quest.id].conditionMsgs[building] = {};
+        updated = true;
+      }
     }
   }
+  for(defaultLang in Language.metadata)
+  {
+    for(var condition in Language.metadata[defaultLang].quests[Quest.id].conditionMsgs)
+    {
+      if(!(Quest.metadata.conditions.buildings[condition] || Quest.metadata.conditions.resources[condition]))
+      {
+        delete(Language.metadata[defaultLang].quests[Quest.id].conditionMsgs[condition]);
+        updated = true;
+      }
+    }
+  }
+  if(updated)
+    this.saveToServer();
 }
 
 Language.display = function(){
@@ -463,8 +493,6 @@ Language.save = function(){
   this.metadata[language].quests[Quest.id].congratesMsg = $$('#globalData #congratesMsg')[0].value;
   this.metadata[language].quests[Quest.id].conditionMsgs = {};
   $$('#globalData .building_condition_msg input').each(function(input){
-                                                        if(!Language.metadata[language].quests[Quest.id].conditionMsgs[input.id])
-                                                          Language.metadata[language].quests[Quest.id].conditionMsgs[input.id] = {};
                                                         var building = input.id.split('__')[0];
                                                         var cond = input.id.split('__')[1];
                                                         if(!Language.metadata[language].quests[Quest.id].conditionMsgs[building])
@@ -478,9 +506,8 @@ Language.save = function(){
 }
 
 Language.changeLanguage = function(){
-  var defaultLang = $('language').value; 
-  this.initializeHash();
-  $('globalData').innerHTML = TrimPath.processDOMTemplate("globalDataTemplate", { languages : data.languages,
+  var defaultLang = $('language').value;
+  $('globalData').innerHTML = TrimPath.processDOMTemplate("globalDataTemplate", { languages : Language.metadata,
                                                                                   defaultLang : defaultLang,
                                                                                   data : this.metadata[defaultLang].quests[Quest.id] });
 }
@@ -542,6 +569,5 @@ Language.changeLanguage = function(){
 <!----------------------------------------------->
 <script>
 Quest.init();
-Language.initialize();
 </script>
 

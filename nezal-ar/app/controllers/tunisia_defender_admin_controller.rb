@@ -1,0 +1,3 @@
+class TunisiaDefenderAdminController < AdminController
+
+end

@@ -82,7 +82,7 @@
         <span style="width : 20%; display : block; float : left;">
           <%=camp[:path]%>
         </span>
-        <form id="delete_campaign_<%=camp.id%>" action="/<%=AdminController::ADMIN_URL%>/<%=@game[:id]%>/campaigns/<%=camp.id%>" method="POST" style="display:inline">
+        <form id="delete_campaign_<%=camp.id%>" action="/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/campaigns/<%=camp.id%>" method="POST" style="display:inline">
           <input type="hidden" name="_method" value="put"/>
           <a href="#" onclick="document.getElementById('delete_campaign_<%=camp.id%>').submit(); return false;" class="submit_links"> x </a>
         </form> 
@@ -91,7 +91,7 @@
     <% end %>
     <div id="game_campaign_form">
       <LABEL for="new_campaign" class="label">Add New Campaign</LABEL>
-      <form id="new_rank" action="/<%=AdminController::ADMIN_URL%>/<%=@game[:id]%>/campaigns" method="post" enctype="multipart/form-data">
+      <form id="new_rank" action="/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/campaigns" method="post" enctype="multipart/form-data">
         <div class="form_row">  
           <LABEL for="campaign_name">Name</LABEL>
           <INPUT type="text" id="campaign_name" name='name'><BR>
@@ -107,7 +107,7 @@
     </div>
     <div id="game_current_campaign_form">
       <LABEL for="game_campaigns" class="label">Current Campaign</LABEL>
-      <form id="set_current_campaign" action="/<%=AdminController::ADMIN_URL%>/<%=@game[:id]%>/current-campaign" method="POST">
+      <form id="set_current_campaign" action="/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/current-campaign" method="POST">
         <div class="form_row">
           <LABEL for="current_campaign">Current Campaign</LABEL>
           <select id="current_campaign" name="current_campaign">

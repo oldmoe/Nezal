@@ -1,0 +1,3 @@
+class CityDefenderController < GamesController
+
+end

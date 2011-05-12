@@ -276,7 +276,7 @@
         <div id="sendAttackText" class="yellowText"> Attack </div>
       </div>
       
-      <div id="quest-panel" style="display:none;"></div>
+      <div id="quest-panel" style="display:none;"></div>      
       <div id="interaction" style="display:none;">    
         <div id="msg" style="display:none;"> </div>
         <div id="questDisplay" style="display:none;"> </div>
@@ -288,7 +288,11 @@
         <span class="loadedImg" imgSrc ="images/game_elements/button.png"></span>
         <div id="resetText" class="yellowText" onclick="game.network.resetEmpire();"> Reset </div>
       </div>
-      
+      <div id="languageSelector" class="languageSelector">
+        {for language in Language.langsNames}
+          <div  id='${language[0]}' class="yellowText" onclick="game.selectLanguage('${language[0]}')"> ${language[1]} </div>
+        {/for}
+      </div>
       <div id="hand" style="display:none;position:absolute;z-index:11;">
         <span class="loadedImg" imgSrc ="images/quests/cursor.png"></span>
       </div>
