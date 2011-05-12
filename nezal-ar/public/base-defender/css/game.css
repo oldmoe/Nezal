@@ -88,6 +88,7 @@ img{
 	font-weight:bold;
 }
 #cancelBuilding{
+  background-image: url("../images/buildings/transparent1x1.png");
   left: 684px;
   position: absolute;
   top: 347px;
@@ -250,6 +251,7 @@ img{
 	background-image : url('../images/game_elements/resource_bar_right.png')
 }
 #controlPanel #openControl{
+    background-image: url("../images/buildings/transparent1x1.png");
     cursor: pointer;
     height: 25px;
     position: absolute;

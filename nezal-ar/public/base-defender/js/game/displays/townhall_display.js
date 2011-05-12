@@ -34,6 +34,7 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
       coords: this.owner.coords,
       imgWidth: this.flagImgWidth,
       imgHeight: this.flagImgHeight,
+      angle : 0,
       zdim: this.flagZDim
     }, {
       img: this.flagImg

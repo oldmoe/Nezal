@@ -49,7 +49,6 @@ var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
   
   render : function($super){
     $super();
-    
     if(!this.owner.producing || !this.owner.working || this.owner.hp <= 0 || this.owner.assignedWorkers==0){
       this.bubbles.each(function(bubble){
         bubble.hide()
@@ -66,8 +65,7 @@ var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
           bubble.owner.xMovement = self.bubbleInitialXShift;
           bubble.setImgWidth(10);
           return;
-        }
-        
+        }    
         var sizeDirection = 1;
         for(var i=0;i<self.bubbleElevation/3;i++){
           if (-bubble.owner.yMovement == (i+1)*3) {
@@ -80,5 +78,6 @@ var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
         bubble.render();
       })
     }
+    
   }
 });

@@ -5,7 +5,7 @@ var DomImgSprite = Class.create(DomSprite, {
 	initialize : function($super, owner, imgAssets, properties){
     $super(owner, imgAssets, properties);
     //console.log( imgAssets )
-		this.img = imgAssets.img.clone()
+		this.img = $(imgAssets.img).clone()
 		if(this.img){
 			this.img.observe('mousedown',function(event){
 				 if(event.preventDefault)
@@ -50,7 +50,6 @@ var DomImgSprite = Class.create(DomSprite, {
   
 	render : function($super){
     $super();
-    
     if (this.clickable) {
 			this.div.setStyle({
 				zIndex: (this.owner.coords.y + this.minAreaZIndex)
@@ -61,6 +60,7 @@ var DomImgSprite = Class.create(DomSprite, {
         marginTop: (-this.currentAnimationFrame * this.owner.imgHeight + "px")
       });
     }
+    
   },
   
 	destroy : function($super){

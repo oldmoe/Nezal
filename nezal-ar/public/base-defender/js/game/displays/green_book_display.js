@@ -25,7 +25,7 @@ var GreenBook = Class.create( Rock, {
     5 : {x : 0, y : 30, zIndex : 2 }, 
     6 : {x : 15, y : 35, zIndex : 5 }, 
     7 : {x : 42, y : 32, zIndex : 2 }
-  },
+  }
   
 });
 
@@ -34,6 +34,6 @@ var GreenBookDisplay = Class.create( RockDisplay, {
   render : function($super) {
     this.owner.angle = this.owner.owner.angle
     $super();
-  },
+  }
 
 });

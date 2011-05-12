@@ -39,12 +39,12 @@ var Hand = {
     this.topOffset = this.topOffset + 6*this.moveDirection*this.direction;
     this.leftOffset = this.leftOffset + 6*this.moveDirection;
     $('hand').setStyle({zIndex : 1001,  top : this.topOffset + "px", left : this.leftOffset + "px" });
-    var parents = this.obj.ancestors();
+    var parents = $(this.obj).ancestors();
     var visible = true;
     for(var i = 0; i < parents.length; i++)
     {
-      parent = parents[i];
-      parentOffset = Element.cumulativeOffset(parent);
+      var parent = $(parents[i]);
+      var parentOffset = Element.cumulativeOffset(parent);
       if(parent.getStyle('overflow') == 'hidden')
       {
         if(position.top < parentOffset.top || position.top > parentOffset.top + parent.getStyle('height'))

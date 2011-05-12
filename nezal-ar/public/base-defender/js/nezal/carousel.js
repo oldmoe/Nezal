@@ -24,12 +24,15 @@ var Carousel = Class.create( {
     initialize : function(id, images, displayCount){
         this.id = id;
         this.images = images;
-				if($$('#' + this.id + ' ul li')[0])
-        this.width = parseInt($$('#' + this.id + ' ul li')[0].getStyle('width')) + 
-                        parseInt($$('#' + this.id + ' ul li')[0].getStyle('padding-left')) + 
-                        parseInt($$('#' + this.id + ' ul li')[0].getStyle('padding-right')) +
-                        parseInt($$('#' + this.id + ' ul li')[0].getStyle('margin-left')) + 
-                        parseInt($$('#' + this.id + ' ul li')[0].getStyle('margin-right'));
+				if ($$('#' + this.id + ' ul li')[0]) {
+          this.width = parseInt($$('#' + this.id + ' ul li')[0].getStyle('width')) +
+          parseInt($$('#' + this.id + ' ul li')[0].getStyle('padding-left')) +
+          parseInt($$('#' + this.id + ' ul li')[0].getStyle('padding-right'))
+          if($$('#' + this.id + ' ul li')[0].getStyle('margin-left'))                 
+                  this.width+=parseInt($$('#' + this.id + ' ul li')[0].getStyle('margin-left'))
+          if($$('#' + this.id + ' ul li')[0].getStyle('margin-right')) 
+                  this.width+=parseInt($$('#' + this.id + ' ul li')[0].getStyle('margin-right'));
+        }                        
         this.displayCount = displayCount;
         this.scroll = displayCount;
         this.ulId = $$('#' + this.id + ' ul')[0].id;

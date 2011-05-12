@@ -315,7 +315,6 @@ var BuildingDisplay = Class.create(Display, {
     } else {
       this.sprites.defaultMouseover = this.defaultActionSprite();
     }
-    
   	if (this.owner.state == this.owner.states.UNDER_CONSTRUCTION) this.renderUnderConstruction();
     if (this.owner.state == this.owner.states.UNDER_CONSTRUCTION || this.owner.state == this.owner.states.UPGRADING ) {
       this.sprites.clickSprite.setCursor("default");
@@ -382,6 +381,6 @@ var BuildingDisplay = Class.create(Display, {
         smoke.show();
         smoke.render();
     })
-  },
+  }
   
 });
