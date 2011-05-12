@@ -130,7 +130,7 @@ var Util = {
 		   textSpan.addClassName(textSpanStyleClass)
 		   textSpan.innerHTML = attributes.text || '';
 		   link.appendChild(textSpan);
-		   return this.game.domConverter.getHTML(link);
+		   return game.domConverter.getHTML(link);
 	}
 }
 
