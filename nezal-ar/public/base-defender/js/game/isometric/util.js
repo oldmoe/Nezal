@@ -119,7 +119,19 @@ var Util = {
 	      string = seconds + ' seconds'
 	    }
 	    return string;
-	 }
+	 },
+   //attributes can be {text:'text value'} with defualt css or {text:'text value', linkClass:c1, spanClass:c2}
+   createButton: function(attributes){
+		   var link = $(document.createElement('a'))		   
+		   var linkStyleClass = attributes.linkClass || 'defualtButton'
+		   link.addClassName(linkStyleClass)
+		   var textSpan = $(document.createElement('SPAN'))
+		   textSpanStyleClass = attributes.spanClass || 'defaultButtonText'
+		   textSpan.addClassName(textSpanStyleClass)
+		   textSpan.innerHTML = attributes.text || '';
+		   link.appendChild(textSpan);
+		   return this.game.domConverter.getHTML(link);
+	}
 }
 
 Array.prototype.random = function(){

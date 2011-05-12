@@ -140,8 +140,8 @@ var Game = Class.create({
         });
         //////////////////////////////////
         self.reInitialize();
-      //  Sounds.gameSounds.Intro[0].stop()
-      //  Sounds.resumeTrack()
+        Sounds.gameSounds.Intro[0].stop()
+        Sounds.resumeTrack()
     };	
     var buildingImages = BuildingMode.prototype.buildings.collect(function(building){
       return building + ".png";

@@ -149,7 +149,7 @@ function createBackgroundMusic(){
 	  id: "introSound",
 	  url: 'sounds/sfx/mp3/intro.mp3',
 	  autoLoad: true,
-	  autoPlay: false,
+	  autoPlay: true,
 	  volume: 30,
 	  loops : 10000
 	});
