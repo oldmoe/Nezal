@@ -43,13 +43,13 @@ var DomTextSprite = Class.create(DomSprite, {
   
   show : function(){
   	if(this.effect)this.effect.cancel()
-  	this.effect = Effect.Appear(this.div, {duration : 0.25})
+  	this.effect = new Effect.Appear(this.div, {duration : 0.25})
   	return this
   },
   
   hide : function(){
   	if(this.effect)this.effect.cancel()
-  	this.effect = Effect.Fade(this.div, {duration : 0.25})
+  	this.effect = new Effect.Fade(this.div, {duration : 0.25})
   	return this
   }
   

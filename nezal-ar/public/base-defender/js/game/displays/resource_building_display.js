@@ -102,8 +102,8 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
         }
         return false
       }
-      if (checkFullErrorMessage()) 
-        return Sounds.play(Sounds.gameSounds.resource_collection)
+//      if (checkFullErrorMessage()) 
+//        return Sounds.play(Sounds.gameSounds.resource_collection)
       var collected = owner[owner.factory.collect]
       var currentResources = owner.game.resources[owner.factory.collect]
       var totalStorage = owner.factory.getTotalStorageCapacity()
@@ -125,11 +125,11 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
     })
     owner.game.domConverter.convert(html)
     var collectionDiv = $$('.collectionAnimation')[$$('.collectionAnimation').length-1]
-    collectionDiv.setStyle({
-      'top': owner.coords.y + "px",
-      'left': (owner.coords.x - 15) + "px"
-    })
-    $('gameCanvas').appendChild(collectionDiv)
-    Animation.springFade(collectionDiv, -105)
+      collectionDiv.setStyle({
+        'top': owner.coords.y + "px",
+        'left': (owner.coords.x - 15) + "px"
+      })
+      $('gameCanvas').appendChild(collectionDiv)
+      Animation.springFade(collectionDiv, -105)
   }
 });

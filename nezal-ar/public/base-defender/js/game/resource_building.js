@@ -22,10 +22,10 @@ var ResourceBuilding = Class.create(Building, {
   resourceInfo : function(){
   	if(!this.capacity)return ''
     var data = parseInt(this[this.factory.collect])+"/"+ this.capacity
-	if (!this.isFull() && this.assignedWorkers!=0) {
-		data += "<br/>Full in " + this.remainingTime();
-	}
-	return data
+	  if (!this.isFull() && this.assignedWorkers!=0) {
+	  	data += "<br/>Full in " + this.remainingTime();
+  	}
+	  return data
   },
   isFull : function(){
   	   return parseInt(this[this.factory.collect]) == this.capacity

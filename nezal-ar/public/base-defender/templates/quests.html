@@ -209,50 +209,51 @@
         <img src="" />
       </div> 
       <div id="buildings-container" class="container">
-        <ul id='buildings-ul'>
+    <ul id='buildings-ul'>
         {for building in buildings}
           {if (building.defense==false)}
           <li>
-            <div id="${building_index}" 
+            <div id="${building_index}"
               {if (disabled.indexOf(building_index) < 0)}
                onmouseout="$('${building_index}_info').hide();$('${building_index}_image').setStyle({height:'75px'});
-                            $('${building_index}_image_hover').hide(); $('${building_index}_image_arrow').hide()" 
-               onmouseover="$('${building_index}_info').show();$('${building_index}_image').setStyle({height:'90px'}); 
-                            $('${building_index}_image_hover').show(); $('${building_index}_image_arrow').show()"
+$('${building_index}_image_hover').hide(); $('${building_index}_image_arrow').hide()"
+               onmouseover="$('${building_index}_info').show();$('${building_index}_image').setStyle({height:'90px'});
+$('${building_index}_image_hover').show(); $('${building_index}_image_arrow').show()"
               {else}
                onmouseout="$('${building_index}_info').hide();$('${building_index}_image').setStyle({height:'75px'});
-                           $('${building_index}_image_hover').hide(); $('${building_index}_image_arrow').hide();
-                           $('${building_index}_msg').hide();$('${building_index}_msg_text').hide();" 
-               onmouseover="$('${building_index}_info').show();$('${building_index}_image').setStyle({height:'90px'}); 
-                            $('${building_index}_image_hover').show(); $('${building_index}_image_arrow').show();
-                            $('${building_index}_msg').show();$('${building_index}_msg_text').show();"
+$('${building_index}_image_hover').hide(); $('${building_index}_image_arrow').hide();
+$('${building_index}_msg').hide();$('${building_index}_msg_text').hide();"
+               onmouseover="$('${building_index}_info').show();$('${building_index}_image').setStyle({height:'90px'});
+$('${building_index}_image_hover').show(); $('${building_index}_image_arrow').show();
+$('${building_index}_msg').show();$('${building_index}_msg_text').show();"
               {/if}
-               class="item">     
+               class="item">
               {if (disabled.indexOf(building_index) < 0)}
-                <div  class="itemData" onclick="Animation.hide('buildingDisplay');game.buildingsManager.build('${building_index}')">  
+                <div class="itemData" onclick="Animation.hide('buildingDisplay');game.buildingsManager.build('${building_index}')">
                 </div>
-                <span imgId="${building_index}_image"  class="loadedImg" imgClasses="background" imgSrc="images/quests/${building_index}_info.png">
+                <span imgId="${building_index}_image" class="loadedImg" imgClasses="background" imgSrc="images/quests/${building_index}_info.png">
                 </span>
               {else}
-                <div  class="itemData" onclick="Animation.hide('buildingDisplay');game.buildingsManager.build('${building_index}')">  
+                <div class="itemData" onclick="Animation.hide('buildingDisplay');game.buildingsManager.build('${building_index}')">
                 </div>
-                <span imgId="${building_index}_image"  class="loadedImg" imgClasses="background" imgSrc="images/quests/${building_index}_info_dimmed.png">
+                <span imgId="${building_index}_image" class="loadedImg" imgClasses="background" imgSrc="images/quests/${building_index}_info_dimmed.png">
                 </span>
                 <div id="${building_index}_msg" class="disabledMsgBackground blueText" style="display:none;"> </div>
                 <div id="${building_index}_msg_text" class="disabledMsgText blueText" style="display:none;"> ${building.msg} </div>
               {/if}
               <span imgId="${building_index}_image_hover" class="loadedImg" imgClasses="hover" imgSrc="images/quests/building_hover.png" hidden="true">
               </span>
-              <span imgId="${building_index}_image_arrow" class="loadedImg" imgClasses="hoverArrow" 
+              <span imgId="${building_index}_image_arrow" class="loadedImg" imgClasses="hoverArrow"
                     imgSrc="images/quests/building_hover_arrow.png" hidden="true">
+              </span>
             </div>
           </li>
           {/if}
         {/for}
         <li>
           <div class="item">
-            <div  class="itemData" style="cursor:auto;"> </div>
-            <span class="loadedImg" imgSrc="images/quests/empty.png" imgClasses="background" >
+            <div class="itemData" style="cursor:auto;"> </div>
+            <span class="loadedImg" imgSrc="images/quests/empty.png" imgClasses="background" ></span>
           </div>
         </li>
         </ul>
@@ -261,55 +262,56 @@
         <img src="" />
       </div>
     </div>
-    <div id="defense" class="buildings" style="display:none;">
+     <div id="defense" class="buildings" style="display:none;">
       <div class="left">
         <img src="" />
-      </div> 
+      </div>
       <div id="defense-container" class="container">
         <ul id='defense-ul'>
         {for building in buildings}
           {if (building.defense==true)}
           <li>
-            <div id="${building_index}" 
+            <div id="${building_index}"
               {if (disabled.indexOf(building_index) < 0)}
                onmouseout="$('${building_index}_info').hide();$('${building_index}_image').setStyle({height:'75px'});
-                            $('${building_index}_image_hover').hide(); $('${building_index}_image_arrow').hide()" 
-               onmouseover="$('${building_index}_info').show();$('${building_index}_image').setStyle({height:'90px'}); 
-                            $('${building_index}_image_hover').show(); $('${building_index}_image_arrow').show()"
+$('${building_index}_image_hover').hide(); $('${building_index}_image_arrow').hide()"
+               onmouseover="$('${building_index}_info').show();$('${building_index}_image').setStyle({height:'90px'});
+$('${building_index}_image_hover').show(); $('${building_index}_image_arrow').show()"
               {else}
                onmouseout="$('${building_index}_info').hide();$('${building_index}_image').setStyle({height:'75px'});
-                           $('${building_index}_image_hover').hide(); $('${building_index}_image_arrow').hide();
-                           $('${building_index}_msg').hide();$('${building_index}_msg_text').hide();" 
-               onmouseover="$('${building_index}_info').show();$('${building_index}_image').setStyle({height:'90px'}); 
-                            $('${building_index}_image_hover').show(); $('${building_index}_image_arrow').show();
-                            $('${building_index}_msg').show();$('${building_index}_msg_text').show();"
+$('${building_index}_image_hover').hide(); $('${building_index}_image_arrow').hide();
+$('${building_index}_msg').hide();$('${building_index}_msg_text').hide();"
+               onmouseover="$('${building_index}_info').show();$('${building_index}_image').setStyle({height:'90px'});
+$('${building_index}_image_hover').show(); $('${building_index}_image_arrow').show();
+$('${building_index}_msg').show();$('${building_index}_msg_text').show();"
               {/if}
-               class="item">     
+               class="item">
               {if (disabled.indexOf(building_index) < 0)}
-                <div  class="itemData" onclick="Animation.hide('buildingDisplay');game.buildingsManager.build('${building_index}')">  
+                <div class="itemData" onclick="Animation.hide('buildingDisplay');game.buildingsManager.build('${building_index}')">
                 </div>
-                <span imgId="${building_index}_image"  class="loadedImg" imgClasses="background" imgSrc="images/quests/${building_index}_info.png">
+                <span imgId="${building_index}_image" class="loadedImg" imgClasses="background" imgSrc="images/quests/${building_index}_info.png">
                 </span>
               {else}
-                <div  class="itemData" onclick="Animation.hide('buildingDisplay');game.buildingsManager.build('${building_index}')">  
+                <div class="itemData" onclick="Animation.hide('buildingDisplay');game.buildingsManager.build('${building_index}')">
                 </div>
-                <span imgId="${building_index}_image"  class="loadedImg" imgClasses="background" imgSrc="images/quests/${building_index}_info_dimmed.png">
+                <span imgId="${building_index}_image" class="loadedImg" imgClasses="background" imgSrc="images/quests/${building_index}_info_dimmed.png">
                 </span>
                 <div id="${building_index}_msg" class="disabledMsgBackground blueText" style="display:none;"> </div>
                 <div id="${building_index}_msg_text" class="disabledMsgText blueText" style="display:none;"> ${building.msg} </div>
               {/if}
               <span imgId="${building_index}_image_hover" class="loadedImg" imgClasses="hover" imgSrc="images/quests/building_hover.png" hidden="true">
               </span>
-              <span imgId="${building_index}_image_arrow" class="loadedImg" imgClasses="hoverArrow" 
+              <span imgId="${building_index}_image_arrow" class="loadedImg" imgClasses="hoverArrow"
                     imgSrc="images/quests/building_hover_arrow.png" hidden="true">
+               </span>
             </div>
           </li>
           {/if}
         {/for}
         <li>
           <div class="item">
-            <div  class="itemData" style="cursor:auto;"> </div>
-            <span class="loadedImg" imgSrc="images/quests/empty.png" imgClasses="background" >
+            <div class="itemData" style="cursor:auto;"> </div>
+            <span class="loadedImg" imgSrc="images/quests/empty.png" imgClasses="background" ></span>
           </div>
         </li>
         </ul>
@@ -323,31 +325,31 @@
     <div class="buildingInfo" id="${building_index}_info" style="display:none;">
       <div class="buildingName">${Text.buildings[building_index]['name']}</div>
       <div class="buildingDesc"> ${Text.buildings[building_index]['desc']}</div>
-  	  <span class="loadedImg" imgClasses="resourcesNeeded" imgSrc="images/quests/resources_needed_for_building.png">
-	    </span>
-      <div  class="cost">
-        <div class="text"> 
+   <span class="loadedImg" imgClasses="resourcesNeeded" imgSrc="images/quests/resources_needed_for_building.png">
+  </span>
+      <div class="cost">
+        <div class="text">
           {if building['lumber']}
             ${building['lumber']}
           {else}
             0
           {/if}
         </div>
-        <div class="text"> 
+        <div class="text">
           {if building['rock']}
             ${building['rock']}
           {else}
             0
           {/if}
         </div>
-        <div class="text"> 
+        <div class="text">
           {if building['coins']}
             ${building['coins']}
           {else}
             0
           {/if}
         </div>
-        <div class="text"> 
+        <div class="text">
           {if building['time']}
             ${Util.timeDisplay(building['time'])}
           {else}
@@ -372,6 +374,6 @@
   <div id="defenseTrigger" class="buildingPanelTriggers inactiveTrigger" onclick="game.buildingsManager.displayDefenseTab()">
     Defense
   </div>
-  <div id="closeBuildingPanel" onclick="Animation.hide('buildingDisplay');"></div>
+  <div id="closeBuildingPanel"  onclick="Animation.hide('buildingDisplay');"></div>
 </textarea>
 
