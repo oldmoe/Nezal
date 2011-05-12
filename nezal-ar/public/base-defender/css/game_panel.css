@@ -40,6 +40,10 @@
   top:6px;
   height: 66px;
 }
+.topGameElement span{
+  font-size:11px;
+  font-weight:bold;
+}
 #coins_game_element img {
   margin-left: -493px;
 }
@@ -68,8 +72,8 @@
 #workers_game_element #hire-worker-text, #coins_game_element #add-coins-text {
   color: #FCED70;
   cursor: pointer;
-  font-family: ShowG;
-  font-size: 15px;
+  font-family: Helvetica;
+  font-size: 14px;
   height: 13px;
   line-height: 14px;
   position: absolute;
@@ -87,8 +91,6 @@
 
 #workers-amount {
   color: yellow;
-  font-family: Lds;
-  font-size: 16px;
   left: 53px;
   line-height: 14px;
   position: absolute;
@@ -107,8 +109,6 @@
 
 #coins-amount {
   color: gold;
-  font-family: Lds;
-  font-size: 18px;
   left: 50px;
   line-height: 14px;
   position: absolute;
@@ -119,8 +119,6 @@
 
 #rock-amount {
   color: gold;
-  font-family: Lds;
-  font-size: 18px;
   left: 45px;
   line-height: 14px;
   position: absolute;
@@ -132,8 +130,6 @@
 
 #lumber-amount {
   color: gold;
-  font-family: Lds;
-  font-size: 18px;
   left: 53px;
   line-height: 14px;
   position: absolute;
