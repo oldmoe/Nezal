@@ -142,8 +142,8 @@ var Game = Class.create({
         });
         //////////////////////////////////
         self.reInitialize();
-      //  Sounds.gameSounds.Intro[0].stop()
-      //  Sounds.resumeTrack()
+        Sounds.gameSounds.Intro[0].stop()
+        Sounds.resumeTrack()
     };	
     var buildingImages = BuildingMode.prototype.buildings.collect(function(building){
       return building + ".png";
@@ -285,7 +285,9 @@ var Game = Class.create({
     if(!this.neighborGame)this.rewardsPanel = new RewardsPanel(this)
     this.controlsPanel = new ControlsPanel(this)
     this.tutorial = new Tutorial(this);
-    this.tutorial.fire();
+    if(!game.neighborGame) {
+      this.tutorial.fire();
+    }
     this.reInitializationNotifications.each(function(fn){fn()});
 /*    if(!this.neighborGame)
       new Notification(this).showAll();*/

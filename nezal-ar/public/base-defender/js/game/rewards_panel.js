@@ -13,7 +13,7 @@ var RewardsPanel = Class.create({
       reward['valid'] = self.validateReward(reward)
     })
     var data = {rewards:this.rewards,
-							buttons:{'next':this.createButton({text:'Next'}), 'back':this.createButton({'text':'Back'}), 'use':this.createButton({text:'Use'})}
+							buttons:{'next':Util.createButton({text:'Next'}), 'back':Util.createButton({'text':'Back'}), 'use':Util.createButton({text:'Use'})}
 				   }
            
 		$('rewardsContainer').innerHTML = game.templatesManager.load('rewards', data);
@@ -78,17 +78,5 @@ var RewardsPanel = Class.create({
         }
       }
     })
-  },
-  createButton: function(attributes){
-		   var link = $(document.createElement('a'))		   
-		   var linkStyleClass = attributes.linkClass || 'defualtButton'
-		   link.addClassName(linkStyleClass)
-		   var textSpan = $(document.createElement('SPAN'))
-		   textSpanStyleClass = attributes.spanClass || 'defaultButtonText'
-		   textSpan.addClassName(textSpanStyleClass)
-		   textSpan.innerHTML = attributes.text || '';
-		   link.appendChild(textSpan);
-		   return this.game.domConverter.getHTML(link);
-	}
-  
+  }
 })
