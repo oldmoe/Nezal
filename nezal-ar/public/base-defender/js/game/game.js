@@ -51,9 +51,9 @@ var Game = Class.create({
     this.templatesManager = new TemplatesManager(this.network);
     new Loader().load([{images : ['logo.png'], path: 'images/loading/', store: 'loading'}],
                       {onFinish : function(){
-                        $('inProgress').show();
+                         $('inProgress').show();
                         $('inProgress').innerHTML = self.templatesManager.load("loadingScreen");
-						            self.addLoadedImagesToDiv('inProgress');
+ 					            self.addLoadedImagesToDiv('inProgress');
                         self.initializeGame();
                       }});
   },
@@ -138,8 +138,8 @@ var Game = Class.create({
         });
         //////////////////////////////////
         self.reInitialize();
-        Sounds.gameSounds.Intro[0].stop()
-        Sounds.resumeTrack()
+      //  Sounds.gameSounds.Intro[0].stop()
+      //  Sounds.resumeTrack()
     };	
     var buildingImages = BuildingMode.prototype.buildings.collect(function(building){
       return building + ".png";
@@ -292,8 +292,8 @@ var Game = Class.create({
       for(var i=0;i<imgPath.length;i++){
          imgPart = imgPart[imgPath[i]]
       }
-      var img = imgPart.clone()
-      var parent = imgSpan.parentNode
+      var img = $(imgPart).clone()
+      var parent = $(imgSpan.parentNode)
       img = parent.insertBefore(img, imgSpan)
       parent.removeChild(imgSpan)
       if(imgSpan.getAttribute('imgId')) img.id = imgSpan.getAttribute('imgId')

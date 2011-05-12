@@ -1,3 +1,7 @@
+img{
+  width:auto;
+  height:auto;
+}
 @font-face {
   font-family: "Adlib";
   src: url("fonts/ADLIB.TTF");
@@ -134,10 +138,11 @@
 }
 
 #interaction #closeBuildingPanel {
+  background-image: url("../images/buildings/transparent1x1.png");
   cursor: pointer;
   height: 35px;
   position: absolute;
-  right: 80px;
+  left: 640px;
   top: 105px;
   width: 40px;
   z-index: 10;
@@ -218,11 +223,12 @@
 
 #interaction #buildingsPanel .item .itemData {  
   cursor: pointer;
-  height: 100%;
+  background-image: url("../images/buildings/transparent1x1.png");
+  height: 130px;
   position: relative;
   text-align: center;
-  width: 100%;
-  z-index: 200;
+  width: 80px;
+  z-index: 500;
 }
 #interaction #buildingsPanel .item .itemData .name {  
   font-size: 17px;
@@ -304,7 +310,7 @@
 	border:none;
 }
 #buildings-container, #defense-container {
-	width : 432px;
+	width : 426px;
 	overflow: hidden;
   padding : 0px 2px;
 }

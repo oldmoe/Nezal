@@ -80,10 +80,10 @@ var RewardsPanel = Class.create({
     })
   },
   createButton: function(attributes){
-		   var link = document.createElement('a')		   
+		   var link = $(document.createElement('a'))		   
 		   var linkStyleClass = attributes.linkClass || 'defualtButton'
 		   link.addClassName(linkStyleClass)
-		   var textSpan = document.createElement('SPAN')
+		   var textSpan = $(document.createElement('SPAN'))
 		   textSpanStyleClass = attributes.spanClass || 'defaultButtonText'
 		   textSpan.addClassName(textSpanStyleClass)
 		   textSpan.innerHTML = attributes.text || '';

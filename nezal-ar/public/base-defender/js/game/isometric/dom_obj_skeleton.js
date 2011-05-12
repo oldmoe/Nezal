@@ -100,6 +100,6 @@ var DomSkeleton = Class.create(DomSprite, {
 		this.ctx = this.div.getContext('2d');
 		this.div.addClassName("canvas")
     $('gameCanvas').appendChild(this.div);
-  },
+  }
 	
 })

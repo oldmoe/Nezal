@@ -37,7 +37,7 @@ var BuildingFactory = Class.create({
   getDependenciesValidations : function(level){
 	 var result = [];
 	  var buildingDependencies = this.bluePrints.levels[level].dependency.buildings;
-	  for(building in buildingDependencies){
+	  for(var building in buildingDependencies){
 	  	 var buildingValidation = {}
 		 result.push(buildingValidation)
 		 buildingValidation['building'] = this.humanizeString(building.capitalize())
@@ -52,7 +52,7 @@ var BuildingFactory = Class.create({
     return result;
   },
   buildingExists : function(level){
-  	for (key in this.factoryRegistry) {
+  	for (var key in this.factoryRegistry) {
 		  var building = this.factoryRegistry[key]
 		  if (building.state == building.states.NORMAL || building.state == building.states.UPGRADING) {
 			  if (!level) 
@@ -67,7 +67,7 @@ var BuildingFactory = Class.create({
   isDependenciesMet : function(level){
     var result = {valid : true, msg : ''};
 	  var buildingDependencies = this.bluePrints.levels[level].dependency.buildings
-	  for(building in buildingDependencies){
+	  for(var building in buildingDependencies){
 		  if(!this.game[building.dasherize().camelize()+"Factory"].buildingExists(buildingDependencies[building])){
 //			  Notification.alert();
         result['valid'] = false;
@@ -86,10 +86,10 @@ var BuildingFactory = Class.create({
 		  var registery = this.game[limitingBuilding.dasherize().camelize() + "Factory"].factoryRegistry
 		  var maxLevel = 0;
 		  var key = null
-		  for (item in registery) {
-			  if (registery[item].level > maxLevel) {
-				  maxLevel = registery[item].level
-				  key = item
+		  for(var itm in registery){
+			  if (registery[itm].level > maxLevel) {
+				  maxLevel = registery[itm].level
+				  key = itm
 			  }
 		  }
 		  if (key) {

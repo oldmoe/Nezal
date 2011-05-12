@@ -119,7 +119,7 @@ var Loader = Class.create({
     var self = this
     image.onload = function(){self.onload(options);}
     image.src = src
-    return image
+    return $(image)
   },
   
   load_sounds : function(src, options){

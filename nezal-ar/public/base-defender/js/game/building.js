@@ -247,7 +247,7 @@ var Building = Class.create({
   		requirements: {},
   		gains: {},
   		maxUpgrade: false,
-  		workersNotEnough: false,
+  		workersNotEnough: false
   	}
   	if (this.game.workerFactory.idleWorkers == 0) {
   		upgradeSpecs['workersNotEnough'] = true
@@ -292,7 +292,7 @@ var Building = Class.create({
     var upgradableSpecs = []
     var buildingData = game.data.buildings[this.name]
     if(!buildingData['displayable']) return upgradableSpecs
-    for(property in buildingData['displayable']){
+    for(var property in buildingData['displayable']){
         if (this.currentLevelBluePrints[property] && buildingData['displayable'][property] &&
          this.currentLevelBluePrints[property] != this.nextLevelBluePrints[property]) {
           var upgradableSpec = []

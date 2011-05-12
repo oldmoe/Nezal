@@ -3,6 +3,7 @@ var Bubble = Class.create({
     this.coords = coords;
     this.imgWidth = 110;
     this.imgHeight = 40;
+    this.angle=0
     this.xdim = 110;
     this.ydim = 40;
     this.zdim = 0;

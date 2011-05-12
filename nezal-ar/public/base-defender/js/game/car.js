@@ -15,7 +15,7 @@ var Car = Class.create(MovingObject,{
     this.specs = {
                 "hp" : 100,
                 "power" : 3,
-                "speed" : 3,
+                "speed" : 3
             }
 		this.hp = this.maxHp =  this.specs.hp
 		this.speed = this.specs.speed
@@ -192,6 +192,6 @@ var Car = Class.create(MovingObject,{
 	  return function(){
 	    	return self.hp/self.maxHp	
 	  }
-  },	
+  }	
 })
 

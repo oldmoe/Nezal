@@ -1,11 +1,12 @@
 var Text = {}
 var TemplatesManager = Class.create({
   initialize : function(network){
-    var templatesRootNode = document.createElement('div');
+    var templatesRootNode = $(document.createElement('div'));
     network.fetchTemplate( "templates/templates.html", function(responseText){
       templatesRootNode.innerHTML = responseText;
       network.fetchTemplate( "templates/quests.html", function(responseText){
-        templatesRootNode.innerHTML += responseText;
+        var data = templatesRootNode.innerHTML + responseText
+        templatesRootNode.innerHTML = data;
         templatesRootNode.select('textarea').each(function(node){
           node.setAttribute('id', node.getAttribute('id') + "-template");
         });
@@ -17,8 +18,7 @@ var TemplatesManager = Class.create({
         });
       });
     });
-    
-    document.body.appendChild(templatesRootNode.hide());
+    $(document.body.appendChild(templatesRootNode)).hide();
   },
 
   load : function(name, params){

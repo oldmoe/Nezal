@@ -12,7 +12,7 @@ var GamePanel = Class.create({
 		if(!game.townhallFactory.getTownhall()) return null;
 		var totalCapacity = game.townhallFactory.getTownhall().storageCapacity
 		var storages = game.storageFactory.factoryRegistry
-		for(key in storages){
+		for(var key in storages){
 			totalCapacity +=storages[key].storageCapacity
 		}
 		this.totalStorageCapacity = totalCapacity

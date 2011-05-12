@@ -80,6 +80,6 @@ var DomSprite = Class.create(Sprite, {
   createDiv : function() {
     this.div = $(document.createElement('DIV'));
     $('gameCanvas').appendChild(this.div);
-  },
+  }
 	
 })
