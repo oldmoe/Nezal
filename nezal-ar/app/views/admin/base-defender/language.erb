@@ -6,14 +6,16 @@ Language.addWord = function() {
   var label = $$('#addWord #word')[0].value;
   var value =  $$('#addWord #translation')[0].value;
   Language.metadata[lang]['labels'][label] = value;
-  Language.saveToServer();
-  window.location = window.location;
+  Language.saveToServer({ 'successCallback' : function(){
+                                                  window.location = window.location;  
+                                        } });
 }
 
 Language.deleteWord = function(word) {
   delete(Language.metadata[lang]['labels'][word]);
-  Language.saveToServer();
-  window.location = window.location;
+  Language.saveToServer({ 'successCallback' : function(){
+                                                  window.location = window.location;  
+                                        } });
 }
 
 Language.save = function() {
@@ -22,8 +24,9 @@ Language.save = function() {
     var translation = $$('#basicData #translation_' + item)[0].value;
     Language.metadata[lang]['labels'][item] = translation;
   }
-  Language.saveToServer();
-  window.location = window.location;
+  Language.saveToServer({ 'successCallback' : function(){
+                                            window.location = window.location;  
+                                        } });
 }
 
 Language.display = function() {
