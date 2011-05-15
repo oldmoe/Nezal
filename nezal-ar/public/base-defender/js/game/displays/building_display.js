@@ -108,21 +108,24 @@ var BuildingDisplay = Class.create(Display, {
     this.sprites.clickSprite.img.setStyle({width:this.imgWidth+"px",height:this.imgHeight+"px"})
     this.sprites.health = new DomMeterSprite(this.owner,{styleClass:{empty:'healthEmpty',full:'healthFull'},shiftZ:1000})
 		this.sprites.underConstruction = new DomImgSprite(this.owner, {img: this.constructionImg}, {shiftY: this.zdim});
-    this.sprites.mouseover = new DomImgSprite(this.owner, {img: this.mouseoverImg});
-    this.sprites.mouseover.hide();
-    this.sprites.defaultMouseover = this.sprites.mouseover;
-    this.staticSprites.moreContainer = new DomSpriteContainer(this.owner, {zIndex : this.sprites.clickSprite.minAreaZIndex + 1100,
+    if(!this.owner.game.neighborGame)
+    {
+      this.sprites.mouseover = new DomImgSprite(this.owner, {img: this.mouseoverImg});
+      this.sprites.mouseover.hide();
+      this.sprites.defaultMouseover = this.sprites.mouseover;
+      this.staticSprites.moreContainer = new DomSpriteContainer(this.owner, {zIndex : this.sprites.clickSprite.minAreaZIndex + 1100,
+                                                          width :this.buttonImg.width, height : this.buttonImg.height });
+      this.staticSprites.moreContainer.shiftX = (this.imgWidth - this.buttonImg.width)/2+2;
+      this.staticSprites.moreContainer.shiftY = this.imgHeight - this.buttonImg.height - 15;
+      this.staticSprites.moreButton = this.staticSprites.moreContainer.newDomImgSprite(this.owner, { img: this.buttonImg,
+                                                                                         width :this.buttonImg.width,
+                                                                                         height : this.buttonImg.height });
+      this.owner.moreButtonText = function(){ return "menu"};
+      this.staticSprites.moreButtonText = this.staticSprites.moreContainer.newDomTextSprite(this.owner, 'moreButtonText',
+                                                      {centered: true, styleClass : 'moreButtonText', divClass : 'moreButtonText',
                                                         width :this.buttonImg.width, height : this.buttonImg.height });
-    this.staticSprites.moreContainer.shiftX = (this.imgWidth - this.buttonImg.width)/2+2;
-    this.staticSprites.moreContainer.shiftY = this.imgHeight - this.buttonImg.height - 15;
-    this.staticSprites.moreButton = this.staticSprites.moreContainer.newDomImgSprite(this.owner, { img: this.buttonImg,
-                                                                                       width :this.buttonImg.width,
-                                                                                       height : this.buttonImg.height });
-    this.owner.moreButtonText = function(){ return "menu"};
-    this.staticSprites.moreButtonText = this.staticSprites.moreContainer.newDomTextSprite(this.owner, 'moreButtonText',
-                                                    {centered: true, styleClass : 'moreButtonText', divClass : 'moreButtonText',
-                                                      width :this.buttonImg.width, height : this.buttonImg.height });
-    Map.registerSpecialListeners(this.staticSprites.moreContainer.div, this.owner, 'renderPanel');
+      Map.registerSpecialListeners(this.staticSprites.moreContainer.div, this.owner, 'renderPanel');
+    }
     for(var sprite in this.staticSprites){
       this.staticSprites[sprite].render();
     }
@@ -301,16 +304,19 @@ var BuildingDisplay = Class.create(Display, {
   },
   
   render : function(){
-    if( (this.owner.state == this.owner.states.NOT_PLACED) || ( this.defaultAction && (this.owner.state == this.owner.states.NORMAL) ) ) {
+    if( !this.owner.game.neighborGame && 
+          ((this.owner.state == this.owner.states.NOT_PLACED) || ( this.defaultAction && (this.owner.state == this.owner.states.NORMAL)) ) ) {
       this.sprites.clickSprite.setCursor('url(images/buildings/transparent1x1.png), none');
     } else {
       this.sprites.clickSprite.setCursor("pointer");
     }
-    
-    if( this.owner.game.buildingMode && this.owner.game.buildingMode.moveMode ){
-      this.sprites.defaultMouseover = this.sprites.defaultMove;
-    } else {
-      this.sprites.defaultMouseover = this.defaultActionSprite();
+    if(!this.owner.game.neighborGame)
+    {
+      if( this.owner.game.buildingMode && this.owner.game.buildingMode.moveMode ){
+        this.sprites.defaultMouseover = this.sprites.defaultMove;
+      } else {
+        this.sprites.defaultMouseover = this.defaultActionSprite();
+      }
     }
   	if (this.owner.state == this.owner.states.UNDER_CONSTRUCTION) this.renderUnderConstruction();
     if (this.owner.state == this.owner.states.UNDER_CONSTRUCTION || this.owner.state == this.owner.states.UPGRADING ) {

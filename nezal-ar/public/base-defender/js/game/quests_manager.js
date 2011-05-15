@@ -27,7 +27,6 @@ var QuestsManager = Class.create({
   },
 
   render : function(){
-    if(this.game.neighborGame) return;
     var quests = this.nextInCategory();
     $('quest-panel').innerHTML = this.game.templatesManager.load("quests-list", {questsList : quests});
   	this.game.addLoadedImagesToDiv('quest-panel');
@@ -107,11 +106,6 @@ var QuestsManager = Class.create({
   },
 
   handleQuests : function() {
-    if(this.game.neighborGame == true) {
-      this.hideQuests();
-      return;
-    }
-    
     /* Handle Quests should check any quests screens to display :
        if there is any quests notifications, display them one by one.
        else, Check for a mandatory Quest and display it.

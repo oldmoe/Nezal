@@ -409,6 +409,17 @@ class BaseDefender < Metadata
     @@building_modules[building].collect(user_game_profile, coords)
   end
   
+  def self.collect_neighbor_building(user_game_profile, neighbor_profile, data)
+    puts data
+    puts @@building_modules
+    building = data['building']
+    coords = data['coords']
+    @@building_modules[building].collect(neighbor_profile, coords)
+    BD::RewardBag.new({ :metadata => user_game_profile.metadata, :reward_data => {:rock=> 50, :gold=>50, :lumber=>50} })
+    user_game_profile.save
+    BD::Neighbor.neighbor_empire(user_game_profile, data)
+  end
+
   def self.move_building(user_game_profile, data)
     name = data['building']
     validation = @@building_modules[name].move(user_game_profile, name, data['coords'], data['oldCoords'])

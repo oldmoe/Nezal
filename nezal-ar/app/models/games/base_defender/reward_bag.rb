@@ -1,10 +1,10 @@
-class RewardBag
+class BD::RewardBag
   def initialize(options)
     metadata = options[:metadata]
     metadata['reward_bags']['id_generator'] += 1
     reward = {}    
     reward['id'] = metadata['notifications']['id_generator']
-    reward['data'] = options[:reward_data]
+    reward['reward_data'] = options[:reward_data]
     reward['time'] = Time.now.utc.to_i
     metadata['reward_bags']['queue'].push reward
   end

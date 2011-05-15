@@ -47,6 +47,7 @@ module BD
               protected_metadata[building_name][building_instance_coords]['level'] = building_instance['level']
               protected_metadata[building_name][building_instance_coords]['state'] = building_instance['state']
               protected_metadata[building_name][building_instance_coords]['coords'] = building_instance['coords']
+              building_module.neighbor_data.each { |key| protected_metadata[building_name][building_instance_coords][key] = building_instance[key] }
             end
           end
         end
