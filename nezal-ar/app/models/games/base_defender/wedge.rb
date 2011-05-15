@@ -8,6 +8,10 @@ module BD
     def initialize(name)
       @name = name
     end
+
+    def neighbor_data
+      self.class.neighbor_data
+    end
  
     def build(user_game_profile, coords)
       self.class.build(user_game_profile, coords, @name)
