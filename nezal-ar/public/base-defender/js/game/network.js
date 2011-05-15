@@ -56,6 +56,19 @@ var Network = Class.create({
     return IDs;
   },
 
+  performNeighborAction : function(data){
+    var userData = {};
+    var url = data['url'] || '';
+    new Ajax.Request( 'neighbor' + '/' + url, {
+      method : 'post',
+      asynchronous : false,
+      parameters: { 'data' : Object.toJSON(data)},
+      onSuccess: function(response) {
+        userData = JSON.parse(response.responseText).user_data;
+      }
+    });
+    return userData;
+  },
 
   resetEmpire : function(){
     new Ajax.Request('users/reset', {
@@ -91,7 +104,10 @@ var Network = Class.create({
   },
   
   collectResources : function(name, coords){
-    return this.contactTheBoss({ 'event' :'collect_resources', 'building' : name, 'coords' : coords });
+		if(!game.neighborGame)
+      return this.contactTheBoss({ 'event' :'collect_resources', 'building' : name, 'coords' : coords });
+		else 	
+      return this.performNeighborAction({ 'url' : 'building/collect', 'building' : name, 'coords' : coords, 'user_id':game.visitedNeighborId });
   },
 
 	simulateAttack : function(creeps){

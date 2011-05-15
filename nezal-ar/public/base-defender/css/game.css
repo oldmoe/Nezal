@@ -12,6 +12,10 @@ body{
 	margin : 0px;
 }
 
+.arabic {
+  direction : rtl;
+}
+
 area {
 	/*cursor : pointer;*/
 }
@@ -52,11 +56,12 @@ img{
 }
 
 #gameCanvas{
-		position:absolute;
-		z-index:0;
-		top:-275px;
-		left:-380px;
-	}
+	position:absolute;
+	z-index:0;
+	top:-275px;
+	left:-380px;
+  direction : ltr;
+}
 #imageMap{
 	position:absolute;
 	z-index:100000;
@@ -114,7 +119,7 @@ img{
 	background-color:green;
 }
 .resourceEmpty{
-	background-color:grey;	
+	background-color:grey;
 }
 .resourceFull{
 	background-color:green;	
@@ -323,4 +328,41 @@ img{
   -webkit-border-radius : 8px;
   -o-border-radius : 8px;
   border-radius : 8px;
+}
+.DomSprite .buildingName {
+    background-color: #3E7A94;
+    border-radius: 5px 5px 5px 5px;
+    color: white;
+    font-family: verdana;
+    font-size: 11px;
+    padding: 2px;
+    text-shadow: none;
+}
+
+.DomSprite .resourceText {
+    color: #FF9900;
+}
+.moreButtonText {
+  color : #fced70;
+  font-family : ShowG;
+  font-size : 12px;
+  line-height : 24px;
+  width : 63px;
+  height : 24px;
+  cursor : pointer;
+  display: inline-block;
+}
+
+
+#gameContainer.arabic .flippedImg {
+  -moz-transform: scaleX(-1);
+  -o-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+  filter: FlipH;
+  -ms-filter: "FlipH";
+}
+
+#gameContainer.english .flippedImg {
+
 }

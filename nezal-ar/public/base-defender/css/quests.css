@@ -92,16 +92,20 @@
 #interaction #msg .bubble {
   position : absolute;
   top : 20px; 
-  left : 100px
+  margin : 0px 72px;
+}
+#interaction #msg .closeContainer {
+  height:26px;
+  position : absolute;
+  top : 0px;
+  width : 100%;
 }
 #interaction #msg .close {
   cursor: pointer;
   background-image: url("../images/buildings/transparent1x1.png");
   height: 23px;
-  position: absolute;
-  right: 5px;
-  top: 0;
   width: 50px;
+  display : inline-block;
 }
 #interaction #msg .okImage {
   position: relative;
@@ -113,7 +117,6 @@
   width : 70%;
 }
 #interaction #msg #welcomeMsg, #interaction #msg #congratesMsg, #interaction #msg #emptyQuest {
-  position: absolute;
   height: 100%;
   width: 600px;
   height : 230px;
@@ -123,7 +126,7 @@
   left: 115px;
   position: absolute;
   top: 50px;
-  width: 430px;
+  width: 370px;
 }
 #interaction #msg #welcomeMsg .text .name{
     color: #F23D00;
@@ -160,6 +163,7 @@
   text-align : center;
   font-size : 17px;
   line-height : 15px;
+  direction : ltr;
 }
 #interaction #msg #congratesMsg .reward .lumber{
   position : relative;
@@ -266,15 +270,19 @@
   width : 100%;
   overflow : hidden;
 }
-#interaction #questDisplay .close {
+#interaction #questDisplay .closeContainer {
   position : absolute;
-  background-image: url("../images/buildings/transparent1x1.png");
-  right : 5px;
   top : 0px;
-  width : 50px;
+  width : 100%;
   height : 40px;
+}
+#interaction #questDisplay .close {
+  background-image: url("../images/buildings/transparent1x1.png");
+  width : 50px;
+  display : inline-block;
   cursor : pointer;
   z-index: 10;
+  height : 40px;
 }
 #interaction #questDisplay .conditions {
   position: absolute;
@@ -304,12 +312,18 @@
 #interaction #questDisplay .condition .image img{
   width : 54px;
 }
+#interaction #questDisplay .condition .descContainer{
+  width : 100%;
+  position : relative;
+  top : -60px;
+  left : 0px;
+  text-align : center;
+}
 #interaction #questDisplay .condition .desc{
   background: none repeat scroll 0 0 white;
   display: inline-block;
   height: 35px;
   vertical-align: top;
-  margin-left: -50px;
   margin-top: 8px;
   width: 495px;
   -moz-border-radius : 8px;

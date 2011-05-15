@@ -417,7 +417,7 @@ var Map={
 	
 	registerListeners : function(div,owner){
 		div.observe(game.mouseClickEvent,function(){
-			if(!game.buildingMode.isOn && owner.working && owner.state == owner.states.NORMAL){
+			if(!game.buildingMode.isOn && owner.working && owner.state == owner.states.NORMAL && !owner.game.neighborGame){
 				if (!owner.game.buildingMode.moveMode) {
 				  game.buildingMode.fillBuildingPanel(owner)
 					owner.defaultAction();
@@ -441,7 +441,7 @@ var Map={
 		})
     
     var mousemoveCallback = function(mouse){
-      if( owner.state == owner.states.NORMAL ) {
+      if(owner.state == owner.states.NORMAL && owner.sprites.defaultMouseover) {
         var x = mouse.pointerX() || mouse.touches[0].pageX;
         var y = mouse.pointerY() || mouse.touches[0].pageY;
         owner.sprites.defaultMouseover.shiftX = x - (owner.coords.x - Math.round(owner.imgWidth / 2) - Map.x);
@@ -454,7 +454,7 @@ var Map={
     div.observe(game.mouseMoveEvent, mousemoveCallback);
     
 		div.observe('mouseover',function(){
-	  	if (owner.state != owner.states.NOT_PLACED) {
+	  	if(owner.state != owner.states.NOT_PLACED) {
 	  		if (owner.state != owner.states.UNDER_CONSTRUCTION) owner.sprites.outline.show();
         owner.sprites.info.show();
 	  		if(owner.sprites.text) owner.sprites.text.show()
@@ -468,9 +468,10 @@ var Map={
 		})
 		div.observe('mouseout',function(){
 			owner.sprites.outline.hide();
-	    owner.sprites.defaultMouseover.hide();
   		owner.sprites.info.hide();
-			if(owner.sprites.text)owner.sprites.text.hide()
+			if(owner.sprites.text) owner.sprites.text.hide()
+	    if(owner.sprites.defaultMouseover) 
+        owner.sprites.defaultMouseover.hide();
       if(owner.state == owner.states.NORMAL && owner.staticSprites.moreContainer) 
         owner.staticSprites.moreContainer.hide();
       if(owner.progressDisplays[0]){
@@ -512,7 +513,8 @@ var Map={
 		})
 		div.observe('mouseout',function(){
 			owner.sprites.outline.hide();
-	    owner.sprites.defaultMouseover.hide();
+	    if(owner.sprites.defaultMouseover) 
+        owner.sprites.defaultMouseover.hide();
   		owner.sprites.info.hide();
 			if(owner.sprites.text)owner.sprites.text.hide()
       if(owner.progressDisplays[0]){

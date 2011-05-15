@@ -24,11 +24,7 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
       self.sprites.text.hide()
 	  
     });
-    this.owner.stateNotifications[this.owner.states.NORMAL].push(function(){
-      if(self.owner.game.neighborGame == true)
-        self.sprites.text.hide()
-    });
-	
+
   },
   
   renderPanel : function($super){
@@ -45,6 +41,24 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
     this.sprites.defaultAssign = new DomImgSprite(this.owner, {img: this.assignWorkerImg});
     this.sprites.defaultAssign.img.setStyle({width:"40px"});
     this.sprites.defaultAssign.hide();
+    if(this.owner.game.neighborGame && this.owner[this.owner.factory.collect] > 0)
+    {
+      this.staticSprites.moreContainer = new DomSpriteContainer(this.owner, {zIndex : this.sprites.clickSprite.minAreaZIndex + 1100,
+                                                          width :this.buttonImg.width, height : this.buttonImg.height });
+      this.staticSprites.moreContainer.shiftX = (this.imgWidth - this.buttonImg.width)/2+2;
+      this.staticSprites.moreContainer.shiftY = this.imgHeight - this.buttonImg.height - 15;
+      this.staticSprites.moreButton = this.staticSprites.moreContainer.newDomImgSprite(this.owner, { img: this.buttonImg,
+                                                                                         width :this.buttonImg.width,
+                                                                                         height : this.buttonImg.height });
+      this.owner.moreButtonText = function(){ return "collect"};
+      this.staticSprites.moreButtonText = this.staticSprites.moreContainer.newDomTextSprite(this.owner, 'moreButtonText',
+                                                      {centered: true, styleClass : 'moreButtonText', divClass : 'moreButtonText',
+                                                        width :this.buttonImg.width, height : this.buttonImg.height });
+      Map.registerSpecialListeners(this.staticSprites.moreContainer.div, this.owner, 'collectNeighborResources');
+    }
+    for(var sprite in this.staticSprites){
+      this.staticSprites[sprite].render();
+    }
   },
   
   defaultActionSprite : function(){
@@ -117,6 +131,13 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
       owner._AssignWorker();
     }
   },
+
+  collectNeighborResources : function(){
+    var collected = this.owner[this.owner.factory.collect];
+    this.owner._CollectNeighborResources();
+    this._CollectionAnimation(collected);
+  },
+
   _CollectionAnimation : function(collected){
     var owner = this.owner
     var html = owner.game.templatesManager.load("collectAnimation",{

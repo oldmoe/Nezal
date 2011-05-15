@@ -74,6 +74,12 @@ var ResourceBuilding = Class.create(Building, {
     this.game.updateGameStatus(response['gameStatus']);
   },
   
+  _CollectNeighborResources: function(){
+    var response = this.game.network.collectResources(this.name, this.coords);
+    this.game.gameStatus.user_data = response;
+    this.game.updateGameStatus(this.game.gameStatus);
+  },
+
   _ValidateAssignWorker: function(){
     if( this.assignedWorkers >= this.maxWorkers ){
       Notification.alert("Cannot assign more workers, please upgrade the " + this.name + " first!");

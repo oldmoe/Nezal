@@ -98,7 +98,6 @@ var Game = Class.create({
                           $('gameContainer').innerHTML = game.templatesManager.load("gameElements");
                           self.addLoadedImagesToDiv('gameContainer')
                           Map.initializeMapSize()
-                          self.questsManager = new QuestsManager(self);
                           self.domConverter = new DomConverter();
                           $('inProgress').hide()
                           $('gameContainer').show()
@@ -213,6 +212,7 @@ var Game = Class.create({
     var self = this;
     Language.getLanguage(this.gameStatus.user_data.locale, function() {
       var language = Language.userLanguage;
+      $('gameContainer').addClassName(language);
       if(!Language[language])
       {
         self.network.fetchTemplate( "statics/" + language + ".html", function(responseText){
@@ -231,7 +231,13 @@ var Game = Class.create({
   selectLanguage : function(lang){
     var self = this;
     Language.select(lang, function(){
+      console.log("here");
       var language = Language.userLanguage;
+      for(var i=0; i<Language.langsNames.length; i++) 
+      {      
+        $('gameContainer').removeClassName(Language.langsNames[i][0]);
+      }
+      $('gameContainer').addClassName(language);
       self.network.fetchTemplate( "statics/" + language + ".html", function(responseText){
         Text = JSON.parse(responseText);
         self.reflectStatusChange();
@@ -262,7 +268,6 @@ var Game = Class.create({
   	this.storageFactory = new StorageFactory(this);
     this.quarryFactory = new QuarryFactory(this);
     this.lumbermillFactory = new LumbermillFactory(this);
-    this.buildingsManager = new BuildingsManager(this);
     this.workerFactory = new WorkerFactory(this);
     this.creepFactory = new CreepFactory(this);
     this.defenseCenterFactory = new DefenseCenterFactory(this);
@@ -282,10 +287,13 @@ var Game = Class.create({
         this.buildingMode.on( newBuilding, function(){} );
       }
     }
-    if(!this.neighborGame)this.rewardsPanel = new RewardsPanel(this)
-    this.controlsPanel = new ControlsPanel(this)
-    this.tutorial = new Tutorial(this);
-    if(!game.neighborGame) {
+    this.controlsPanel = new ControlsPanel(this);
+    if(this.neighborGame != true)
+    {
+      this.rewardsPanel = new RewardsPanel(this)
+      this.buildingsManager = new BuildingsManager(this);
+      this.questsManager = new QuestsManager(this);
+      this.tutorial = new Tutorial(this);
       this.tutorial.fire();
     }
     this.reInitializationNotifications.each(function(fn){fn()});

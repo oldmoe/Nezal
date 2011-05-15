@@ -10,6 +10,11 @@ module BD
       def states
         @@states
       end
+
+      def neighbor_data
+        []
+      end
+
       def build(user_game_profile, coords, name=nil)
         building_name = name || @name
         game_metadata = BaseDefender.adjusted_game_metadata

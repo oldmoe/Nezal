@@ -2,15 +2,17 @@
 
 <textarea style="display:none;" id='welcome'>
   <div id='welcomeMsg' style="display:none;">
-  <span class="loadedImg" imgClasses="background" imgSrc="images/quests/msgBg.png">
+  <span class="loadedImg" imgClasses="background flippedImg" imgSrc="images/quests/msgBg.png">
 		  </span>
     <div class="msgBGImgs">
-    	  <span class="loadedImg" imgClasses="wedge" imgSrc="images/quests/wedge.png">
+    	  <span class="loadedImg" imgClasses="wedge flippedImg" imgSrc="images/quests/wedge.png">
 		  </span>
-		  <span class="loadedImg" imgClasses="bubble" imgSrc="images/quests/msgBaloon.png">
+		  <span class="loadedImg" imgClasses="bubble flippedImg" imgSrc="images/quests/msgBaloon.png">
 		  </span>
     </div>
-    <div class="close" onclick="Animation.hide('msg'); game.questsManager.handleQuests();">
+    <div class="closeContainer">
+      <div class="alignDiv" style="width:90%;"> </div>
+      <div class="close" onclick="Animation.hide('msg'); game.questsManager.handleQuests();">
     </div>
     <div class="okButtonWrapper">
       <div class="alignDiv"> </div>
@@ -31,9 +33,12 @@
 
 <textarea style="display:none;" id='quest'>
   <div id='questScreen' style="display:none;">
-     <span class="loadedImg" imgClasses="background" imgSrc="images/quests/questBg.png">
-		  </span>
-    <div class="close" onclick="Animation.hide('questDisplay');">
+    <span class="loadedImg" imgClasses="background flippedImg" imgSrc="images/quests/questBg.png">
+	  </span>
+    <div class="closeContainer">
+      <div class="alignDiv" style="width:90%;"> </div>
+      <div class="close" onclick="Animation.hide('questDisplay');">
+      </div>
     </div>
     <div class="title">
       <span class="text yellowText"> ${text.title} </span>
@@ -45,23 +50,25 @@
           <div class="condition">          
             <div class="image">
               <div class="alignDiv" style="width:30px;"></div>
-			  <span class="loadedImg" imgClasses="" imgSrc="images/icons/${building_index+'.png'}">
-		  </span>
+			        <span class="loadedImg" imgClasses="" imgSrc="images/icons/${building_index+'.png'}">
+  		        </span>
             </div>
-            <div class="desc">
-              <div class="text"> 
-                {if quest['status']['buildings'][building_index][condition_index]['status'] < 1 }
-                <div class="condMsg blueText"> ${text['conditionMsgs'][building_index][condition_index]} </div>
-                <div class="condStatus"> 
-                  ${quest['status']['buildings'][building_index][condition_index]['value']} /
-                  ${quest['status']['buildings'][building_index][condition_index]['target']}
+            <div class="descContainer">
+              <div class="desc">
+                <div class="text"> 
+                  {if quest['status']['buildings'][building_index][condition_index]['status'] < 1 }
+                  <div class="condMsg blueText"> ${text['conditionMsgs'][building_index][condition_index]} </div>
+                  <div class="condStatus"> 
+                    ${quest['status']['buildings'][building_index][condition_index]['value']} /
+                    ${quest['status']['buildings'][building_index][condition_index]['target']}
+                  </div>
+                  {else}
+                  <div class="condMsg redText"> ${text['conditionMsgs'][building_index][condition_index]} </div>
+                  <div class="condStatus"> 
+                    <img style="width:28px;" src="${Loader.images.quests['correct.png'].src}"/>
+                  </div>
+                  {/if}
                 </div>
-                {else}
-                <div class="condMsg redText"> ${text['conditionMsgs'][building_index][condition_index]} </div>
-                <div class="condStatus"> 
-                  <img style="width:28px;" src="${Loader.images.quests['correct.png'].src}"/>
-                </div>
-                {/if}
               </div>
             </div>
           </div>
@@ -71,22 +78,25 @@
         <div class="condition">          
           <div class="image">
             <div class="alignDiv" style="width:30px;"></div>
-            <img src="${Loader.images.icons[condition_index+'.png'].src}"/>        
+		        <span class="loadedImg" imgClasses="" imgSrc="images/icons/${condition_index+'.png'}">
+		        </span>       
           </div>
-          <div class="desc">
-            <div class="text"> 
-              {if quest['status']['resources'][condition_index]['status'] < 1 }
-              <div class="condMsg blueText"> ${text['conditionMsgs'][condition_index]} </div>
-              <div class="condStatus"> 
-                ${quest['status']['resources'][condition_index]['value']} /
-                ${quest['status']['resources'][condition_index]['target']}
+          <div class="descContainer">
+            <div class="desc">
+              <div class="text"> 
+                {if quest['status']['resources'][condition_index]['status'] < 1 }
+                <div class="condMsg blueText"> ${text['conditionMsgs'][condition_index]} </div>
+                <div class="condStatus"> 
+                  ${quest['status']['resources'][condition_index]['value']} /
+                  ${quest['status']['resources'][condition_index]['target']}
+                </div>
+                {else}
+                <div class="condMsg redText"> ${text['conditionMsgs'][condition_index]} </div>
+                <div class="condStatus"> 
+                  <img style="width:28px;" src="${Loader.images.quests['correct.png'].src}"/>
+                </div>
+                {/if}
               </div>
-              {else}
-              <div class="condMsg redText"> ${text['conditionMsgs'][condition_index]} </div>
-              <div class="condStatus"> 
-                <img style="width:28px;" src="${Loader.images.quests['correct.png'].src}"/>
-              </div>
-              {/if}
             </div>
           </div>
         </div>
@@ -97,7 +107,7 @@
       <div class="description">
         <div class="alignDiv" style="width:85px;"></div>
         <div class="bubble">
-          <img src="${Loader.images.quests['questBaloon.png'].src}"/>
+          <img src="${Loader.images.quests['questBaloon.png'].src}" class="flippedImg"/>
           <div class="bubbleText blueText">
             <div style="display : table-cell;vertical-align:middle;height: 82px;"> ${text.description} </div>
           </div>
@@ -123,12 +133,15 @@
 
 <textarea style="display:none;" id='congrates'>
   <div id='congratesMsg' style="display:none;">
-    <img class="background" src="${Loader.images.quests['msgBg.png'].src}"/>
+    <img class="background flippedImg" src="${Loader.images.quests['msgBg.png'].src}"/>
     <div class="msgBGImgs">
-      <img class="wedge" src="${Loader.images.quests['wedge.png'].src}"/>
-      <img class="bubble" src="${Loader.images.quests['msgBaloon.png'].src}"/>
+      <img class="wedge flippedImg" src="${Loader.images.quests['wedge.png'].src}"/>
+      <img class="bubble flippedImg" src="${Loader.images.quests['msgBaloon.png'].src}"/>
     </div>
-    <div class="close" onclick="Animation.hide('congratesMsg'); game.questsManager.ackCongratesMsgs(${msg['id']});"> </div>
+    <div class="closeContainer">
+      <div class="alignDiv" style="width:90%;"> </div>
+      <div class="close" onclick="Animation.hide('congratesMsg'); game.questsManager.ackCongratesMsgs(${msg['id']});"> </div>
+    </div>
     <div class="okButtonWrapper">
       <div class="alignDiv"> </div>
       <div class="okButton" ackId="${msg['id']}" onclick="Animation.hide('congratesMsg'); game.questsManager.ackCongratesMsgs(${msg['id']});">
@@ -324,56 +337,64 @@ $('${building_index}_msg').show();$('${building_index}_msg_text').show();"
   {for building in buildings}
     <div class="buildingInfo" id="${building_index}_info" style="display:none;">
       <div class="buildingName">${Text.buildings[building_index]['name']}</div>
-      <div class="buildingDesc"> ${Text.buildings[building_index]['desc']}</div>
-   <span class="loadedImg" imgClasses="resourcesNeeded" imgSrc="images/quests/resources_needed_for_building.png">
-  </span>
-      <div class="cost">
-        <div class="text">
-          {if building['lumber']}
-            ${building['lumber']}
-          {else}
-            0
-          {/if}
-        </div>
-        <div class="text">
-          {if building['rock']}
-            ${building['rock']}
-          {else}
-            0
-          {/if}
-        </div>
-        <div class="text">
-          {if building['coins']}
-            ${building['coins']}
-          {else}
-            0
-          {/if}
-        </div>
-        <div class="text">
-          {if building['time']}
-            ${Util.timeDisplay(building['time'])}
-          {else}
-            0
-          {/if}
+      <div class="buildingDetails">
+        <div class="buildingDesc"> ${Text.buildings[building_index]['desc']}</div>
+        <div class="buildingCost">     
+          <span class="loadedImg" imgClasses="resourcesNeeded" imgSrc="images/quests/resources_needed_for_building.png">
+          </span>
+          <div class="cost">
+            <div class="text">
+              {if building['lumber']}
+                ${building['lumber']}
+              {else}
+                0
+              {/if}
+            </div>
+            <div class="text">
+              {if building['rock']}
+                ${building['rock']}
+              {else}
+                0
+              {/if}
+            </div>
+            <div class="text">
+              {if building['coins']}
+                ${building['coins']}
+              {else}
+                0
+              {/if}
+            </div>
+            <div class="text">
+              {if building['time']}
+                ${Util.timeDisplay(building['time'])}
+              {else}
+                0
+              {/if}
+            </div>
+          </div>
         </div>
       </div>
     </div>
   {/for}
-  <span class="loadedImg" imgClasses="buildingPanelBg" imgSrc="images/quests/buildingPanelBg.png">
+  <span class="loadedImg" imgClasses="buildingPanelBg flippedImg" imgSrc="images/quests/buildingPanelBg.png">
   </span>
-	<span class="loadedImg" imgClasses="wedgesBg" imgSrc="images/quests/wedgesBg.png">
+	<span class="loadedImg" imgClasses="wedgesBg flippedImg" imgSrc="images/quests/wedgesBg.png">
   </span>	  	  
-	<span class="loadedImg" imgClasses="buildingsBg" imgSrc="images/quests/buildingsBg.png">
+	<span class="loadedImg" imgClasses="buildingsBg flippedImg" imgSrc="images/quests/buildingsBg.png">
   </span>	  	  
   <span class="loadedImg" imgClasses="buildingPanelLine" imgSrc="images/quests/line.png">
   </span>	  	  
-		 
-  <div id="buildingsTrigger" class="buildingPanelTriggers activeTrigger" onclick="game.buildingsManager.displayBuildingsTab()">
-    Buildings
+  <div class="triggers">
+    <div id="buildingsTrigger" class="buildingPanelTriggers activeTrigger" onclick="game.buildingsManager.displayBuildingsTab()">
+      Buildings
+    </div>
+    <div id="defenseTrigger" class="buildingPanelTriggers inactiveTrigger" onclick="game.buildingsManager.displayDefenseTab()">
+      Defense
+    </div>
   </div>
-  <div id="defenseTrigger" class="buildingPanelTriggers inactiveTrigger" onclick="game.buildingsManager.displayDefenseTab()">
-    Defense
+  <div class="closeContainer">
+    <div class="alignDiv" style="width:87%;"> </div>
+    <div id="closeBuildingPanel"  onclick="Animation.hide('buildingDisplay');"></div>
   </div>
-  <div id="closeBuildingPanel"  onclick="Animation.hide('buildingDisplay');"></div>
 </textarea>
 

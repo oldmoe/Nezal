@@ -4,6 +4,10 @@ module BD
       @collect
     end
 
+    def self.neighbor_data
+      [collects]
+    end
+
     def self.collect(user_game_profile, coords)
       game_metadata = user_game_profile.game.metadata
       location_hash = BaseDefender.convert_location(coords)
