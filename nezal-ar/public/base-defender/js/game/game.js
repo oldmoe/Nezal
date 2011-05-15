@@ -47,7 +47,7 @@ var Game = Class.create({
   		this.mouseEndEvent = 'touchend'
   		this.mouseMoveEvent = 'touchmove'
     }
-    //soundManager.mute()
+    soundManager.mute()
   },
 	
   startLoading : function(){
