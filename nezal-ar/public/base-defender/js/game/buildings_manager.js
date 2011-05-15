@@ -9,10 +9,19 @@ var BuildingsManager = Class.create({
 
   initialize : function(game){
     this.game = game
+    if($('buildingDisplay').style.display != 'none')
+      game.buildingsManager.displayBuildingsPanel({'disabled' : []});
     this.displayBuildButton(function(){
       game.buildingsManager.displayBuildingsPanel({'disabled' : []});
       Sounds.play(Sounds.gameSounds.click);
     });
+  },
+
+  destroy : function(){
+    if(this.buildingsCarousel)
+      this.buildingsCarousel.destroy();      
+    if(this.defenseCarousel)
+      this.defenseCarousel.destroy();
   },
 
   /*
@@ -21,6 +30,7 @@ var BuildingsManager = Class.create({
 - listeners : hash of listeners to attach to certain items.
 */
   displayBuildingsPanel : function(params){
+    this.destroy();
     var buildings = {};
     var disabled = [];
     for ( var i in this.game.data.buildings) {
@@ -40,11 +50,6 @@ var BuildingsManager = Class.create({
     }
     disabled = (params['disabled'] || []).concat(disabled);
     $('buildingDisplay').innerHTML = this.game.templatesManager.load("buildings-panel", {'buildings' : buildings, 'disabled' : disabled});
-
-    if(this.buildingsCarousel)
-      this.buildingsCarousel.destroy();      
-    if(this.defenseCarousel)
-      this.defenseCarousel.destroy();
     this.defenseCarousel = new Carousel("defense", this.images, 5);
     this.buildingsCarousel = new Carousel("buildings", this.images, 5);
     this.defenseCarousel.checkButtons();

@@ -210,6 +210,7 @@ var Game = Class.create({
     var self = this;
     Language.getLanguage(this.gameStatus.user_data.locale, function() {
       var language = Language.userLanguage;
+      $('gameContainer').addClassName(language);
       if(!Language[language])
       {
         self.network.fetchTemplate( "statics/" + language + ".html", function(responseText){
@@ -228,7 +229,13 @@ var Game = Class.create({
   selectLanguage : function(lang){
     var self = this;
     Language.select(lang, function(){
+      console.log("here");
       var language = Language.userLanguage;
+      for(var i=0; i<Language.langsNames.length; i++) 
+      {      
+        $('gameContainer').removeClassName(Language.langsNames[i][0]);
+      }
+      $('gameContainer').addClassName(language);
       self.network.fetchTemplate( "statics/" + language + ".html", function(responseText){
         Text = JSON.parse(responseText);
         self.reflectStatusChange();

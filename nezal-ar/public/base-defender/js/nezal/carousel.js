@@ -38,6 +38,17 @@ var Carousel = Class.create( {
         this.ulId = $$('#' + this.id + ' ul')[0].id;
         this.listSize =  $$('#' + this.ulId + ' li').length;
         $(this.ulId).style.left = 0;
+        $(this.ulId).style.border = 'none';
+        if($(this.ulId).getStyle('direction') == 'rtl')
+        {
+          this.direction = -1;
+          $(this.ulId).setStyle('float', 'right');
+        }
+        else
+        {
+          this.direction = 1;
+          $(this.ulId).setStyle('float', 'left');
+        }
         this.offset = $(this.id).cumulativeOffset()[0];
         this.right = $$('#' + this.id +  ' .right img')[0];
         this.right.carousel = this;
@@ -66,7 +77,7 @@ var Carousel = Class.create( {
             var newIndex = this.currIndex - this.scroll;
             if (newIndex < 0)
               newIndex = 0;
-            var step = -1 * (newIndex - this.currIndex) * this.width;
+            var step = -1 * this.direction * (newIndex - this.currIndex) * this.width;
             this.currIndex = newIndex;
             var carousel = this;
             new Effect.Move(this.ulId, {x: step, y: 0, mode: 'relative', duration: 0.5, afterFinish : function(){ carousel.enabled = true; } })
@@ -82,7 +93,7 @@ var Carousel = Class.create( {
             var newIndex = this.currIndex + this.scroll;
             if ( newIndex > this.listSize - this.displayCount )
                 newIndex = this.listSize - this.displayCount;
-            var step = -1 * (newIndex - this.currIndex) * this.width;
+            var step = -1 * this.direction * (newIndex - this.currIndex) * this.width;
             this.currIndex = newIndex;
             var carousel = this;
             new Effect.Move(this.ulId, {x: step, y: 0, mode: 'relative', duration: 0.3, afterFinish : function(){ carousel.enabled = true; } })
@@ -93,7 +104,7 @@ var Carousel = Class.create( {
     scrollTo : function(index){
         if(index > (this.listSize - this.displayCount))
             index = this.listSize - this.displayCount
-        var distance = (this.currIndex - index) * this.width;
+        var distance = this.direction * (this.currIndex - index) * this.width;
         this.currIndex = index;
         new Effect.Move(this.ulId, {x:distance, y: 0, mode: 'relative', duration: 0.3, afterFinish : function(){ }})
         this.checkButtons();
