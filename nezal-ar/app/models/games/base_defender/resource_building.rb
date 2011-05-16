@@ -5,7 +5,7 @@ module BD
     end
 
     def self.neighbor_data
-      [collects]
+      [collects, 'assigned_workers']
     end
 
     def self.collect(user_game_profile, coords)

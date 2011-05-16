@@ -38,6 +38,9 @@ var BuildingDisplay = Class.create(Display, {
     /* Set Default Onclick Action */
     if(!this.defaultAction)
       this.defaultAction = this.renderPanel;
+    /* Set Default Onclick Action for neighbor visits*/
+    if(!this.defaultNeighborAction)
+      this.defaultNeighborAction = function(){};
 
     var buildImgName = this.noOfXTiles+"x"+this.noOfYTiles
     this.invalidImg =  Loader.images.buildingModes[buildImgName+"_invalid.png"];
@@ -108,11 +111,13 @@ var BuildingDisplay = Class.create(Display, {
     this.sprites.clickSprite.img.setStyle({width:this.imgWidth+"px",height:this.imgHeight+"px"})
     this.sprites.health = new DomMeterSprite(this.owner,{styleClass:{empty:'healthEmpty',full:'healthFull'},shiftZ:1000})
 		this.sprites.underConstruction = new DomImgSprite(this.owner, {img: this.constructionImg}, {shiftY: this.zdim});
+    this.sprites.mouseover = new DomImgSprite(this.owner, {img: this.mouseoverImg});
+    this.sprites.mouseover.hide();
+    this.sprites.defaultMouseover = this.sprites.mouseover;
+    this.sprites.neighborMouseover = new DomImgSprite(this.owner, {img: this.transparentImg});
+    this.sprites.neighborMouseover.hide();
     if(!this.owner.game.neighborGame)
     {
-      this.sprites.mouseover = new DomImgSprite(this.owner, {img: this.mouseoverImg});
-      this.sprites.mouseover.hide();
-      this.sprites.defaultMouseover = this.sprites.mouseover;
       this.staticSprites.moreContainer = new DomSpriteContainer(this.owner, {zIndex : this.sprites.clickSprite.minAreaZIndex + 1100,
                                                           width :this.buttonImg.width, height : this.buttonImg.height });
       this.staticSprites.moreContainer.shiftX = (this.imgWidth - this.buttonImg.width)/2+2;
@@ -302,21 +307,24 @@ var BuildingDisplay = Class.create(Display, {
   defaultActionSprite : function(){
     return this.sprites.mouseover;
   },
+
+  defaultNeighborActionSprite : function(){
+    return this.sprites.neighborMouseover;
+  },
   
   render : function(){
-    if( !this.owner.game.neighborGame && 
-          ((this.owner.state == this.owner.states.NOT_PLACED) || ( this.defaultAction && (this.owner.state == this.owner.states.NORMAL)) ) ) {
+    if((this.owner.state == this.owner.states.NOT_PLACED) || ( this.defaultAction && (this.owner.state == this.owner.states.NORMAL))) {
       this.sprites.clickSprite.setCursor('url(images/buildings/transparent1x1.png), none');
     } else {
       this.sprites.clickSprite.setCursor("pointer");
     }
-    if(!this.owner.game.neighborGame)
-    {
-      if( this.owner.game.buildingMode && this.owner.game.buildingMode.moveMode ){
-        this.sprites.defaultMouseover = this.sprites.defaultMove;
-      } else {
-        this.sprites.defaultMouseover = this.defaultActionSprite();
-      }
+    if(this.owner.game.neighborGame) {
+      this.sprites.defaultMouseover = this.defaultNeighborActionSprite();
+    }
+    else if( this.owner.game.buildingMode && this.owner.game.buildingMode.moveMode ){
+      this.sprites.defaultMouseover = this.sprites.defaultMove;
+    } else {
+      this.sprites.defaultMouseover = this.defaultActionSprite();
     }
   	if (this.owner.state == this.owner.states.UNDER_CONSTRUCTION) this.renderUnderConstruction();
     if (this.owner.state == this.owner.states.UNDER_CONSTRUCTION || this.owner.state == this.owner.states.UPGRADING ) {
