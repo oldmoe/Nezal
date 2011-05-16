@@ -69,15 +69,16 @@
   width: 44px;
 }
 #friends .friend .name{
-    color: white;
-    font-family: helvetica;
-    font-size: 14px;
-    font-weight: bold;
-    position: absolute;
-    text-align: center;
-    text-decoration: none;
-    top: 72px;
-    width: 80px;
+  color: white;
+  font-family: helvetica;
+  font-size: 14px;
+  font-weight: bold;
+  position: absolute;
+  text-align: center;
+  text-decoration: none;
+  top: 72px;
+  width: 80px;
+  left: 3px;
 }
 
 #home {

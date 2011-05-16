@@ -8,9 +8,18 @@ var BuildingsManager = Class.create({
             },
 
   initialize : function(game){
-    this.game = game
-    if($('buildingDisplay').style.display != 'none')
-      game.buildingsManager.displayBuildingsPanel({'disabled' : []});
+    this.game = game;
+    if(this.game.reInitializationNotifications)
+    {
+      if($('buildingDisplay').getStyle("display") == "block")
+      {
+        this.game.reInitializationNotifications.push(function(){
+                                                      if($('questDisplay').getStyle("display") == 'none' &&          
+                                                          $('msg').getStyle("display") == 'none')
+                                                        $('buildingDisplay').show();
+                                                    })
+      } 
+    }
     this.displayBuildButton(function(){
       game.buildingsManager.displayBuildingsPanel({'disabled' : []});
       Sounds.play(Sounds.gameSounds.click);
@@ -25,10 +34,10 @@ var BuildingsManager = Class.create({
   },
 
   /*
-* Params will include : hash { 'disable', 'listeners'}
-- disabled list : disables clicks on items named in disbaled array.
-- listeners : hash of listeners to attach to certain items.
-*/
+   Params will include : hash { 'disable', 'listeners'}
+    - disabled list : disables clicks on items named in disbaled array.
+    - listeners : hash of listeners to attach to certain items.
+  */
   displayBuildingsPanel : function(params){
     this.destroy();
     var buildings = {};
@@ -63,7 +72,8 @@ var BuildingsManager = Class.create({
                       }
                   });
    this.game.addLoadedImagesToDiv('buildingDisplay');
-    Animation.hide('questDisplay');
+    if($('questDisplay')) Animation.hide('questDisplay');
+    if($('congratesMsg')) Animation.hide('congratesMsg');
     Animation.show('buildingDisplay');
     $('interaction').show();
   },
@@ -77,11 +87,16 @@ var BuildingsManager = Class.create({
     $('buildButton').show();
   },
 
-  hideBuildButton : function(){
+  hideBuildControls : function(){
     if($('buildButton'))
     {
       $('buildButton').hide();
       $('buildButton').stopObserving(game.mouseClickEvent);
+    }
+    if($('buildingDisplay'))
+    {
+      $('buildingDisplay').innerHTML = '';
+      $('buildingDisplay').hide();
     }
   },
   

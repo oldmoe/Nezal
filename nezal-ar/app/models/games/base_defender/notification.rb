@@ -11,11 +11,14 @@ class Notification
     metadata['notifications']['queue'].push notification
   end
   
+  # Takes an array of ids or single id in the options
   def self.delete(options)
     profile = options[:profile]
-    ack_id = options[:id]
+    ack_ids = options[:ids] || [options[:id]] || []
     profile.metadata['notifications']['queue'].each_with_index do |notification, index|
-      profile.metadata['notifications']['queue'].delete_at index if notification['id'] == ack_id.to_i
+      if (ack_ids.include? (notification['id']).to_s) || (ack_ids.include? notification['id'])
+        profile.metadata['notifications']['queue'].delete_at index 
+      end
     end
     profile.save
     return {'valid' => true, 'error' => '' }

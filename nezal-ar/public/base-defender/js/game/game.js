@@ -228,8 +228,9 @@ var Game = Class.create({
 
   selectLanguage : function(lang){
     var self = this;
+    this.questsManager.hideQuests();
+    this.buildingsManager.hideBuildControls();
     Language.select(lang, function(){
-      console.log("here");
       var language = Language.userLanguage;
       for(var i=0; i<Language.langsNames.length; i++) 
       {      
