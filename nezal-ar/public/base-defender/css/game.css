@@ -263,35 +263,36 @@ img{
     right: 11px;
     width: 48px;
 }    
-#controlPanel .controlContainer{
-	position:absolute;
-}
+
 #controlPanel .controlContainer img{
 	position:absolute;
 }
+#controlPanel #controlsBackground{
+  position:absolute;
+  left:-10px; 
+}
 #controlPanel #sound{
-	left:16px;
-	top:29px;
 }
 #controlPanel #move{
-	left:60px;
-	top:29px;
 }
 #controlPanel #zoom{
-	left:104px;
-	top:29px;
 }
 #controlPanel #music{
-	left:16px;
-	top:64px;
+  margin-top:0px;
 }
 #controlPanel{
-    left: 582px;
     position: absolute;
-    top:518px;
+    left: 593px;
+    top: 446px;
+    width: 145px;
 }
 #controlPanel .controlContainer{
-	cursor:pointer;
+	  cursor: pointer;
+    float: left;
+    height: 35px;
+    margin-top: 30px;
+    margin-top: 32px;
+    width: 44px;
 }
 .collectionAnimation{
 	position : absolute;

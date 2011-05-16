@@ -101,8 +101,8 @@ var Util = {
 		return Math.sqrt(Math.pow(x1-x2,2)+Math.pow(y1-y2,2))
 	 },
 	 timeDisplay : function(remainingTime){
-	 	var string = ''
-	 	var seconds = remainingTime % 60
+	 	  var string = ''
+	 	  var seconds = remainingTime % 60
 	    remainingTime = ((remainingTime - seconds) / 60)
 	    var minutes = remainingTime % 60
 	    remainingTime = ((remainingTime - minutes) / 60)
