@@ -42,7 +42,7 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
     this.sprites.defaultAssign = new DomImgSprite(this.owner, {img: this.assignWorkerImg});
     this.sprites.defaultAssign.img.setStyle({width:"40px"});
     this.sprites.defaultAssign.hide();
-    if(this.owner.game.neighborGame && (this.owner[this.owner.factory.collect] > 0 || this.owner.producing) )
+    if(this.owner.game.neighborGame && (this.owner[this.owner.factory.collect] > 0 || this.owner.assignedWorkers > 0) )
     {
       this.staticSprites.collectContainer = new DomSpriteContainer(this.owner, {zIndex : this.sprites.clickSprite.minAreaZIndex + 1100,
                                                           width :this.buttonImg.width, height : this.buttonImg.height });
@@ -71,7 +71,7 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
   },
 
   defaultNeighborActionSprite : function(){
-    if( (this.owner[this.owner.factory.collect] > 0 || this.owner.producing))
+    if( (this.owner[this.owner.factory.collect] > 0 || this.owner.assignedWorkers > 0))
       return this.sprites.defaultMouseover = this.sprites.mouseover;
     else
       return this.sprites.defaultMouseover = this.sprites.neighborMouseover;
@@ -141,7 +141,7 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
   },
 
   collectNeighborResources : function(){
-    if( (this.owner[this.owner.factory.collect] > 0 || this.owner.producing))
+    if( (this.owner[this.owner.factory.collect] > 0 || this.owner.assignedWorkers > 0))
     {
       this.owner._CollectNeighborResources();
       this._NeighborCollectionAnimation();

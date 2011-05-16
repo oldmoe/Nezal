@@ -166,8 +166,7 @@ var BuildingDisplay = Class.create(Display, {
 	    self.createUnderConstructionElements();
       var top =  self.owner.coords.y
       var left =  self.owner.coords.x -  37; // half width of the progress bar
-      self.progressDisplay = new ProgressDisplay( 
-      self.owner.nextLevelBluePrints.time, top, left, self.owner.coords.y, 'Building');
+      self.progressDisplay = new ProgressDisplay(self.owner.nextLevelBluePrints.time, top, left, self.owner.coords.y, 'Building');
       self.progressDisplays.push(self.progressDisplay)
       self.sprites.building.hide();
 	    self.sprites.shadow.hide();
@@ -187,8 +186,7 @@ var BuildingDisplay = Class.create(Display, {
       var top =  self.owner.coords.y+Math.round(self.imgHeight/2) - 50
       var left =  self.owner.coords.x - 37;
   	  self.sprites.underConstruction.hide();
-      self.progressDisplay = new ProgressDisplay( 
-      self.owner.nextLevelBluePrints.time, top -12, left, self.owner.coords.y ,'Upgrading');
+      self.progressDisplay = new ProgressDisplay(self.owner.nextLevelBluePrints.time, top -12, left, self.owner.coords.y ,'Upgrading');
       self.progressDisplays.push(self.progressDisplay)
       self.sprites.building.show();
       self.sprites.building.setOpacity(0.5);
@@ -327,9 +325,12 @@ var BuildingDisplay = Class.create(Display, {
       this.sprites.defaultMouseover = this.defaultActionSprite();
     }
   	if (this.owner.state == this.owner.states.UNDER_CONSTRUCTION) this.renderUnderConstruction();
-    if (this.owner.state == this.owner.states.UNDER_CONSTRUCTION || this.owner.state == this.owner.states.UPGRADING ) {
+    if (this.owner.state == this.owner.states.UNDER_CONSTRUCTION || this.owner.state == this.owner.states.UPGRADING) {
       this.sprites.clickSprite.setCursor("default");
-      this.progressDisplay.render( this.owner.elapsedTime() );
+      if(this.owner.game.neighborGame)
+        this.progressDisplay.hide();
+      else
+        this.progressDisplay.render( this.owner.elapsedTime() );
     } else if (this.owner.state == this.owner.states.NOT_PLACED) {
       if( this.owner.locationValid ){
         this.sprites.invalid.hide();

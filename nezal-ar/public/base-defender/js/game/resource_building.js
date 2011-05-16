@@ -15,7 +15,7 @@ var ResourceBuilding = Class.create(Building, {
 	  this.unitPerWorkerTick = (this.unitPerWorkerMinute / (60)) * (this.game.reactor.delay / 1000);
       this.capacity = this.currentLevelBluePrints.capacity
     }
-	this.fullObservers = []
+  	this.fullObservers = []
   },
 	
   
@@ -37,7 +37,7 @@ var ResourceBuilding = Class.create(Building, {
   	
   totalPerTick : function(){
 		var collected = this.unitPerWorkerTick * this.assignedWorkers
-    	if (this[this.factory.collect] + collected > this.capacity) {
+  	if (this[this.factory.collect] + collected > this.capacity) {
 			this.producing = false
 			this.full = true
 			return (this.capacity - this[this.factory.collect]);
