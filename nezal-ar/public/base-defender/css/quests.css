@@ -315,13 +315,14 @@
 }
 #interaction #questDisplay .condition .image{
   display: inline-block;
-  height: 100%;
   width: 96px;
+  height : 54px;
   position : relative;
   z-index : 10;
 }
 #interaction #questDisplay .condition .image img{
   width : 54px;
+  height : 46px;
 }
 #interaction #questDisplay .condition .descContainer{
   width : 100%;
@@ -359,7 +360,7 @@
 #interaction #questDisplay .condition .desc .condStatus{
   display: inline-block;
   width : 60px;
-  margin-top: -6px;
+  height : 35px;
 }
 #interaction #questDisplay .descriptionWrapper {
   height: 175px;
