@@ -206,10 +206,14 @@
 .clickable {
   cursor : pointer;
 }
-#quest-panel {
+
+#side-bar {
   padding: 0 0 10px 0px;
   position: absolute;
   top: 95px;
+  width: 66px;
+}
+#quest-panel {
   width: 66px;
 }
 #quest-panel .wedge {

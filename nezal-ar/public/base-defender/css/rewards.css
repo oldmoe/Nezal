@@ -1,12 +1,72 @@
 #rewardsBag{
-  position:absolute;
-  left: 10px;
-  top: 362px;
+  height: 80px;
+  position: relative;
+  text-align: center;
+  top: 10px;
+  width: 70px;
   z-index:1;
   cursor:pointer;
 }
-#rewardsBag img{
-  width:50px; 
+#rewardsBag .mainImg {
+  left: 1px;
+  position: absolute;
+  text-align: center;
+  top: -2px;
+  width: 64px;
+}
+#rewardsBag .shadow{
+  position: absolute;
+  width: 68px;
+  left: 1px;
+  top: 0px;
+}
+#rewardsBag .circle{
+  left: 2px;
+  position: absolute;
+  top: 0;
+  width: 68px;
+}
+#rewardsBag .text {
+  color: white;
+  font-family: Showg;
+  font-size: 11px;
+  position: absolute;
+  text-shadow: -2px 2px 1px #000000;
+  text-transform: uppercase;
+  top: 55px;
+  width: 100%;
+}
+#rewardsBag .number {
+    color: #326479;
+    font-family: Showg;
+    font-size: 23px;
+    position: absolute;
+    text-shadow: -2px 2px 1px #ffffff;
+    text-transform: uppercase;
+    top: 32px;
+    width: 100%;
+}
+
+#neighborRewardsBag{
+  right: 20px;
+  top : 100px;
+  position: absolute;
+  text-align: center;
+}
+#neighborRewardsBag .mainImg {
+  left: 1px;
+  position: absolute;
+  text-align: center;
+}
+#neighborRewardsBag .number {
+    color: #326479;
+    font-family: Showg;
+    font-size: 23px;
+    position: absolute;
+    text-shadow: -2px 2px 1px #ffffff;
+    text-transform: uppercase;
+    top: 22px;
+    width: 100%;
 }
 #rewards .reward .closeRewards{
     background-color: Sienna;

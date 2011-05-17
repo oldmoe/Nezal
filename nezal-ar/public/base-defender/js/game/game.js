@@ -80,7 +80,7 @@ var Game = Class.create({
     questsImages = questsImages.concat(BuildingMode.prototype.buildings.collect(function(building){
                                                                       return building + "_info_dimmed.png";
                                                                   }));
-    rewardsImages = ['reward_icon.png'];
+    rewardsImages = ['reward_icon.png', 'reward_notification.png', 'yellow_bag.png'];
     var specialDefaultActionImages = ['assign_worker.png', 'move.png']
     new Loader().load([ {images : gameElementsImages, path: 'images/game_elements/', store: 'game_elements'},
                         {images : friendsImages, path: 'images/friends/', store: 'friends'},
@@ -291,12 +291,13 @@ var Game = Class.create({
     this.controlsPanel = new ControlsPanel(this);
     if(this.neighborGame != true)
     {
-      this.rewardsPanel = new RewardsPanel(this)
       this.buildingsManager = new BuildingsManager(this);
       this.questsManager = new QuestsManager(this);
       this.tutorial = new Tutorial(this);
       this.tutorial.fire();
     }
+    this.rewardsPanel = new RewardsPanel(this)
+    this.rewardsPanel.handleRewards();
     this.reInitializationNotifications.each(function(fn){fn()});
 /*    if(!this.neighborGame)
       new Notification(this).showAll();*/

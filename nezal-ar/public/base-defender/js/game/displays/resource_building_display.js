@@ -46,16 +46,16 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
     {
       this.staticSprites.collectContainer = new DomSpriteContainer(this.owner, {zIndex : this.sprites.clickSprite.minAreaZIndex + 1100,
                                                           width :this.buttonImg.width, height : this.buttonImg.height });
-      this.staticSprites.collectContainer.shiftX = (this.imgWidth - this.buttonImg.width)/2+2;
-      this.staticSprites.collectContainer.shiftY = this.imgHeight - this.buttonImg.height - 15;
-      this.staticSprites.moreButton = this.staticSprites.collectContainer.newDomImgSprite(this.owner, { img: this.buttonImg,
+      this.staticSprites.collectContainer.shiftX = (this.imgWidth- this.buttonImg.width)/2+2;
+      this.staticSprites.collectContainer.shiftY = -10;
+/*      this.staticSprites.collectContainer = this.staticSprites.moreContainer.newDomImgSprite(this.owner, { img: this.buttonImg,
                                                                                          width :this.buttonImg.width,
-                                                                                         height : this.buttonImg.height });
+                                                                                         height : this.buttonImg.height });*/
       this.owner.moreButtonText = function(){ return "collect"};
       this.staticSprites.moreButtonText = this.staticSprites.collectContainer.newDomTextSprite(this.owner, 'moreButtonText',
-                                                      {centered: true, styleClass : 'moreButtonText', divClass : 'moreButtonText',
+                                                      {centered: true, styleClass : 'collectButtonText', divClass : 'moreButtonText',
                                                         width :this.buttonImg.width, height : this.buttonImg.height });
-      Map.registerSpecialListeners(this.staticSprites.collectContainer.div, this.owner, 'collectNeighborResources');
+//      Map.registerSpecialListeners(this.staticSprites.collectContainer.div, this.owner, 'collectNeighborResources');
     }
     for(var sprite in this.staticSprites){
       this.staticSprites[sprite].render();
