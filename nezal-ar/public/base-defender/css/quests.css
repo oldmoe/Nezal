@@ -362,6 +362,10 @@
   width : 60px;
   height : 35px;
 }
+#interaction #questDisplay .condition .desc .condStatus img{
+  width: 30px;
+  margin-top : 2px;
+}
 #interaction #questDisplay .descriptionWrapper {
   height: 175px;
   overflow: hidden;
