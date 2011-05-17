@@ -11,6 +11,7 @@ var RewardsPanel = Class.create({
   handleRewards : function(){
     if(!this.game.neighborGame)
     {
+      $('neighborRewardsBag').hide();
       $('rewardsBag').innerHTML = game.templatesManager.load('reward-bags');
       this.game.addLoadedImagesToDiv('rewardsBag');
       $$('#rewardsBag .clickable').each( function(button){
@@ -31,6 +32,7 @@ var RewardsPanel = Class.create({
       $('rewardsBag').hide();
       $('neighborRewardsBag').innerHTML = game.templatesManager.load('neighbor-reward-bags');
       this.game.addLoadedImagesToDiv('neighborRewardsBag');
+      $('neighborRewardsBag').show();
     }
   },
 
