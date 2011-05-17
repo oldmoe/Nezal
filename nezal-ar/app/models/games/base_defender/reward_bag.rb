@@ -1,6 +1,9 @@
 class BD::RewardBag
   def initialize(options)
     metadata = options[:metadata]
+    metadata['reward_bags'] ||= {'id_generator' => 4, 'queue' => [{:id=>1,:reward_data=>{:gold=>0,:rock=>100,:lumber=>100}}]}
+    metadata['reward_bags']['id_generator'] ||=4
+    metadata['reward_bags']['queue'] ||= []
     metadata['reward_bags']['id_generator'] += 1
     reward = {}    
     reward['id'] = metadata['notifications']['id_generator']

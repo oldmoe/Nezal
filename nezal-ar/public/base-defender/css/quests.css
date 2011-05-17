@@ -69,8 +69,9 @@
 
 #interaction #msg {
   position: absolute;
-  top: 170px;
-  left : 80px;
+  top: 0px;
+  left : 0px;
+  z-index : 10;
 }
 #interaction #msg img {
   position : absolute;
@@ -116,10 +117,15 @@
 #interaction #msg .alignDiv {
   width : 70%;
 }
+#interaction #msg .blocker {
+}
 #interaction #msg #welcomeMsg, #interaction #msg #congratesMsg, #interaction #msg #emptyQuest {
   height: 100%;
   width: 600px;
   height : 230px;
+  position: absolute;
+  top: 170px;
+  left : 80px;
 }
 #interaction #msg #welcomeMsg .text {
   font-size: 21px;
@@ -200,10 +206,14 @@
 .clickable {
   cursor : pointer;
 }
-#quest-panel {
+
+#side-bar {
   padding: 0 0 10px 0px;
   position: absolute;
   top: 95px;
+  width: 66px;
+}
+#quest-panel {
   width: 66px;
 }
 #quest-panel .wedge {
@@ -252,6 +262,7 @@
   position: absolute;
   top: 75px;
   width: 600px;
+  z-index : 10;
 }
 #interaction #questScreen {
   width : 100%;
@@ -343,6 +354,7 @@
   vertical-align: top;
   width : 320px;
   margin : 0px 40px;
+  text-align: justify;
 }
 #interaction #questDisplay .condition .desc .condStatus{
   display: inline-block;

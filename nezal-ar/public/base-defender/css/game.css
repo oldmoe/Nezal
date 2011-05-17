@@ -353,6 +353,15 @@ img{
   cursor : pointer;
   display: inline-block;
 }
+.collectButtonText {
+  color : white;
+  font-family : ShowG;
+  font-size : 12px;
+  line-height : 24px;
+  width : 63px;
+  height : 24px;
+  display: inline-block;
+}
 
 
 #gameContainer.arabic .flippedImg {

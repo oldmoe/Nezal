@@ -179,9 +179,7 @@
 	    <div class="gameElement" id="cancelBuilding" style="display:none;">
 			<span class="loadedImg" imgSrc ="images/game_elements/cancel.png"></span>
 		</div>
-    <div id ="rewardsBag">
-        <img src="images/game_elements/reward_bags.gif">
-      </div>
+
     <div id="rewardsContainer" style="display:none;"></div>
 			 <div id="mapView">
 		<span class="loadedImg" imgSrc ="images/friends/bar.png"></span>
@@ -275,8 +273,11 @@
         <span class="loadedImg" imgSrc ="images/game_elements/button.png"></span>
         <div id="sendAttackText" class="yellowText"> Attack </div>
       </div>
-      
-      <div id="quest-panel" style="display:none;"></div>      
+      <div id="side-bar"> 
+        <div id="quest-panel" style="display:none;"></div>      
+        <div id="rewardsBag"></div>
+      </div>
+      <div id="neighborRewardsBag" class="clickable"></div>
       <div id="interaction" style="display:none;">    
         <div id="msg" style="display:none;"> </div>
         <div id="questDisplay" style="display:none;"> </div>
@@ -456,9 +457,34 @@
 
 <textarea id="collectAnimation" style="display:none;">
 <div class="collectionAnimation">
-	<img src='images/icons/${building_name}_icon.png'><div id="text">${Math.round(collected)}</div>
+	<img src='images/icons/${building_name}_icon.png'><div id="text"> ${Math.round(collected)} </div>
 </div>
 </textarea>
+
+<textarea id="neighborCollectAnimation" style="display:none;">
+<div class="collectionAnimation" id="neighborCollect">
+	<span class="loadedImg" imgSrc='images/rewards/reward_icon.png'></span>
+</div>
+</textarea>
+
+<textarea id="reward-bags" style="display:none;">
+  <div class="clickable">
+    <div class="alignDiv" style="height: 1px;width: 42px;" ></div>
+    <span class="loadedImg" imgSrc ="images/quests/hover.png" imgClasses="shadow"></span>
+    <span class="loadedImg" imgSrc ="images/quests/animated_circles.gif" imgClasses="circle"></span>
+    <span class="loadedImg" imgSrc ="images/rewards/reward_notification.png" imgClasses="mainImg"></span>
+    <div class="number"> ${game.rewardsPanel.bagCount()} </div>
+  </div>
+</textarea>
+
+<textarea id="neighbor-reward-bags" style="display:none;">
+  <div class="clickable">
+    <div class="alignDiv" style="height: 1px;width: 42px;" ></div>
+    <span class="loadedImg" imgSrc ="images/rewards/yellow_bag.png" imgClasses="mainImg"></span>
+    <div class="number"> ${game.rewardsPanel.bagCount()} </div>
+  </div>
+</textarea>
+
 
 <textarea id="rewards" style="display:none;">
   <div id = "rewards">
