@@ -46,7 +46,17 @@ var QuarryDisplay = Class.create(ResourceBuildingDisplay, {
 	this.sprites.text.shiftY -= 10
 	this.render();
   },
-  
+
+  createSprites : function($super){
+    $super();  
+    if(this.staticSprites.collectContainer)
+    {
+      this.staticSprites.collectContainer.shiftY = -15;
+      this.staticSprites.collectContainer.shiftX -= 5;
+      this.staticSprites.collectContainer.render();
+    }
+  },
+
   render : function($super){
     $super();
     if(!this.owner.producing || !this.owner.working || this.owner.hp <= 0 || this.owner.assignedWorkers==0){

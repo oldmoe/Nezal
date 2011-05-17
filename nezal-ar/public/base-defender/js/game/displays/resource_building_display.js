@@ -47,7 +47,7 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
       this.staticSprites.collectContainer = new DomSpriteContainer(this.owner, {zIndex : this.sprites.clickSprite.minAreaZIndex + 1100,
                                                           width :this.buttonImg.width, height : this.buttonImg.height });
       this.staticSprites.collectContainer.shiftX = (this.imgWidth- this.buttonImg.width)/2+2;
-      this.staticSprites.collectContainer.shiftY = -10;
+      this.staticSprites.collectContainer.shiftY = 0;
 /*      this.staticSprites.collectContainer = this.staticSprites.moreContainer.newDomImgSprite(this.owner, { img: this.buttonImg,
                                                                                          width :this.buttonImg.width,
                                                                                          height : this.buttonImg.height });*/
@@ -179,7 +179,6 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
       })
       $('gameCanvas').appendChild(collectionDiv)
       owner.game.addLoadedImagesToDiv('neighborCollect');
-      var up = - owner.imgHeight/2
-      Animation.springFade(collectionDiv, up)
+      Animation.springFade(collectionDiv, -70)
   }
 });
