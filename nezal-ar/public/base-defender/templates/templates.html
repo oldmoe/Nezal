@@ -461,33 +461,33 @@
 </textarea>
 
 <textarea id="rewards" style="display:none;">
-	   <div id = "rewards">
-		{for reward in rewards}
-			{if reward.id}
-			<div class="reward" id="${reward.id}">
-			   <div class="closeRewards"> X </div> 
-			   <div class="rewardValue">
-				   <div class="rewardElement rock">
-				      <img class="rewardsImg" src='images/game_elements/rock_reward.png' /> ${reward.reward_data.rock} 
-				   </div>
-				   <div class="rewardElement wood">
-					 <img class="rewardsImg" src='images/game_elements/lumber_reward.png' /> ${reward.reward_data.lumber}
-				   </div>					
-				   <div class="rewardElement gold"> 
-					<img class="rewardsImg" src='images/game_elements/gold_reward.png' /> ${reward.reward_data.gold}
-				   </div>
-			    </div>
-				<div class="rewardControl useReward">
-				  ${buttons.use}
-				</div>
-				<div class="rewardControl back">
-				  ${buttons.back}
-				</div>
-				<div class="rewardControl next">
-				  ${buttons.next}
-				</div>
+  <div id = "rewards">
+	{for reward in rewards}
+		{if reward.id}
+		<div class="reward" id="${reward.id}">
+		   <div class="closeRewards"> X </div> 
+		   <div class="rewardValue">
+			   <div class="rewardElement rock">
+			      <img class="rewardsImg" src='images/game_elements/rock_reward.png' /> ${reward.reward_data.rock} 
+			   </div>
+			   <div class="rewardElement wood">
+				 <img class="rewardsImg" src='images/game_elements/lumber_reward.png' /> ${reward.reward_data.lumber}
+			   </div>					
+			   <div class="rewardElement gold"> 
+				<img class="rewardsImg" src='images/game_elements/gold_reward.png' /> ${reward.reward_data.gold}
+			   </div>
+		    </div>
+			<div class="rewardControl useReward">
+			  ${buttons.use}
 			</div>
-			{/if}
-	    {/for}
+			<div class="rewardControl back">
+			  ${buttons.back}
+			</div>
+			<div class="rewardControl next">
+			  ${buttons.next}
+			</div>
 		</div>
-	</textarea>
+	  {/if}
+  {/for}
+	</div>
+</textarea>
