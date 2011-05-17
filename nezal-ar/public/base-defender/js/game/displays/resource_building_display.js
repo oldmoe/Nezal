@@ -53,7 +53,7 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
                                                                                          height : this.buttonImg.height });*/
       this.owner.moreButtonText = function(){ return "collect"};
       this.staticSprites.moreButtonText = this.staticSprites.collectContainer.newDomTextSprite(this.owner, 'moreButtonText',
-                                                      {centered: true, styleClass : 'collectButtonText', divClass : 'moreButtonText',
+                                                      {centered: true, styleClass : 'collectButtonText', divClass : 'collectButtonText',
                                                         width :this.buttonImg.width, height : this.buttonImg.height });
 //      Map.registerSpecialListeners(this.staticSprites.collectContainer.div, this.owner, 'collectNeighborResources');
     }
