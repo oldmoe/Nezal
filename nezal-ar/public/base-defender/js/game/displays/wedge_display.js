@@ -51,6 +51,26 @@ var WedgeDisplay = Class.create(BuildingDisplay, {
     this.sprites.mouseover.hide();
     this.sprites.defaultMouseover = this.sprites.mouseover;
 	  this.sprites.underConstruction = new DomImgSprite(this.owner, {img: this.constructionImg}, {shiftY: this.zdim});
+    this.sprites.neighborMouseover = new DomImgSprite(this.owner, {img: this.transparentImg});
+    this.sprites.neighborMouseover.hide();
+    if(!this.owner.game.neighborGame)
+    {
+      this.staticSprites.moreContainer = new DomSpriteContainer(this.owner, {zIndex : this.sprites.clickSprite.minAreaZIndex + 1100,
+                                                          width :this.buttonImg.width, height : this.buttonImg.height });
+      this.staticSprites.moreContainer.shiftX = (this.imgWidth - this.buttonImg.width)/2+2;
+      this.staticSprites.moreContainer.shiftY = this.imgHeight - this.buttonImg.height - 15;
+      this.staticSprites.moreButton = this.staticSprites.moreContainer.newDomImgSprite(this.owner, { img: this.buttonImg,
+                                                                                         width :this.buttonImg.width,
+                                                                                         height : this.buttonImg.height });
+      this.owner.moreButtonText = function(){ return "menu"};
+      this.staticSprites.moreButtonText = this.staticSprites.moreContainer.newDomTextSprite(this.owner, 'moreButtonText',
+                                                      {centered: true, styleClass : 'moreButtonText', divClass : 'moreButtonText',
+                                                        width :this.buttonImg.width, height : this.buttonImg.height });
+      Map.registerSpecialListeners(this.staticSprites.moreContainer.div, this.owner, 'renderPanel');
+    }
+    for(var sprite in this.staticSprites){
+      this.staticSprites[sprite].render();
+    }
     this.container.render();
   },
 

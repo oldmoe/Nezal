@@ -24,6 +24,10 @@ var ProgressDisplay = Class.create({
       this.timeContainer.innerHTML = this.timeRemaining();
     }
   },
+
+  hide : function(){
+    this.div.hide();
+  },
   
   destroy : function(){
     if(this.div.parentNode){

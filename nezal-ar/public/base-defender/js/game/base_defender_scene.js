@@ -48,7 +48,7 @@ var BaseDefenderScene = Class.create(Scene, {
  
   adjustNeighborScene : function(){
     this.game.questsManager.hideQuests();
-    this.game.buildingsManager.hideBuildButton();
+    this.game.buildingsManager.hideBuildControls();
     if(this.game.selectedBuildingPanel){
       this.game.selectedBuildingPanel.hide();
     }

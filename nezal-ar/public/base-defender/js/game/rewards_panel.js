@@ -6,6 +6,37 @@ var RewardsPanel = Class.create({
   rewards : null,
   initialize : function(game){
 		this.game = game;
+  },
+
+  handleRewards : function(){
+    if(!this.game.neighborGame)
+    {
+      $('neighborRewardsBag').hide();
+      $('rewardsBag').innerHTML = game.templatesManager.load('reward-bags');
+      this.game.addLoadedImagesToDiv('rewardsBag');
+      $$('#rewardsBag .clickable').each( function(button){
+                                              $$( "#rewardsBag " + " .shadow")[0].hide();
+                                              button.observe( 'mouseover', function(){
+                                                                             $$("#rewardsBag " + " .shadow")[0].show();
+                                                                          });
+                                              button.observe( 'mouseout', function(){
+                                                                             $$("#rewardsBag " + " .shadow")[0].hide();
+                                                                        });
+                                        });
+      var self = this;
+      $('rewardsBag').observe(game.mouseClickEvent,function(){
+        self.displayRewardsMenu();
+      });
+      $('rewardsBag').show();
+    } else {
+      $('rewardsBag').hide();
+      $('neighborRewardsBag').innerHTML = game.templatesManager.load('neighbor-reward-bags');
+      this.game.addLoadedImagesToDiv('neighborRewardsBag');
+      $('neighborRewardsBag').show();
+    }
+  },
+
+  displayRewardsMenu : function(){
     this.rewards = this.game.user.data.reward_bags.queue
     if(!this.rewards)return
     this.noOfRewards = this.rewards.length
@@ -16,25 +47,16 @@ var RewardsPanel = Class.create({
     var data = {rewards:this.rewards,
 							buttons:{'next':Util.createButton({text:'Next'}), 'back':Util.createButton({'text':'Back'}), 'use':Util.createButton({text:'Use'})}
 				   }
-           
 		$('rewardsContainer').innerHTML = game.templatesManager.load('rewards', data);
     this.rewardsDiv = $$('#rewardsContainer #rewards')[0]
     this.rewardsDiv.setStyle({width:this.rewardWidth*this.rewards.length+"px"})
-    
-    $('rewardsBag').observe(game.mouseClickEvent,function(){
-      $('rewardsContainer').show()
-    })
+
+    /* Controls on the rewards display */    
     $$('#rewards .reward .next').each(function(div){
       div.observe(game.mouseClickEvent,function(){
         self.next()
       })
     })
-    $$('#rewards .reward .closeRewards').each(function(div){
-      div.observe(game.mouseClickEvent,function(){
-        $('rewardsContainer').hide()
-      })
-    })
-
     $$('#rewards .reward .back').each(function(div){
       div.observe(game.mouseClickEvent,function(){
         self.previous()
@@ -45,7 +67,14 @@ var RewardsPanel = Class.create({
         self.useReward(div.parentNode.id)
       })
     })
+    $$('#rewards .reward .closeRewards').each(function(div){
+      div.observe(game.mouseClickEvent,function(){
+        $('rewardsContainer').hide()
+      })
+    })
+    $('rewardsContainer').show()
   },
+
   next: function(){
     if(this.left>-(this.noOfRewards-1)*this.rewardWidth){
       this.left-=this.rewardWidth
@@ -79,5 +108,10 @@ var RewardsPanel = Class.create({
         }
       }
     })
+  },
+  bagCount : function(){
+    if(this.game.neighborGame)
+      return this.game.collectedRewardBags;
+    return this.game.user.data.reward_bags.queue.length
   }
 })

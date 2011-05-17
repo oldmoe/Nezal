@@ -69,25 +69,25 @@
   width: 44px;
 }
 #friends .friend .name{
-    color: white;
-    font-family: helvetica;
-    font-size: 14px;
-    font-weight: bold;
-    position: absolute;
-    text-align: center;
-    text-decoration: none;
-    top: 72px;
-    width: 80px;
+  color: white;
+  font-family: helvetica;
+  font-size: 14px;
+  font-weight: bold;
+  position: absolute;
+  text-align: center;
+  text-decoration: none;
+  top: 72px;
+  width: 80px;
+  left: 3px;
 }
 
 #home {
-  cursor: pointer;
-  margin: 4px;
   position: absolute;
-  right: 4px;
-  top: 340px;
-  width: 100px;
-  z-index:100;
+  left : 490px;
+  top: 448px;
+  width: 85px;
+  z-index: 100;
+  cursor : pointer;
 }
 #home .photo{
 	width : 39px;
@@ -95,23 +95,23 @@
 
 #home .photoContainer {
   height: 46px;
-  left: 18px;
   overflow: hidden;
   position: absolute;
   top: 12px;
-  width: 38px;
+  width: 100%;
+  text-align: center;
 }
 
 #home .name{
-    color: white;
-    font-family: helvetica;
-    font-size: 14px;
-    font-weight: bold;
-    position: absolute;
-    top: 65px;
-    left : 0px;
-    text-align: center;
-    text-decoration: none;
-    width: 100%;
+  color: white;
+  font-family: helvetica;
+  font-size: 14px;
+  font-weight: bold;
+  position: absolute;
+  top: 65px;
+  left : 0px;
+  text-align: center;
+  text-decoration: none;
+  width: 100%;
 
 }

@@ -416,8 +416,13 @@ var Map={
 	},
 	
 	registerListeners : function(div,owner){
+    if(owner.game.neighborGame)
+    {
+      this.registerNeighborListeners(div, owner);
+      return;
+    }
 		div.observe(game.mouseClickEvent,function(){
-			if(!game.buildingMode.isOn && owner.working && owner.state == owner.states.NORMAL && !owner.game.neighborGame){
+			if(!game.buildingMode.isOn && owner.working && owner.state == owner.states.NORMAL){
 				if (!owner.game.buildingMode.moveMode) {
 				  game.buildingMode.fillBuildingPanel(owner)
 					owner.defaultAction();
@@ -482,7 +487,50 @@ var Map={
 		})
 	},
 
+  registerNeighborListeners : function(div,owner){
+		div.observe(game.mouseClickEvent,function(){
+			if(!game.buildingMode.isOn && owner.working && owner.state == owner.states.NORMAL){
+				owner.defaultNeighborAction();
+			}
+		})
+		div.observe(game.mouseStartEvent,function(event){
+			if (event.button != 2) {
+			  	if (event.preventDefault) {
+			  		event.preventDefault();
+			  	}
+	  		}
+		})
+    var mousemoveCallback = function(mouse){
+      if(owner.state == owner.states.NORMAL && owner.sprites.defaultMouseover) {
+        var x = mouse.pointerX() || mouse.touches[0].pageX;
+        var y = mouse.pointerY() || mouse.touches[0].pageY;
+        owner.sprites.defaultMouseover.shiftX = x - (owner.coords.x - Math.round(owner.imgWidth / 2) - Map.x);
+        owner.sprites.defaultMouseover.shiftY = y - (owner.coords.y - Math.round(owner.imgHeight / 2) - Map.y);
+        owner.sprites.defaultMouseover.render();
+        owner.sprites.defaultMouseover.show();
+      }
+    }
+    div.observe(game.mouseMoveEvent, mousemoveCallback);
+		div.observe('mouseover',function(){
+	  	if(owner.state != owner.states.NOT_PLACED) {
+	  		if (owner.state != owner.states.UNDER_CONSTRUCTION) owner.sprites.outline.show();
+        owner.sprites.info.show();
+	  	}
+		})
+		div.observe('mouseout',function(){
+			owner.sprites.outline.hide();
+  		owner.sprites.info.hide();
+	    if(owner.sprites.defaultMouseover) 
+        owner.sprites.defaultMouseover.hide();
+		})
+  },
+
 	registerSpecialListeners : function(div,owner, clickCall){
+    if(owner.game.neighborGame)
+    {
+      this.registerNeighborSpecialListeners(div, owner, clickCall);
+      return;
+    }
 		div.observe(game.mouseClickEvent,function(){
 			if(!game.buildingMode.isOn && owner.working && owner.state == owner.states.NORMAL){
 				game.buildingMode.fillBuildingPanel(owner)
@@ -524,6 +572,34 @@ var Map={
       }
       if(owner.state == owner.states.NORMAL && owner.staticSprites.moreContainer) 
         owner.staticSprites.moreContainer.hide();
+		})
+	},
+
+	registerNeighborSpecialListeners : function(div,owner, clickCall){
+		div.observe(game.mouseClickEvent,function(){
+			if(!game.buildingMode.isOn && owner.working && owner.state == owner.states.NORMAL){
+				game.buildingMode.fillBuildingPanel(owner)
+				owner[clickCall]();
+			}
+		})
+		div.observe(game.mouseStartEvent,function(event){
+			if (event.button != 2) {
+			  	if (event.preventDefault) {
+			  		event.preventDefault();
+			  	}
+	  		}
+		})
+		div.observe('mouseover',function(){
+	  	if (owner.state != owner.states.NOT_PLACED) {
+	  		if (owner.state != owner.states.UNDER_CONSTRUCTION)owner.sprites.outline.show();
+        owner.sprites.info.show();
+	  	}
+		})
+		div.observe('mouseout',function(){
+			owner.sprites.outline.hide();
+	    if(owner.sprites.defaultMouseover) 
+        owner.sprites.defaultMouseover.hide();
+  		owner.sprites.info.hide();
 		})
 	},
 //	checkBusyTiles : function(){

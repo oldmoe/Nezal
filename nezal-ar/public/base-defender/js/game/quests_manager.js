@@ -24,9 +24,13 @@ var QuestsManager = Class.create({
 
   initialize : function(game){
     this.game = game;
+    this.oldQuest = null;
+    if($('questScreen') && $('questDisplay').getStyle('display')=='block')
+      this.oldQuest = $('questScreen').getAttribute('questId');
+    this.displayedNotifications = [];
   },
 
-  render : function(){
+  renderQuestPanel : function(){
     var quests = this.nextInCategory();
     $('quest-panel').innerHTML = this.game.templatesManager.load("quests-list", {questsList : quests});
   	this.game.addLoadedImagesToDiv('quest-panel');
@@ -48,16 +52,19 @@ var QuestsManager = Class.create({
   },
 
   displayQuest : function(questId){
-    if($('emptyQuest')) Animation.hide('emptyQuest');
-    $('msg').hide();
+    if(! this.game.user.data.quests.descriptions[questId] )
+      return;
     $('questDisplay').innerHTML = '';
     $('questDisplay').innerHTML = this.game.templatesManager.load("quest", 
                                     {quest: this.game.user.data.quests.descriptions[questId],
+                                     questId : questId,
                                      text : Text.quests[questId] || {'conditionMsgs' : {}} });
-    this.game.addLoadedImagesToDiv('questDisplay')									
-    $('questDisplay').show();
+    this.game.addLoadedImagesToDiv('questDisplay')		
+    if($('emptyQuest')) Animation.hide('emptyQuest');
+    if($('congratesMsg')) Animation.hide('congratesMsg');
+    if($('buildingDisplay')) Animation.hide('buildingDisplay');
     $('interaction').show();
-    Animation.show('questScreen');
+    Animation.show('questDisplay');
   },
 
   displayCongratesMsg : function(msg){
@@ -65,20 +72,26 @@ var QuestsManager = Class.create({
       msg.text = Text.quests[msg['data']['id']]['congratesMsg']
     $('msg').innerHTML = this.game.templatesManager.load("congrates", {msg : msg});
   	this.game.addLoadedImagesToDiv('msg')
+    if($('emptyQuest')) Animation.hide('emptyQuest');
+    if($('questDisplay')) Animation.hide('questDisplay');
+    if($('buildingDisplay')) Animation.hide('buildingDisplay');
     $('interaction').show();
     $('msg').show();
     Animation.show('congratesMsg');
+    this.displayedNotifications.push(msg['id']);
+    this.ackCongratesMsgs(msg['id']);
   },
 
   displayQuestEmptyMsg : function(category){
-    if($('questScreen')) Animation.hide('questScreen');
-    $('questDisplay').hide();
     $('msg').innerHTML = '';
     $('msg').innerHTML = this.game.templatesManager.load("empty-quest", 
                     { category: category, msg: this.categoryMsgs[category], msg2: this.categoryMsgs["noQuest"]});
-  	this.game.addLoadedImagesToDiv('msg')				
-    $('msg').show();
+  	this.game.addLoadedImagesToDiv('msg')		
+    if($('congratesMsg')) Animation.hide('congratesMsg');
+    if($('questDisplay')) Animation.hide('questDisplay');
+    if($('buildingDisplay')) Animation.hide('buildingDisplay');		
     $('interaction').show();
+    $('msg').show();
     Animation.show('emptyQuest');
   },
 
@@ -98,10 +111,10 @@ var QuestsManager = Class.create({
       $('questDisplay').innerHTML = '';
       $('questDisplay').hide();
     }
-    if($('buildingDisplay'))
+    if($('emptyQuest'))
     {
-      $('buildingDisplay').innerHTML = '';
-      $('buildingDisplay').hide();
+      $('questDisplay').innerHTML = '';
+      $('questDisplay').hide();
     }
   },
 
@@ -110,12 +123,11 @@ var QuestsManager = Class.create({
        if there is any quests notifications, display them one by one.
        else, Check for a mandatory Quest and display it.
     */
-    var buildingDisplayShown = $('buildingDisplay').getStyle("display") == "block" ? true : false;
-    $('buildingDisplay').hide();
-    $('msg').innerHTML = ""
-    $('questDisplay').innerHTML = ""
-    this.render();
-    var notifications = this.game.user.data.notifications.queue.findAll(function(n) { return n['type'] ==   'quest'; });
+    this.hideQuests();
+    this.renderQuestPanel();
+    var self = this;
+    var notifications = this.game.user.data.notifications.queue.findAll(function(n) {
+                                                                         return n['type'] == 'quest' && self.displayedNotifications.indexOf(n['id'])<0 });
     if( notifications && notifications.length > 0 ) {
 			$('interaction').hide();
       this.displayCongratesMsg(notifications.first());
@@ -127,11 +139,8 @@ var QuestsManager = Class.create({
         var tutorialHandle = this.game.tutorial[this.game.user.data.quests.descriptions[mandatoryQuest]['name']];
         if(tutorialHandle)
           tutorialHandle.handle();
-      }
-    }
-    if( $('msg').innerHTML == "" && $('questDisplay').innerHTML == "" ){
-      if( buildingDisplayShown ){
-        $('buildingDisplay').show();
+      }else if(this.oldQuest) {
+        this.displayQuest(this.oldQuest);
       }
     }
   },
@@ -139,7 +148,7 @@ var QuestsManager = Class.create({
   /* TODO : make sure it updates status from returned value instead of new request */
   ackCongratesMsgs : function(congratesId){
     this.game.network.notificationAck( congratesId );
-    this.game.reInitialize();
+//    this.game.reInitialize();
   },
 
   mandatoryQuest : function() {

@@ -80,13 +80,15 @@ var Game = Class.create({
     questsImages = questsImages.concat(BuildingMode.prototype.buildings.collect(function(building){
                                                                       return building + "_info_dimmed.png";
                                                                   }));
+    rewardsImages = ['reward_icon.png', 'reward_notification.png', 'yellow_bag.png'];
     var specialDefaultActionImages = ['assign_worker.png', 'move.png']
     new Loader().load([ {images : gameElementsImages, path: 'images/game_elements/', store: 'game_elements'},
                         {images : friendsImages, path: 'images/friends/', store: 'friends'},
                         {images : questsImages, path: 'images/quests/', store: 'quests'},
                         {images : panelImages, path: 'images/buildings/panel/', store: 'panel'},
                         {images : buildingImages, path: 'images/buildings/', store: 'buildings'},
-                        {images : specialDefaultActionImages, path: 'images/buildings/special_default_actions/', store: 'default_actions'}
+                        {images : specialDefaultActionImages, path: 'images/buildings/special_default_actions/', store: 'default_actions'},
+                        {images : rewardsImages, path : 'images/rewards/', store : 'rewards'}
                       ],
                       {
                         onProgress : function(progress){
@@ -228,8 +230,9 @@ var Game = Class.create({
 
   selectLanguage : function(lang){
     var self = this;
+    this.questsManager.hideQuests();
+    this.buildingsManager.hideBuildControls();
     Language.select(lang, function(){
-      console.log("here");
       var language = Language.userLanguage;
       for(var i=0; i<Language.langsNames.length; i++) 
       {      
@@ -288,12 +291,13 @@ var Game = Class.create({
     this.controlsPanel = new ControlsPanel(this);
     if(this.neighborGame != true)
     {
-      this.rewardsPanel = new RewardsPanel(this)
       this.buildingsManager = new BuildingsManager(this);
       this.questsManager = new QuestsManager(this);
       this.tutorial = new Tutorial(this);
       this.tutorial.fire();
     }
+    this.rewardsPanel = new RewardsPanel(this)
+    this.rewardsPanel.handleRewards();
     this.reInitializationNotifications.each(function(fn){fn()});
 /*    if(!this.neighborGame)
       new Notification(this).showAll();*/
@@ -305,6 +309,7 @@ var Game = Class.create({
     this.gameStatus.user_data = this.network.neighbourEmpire(user_id);
     this.neighborGame = true;
     this.visitedNeighborId = user_id
+    this.collectedRewardBags = 0;
     this.updateGameStatus( this.gameStatus );
     this.scene.adjustNeighborScene();
   },

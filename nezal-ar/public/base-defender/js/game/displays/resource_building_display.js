@@ -1,6 +1,7 @@
 var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
   initialize : function($super,owner,properties){
     this.defaultAction = this.collectResources;
+    this.defaultNeighborAction = this.collectNeighborResources;
     $super(owner,properties)
 	  var self = this
     this.sprites.text = new DomTextSprite(owner, 'resourceInfo',{centered: true, shiftY: 110, styleClass:'resourceText'});
@@ -41,20 +42,20 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
     this.sprites.defaultAssign = new DomImgSprite(this.owner, {img: this.assignWorkerImg});
     this.sprites.defaultAssign.img.setStyle({width:"40px"});
     this.sprites.defaultAssign.hide();
-    if(this.owner.game.neighborGame && this.owner[this.owner.factory.collect] > 0)
+    if(this.owner.game.neighborGame && (this.owner[this.owner.factory.collect] > 0 || this.owner.assignedWorkers > 0) )
     {
-      this.staticSprites.moreContainer = new DomSpriteContainer(this.owner, {zIndex : this.sprites.clickSprite.minAreaZIndex + 1100,
+      this.staticSprites.collectContainer = new DomSpriteContainer(this.owner, {zIndex : this.sprites.clickSprite.minAreaZIndex + 1100,
                                                           width :this.buttonImg.width, height : this.buttonImg.height });
-      this.staticSprites.moreContainer.shiftX = (this.imgWidth - this.buttonImg.width)/2+2;
-      this.staticSprites.moreContainer.shiftY = this.imgHeight - this.buttonImg.height - 15;
-      this.staticSprites.moreButton = this.staticSprites.moreContainer.newDomImgSprite(this.owner, { img: this.buttonImg,
+      this.staticSprites.collectContainer.shiftX = (this.imgWidth- this.buttonImg.width)/2+2;
+      this.staticSprites.collectContainer.shiftY = -10;
+/*      this.staticSprites.collectContainer = this.staticSprites.moreContainer.newDomImgSprite(this.owner, { img: this.buttonImg,
                                                                                          width :this.buttonImg.width,
-                                                                                         height : this.buttonImg.height });
+                                                                                         height : this.buttonImg.height });*/
       this.owner.moreButtonText = function(){ return "collect"};
-      this.staticSprites.moreButtonText = this.staticSprites.moreContainer.newDomTextSprite(this.owner, 'moreButtonText',
-                                                      {centered: true, styleClass : 'moreButtonText', divClass : 'moreButtonText',
+      this.staticSprites.moreButtonText = this.staticSprites.collectContainer.newDomTextSprite(this.owner, 'moreButtonText',
+                                                      {centered: true, styleClass : 'collectButtonText', divClass : 'collectButtonText',
                                                         width :this.buttonImg.width, height : this.buttonImg.height });
-      Map.registerSpecialListeners(this.staticSprites.moreContainer.div, this.owner, 'collectNeighborResources');
+//      Map.registerSpecialListeners(this.staticSprites.collectContainer.div, this.owner, 'collectNeighborResources');
     }
     for(var sprite in this.staticSprites){
       this.staticSprites[sprite].render();
@@ -67,6 +68,13 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
     } else {
       return this.sprites.defaultMouseover = this.sprites.defaultAssign;
     }
+  },
+
+  defaultNeighborActionSprite : function(){
+    if( (this.owner[this.owner.factory.collect] > 0 || this.owner.assignedWorkers > 0))
+      return this.sprites.defaultMouseover = this.sprites.mouseover;
+    else
+      return this.sprites.defaultMouseover = this.sprites.neighborMouseover;
   },
   
   render : function($super){
@@ -133,9 +141,13 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
   },
 
   collectNeighborResources : function(){
-    var collected = this.owner[this.owner.factory.collect];
-    this.owner._CollectNeighborResources();
-    this._CollectionAnimation(collected);
+    if( (this.owner[this.owner.factory.collect] > 0 || this.owner.assignedWorkers > 0))
+    {
+      this.owner._CollectNeighborResources();
+      this.owner.game.collectedRewardBags ++;
+      this._NeighborCollectionAnimation();
+      this.owner.game.rewardsPanel.handleRewards();
+    }
   },
 
   _CollectionAnimation : function(collected){
@@ -152,5 +164,22 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
       })
       $('gameCanvas').appendChild(collectionDiv)
       Animation.springFade(collectionDiv, -105)
+  },
+
+  _NeighborCollectionAnimation : function(){
+    var owner = this.owner
+    var html = owner.game.templatesManager.load("neighborCollectAnimation",{
+      building_name: owner.name
+    })
+    owner.game.domConverter.convert(html)
+    var collectionDiv = $$('.collectionAnimation')[$$('.collectionAnimation').length-1]
+      collectionDiv.setStyle({
+        'top': owner.coords.y - owner.imgHeight/2 + "px",
+        'left': (owner.coords.x - 15) + "px"
+      })
+      $('gameCanvas').appendChild(collectionDiv)
+      owner.game.addLoadedImagesToDiv('neighborCollect');
+      var up = - owner.imgHeight/2
+      Animation.springFade(collectionDiv, up)
   }
 });
