@@ -172,11 +172,12 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
     owner.game.domConverter.convert(html)
     var collectionDiv = $$('.collectionAnimation')[$$('.collectionAnimation').length-1]
       collectionDiv.setStyle({
-        'top': owner.coords.y + "px",
+        'top': owner.coords.y - owner.imgHeight/2 + "px",
         'left': (owner.coords.x - 15) + "px"
       })
       $('gameCanvas').appendChild(collectionDiv)
       owner.game.addLoadedImagesToDiv('neighborCollect');
-      Animation.springFade(collectionDiv, -105)
+      var up = - owner.imgHeight/2
+      Animation.springFade(collectionDiv, up)
   }
 });
