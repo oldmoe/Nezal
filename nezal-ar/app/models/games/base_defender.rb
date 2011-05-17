@@ -280,7 +280,7 @@ class BaseDefender < Metadata
     elsif data['event'] == 'notification_ack'
       validation = Notification.delete({:profile => user_game_profile, :id => data['id']})
     elsif data['event'] == 'use_reward'
-      validation = RewardBag.use({:profile => user_game_profile, :id => data['id']})
+      validation = BD::RewardBag.use({:profile => user_game_profile, :id => data['id']})
     elsif data['event'] == 'attack'
       repair_jobs user_game_profile
       validation = initialize_simulate_attack user_game_profile, data

@@ -30,6 +30,58 @@
   left: 240px;
   width: 257px;
 }
+
+#energy_bar{
+  left: 250px;
+  top: 55px;
+}
+
+#energy_bar #energy_text {
+  position: absolute;
+  top: 20px;
+  z-index: 1;
+  left: 100px;
+  text-shadow: 0px 0px 0px;
+}
+#energy_bar #more_energy_text {
+  position: absolute;
+  right: 65px;
+  text-shadow: 0px 0px 0px;
+}
+
+#energy_fill_bar{
+  height: 27px;
+  left: 0;
+  position: absolute;
+  top: 16px;
+  width: 235px;
+}
+
+#energy_fill_bar_left.anyEnergy{
+  background-image : url('../images/game_elements/energy_bar_left.png');
+  float: left;
+  width: 10px;
+  height: 23px;
+  margin-top: 2px;
+  margin-left: 4px;
+}
+
+#energy_fill_bar_middle{
+  background-image: url("../images/game_elements/energy_bar_middle.png");
+  float: left;
+  height: 23px;
+  margin-top: 2px;
+  width: 0;
+}
+
+#energy_fill_bar_right.full{
+  background-image: url("../images/game_elements/energy_bar_right.png");
+  float: right;
+  height: 23px;
+  width: 10px;
+  margin-top: 2px;
+}
+
 #xp_bar img {
   margin-left: -233px;
 }

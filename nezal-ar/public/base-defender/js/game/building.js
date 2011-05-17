@@ -152,8 +152,7 @@ var Building = Class.create({
 
   elapsedTime : function(){
     if(this.inProgress()){
-      console.log(this.game.loadTime, this._LoadTime)
-      return this.nextLevelBluePrints.time - ( this.remainingBuildTime - Math.ceil((new Date().getTime() - this.game.loadTime)/1000) );
+     return this.nextLevelBluePrints.time - ( this.remainingBuildTime - Math.ceil((new Date().getTime() - this._LoadTime)/1000) );
     }else{
       return 0;
     }
