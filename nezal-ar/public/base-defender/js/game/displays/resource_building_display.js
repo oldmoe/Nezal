@@ -144,7 +144,9 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
     if( (this.owner[this.owner.factory.collect] > 0 || this.owner.assignedWorkers > 0))
     {
       this.owner._CollectNeighborResources();
+      this.owner.game.collectedRewardBags ++;
       this._NeighborCollectionAnimation();
+      this.owner.game.rewardsPanel.handleRewards();
     }
   },
 

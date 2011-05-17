@@ -309,6 +309,7 @@ var Game = Class.create({
     this.gameStatus.user_data = this.network.neighbourEmpire(user_id);
     this.neighborGame = true;
     this.visitedNeighborId = user_id
+    this.collectedRewardBags = 0;
     this.updateGameStatus( this.gameStatus );
     this.scene.adjustNeighborScene();
   },

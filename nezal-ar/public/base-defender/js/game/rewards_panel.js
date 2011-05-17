@@ -111,7 +111,7 @@ var RewardsPanel = Class.create({
   },
   bagCount : function(){
     if(this.game.neighborGame)
-      return 0;
+      return this.game.collectedRewardBags;
     return this.game.user.data.reward_bags.queue.length
   }
 })
