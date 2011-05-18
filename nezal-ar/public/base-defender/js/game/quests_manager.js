@@ -32,6 +32,12 @@ var QuestsManager = Class.create({
 
   renderQuestPanel : function(){
     var quests = this.nextInCategory();
+    $$('#quest-panel .clickable').each( function(button){
+                                            var id = button.getAttribute('id');
+                                            button.stopObserving(game.mouseClickEvent);
+                                            button.stopObserving('mouseover');
+                                            button.stopObserving('mouseout');
+                              });
     $('quest-panel').innerHTML = this.game.templatesManager.load("quests-list", {questsList : quests});
   	this.game.addLoadedImagesToDiv('quest-panel');
     $$('#quest-panel .clickable').each( function(button){

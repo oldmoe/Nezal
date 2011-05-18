@@ -147,13 +147,13 @@
 }
 #rewards .right, #rewards .left{
   direction: ltr;
-  height: 100%;
-  margin: 0px 8px ;
+  height: 84px;
+  margin: 0 8px;
   overflow: hidden;
   position: relative;
   text-align: center;
+  top: -50px;
   width: 30px;
-  top: 35px;
 }
 #rewardsContainer li {
 	float : left;

@@ -29,9 +29,16 @@ var RewardsPanel = Class.create({
     if(this.rewardsCarousel)
       this.rewardsCarousel.destroy();
     $('rewardsContainer').innerHTML = "";  
+    $('rewardsContainer').style.top = "80px"
+    $('rewardsContainer').style.top = "80px"
   },
 
   handleRewards : function(){
+    if($('rewardsBag')){
+      $('rewardsBag').stopObserving(game.mouseClickEvent);
+      $('rewardsBag').stopObserving('mouseover');
+      $('rewardsBag').stopObserving('mouseout');
+    }
     if(!this.game.neighborGame)
     {
       $('neighborRewardsBag').hide();
