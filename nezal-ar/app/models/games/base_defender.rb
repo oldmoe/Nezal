@@ -242,7 +242,7 @@ class BaseDefender < Metadata
     elsif data['event'] == 'notification_ack'
       validation = Notification.delete({:profile => user_game_profile, :id => data['id']})
     elsif data['event'] == 'use_reward'
-      validation = RewardBag.use({:profile => user_game_profile, :id => data['id']})
+      validation = BD::RewardBag.use({:profile => user_game_profile, :id => data['id']})
     elsif data['event'] == 'attack'
       repair_jobs user_game_profile
       validation = initialize_simulate_attack user_game_profile, data
@@ -281,8 +281,18 @@ class BaseDefender < Metadata
     profile_metadata = nil
     validation = nil
     if(!data['user_id'].nil?)
+      user_id = data['user_id'].to_i
       neighbor_profile = BD::Neighbor.neighbor_profile(user_game_profile, data)
       profile_metadata  = neighbor_profile.metadata
+      user_game_profile.metadata['attack_history'] = {} if(user_game_profile.metadata['attack_history'].nil?)
+      profile_metadata['attack_history'] = {} if(profile_metadata['attack_history'].nil?)
+      if(!user_game_profile.metadata['attack_history'][user_id].nil?)
+        user_game_profile.metadata['attack_history'][user_id]['attacked']+=1
+        pofile_metadata['attack_history'][user_game_profile.id.to_i]['defended']+=1
+      else
+        user_game_profile.metadata['attack_history'][user_id] = {'attacked'=>1,'defended'=>0}
+        profile_metadata['attack_history'][user_game_profile.user_id.to_i] = {'attacked'=>0,'defended'=>1}
+      end
       attack_result = simulate_attack profile_metadata, data
       notification_text = ''
       if(attack_result['attack_success'])
@@ -478,6 +488,13 @@ class BaseDefender < Metadata
       end
     end
   end
+  
+  def self.list_map user_game_profile
+    attack_history = user_game_profile.metadata['attack_history']
+    for user in attack_hitory.keys
+      
+    end
+  end
 
   def self.init_game_profile(user_game_profile)
     user_game_profile.metadata= 
@@ -488,6 +505,7 @@ class BaseDefender < Metadata
       'idle_workers' => 1,
       'rock' => 50000,
       'lumber' => 50000,
+      'attack_history' => {},
       'reward_bags' => {'id_generator' => 4, 'queue' => [{:id=>1,:reward_data=>{:gold=>0,:rock=>100,:lumber=>100}},
       {:id=>2,:reward_data=>{:gold=>0,:rock=>100,:lumber=>200}},{:id=>3,:reward_data=>{:gold=>0,:rock=>200,:lumber=>100}}]},
       'notifications' => {'id_generator' => 0, 'queue' => []},
