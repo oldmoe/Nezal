@@ -78,38 +78,41 @@ class BaseDefender < Metadata
   def self.energy_gain user_game_profile
     profile_metadata = user_game_profile.metadata
     last_loaded = profile_metadata['last_loaded']
-    uesr_xp_level = profile_metadata['xp_info']['xp_level']
+    xp_info = profile_metadata['xp_info']
+    if( [xp_info, xp_info['xp_level'], xp_info['energy'], xp_info['bonus_seconds']].include? nil )
+      xp_info['xp_level'] = 1
+      xp_info['energy'] = 0
+      xp_info['bonus_seconds'] = 0
+    end
+    uesr_xp_level = xp_info['xp_level']
     xp_level_metadata = @@game_metadata['xp_levels'][uesr_xp_level.to_s]
     max_energy = xp_level_metadata['max_helping_power']
     
     #The case of first loading a profile, he should have it full energy
     if( last_loaded.nil? )
-      profile_metadata['xp_info']['energy'] = max_energy
+      xp_info['energy'] = max_energy
       return
     end
     
-    current_energy = profile_metadata['xp_info']['energy']
+    current_energy = xp_info['energy']
     if( current_energy >= max_energy )
       return
     end
     
     energy_unit_every = xp_level_metadata['helping_power_unit_every']
-    seconds_passed = Time.now.utc.to_i - last_loaded + profile_metadata['xp_info']['bonus_seconds']
+    seconds_passed = Time.now.utc.to_i - last_loaded + xp_info['bonus_seconds']
     net_energy_units = seconds_passed / energy_unit_every
     needed_energy = max_energy - current_energy
     
     if( net_energy_units >= needed_energy )
-      profile_metadata['xp_info']['bonus_seconds'] = 0
-      profile_metadata['xp_info']['energy'] = max_energy
+      xp_info['bonus_seconds'] = 0
+      xp_info['energy'] = max_energy
       return
     end
     
     bonus_seconds = seconds_passed % energy_unit_every
-    profile_metadata['xp_info']['energy'] += net_energy_units
-    profile_metadata['xp_info']['bonus_seconds'] = bonus_seconds
-    
-    puts "!!!!!!!!!!!!Energy : #{profile_metadata['xp_info']['energy']}"
-    puts "!!!!!!!!!!!!Bonus Seconds : #{profile_metadata['xp_info']['bonus_seconds']}"
+    xp_info['energy'] += net_energy_units
+    xp_info['bonus_seconds'] = bonus_seconds
   end
   
   def self.repair_jobs user_game_profile
@@ -460,13 +463,14 @@ class BaseDefender < Metadata
   end
   
   def self.collect_neighbor_building(user_game_profile, neighbor_profile, data)
-    puts data
-    puts @@building_modules
-    building = data['building']
-    coords = data['coords']
-    @@building_modules[building].collect(neighbor_profile, coords)
-    BD::RewardBag.new({ :metadata => user_game_profile.metadata, :reward_data => {:rock=> 50, :gold=>50, :lumber=>50} })
-    user_game_profile.save
+    if( user_game_profile.metadata['xp_info']['energy'] > 0 )
+      building = data['building']
+      coords = data['coords']
+      @@building_modules[building].collect(neighbor_profile, coords)
+      BD::RewardBag.new({ :metadata => user_game_profile.metadata, :reward_data => {:rock=> 50, :gold=>50, :lumber=>50} })
+      user_game_profile.metadata['xp_info']['energy'] -= 1
+      user_game_profile.save
+    end
     BD::Neighbor.neighbor_empire(user_game_profile, data)
   end
 
