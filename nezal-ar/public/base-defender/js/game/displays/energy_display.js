@@ -22,8 +22,7 @@ var EnergyDisplay = Class.create({
     }
     
     if( this.owner.energy < this.owner.maxHelpingPower ){
-      $$('#energy_bar #more_energy_text')[0].innerHTML = 
-                          "More in " + Util.timeDisplay(this.owner.remainingTillNextEnergyUnit);
+      $$('#energy_bar #more_energy_text')[0].innerHTML = Util.timeDisplay(this.owner.remainingTillNextEnergyUnit);
     } else {
       $$('#energy_bar #more_energy_text')[0].innerHTML = "";
     }

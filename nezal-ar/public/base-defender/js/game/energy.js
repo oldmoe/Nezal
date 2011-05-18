@@ -40,6 +40,5 @@ var Energy = Class.create({
       this.energy += 1;
     }
     if( this.remainingTillNextEnergyUnit <= 0 ) this.remainingTillNextEnergyUnit = this.helpingPowerUnitEvery;
-    
   }
 });
