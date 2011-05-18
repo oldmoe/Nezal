@@ -2,7 +2,7 @@ var DomSprite = Class.create(Sprite, {
   shiftX : 0,
   shiftY : 0,
   shiftZ : 0,
-  initialize : function(owner, assets, properties){
+  initialize : function(owner, assets, properties,name){
   	properties = properties || {}
     this.createDiv();
     this.div.addClassName('DomSprite');
@@ -13,7 +13,7 @@ var DomSprite = Class.create(Sprite, {
 		z = properties.zIndex
 		this.zIndex = z
 	}  
-	else var z = this.owner.coords.y + this.owner.zdim
+	else z = this.owner.coords.y + this.owner.zdim
     this.div.setStyle ({zIndex :(z)});
 		if(properties.width)this.div.style.width = properties.width + "px";
     else this.div.style.width = this.owner.imgWidth + "px";

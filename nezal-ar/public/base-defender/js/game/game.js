@@ -92,6 +92,7 @@ var Game = Class.create({
                       ],
                       {
                         onProgress : function(progress){
+                          if($$('#inProgress #loadingBarFill')[0])
                           $$('#inProgress #loadingBarFill')[0].style.width = Math.min(progress,88)+"%"
                         },
                         onFinish: function(){
@@ -141,8 +142,8 @@ var Game = Class.create({
         });
         //////////////////////////////////
         self.reInitialize();
-        Sounds.gameSounds.Intro[0].stop()
-        Sounds.resumeTrack()
+        //Sounds.gameSounds.Intro[0].stop()
+        //Sounds.resumeTrack()
     };	
     var buildingImages = BuildingMode.prototype.buildings.collect(function(building){
       return building + ".png";
@@ -301,7 +302,7 @@ var Game = Class.create({
     this.reInitializationNotifications.each(function(fn){fn()});
 /*    if(!this.neighborGame)
       new Notification(this).showAll();*/
-
+    makeUnselectable(document.body)
   },
   
   loadUserEmpire : function(user_id){
@@ -352,4 +353,15 @@ var Game = Class.create({
   }
 
 });
+
+function makeUnselectable(node) {
+    if (node.nodeType == 1) {
+        node.unselectable = true;
+    }
+    var child = node.firstChild;
+    while (child) {
+        makeUnselectable(child);
+        child = child.nextSibling;
+    }
+}
 

@@ -6,7 +6,7 @@ var Rock = Class.create( {
   imgWidth : 15,
   width : 15,
   height : 15,
-
+  xdim:0,ydim:0,zdim:0,
   position : {
     0 : {x : 22, y : 48, zIndex : 5 }, 
     1 : {x : 24, y : 36, zIndex : 2 },
