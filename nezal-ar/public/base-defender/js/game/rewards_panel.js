@@ -1,11 +1,34 @@
 var RewardsPanel = Class.create({
+
+  images : {
+              'left' : 'images/quests/arrows_horizontal.png',
+              'left-disabled' : 'images/quests/arrows_horizontal.png',
+              'right' : 'images/quests/arrows_horizontal.png',
+              'right-disabled' :'images/quests/arrows_horizontal.png'
+            },
   left: 0,
   noOfRewards : 0,
-  rewardWidth : 185,
-  rewardsDiv : null,
-  rewards : null,
+
   initialize : function(game){
 		this.game = game;
+    if(this.game.reInitializationNotifications)
+    {
+      if($('rewardsContainer').getStyle("display") == "block")
+      {
+        var self = this;
+        this.game.reInitializationNotifications.push(function(){
+                                                      if($('questDisplay').getStyle("display") == 'none' &&          
+                                                          $('msg').getStyle("display") == 'none')
+                                                        self.updateMenu();
+                                                    })
+      } 
+    }
+  },
+
+  destroy : function(){
+    if(this.rewardsCarousel)
+      this.rewardsCarousel.destroy();
+    $('rewardsContainer').innerHTML = "";  
   },
 
   handleRewards : function(){
@@ -37,56 +60,31 @@ var RewardsPanel = Class.create({
   },
 
   displayRewardsMenu : function(){
+    this.updateMenu();
+    if($('emptyQuest')) Animation.hide('emptyQuest');
+    if($('congratesMsg')) Animation.hide('congratesMsg');
+    if($('buildingDisplay')) Animation.hide('buildingDisplay');
+    if($('questDisplay')) Animation.hide('questDisplay');
+    Animation.show($('rewardsContainer'));
+  },
+
+  updateMenu : function(){
+    this.destroy();
     this.rewards = this.game.user.data.reward_bags.queue
     if(!this.rewards)return
     this.noOfRewards = this.rewards.length
     var self = this
-    this.rewards.each(function(reward){
-      reward['valid'] = self.validateReward(reward)
-    })
-    var data = {rewards:this.rewards,
-							buttons:{'next':Util.createButton({text:'Next'}), 'back':Util.createButton({'text':'Back'}), 'use':Util.createButton({text:'Use'})}
-				   }
+    var data = {rewards:this.rewards}
 		$('rewardsContainer').innerHTML = game.templatesManager.load('rewards', data);
-    this.rewardsDiv = $$('#rewardsContainer #rewards')[0]
-    this.rewardsDiv.setStyle({width:this.rewardWidth*this.rewards.length+"px"})
-
-    /* Controls on the rewards display */    
-    $$('#rewards .reward .next').each(function(div){
-      div.observe(game.mouseClickEvent,function(){
-        self.next()
-      })
-    })
-    $$('#rewards .reward .back').each(function(div){
-      div.observe(game.mouseClickEvent,function(){
-        self.previous()
-      })
-    })
-    $$('#rewards .reward .useReward').each(function(div){
-      div.observe(game.mouseClickEvent,function(){
-        self.useReward(div.parentNode.id)
-      })
-    })
-    $$('#rewards .reward .closeRewards').each(function(div){
-      div.observe(game.mouseClickEvent,function(){
-        $('rewardsContainer').hide()
-      })
-    })
-    $('rewardsContainer').show()
+    this.game.addLoadedImagesToDiv('rewardsContainer');
+    this.rewardsCarousel = new Carousel("rewards", this.images, 4);
+    this.rewardsCarousel.checkButtons();
   },
 
-  next: function(){
-    if(this.left>-(this.noOfRewards-1)*this.rewardWidth){
-      this.left-=this.rewardWidth
-      this.rewardsDiv.setStyle({marginLeft:this.left+'px'})
-    }
+  closeRewardMenu : function(){
+    Animation.hide($('rewardsContainer'));
   },
-  previous : function(){
-    if(this.left <= -this.rewardWidth){
-      this.left+=this.rewardWidth
-      this.rewardsDiv.setStyle({marginLeft:this.left+'px'})
-    }
-  },
+
   validateReward : function(reward){
     var totalStorage = this.game.quarryFactory.getTotalStorageCapacity()
     reward_data = reward.reward_data
@@ -96,6 +94,7 @@ var RewardsPanel = Class.create({
      }
     else return false
   },
+
   useReward:function(id){
     var self = this
     this.rewards.each(function(reward){
@@ -109,9 +108,11 @@ var RewardsPanel = Class.create({
       }
     })
   },
+
   bagCount : function(){
     if(this.game.neighborGame)
       return this.game.collectedRewardBags;
     return this.game.user.data.reward_bags.queue.length
   }
+
 })

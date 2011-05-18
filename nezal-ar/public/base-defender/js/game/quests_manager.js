@@ -63,6 +63,7 @@ var QuestsManager = Class.create({
     if($('emptyQuest')) Animation.hide('emptyQuest');
     if($('congratesMsg')) Animation.hide('congratesMsg');
     if($('buildingDisplay')) Animation.hide('buildingDisplay');
+    if($('rewardsContainer')) Animation.hide('rewardsContainer');
     $('interaction').show();
     Animation.show('questDisplay');
   },
@@ -75,6 +76,7 @@ var QuestsManager = Class.create({
     if($('emptyQuest')) Animation.hide('emptyQuest');
     if($('questDisplay')) Animation.hide('questDisplay');
     if($('buildingDisplay')) Animation.hide('buildingDisplay');
+    if($('rewardsContainer')) Animation.hide('rewardsContainer');
     $('interaction').show();
     $('msg').show();
     Animation.show('congratesMsg');

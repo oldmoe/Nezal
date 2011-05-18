@@ -74,8 +74,9 @@ var BuildingsManager = Class.create({
    this.game.addLoadedImagesToDiv('buildingDisplay');
     if($('questDisplay')) Animation.hide('questDisplay');
     if($('congratesMsg')) Animation.hide('congratesMsg');
-    Animation.show('buildingDisplay');
+    if($('rewardsContainer')) Animation.hide('rewardsContainer');
     $('interaction').show();
+    Animation.show('buildingDisplay');
   },
   
   /*

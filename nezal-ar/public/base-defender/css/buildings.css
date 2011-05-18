@@ -74,19 +74,6 @@ img{
   text-shadow: 3px 3px 0px #5A3815;
   text-transform: uppercase;
 }
-/* CSS for aligned buttons that should work with both LTR, RTL */
-#interaction .okButtonWrapper {
-  position: absolute;
-  left : 0px;
-  height: 55px;
-  width: 100%;
-  z-index : 10;
-}
-  /* Each aligned button should set a width to this div according to desired position of button */
-#interaction .alignDiv {
-  height : 100%;
-  display:inline-block;
-}
 #interaction #buildingDisplay {
   overflow: visible;
   position: absolute;
@@ -224,15 +211,15 @@ img{
   z-index : 100;
 }
 #interaction #buildingsPanel .item .hover {
-  position : relative;
-  top : -232px;
+  position : absolute;
+  top : -8px;
   left : -8px;
   width : 98px;
   float : none;
   z-index : 50;
 }
 #gameContainer.arabic #interaction #buildingsPanel .item .hover {
-  left : 8px;
+  left : -10px;
 }
 #interaction #buildingsPanel .item .hoverArrow {
   float: none;

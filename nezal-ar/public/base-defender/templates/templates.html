@@ -191,7 +191,6 @@
 			<span class="loadedImg" imgSrc ="images/game_elements/cancel.png"></span>
 		</div>
 
-    <div id="rewardsContainer" style="display:none;"></div>
 			 <div id="mapView">
 		<span class="loadedImg" imgSrc ="images/friends/bar.png"></span>
         <div id="friends">
@@ -296,6 +295,7 @@
         <div id="alert" style="display:none;"> </div>
 				<div id="notify" style="display:none;"> </div>
       </div>
+      <div id="rewardsContainer" style="display:none;"></div>
       <div id="reset" class="resetAccount">
         <span class="loadedImg" imgSrc ="images/game_elements/button.png"></span>
         <div id="resetText" class="yellowText" onclick="game.network.resetEmpire();"> Reset </div>
@@ -498,33 +498,73 @@
 
 
 <textarea id="rewards" style="display:none;">
-  <div id = "rewards">
+
+  <div id="rewards" class="rewards">
+    <div class="left">
+      <img src="" />
+    </div> 
+    <div id="rewards-container" class="container">
+      <ul id='rewards-ul'>
+        {for reward in rewards}
+    		{if reward.id}
+        <li>
+          <div id="reward_${reward.id}"
+             onmouseout="$('${reward.id}_info').hide();$('${reward.id}_image').setStyle({height:'96px'});
+$('${reward.id}_image_hover').hide(); $('${reward.id}_image_arrow').hide();"
+             onmouseover="$('${reward.id}_info').show();$('${reward.id}_image').setStyle({height:'114px'});
+$('${reward.id}_image_hover').show(); $('${reward.id}_image_arrow').show();"
+             onclick="game.rewardsPanel.useReward(${reward.id});"
+             class="item">
+            <span imgId="${reward.id}_image" class="loadedImg" imgClasses="background" imgSrc="images/rewards/yellow_bag_button.png">
+            </span>
+            <span imgId="${reward.id}_image_hover" class="loadedImg" imgClasses="hover" imgSrc="images/quests/building_hover.png" hidden="true">
+            </span>
+            <span imgId="${reward.id}_image_arrow" class="loadedImg" imgClasses="hoverArrow"
+                  imgSrc="images/quests/building_hover_arrow.png" hidden="true">
+            </span>
+          </div>
+        </li>
+        {/if}
+        {/for}
+        <li>
+          <div class="item">
+            <div class="itemData" style="cursor:auto;"> </div>
+            <span class="loadedImg" imgSrc="images/quests/empty.png" imgClasses="background" ></span>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="right">
+      <img src="" />
+    </div>
+  </div>
 	{for reward in rewards}
-		{if reward.id}
-		<div class="reward" id="${reward.id}">
-		   <div class="closeRewards"> X </div> 
-		   <div class="rewardValue">
-			   <div class="rewardElement rock">
-			      <img class="rewardsImg" src='images/game_elements/rock_reward.png' /> ${reward.reward_data.rock} 
-			   </div>
-			   <div class="rewardElement wood">
-				 <img class="rewardsImg" src='images/game_elements/lumber_reward.png' /> ${reward.reward_data.lumber}
-			   </div>					
-			   <div class="rewardElement gold"> 
-				<img class="rewardsImg" src='images/game_elements/gold_reward.png' /> ${reward.reward_data.gold}
-			   </div>
-		    </div>
-			<div class="rewardControl useReward">
-			  ${buttons.use}
-			</div>
-			<div class="rewardControl back">
-			  ${buttons.back}
-			</div>
-			<div class="rewardControl next">
-			  ${buttons.next}
-			</div>
+    {if reward.id}
+    <div class="reward" id="${reward.id}_info" style="display:none;">
+      <div class="rewardValue">
+		   <div class="rewardElement">
+        <img class="rewardsImg" src='images/icons/quarry_icon.png' /> 
+        <span class="text"> ${reward.reward_data.rock} </span>
+		   </div>
+		   <div class="rewardElement">
+        <img class="rewardsImg" src='images/icons/lumbermill_icon.png' /> 
+        <span class="text"> ${reward.reward_data.lumber} </span>
+		   </div>					
+		   <div class="rewardElement"> 
+  			<img class="rewardsImg" src='images/icons/coins.png' />        
+        <span class="text"> ${reward.reward_data.gold} </span>
+		   </div>
+      </div>
 		</div>
-	  {/if}
+    {/if}
   {/for}
-	</div>
+  <span class="loadedImg" imgClasses="rewardsPanelBg flippedImg" imgSrc="images/rewards/background.png"> </span>
+  <span class="loadedImg" imgClasses="rewardsPanelLine" imgSrc="images/quests/line.png"> </span>	  	  
+  <div class="rewardsTitle">
+    ${Text.labels.rewards}
+  </div>
+  <div class="okButtonWrapper closeContainer">
+    <div class="alignDiv" style="width:87%;"> </div>
+    <div class="closeButton"  onclick="game.rewardsPanel.closeRewardMenu();"></div>
+  </div>
 </textarea>

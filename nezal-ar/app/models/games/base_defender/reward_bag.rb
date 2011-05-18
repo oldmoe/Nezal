@@ -6,7 +6,7 @@ class BD::RewardBag
     metadata['reward_bags']['queue'] ||= []
     metadata['reward_bags']['id_generator'] += 1
     reward = {}    
-    reward['id'] = metadata['notifications']['id_generator']
+    reward['id'] = metadata['reward_bags']['id_generator']
     reward['reward_data'] = options[:reward_data]
     reward['time'] = Time.now.utc.to_i
     metadata['reward_bags']['queue'].push reward
