@@ -278,7 +278,7 @@ var Game = Class.create({
 	  this.palmFactory = new PalmFactory(this);
     this.wedgeFactory = new WedgeFactory(this);
     this.gaddafiFactory = new GaddafiFactory(this);
-    
+    this.friendsManager = new FriendsManager(this);
     if( !this.buildingMode )
       this.buildingMode = new BuildingMode(this);
     else{
