@@ -288,6 +288,8 @@ class BaseDefender < Metadata
       validation = repair_buildings user_game_profile
     elsif data['event'] == 'reward_bag'
       validation = add_reward_bag user_game_profile, data
+    elsif data['event'] == 'list_map'
+      validation = list_map user_game_profile, data
     end
     
     user_game_profile['error'] = validation['error'] unless validation['valid']
@@ -527,7 +529,9 @@ class BaseDefender < Metadata
     end
   end
   
-  def self.list_map user_game_profile
+  def self.list_map user_game_profile, data
+    friend_ids = data['friend_ids']
+    
     attack_history = user_game_profile.metadata['attack_history']
     for user in attack_hitory.keys
       
