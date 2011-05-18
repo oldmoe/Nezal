@@ -8,12 +8,14 @@ var Energy = Class.create({
   
   initialize : function(game){
     var self = this;
-    this.seedTime = new Date().getTime();
     this.game = game;
     var userDataSource = null;
     if( game.neighborGame ){
-      userDataSource = game.myEmpire;
+      console.log(game.myEnergy);
+      this.seedTime = game.myEnergy.seedTime;
+      userDataSource = game.myEnergy;
     } else {
+      this.seedTime = new Date().getTime();
       userDataSource = game.user.data
     }
     this.xpLevel = userDataSource.xp_info.xp_level;
@@ -40,5 +42,16 @@ var Energy = Class.create({
       this.energy += 1;
     }
     if( this.remainingTillNextEnergyUnit <= 0 ) this.remainingTillNextEnergyUnit = this.helpingPowerUnitEvery;
+  },
+  
+  snapshot : function(){
+    return {
+      xp_info: {
+        xp_level: this.xpLevel,
+        energy: this.energy,
+        bonus_seconds: this.bonusSeconds
+      },
+      seedTime: this.seedTime
+    };
   }
 });
