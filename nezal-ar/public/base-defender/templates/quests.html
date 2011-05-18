@@ -19,14 +19,14 @@
       <div class="okButton" onclick="Animation.hide('msg'); game.questsManager.handleQuests();">
       	 <span class="loadedImg" imgClasses="okImage" imgSrc="images/quests/button.png">
 		  </span>
-        <div class="okText yellowText"> OK </div>
+        <div class="okText yellowText"> ${Text.labels.ok} </div>
       </div>
     </div>
     <div class="text blueText">
-      <span> Welcome </span>
+      <span> ${Text.labels.welcome} </span>
       <span  class="name">${userName}</span>
       <span>,</span>
-      <div> I will help you to get started on your base.</div>
+      <div> ${Text.labels.welcomeMsg}</div>
     </div>
   </div>
 </textarea>
@@ -65,7 +65,7 @@
                   {else}
                   <div class="condMsg redText"> ${text['conditionMsgs'][building_index][condition_index]} </div>
                   <div class="condStatus"> 
-                    <img style="width:28px;" src="${Loader.images.quests['correct.png'].src}"/>
+      			        <span class="loadedImg" imgClasses="" imgSrc="images/quests/correct.png"></span>
                   </div>
                   {/if}
                 </div>
@@ -93,7 +93,7 @@
                 {else}
                 <div class="condMsg redText"> ${text['conditionMsgs'][condition_index]} </div>
                 <div class="condStatus"> 
-                  <img style="width:28px;" src="${Loader.images.quests['correct.png'].src}"/>
+    			        <span class="loadedImg" imgClasses="" imgSrc="images/quests/correct.png"></span>
                 </div>
                 {/if}
               </div>
@@ -107,7 +107,7 @@
       <div class="description">
         <div class="alignDiv" style="width:85px;"></div>
         <div class="bubble">
-          <img src="${Loader.images.quests['questBaloon.png'].src}" class="flippedImg"/>
+	        <span class="loadedImg" imgClasses="flippedImg" imgSrc="images/quests/questBaloon.png"></span>
           <div class="bubbleText blueText">
             <div style="display : table-cell;vertical-align:middle;height: 82px;"> ${text.description} </div>
           </div>
@@ -115,16 +115,16 @@
       </div>
       <div class="wedge">
         <div class="alignDiv" style="height: 1px;width: 42px;"></div>
-        <img  src="${Loader.images.quests['hover.png'].src}"  />
-        <img  src="${Loader.images.quests['circles.png'].src}"  class="circle"/>
-        <img  src="${Loader.images.quests[game.questsManager.categories[quest['category']]+'.png'].src}" class="wedgeImg"/>
-        <div class="text"> ${game.questsManager.categories[quest['category']]} </div>
+        <span class="loadedImg" imgSrc="images/quests/hover.png"></span>
+        <span class="loadedImg" imgSrc="images/quests/circles.png" imgClasses="circle"></span>
+        <span class="loadedImg" imgSrc="images/quests/${game.questsManager.categories[quest['category']]}.png" imgClasses="wedgeImg"></span>
+        <div class="text"> ${Text.labels[game.questsManager.categories[quest['category']]]} </div>
       </div>
       <div class="okButtonWrapper">
         <div class="alignDiv"> </div>
         <div class="okButton" onclick="Animation.hide('questDisplay');" >
-          <img class="okImage" src="${Loader.images.quests['button.png'].src}"/>
-          <div class="okText yellowText"> OK </div>
+          <span class="loadedImg" imgSrc="images/quests/button.png" imgClasses="okImage"></span>
+          <div class="okText yellowText"> ${Text.labels.ok} </div>
         </div>
       </div>
     </div>
@@ -133,10 +133,10 @@
 
 <textarea style="display:none;" id='congrates'>
   <div id='congratesMsg' style="display:none;">
-    <img class="background flippedImg" src="${Loader.images.quests['msgBg.png'].src}"/>
+    <span class="loadedImg" imgSrc="images/quests/msgBg.png" imgClasses="background flippedImg"></span>
     <div class="msgBGImgs">
-      <img class="wedge flippedImg" src="${Loader.images.quests['wedge.png'].src}"/>
-      <img class="bubble flippedImg" src="${Loader.images.quests['msgBaloon.png'].src}"/>
+      <span class="loadedImg" imgSrc="images/quests/wedge.png" imgClasses="wedge flippedImg"></span>
+      <span class="loadedImg" imgSrc="images/quests/msgBaloon.png" imgClasses="bubble flippedImg"></span>
     </div>
     <div class="closeContainer">
       <div class="alignDiv" style="width:90%;"> </div>
@@ -145,14 +145,14 @@
     <div class="okButtonWrapper">
       <div class="alignDiv"> </div>
       <div class="okButton" ackId="${msg['id']}" onclick="Animation.hide('congratesMsg'); game.questsManager.handleQuests();">
-        <img class="okImage" src="${Loader.images.quests['button.png'].src}"/>
-        <div class="okText yellowText"> OK </div>
+        <span class="loadedImg" imgSrc="images/quests/button.png" imgClasses="okImage"></span>
+        <div class="okText yellowText"> ${Text.labels.ok} </div>
       </div>
     </div>
     <div class="alignDiv" style="width : 20%;"> </div>
     <div class="msg">
       <div class="header">
-        <span> Congratulations: </span>
+        <span> ${Text.labels.congratulations}: </span>
       </div>
       <div class="text blueText">
         <span> ${msg['text']} </span>
@@ -161,39 +161,11 @@
       <div class="rewards">
           {for reward in msg['data']['rewards'] }
           <div class="reward"> 
-            <img  class="${reward_index}" src="${Loader.images.quests['resources.png'].src}"/>
+            <span class="loadedImg" imgSrc="images/quests/resources.png" imgClasses="${reward_index}"></span>
             ${reward}
           </div>
           {/for}
       </div>
-    </div>
-    
-  </div>
-</textarea>
-
-<textarea style="display:none;" id='empty-quest'>
-  <div id='emptyQuest' style="display:none;">
-    <img class="background" src="${Loader.images.quests['msgBg.png'].src}"/>
-    <div class="msgBGImgs">
-      <div class="wedge">
-        <img  src="${Loader.images.quests['hover.png'].src}" class="shadow"/>
-        <img  src="${Loader.images.quests['circles.png'].src}"  class="circle"/>
-        <img  src="${Loader.images.quests[category+'.png'].src}"/>
-      </div>
-      <img class="bubble" src="${Loader.images.quests['msgBaloon.png'].src}"/>
-    </div>
-    <div class="close" onclick="Animation.hide('msg');"> </div>
-    <div class="okButtonWrapper">
-      <div class="alignDiv"> </div>
-      <div class="okButton" ackId="${msg['id']}" onclick="Animation.hide('msg');">
-        <img class="okImage" src="${Loader.images.quests['button.png'].src}"/>
-        <div class="okText yellowText"> OK </div>
-      </div>
-    </div>
-    <div class="alignDiv" style="width : 20%;"> </div>
-    <div class="text blueText">
-      ${msg}
-      <div  class="noQuestText redText">${msg2}</div>
     </div>
     
   </div>
@@ -204,10 +176,10 @@
   {if questsList[category]}
   <div class="wedge clickable" id="${questsList[category]}">
     <div class="alignDiv" style="height: 1px;width: 42px;" ></div>
-    <img  src="${Loader.images.quests['hover.png'].src}" class="shadow"/>
-    <img  src="${Loader.images.quests['animated_circles.gif'].src}"  class="circle"/>
-    <img  src="${Loader.images.quests[category+'.png'].src}" class="wedgeImg"/>
-    <div class="text"> ${category} </div>
+    <span class="loadedImg" imgSrc="images/quests/hover.png" imgClasses="shadow"></span>
+    <span class="loadedImg" imgSrc="images/quests/animated_circles.gif" imgClasses="circle"></span>
+    <span class="loadedImg" imgSrc="images/quests/${category}.png" imgClasses="wedgeImg"></span>
+    <div class="text"> ${Text.labels[category]} </div>
   </div>
   {/if}
   {/for}
@@ -386,15 +358,45 @@ $('${building_index}_msg').show();$('${building_index}_msg_text').show();"
   </span>	  	  
   <div class="triggers">
     <div id="buildingsTrigger" class="buildingPanelTriggers activeTrigger" onclick="game.buildingsManager.displayBuildingsTab()">
-      Buildings
+      ${Text.labels.buildings}
     </div>
     <div id="defenseTrigger" class="buildingPanelTriggers inactiveTrigger" onclick="game.buildingsManager.displayDefenseTab()">
-      Defense
+      ${Text.labels.defense}
     </div>
   </div>
   <div class="closeContainer">
     <div class="alignDiv" style="width:87%;"> </div>
     <div id="closeBuildingPanel"  onclick="Animation.hide('buildingDisplay');"></div>
+  </div>
+</textarea>
+
+
+<textarea style="display:none;" id='empty-quest'>
+  <div id='emptyQuest' style="display:none;">
+    <img class="background" src="${Loader.images.quests['msgBg.png'].src}"/>
+    <div class="msgBGImgs">
+      <div class="wedge">
+        <span class="loadedImg" imgSrc="images/quests/hover.png" imgClasses="shadow"></span>
+        <span class="loadedImg" imgSrc="images/quests/circles.png" imgClasses="circle"></span>
+        <span class="loadedImg" imgSrc="images/quests/${category}.png"></span>
+      </div>
+      <span class="loadedImg" imgSrc="images/quests/msgBaloon.png"></span>
+    </div>
+    <div class="close" onclick="Animation.hide('msg');"> </div>
+    <div class="okButtonWrapper">
+      <div class="alignDiv"> </div>
+      <div class="okButton" ackId="${msg['id']}" onclick="Animation.hide('msg');">
+        <span class="loadedImg" imgSrc="images/quests/msgBaloon.png"></span>
+        <span class="loadedImg" imgSrc="images/quests/button.png" imgClasses="okImage"></span>
+        <div class="okText yellowText"> ${Text.labels.ok} </div>
+      </div>
+    </div>
+    <div class="alignDiv" style="width : 20%;"> </div>
+    <div class="text blueText">
+      ${msg}
+      <div  class="noQuestText redText">${msg2}</div>
+    </div>
+    
   </div>
 </textarea>
 

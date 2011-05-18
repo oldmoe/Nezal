@@ -47,6 +47,7 @@
     width: 100%;
 }
 
+
 #neighborRewardsBag{
   right: 20px;
   top : 100px;
@@ -75,22 +76,172 @@
     position: absolute;
     top: 5px;
 }
+
+
 #rewardsContainer{
-  width:185px;
-  overflow:hidden;
-  position: absolute;
-  z-index: 1;
-  left: 304px;
-  top: 161px;
-  background-color: SlateGray;
-  border-radius: 12px 12px 12px 12px;
+  overflow: visible;
+  z-index: 1000;
+  position : absolute;
+  top: 80px;
+  left: 80px;
+  width: 600px;
+  height: 400px;
 }
-#rewards .reward{
-  float:left;
-  width:185px;
-  height:154px;
+#rewardsContainer .rewardsTitle {
+  color: #FFF78C;
+  font-family: ShowG;
+  font-size: 25px;
+  height: 40px;
+  margin: 0 48px;
+  position: absolute;
+  text-align: center;
+  text-transform: uppercase;
+  text-shadow: -1px 2px 1px black;
+  top: 22px;
+  width: 144px;
+}
+#rewardsContainer .rewardsPanelBg
+{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+#rewardsContainer .rewardsPanelLine {
+  position: absolute;
+  top: 230px;
+  left: 30px;
+  z-index : 10;
+}
+#rewardsContainer .closeContainer {
+  top: 30px;  
+}
+#rewardsContainer .closeButton {
+  cursor: pointer;
+  height: 35px;
+  width: 40px;
+  z-index: 10;
+  display : inline-block;
+}
+#rewardsContainer .rewards {
+  height: 170px;
+  left: 32px;
+  position: absolute;
+  top: 80px;
+  width: 535px;
+  z-index: 12;
+}
+#rewardsContainer #rewards div {
+  display : inline-block;
+}
+#rewardsContainer #rewards-container {
+	width : 420px;
+	overflow: hidden;
+  padding : 0px 4px;
+  display : inline-block;
+}
+#rewardsContainer #rewards-ul{
+	width : 2000px;
+	height :170px;			
+	margin : 0px;
+	padding : 0px;
+}
+#rewards .right, #rewards .left{
+  direction: ltr;
+  height: 84px;
+  margin: 0 8px;
+  overflow: hidden;
+  position: relative;
+  text-align: center;
+  top: -50px;
+  width: 30px;
+}
+#rewardsContainer li {
+	float : left;
+	list-style : none;			
+  height: 150px;
+  width: 105px;
+  text-align: center;
+}
+#gameContainer.arabic #rewardsContainer li{
+	float : right;
+}
+#rewardsContainer .item {
+  height: 110px;
+  width: 103px;
+  top : 30px;
+  position: relative;
+  text-align : center;
+}
+#rewardsContainer .item .background {
+  float : none;
+  position : relative;
+  top : 0px;
+  height : 96px;
+  z-index : 100;
+  cursor : pointer;
+}
+#rewardsContainer .item .hover {
+  position : absolute;
+  top : -11px;
+  left : -10px;
+  width : 124px;
+  float : none;
+  z-index : 50;
+}
+#rewardsContainer .item .hoverArrow {
+  float: none;
+  position: absolute;
+  top: 115px;
+  width: 46px;
+  left: 30px;
+  z-index: 120;
+}
+#rewards .leftOff {
+  margin-left : 0px;
+}
+#rewards .leftOn {
+  margin-left : -60px;
+  cursor : pointer;
+}
+#rewards .rightOff {
+  margin-left : -30px;
+}
+#rewards .rightOn {
+  margin-left : -90px;
+  cursor : pointer;
+}
+#gameContainer.arabic #rewards .leftOff {
+  margin-left : -30px;
+}
+#gameContainer.arabic #rewards .leftOn {
+  margin-left : -90px;
+}
+#gameContainer.arabic #rewards .rightOff {
+  margin-left : 0px;
+}
+#gameContainer.arabic #rewards .rightOn {
+  margin-left : -60px;
 }
 
+#rewardsContainer .reward{
+  position : absolute;
+  top : 260px;
+  left : 40px;
+  width : 520px;
+  height : 100px;
+  z-index : 100;
+}
+#rewardsContainer .reward .rewardElement{
+  display: inline-block;
+  width: 60px;
+  text-align: center;
+  margin-top : 20px;
+}
+#rewardsContainer .reward .rewardElement .text{
+  display:block;
+  color : white;
+  font-size : 12px;
+}
 
 #rewards .rewardText{
 	color: #FCED70;
@@ -99,53 +250,4 @@
     text-align: center;
     width: 100%;
     z-index: 0;
-}
-
-#rewards .rewardControl{
-	float: left;
-    height: 20px;
-    margin-right: 55px;
-    margin-top: 12px;
-    width: 63px;
-}
-#rewards .useReward{
-	margin-left: 57px;
-}
-#rewards .next{
-  margin-right:0px;
-}
-#rewards .rewardValue{
-  margin-left : 61px;
-}
-a.defualtButton {
-    color : #FCED70;
-    background: transparent url('../images/game_elements/button.png') no-repeat  scroll top right;
-    display: block;
-	  width : 63px;
-    font: bold 13px showG, arial, sans-serif;
-    height: 24px;
-	  text-align:center;
-	  cursor:pointer;
-    text-decoration: none;
-}
-
-a.defualtButton .defaultButtonText {
-    background: transparent url('../images/game_elements/button.png') no-repeat;
-    display: block;
-    line-height: 12px;
-    padding: 5px 0 5px 0px;
-} 
-a.defualtButton:active {
-    background-position: bottom right;
-    color: #000;
-    outline: none; /* hide dotted outline in Firefox */
-}
-
-a.defualtButton:active .defaultButtonText {
-    padding: 6px 0 4px 0px; /* push text down 1px */
-} 
-a.defualtButton:hover {
-    background-position: bottom right;
-    color: #FFF;
-    outline: none; /* hide dotted outline in Firefox */
 }

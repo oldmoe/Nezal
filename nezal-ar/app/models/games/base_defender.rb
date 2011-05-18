@@ -70,8 +70,46 @@ class BaseDefender < Metadata
     building_jobs user_game_profile
     resource_collection_jobs user_game_profile
     repair_jobs user_game_profile
+    energy_gain user_game_profile
     user_game_profile.metadata['last_loaded'] = Time.now.utc.to_i
     user_game_profile.save
+  end
+  
+  def self.energy_gain user_game_profile
+    profile_metadata = user_game_profile.metadata
+    last_loaded = profile_metadata['last_loaded']
+    uesr_xp_level = profile_metadata['xp_info']['xp_level']
+    xp_level_metadata = @@game_metadata['xp_levels'][uesr_xp_level.to_s]
+    max_energy = xp_level_metadata['max_helping_power']
+    
+    #The case of first loading a profile, he should have it full energy
+    if( last_loaded.nil? )
+      profile_metadata['xp_info']['energy'] = max_energy
+      return
+    end
+    
+    current_energy = profile_metadata['xp_info']['energy']
+    if( current_energy >= max_energy )
+      return
+    end
+    
+    energy_unit_every = xp_level_metadata['helping_power_unit_every']
+    seconds_passed = Time.now.utc.to_i - last_loaded + profile_metadata['xp_info']['bonus_seconds']
+    net_energy_units = seconds_passed / energy_unit_every
+    needed_energy = max_energy - current_energy
+    
+    if( net_energy_units >= needed_energy )
+      profile_metadata['xp_info']['bonus_seconds'] = 0
+      profile_metadata['xp_info']['energy'] = max_energy
+      return
+    end
+    
+    bonus_seconds = seconds_passed % energy_unit_every
+    profile_metadata['xp_info']['energy'] += net_energy_units
+    profile_metadata['xp_info']['bonus_seconds'] = bonus_seconds
+    
+    puts "!!!!!!!!!!!!Energy : #{profile_metadata['xp_info']['energy']}"
+    puts "!!!!!!!!!!!!Bonus Seconds : #{profile_metadata['xp_info']['bonus_seconds']}"
   end
   
   def self.repair_jobs user_game_profile
@@ -111,7 +149,7 @@ class BaseDefender < Metadata
     if user_game_profile.metadata['last_loaded'].nil?
       return
     end
-    now = Time.now.utc.to_i  
+    now = Time.now.utc.to_i
     #Looping on every resource building module
     @@resource_building_modules.keys.each do |resource_building_name|
       #Checking if the user have built this type of building or not yet
@@ -513,6 +551,8 @@ class BaseDefender < Metadata
       'map' => (0..72).to_a.map{(0..24).to_a.map{0}},
       'xp_info' => {
         'xp_level' => 1,
+        'energy' => 0,
+        'bonus_seconds' => 0,
         'xp' => 0
       }
     }

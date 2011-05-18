@@ -24,6 +24,20 @@ img{
 	border:none;
 }
 
+/* CSS for aligned buttons that should work with both LTR, RTL */
+.okButtonWrapper {
+  position: absolute;
+  left : 0px;
+  height: 55px;
+  width: 100%;
+  z-index : 10;
+}
+/* Each aligned button should set a width to this div according to desired position of button */
+.alignDiv {
+  height : 100%;
+  display:inline-block;
+}
+
 #gameContainer {
 	padding-top: 0px;
 	position : relative;

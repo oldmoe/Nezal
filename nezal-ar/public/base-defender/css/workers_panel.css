@@ -6,6 +6,7 @@
   top: 74px;
   width: 250px;
   background-repeat: no-repeat;
+  z-index : 10;
 }
 
 #workers-panel-contents {

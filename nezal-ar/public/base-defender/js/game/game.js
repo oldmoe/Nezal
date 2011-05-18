@@ -29,7 +29,6 @@ var Game = Class.create({
     rock : 0,
     lumber : 0
   },
-
   workersStatus : null,
 
   initialize : function(){
@@ -45,7 +44,7 @@ var Game = Class.create({
   		this.mouseEndEvent = 'touchend'
   		this.mouseMoveEvent = 'touchmove'
     }
-    //soundManager.mute()
+    soundManager.mute()
   },
 	
   startLoading : function(){
@@ -62,10 +61,10 @@ var Game = Class.create({
 	
   initializeGame : function(){
     var self = this
-    var gameElementsImages = ['upper_bar.png','monitor.png','background.png','cancel.png','button.png','move.png','flag.png',
-                              'zoom.png','hover.png','sound.png','music.png','control_button.png','click.png','panel_background.png',
-                            	'resource_meter_background.png','resource_meter_rock.png','resource_meter_wood.png','button_clicked.png',
-                            	'building_menu_hover.png', 'build_button.png']
+    var gameElementsImages = ['upper_bar.png', 'energy_bar_background.png','monitor.png','background.png','cancel.png','button.png',
+                              'zoom.png','hover.png','sound.png','music.png','control_button.png','click.png','move.png','flag.png',
+                            	'panel_background.png', 'resource_meter_background.png','resource_meter_rock.png','resource_meter_wood.png',
+                            	'button_clicked.png', 'building_menu_hover.png', 'build_button.png']
                               
     var friendsImages = ['1st_blank.png', 'bar.png']
     var buildingImages = ['townhall.png']
@@ -80,7 +79,7 @@ var Game = Class.create({
     questsImages = questsImages.concat(BuildingMode.prototype.buildings.collect(function(building){
                                                                       return building + "_info_dimmed.png";
                                                                   }));
-    rewardsImages = ['reward_icon.png', 'reward_notification.png', 'yellow_bag.png'];
+    rewardsImages = ['reward_notification.png', 'yellow_bag.png', 'background.png', 'yellow_bag_button.png'];
     var specialDefaultActionImages = ['assign_worker.png', 'move.png']
     new Loader().load([ {images : gameElementsImages, path: 'images/game_elements/', store: 'game_elements'},
                         {images : friendsImages, path: 'images/friends/', store: 'friends'},
@@ -279,6 +278,7 @@ var Game = Class.create({
 	  this.palmFactory = new PalmFactory(this);
     this.wedgeFactory = new WedgeFactory(this);
     this.gaddafiFactory = new GaddafiFactory(this);
+    
     if( !this.buildingMode )
       this.buildingMode = new BuildingMode(this);
     else{
@@ -289,9 +289,9 @@ var Game = Class.create({
         this.buildingMode.on( newBuilding, function(){} );
       }
     }
+    
     this.controlsPanel = new ControlsPanel(this);
-    if(this.neighborGame != true)
-    {
+    if(this.neighborGame != true) {
       this.buildingsManager = new BuildingsManager(this);
       this.questsManager = new QuestsManager(this);
       this.tutorial = new Tutorial(this);
@@ -299,6 +299,9 @@ var Game = Class.create({
     }
     this.rewardsPanel = new RewardsPanel(this)
     this.rewardsPanel.handleRewards();
+    
+    this.energy = new Energy(this);
+    
     this.reInitializationNotifications.each(function(fn){fn()});
 /*    if(!this.neighborGame)
       new Notification(this).showAll();*/
