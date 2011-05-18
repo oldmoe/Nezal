@@ -10,9 +10,15 @@ var Energy = Class.create({
     var self = this;
     this.seedTime = new Date().getTime();
     this.game = game;
-    this.xpLevel = game.user.data.xp_info.xp_level;
-    this.energy = game.user.data.xp_info.energy;
-    this.bonusSeconds = game.user.data.xp_info.bonus_seconds;
+    var userDataSource = null;
+    if( game.neighborGame ){
+      userDataSource = game.myEmpire;
+    } else {
+      userDataSource = game.user.data
+    }
+    this.xpLevel = userDataSource.xp_info.xp_level;
+    this.energy = userDataSource.xp_info.energy;
+    this.bonusSeconds = userDataSource.xp_info.bonus_seconds;
     this.maxHelpingPower = this.currentXPLevelData().max_helping_power;
     this.helpingPowerUnitEvery = this.currentXPLevelData().helping_power_unit_every;
     new EnergyDisplay(this);

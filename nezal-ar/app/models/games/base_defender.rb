@@ -448,12 +448,12 @@ class BaseDefender < Metadata
   end
   
   def self.collect_neighbor_building(user_game_profile, neighbor_profile, data)
-    puts data
-    puts @@building_modules
+    return if( user_game_profile.metadata['xp_info']['energy'] == 0 )
     building = data['building']
     coords = data['coords']
     @@building_modules[building].collect(neighbor_profile, coords)
     BD::RewardBag.new({ :metadata => user_game_profile.metadata, :reward_data => {:rock=> 50, :gold=>50, :lumber=>50} })
+    user_game_profile.metadata['xp_info']['energy'] -= 1
     user_game_profile.save
     BD::Neighbor.neighbor_empire(user_game_profile, data)
   end

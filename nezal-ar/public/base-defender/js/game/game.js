@@ -308,10 +308,14 @@ var Game = Class.create({
   },
   
   loadUserEmpire : function(user_id){
-  	$('home').show()
+  	$('home').show();
+    if( !this.neighborGame ){
+      this.myEmpire = this.user.data;
+    }
     this.gameStatus.user_data = this.network.neighbourEmpire(user_id);
+    
     this.neighborGame = true;
-    this.visitedNeighborId = user_id
+    this.visitedNeighborId = user_id;
     this.collectedRewardBags = 0;
     this.updateGameStatus( this.gameStatus );
     this.scene.adjustNeighborScene();
