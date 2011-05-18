@@ -310,7 +310,7 @@ var Game = Class.create({
   loadUserEmpire : function(user_id){
   	$('home').show();
     if( !this.neighborGame ){
-      this.myEmpire = this.user.data;
+      this.myEmpire = Nezal.clone_obj(this.user.data);
     }
     this.gameStatus.user_data = this.network.neighbourEmpire(user_id);
     
