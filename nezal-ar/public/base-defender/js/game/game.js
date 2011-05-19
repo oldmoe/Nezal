@@ -312,6 +312,7 @@ var Game = Class.create({
   	$('home').show();
     if( !this.neighborGame ){
       this.myEmpire = Nezal.clone_obj(this.user.data);
+      this.myEnergy = this.energy.snapshot();
     }
     this.gameStatus.user_data = this.network.neighbourEmpire(user_id);
     

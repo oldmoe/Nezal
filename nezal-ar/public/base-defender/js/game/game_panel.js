@@ -20,6 +20,7 @@ var GamePanel = Class.create({
   	},
   
 	render : function(){
+    this.game.energy.render();
     if(this.game.neighborGame) return;
 		var rockValue = this.game.resources.rock;
 		var lumberValue = this.game.resources.lumber;
@@ -57,7 +58,5 @@ var GamePanel = Class.create({
     $('workers-amount').innerHTML = this.game.templatesManager.load("workers-in-game-panel",
             {idleWorkers : this.game.workerFactory.idleWorkers, totalWorkers : this.game.workerFactory.workers});
     $('coins-amount').innerHTML = this.game.user.coins;
-    
-    this.game.energy.render();
   }
 })

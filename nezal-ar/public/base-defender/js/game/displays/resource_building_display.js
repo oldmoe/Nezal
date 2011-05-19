@@ -141,12 +141,18 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
   },
 
   collectNeighborResources : function(){
-    if( (this.owner[this.owner.factory.collect] > 0 || this.owner.assignedWorkers > 0))
-    {
+    var hasEnergy = this.owner.game.energy.energy > 0;
+    if( (this.owner[this.owner.factory.collect] > 0 || this.owner.assignedWorkers > 0) && hasEnergy ) {
+      
+      this.owner.game.energy.energy--;
       this.owner._CollectNeighborResources();
       this.owner.game.collectedRewardBags ++;
       this._NeighborCollectionAnimation();
       this.owner.game.rewardsPanel.handleRewards();
+    }
+    
+    if( !hasEnergy ){
+      Notification.alert('You need more energy.');
     }
   },
 
