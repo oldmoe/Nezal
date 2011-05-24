@@ -1,20 +1,3 @@
-img{
-  width:auto;
-  height:auto;
-}
-@font-face {
-  font-family: "Adlib";
-  src: url("fonts/ADLIB.TTF");
-}
-@font-face {
-  font-family: "Lds";
-  src: url("fonts/LDS_typoderm.ttf");
-}
-@font-face {
-  font-family: "Showg";
-  src: url("fonts/SHOWG.TTF");
-}
-
 #buildButton {
   bottom: 0px;
   cursor: pointer;
@@ -57,15 +40,6 @@ img{
   font-size: 14px;
 }
 
-#interaction {
-  position: absolute;
-  top: 0px;
-  left: 0px
-  height : 550px;
-  width : 760px;
-  font-family : Lds;
-  z-index : 1000;
-}
 #interaction .title {
   color: white;
   font-family: Showg;
@@ -158,7 +132,6 @@ img{
   text-align: center;
   width: 150px;
   z-index: 10;
-  text-shadow: -1px 2px 1px black;
   font-family: showG;
 }
 

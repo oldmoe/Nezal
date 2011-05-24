@@ -20,8 +20,36 @@ area {
 	/*cursor : pointer;*/
 }
 
+/* Fonts used though out the game */
+@font-face {
+  font-family: "Adlib";
+  src: url("fonts/ADLIB.TTF");
+}
+@font-face {
+  font-family: "Lds";
+  src: url("fonts/LDS_typoderm.ttf");
+}
+@font-face {
+  font-family: "Showg";
+  src: url("fonts/SHOWG.TTF");
+}
+@font-face {
+  font-family: "Cairo";
+  src: url("fonts/CAIRO_.TTF");
+}
 img{
 	border:none;
+  width:auto;
+  height:auto;
+}
+.yellowText {
+  color: #FAC200;
+}
+.blueText {
+  color : #326479;
+}
+.redText {
+  color : #f23d00;
 }
 
 /* CSS for aligned buttons that should work with both LTR, RTL */
@@ -32,10 +60,32 @@ img{
   width: 100%;
   z-index : 10;
 }
+.okButtonWrapper .okImage{
+  display : block;
+}
+.okButtonWrapper .okButton {
+  display: inline-block;
+  text-align: center;
+  vertical-align: top;
+  cursor: pointer;
+  overflow : hidden;
+  height : 100%;
+}
+.okButtonWrapper .okText {
+  font-family: Showg;
+  font-size: 34px;
+  position: relative;
+  display : block;
+  text-shadow: -1px -1px 1px black;
+  top: -50px;
+  height : 100%;
+  line-height : 50px;
+}
 /* Each aligned button should set a width to this div according to desired position of button */
 .alignDiv {
   height : 100%;
   display:inline-block;
+  background-image: url("../images/buildings/transparent1x1.png");
 }
 
 #gameContainer {
@@ -45,6 +95,16 @@ img{
 	height: 550px;
 	bottom: 0px;
 	font-family : verdana;
+}
+
+#interaction {
+  position: absolute;
+  top: 0px;
+  left: 0px
+  height : 550px;
+  width : 760px;
+  font-family : Lds;
+  z-index : 1000;
 }
 
 #attackDiv{
@@ -389,4 +449,7 @@ img{
 
 #gameContainer.english .flippedImg {
 
+}
+.text-shadow {
+  text-shadow: -1px -1px 2px black, 1px 1px 2px black, -1px 1px 2px black, 1px -1px 2px black;
 }

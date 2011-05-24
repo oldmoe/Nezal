@@ -66,7 +66,7 @@ var Game = Class.create({
                             	'panel_background.png', 'resource_meter_background.png','resource_meter_rock.png','resource_meter_wood.png',
                             	'button_clicked.png', 'building_menu_hover.png', 'build_button.png']
                               
-    var friendsImages = ['1st_blank.png', 'bar.png']
+    var friendsImages = ['1st_blank.png', 'bar.png', 'home_icon.png']
     var buildingImages = ['townhall.png']
     var panelImages = ['buttons.png']
     var questsImages = [  "msgBg.png", "wedge.png", "button.png", "msgBaloon.png", "questBaloon.png" , "questBg.png", "buildingPanelBg.png",
@@ -79,7 +79,8 @@ var Game = Class.create({
     questsImages = questsImages.concat(BuildingMode.prototype.buildings.collect(function(building){
                                                                       return building + "_info_dimmed.png";
                                                                   }));
-    rewardsImages = ['reward_notification.png', 'yellow_bag.png', 'background.png', 'yellow_bag_button.png'];
+    rewardsImages = ['reward_notification.png', 'gold_bag.png', 'background.png', 'gold_bag_button.png',
+                     'rock_bag.png', 'rock_bag_button.png', 'lumber_bag.png', 'lumber_bag_button.png', 'mix_bag.png', 'mix_bag_button.png'];
     var specialDefaultActionImages = ['assign_worker.png', 'move.png']
     new Loader().load([ {images : gameElementsImages, path: 'images/game_elements/', store: 'game_elements'},
                         {images : friendsImages, path: 'images/friends/', store: 'friends'},

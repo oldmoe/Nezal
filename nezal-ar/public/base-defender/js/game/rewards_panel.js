@@ -7,7 +7,6 @@ var RewardsPanel = Class.create({
               'right-disabled' :'images/quests/arrows_horizontal.png'
             },
   left: 0,
-  noOfRewards : 0,
 
   initialize : function(game){
 		this.game = game;
@@ -39,11 +38,13 @@ var RewardsPanel = Class.create({
       $('rewardsBag').stopObserving('mouseover');
       $('rewardsBag').stopObserving('mouseout');
     }
+    $('neighborRewardsBag').hide();
+    $('rewardsBag').hide();
     if(!this.game.neighborGame)
     {
-      $('neighborRewardsBag').hide();
       $('rewardsBag').innerHTML = game.templatesManager.load('reward-bags');
       this.game.addLoadedImagesToDiv('rewardsBag');
+      var self = this;
       $$('#rewardsBag .clickable').each( function(button){
                                               $$( "#rewardsBag " + " .shadow")[0].hide();
                                               button.observe( 'mouseover', function(){
@@ -52,14 +53,12 @@ var RewardsPanel = Class.create({
                                               button.observe( 'mouseout', function(){
                                                                              $$("#rewardsBag " + " .shadow")[0].hide();
                                                                         });
+                                              button.observe(game.mouseClickEvent,function(){
+                                                      self.displayRewardsMenu();
+                                              });
                                         });
-      var self = this;
-      $('rewardsBag').observe(game.mouseClickEvent,function(){
-        self.displayRewardsMenu();
-      });
       $('rewardsBag').show();
     } else {
-      $('rewardsBag').hide();
       $('neighborRewardsBag').innerHTML = game.templatesManager.load('neighbor-reward-bags');
       this.game.addLoadedImagesToDiv('neighborRewardsBag');
       $('neighborRewardsBag').show();
@@ -77,10 +76,19 @@ var RewardsPanel = Class.create({
 
   updateMenu : function(){
     this.destroy();
-    this.rewards = this.game.user.data.reward_bags.queue
+    this.rewards = this.game.user.data.reward_bags.queue;
     if(!this.rewards)return
-    this.noOfRewards = this.rewards.length
-    var self = this
+    this.rewards.each(function(reward_hash){
+                        var reward = reward_hash.reward_data
+                        if(reward['lumber'] && !reward['rock'] && !reward['gold'])
+                          reward_hash.type='lumber';
+                        else if(!reward['lumber'] && reward['rock'] && !reward['gold'])
+                          reward_hash.type='rock';
+                        else if(!reward['lumber'] && !reward['rock'] && reward['gold'])
+                          reward_hash.type='gold';
+                        else
+                          reward_hash.type='mix';
+                      })
     var data = {rewards:this.rewards}
 		$('rewardsContainer').innerHTML = game.templatesManager.load('rewards', data);
     this.game.addLoadedImagesToDiv('rewardsContainer');

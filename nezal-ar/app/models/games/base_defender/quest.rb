@@ -184,15 +184,16 @@ module BD
       if quest.metadata['rewards']['exp']
         user_game_profile.exp = user_game_profile.exp.to_i + quest.metadata['rewards']['exp']
       end
-      if quest.metadata['rewards']['coins'] 
-        user_game_profile.user.coins += quest.metadata['rewards']['coins']
-        user_game_profile.user.save
+      reward_data = {}
+      if quest.metadata['rewards']['coins']
+        reward_data['gold'] = quest.metadata['rewards']['coins']
       end
       self::REWARDS[:resources].each do | reward |
         if quest.metadata['rewards'][reward]  
-          user_game_profile.metadata[reward] += quest.metadata['rewards'][reward].to_i
+          reward_data[reward] = quest.metadata['rewards'][reward].to_i
         end
       end
+      BD::RewardBag.new({ :metadata => user_game_profile.metadata, :reward_data => reward_data })
     end
 
     def self.load_quests user_game_profile
