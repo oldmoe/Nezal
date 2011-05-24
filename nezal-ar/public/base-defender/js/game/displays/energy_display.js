@@ -1,5 +1,5 @@
 var EnergyDisplay = Class.create({
-  maxMiddleBarWidth : 211,
+  maxMiddleBarWidth : 198,
   
   initialize : function(game){
     this.game = game;
