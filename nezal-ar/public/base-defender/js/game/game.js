@@ -303,18 +303,13 @@ var Game = Class.create({
     this.rewardsPanel.handleRewards();
     
     this.energy = new Energy(this);
+    new EnergyDisplay(this);
+    
     this.reInitializationNotifications.each(function(fn){fn()});
-/*    if(!this.neighborGame)
-      new Notification(this).showAll();*/
-    makeUnselectable(document.body)
   },
   
   loadUserEmpire : function(user_id){
   	$('home').show();
-    if( !this.neighborGame ){
-      this.myEmpire = Nezal.clone_obj(this.user.data);
-      this.myEnergy = this.energy.snapshot();
-    }
     this.gameStatus.user_data = this.network.neighbourEmpire(user_id);
     
     this.neighborGame = true;

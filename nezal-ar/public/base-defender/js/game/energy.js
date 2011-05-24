@@ -5,15 +5,14 @@ var Energy = Class.create({
   helpingPowerUnitEvery : null,
   xpLevel : null,
   seedTime : null,
-  
   initialize : function(game){
     var self = this;
     this.game = game;
     var userDataSource = null;
     if( game.neighborGame ){
-      console.log(game.myEnergy);
-      this.seedTime = game.myEnergy.seedTime;
-      userDataSource = game.myEnergy;
+      var energySnapshot = game.energy.snapshot();
+      this.seedTime = energySnapshot.seedTime;
+      userDataSource = energySnapshot;
     } else {
       this.seedTime = new Date().getTime();
       userDataSource = game.user.data
@@ -23,7 +22,7 @@ var Energy = Class.create({
     this.bonusSeconds = userDataSource.xp_info.bonus_seconds;
     this.maxHelpingPower = this.currentXPLevelData().max_helping_power;
     this.helpingPowerUnitEvery = this.currentXPLevelData().helping_power_unit_every;
-    new EnergyDisplay(this);
+    
     game.reactor.pushPeriodical(0,1,game.reactor.everySeconds(0.5), function(){self.tick()})
   },
   
@@ -35,7 +34,6 @@ var Energy = Class.create({
     if( this.maxHelpingPower == this.energy ) return;
     var secondsPassed = (new Date().getTime() - this.seedTime)/1000;
     this.remainingTillNextEnergyUnit = this.helpingPowerUnitEvery - this.bonusSeconds - Math.floor(secondsPassed);
-    //console.log( this.bonusSeconds);
     if( this.remainingTillNextEnergyUnit <= 0 ){
       this.seedTime = new Date().getTime();
       this.bonusSeconds = 0;

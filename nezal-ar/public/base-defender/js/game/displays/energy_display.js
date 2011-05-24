@@ -1,34 +1,35 @@
 var EnergyDisplay = Class.create({
   maxMiddleBarWidth : 211,
   
-  initialize : function(energyObject){
-    this.owner = energyObject;
-    Object.extend(this.owner,this);
+  initialize : function(game){
+    this.game = game;
+    Object.extend(game.energy, this);
   },
   
   render : function(){
-    $$('#energy_bar #energy_text')[0].innerHTML = this.owner.energy + "/" + this.owner.maxHelpingPower;
-    if( this.owner.energy > 0 ){
+    var energyObject = this.game.energy;
+    $$('#energy_bar #energy_text')[0].innerHTML = energyObject.energy + "/" + energyObject.maxHelpingPower;
+    if( energyObject.energy > 0 ){
       $('energy_fill_bar_left').addClassName('anyEnergy');
     }
-    if( this.owner.energy == 0 ){
+    if( energyObject.energy == 0 ){
       $('energy_fill_bar_left').removeClassName('anyEnergy');
     }
     
-    if( this.owner.energy >= this.owner.maxHelpingPower ){
+    if( energyObject.energy >= energyObject.maxHelpingPower ){
       $('energy_fill_bar_right').addClassName('full');
     } else {
       $('energy_fill_bar_right').removeClassName('full');
     }
     
-    if( this.owner.energy < this.owner.maxHelpingPower ){
-      $$('#energy_bar #more_energy_text')[0].innerHTML = Util.timeDisplay(this.owner.remainingTillNextEnergyUnit);
+    if( energyObject.energy < energyObject.maxHelpingPower ){
+      $$('#energy_bar #more_energy_text')[0].innerHTML = Util.timeDisplay(energyObject.remainingTillNextEnergyUnit);
     } else {
       $$('#energy_bar #more_energy_text')[0].innerHTML = "";
     }
     
-    var energyDisplayUnitWidth = this.maxMiddleBarWidth / this.owner.maxHelpingPower;
-    var middleBarWidth = energyDisplayUnitWidth * this.owner.energy;
+    var energyDisplayUnitWidth = this.maxMiddleBarWidth / energyObject.maxHelpingPower;
+    var middleBarWidth = energyDisplayUnitWidth * energyObject.energy;
     $('energy_fill_bar_middle').setStyle({width : middleBarWidth+"px"});
   }
 });
