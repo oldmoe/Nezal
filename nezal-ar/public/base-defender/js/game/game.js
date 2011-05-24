@@ -91,6 +91,7 @@ var Game = Class.create({
                       ],
                       {
                         onProgress : function(progress){
+                          if($$('#inProgress #loadingBarFill')[0])
                           $$('#inProgress #loadingBarFill')[0].style.width = Math.min(progress,88)+"%"
                         },
                         onFinish: function(){
@@ -140,8 +141,8 @@ var Game = Class.create({
         });
         //////////////////////////////////
         self.reInitialize();
-        Sounds.gameSounds.Intro[0].stop()
-        Sounds.resumeTrack()
+        //Sounds.gameSounds.Intro[0].stop()
+        //Sounds.resumeTrack()
     };	
     var buildingImages = BuildingMode.prototype.buildings.collect(function(building){
       return building + ".png";
@@ -228,6 +229,7 @@ var Game = Class.create({
   },
 
   selectLanguage : function(lang){
+    if(!$$('#controlPanel #languages')[0].hasClassName('opened'))return
     var self = this;
     this.questsManager.hideQuests();
     this.buildingsManager.hideBuildControls();
@@ -237,6 +239,7 @@ var Game = Class.create({
       {      
         $('gameContainer').removeClassName(Language.langsNames[i][0]);
       }
+     
       $('gameContainer').addClassName(language);
       self.network.fetchTemplate( "statics/" + language + ".html", function(responseText){
         Text = JSON.parse(responseText);
@@ -277,7 +280,7 @@ var Game = Class.create({
 	  this.palmFactory = new PalmFactory(this);
     this.wedgeFactory = new WedgeFactory(this);
     this.gaddafiFactory = new GaddafiFactory(this);
-    
+    this.friendsManager = new FriendsManager(this);
     if( !this.buildingMode )
       this.buildingMode = new BuildingMode(this);
     else{
@@ -354,4 +357,15 @@ var Game = Class.create({
   }
 
 });
+
+function makeUnselectable(node) {
+    if (node.nodeType == 1) {
+        node.unselectable = true;
+    }
+    var child = node.firstChild;
+    while (child) {
+        makeUnselectable(child);
+        child = child.nextSibling;
+    }
+}
 

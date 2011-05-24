@@ -98,12 +98,16 @@ data={
               "dependency" :{"buildings":{"townhall":1}}, "limited_by":null,"limiting":{"global":3,"others":{}},
               "hp": 800,
               "time" : 0,
+              "max_queue_size":0,
+              "queue":{"size":0,"creep":null,"last_creep_start":null,"creep_production_time":null},
               "display" : {"xdim":35,"ydim":35,"zdim":93,"imgWidth":124,"imgHeight":155,
                            "area":"101,118,102,111,102,91,104,77,107,72,84,61,81,60,67,21,63,14,38,17,45,20,45,28,42,37,52,44,47,61,21,70,18,73,25,99,21,85,13,101,10,123,48,141,79,128"}
         },
         "1":{
               "dependency" :{"buildings":{"townhall":1}}, "limited_by":null,"limiting":{"global":3,"others":{}},
               "hp": 800, "rock":2000, "lumber":2000, "time":15,
+              "max_queue_size":0,
+              "queue":{"size":0,"creep":null,"last_creep_start":null,"creep_production_time":null},
               "display" : {"xdim":35,"ydim":35,"zdim":93,"imgWidth":124,"imgHeight":155,
                            "area":"101,118,102,111,102,91,104,77,107,72,84,61,81,60,67,21,63,14,38,17,45,20,45,28,42,37,52,44,47,61,21,70,18,73,25,99,21,85,13,101,10,123,48,141,79,128"}
         }

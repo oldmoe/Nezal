@@ -4,7 +4,7 @@ var ChildDomImgSprite = Class.create(DomImgSprite, {
   container : null,
   zIndex : 3,
 
-  initialize : function($super, owner, assets, properties){
+  initialize : function($super, owner, assets, properties,name){
     if( assets && assets.container )
     {
       this.container = assets.container;
@@ -12,7 +12,7 @@ var ChildDomImgSprite = Class.create(DomImgSprite, {
         this.zIndex = assets.zIndex;
     }else
       this.container = $('gameCanvas');
-    $super(owner, assets, properties);
+    $super(owner, assets, properties,name);
   },
 
   createDiv : function() {  

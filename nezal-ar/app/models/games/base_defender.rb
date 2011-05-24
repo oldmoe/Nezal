@@ -71,8 +71,46 @@ class BaseDefender < Metadata
     resource_collection_jobs user_game_profile
     repair_jobs user_game_profile
     energy_gain user_game_profile
+    creeps_generation user_game_profile
     user_game_profile.metadata['last_loaded'] = Time.now.utc.to_i
     user_game_profile.save
+  end
+  
+  def self.creeps_generation ugp
+    war_factories = ugp['war_factory']
+    if(!war_factories.nil?)
+      war_factories.each_pair do |k,building|
+         next if(building['state'] != BD::Building.states['NORMAL'])
+         queue = building['queue']
+         if(queue['size']!=0)
+            creeps_generated = (Time.now.utc.to_i - queue['last_creep_start'])/queue['creep_production_time']
+            remaining_time = (Time.now.utc.to_i - queue['last_creep_start'])%queue['creep_production_time']
+            garage_ramaining = get_garage_remaining_capacity
+            if(queue['size'] < creeps_generated)
+              creeps_generated = queue['size'] 
+            end
+            
+            if(creeps_generated < garage_remaining)
+                #increase the number of creeps in the garage by queue['size']
+              queue['size'] -= creeps_generated
+            else
+                #increase the number of creeps in the garage by garage remaining capacity
+                queue['size']-=garage_remaining
+            end
+            if(queue['size']!=0)
+              queue['last_creep_start'] = remaining_time
+            end
+        end
+      end
+    end
+  end
+  
+  def self.generate_creep user_game_profile, data
+      
+  end
+  
+  def self.get_garage_remaining_capacity
+    return 10  
   end
   
   def self.energy_gain user_game_profile
@@ -291,6 +329,8 @@ class BaseDefender < Metadata
       validation = repair_buildings user_game_profile
     elsif data['event'] == 'reward_bag'
       validation = add_reward_bag user_game_profile, data
+    elsif data['event'] == 'list_map'
+      validation = list_map user_game_profile, data
     end
     
     user_game_profile['error'] = validation['error'] unless validation['valid']
@@ -322,8 +362,18 @@ class BaseDefender < Metadata
     profile_metadata = nil
     validation = nil
     if(!data['user_id'].nil?)
+      user_id = data['user_id'].to_i
       neighbor_profile = BD::Neighbor.neighbor_profile(user_game_profile, data)
       profile_metadata  = neighbor_profile.metadata
+      user_game_profile.metadata['attack_history'] = {} if(user_game_profile.metadata['attack_history'].nil?)
+      profile_metadata['attack_history'] = {} if(profile_metadata['attack_history'].nil?)
+      if(!user_game_profile.metadata['attack_history'][user_id].nil?)
+        user_game_profile.metadata['attack_history'][user_id]['attacked']+=1
+        pofile_metadata['attack_history'][user_game_profile.id.to_i]['defended']+=1
+      else
+        user_game_profile.metadata['attack_history'][user_id] = {'attacked'=>1,'defended'=>0}
+        profile_metadata['attack_history'][user_game_profile.user_id.to_i] = {'attacked'=>0,'defended'=>1}
+      end
       attack_result = simulate_attack profile_metadata, data
       notification_text = ''
       if(attack_result['attack_success'])
@@ -520,6 +570,15 @@ class BaseDefender < Metadata
       end
     end
   end
+  
+  def self.list_map user_game_profile, data
+    friend_ids = data['friend_ids']
+    
+    attack_history = user_game_profile.metadata['attack_history']
+    for user in attack_hitory.keys
+      
+    end
+  end
 
   def self.init_game_profile(user_game_profile)
     user_game_profile.metadata= 
@@ -530,6 +589,7 @@ class BaseDefender < Metadata
       'idle_workers' => 1,
       'rock' => 50000,
       'lumber' => 50000,
+      'attack_history' => {},
       'reward_bags' => {'id_generator' => 4, 'queue' => [{:id=>1,:reward_data=>{:gold=>0,:rock=>100,:lumber=>100}},
       {:id=>2,:reward_data=>{:gold=>0,:rock=>100,:lumber=>200}},{:id=>3,:reward_data=>{:gold=>0,:rock=>200,:lumber=>100}}]},
       'notifications' => {'id_generator' => 0, 'queue' => []},

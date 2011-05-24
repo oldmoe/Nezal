@@ -13,10 +13,11 @@ var DomSpriteContainer = Class.create(DomSprite, {
     return new ChildDomTextSprite(owner, assets, properties);
   },
 
-  newDomImgSprite : function(owner, assets, properties){
+  newDomImgSprite : function(owner, assets, properties,name){
     if(!assets)  assets = {};
     assets.container = this.div;
-    return new ChildDomImgSprite(owner, assets, properties);
+    var sprite =  new ChildDomImgSprite(owner, assets, properties,name);
+    return sprite
   }
 
 });
