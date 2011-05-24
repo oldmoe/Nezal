@@ -229,6 +229,7 @@ var Game = Class.create({
   },
 
   selectLanguage : function(lang){
+    if(!$$('#controlPanel #languages')[0].hasClassName('opened'))return
     var self = this;
     this.questsManager.hideQuests();
     this.buildingsManager.hideBuildControls();
@@ -238,6 +239,7 @@ var Game = Class.create({
       {      
         $('gameContainer').removeClassName(Language.langsNames[i][0]);
       }
+     
       $('gameContainer').addClassName(language);
       self.network.fetchTemplate( "statics/" + language + ".html", function(responseText){
         Text = JSON.parse(responseText);
@@ -301,7 +303,6 @@ var Game = Class.create({
     this.rewardsPanel.handleRewards();
     
     this.energy = new Energy(this);
-    
     this.reInitializationNotifications.each(function(fn){fn()});
 /*    if(!this.neighborGame)
       new Notification(this).showAll();*/
