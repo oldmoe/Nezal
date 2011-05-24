@@ -71,8 +71,46 @@ class BaseDefender < Metadata
     resource_collection_jobs user_game_profile
     repair_jobs user_game_profile
     energy_gain user_game_profile
+    creeps_generation user_game_profile
     user_game_profile.metadata['last_loaded'] = Time.now.utc.to_i
     user_game_profile.save
+  end
+  
+  def self.creeps_generation ugp
+    war_factories = ugp['war_factory']
+    if(!war_factories.nil?)
+      war_factories.each_pair do |k,building|
+         next if(building['state'] != BD::Building.states['NORMAL'])
+         queue = building['queue']
+         if(queue['size']!=0)
+            creeps_generated = (Time.now.utc.to_i - queue['last_creep_start'])/queue['creep_production_time']
+            remaining_time = (Time.now.utc.to_i - queue['last_creep_start'])%queue['creep_production_time']
+            garage_ramaining = get_garage_remaining_capacity
+            if(queue['size'] < creeps_generated)
+              creeps_generated = queue['size'] 
+            end
+            
+            if(creeps_generated < garage_remaining)
+                #increase the number of creeps in the garage by queue['size']
+              queue['size'] -= creeps_generated
+            else
+                #increase the number of creeps in the garage by garage remaining capacity
+                queue['size']-=garage_remaining
+            end
+            if(queue['size']!=0)
+              queue['last_creep_start'] = remaining_time
+            end
+        end
+      end
+    end
+  end
+  
+  def self.generate_creep user_game_profile, data
+      
+  end
+  
+  def self.get_garage_remaining_capacity
+    return 10  
   end
   
   def self.energy_gain user_game_profile
