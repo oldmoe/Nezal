@@ -118,7 +118,7 @@
         <span class="loadedImg" imgSrc="images/quests/hover.png"></span>
         <span class="loadedImg" imgSrc="images/quests/circles.png" imgClasses="circle"></span>
         <span class="loadedImg" imgSrc="images/quests/${game.questsManager.categories[quest['category']]}.png" imgClasses="wedgeImg"></span>
-        <div class="text"> ${Text.labels[game.questsManager.categories[quest['category']]]} </div>
+        <div class="text text-shadow"> ${Text.labels[game.questsManager.categories[quest['category']]]} </div>
       </div>
       <div class="okButtonWrapper">
         <div class="alignDiv"> </div>
@@ -179,7 +179,7 @@
     <span class="loadedImg" imgSrc="images/quests/hover.png" imgClasses="shadow"></span>
     <span class="loadedImg" imgSrc="images/quests/animated_circles.gif" imgClasses="circle"></span>
     <span class="loadedImg" imgSrc="images/quests/${category}.png" imgClasses="wedgeImg"></span>
-    <div class="text"> ${Text.labels[category]} </div>
+    <div class="text text-shadow"> ${Text.labels[category]} </div>
   </div>
   {/if}
   {/for}
@@ -353,10 +353,10 @@ $('${building_index}_msg').show();$('${building_index}_msg_text').show();"
 	<span class="loadedImg" imgClasses="buildingsBg flippedImg" imgSrc="images/quests/buildingsBg.png"></span>
   <span class="loadedImg" imgClasses="buildingPanelLine" imgSrc="images/quests/line.png"></span>
   <div class="triggers">
-    <div id="buildingsTrigger" class="buildingPanelTriggers activeTrigger" onclick="game.buildingsManager.displayBuildingsTab()">
+    <div id="buildingsTrigger" class="buildingPanelTriggers activeTrigger text-shadow" onclick="game.buildingsManager.displayBuildingsTab()">
       ${Text.labels.buildings}
     </div>
-    <div id="defenseTrigger" class="buildingPanelTriggers inactiveTrigger" onclick="game.buildingsManager.displayDefenseTab()">
+    <div id="defenseTrigger" class="buildingPanelTriggers inactiveTrigger text-shadow" onclick="game.buildingsManager.displayDefenseTab()">
       ${Text.labels.defense}
     </div>
   </div>

@@ -207,10 +207,7 @@
         </div>
       </div>
       <div id="home" style="display:none;" onclick="Javascript:game.reInitialize(function(){game.scene.render()})">
-          <span class="loadedImg" imgSrc ="images/friends/1st_blank.png"></span>
-          <div class="photoContainer">
-            <img class='photo' src="${Loader.images.buildings['townhall.png'].src}"/>
-          </div>	
+          <span class="loadedImg" imgSrc ="images/friends/home_icon.png"></span>
           <div class='name'>Home</div>
         </div>
 			<div id="attackDiv" style="display:none;">
@@ -286,9 +283,9 @@
       </div>
       <div id="side-bar"> 
         <div id="quest-panel" style="display:none;"></div>      
-        <div id="rewardsBag"></div>
+        <div id="rewardsBag" style="display:none;"></div>
       </div>
-      <div id="neighborRewardsBag" class="clickable"></div>
+      <div id="neighborRewardsBag"></div>
       <div id="interaction" style="display:none;">    
         <div id="msg" style="display:none;"> </div>
         <div id="questDisplay" style="display:none;"> </div>
@@ -471,31 +468,36 @@
 
 <textarea id="neighborCollectAnimation" style="display:none;">
 <div class="collectionAnimation" id="neighborCollect">
-	<span class="loadedImg" imgSrc='images/rewards/yellow_bag.png'></span>
+	<span class="loadedImg" imgSrc='images/rewards/${type}_bag.png'></span>
 </div>
 </textarea>
 
 <textarea id="reward-bags" style="display:none;">
-  <div class="clickable">
+  {if game.rewardsPanel.bagCount()}
+  <div class="clickable container">
     <div class="alignDiv" style="height: 1px;width: 42px;" ></div>
     <span class="loadedImg" imgSrc ="images/quests/hover.png" imgClasses="shadow"></span>
     <span class="loadedImg" imgSrc ="images/quests/animated_circles.gif" imgClasses="circle"></span>
     <span class="loadedImg" imgSrc ="images/rewards/reward_notification.png" imgClasses="mainImg"></span>
-    <div class="number"> ${game.rewardsPanel.bagCount()} </div>
+    <div class="number text-shadow"> ${game.rewardsPanel.bagCount()} </div>
+    <div class="text text-shadow"> ${Text.labels.rewards} </div>
   </div>
+  {/if}
 </textarea>
 
 <textarea id="neighbor-reward-bags" style="display:none;">
-  <div class="clickable">
+  <div>
     <div class="alignDiv" style="height: 1px;width: 42px;" ></div>
-    <span class="loadedImg" imgSrc ="images/rewards/yellow_bag.png" imgClasses="mainImg"></span>
-    <div class="number"> ${game.rewardsPanel.bagCount()} </div>
+    <span class="loadedImg" imgSrc ="images/quests/hover.png" imgClasses="shadow"></span>
+    <span class="loadedImg" imgSrc ="images/quests/circles.png" imgClasses="circle"></span>
+    <span class="loadedImg" imgSrc ="images/rewards/reward_notification.png" imgClasses="mainImg"></span>
+    <div class="number text-shadow"> ${game.rewardsPanel.bagCount()} </div>
+    <div class="text text-shadow"> ${Text.labels.rewards} </div>
   </div>
 </textarea>
 
 
 <textarea id="rewards" style="display:none;">
-
   <div id="rewards" class="rewards">
     <div class="left">
       <img src="" />
@@ -505,30 +507,19 @@
         {for reward in rewards}
     		{if reward.id}
         <li>
-          <div id="reward_${reward.id}"
-             onmouseout="$('${reward.id}_info').hide();$('${reward.id}_image').setStyle({height:'96px'});
-$('${reward.id}_image_hover').hide(); $('${reward.id}_image_arrow').hide();"
-             onmouseover="$('${reward.id}_info').show();$('${reward.id}_image').setStyle({height:'114px'});
-$('${reward.id}_image_hover').show(); $('${reward.id}_image_arrow').show();"
-             onclick="game.rewardsPanel.useReward(${reward.id});"
-             class="item">
-            <span imgId="${reward.id}_image" class="loadedImg" imgClasses="background" imgSrc="images/rewards/yellow_bag_button.png">
+          <div id="reward_${reward.id}" class="item">
+            <span imgId="${reward.id}_image" class="loadedImg" imgClasses="background" imgSrc="images/rewards/${reward.type}_bag_button.png">
             </span>
             <span imgId="${reward.id}_image_hover" class="loadedImg" imgClasses="hover" imgSrc="images/quests/building_hover.png" hidden="true">
             </span>
             <span imgId="${reward.id}_image_arrow" class="loadedImg" imgClasses="hoverArrow"
                   imgSrc="images/quests/building_hover_arrow.png" hidden="true">
             </span>
+            <div class="name text-shadow" id="${reward.id}_name"> ${Text.labels[reward.type]} </div>
           </div>
         </li>
         {/if}
         {/for}
-        <li>
-          <div class="item">
-            <div class="itemData" style="cursor:auto;"> </div>
-            <span class="loadedImg" imgSrc="images/quests/empty.png" imgClasses="background" ></span>
-          </div>
-        </li>
       </ul>
     </div>
     <div class="right">
@@ -538,26 +529,36 @@ $('${reward.id}_image_hover').show(); $('${reward.id}_image_arrow').show();"
 	{for reward in rewards}
     {if reward.id}
     <div class="reward" id="${reward.id}_info" style="display:none;">
-      <div class="rewardValue">
-		   <div class="rewardElement">
-        <img class="rewardsImg" src='images/icons/quarry_icon.png' /> 
-        <span class="text"> ${reward.reward_data.rock} </span>
-		   </div>
-		   <div class="rewardElement">
-        <img class="rewardsImg" src='images/icons/lumbermill_icon.png' /> 
-        <span class="text"> ${reward.reward_data.lumber} </span>
-		   </div>					
-		   <div class="rewardElement"> 
-  			<img class="rewardsImg" src='images/icons/coins.png' />        
-        <span class="text"> ${reward.reward_data.gold} </span>
-		   </div>
-      </div>
-		</div>
+      <div class="title text-shadow"> ${Text.labels[reward.type + '_bag']} </div>
+      <div class="rewardDesc">
+        <div class="descText text-shadow"> ${Text.labels['rewardsMsg']} </div>
+        <div class="rewardValue">
+          {if reward.reward_data.rock}
+          <div class="rewardElement">
+            <img class="rewardsImg" src='images/icons/quarry_icon.png' /> 
+            <span class="text"> ${reward.reward_data.rock} </span>
+          </div>
+          {/if}
+          {if reward.reward_data.lumber}
+		      <div class="rewardElement">
+            <img class="rewardsImg" src='images/icons/lumbermill_icon.png' /> 
+            <span class="text"> ${reward.reward_data.lumber} </span>
+		      </div>					
+          {/if}
+          {if reward.reward_data.gold}
+          <div class="rewardElement"> 
+      			<img class="rewardsImg" src='images/icons/coins.png' />        
+            <span class="text"> ${reward.reward_data.gold} </span>
+    	    </div>
+          {/if}
+        </div>
+		  </div>
+    </div>
     {/if}
   {/for}
   <span class="loadedImg" imgClasses="rewardsPanelBg flippedImg" imgSrc="images/rewards/background.png"> </span>
   <span class="loadedImg" imgClasses="rewardsPanelLine" imgSrc="images/quests/line.png"> </span>	  	  
-  <div class="rewardsTitle">
+  <div class="rewardsTitle text-shadow">
     ${Text.labels.rewards}
   </div>
   <div class="okButtonWrapper closeContainer">

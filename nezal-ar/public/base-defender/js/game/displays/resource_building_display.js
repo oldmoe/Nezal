@@ -175,7 +175,8 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
   _NeighborCollectionAnimation : function(){
     var owner = this.owner
     var html = owner.game.templatesManager.load("neighborCollectAnimation",{
-      building_name: owner.name
+      building_name: owner.name,
+      type : owner.factory.collect
     })
     owner.game.domConverter.convert(html)
     var collectionDiv = $$('.collectionAnimation')[$$('.collectionAnimation').length-1]
