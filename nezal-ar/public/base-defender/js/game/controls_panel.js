@@ -6,7 +6,38 @@ var ControlsPanel = Class.create({
     this._AttachZoomListener()
     this._AttachSoundListener()
     this._AttachMusicListener()
-    this._AttackOpenerListener()    
+    this._AttachOpenerListener()
+    this._AttachLangListeners()    
+  },
+  _AttachLangListeners : function(){
+      $$('#controlPanel #languages')[0].innerHTML = game.templatesManager.load("languagesMenu");
+      $$('#controlPanel #languages .lang').each(function(div){
+        div.stopObserving('mouseover')
+  		div.observe('mouseover',function(){
+  				$$('#controlPanel #languages #'+div.id+" .languageBtn")[0].show()
+  				$$('#controlPanel #languages #'+div.id+" .langButtonTxt")[0].setStyle({top:'7px'})
+  		})
+  	})
+  	$$('#controlPanel #languages .lang').each(function(div){
+      div.stopObserving('mouseout')
+  		div.observe('mouseout',function(){
+  				$$('#controlPanel #languages #'+div.id+" .languageBtn")[0].hide()
+  				$$('#controlPanel #languages #'+div.id+" .langButtonTxt")[0].setStyle({top:'6px'})
+  		})
+  	})
+  	var langDiv = $$('#controlPanel #languages')[0]
+    langDiv.stopObserving('click')
+  	langDiv.observe('click',function(){
+  		if(langDiv.hasClassName('closed')){
+  			langDiv.removeClassName('closed')
+  			langDiv.addClassName('opened')
+  			langDiv.setStyle({overflow:'visible'})
+  		}else{
+  			langDiv.removeClassName('opened')
+  			langDiv.addClassName('closed')
+  			langDiv.setStyle({overflow:'hidden'})
+  		}
+  	})
   },
   _AttachDefaultEvents : function(){
      $$('#controlPanel .controlContainer').each(function(div){
@@ -83,7 +114,7 @@ var ControlsPanel = Class.create({
 			Sounds.switchmusic()
 		})
   },
-  _AttackOpenerListener : function(){
+  _AttachOpenerListener : function(){
     var self = this
     $$('#controlPanel #openControl')[0].stopObserving(this.game.mouseClickEvent)
     $$('#controlPanel #openControl')[0].observe(this.game.mouseClickEvent,function(){
@@ -94,7 +125,7 @@ var ControlsPanel = Class.create({
           y: 72,
           mode: 'relative',
           transition: Effect.Transitions.spring,
-          afterFinish : function(){self._AttackOpenerListener()}
+          afterFinish : function(){self._AttachOpenerListener()}
         })
       }else{
         this.setAttribute('opened','true')
@@ -102,7 +133,7 @@ var ControlsPanel = Class.create({
           y: -72,
           mode: 'relative',
           duration: 0.3,
-          afterFinish : function(){self._AttackOpenerListener()}
+          afterFinish : function(){self._AttachOpenerListener()}
         })
       }
     })  

@@ -3,51 +3,65 @@ require 'json'
 
 class ApplicationController < Sinatra::Base
 
-  set :raise_errors, false
-  set :show_exceptions, false
-  
   enable :sessions
-
+  def app_configs
+    @app_configs
+  end
+  def user_game_profile
+    @game_profile
+  end
+  def game
+    @game
+  end
+  def user
+    @user
+  end
+  def app_name
+    @app_name
+  end
+  def service_provider
+    @service_provider
+  end
   before do 
     app_name = env['PATH_INFO'].split('/')[1]
     @service_provider = env['SCRIPT_NAME'].split('/')[1].split('-')[0]
     if app_name
       @app_configs = FB_CONFIGS::find('name', app_name)
       @app_configs ||= K_CONFIGS::find('name', app_name)
-    	if @app_configs && get_provider_session
-    	  begin
-	        @game = Game.where( 'name'=>app_name ).first
-			    @user = User.where( 'service_type'=>Service::PROVIDERS[@service_provider], 'service_id'=>@service_id ).first
-			    if(!@user)
-				    @user = User.create( 'service_type'=>Service::PROVIDERS[@service_provider], 'service_id'=>@service_id, 'coins'=>0 )
-			    end
-			    @game_profile = UserGameProfile.where('game_id'=>@game.id, 'user_id'=>@user.id).first
-			    if !(@game_profile)
-				    LOGGER.debug "Game profile not found, creating one"
-				    @game_profile = UserGameProfile.new()
-				    @game_profile.game= @game
-				    @game_profile.user= @user
-				    get_helper_klass.init_game_profile(@game_profile)
-				    @game_profile.save!()
-				    LOGGER.debug params["inviter"]
-				    if(params["inviter"])
-					    get_helper_klass.reward_invitation(params["inviter"])
-				    end
-			    end
-	      rescue Exception => e   
+      if @app_configs && get_provider_session
+        begin
+          @game = Game.where( 'name'=>app_name ).first
+          @user = User.where( 'service_type'=>Service::PROVIDERS[@service_provider], 'service_id'=>@service_id ).first
+          if(!@user)
+            @user = User.create( 'service_type'=>Service::PROVIDERS[@service_provider], 'service_id'=>@service_id, 'coins'=>0 )
+          end
+          @game_profile = UserGameProfile.where('game_id'=>@game.id, 'user_id'=>@user.id).first
+          if !(@game_profile)
+            LOGGER.debug "Game profile not found, creating one"
+            @game_profile = UserGameProfile.new()
+            @game_profile.game= @game
+            @game_profile.user= @user
+            get_helper_klass.init_game_profile(@game_profile)
+            @game_profile.save!()
+            LOGGER.debug params["inviter"]
+            if(params["inviter"])
+              get_helper_klass.reward_invitation(params["inviter"])
+            end
+          end
+        rescue Exception => e   
           LOGGER.debug e
           ''
-	      end
-	    else
+        end
+      else
         LOGGER.debug "No Cookie Or Params Found"
-	    end
+      end
     end
   end
   
   after do
-  	if params[:uid] || params[:fb_sig_user]
-	  	headers 'Cache-Control' => "no-cache", 'Pragma' => "no-cache", 'Expires' => "0"
-	  end
+    if params[:uid] || params[:fb_sig_user]
+      headers 'Cache-Control' => "no-cache", 'Pragma' => "no-cache", 'Expires' => "0"
+    end
   end
   
   protected
@@ -57,42 +71,42 @@ class ApplicationController < Sinatra::Base
       LOGGER.debug ">>>>>> Kongregate - We will check for session in params"
       if params[:kongregate_user_id] && params[:kongregate_game_auth_token]
         @service_id = params[:kongregate_user_id]
-	      @session_key = params[:kongregate_game_auth_token]        
-	      LOGGER.debug ">>>>>> Params - service_id : #{@service_id}"
-	      LOGGER.debug ">>>>>> Params - session_key : #{@session_key}"
+        @session_key = params[:kongregate_game_auth_token]        
+        LOGGER.debug ">>>>>> Params - service_id : #{@service_id}"
+        LOGGER.debug ">>>>>> Params - session_key : #{@session_key}"
       elsif params[:session_key] && params[:uid]
-	      @service_id = params[:uid] 
-	      @session_key = params[:session_key]
-	      LOGGER.debug ">>>>>> Our Params - service_id : #{@service_id}"
-	      LOGGER.debug ">>>>>> Our Params - session_key : #{@session_key}"
-	      true
+        @service_id = params[:uid] 
+        @session_key = params[:session_key]
+        LOGGER.debug ">>>>>> Our Params - service_id : #{@service_id}"
+        LOGGER.debug ">>>>>> Our Params - session_key : #{@session_key}"
+        true
       else
-	      false
+        false
       end
     elsif Service::PROVIDERS[@service_provider] == Service::FACEBOOK
       if env['rack.request.cookie_hash'] && 
               (fb_cookie = env['rack.request.cookie_hash']["fbs_#{@app_configs['id']}"] ||
                env['rack.request.cookie_hash']["fbs_#{@app_configs['key']}"]) # if
-	      cookie = CGI::parse(fb_cookie)
-	      @service_id = cookie['uid'][0].split('"')[0]
-	      @session_key = cookie['session_key'][0]
-	      LOGGER.debug ">>>>>> Cookie - service_id : #{@service_id}"
-	      LOGGER.debug ">>>>>> Cookie - session_key : #{@session_key}"
-	      true
+        cookie = CGI::parse(fb_cookie)
+        @service_id = cookie['uid'][0].split('"')[0]
+        @session_key = cookie['session_key'][0]
+        LOGGER.debug ">>>>>> Cookie - service_id : #{@service_id}"
+        LOGGER.debug ">>>>>> Cookie - session_key : #{@session_key}"
+        true
       elsif params[:fb_sig_session_key] && params[:fb_sig_user]
-	      @service_id = params[:fb_sig_user] 
-	      @session_key = params[:fb_sig_session_key]
-	      LOGGER.debug ">>>>>> Params - service_id : #{@service_id}"
-	      LOGGER.debug ">>>>>> Params - session_key : #{@session_key}"
-	      true
+        @service_id = params[:fb_sig_user] 
+        @session_key = params[:fb_sig_session_key]
+        LOGGER.debug ">>>>>> Params - service_id : #{@service_id}"
+        LOGGER.debug ">>>>>> Params - session_key : #{@session_key}"
+        true
       elsif params[:session_key] && params[:uid]
-	      @service_id = params[:uid] 
-	      @session_key = params[:session_key]
-	      LOGGER.debug ">>>>>> Our Params - service_id : #{@service_id}"
-	      LOGGER.debug ">>>>>> Our Params - session_key : #{@session_key}"
-	      true
+        @service_id = params[:uid] 
+        @session_key = params[:session_key]
+        LOGGER.debug ">>>>>> Our Params - service_id : #{@service_id}"
+        LOGGER.debug ">>>>>> Our Params - session_key : #{@session_key}"
+        true
       else
-	      false
+        false
       end
     else
       false

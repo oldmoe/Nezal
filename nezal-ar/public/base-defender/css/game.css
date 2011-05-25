@@ -336,6 +336,7 @@ img{
     position: absolute;
     right: 11px;
     width: 48px;
+    z-index:1;
 }    
 
 #controlPanel .controlContainer img{
@@ -356,8 +357,9 @@ img{
 }
 #controlPanel{
     position: absolute;
+    direction:ltr;
     left: 593px;
-    top: 446px;
+    top: 518px;
     width: 145px;
 }
 #controlPanel .controlContainer{
@@ -367,6 +369,50 @@ img{
     margin-top: 30px;
     margin-top: 32px;
     width: 44px;
+}
+#controlPanel #languages{
+  cursor: pointer;
+  height: 33px;
+  left: 44px;
+  overflow: hidden;
+  position: absolute;
+  top: 65px;
+  width: 92px;
+  z-index:2;
+}
+#controlPanel #languages #langsBg{
+	position:absolute;
+	top:-65px;
+}
+#controlPanel #languages .lang{
+  height: 31px;
+  width: 86px;
+	left:4px;
+	position:absolute;
+}
+#controlPanel #languages .lang.second{
+	top:31px;
+}
+#controlPanel #languages .lang.third{
+	top:62px;
+}
+#controlPanel #languages .languageBtn{
+	margin-left:2px;
+}
+#controlPanel #languages #languageButtons{	
+	position: absolute;
+	top:-62px;
+}
+#controlPanel #languages .langButtonTxt{
+	color: white;
+  font-family: verdana;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+  top:6px;
+  left:0px;
+  width: 100%;
+  position:absolute;
 }
 .collectionAnimation{
 	position : absolute;

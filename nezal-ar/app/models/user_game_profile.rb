@@ -14,5 +14,16 @@ class UserGameProfile < ActiveRecord::Base
       self.rank = Game.find(self.game_id).ranks.first(:order => :lower_exp)
     end
   end
-
+  
+  after_save do
+    @needs_saving = false
+  end
+  
+  def needs_saving?
+    @needs_saving 
+  end
+  
+  def needs_saving(really = true)
+    @needs_saving = really
+  end
 end

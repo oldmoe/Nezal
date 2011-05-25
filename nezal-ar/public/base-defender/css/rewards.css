@@ -254,3 +254,12 @@
     width: 100%;
     z-index: 0;
 }
+
+#rewards .item .name{
+  position: absolute;
+  top: 0px;
+  z-index: 100;
+  width: 100%;
+  color: white;
+  font-weight: bold;
+}

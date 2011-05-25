@@ -55,7 +55,21 @@ var Network = Class.create({
     });
     return IDs;
   },
-
+  
+  globalMap : function(friendIds){
+    var user = null
+    new Ajax.Request('global_map', {
+      method : 'get',
+      asynchronous : false,
+      parameters: {data: Object.toJSON({
+        'friend_ids': friendIds
+      })},
+      onSuccess: function(response) {
+         users = JSON.parse(response.responseText);
+      }
+    });
+    return users;
+  },
   performNeighborAction : function(data){
     var userData = {};
     var url = data['url'] || '';

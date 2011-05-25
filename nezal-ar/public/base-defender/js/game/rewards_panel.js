@@ -102,12 +102,14 @@ var RewardsPanel = Class.create({
                                                   $(id + '_image').setStyle({height:'96px'});
                                                   $(id + '_image_hover').hide();
                                                   $(id + '_image_arrow').hide();
+                                                  $(id + '_name').show();
                           })
             element.observe( 'mouseover', function(){  
                                                   $(id + '_info').show();
                                                   $(id + '_image').setStyle({height:'114px'});
                                                   $(id + '_image_hover').show();
                                                   $(id + '_image_arrow').show();
+                                                  $(id + '_name').hide();
                           })
             element.observe(this.game.mouseClickEvent, function(){ self.useReward(id) });
     })

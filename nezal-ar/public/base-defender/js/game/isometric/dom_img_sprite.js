@@ -2,8 +2,8 @@ var DomImgSprite = Class.create(DomSprite, {
 	animated : false,
 	clickable : false,
 	minAreaZIndex : 10000000,
-	initialize : function($super, owner, imgAssets, properties){
-    $super(owner, imgAssets, properties);
+	initialize : function($super, owner, imgAssets, properties,name){
+    $super(owner, imgAssets, properties,name);
     //console.log( imgAssets )
 		this.img = $(imgAssets.img).clone()
 		if(this.img){

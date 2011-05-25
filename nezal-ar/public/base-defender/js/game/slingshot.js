@@ -1,9 +1,9 @@
 var Slingshot = Class.create({
-
   angle : 0,
   targetAngle : 5,
   imgHeight : 93,
   imgWidth : 64,
+  zdim :0,xdim:0,ydim:0,
   name : null,
   game : null,
   specs : null,
