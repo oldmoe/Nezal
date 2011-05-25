@@ -83,7 +83,9 @@ class BaseDefender < Metadata
     if(!war_factories.nil?)
       war_factories.each_pair do |k,building|
          next if(building['state'] != BD::Building.states['NORMAL'])
+         building['queue'] = {"size"=>0,"creep"=>nil,"last_creep_start"=>nil, "creep_production_time"=>nil} if(building['queue'].nil?)
          queue = building['queue']
+         
          if(queue['size']!=0)
             creeps_generated = (Time.now.utc.to_i - queue['last_creep_start'])/queue['creep_production_time']
             creep_storage_units = @@game_metadata['creeps'][queue['creep']]['garage_units']
