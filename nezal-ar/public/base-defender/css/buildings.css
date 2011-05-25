@@ -74,7 +74,7 @@ img{
   text-shadow: 3px 3px 0px #5A3815;
   text-transform: uppercase;
 }
-#interaction #buildingDisplay {
+#interaction #buildingDisplay, #interaction #researchDisplay {
   overflow: visible;
   position: absolute;
   top: 80px;
@@ -83,7 +83,7 @@ img{
   height: 500px;
   z-index: 10;
 }
-#interaction #buildingsPanel {
+#interaction #buildingsPanel, #interaction #researchBuildings {
   height: 150px;
   left: 36px;
   overflow: hidden;
@@ -132,7 +132,7 @@ img{
   position: absolute;
 }
 
-#interaction #buildingDisplay .closeContainer {
+#interaction #buildingDisplay .closeContainer,  #interaction #researchDisplay .closeContainer{
   height: 45px;
   left: 0;
   position: absolute;
@@ -141,7 +141,7 @@ img{
   z-index : 12;
 }
 
-#interaction #closeBuildingPanel {
+#interaction #closeBuildingPanel, #interaction #closeResearchPanel {
   background-image: url("../images/buildings/transparent1x1.png");
   cursor: pointer;
   height: 35px;
@@ -150,7 +150,7 @@ img{
   display : inline-block;
 }
 
-#interaction .buildingPanelTriggers {
+#interaction .buildingPanelTriggers, #interaction .researchPanelTriggers {
   color: #fff78c;
   cursor: pointer;
   height: 40px;
@@ -178,15 +178,15 @@ img{
   z-index : 10;
 }
 
-#interaction #buildingsTrigger {
+#interaction #buildingsTrigger, #interaction #researchBuildingsTrigger {
   display : inline-block;
 }
 
-#interaction #defenseTrigger {
+#interaction #defenseTrigger, #interaction #researchMilitaryTrigger {
   display : inline-block;
 }
     
-#interaction #buildingsPanel .item {
+#interaction #buildingsPanel .item, #interaction #researchBuildings .item {
   float: left;
   height: 130px;
   width: 80px;
@@ -203,7 +203,7 @@ img{
   z-index : 10;
 }
 
-#interaction #buildingsPanel .item .background {
+#interaction #buildingsPanel .item .background, #interaction #researchBuildings .item .background {
   position : relative;
   top : -130px;
   height : 75px;
@@ -230,7 +230,7 @@ img{
   left: 21px;
 }
 
-#interaction #buildingsPanel .item .itemData {  
+#interaction #buildingsPanel .item .itemData, #interaction  #researchBuildings  .item .itemData {  
   cursor: pointer;
   background-image: url("../images/buildings/transparent1x1.png");
   height: 130px;
@@ -328,63 +328,65 @@ img{
 }
 
 
-#buildings div, #defense div{
+#buildings div, #defense div, #researchBuildings div{
 	float :left;	
 }
 #gameContainer.arabic #buildings div, #gameContainer.arabic #defense div{
 	float :right;	
 }
 
-#buildings-container, #defense-container {
+#buildings-container, #defense-container, #research-buildings-container {
 	width : 430px;
 	overflow: hidden;
   padding : 0px 2px;
 }
-#buildings-ul, #defense-ul{
+#buildings-ul, #defense-ul, #researches-ul{
 	width : 2000px;
 	height :150px;			
 	margin : 0px;
 	padding : 0px;
 }
-#buildings .right, #buildings .left, #defense .right, #defense .left{
+#buildings .right, #buildings .left, #defense .right, #defense .left,
+#researchBuildings .right, #researchBuildings .left {
   width : 30px;
   margin : 10px 8px 0px 8px;
   text-align : center;
   overflow : hidden;
   direction : ltr;
 }
-#buildings li, #defense li {
+#buildings li, #defense li, #researchBuildings li {
 	float : left;
 	list-style : none;			
   height: 150px;
   width: 86px;
 }
-#gameContainer.arabic #buildings li, #gameContainer.arabic #defense li {
+#gameContainer.arabic #buildings li, #gameContainer.arabic #defense li,
+#gameContainer.arabic #researchBuildings li {
 	float : right;
 }
-#buildingsPanel .leftOff {
+#buildingsPanel .leftOff, #researchBuildings .leftOff {
   margin-left : 0px;
 }
-#buildingsPanel .leftOn {
+#buildingsPanel .leftOn, #researchBuildings .leftOn  {
   margin-left : -60px;
   cursor : pointer;
 }
-#buildingsPanel .rightOff {
+#buildingsPanel .rightOff, #researchBuildings .rightOff  {
   margin-left : -30px;
 }
-#buildingsPanel .rightOn {
+#buildingsPanel .rightOn, #researchBuildings .rightOn  {
   margin-left : -90px;
   cursor : pointer;
 }
-#gameContainer.arabic #buildingsPanel .leftOff {
+#gameContainer.arabic #buildingsPanel .leftOff, #gameContainer.arabic #researchBuildings .leftOff {
   margin-left : -30px;
 }
-#gameContainer.arabic #buildingsPanel .leftOn {
+#gameContainer.arabic #buildingsPanel .leftOn, #gameContainer.arabic #researchBuildings .leftOn {
   margin-left : -90px;
 }
-#gameContainer.arabic #buildingsPanel .rightOff {
+#gameContainer.arabic #buildingsPanel .rightOff, #gameContainer.arabic #researchBuildings .rightOff {
   margin-left : 0px;
 }
-#gameContainer.arabic #buildingsPanel .rightOn {
+#gameContainer.arabic #buildingsPanel .rightOn, #gameContainer.arabic #researchBuildings .rightOn {
   margin-left : -60px;
 }

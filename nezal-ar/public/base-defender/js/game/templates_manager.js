@@ -4,10 +4,12 @@ var TemplatesManager = Class.create({
     network.fetchTemplate( "templates/templates.html", function(responseText){
       templatesRootNode.innerHTML = responseText;
       network.fetchTemplate( "templates/quests.html", function(responseText){
-        var data = templatesRootNode.innerHTML + responseText
-        templatesRootNode.innerHTML = data;
-        templatesRootNode.select('textarea').each(function(node){
-          node.setAttribute('id', node.getAttribute('id') + "-template");
+        templatesRootNode.innerHTML += responseText;
+        network.fetchTemplate( "templates/research.html", function(responseText){
+          templatesRootNode.innerHTML += responseText;
+          templatesRootNode.select('textarea').each(function(node){
+            node.setAttribute('id', node.getAttribute('id') + "-template");
+          });
         });
         /* Fetch the locale based file for texts .. 
            Should be inhanced to get the user locale and fetch the appropriate file accordingly 

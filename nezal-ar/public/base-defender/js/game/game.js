@@ -5,7 +5,6 @@ var Game = Class.create({
   templatesManager : null,
   selectedBuildingPanel : null,
   workerFactory : null,
-  researchManager : null,
   reactor : null,
   network : null,
   gameStatus : null,
@@ -30,6 +29,7 @@ var Game = Class.create({
     lumber : 0
   },
   workersStatus : null,
+  research : null,
 
   initialize : function(){
     this.network = new Network(); 
@@ -187,6 +187,8 @@ var Game = Class.create({
     var creepsImages = ["car.png",'explosion.png','car_fight.png']
 		//This is duplicated to avoid a problem in the loader that can't deal with an array of a single item
     var smokeImages = ["smoke_big.png", "smoke_big.png"]
+    
+    var researchImages = ["cement.png", "cement.png"];
   
     // Weapons Images 
 		var weaponsImages = ["slingshot.png", "rock.png", "green_book.png"]
@@ -200,7 +202,8 @@ var Game = Class.create({
 											 {images : buildingOutlineImages, path: 'images/buildings/outlines/', store: 'buildingOutlines'},
 											 {images : buildingShadowImages, path: 'images/buildings/shadows/', store: 'buildingShadows'},
 											 {images : buildingMovingImages, path: 'images/buildings/moving/', store: 'buildingMoving'},
-											 {images : weaponsImages, path: 'images/weapons/', store: 'weapons'}],
+											 {images : weaponsImages, path: 'images/weapons/', store: 'weapons'},
+                       {images : researchImages, path: 'images/researches/', store: 'researches'}],
       {onFinish : loaderFinishCallback});
   },
   
@@ -304,6 +307,9 @@ var Game = Class.create({
     
     this.energy = new Energy(this);
     new EnergyDisplay(this);
+    
+    this.research = new Research(this);
+    console.log( this.research );
     
     this.reInitializationNotifications.each(function(fn){fn()});
   },

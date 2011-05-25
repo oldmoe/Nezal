@@ -190,7 +190,23 @@ data={
       }
       }
     }
-  },            
+  },
+  
+  researches : {
+    "cement" : {
+      "dependency" : {  },
+      "benefits" : {
+        //10 means : 10%
+        "buildings" : { "hp": 10 } 
+      },
+      "needs" : {
+        time : 10,
+        rock : 1000,
+        lumber : 1000
+      }
+    }
+  },
+  
   "workers":{
     "initial_allowed" : 3,
     "initial_coins" : 50,

@@ -72,6 +72,7 @@ class BaseDefender < Metadata
     repair_jobs user_game_profile
     energy_gain user_game_profile
     creeps_generation user_game_profile
+    BD::Research.operate user_game_profile
     user_game_profile.metadata['last_loaded'] = Time.now.utc.to_i
     user_game_profile.save
   end
@@ -331,6 +332,8 @@ class BaseDefender < Metadata
       validation = add_reward_bag user_game_profile, data
     elsif data['event'] == 'list_map'
       validation = list_map user_game_profile, data
+    elsif data['event'] == 'start_research'
+      validation = BD::Research.start user_game_profile, data['name']
     end
     
     user_game_profile['error'] = validation['error'] unless validation['valid']
