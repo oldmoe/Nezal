@@ -59,7 +59,7 @@ class ApplicationController < Sinatra::Base
   end
   
   after do
-    if user_game_profile.needs_saving
+    if user_game_profile.needs_saving?
       user_game_profile.save
     end
     if params[:uid] || params[:fb_sig_user]

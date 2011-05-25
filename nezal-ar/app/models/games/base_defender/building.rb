@@ -34,7 +34,7 @@ module BD
         user_game_profile.metadata['rock'] -= game_metadata['buildings'][building_name]['levels']['1']['rock']
         user_game_profile.metadata['lumber'] -= game_metadata['buildings'][building_name]['levels']['1']['lumber']
         
-        user_game_profile.save
+        user_game_profile.needs_saving
         
         return validation
       end
