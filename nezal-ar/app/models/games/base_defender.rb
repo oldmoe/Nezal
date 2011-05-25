@@ -77,41 +77,78 @@ class BaseDefender < Metadata
   end
   
   def self.creeps_generation ugp
-    war_factories = ugp['war_factory']
+    ugp_metadata = ugp.metadata
+    war_factories = ugp_metadata['war_factory']
     if(!war_factories.nil?)
       war_factories.each_pair do |k,building|
          next if(building['state'] != BD::Building.states['NORMAL'])
          queue = building['queue']
          if(queue['size']!=0)
             creeps_generated = (Time.now.utc.to_i - queue['last_creep_start'])/queue['creep_production_time']
+            creep_storage_units = @@game_metadata['creeps'][queue['creep']]['garage_units']
             remaining_time = (Time.now.utc.to_i - queue['last_creep_start'])%queue['creep_production_time']
             garage_ramaining = get_garage_remaining_capacity
             if(queue['size'] < creeps_generated)
               creeps_generated = queue['size'] 
             end
             
-            if(creeps_generated < garage_remaining)
+            if(creeps_generated*creep_storage_units < garage_ramaining)
                 #increase the number of creeps in the garage by queue['size']
               queue['size'] -= creeps_generated
             else
                 #increase the number of creeps in the garage by garage remaining capacity
-                queue['size']-=garage_remaining
+                queue['size']-=(garage_remaining/creep_storage_units).floor
             end
             if(queue['size']!=0)
               queue['last_creep_start'] = remaining_time
-            end
+          end
         end
       end
     end
   end
   
-  def self.generate_creep user_game_profile, data
-      
-  end
-  
   def self.get_garage_remaining_capacity
     return 10  
   end
+  
+  def self.generate_creep ugp, data
+      war_factory_key = data['war_factory']
+      wf = ugp.metadata['war_factory'][war_factory_key]
+      #if(wf.nil?)return error no building
+      return if(wf.nil?)
+      wf_max_size = @@game_metadata['buildings']['war_factory']['levels'][wf['level'].to_s]['max_queue_size']
+      puts "#{wf['queue']['size']}   #{wf_max_size}"
+      if(wf['queue']['size'] >= wf_max_size)
+        #return false validation with building queue 
+      elsif(wf['queue']['size']==0)
+        wf['queue']['size']+=1
+        wf['queue']['last_creep_start']= Time.now.utc.to_i
+        wf['queue']['creep'] = data['creep']
+        wf['queue']['creep_production_time'] = @@game_metadata['creeps'][data['creep']]['production_time'] 
+      else
+        wf['queue']['size']+=1 
+      end
+    puts "#{wf['queue']['size']}   #{wf_max_size}"
+    ugp.needs_saving
+  end
+  
+  def self.cancel_creep_generation ugp,data
+      war_factory_key = data['war_factory']
+      wf = ugp.metadata['war_factory'][war_factory_key]
+      if(wf['queue']['size']==0)
+        #return false validation with nothing in queue
+      elsif(wf['queue']['size']==1)
+        wf['queue']['size']=0
+        wf['queue']['last_creep_start']= nil
+        wf['queue']['creep'] = nil
+        wf['queue']['creep_production_time'] = nil
+      else
+        wf['queue']['size']-=1
+    end
+    puts  "#{wf['queue']['size']}"
+    ugp.needs_saving
+  end
+  
   
   def self.energy_gain user_game_profile
     profile_metadata = user_game_profile.metadata

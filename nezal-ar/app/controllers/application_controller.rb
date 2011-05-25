@@ -59,6 +59,9 @@ class ApplicationController < Sinatra::Base
   end
   
   after do
+    if user_game_profile.needs_saving
+      user_game_profile.save
+    end
     if params[:uid] || params[:fb_sig_user]
       headers 'Cache-Control' => "no-cache", 'Pragma' => "no-cache", 'Expires' => "0"
     end
