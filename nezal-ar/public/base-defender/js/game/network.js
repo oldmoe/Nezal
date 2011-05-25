@@ -126,14 +126,18 @@ var Network = Class.create({
 
 	simulateAttack : function(creeps){
 		if(!game.neighborGame)
-			return this.contactTheBoss({ 'event' : 'attack','creeps': creeps})
+			return this.contactTheBoss({ 'event' : 'attack','creeps': creeps});
 		else 	
-			return this.contactTheBoss({ 'event' : 'attack','creeps': creeps ,'user_id':game.visitedNeighborId})
+			return this.contactTheBoss({ 'event' : 'attack','creeps': creeps ,'user_id':game.visitedNeighborId});
 	},
 	
 	repairBuildings : function(){
-		return this.contactTheBoss({ 'event' : 'repair_buildings'})
+		return this.contactTheBoss({ 'event' : 'repair_buildings'});
 	},
+  
+  startResearch :function(researchName){
+    return this.contactTheBoss({ 'event' : 'start_research', name : researchName});
+  },
 	
   fetchTemplate : function(path, callBack){
     new Ajax.Request(path, {

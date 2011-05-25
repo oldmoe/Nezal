@@ -5,7 +5,6 @@ var Game = Class.create({
   templatesManager : null,
   selectedBuildingPanel : null,
   workerFactory : null,
-  researchManager : null,
   reactor : null,
   network : null,
   gameStatus : null,
@@ -30,6 +29,7 @@ var Game = Class.create({
     lumber : 0
   },
   workersStatus : null,
+  research : null,
 
   initialize : function(){
     this.network = new Network(); 
@@ -66,7 +66,7 @@ var Game = Class.create({
                             	'panel_background.png', 'resource_meter_background.png','resource_meter_rock.png','resource_meter_wood.png',
                             	'button_clicked.png', 'building_menu_hover.png', 'build_button.png']
                               
-    var friendsImages = ['1st_blank.png', 'bar.png']
+    var friendsImages = ['1st_blank.png', 'bar.png', 'home_icon.png']
     var buildingImages = ['townhall.png']
     var panelImages = ['buttons.png']
     var questsImages = [  "msgBg.png", "wedge.png", "button.png", "msgBaloon.png", "questBaloon.png" , "questBg.png", "buildingPanelBg.png",
@@ -79,7 +79,8 @@ var Game = Class.create({
     questsImages = questsImages.concat(BuildingMode.prototype.buildings.collect(function(building){
                                                                       return building + "_info_dimmed.png";
                                                                   }));
-    rewardsImages = ['reward_notification.png', 'yellow_bag.png', 'background.png', 'yellow_bag_button.png'];
+    rewardsImages = ['reward_notification.png', 'gold_bag.png', 'background.png', 'gold_bag_button.png',
+                     'rock_bag.png', 'rock_bag_button.png', 'lumber_bag.png', 'lumber_bag_button.png', 'mix_bag.png', 'mix_bag_button.png'];
     var specialDefaultActionImages = ['assign_worker.png', 'move.png']
     new Loader().load([ {images : gameElementsImages, path: 'images/game_elements/', store: 'game_elements'},
                         {images : friendsImages, path: 'images/friends/', store: 'friends'},
@@ -187,6 +188,8 @@ var Game = Class.create({
     var creepsImages = ["car.png",'explosion.png','car_fight.png']
 		//This is duplicated to avoid a problem in the loader that can't deal with an array of a single item
     var smokeImages = ["smoke_big.png", "smoke_big.png"]
+    
+    var researchImages = ["cement.png", "cement.png"];
   
     // Weapons Images 
 		var weaponsImages = ["slingshot.png", "rock.png", "green_book.png"]
@@ -200,7 +203,8 @@ var Game = Class.create({
 											 {images : buildingOutlineImages, path: 'images/buildings/outlines/', store: 'buildingOutlines'},
 											 {images : buildingShadowImages, path: 'images/buildings/shadows/', store: 'buildingShadows'},
 											 {images : buildingMovingImages, path: 'images/buildings/moving/', store: 'buildingMoving'},
-											 {images : weaponsImages, path: 'images/weapons/', store: 'weapons'}],
+											 {images : weaponsImages, path: 'images/weapons/', store: 'weapons'},
+                       {images : researchImages, path: 'images/researches/', store: 'researches'}],
       {onFinish : loaderFinishCallback});
   },
   
@@ -304,6 +308,9 @@ var Game = Class.create({
     
     this.energy = new Energy(this);
     new EnergyDisplay(this);
+    
+    this.research = new Research(this);
+    console.log( this.research );
     
     this.reInitializationNotifications.each(function(fn){fn()});
   },

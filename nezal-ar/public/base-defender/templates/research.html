@@ -1,0 +1,53 @@
+<textarea id="research-panel">
+  
+  <div id="researchBuildings" class="researchBuildings">
+    
+    <div class="left">
+      <img class="leftOff" src="images/quests/arrows_horizontal.png" />
+    </div>
+    
+    <div id="research-buildings-container" class="container">
+      <ul id='researches-ul'>
+        {for research in researches}
+          <li>
+            <div id="${research_index}" class="item">
+              <div class="itemData" onclick="game.research.start('${research_index}')"></div>
+              <span imgId="${research_index}_image" class="loadedImg" imgClasses="background" imgSrc="images/researches/${research_index}.png"></span>
+            </div>
+          </li>
+        {/for}
+        <li>
+          <div class="item">
+            <div class="itemData" style="cursor:auto;"> </div>
+            <span class="loadedImg" imgSrc="images/quests/empty.png" imgClasses="background" ></span>
+          </div>
+        </li>
+      </ul>
+    </div>
+    
+    <div class="right">
+      <img class="rightOff" src="images/quests/arrows_horizontal.png" />
+    </div>
+    
+  </div>
+  <div id="researchMilitary"></div>
+  
+  <span class="loadedImg" imgClasses="buildingPanelBg flippedImg" imgSrc="images/quests/buildingPanelBg.png"></span>
+  <span class="loadedImg" imgClasses="wedgesBg flippedImg" imgSrc="images/quests/wedgesBg.png"></span>
+  <span class="loadedImg" imgClasses="buildingsBg flippedImg" imgSrc="images/quests/buildingsBg.png"></span>
+  <span class="loadedImg" imgClasses="buildingPanelLine" imgSrc="images/quests/line.png"></span>
+  
+  <div class="triggers">
+    <div id="researchBuildingsTrigger" class="researchPanelTriggers activeTrigger" onclick="Javascript:void(0);">
+      ${Text.labels.buildings}
+    </div>
+    <div id="researchMilitaryTrigger" class="researchPanelTriggers inactiveTrigger" onclick="Javascript:void(0);">
+      ${Text.labels.military}
+    </div>
+  </div>
+  
+  <div class="closeContainer">
+    <div class="alignDiv" style="width:87%;"> </div>
+    <div id="closeResearchPanel"  onclick="Animation.hide('researchDisplay');"></div>
+  </div>
+</textarea>

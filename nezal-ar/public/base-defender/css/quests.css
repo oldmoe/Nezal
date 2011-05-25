@@ -1,28 +1,3 @@
-@font-face {
-  font-family: "Adlib";
-  src: url("fonts/ADLIB.TTF");
-}
-@font-face {
-  font-family: "Lds";
-  src: url("fonts/LDS_typoderm.ttf");
-}
-@font-face {
-  font-family: "Showg";
-  src: url("fonts/SHOWG.TTF");
-}
-@font-face {
-  font-family: "Cairo";
-  src: url("fonts/CAIRO_.TTF");
-}
-.yellowText {
-  color: #FAC200;
-}
-#interaction .blueText {
-  color : #326479;
-}
-#interaction .redText {
-  color : #f23d00;
-}
 #interaction .title {
   color: white;
   font-family: Showg;
@@ -31,41 +6,6 @@
   text-shadow: 3px 3px 0px #5A3815;
   text-transform: uppercase;
 }
-/* CSS for aligned buttons that should work with both LTR, RTL */
-#interaction .okButtonWrapper {
-  position: absolute;
-  left: 0;
-  width: 100%;
-  height: 55px;
-  z-index: 10;
-}
-  /* Each aligned button should set a width to this div according to desired position of button */
-#interaction .alignDiv {
-  height : 100%;
-  display:inline-block;
-}
-#interaction .okImage{
-  display : block;
-}
-#interaction .okButton {
-  display: inline-block;
-  text-align: center;
-  vertical-align: top;
-  cursor: pointer;
-  overflow : hidden;
-  height : 100%;
-}
-#interaction .okText {
-  font-family: Showg;
-  font-size: 34px;
-  position: relative;
-  display : block;
-  text-shadow: -1px -1px 1px black;
-  top: -50px;
-  height : 100%;
-  line-height : 50px;
-}
-/* End of Button CSS */
 
 #interaction #msg {
   position: absolute;
@@ -247,7 +187,6 @@
   font-family: Showg;
   font-size: 11px;
   position: absolute;
-  text-shadow: -2px 2px 1px #000000;
   text-transform: uppercase;
   top: 55px;
   width: 100%;
@@ -355,7 +294,10 @@
   vertical-align: top;
   width : 320px;
   margin : 0px 40px;
-  text-align: justify;
+  text-align: left;
+}
+#gameContainer.arabic #interaction #questDisplay .condition .desc .condMsg{
+  text-align: right;
 }
 #interaction #questDisplay .condition .desc .condStatus{
   display: inline-block;
@@ -401,7 +343,6 @@
   font-family: Showg;
   font-size: 15px;
   position: relative;
-  text-shadow: -2px 2px 1px #000000;
   text-transform: uppercase;
   top: -300px;
 }

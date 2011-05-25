@@ -72,6 +72,7 @@ class BaseDefender < Metadata
     repair_jobs user_game_profile
     energy_gain user_game_profile
     creeps_generation user_game_profile
+    BD::Research.operate user_game_profile
     user_game_profile.metadata['last_loaded'] = Time.now.utc.to_i
     user_game_profile.save
   end
@@ -368,6 +369,8 @@ class BaseDefender < Metadata
       validation = add_reward_bag user_game_profile, data
     elsif data['event'] == 'list_map'
       validation = list_map user_game_profile, data
+    elsif data['event'] == 'start_research'
+      validation = BD::Research.start user_game_profile, data['name']
     end
     
     user_game_profile['error'] = validation['error'] unless validation['valid']
@@ -541,8 +544,12 @@ class BaseDefender < Metadata
     if( user_game_profile.metadata['xp_info']['energy'] > 0 )
       building = data['building']
       coords = data['coords']
+      reward_data = {}
+      location_hash = BaseDefender.convert_location(coords)
+      building_data = neighbor_profile.metadata[building][location_hash]
+      reward_data[@@building_modules[building].collects] = (building_data[@@building_modules[building].collects]/100).to_i
       @@building_modules[building].collect(neighbor_profile, coords)
-      BD::RewardBag.new({ :metadata => user_game_profile.metadata, :reward_data => {:rock=> 50, :gold=>50, :lumber=>50} })
+      BD::RewardBag.new({ :metadata => user_game_profile.metadata, :reward_data => reward_data })
       user_game_profile.metadata['xp_info']['energy'] -= 1
       user_game_profile.save
     end
@@ -626,9 +633,8 @@ class BaseDefender < Metadata
       'idle_workers' => 1,
       'rock' => 50000,
       'lumber' => 50000,
+      'reward_bags' => {'id_generator' => 0, 'queue' => []},
       'attack_history' => {},
-      'reward_bags' => {'id_generator' => 4, 'queue' => [{:id=>1,:reward_data=>{:gold=>0,:rock=>100,:lumber=>100}},
-      {:id=>2,:reward_data=>{:gold=>0,:rock=>100,:lumber=>200}},{:id=>3,:reward_data=>{:gold=>0,:rock=>200,:lumber=>100}}]},
       'notifications' => {'id_generator' => 0, 'queue' => []},
       'attacks' => {},
       'map' => (0..72).to_a.map{(0..24).to_a.map{0}},

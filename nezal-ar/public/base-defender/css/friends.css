@@ -82,36 +82,24 @@
 }
 
 #home {
+  cursor: pointer;
+  left: 515px;
   position: absolute;
-  left : 490px;
-  top: 448px;
-  width: 85px;
+  top: 485px;
+  width: 67px;
   z-index: 100;
-  cursor : pointer;
 }
-#home .photo{
-	width : 39px;
-}
-
-#home .photoContainer {
-  height: 46px;
-  overflow: hidden;
-  position: absolute;
-  top: 12px;
-  width: 100%;
-  text-align: center;
-}
-
 #home .name{
-  color: white;
-  font-family: helvetica;
+  color: #FFF78C;
+  font-family: showG;
+  line-height: 48px;
+  text-shadow: -1px -1px 2px black, 1px 1px 2px black, -1px 1px 2px black, 1px -1px 2px black;
   font-size: 14px;
   font-weight: bold;
   position: absolute;
-  top: 65px;
+  top: 28px;
   left : 0px;
   text-align: center;
   text-decoration: none;
   width: 100%;
-
 }
