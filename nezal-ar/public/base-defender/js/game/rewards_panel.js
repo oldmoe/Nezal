@@ -92,6 +92,25 @@ var RewardsPanel = Class.create({
     var data = {rewards:this.rewards}
 		$('rewardsContainer').innerHTML = game.templatesManager.load('rewards', data);
     this.game.addLoadedImagesToDiv('rewardsContainer');
+    var self = this;
+    $$('#rewardsContainer ul li').each(function(item) {
+            var div = item.childElements()[0];
+            var element = div.childElements()[0];
+            var id = div.id.split('_')[1];
+            element.observe( 'mouseout', function(){  
+                                                  $(id + '_info').hide();
+                                                  $(id + '_image').setStyle({height:'96px'});
+                                                  $(id + '_image_hover').hide();
+                                                  $(id + '_image_arrow').hide();
+                          })
+            element.observe( 'mouseover', function(){  
+                                                  $(id + '_info').show();
+                                                  $(id + '_image').setStyle({height:'114px'});
+                                                  $(id + '_image_hover').show();
+                                                  $(id + '_image_arrow').show();
+                          })
+            element.observe(this.game.mouseClickEvent, function(){ self.useReward(id) });
+    })
     this.rewardsCarousel = new Carousel("rewards", this.images, 4);
     this.rewardsCarousel.checkButtons();
   },

@@ -510,13 +510,7 @@
         {for reward in rewards}
     		{if reward.id}
         <li>
-          <div id="reward_${reward.id}"
-             onmouseout="$('${reward.id}_info').hide();$('${reward.id}_image').setStyle({height:'96px'});
-$('${reward.id}_image_hover').hide(); $('${reward.id}_image_arrow').hide();"
-             onmouseover="$('${reward.id}_info').show();$('${reward.id}_image').setStyle({height:'114px'});
-$('${reward.id}_image_hover').show(); $('${reward.id}_image_arrow').show();"
-             onclick="game.rewardsPanel.useReward(${reward.id});"
-             class="item">
+          <div id="reward_${reward.id}" class="item">
             <span imgId="${reward.id}_image" class="loadedImg" imgClasses="background" imgSrc="images/rewards/${reward.type}_bag_button.png">
             </span>
             <span imgId="${reward.id}_image_hover" class="loadedImg" imgClasses="hover" imgSrc="images/quests/building_hover.png" hidden="true">
@@ -524,6 +518,7 @@ $('${reward.id}_image_hover').show(); $('${reward.id}_image_arrow').show();"
             <span imgId="${reward.id}_image_arrow" class="loadedImg" imgClasses="hoverArrow"
                   imgSrc="images/quests/building_hover_arrow.png" hidden="true">
             </span>
+            <div class="title text-shadow"> ${Text.labels[reward.type + '_bag']} </div>
           </div>
         </li>
         {/if}
