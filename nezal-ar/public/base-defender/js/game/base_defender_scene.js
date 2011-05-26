@@ -53,7 +53,7 @@ var BaseDefenderScene = Class.create(Scene, {
     $('building-remaining-time').hide();
   },
   
-  _FormatResourceDisplay : function(amount){
+  formatResourceDisplay : function(amount){
     var amount = Math.floor(amount) + "";
     var part = amount.length % 3;
     var splits = [];

@@ -23,7 +23,7 @@ var Energy = Class.create({
     this.maxHelpingPower = this.currentXPLevelData().max_helping_power;
     this.helpingPowerUnitEvery = this.currentXPLevelData().helping_power_unit_every;
     
-    game.reactor.pushPeriodical(0,1,game.reactor.everySeconds(0.5), function(){self.tick()})
+    game.reactor.pushPeriodical(0,1,game.reactor.everySeconds(0.5), function(){self.tick()});
   },
   
   currentXPLevelData : function(){
