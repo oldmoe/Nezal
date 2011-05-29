@@ -161,15 +161,11 @@ var Building = Class.create({
   textInfo : function(){
     text = '&nbsp;&nbsp;'
     if(this.state == this.states.UNDER_CONSTRUCTION)
-      text+= this.humanizeString(this.name);
+      text += this.name.humanize();
     else
-      text+= this.humanizeString(this.name) + " [" + this.level + "]";
-      text+='&nbsp;&nbsp;'
+      text += this.name.humanize() + " [" + this.level + "]";
+      text +='&nbsp;&nbsp;'
     return text
-  },
-
-  humanizeString : function(str){
-    return str.underscore().capitalize().gsub("_", " ") 
   },
   
   getMeterFunc: function(){
@@ -296,7 +292,7 @@ var Building = Class.create({
         if (this.currentLevelBluePrints[property] && buildingData['displayable'][property] &&
          this.currentLevelBluePrints[property] != this.nextLevelBluePrints[property]) {
           var upgradableSpec = []
-          upgradableSpec.name = this.humanizeString(property)
+          upgradableSpec.name = property.humanize();
           upgradableSpec.from = this.currentLevelBluePrints[property]
           upgradableSpec.to = this.nextLevelBluePrints[property]
           upgradableSpecs.push(upgradableSpec)

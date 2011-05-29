@@ -200,17 +200,29 @@
           <li>
             <div id="${building_index}"
               {if (disabled.indexOf(building_index) < 0)}
-               onmouseout="$('${building_index}_info').hide();$('${building_index}_image').setStyle({height:'75px'});
-$('${building_index}_image_hover').hide(); $('${building_index}_image_arrow').hide()"
-               onmouseover="$('${building_index}_info').show();$('${building_index}_image').setStyle({height:'90px'});
-$('${building_index}_image_hover').show(); $('${building_index}_image_arrow').show()"
+               onmouseout="$('${building_index}_info').hide();
+                           $('${building_index}_image').setStyle({height:'75px'});
+                           $('${building_index}_image_hover').hide();
+                           $('${building_index}_image_arrow').hide()"
+                           
+               onmouseover="$('${building_index}_info').show();
+                            $('${building_index}_image').setStyle({height:'90px'});
+                            $('${building_index}_image_hover').show();
+                            $('${building_index}_image_arrow').show()"
               {else}
-               onmouseout="$('${building_index}_info').hide();$('${building_index}_image').setStyle({height:'75px'});
-$('${building_index}_image_hover').hide(); $('${building_index}_image_arrow').hide();
-$('${building_index}_msg').hide();$('${building_index}_msg_text').hide();"
-               onmouseover="$('${building_index}_info').show();$('${building_index}_image').setStyle({height:'90px'});
-$('${building_index}_image_hover').show(); $('${building_index}_image_arrow').show();
-$('${building_index}_msg').show();$('${building_index}_msg_text').show();"
+               onmouseout="$('${building_index}_info').hide();
+                           $('${building_index}_image').setStyle({height:'75px'});
+                           $('${building_index}_image_hover').hide();
+                           $('${building_index}_image_arrow').hide();
+                           $('${building_index}_msg').hide();
+                           $('${building_index}_msg_text').hide();"
+                           
+               onmouseover="$('${building_index}_info').show();
+                            $('${building_index}_image').setStyle({height:'90px'});
+                            $('${building_index}_image_hover').show();
+                            $('${building_index}_image_arrow').show();
+                            $('${building_index}_msg').show();
+                            $('${building_index}_msg_text').show();"
               {/if}
                class="item">
               {if (disabled.indexOf(building_index) < 0)}

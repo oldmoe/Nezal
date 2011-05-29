@@ -72,7 +72,7 @@ class BaseDefender < Metadata
     repair_jobs user_game_profile
     energy_gain user_game_profile
     creeps_generation user_game_profile
-    #BD::Research.operate user_game_profile
+    BD::Research.operate user_game_profile
     user_game_profile.metadata['last_loaded'] = Time.now.utc.to_i
     user_game_profile.save
   end

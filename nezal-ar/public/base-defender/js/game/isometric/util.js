@@ -165,6 +165,10 @@ Array.prototype.pushInPlaceAscending=function(obj,field){
 	}
 }
 
+String.prototype.humanize = function(){
+  return this.underscore().capitalize().gsub("_", " ");
+}
+
 Math.randomSign = function(){
   var r = Math.random();
   return r > 0.5 ? 1 : -1;

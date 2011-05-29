@@ -10,9 +10,59 @@
       <ul id='researches-ul'>
         {for research in researches}
           <li>
-            <div id="${research_index}" class="item">
-              <div class="itemData" onclick="game.research.start('${research_index}')"></div>
-              <span imgId="${research_index}_image" class="loadedImg" imgClasses="background" imgSrc="images/researches/${research_index}.png"></span>
+            <div id="${research_index}" class="item" 
+            {if (disabled.indexOf(research_index) < 0)}
+               onmouseout="$('${research_index}_info').hide();
+                           $('${research_index}_image').setStyle({height:'75px'});
+                           $('${research_index}_image_hover').hide();
+                           $('${research_index}_image_arrow').hide()"
+                           
+               onmouseover="$('${research_index}_info').show();
+                            $('${research_index}_image').setStyle({height:'90px'});
+                            $('${research_index}_image_hover').show();
+                            $('${research_index}_image_arrow').show()"
+              {else}
+               onmouseout="$('${research_index}_info').hide();
+                           $('${research_index}_image').setStyle({height:'75px'});
+                           $('${research_index}_image_hover').hide();
+                           $('${research_index}_image_arrow').hide();
+                           $('${research_index}_msg').hide();
+                           $('${research_index}_msg_text').hide();"
+                           
+               onmouseover="$('${research_index}_info').show();
+                            $('${research_index}_image').setStyle({height:'90px'});
+                            $('${research_index}_image_hover').show();
+                            $('${research_index}_image_arrow').show();
+                            $('${research_index}_msg').show();
+                            $('${research_index}_msg_text').show();"
+              {/if} >
+              
+              {if (disabled.indexOf(research_index) < 0)}
+                <div class="itemData" onclick="game.research.start('${research_index}')"></div>
+                <span imgId="${research_index}_image" 
+                      class="loadedImg"
+                      imgClasses="background"
+                      imgSrc="images/researches/${research_index}.png">
+                </span>
+              {else}
+                <div class="itemData" style="cursor: default;"></div>
+                <span imgId="${research_index}_image"
+                      class="loadedImg"
+                      imgClasses="background"
+                      imgSrc="images/researches/${research_index}_disabled.png">
+                </span>
+                <div id="${research_index}_msg" class="disabledMsgBackground blueText" style="display:none;"> </div>
+                <div id="${research_index}_msg_text" class="disabledMsgText blueText" style="display:none;"> ${research.msg} </div>
+              {/if}
+              
+              <div id="${research_index}_ongoing" class="ongoingResearch redText" style="display:none;">
+                <span id="${research_index}TimeLeftText"></span>
+              </div>
+              
+              <span imgId="${research_index}_image_hover" class="loadedImg" imgClasses="hover" imgSrc="images/quests/building_hover.png" hidden="true"></span>
+              <span imgId="${research_index}_image_arrow" class="loadedImg" imgClasses="hoverArrow"
+                    imgSrc="images/quests/building_hover_arrow.png" hidden="true">
+              </span>
             </div>
           </li>
         {/for}
@@ -28,20 +78,62 @@
     <div class="right">
       <img class="rightOff" src="images/quests/arrows_horizontal.png" />
     </div>
-    
   </div>
+  
   <div id="researchMilitary"></div>
   
+  {for research in researches}
+    <div class="researchInfo" id="${research_index}_info" style="display:none;">
+      <div class="researchName">${research_index}</div>
+      <div class="researchDetails">
+        <div class="researchDesc">NA</div>
+        <div class="researchCost">     
+          <span class="loadedImg" imgClasses="resourcesNeeded" imgSrc="images/quests/resources_needed_for_building.png">
+          </span>
+          <div class="cost">
+            <div class="text">
+              {if research.needs.lumber}
+                ${research.needs.lumber}
+              {else}
+                0
+              {/if}
+            </div>
+            <div class="text">
+              {if research.needs.rock}
+                ${research.needs.rock}
+              {else}
+                0
+              {/if}
+            </div>
+            <div class="text">
+              {if research.needs.coins}
+                ${research.needs.coins}
+              {else}
+                0
+              {/if}
+            </div>
+            <div class="text">
+              {if research.needs.time}
+                ${Util.timeDisplay(research.needs.time)}
+              {else}
+                0
+              {/if}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {/for}
   <span class="loadedImg" imgClasses="buildingPanelBg flippedImg" imgSrc="images/quests/buildingPanelBg.png"></span>
   <span class="loadedImg" imgClasses="wedgesBg flippedImg" imgSrc="images/quests/wedgesBg.png"></span>
   <span class="loadedImg" imgClasses="buildingsBg flippedImg" imgSrc="images/quests/buildingsBg.png"></span>
   <span class="loadedImg" imgClasses="buildingPanelLine" imgSrc="images/quests/line.png"></span>
   
   <div class="triggers">
-    <div id="researchBuildingsTrigger" class="researchPanelTriggers activeTrigger" onclick="Javascript:void(0);">
+    <div id="researchBuildingsTrigger" class="researchPanelTriggers activeTrigger text-shadow" onclick="Javascript:void(0);">
       ${Text.labels.buildings}
     </div>
-    <div id="researchMilitaryTrigger" class="researchPanelTriggers inactiveTrigger" onclick="Javascript:void(0);">
+    <div id="researchMilitaryTrigger" class="researchPanelTriggers inactiveTrigger text-shadow" onclick="Javascript:void(0);">
       ${Text.labels.military}
     </div>
   </div>

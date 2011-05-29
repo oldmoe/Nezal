@@ -24,8 +24,8 @@ var GamePanel = Class.create({
     if(this.game.neighborGame) return;
 		var rockValue = this.game.resources.rock;
 		var lumberValue = this.game.resources.lumber;
-    var rock = this.game.scene._FormatResourceDisplay(rockValue);
-    var lumber = this.game.scene._FormatResourceDisplay(lumberValue);
+    var rock = this.game.scene.formatResourceDisplay(rockValue);
+    var lumber = this.game.scene.formatResourceDisplay(lumberValue);
 		var totalCapacity = this.getTotalStorageCapacity()
 		if( totalCapacity ){
       var rockStyleWidth = Math.max(Math.round((rockValue*100/ totalCapacity)-4),0);

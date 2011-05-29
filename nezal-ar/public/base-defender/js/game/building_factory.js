@@ -40,7 +40,7 @@ var BuildingFactory = Class.create({
 	  for(var building in buildingDependencies){
 	  	 var buildingValidation = {}
 		 result.push(buildingValidation)
-		 buildingValidation['building'] = this.humanizeString(building.capitalize())
+		 buildingValidation['building'] = building.humanize();
 		 buildingValidation['level'] = buildingDependencies[building]
 		 if (!this.game[building.dasherize().camelize() + "Factory"].buildingExists(buildingDependencies[building])) {
 		 	buildingValidation['valid'] = false
@@ -71,7 +71,7 @@ var BuildingFactory = Class.create({
 		  if(!this.game[building.dasherize().camelize()+"Factory"].buildingExists(buildingDependencies[building])){
 //			  Notification.alert();
         result['valid'] = false;
-        result['msg'] = "Cannot build " + this.name + ", you need a "+ this.humanizeString(building) + " level "+ buildingDependencies[building];
+        result['msg'] = "Cannot build " + this.name + ", you need a "+ building.humanize() + " level "+ buildingDependencies[building];
 			  return result;
 		  }
 	  }
@@ -99,7 +99,7 @@ var BuildingFactory = Class.create({
 			  if (maxNoOfBuildings <= this.noOfBuildings) {
 //				  Notification.alert();
           result.valid = false;
-          result.msg = "You can only build " + maxNoOfBuildings + " " + this.humanizeString(this.name);
+          result.msg = "You can only build " + maxNoOfBuildings + " " + this.name.humanize();
 				  return result;
 			  }
 		  }
@@ -137,10 +137,6 @@ var BuildingFactory = Class.create({
       return result;
     }
     return result;
-  },
-
-  humanizeString : function(str){
-  	return str.capitalize().replace("_", " ") 
   },
 
   factoryRegistrar : function(coords, building){

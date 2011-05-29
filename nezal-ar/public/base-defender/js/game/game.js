@@ -190,8 +190,9 @@ var Game = Class.create({
 		//This is duplicated to avoid a problem in the loader that can't deal with an array of a single item
     var smokeImages = ["smoke_big.png", "smoke_big.png"]
     
-    var researchImages = ["cement.png", "cement.png"];
     var creepGenerationImages = ["",""]
+    var researchImages = ["cement.png", "cement_disabled.png", "laser.png", "laser_disabled.png"];
+  
     // Weapons Images 
 		var weaponsImages = ["slingshot.png", "rock.png", "green_book.png"]
     new Loader().load([{images : BaseDefenderScene.prototype.textures, path: 'images/textures/', store: 'textures'},
