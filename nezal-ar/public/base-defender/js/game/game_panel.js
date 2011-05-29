@@ -20,7 +20,7 @@ var GamePanel = Class.create({
   	},
   
 	render : function(){
-    this.game.energy.render();
+    //this.game.energy.render();
     if(this.game.neighborGame) return;
 		var rockValue = this.game.resources.rock;
 		var lumberValue = this.game.resources.lumber;

@@ -64,7 +64,7 @@ var Game = Class.create({
     var gameElementsImages = ['upper_bar.png', 'energy_bar_background.png','monitor.png','background.png','cancel.png','button.png',
                               'zoom.png','hover.png','sound.png','music.png','control_button.png','click.png','move.png','flag.png',
                             	'panel_background.png', 'resource_meter_background.png','resource_meter_rock.png','resource_meter_wood.png',
-                            	'button_clicked.png', 'building_menu_hover.png', 'build_button.png']
+                            	'button_clicked.png', 'building_menu_hover.png', 'build_button.png','language_button.png','language_click.png']
                               
     var friendsImages = ['1st_blank.png', 'bar.png', 'home_icon.png']
     var buildingImages = ['townhall.png']
@@ -72,7 +72,8 @@ var Game = Class.create({
     var questsImages = [  "msgBg.png", "wedge.png", "button.png", "msgBaloon.png", "questBaloon.png" , "questBg.png", "buildingPanelBg.png",
                           "resources.png", "correct.png", "buildingsBg.png", "wedgesBg.png", 
                           'button.png','cursor.png',"social.png", "civil.png", "military.png", "circles.png", "hover.png", "animated_circles.gif", 
-                          "line.png", "resources_needed_for_building.png", "building_hover.png", "building_hover_arrow.png", "empty.png"];
+                          "line.png", "resources_needed_for_building.png", "building_hover.png", "building_hover_arrow.png", "empty.png",
+                          "cancel_in_progress.png"];
     questsImages = questsImages.concat(BuildingMode.prototype.buildings.collect(function(building){
                                                                       return building + "_info.png";
                                                                   }));
@@ -185,12 +186,12 @@ var Game = Class.create({
     var workerImages = ["worker.png", "worker_shadow.png"];
     //var buildingPanelImages = ["panel.png"]
 		
-    var creepsImages = ["car.png",'explosion.png','car_fight.png']
+    var creepsImages = ["car.png",'explosion.png','car_fight.png','car_button.png','car_button_dimmed.png']
 		//This is duplicated to avoid a problem in the loader that can't deal with an array of a single item
     var smokeImages = ["smoke_big.png", "smoke_big.png"]
     
     var researchImages = ["cement.png", "cement.png"];
-  
+    var creepGenerationImages = ["",""]
     // Weapons Images 
 		var weaponsImages = ["slingshot.png", "rock.png", "green_book.png"]
     new Loader().load([{images : BaseDefenderScene.prototype.textures, path: 'images/textures/', store: 'textures'},
@@ -310,8 +311,7 @@ var Game = Class.create({
     new EnergyDisplay(this);
     
     this.research = new Research(this);
-    console.log( this.research );
-    
+    this.creepPanel = new CreepPanel(this)
     this.reInitializationNotifications.each(function(fn){fn()});
   },
   

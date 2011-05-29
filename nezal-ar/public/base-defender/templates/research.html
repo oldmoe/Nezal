@@ -51,3 +51,58 @@
     <div id="closeResearchPanel"  onclick="Animation.hide('researchDisplay');"></div>
   </div>
 </textarea>
+
+
+
+
+<!-- creep panel -->
+<textarea id="creep-panel">
+  <div id="creeps" class="creeps">
+    <div class="left">
+      <img class="leftOff" src="images/quests/arrows_horizontal.png" />
+    </div>
+    
+    <div id="creeps-container" class="container">
+      <ul id='creeps-ul'>
+        {for creep in creeps}
+          <li>
+            <div id="${creep}" class="item">
+              <div class="itemData" ></div>
+              <span imgId="${creep}_image" class="loadedImg" imgClasses="background" imgSrc="images/creeps/${creep}_button.png"></span>
+            </div>
+          </li>
+        {/for}
+        <li>
+          <div class="item">
+            <div class="itemData" style="cursor:auto;"> </div>
+            <span class="loadedImg" imgSrc="images/quests/empty.png" imgClasses="background" ></span>
+          </div>
+        </li>
+      </ul>
+    </div>
+    
+    <div class="right">
+      <img class="rightOff" src="images/quests/arrows_horizontal.png" />
+    </div>
+    
+  </div>
+      <div id="creepInProgress" class="item">
+              <div class="itemData" ></div>
+                    <span class="loadedImg" imgId="inPorgressCreep "imgSrc="images/quests/empty.png" imgClasses="background" ></span>
+              <div class="alignDiv" style="width:79%;"> </div>
+     </div>
+  <span class="loadedImg" imgClasses="buildingPanelBg flippedImg" imgSrc="images/quests/buildingPanelBg.png"></span>
+  <span class="loadedImg" imgClasses="buildingsBg flippedImg" imgSrc="images/quests/buildingsBg.png"></span>
+  <span class="loadedImg" imgClasses="buildingPanelLine" imgSrc="images/quests/line.png"></span>
+  
+  <div class="triggers">
+    <div id="creepTrigger" class="creepPanelTriggers activeTrigger" onclick="Javascript:void(0);">
+      ${Text.labels.creeps}
+    </div>
+  </div>
+  
+  <div class="closeContainer">
+    <div class="alignDiv" style="width:87%;"> </div>
+    <div id="closeCreepPanel"  onclick="Animation.hide('creepDisplay');"></div>
+  </div>
+</textarea>
