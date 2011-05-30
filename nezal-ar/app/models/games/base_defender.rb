@@ -373,6 +373,8 @@ class BaseDefender < Metadata
       validation = list_map user_game_profile, data
     elsif data['event'] == 'start_research'
       validation = BD::Research.start user_game_profile, data['name']
+    elsif data['event'] == 'cancel_research'
+      validation = BD::Research.cancel user_game_profile, data['name']
     end
     
     user_game_profile['error'] = validation['error'] unless validation['valid']

@@ -76,9 +76,36 @@
     <div class="close" onclick="Animation.hide('alertMsg');">
     </div>
     <div class="okButtonWrapper">
-      <div class="okButton" onclick="Animation.hide('alertMsg')">
+      <div id="alertOK" class="okButton" onclick="Animation.hide('alertMsg')">
         <img class="okImage" src="${Loader.images.quests['button.png'].src}"/>
         <div class="okText yellowText"> OK </div>
+      </div>
+    </div>
+    <div class="text blueText">
+      <span>${message}</span>
+    </div>
+  </div>
+</textarea>
+
+<textarea style="display:none;" id='prompt'>
+  <div id='promptMsg'>
+    <img class="background" src="${Loader.images.quests['msgBg.png'].src}"/>
+    <div class="msgBGImgs">
+      <img class="wedge" src="${Loader.images.quests['wedge.png'].src}"/>
+      <img class="bubble" src="${Loader.images.quests['msgBaloon.png'].src}"/>
+    </div>
+    <div class="close" onclick="Animation.hide('alertMsg');">
+    </div>
+    <div class="okButtonWrapper">
+      <div id="promptYes" class="okButton" onclick="Animation.hide('promptMsg')">
+        <img class="okImage" src="${Loader.images.quests['button.png'].src}"/>
+        <div class="okText yellowText"> Yes </div>
+      </div>
+    </div>
+    <div class="noButtonWrapper">
+      <div id="promptNo" class="noButton" onclick="Animation.hide('promptMsg')">
+        <img class="noImage" src="${Loader.images.quests['button.png'].src}"/>
+        <div class="noText yellowText"> No </div>
       </div>
     </div>
     <div class="text blueText">
@@ -292,6 +319,7 @@
         <div id="buildingDisplay" style="display:none;"> </div>
         <div id="researchDisplay" style="display:none;"> </div>
         <div id="alert" style="display:none;"> </div>
+        <div id="prompt" style="display:none;"> </div>
 				<div id="notify" style="display:none;"> </div>
       </div>
       <div id="rewardsContainer" style="display:none;"></div>

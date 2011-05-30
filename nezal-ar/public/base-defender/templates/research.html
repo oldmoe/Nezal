@@ -15,26 +15,30 @@
                onmouseout="$('${research_index}_info').hide();
                            $('${research_index}_image').setStyle({height:'75px'});
                            $('${research_index}_image_hover').hide();
-                           $('${research_index}_image_arrow').hide()"
+                           $('${research_index}_image_arrow').hide();
+                           $('cancel_${research_index}').hide();"
                            
                onmouseover="$('${research_index}_info').show();
                             $('${research_index}_image').setStyle({height:'90px'});
                             $('${research_index}_image_hover').show();
-                            $('${research_index}_image_arrow').show()"
+                            $('${research_index}_image_arrow').show();
+                            $('cancel_${research_index}').show();"
               {else}
                onmouseout="$('${research_index}_info').hide();
                            $('${research_index}_image').setStyle({height:'75px'});
                            $('${research_index}_image_hover').hide();
                            $('${research_index}_image_arrow').hide();
                            $('${research_index}_msg').hide();
-                           $('${research_index}_msg_text').hide();"
+                           $('${research_index}_msg_text').hide();
+                           $('cancel_${research_index}').hide();"
                            
                onmouseover="$('${research_index}_info').show();
                             $('${research_index}_image').setStyle({height:'90px'});
                             $('${research_index}_image_hover').show();
                             $('${research_index}_image_arrow').show();
                             $('${research_index}_msg').show();
-                            $('${research_index}_msg_text').show();"
+                            $('${research_index}_msg_text').show();
+                            $('cancel_${research_index}').show();"
               {/if} >
               
               {if (disabled.indexOf(research_index) < 0)}
@@ -57,6 +61,14 @@
               
               <div id="${research_index}_ongoing" class="ongoingResearch redText" style="display:none;">
                 <span id="${research_index}TimeLeftText"></span>
+                <div id="cancel_${research_index}" style="display:none;">
+                  <div class="cancelButtonWrapper">
+                    <div id="${research_index}ResearchCancel" class="cancelButton" onclick="game.research.cancelConfirm('${research_index}')">
+                      <img class="cancelImage" src="${Loader.images.quests['button.png'].src}"/>
+                      <div class="cancelText yellowText"> Cancel </div>
+                    </div>
+                  </div>
+                </div>
               </div>
               
               <span imgId="${research_index}_image_hover" class="loadedImg" imgClasses="hover" imgSrc="images/quests/building_hover.png" hidden="true"></span>
@@ -86,7 +98,7 @@
     <div class="researchInfo" id="${research_index}_info" style="display:none;">
       <div class="researchName">${research_index}</div>
       <div class="researchDetails">
-        <div class="researchDesc">NA</div>
+        <div class="researchDesc">Increases your HP by 10%</div>
         <div class="researchCost">     
           <span class="loadedImg" imgClasses="resourcesNeeded" imgSrc="images/quests/resources_needed_for_building.png">
           </span>

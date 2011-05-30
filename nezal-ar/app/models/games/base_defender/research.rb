@@ -11,6 +11,38 @@ module BD
       #user_game_profile.save
     end
     
+    def self.cancel( user_game_profile , research_name )
+      research_metadata = BaseDefender.adjusted_game_metadata['researches'][research_name]
+      user_profile_metadata = user_game_profile.metadata
+      
+      #Check if this research didn't started yet or already done
+      already_done = user_profile_metadata['researches'][research_name]['done'] == true
+      didnt_started = user_profile_metadata['researches'][research_name]['started'] == false
+      if already_done
+        return {'valid' => false, 'error' => research_name.capitalize + ' is already researched!'}
+      end
+      
+      if didnt_started
+        return {'valid' => false, 'error' => research_name.capitalize + ' is not active yet!'}
+      end
+      
+      lumber_to_refund = research_metadata['needs']['lumber'] * 75 / 100
+      rock_to_refund = research_metadata['needs']['lumber'] * 75 / 100
+      total_storage = BD::ResourceBuilding.calculate_total_storage(user_profile_metadata, BaseDefender.adjusted_game_metadata)
+      
+      free_lumber_space = total_storage - user_profile_metadata['lumber']
+      lumber_to_refund = lumber_to_refund > free_lumber_space ? free_lumber_space : lumber_to_refund
+      user_profile_metadata['lumber'] += lumber_to_refund
+      
+      free_rock_space = total_storage - user_profile_metadata['rock']
+      rock_to_refund = rock_to_refund > free_rock_space ? free_rock_space : rock_to_refund
+      user_profile_metadata['rock'] += rock_to_refund
+      
+      user_profile_metadata['researches'][research_name]['started'] = false
+      
+      return {'valid' => true, 'error' => ''}
+    end
+    
     def self.start( user_game_profile , research_name )
       research_metadata = BaseDefender.adjusted_game_metadata['researches'][research_name]
       user_profile_metadata = user_game_profile.metadata

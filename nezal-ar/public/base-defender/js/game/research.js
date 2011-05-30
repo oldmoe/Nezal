@@ -65,6 +65,20 @@ var Research = Class.create({
     }
   },
   
+  cancelConfirm : function(researchName){
+    var self = this;
+    Notification.prompt("Are you sure you want to cancel researching " + researchName + "? You will only be refunded 75% of its cost!",{
+      yesCallback : function(){
+        self.cancelResearch(researchName);
+      }
+    });
+  },
+  
+  cancelResearch : function(researchName){
+    var response = this.game.network.cancelResearch(researchName);
+    this.game.updateGameStatus(response['gameStatus']);
+  },
+  
   start : function(researchName){
     var response = this.game.network.startResearch(researchName);
     this.game.updateGameStatus(response['gameStatus']);
