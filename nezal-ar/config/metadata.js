@@ -261,6 +261,18 @@ data={
         rock : 1000,
         lumber : 1000
       }
+    },
+    "laser" : {
+      "dependency" : {  },
+      "benefits" : {
+        //10 means : 10%
+        "buildings" : { "hp": 10 } 
+      },
+      "needs" : {
+        time : 3600,
+        rock : 100,
+        lumber : 100
+      }
     }
   },
   
