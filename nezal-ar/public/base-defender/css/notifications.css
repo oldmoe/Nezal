@@ -30,6 +30,7 @@
   position: absolute;
   left: 80px;
   top: 170px;
+  z-index:100;
 }
 
 #alert .wedge,#notify .wedge {

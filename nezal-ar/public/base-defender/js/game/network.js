@@ -35,15 +35,10 @@ var Network = Class.create({
     var gameStatus = null;
     new Ajax.Request(request, {
       method : 'post',
-      asynchronous : false,
+      asynchronous : true,
       parameters: { 'data' : Object.toJSON(params)},
       onSuccess: function(response) {
-        gameStatus = JSON.parse(response.responseText);
-        userProfile = gameStatus.user_data.metadata;
-        if (userProfile['error']) {
-          Notification.alert("Something went wrong, message : " + userProfile['error']);
-          done = false;
-        }
+        
       }
     });
     return {'done' : done, 'gameStatus' : gameStatus};

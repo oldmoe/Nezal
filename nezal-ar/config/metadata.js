@@ -241,7 +241,11 @@ data={
           "power" : 10,
           "speed" : 3,
           "garage_units":2,
-          "production_time":10
+         "needs" : {
+          time : 60,
+          rock : 100,
+          lumber : 100
+        }
       }
   },
   "xp_levels" : {
