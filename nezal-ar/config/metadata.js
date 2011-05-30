@@ -130,9 +130,9 @@ data={
             "display" : {"xdim":35,"ydim":35,"zdim":93,"imgWidth":124,"imgHeight":155,
                          "area":"109,116,104,106,104,94,86,85,90,49,76,41,63,30,52,28,48,17,45,14,43,27,30,39,17,56,18,62,28,88,25,104,16,101,22,116,20,122,54,136,106,117"}
       }
-      }
+    }
   },
-   "palm" : {
+  "palm" : {
 		"levels":{
 					"0":{ 
 						  "dependency" :{"buildings":{"townhall":1}}, "limited_by":null,"limiting":{"global":3,"others":{}},
@@ -147,7 +147,64 @@ data={
 								  "area" : "51,83,63,37,61,24,42,8,17,3,9,20,0,38,10,73,29,90,50,86"} 
 					}
 		  }
-   },
+  },
+  "garage" : {
+		"levels":{
+       "0" : {
+            "workers" : 2,
+            "dependency" :{"buildings":{"townhall":1}}, "limited_by":null,"limiting":{"global":3,"others":{}},
+            "hp": 800,
+            "time" : 0,
+            "display" : {"xdim":35,"ydim":35,"zdim":93,"imgWidth":124,"imgHeight":155,
+                         "area":"109,116,104,106,104,94,86,85,90,49,76,41,63,30,52,28,48,17,45,14,43,27,30,39,17,56,18,62,28,88,25,104,16,101,22,116,20,122,54,136,106,117"}
+      },
+      "1":{
+            "workers" : 2,
+            "dependency" :{"buildings":{"townhall":1}}, "limited_by":null,"limiting":{"global":3,"others":{}},
+            "hp": 800, "rock":2000, "lumber":2000, "time":15,
+            "display" : {"xdim":35,"ydim":35,"zdim":93,"imgWidth":124,"imgHeight":155,
+                         "area":"109,116,104,106,104,94,86,85,90,49,76,41,63,30,52,28,48,17,45,14,43,27,30,39,17,56,18,62,28,88,25,104,16,101,22,116,20,122,54,136,106,117"}
+      }
+	  }
+  },
+  "defense_research" : {
+		"levels":{
+       "0" : {
+            "workers" : 2,
+            "dependency" :{"buildings":{"townhall":1}}, "limited_by":null,"limiting":{"global":3,"others":{}},
+            "hp": 800,
+            "time" : 0,
+            "display" : {"xdim":35,"ydim":35,"zdim":93,"imgWidth":124,"imgHeight":155,
+                         "area":"109,116,104,106,104,94,86,85,90,49,76,41,63,30,52,28,48,17,45,14,43,27,30,39,17,56,18,62,28,88,25,104,16,101,22,116,20,122,54,136,106,117"}
+      },
+      "1":{
+            "workers" : 2,
+            "dependency" :{"buildings":{"townhall":1}}, "limited_by":null,"limiting":{"global":3,"others":{}},
+            "hp": 800, "rock":2000, "lumber":2000, "time":15,
+            "display" : {"xdim":35,"ydim":35,"zdim":93,"imgWidth":124,"imgHeight":155,
+                         "area":"109,116,104,106,104,94,86,85,90,49,76,41,63,30,52,28,48,17,45,14,43,27,30,39,17,56,18,62,28,88,25,104,16,101,22,116,20,122,54,136,106,117"}
+      }
+	  }
+  },
+  "military_research" : {
+		"levels":{
+       "0" : {
+            "workers" : 2,
+            "dependency" :{"buildings":{"townhall":1}}, "limited_by":null,"limiting":{"global":3,"others":{}},
+            "hp": 800,
+            "time" : 0,
+            "display" : {"xdim":35,"ydim":35,"zdim":93,"imgWidth":124,"imgHeight":155,
+                         "area":"109,116,104,106,104,94,86,85,90,49,76,41,63,30,52,28,48,17,45,14,43,27,30,39,17,56,18,62,28,88,25,104,16,101,22,116,20,122,54,136,106,117"}
+      },
+      "1":{
+            "workers" : 2,
+            "dependency" :{"buildings":{"townhall":1}}, "limited_by":null,"limiting":{"global":3,"others":{}},
+            "hp": 800, "rock":2000, "lumber":2000, "time":15,
+            "display" : {"xdim":35,"ydim":35,"zdim":93,"imgWidth":124,"imgHeight":155,
+                         "area":"109,116,104,106,104,94,86,85,90,49,76,41,63,30,52,28,48,17,45,14,43,27,30,39,17,56,18,62,28,88,25,104,16,101,22,116,20,122,54,136,106,117"}
+      }
+	  }
+  },
   "wedge" : {
     "levels":{
         "0":{ 
@@ -241,7 +298,8 @@ data={
     "6" :{"max_helping_power" : 10, "helping_power_unit_every" : 1800, "max_xp" : 5000},
     "7" :{"max_helping_power" : 11, "helping_power_unit_every" : 1800, "max_xp" : 8000},
     "8" :{"max_helping_power" : 12, "helping_power_unit_every" : 1800, "max_xp" : 12000}
-  }
+  }, 
+  "languages" : { 'english' : {}, 'arabic' : {} }
 }
 
 new Ajax.Request( '/nezal-admin/local-base-defender/metadata' , {
