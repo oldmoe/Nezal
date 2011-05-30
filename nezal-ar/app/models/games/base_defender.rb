@@ -17,7 +17,10 @@ class BaseDefender < Metadata
     "defense_center" => BD::DefenseCenter,
     "war_factory" => BD::WarFactory,
     "house" => BD::House,
-    "palm" => BD::Palm
+    "palm" => BD::Palm,
+    "garage" => BD::Garage, 
+    "defense_research" => BD::DefenseResearch,
+    "military_research" => BD::MilitaryResearch
   }.merge @@resource_building_modules ).merge @@wedges
   
   @@game_metadata = nil
@@ -315,6 +318,9 @@ class BaseDefender < Metadata
   def self.initialize_game_metadata( game )
     #Applying Speed Factor!
     @@building_modules.keys.each do |building_name|
+      puts building_name
+      puts game.metadata['buildings'][building_name]
+      puts "----------------------------------------------------"
       building_levels = game.metadata['buildings'][building_name]['levels']
       building_levels.keys.each do |level|
         building_levels[level]['time'] /= @@speed_factor
