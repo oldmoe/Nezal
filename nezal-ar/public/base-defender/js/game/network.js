@@ -158,6 +158,10 @@ var Network = Class.create({
   startResearch :function(researchName){
     return this.contactTheBoss({ 'event' : 'start_research', name : researchName});
   },
+  
+  cancelResearch :function(researchName){
+    return this.contactTheBoss({ 'event' : 'cancel_research', name : researchName});
+  },
 	
   fetchTemplate : function(path, callBack){
     new Ajax.Request(path, {

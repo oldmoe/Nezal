@@ -26,26 +26,26 @@
   top : 155px;
 }
 
-#alert, #notify {
+#alert, #notify, #prompt {
   position: absolute;
   left: 80px;
   top: 170px;
   z-index : 11;
 }
 
-#alert .wedge,#notify .wedge {
+#alert .wedge,#notify .wedge, #prompt .wedge {
   left: 15px;
   position: absolute;
   top: 60px;
 }
 
-#alert .bubble, #notify .bubble {
+#alert .bubble, #notify .bubble, #prompt .bubble {
   left: 100px;
   position: absolute;
   top: 30px;
 }
 
-#alert .close, #notify .close {
+#alert .close, #notify .close, #prompt .close {
   cursor: pointer;
   height: 25px;
   width: 45px;
@@ -54,7 +54,7 @@
   top: 0;
 }
 
-#alert .okButtonWrapper, #notify .okButtonWrapper {
+#alert .okButtonWrapper, #notify .okButtonWrapper, #prompt .okButtonWrapper, #prompt .noButtonWrapper {
   bottom: 0;
   height: 55px;
   position: absolute;
@@ -62,7 +62,11 @@
   width: 130px;
 }
 
-#alert .text {
+#prompt .noButtonWrapper {
+  left: 310px;
+}
+
+#alert .text, #notify .text, #prompt .text {
   font-size: 21px;
   color: #F23D00;
   left: 115px;
@@ -71,13 +75,31 @@
   width: 430px;
 }
 #notify .text {
-	font-size: 21px;
   color: black;
-  left: 115px;
-  position: absolute;
-  top: 40px;
-  width: 430px;
 }
 #interaction #notify #alertMsg .okText{
 	font-size:27px;
+}
+
+#interaction #prompt .noText{
+  font-size:27px;
+}
+.noButtonWrapper .noButton {
+  display: inline-block;
+  text-align: center;
+  vertical-align: top;
+  cursor: pointer;
+  overflow : hidden;
+  height : 100%;
+}
+
+.noButtonWrapper .noText {
+  font-family: Showg;
+  font-size: 34px;
+  position: relative;
+  display : block;
+  text-shadow: -1px -1px 1px black;
+  top: -50px;
+  height : 100%;
+  line-height : 50px;
 }

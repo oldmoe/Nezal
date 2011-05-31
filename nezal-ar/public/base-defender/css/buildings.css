@@ -456,17 +456,39 @@
 }
 #interaction  #researchBuildings .ongoingResearch { 
   font-family: Helvetica;
-  font-size: 17px;
+  font-size: 16px;
+  font-weight: bold;
   height: 135px;
   position: relative;
   top: -230px;
-  width: 98px;
+  width: 83px;
   z-index: 501;
 }
 #interaction  #researchBuildings .ongoingResearch span {
   position: relative;
-  top: 40px;
+  top: 25px;
   width: 70px;
   display: block;
   margin-left: 7px;
 }
+
+#interaction #researchDisplay .cancelButtonWrapper {
+  margin-top: 25px;
+  position: relative;
+  cursor: pointer;
+}
+
+#interaction #researchDisplay .cancelImage {
+  width: 84px;
+}
+
+#interaction #researchDisplay .cancelText {
+  font-family: helvetica;
+  font-size: 18px;
+  height: 37px;
+  text-align: center;
+  top: -30px;
+  width: 88px;
+  position: relative;  
+}
+

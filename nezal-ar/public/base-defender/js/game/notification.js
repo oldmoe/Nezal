@@ -27,11 +27,29 @@ var Notification = Class.create({
   }
 });
 
-Notification.alert = function(message){
+Notification.alert = function(message, OKCallback){
   $("alert").innerHTML = game.templatesManager.load("alert", {message : message});
-  $('alert').hide()
-  Animation.show("alert")
+  $('alert').hide();
+  Animation.show("alert");
   $('interaction').show();
+  if( OKCallback ){
+    $("alertOK").stopObserving("click");
+    $("alertOK").observe("click", OKCallback);
+  }
+}
+Notification.prompt = function(message, options){
+  $("prompt").innerHTML = game.templatesManager.load("prompt", {message : message});
+  $("prompt").hide();
+  Animation.show("prompt");
+  $('interaction').show();
+  if( options.yesCallback ){
+    $("promptYes").stopObserving("click");
+    $("promptYes").observe("click", options.yesCallback);
+  }
+  if( options.noCallback ){
+    $("promptNo").stopObserving("click");
+    $("promptNo").observe("click", options.noCallback);
+  }
 }
 Notification.notify = function(message){
 	$("notify").innerHTML = game.templatesManager.load("alert", {message : message});
