@@ -86,7 +86,7 @@ class BaseDefender < Metadata
     war_factories = ugp_metadata['war_factory']
     if(!war_factories.nil?)
       war_factories.each_pair do |k,building|
-         next if(building['state'] != BD::Building.states['NORMAL'])
+         next if(building['state'] != BD::Building.states['NORMAL'] || building['queue']['stopped'])
          building['queue'] = {"size"=>0,"creep"=>nil,"last_creep_start"=>nil, "creep_production_time"=>nil,
          "remaining_time"=>nil} if(building['queue'].nil?)
          war_factory = BD::WarFactory.new building['coords'],ugp

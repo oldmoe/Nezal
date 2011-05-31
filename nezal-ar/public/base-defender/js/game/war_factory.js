@@ -11,6 +11,7 @@ var WarFactory = Class.create(Building, {
          this.queue.remaining_time--;
          if(this.queue.remaining_time<=0){
            game.reInitialize()
+           game.creepPanel.fillTemplate(this)
          }
        }
     }
