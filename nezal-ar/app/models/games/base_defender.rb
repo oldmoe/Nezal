@@ -198,6 +198,7 @@ class BaseDefender < Metadata
   
   def self.repair_jobs user_game_profile
     now = Time.now.utc.to_i
+    research_hp_bonus = BD::Research.total_hp_bonus( user_game_profile )
     repair_factor = 40
     profile_metadata = user_game_profile.metadata
     building_names = @@game_metadata['buildings'].keys
@@ -207,6 +208,7 @@ class BaseDefender < Metadata
           started_repairing_at = user_game_profile.metadata[building_name][key]['started_repairing_at'] 
           if(started_repairing_at > 0)
             max_hp = @@game_metadata['buildings'][building_name]['levels'][building['level'].to_s]['hp']
+            max_hp += research_hp_bonus * max_hp / 100
             hp = building['hp']
             if((max_hp-hp) < (now - started_repairing_at)*repair_factor)
               user_game_profile.metadata[building_name][key]['hp'] = max_hp
@@ -392,12 +394,14 @@ class BaseDefender < Metadata
   
   def self.repair_buildings user_game_profile
     user_game_profile.metadata['attacked'] = 0
+    research_hp_bonus = BD::Research.total_hp_bonus( user_game_profile )
     profile_metadata = user_game_profile.metadata
     building_names = @@game_metadata['buildings'].keys
     building_names.each do |building_name|
       if(!profile_metadata[building_name].nil?)
         profile_metadata[building_name].each do |key, building|
           max_hp = @@game_metadata['buildings'][building_name]['levels'][building['level'].to_s]['hp']
+          max_hp += research_hp_bonus * max_hp / 100
           hp = building['hp']
           if(hp < max_hp)
             user_game_profile.metadata[building_name][key]['started_repairing_at'] = Time.now.utc.to_i
@@ -444,6 +448,7 @@ class BaseDefender < Metadata
   
   def self.simulate_attack profile_metadata, data
     creeps_coords = data['creeps']
+    research_hp_bonus = BD::Research.total_hp_bonus( user_game_profile )
     map = BD::Map.new profile_metadata['map']
     building_names = @@game_metadata['buildings'].keys
     creeps = []
@@ -464,7 +469,7 @@ class BaseDefender < Metadata
             'zdim' => display['zdim'],
             'img_width' => display['imgWidth'],
             'img_height' => display['imgHeight'],
-            'hp' => building['hp']
+            'hp' => building['hp'] * research_hp_bonus / 100
           }
           map_building = BD::MapBuilding.new building, building_name, options
           map.add_element map_building

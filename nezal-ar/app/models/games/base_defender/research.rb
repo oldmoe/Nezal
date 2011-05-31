@@ -11,6 +11,19 @@ module BD
       #user_game_profile.save
     end
     
+    def self.total_hp_bonus( user_game_profile )
+      bonus_hp_percent = 0;
+      user_profile_metadata = user_game_profile.metadata
+      researches = user_profile_metadata['researches'].keys
+      researches.each do |research_index|
+        research = user_profile_metadata['researches'][research_index]
+        if research['done'] && research['buildings'] && research['hp']
+           bonus_hp_percent += research['benefits']['buildings']['hp'].to_i
+        end
+      end
+      bonus_hp_percent
+    end
+    
     def self.cancel( user_game_profile , research_name )
       research_metadata = BaseDefender.adjusted_game_metadata['researches'][research_name]
       user_profile_metadata = user_game_profile.metadata

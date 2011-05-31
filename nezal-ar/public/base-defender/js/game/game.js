@@ -362,7 +362,7 @@ var Game = Class.create({
 	      }
       }
 	  var style = imgSpan.getAttribute('imgStyle')
-	  if(style)img.setAttribute('style',style)
+	  if(style) img.setAttribute('style',style)
     })
   }
 
