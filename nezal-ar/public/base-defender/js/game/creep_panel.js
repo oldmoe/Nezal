@@ -30,7 +30,11 @@ var CreepPanel = Class.create({
       this.wf.queue.creep = creep
       var creepData = this.game.data.creeps[creep]
       if(!(game.resources.rock >= creepData.needs.rock && game.resources.lumber >= creepData.needs.lumber)) {
-        Notification.alert('Not enough resources')
+        Notification.alert('Not enough resources.')
+        return
+      }
+      if(this.wf.queue.size!=0 && this.wf.queue.creep != creep){
+        Notification.alert('Another creep in production.')
         return
       } 
       this.wf.queue.size++
@@ -46,7 +50,7 @@ var CreepPanel = Class.create({
         'creep': creep
       })
     }else{
-      Notification.alert('You have reached maximum number of creeps to generate');
+      Notification.alert('You have reached maximum number of creeps to generate.');
     }
   },
   displayTime : function(){

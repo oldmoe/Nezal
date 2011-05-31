@@ -15,7 +15,7 @@ var WarFactoryDisplay = Class.create(BuildingDisplay, {
     
   renderCreepMenu : function(){
     Sounds.play(Sounds.gameSounds.click);
-    this.game.creepPanel.displayPanel(this.owner,{'disabled' : []});
+    game.creepPanel.displayPanel(this.owner,{'disabled' : []});
   },
 	renderAnimation : function(){
 	  if (!this.sprites.building.animated && !this.owner.producing) {

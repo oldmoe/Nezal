@@ -7,11 +7,10 @@ var WarFactory = Class.create(Building, {
         })
     },
     processCreepGeneration : function(){
-       if(this.queue.size>0){
+       if(this.queue.size>0 && !this.queue.stopped){
          this.queue.remaining_time--;
          if(this.queue.remaining_time<=0){
-           this.queue.size--;
-           this.queue.remaining_time = this.queue.creep_production_time
+           game.reInitialize()
          }
        }
     }

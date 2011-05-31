@@ -67,7 +67,18 @@
   z-index: 12;
 }
 
-#interaction .buildingInfo, #interaction .researchInfo {
+#interaction .creepInfo{
+  height: 120px;
+  left: 152px;
+  position: absolute;
+  top: 215px;
+  width: 428px;
+  z-index: 11; 
+}
+#gameContainer.arabic #interaction .creepInfo{
+  right:152px; 
+}
+#interaction .buildingInfo, #interaction .researchInfo{
  height: 120px;
   left: 30px;
   position: absolute;
@@ -76,7 +87,8 @@
   z-index: 11;
 }
 
-#interaction .buildingInfo .buildingName, #interaction .researchInfo  .researchName {
+#interaction .buildingInfo .buildingName, #interaction .researchInfo  .researchName,
+#interaction .creepInfo  .creepName {
   color: white;
   font-family: showg;
   font-size: 25px;
@@ -176,7 +188,39 @@
     position: absolute;
     text-align: center;
     top: 210px;
-    width: 530px;
+    width: 112px;
+    z-index:1000;
+    color:white;
+}
+
+#creepDisplay #creepInProgress.item #garageError{
+   color : red;
+}
+
+#creepDisplay #creepInProgress.item #inPorgressCancel{
+   height:auto; 
+   cursor:pointer;
+}
+#creepDisplay #creepInProgress.item #queueSize{
+    color: white;
+    display: inline-block;
+    text-align: left;
+    width: 40px;
+    margin-left: 2px;
+    font-size: 19px;
+}
+#gameContainer.arabic #creepDisplay #creepInProgress.item #queueSize{
+ text-align:right; 
+}
+#creepDisplay #creepInProgress.item #InProgressProperties{
+  position: absolute;
+  top: 2px;
+  width: 69px;
+  left: 20px;
+  z-index:100;
+}
+#gameContainer.arabic #creepDisplay #creepInProgress.item{
+   right:64px; 
 }
 #interaction .buildingPanelLine {
   position: absolute;
@@ -204,7 +248,7 @@
   float : none;
   z-index : 100;
 }
-#interaction #buildingsPanel .item .hover, #interaction #researchBuildings .item .hover {
+#interaction #buildingsPanel .item .hover, #interaction #researchBuildings .item .hover, #interaction #creeps .item .hover {
   position : absolute;
   top : -8px;
   left : -8px;
@@ -212,10 +256,12 @@
   float : none;
   z-index : 50;
 }
-#gameContainer.arabic #interaction #buildingsPanel .item .hover, #gameContainer.arabic #interaction #researchBuildings .item .hover {
+#gameContainer.arabic #interaction #buildingsPanel .item .hover, #gameContainer.arabic #interaction #researchBuildings .item .hover,
+ #gameContainer.arabic #interaction #creeps .item .hover{
   left : -10px;
 }
-#interaction #buildingsPanel .item .hoverArrow, #interaction #researchBuildings .item .hoverArrow {
+#interaction #buildingsPanel .item .hoverArrow, #interaction #researchBuildings .item .hoverArrow,
+ #interaction #creeps .item .hoverArrow{
   float: none;
   position: absolute;
   top: 90px;
@@ -245,16 +291,19 @@
   z-index: 500;
 }
 
-#interaction #buildingsPanel .item .itemData .name, #interaction #researchBuildings .item .itemData .name {  
+#interaction #buildingsPanel .item .itemData .name, #interaction #researchBuildings .item .itemData .name,
+ #interaction #creeps .item .itemData .name{  
   font-size: 17px;
   height: 20px;
   padding-top: 5px;
   text-transform: capitalize;
 }
-#interaction #buildingsPanel .item .itemData .image, #interaction #researchBuildings .item .itemData .image {
+#interaction #buildingsPanel .item .itemData .image, #interaction #researchBuildings .item .itemData .image,
+ #interaction #creeps .item .itemData .image{
   height : 74px;
 }
-#interaction #buildingsPanel .item .disabledMsgBackground, #interaction #researchBuildings .item .disabledMsgBackground {  
+#interaction #buildingsPanel .item .disabledMsgBackground, #interaction #researchBuildings .item .disabledMsgBackground,
+ #interaction #creeps .item .disabledMsgBackground{  
   background: white;
   border-radius: 8px 8px 8px 8px;
   font-family: verdana;
@@ -266,7 +315,8 @@
   width: 82px;
   z-index: 200;
 }
-#interaction #buildingsPanel .item .disabledMsgText, #interaction #researchBuildings .item .disabledMsgText {  
+#interaction #buildingsPanel .item .disabledMsgText, #interaction #researchBuildings .item .disabledMsgText,
+ #interaction #creep .item .disabledMsgText{  
   font-family: verdana;
   font-size: 11px;
   height: 80px;
@@ -277,16 +327,17 @@
   width: 82px;
   z-index: 200;
 }
-#interaction #buildingsPanel .item .itemData .image img, #interaction #researchBuildings .item .itemData .image img {  
+#interaction #buildingsPanel .item .itemData .image img, #interaction #researchBuildings .item .itemData .image img,
+ #interaction #creep .item .itemData .image img{  
   width: 68px;
   height: 74px;
 }
-#interaction #buildingDisplay .buildingDetails, #interaction .researchDetails {
+#interaction #buildingDisplay .buildingDetails, #interaction .researchDetails, #interaction .creepDetails {
   left: 0px;
   position: absolute;
   top: 40px;
 }
-#interaction #buildingDisplay .buildingDesc, #interaction .researchDesc {
+#interaction #buildingDisplay .buildingDesc, #interaction .researchDesc, #interaction .creepDesc{
   color: #FFF78C;
   height: 60px;
   width: 280px;
@@ -296,7 +347,11 @@
   margin : 5px 20px;
   display : inline-block;
 }
-#interaction #buildingDisplay .buildingCost, #interaction .researchCost {
+
+#interaction .creepDesc{
+   width:184px; 
+}
+#interaction #buildingDisplay .buildingCost, #interaction .researchCost, #interaction .creepCost{
   display : inline-block;
   vertical-align : top;
 }
@@ -311,18 +366,18 @@
   width: 23%;
   vertical-align: top;
 }
-#interaction .buildingInfo .resourcesNeeded, #interaction .researchInfo .resourcesNeeded {
+#interaction .buildingInfo .resourcesNeeded, #interaction .researchInfo .resourcesNeeded, #interaction .creepInfo .resourcesNeeded {
   text-align: left;
   width : 176px;
   padding : 0px 10px;
 }
-#interaction #buildingsPanel .item .inactive, #interaction #researchBuildings .item .inactive {
+#interaction #buildingsPanel .item .inactive, #interaction #researchBuildings .item .inactive, #interaction #creeps .item .inactive{
   cursor : not-allowed;
 }
 
 
 
-#interaction #buildingDisplay .buildButton, #interaction #researchBuildings .startButton {
+#interaction #buildingDisplay .buildButton, #interaction #researchBuildings .startButton,#interaction #creeps .startButton {
   bottom: 0;
   height: 55px;
   position: absolute;

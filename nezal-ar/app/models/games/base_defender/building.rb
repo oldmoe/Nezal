@@ -138,7 +138,7 @@ module BD
       
       def move(user_game_profile, name, coords, old_coords)
         coords_str = BaseDefender.convert_location(coords)
-        old_coords_str = BaseDefender.convert_location(old_coords)
+        old_coords_str = BaseDefender.convert_location(old_coorsds)
         building = user_game_profile.metadata[name].delete(old_coords_str)
         if building.present?
           building['coords'] = coords
@@ -172,7 +172,9 @@ module BD
         puts "upgrading " + building_name
         return validation
       end
-
+      
+      
+      
       def validate_upgrade(user_profile_metadata, game_metadata, coords, name=nil)
         building_name = name || @name
         #validating workers

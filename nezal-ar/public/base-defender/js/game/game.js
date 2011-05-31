@@ -309,13 +309,13 @@ var Game = Class.create({
       this.questsManager = new QuestsManager(this);
       this.tutorial = new Tutorial(this);
       this.tutorial.fire();
+    
     }
     this.rewardsPanel = new RewardsPanel(this)
     this.rewardsPanel.handleRewards();
     
     this.energy = new Energy(this);
     new EnergyDisplay(this);
-    
     this.research = new Research(this);
     this.creepPanel = new CreepPanel(this)
     this.reInitializationNotifications.each(function(fn){fn()});

@@ -82,40 +82,17 @@ class BaseDefender < Metadata
   
   def self.creeps_generation ugp
     ugp_metadata = ugp.metadata
+    now = Time.now.utc.to_i
     war_factories = ugp_metadata['war_factory']
     if(!war_factories.nil?)
       war_factories.each_pair do |k,building|
          next if(building['state'] != BD::Building.states['NORMAL'])
          building['queue'] = {"size"=>0,"creep"=>nil,"last_creep_start"=>nil, "creep_production_time"=>nil,
          "remaining_time"=>nil} if(building['queue'].nil?)
-         queue = building['queue']
-         if(queue['size']!=0)
-            creeps_generated = (Time.now.utc.to_i - queue['last_creep_start'])/queue['creep_production_time']
-            creep_storage_units = @@game_metadata['creeps'][queue['creep']]['garage_units']
-            remaining_time = (Time.now.utc.to_i - queue['last_creep_start'])%queue['creep_production_time']
-            garage_ramaining = get_garage_remaining_capacity
-            if(queue['size'] < creeps_generated)
-              creeps_generated = queue['size'] 
-            end
-            
-            if(creeps_generated*creep_storage_units < garage_ramaining)
-                #increase the number of creeps in the garage by queue['size']
-              queue['size'] -= creeps_generated
-            else
-                #increase the number of creeps in the garage by garage remaining capacity
-                queue['size']-=(garage_remaining/creep_storage_units).floor
-            end
-            if(queue['size']!=0)
-              queue['last_creep_start'] = Time.now.utc.to_i - remaining_time
-              queue['remaining_time'] = queue['creep_production_time'] - remaining_time
-          end
-        end
+         war_factory = BD::WarFactory.new building['coords'],ugp
+         war_factory.process_creeps_generation
       end
     end
-  end
-  
-  def self.get_garage_remaining_capacity
-    return 10  
   end
   
   def self.generate_creep ugp, data
@@ -123,49 +100,21 @@ class BaseDefender < Metadata
       wf = ugp.metadata['war_factory'][war_factory_key]
       #if(wf.nil?)return error no building
       return if(wf.nil?)
-      wf_max_size = @@game_metadata['buildings']['war_factory']['levels'][wf['level'].to_s]['max_queue_size']
-      if(wf['queue']['size'] >= wf_max_size)
-         return {'valid' => false, 'error' => 'queue is max size'}
-      else
-        needs =  @@game_metadata['creeps'][data['creep']]['needs']
-        if(!(ugp.metadata['lumber']>=needs['lumber'] && ugp.metadata['rock']>=needs['rock']))
-          return {'valid' => false, 'error' => 'not enough resources'}
-        end
-        wf['queue']['size']+=1 
-        if(wf['queue']['size']==1)
-          wf['queue']['last_creep_start']= Time.now.utc.to_i         
-          wf['queue']['creep'] = data['creep']
-          wf['queue']['creep_production_time'] = needs['time']
-          wf['queue']['remaining_time'] = needs['time']
-          ugp.metadata['lumber']-=needs['lumber']
-          ugp.metadata['rock']-=needs['rock']
-        end
-      end
-    puts "#{wf['queue']['size']}   #{wf_max_size}"
-    ugp.needs_saving
-    return {'valid' => true, 'error' => ''}
+      war_factory = BD::WarFactory.new wf['coords'],ugp
+      validation = war_factory.generate_creep data['creep']
+      return validation if(!validation['valid'])
+      ugp.needs_saving
+      return {'valid' => true, 'error' => ''}
   end
   
   def self.cancel_creep_generation ugp,data
       war_factory_key = data['war_factory']
       wf = ugp.metadata['war_factory'][war_factory_key]
-      if(wf['queue']['size']==0)
-        #return false validation with nothing in queue
-        return {'valid' => false, 'error' => 'nothing to be cancelled'}
-      else
-        wf['queue']['size']-=1
-        needs =  @@game_metadata['creeps'][wf['queue']['creep']]['needs']
-        ugp.metadata['lumber']+=needs['lumber']
-        ugp.metadata['rock']+=needs['rock']
-        if(wf['queue']['size']==0)
-          wf['queue']['last_creep_start']= nil
-          wf['queue']['creep'] = nil
-          wf['queue']['creep_production_time'] = nil
-        end
-      end
-    puts  "#{wf['queue']['size']}"
-    ugp.needs_saving
-    return {'valid' => true, 'error' => ''}
+      war_factory = BD::WarFactory.new wf['coords'],ugp
+      validation = war_factory.cancel_creep_generation
+      return validation if(!validation['valid'])
+      ugp.needs_saving
+      return {'valid' => true, 'error' => ''}
   end
   
   
@@ -298,7 +247,12 @@ class BaseDefender < Metadata
     remaining = required - (now - since)
     if( remaining <= 0 )
       building['level'] += 1
-      building['state'] = BD::Building.states['NORMAL']
+      if(building_name=="garage")
+         garage = BD::Garage.new building['coords'], user_game_profile
+         garage.set_state BD::Building.states['NORMAL']
+      else 
+         building['state'] = BD::Building.states['NORMAL']
+      end
       building['startedBuildingAt'] = nil
       metadata['idle_workers'] += 1
       if @@building_modules[building_name].respond_to? 'assign_worker'
@@ -654,6 +608,9 @@ class BaseDefender < Metadata
       'idle_workers' => 1,
       'rock' => 50000,
       'lumber' => 50000,
+      'creeps' => {},
+      'garage_units_used' => 0, 
+      'total_garage_units'=> 0,
       'reward_bags' => {'id_generator' => 0, 'queue' => []},
       'attack_history' => {},
       'notifications' => {'id_generator' => 0, 'queue' => []},
