@@ -48,7 +48,7 @@
   text-shadow: 3px 3px 0px #5A3815;
   text-transform: uppercase;
 }
-#interaction #buildingDisplay, #interaction #researchDisplay {
+#interaction #buildingDisplay, #interaction #researchDisplay, #interaction #creepDisplay{
   overflow: visible;
   position: absolute;
   top: 80px;
@@ -57,7 +57,7 @@
   height: 500px;
   z-index: 10;
 }
-#interaction #buildingsPanel, #interaction #researchBuildings {
+#interaction #buildingsPanel, #interaction #researchBuildings, #interaction #creeps{
   height: 150px;
   left: 36px;
   overflow: hidden;
@@ -67,7 +67,18 @@
   z-index: 12;
 }
 
-#interaction .buildingInfo, #interaction .researchInfo {
+#interaction .creepInfo{
+  height: 120px;
+  left: 152px;
+  position: absolute;
+  top: 215px;
+  width: 428px;
+  z-index: 11; 
+}
+#gameContainer.arabic #interaction .creepInfo{
+  right:152px; 
+}
+#interaction .buildingInfo, #interaction .researchInfo{
  height: 120px;
   left: 30px;
   position: absolute;
@@ -76,7 +87,8 @@
   z-index: 11;
 }
 
-#interaction .buildingInfo .buildingName, #interaction .researchInfo  .researchName {
+#interaction .buildingInfo .buildingName, #interaction .researchInfo  .researchName,
+#interaction .creepInfo  .creepName {
   color: white;
   font-family: showg;
   font-size: 25px;
@@ -106,7 +118,8 @@
   position: absolute;
 }
 
-#interaction #buildingDisplay .closeContainer,  #interaction #researchDisplay .closeContainer{
+#interaction #buildingDisplay .closeContainer,  #interaction #researchDisplay .closeContainer,
+#interaction #creepDisplay .closeContainer{
   height: 45px;
   left: 0;
   position: absolute;
@@ -115,7 +128,7 @@
   z-index : 12;
 }
 
-#interaction #closeBuildingPanel, #interaction #closeResearchPanel {
+#interaction #closeBuildingPanel, #interaction #closeResearchPanel, #interaction #closeCreepPanel{
   background-image: url("../images/buildings/transparent1x1.png");
   cursor: pointer;
   height: 35px;
@@ -124,7 +137,7 @@
   display : inline-block;
 }
 
-#interaction .buildingPanelTriggers, #interaction .researchPanelTriggers {
+#interaction .buildingPanelTriggers, #interaction .researchPanelTriggers, #interaction .creepPanelTriggers {
   color: #fff78c;
   cursor: pointer;
   height: 40px;
@@ -151,7 +164,7 @@
   z-index : 10;
 }
 
-#interaction #buildingsTrigger, #interaction #researchBuildingsTrigger {
+#interaction #buildingsTrigger, #interaction #researchBuildingsTrigger, #interaction #creepTrigger{
   display : inline-block;
 }
 
@@ -159,7 +172,7 @@
   display : inline-block;
 }
     
-#interaction #buildingsPanel .item, #interaction #researchBuildings .item {
+#interaction #buildingsPanel .item, #interaction #researchBuildings .item, #interaction #creeps .item  {
   float: left;
   height: 130px;
   width: 80px;
@@ -169,6 +182,46 @@
   text-align: center;
 }
 
+#creepDisplay #creepInProgress.item{
+   height: 77px;
+    left: 64px;
+    position: absolute;
+    text-align: center;
+    top: 210px;
+    width: 112px;
+    z-index:1000;
+    color:white;
+}
+
+#creepDisplay #creepInProgress.item #garageError{
+   color : red;
+}
+
+#creepDisplay #creepInProgress.item #inPorgressCancel{
+   height:auto; 
+   cursor:pointer;
+}
+#creepDisplay #creepInProgress.item #queueSize{
+    color: white;
+    display: inline-block;
+    text-align: left;
+    width: 40px;
+    margin-left: 2px;
+    font-size: 19px;
+}
+#gameContainer.arabic #creepDisplay #creepInProgress.item #queueSize{
+ text-align:right; 
+}
+#creepDisplay #creepInProgress.item #InProgressProperties{
+  position: absolute;
+  top: 2px;
+  width: 69px;
+  left: 20px;
+  z-index:100;
+}
+#gameContainer.arabic #creepDisplay #creepInProgress.item{
+   right:64px; 
+}
 #interaction .buildingPanelLine {
   position: absolute;
   top: 190px;
@@ -176,14 +229,26 @@
   z-index : 10;
 }
 
-#interaction #buildingsPanel .item .background, #interaction #researchBuildings .item .background {
+#interaction #buildingsPanel .item .background, #interaction #researchBuildings .item .background,
+#interaction #creeps .item .background  {
   position : relative;
   top : -130px;
   height : 75px;
   float : none;
   z-index : 100;
 }
-#interaction #buildingsPanel .item .hover, #interaction #researchBuildings .item .hover {
+
+#creepDisplay #creepInProgress{
+  position:absolute;
+}
+
+#creepDisplay #creepInProgress .background{
+  position : relative;
+  height : 75px;
+  float : none;
+  z-index : 100;
+}
+#interaction #buildingsPanel .item .hover, #interaction #researchBuildings .item .hover, #interaction #creeps .item .hover {
   position : absolute;
   top : -8px;
   left : -8px;
@@ -191,10 +256,12 @@
   float : none;
   z-index : 50;
 }
-#gameContainer.arabic #interaction #buildingsPanel .item .hover, #gameContainer.arabic #interaction #researchBuildings .item .hover {
+#gameContainer.arabic #interaction #buildingsPanel .item .hover, #gameContainer.arabic #interaction #researchBuildings .item .hover,
+ #gameContainer.arabic #interaction #creeps .item .hover{
   left : -10px;
 }
-#interaction #buildingsPanel .item .hoverArrow, #interaction #researchBuildings .item .hoverArrow {
+#interaction #buildingsPanel .item .hoverArrow, #interaction #researchBuildings .item .hoverArrow,
+ #interaction #creeps .item .hoverArrow{
   float: none;
   position: absolute;
   top: 90px;
@@ -203,7 +270,8 @@
   left: 21px;
 }
 
-#interaction #buildingsPanel .item .itemData, #interaction  #researchBuildings  .item .itemData {  
+#interaction #buildingsPanel .item .itemData, #interaction  #researchBuildings  .item .itemData,
+ #interaction  #creeps  .item .itemData{  
   cursor: pointer;
   background-image: url("../images/buildings/transparent1x1.png");
   height: 130px;
@@ -212,16 +280,30 @@
   width: 80px;
   z-index: 500;
 }
-#interaction #buildingsPanel .item .itemData .name, #interaction #researchBuildings .item .itemData .name {  
+
+#interaction #creepDisplay #creepInProgress.item .itemData{
+  cursor: pointer;
+  background-image: url("../images/buildings/transparent1x1.png");
+  height: 130px;
+  position: absolute;
+  text-align: center;
+  width: 80px;
+  z-index: 500;
+}
+
+#interaction #buildingsPanel .item .itemData .name, #interaction #researchBuildings .item .itemData .name,
+ #interaction #creeps .item .itemData .name{  
   font-size: 17px;
   height: 20px;
   padding-top: 5px;
   text-transform: capitalize;
 }
-#interaction #buildingsPanel .item .itemData .image, #interaction #researchBuildings .item .itemData .image {
+#interaction #buildingsPanel .item .itemData .image, #interaction #researchBuildings .item .itemData .image,
+ #interaction #creeps .item .itemData .image{
   height : 74px;
 }
-#interaction #buildingsPanel .item .disabledMsgBackground, #interaction #researchBuildings .item .disabledMsgBackground {  
+#interaction #buildingsPanel .item .disabledMsgBackground, #interaction #researchBuildings .item .disabledMsgBackground,
+ #interaction #creeps .item .disabledMsgBackground{  
   background: white;
   border-radius: 8px 8px 8px 8px;
   font-family: verdana;
@@ -233,7 +315,8 @@
   width: 82px;
   z-index: 200;
 }
-#interaction #buildingsPanel .item .disabledMsgText, #interaction #researchBuildings .item .disabledMsgText {  
+#interaction #buildingsPanel .item .disabledMsgText, #interaction #researchBuildings .item .disabledMsgText,
+ #interaction #creep .item .disabledMsgText{  
   font-family: verdana;
   font-size: 11px;
   height: 80px;
@@ -244,16 +327,17 @@
   width: 82px;
   z-index: 200;
 }
-#interaction #buildingsPanel .item .itemData .image img, #interaction #researchBuildings .item .itemData .image img {  
+#interaction #buildingsPanel .item .itemData .image img, #interaction #researchBuildings .item .itemData .image img,
+ #interaction #creep .item .itemData .image img{  
   width: 68px;
   height: 74px;
 }
-#interaction #buildingDisplay .buildingDetails, #interaction .researchDetails {
+#interaction #buildingDisplay .buildingDetails, #interaction .researchDetails, #interaction .creepDetails {
   left: 0px;
   position: absolute;
   top: 40px;
 }
-#interaction #buildingDisplay .buildingDesc, #interaction .researchDesc {
+#interaction #buildingDisplay .buildingDesc, #interaction .researchDesc, #interaction .creepDesc{
   color: #FFF78C;
   height: 60px;
   width: 280px;
@@ -263,7 +347,11 @@
   margin : 5px 20px;
   display : inline-block;
 }
-#interaction #buildingDisplay .buildingCost, #interaction .researchCost {
+
+#interaction .creepDesc{
+   width:184px; 
+}
+#interaction #buildingDisplay .buildingCost, #interaction .researchCost, #interaction .creepCost{
   display : inline-block;
   vertical-align : top;
 }
@@ -278,18 +366,18 @@
   width: 23%;
   vertical-align: top;
 }
-#interaction .buildingInfo .resourcesNeeded, #interaction .researchInfo .resourcesNeeded {
+#interaction .buildingInfo .resourcesNeeded, #interaction .researchInfo .resourcesNeeded, #interaction .creepInfo .resourcesNeeded {
   text-align: left;
   width : 176px;
   padding : 0px 10px;
 }
-#interaction #buildingsPanel .item .inactive, #interaction #researchBuildings .item .inactive {
+#interaction #buildingsPanel .item .inactive, #interaction #researchBuildings .item .inactive, #interaction #creeps .item .inactive{
   cursor : not-allowed;
 }
 
 
 
-#interaction #buildingDisplay .buildButton, #interaction #researchBuildings .startButton {
+#interaction #buildingDisplay .buildButton, #interaction #researchBuildings .startButton,#interaction #creeps .startButton {
   bottom: 0;
   height: 55px;
   position: absolute;
@@ -300,66 +388,70 @@
 }
 
 
-#buildings div, #defense div, #researchBuildings div{
+#buildings div, #defense div, #researchBuildings div,#creeps div {
 	float :left;	
 }
 #gameContainer.arabic #buildings div, #gameContainer.arabic #defense div, #gameContainer.arabic #researchBuildings div {
 	float :right;	
 }
 
-#buildings-container, #defense-container, #research-buildings-container {
+#buildings-container, #defense-container, #research-buildings-container,#creeps-container {
 	width : 430px;
 	overflow: hidden;
   padding : 0px 2px;
 }
-#buildings-ul, #defense-ul, #researches-ul{
+#buildings-ul, #defense-ul, #researches-ul, #creeps-ul{
 	width : 2000px;
 	height :150px;			
 	margin : 0px;
 	padding : 0px;
 }
 #buildings .right, #buildings .left, #defense .right, #defense .left,
-#researchBuildings .right, #researchBuildings .left {
+#researchBuildings .right, #researchBuildings .left, #creeps .right, #creeps .left {
   width : 30px;
   margin : 10px 8px 0px 8px;
   text-align : center;
   overflow : hidden;
   direction : ltr;
 }
-#buildings li, #defense li, #researchBuildings li {
+#buildings li, #defense li, #researchBuildings li, #creeps li {
 	float : left;
 	list-style : none;			
   height: 150px;
   width: 86px;
 }
 #gameContainer.arabic #buildings li, #gameContainer.arabic #defense li,
-#gameContainer.arabic #researchBuildings li {
+#gameContainer.arabic #researchBuildings li, #gameContainer.arabic #creeps li {
 	float : right;
 }
-#buildingsPanel .leftOff, #researchBuildings .leftOff {
+#buildingsPanel .leftOff, #researchBuildings .leftOff, #creeps .leftOff  {
   margin-left : 0px;
 }
-#buildingsPanel .leftOn, #researchBuildings .leftOn  {
+#buildingsPanel .leftOn, #researchBuildings .leftOn, #creeps .leftOn {
   margin-left : -60px;
   cursor : pointer;
 }
-#buildingsPanel .rightOff, #researchBuildings .rightOff  {
+#buildingsPanel .rightOff, #researchBuildings .rightOff, #creeps .rightOff{
   margin-left : -30px;
 }
-#buildingsPanel .rightOn, #researchBuildings .rightOn  {
+#buildingsPanel .rightOn, #researchBuildings .rightOn, #creeps .rightOn{
   margin-left : -90px;
   cursor : pointer;
 }
-#gameContainer.arabic #buildingsPanel .leftOff, #gameContainer.arabic #researchBuildings .leftOff {
+#gameContainer.arabic #buildingsPanel .leftOff, #gameContainer.arabic #researchBuildings .leftOff, 
+#gameContainer.arabic #creeps .leftOff {
   margin-left : -30px;
 }
-#gameContainer.arabic #buildingsPanel .leftOn, #gameContainer.arabic #researchBuildings .leftOn {
+#gameContainer.arabic #buildingsPanel .leftOn, #gameContainer.arabic #researchBuildings .leftOn,
+#gameContainer.arabic #creeps .leftOn, {
   margin-left : -90px;
 }
-#gameContainer.arabic #buildingsPanel .rightOff, #gameContainer.arabic #researchBuildings .rightOff {
+#gameContainer.arabic #buildingsPanel .rightOff, #gameContainer.arabic #researchBuildings .rightOff,
+ #gameContainer.arabic #creeps .rightOff{
   margin-left : 0px;
 }
-#gameContainer.arabic #buildingsPanel .rightOn, #gameContainer.arabic #researchBuildings .rightOn {
+#gameContainer.arabic #buildingsPanel .rightOn, #gameContainer.arabic #researchBuildings .rightOn,
+ #gameContainer.arabic #creeps .rightOn{
   margin-left : -60px;
 }
 #interaction  #researchBuildings .ongoingResearch { 
@@ -399,3 +491,4 @@
   width: 88px;
   position: relative;  
 }
+

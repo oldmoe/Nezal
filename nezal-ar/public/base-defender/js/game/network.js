@@ -30,6 +30,19 @@ var Network = Class.create({
     return {'done' : done, 'gameStatus' : gameStatus};
   },
   
+  genericPostRequest : function(request,params){
+    var done = true;
+    var gameStatus = null;
+    new Ajax.Request(request, {
+      method : 'post',
+      asynchronous : true,
+      parameters: { 'data' : Object.toJSON(params)},
+      onSuccess: function(response) {
+        
+      }
+    });
+    return {'done' : done, 'gameStatus' : gameStatus};
+  },
   neighbourEmpire : function(user_id){
     var userData = {};
     new Ajax.Request('generic', {
@@ -41,6 +54,13 @@ var Network = Class.create({
       }
     });
     return userData;
+  },
+  
+  generate_creep :function(data){
+    this.genericPostRequest('generate_creep',data)
+  },
+  cancel_creep_generation: function(data){
+    this.genericPostRequest('cancel_creep_generation',data)
   },
   
   neighbourIDs : function(){

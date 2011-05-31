@@ -11,6 +11,7 @@ var ControlsPanel = Class.create({
   },
   _AttachLangListeners : function(){
       $$('#controlPanel #languages')[0].innerHTML = game.templatesManager.load("languagesMenu");
+      game.addLoadedImagesToDiv('languages')
       $$('#controlPanel #languages .lang').each(function(div){
         div.stopObserving('mouseover')
   		div.observe('mouseover',function(){
