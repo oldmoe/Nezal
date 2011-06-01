@@ -72,6 +72,13 @@ var CreepPanel = Class.create({
     var disabled = []
     this.wf = wf || this.wf
     var self = this
+    this.fillTemplate(this.wf)
+    $('interaction').show();
+   if(!this.displayed) Animation.show("creepDisplay");
+   this.displayed = false
+  },
+  fillTemplate : function(wf){
+    var self = this
     $('creepDisplay').innerHTML = this.game.templatesManager.load("creep-panel", {'creeps' : this.creeps,'queue':wf.queue, 'disabled' : this.disabled});
     this.game.addLoadedImagesToDiv("creepDisplay");
     var cancelDiv = $$('#creepDisplay #inPorgressCancel')[0]
@@ -80,8 +87,5 @@ var CreepPanel = Class.create({
         self.cancelCreep()
       })
     }
-    $('interaction').show();
-   if(!this.displayed) Animation.show("creepDisplay");
-   this.displayed = false
-  },
+  }
 })

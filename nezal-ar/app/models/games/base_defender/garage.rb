@@ -9,13 +9,23 @@ module BD
       @can_be_built_on = "grass"
       @ugp = ugp
       @location_hash = BaseDefender.convert_location(coords)
+      @level = @ugp.metadata[@name][@location_hash]['level']
     end
     def set_state state
       @ugp.metadata[@name][@location_hash]['state'] = state
       if(state==BD::Building.states['NORMAL'])
           game_metadata = BaseDefender.adjusted_game_metadata
+          change_garage_capacity
           check_stopped_war_factories @ugp, game_metadata
       end
+    end
+    def change_garage_capacity
+          game_metadata = BaseDefender.adjusted_game_metadata
+          @ugp.metadata['total_garage_units']=0 if(@ugp.metadata['total_garage_units'].nil?)
+          @ugp.metadata['garage_units_used']=0 if(!@ugp.metadata['garage_units_used'].nil?)
+          garage_levels = game_metadata['buildings']['garage']['levels']
+          puts "level = #{garage_levels[(@level-1).to_s]['storage_units']}"
+          @ugp.metadata['total_garage_units']+= (garage_levels[@level.to_s]['storage_units']-garage_levels[(@level-1).to_s]['storage_units'])
     end
     def check_stopped_war_factories ugp, game_metadata
         ugp_metadata = ugp.metadata
@@ -44,25 +54,7 @@ module BD
        end
      end
     class << self
-      def build(user_game_profile, coords, name=nil)
-          validation = super(user_game_profile, coords, name)
-          game_metadata = BaseDefender.adjusted_game_metadata
-          user_game_profile.metadata['total_garage_units']=0 if(!user_game_profile.metadata['total_garage_units'].nil?)
-          user_game_profile.metadata['garage_units_used']=0 if(!user_game_profile.metadata['garage_units_used'].nil?)
-          user_game_profile.metadata['total_garage_units']+= game_metadata['buildings']['garage']['levels']['1']['storage_units']
-          return validation
-      end
-      def upgrade(user_game_profile, coords, name=nil)
-          validation = super(user_game_profile, coords, name)
-          building_name = name || @name
-          location_hash = BaseDefender.convert_location(coords)
-          game_metadata = user_game_profile.game.metadata
-          garage_levels = game_metadata['buildings'][building_name]['levels']
-          if(validation['valid'])
-             level = user_game_profile[building_name][location_hash]['level']
-             user_game_profile.metadata['total_garage_units']+= (garage_levels[level.to_s]['storage_units']-garage_levels[(level-1).to_s]['storage_units'])
-         end
-      end
+      
     end
   end
 end
