@@ -155,6 +155,8 @@ var Game = Class.create({
     buildingImages.push("lumbermill_saw.png");
     buildingImages.push("townhall_door.png");
     buildingImages.push("storage_2.png");
+    buildingImages.push("defense_research_animation.png");
+    buildingImages.push("military_research_animation.png");
 
     var buildingOutlineImages = BuildingMode.prototype.buildings.collect(function(building){
       return building + "_outline.png";
@@ -189,7 +191,8 @@ var Game = Class.create({
 		//This is duplicated to avoid a problem in the loader that can't deal with an array of a single item
     var smokeImages = ["smoke_big.png", "smoke_big.png"]
     
-    var researchImages = ["cement.png", "cement_disabled.png", "laser.png", "laser_disabled.png"];
+    var researchImages = ["cement.png", "cement_disabled.png", "laser.png", "laser_disabled.png",
+                         'blue_bubble.png', 'red_bubble.png', 'green_bubble.png', 'yellow_bubble.png', 'white_bubble.png'];
   
     // Weapons Images 
 		var weaponsImages = ["slingshot.png", "rock.png", "green_book.png"]
