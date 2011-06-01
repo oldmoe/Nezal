@@ -3,6 +3,7 @@ var WarFactoryDisplay = Class.create(BuildingDisplay, {
     animationEverySeconds : 0,
     tickDelay : 2,
     initialize : function($super,owner,properties){
+      this.defaultAction = this.renderCreepMenu;
       $super(owner,properties)
       var self = this;
       this.owner.game.scene.pushPeriodicalRenderLoop(
@@ -11,10 +12,10 @@ var WarFactoryDisplay = Class.create(BuildingDisplay, {
               this.animationEverySeconds,
               function(){self.renderAnimation()});
     },
-  renderPanel: function($super){
-    $super();
-    var self = this.owner;
-    self.game.selectedBuildingPanel = new BuildingPanel(self, function(){return ""});
+    
+  renderCreepMenu : function(){
+    Sounds.play(Sounds.gameSounds.click);
+    game.creepPanel.displayPanel(this.owner,{'disabled' : []});
   },
 	renderAnimation : function(){
 	  if (!this.sprites.building.animated && !this.owner.producing) {

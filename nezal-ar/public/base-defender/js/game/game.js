@@ -64,7 +64,7 @@ var Game = Class.create({
     var gameElementsImages = ['upper_bar.png', 'energy_bar_background.png','monitor.png','background.png','cancel.png','button.png',
                               'zoom.png','hover.png','sound.png','music.png','control_button.png','click.png','move.png','flag.png',
                             	'panel_background.png', 'resource_meter_background.png','resource_meter_rock.png','resource_meter_wood.png',
-                            	'button_clicked.png', 'building_menu_hover.png', 'build_button.png']
+                            	'button_clicked.png', 'building_menu_hover.png', 'build_button.png','language_button.png','language_click.png']
                               
     var friendsImages = ['1st_blank.png', 'bar.png', 'home_icon.png']
     var buildingImages = ['townhall.png']
@@ -72,7 +72,8 @@ var Game = Class.create({
     var questsImages = [  "msgBg.png", "wedge.png", "button.png", "msgBaloon.png", "questBaloon.png" , "questBg.png", "buildingPanelBg.png",
                           "resources.png", "correct.png", "buildingsBg.png", "wedgesBg.png", 
                           'button.png','cursor.png',"social.png", "civil.png", "military.png", "circles.png", "hover.png", "animated_circles.gif", 
-                          "line.png", "resources_needed_for_building.png", "building_hover.png", "building_hover_arrow.png", "empty.png"];
+                          "line.png", "resources_needed_for_building.png", "building_hover.png", "building_hover_arrow.png", "empty.png",
+                          "cancel_in_progress.png"];
     questsImages = questsImages.concat(BuildingMode.prototype.buildings.collect(function(building){
                                                                       return building + "_info.png";
                                                                   }));
@@ -188,11 +189,13 @@ var Game = Class.create({
     //var buildingPanelImages = ["panel.png"]
 		
     var creepsImages = ["car.png",'explosion.png','car_fight.png']
+    var creepsMenuImages = ['car_button.png','car_button_disabled.png','cancel.png']
 		//This is duplicated to avoid a problem in the loader that can't deal with an array of a single item
     var smokeImages = ["smoke_big.png", "smoke_big.png"]
     
     var researchImages = ["cement.png", "cement_disabled.png", "laser.png", "laser_disabled.png",
                          'blue_bubble.png', 'red_bubble.png', 'green_bubble.png', 'yellow_bubble.png', 'white_bubble.png'];
+    var creepGenerationImages = ["",""]
   
     // Weapons Images 
 		var weaponsImages = ["slingshot.png", "rock.png", "green_book.png"]
@@ -202,6 +205,7 @@ var Game = Class.create({
 											 {images : iconsImages, path: 'images/icons/', store: 'icons'},
 										 	 {images : workerImages, path: 'images/worker/', store: 'worker'},
 											 {images : creepsImages, path: 'images/creeps/', store: 'creeps'},
+                       {images : creepsMenuImages, path: 'images/creeps/menu/', store: 'creeps'},
                        {images : smokeImages, path: 'images/', store: 'smoke'},
 											 {images : buildingOutlineImages, path: 'images/buildings/outlines/', store: 'buildingOutlines'},
 											 {images : buildingShadowImages, path: 'images/buildings/shadows/', store: 'buildingShadows'},
@@ -308,16 +312,15 @@ var Game = Class.create({
       this.questsManager = new QuestsManager(this);
       this.tutorial = new Tutorial(this);
       this.tutorial.fire();
+    
     }
     this.rewardsPanel = new RewardsPanel(this)
     this.rewardsPanel.handleRewards();
     
     this.energy = new Energy(this);
     new EnergyDisplay(this);
-    
     this.research = new Research(this);
-    console.log( this.research );
-    
+    this.creepPanel = new CreepPanel(this)
     this.reInitializationNotifications.each(function(fn){fn()});
   },
   

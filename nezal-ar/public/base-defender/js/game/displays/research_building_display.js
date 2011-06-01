@@ -54,7 +54,7 @@ var ResearchBuildingDisplay = Class.create(BuildingDisplay, {
     }
     else 
     {
-
+      this.renderNormalAnimation();
     }
     $super();
   },  

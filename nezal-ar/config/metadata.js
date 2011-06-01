@@ -155,11 +155,21 @@ data={
             "dependency" :{"buildings":{"townhall":1}}, "limited_by":null,"limiting":{"global":3,"others":{}},
             "hp": 800,
             "time" : 0,
+            "storage_units": 0,
             "display" : {"xdim":35,"ydim":35,"zdim":93,"imgWidth":124,"imgHeight":155,
                          "area":"109,116,104,106,104,94,86,85,90,49,76,41,63,30,52,28,48,17,45,14,43,27,30,39,17,56,18,62,28,88,25,104,16,101,22,116,20,122,54,136,106,117"}
       },
       "1":{
             "workers" : 2,
+            "storage_units" :10,
+            "dependency" :{"buildings":{"townhall":1}}, "limited_by":null,"limiting":{"global":3,"others":{}},
+            "hp": 800, "rock":2000, "lumber":2000, "time":15,
+            "display" : {"xdim":35,"ydim":35,"zdim":93,"imgWidth":124,"imgHeight":155,
+                         "area":"109,116,104,106,104,94,86,85,90,49,76,41,63,30,52,28,48,17,45,14,43,27,30,39,17,56,18,62,28,88,25,104,16,101,22,116,20,122,54,136,106,117"}
+      },
+      "2":{
+            "workers" : 2,
+            "storage_units" :20,
             "dependency" :{"buildings":{"townhall":1}}, "limited_by":null,"limiting":{"global":3,"others":{}},
             "hp": 800, "rock":2000, "lumber":2000, "time":15,
             "display" : {"xdim":35,"ydim":35,"zdim":93,"imgWidth":124,"imgHeight":155,
@@ -298,7 +308,11 @@ data={
           "power" : 10,
           "speed" : 3,
           "garage_units":2,
-          "production_time":10
+         "needs" : {
+          time : 60,
+          rock : 100,
+          lumber : 100
+        }
       }
   },
   "xp_levels" : {

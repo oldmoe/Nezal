@@ -172,7 +172,9 @@ module BD
         puts "upgrading " + building_name
         return validation
       end
-
+      
+      
+      
       def validate_upgrade(user_profile_metadata, game_metadata, coords, name=nil)
         building_name = name || @name
         #validating workers
