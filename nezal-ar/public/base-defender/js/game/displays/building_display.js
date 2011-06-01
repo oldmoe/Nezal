@@ -89,7 +89,7 @@ var BuildingDisplay = Class.create(Display, {
         centered: true,
         shiftY: -10,
         styleClass: 'buildingName',
-        width : 144,
+        width : 160,
         shiftX : this.owner.imgWidth/2-70
       });
     else
