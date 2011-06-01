@@ -7,6 +7,10 @@ var Bubble = Class.create({
     this.xdim = 110;
     this.ydim = 40;
     this.zdim = 0;
+    if(largeSizeLimit && largeSizeLimit.width)
+      this.imgWidth = largeSizeLimit.width;
+    if(largeSizeLimit && largeSizeLimit.height)
+      this.imgHeight = largeSizeLimit.height;
     this.reset();
   },
   reset : function(){
