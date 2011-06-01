@@ -78,6 +78,7 @@ var CreepPanel = Class.create({
    this.displayed = false
   },
   fillTemplate : function(wf){
+    var self = this
     $('creepDisplay').innerHTML = this.game.templatesManager.load("creep-panel", {'creeps' : this.creeps,'queue':wf.queue, 'disabled' : this.disabled});
     this.game.addLoadedImagesToDiv("creepDisplay");
     var cancelDiv = $$('#creepDisplay #inPorgressCancel')[0]
