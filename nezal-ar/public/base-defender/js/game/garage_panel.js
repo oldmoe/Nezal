@@ -14,6 +14,7 @@ var GaragePanel = Class.create({
     var self = this
     this.fillTemplate()
     $$('#garageDisplay .barFiller')[0].style.width = ((game.user.data.garage_units_used/game.user.data.total_garage_units) * 100) + "%"
+    $$('#garageDisplay #garageCapacityNumber')[0].innerHTML = game.user.data.garage_units_used+"/"+game.user.data.total_garage_units
     $('interaction').show();
     Animation.show("garageDisplay");
   },

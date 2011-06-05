@@ -241,6 +241,14 @@
 #interaction #garageDisplay #garageCapacity{ 
   
 }
+#interaction #garageDisplay #garageCapacityNumber{
+    color: white;
+    font-size: 30px;
+    left: 263px;
+    position: absolute;
+    top: 295px;
+    z-index: 102;
+}
 #interaction #garageDisplay #garageCapacity .barFiller{
    margin-left: 9px;
    margin-right:9px;
