@@ -26,7 +26,6 @@ var ResearchDisplay = Class.create({
   
   tick : function(){
     var timePassed = Math.floor( (new Date().getTime() - this.seedTime)/1000 );
-    console.log( Util.timeDisplay(this.ongoingResearch.time_remaining - timePassed) );
     var self = this;
     if( timePassed > this.ongoingResearch.time_remaining + 2 ){
       self.researchOwner.game.reInitialize();

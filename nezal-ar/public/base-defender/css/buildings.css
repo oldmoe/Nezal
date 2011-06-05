@@ -48,7 +48,7 @@
   text-shadow: 3px 3px 0px #5A3815;
   text-transform: uppercase;
 }
-#interaction #buildingDisplay, #interaction #researchDisplay, #interaction #creepDisplay{
+#interaction #buildingDisplay, #interaction #researchDisplay, #interaction #creepDisplay, #interaction #garageDisplay{
   overflow: visible;
   position: absolute;
   top: 80px;
@@ -57,7 +57,7 @@
   height: 500px;
   z-index: 10;
 }
-#interaction #buildingsPanel, #interaction #researchBuildings, #interaction #creeps{
+#interaction #buildingsPanel, #interaction #researchBuildings, #interaction #creepDisplay #creeps, #interaction #garageDisplay .creeps{
   height: 150px;
   left: 36px;
   overflow: hidden;
@@ -119,7 +119,7 @@
 }
 
 #interaction #buildingDisplay .closeContainer,  #interaction #researchDisplay .closeContainer,
-#interaction #creepDisplay .closeContainer{
+#interaction #creepDisplay .closeContainer, #interaction #garageDisplay .closeContainer{
   height: 45px;
   left: 0;
   position: absolute;
@@ -128,7 +128,7 @@
   z-index : 12;
 }
 
-#interaction #closeBuildingPanel, #interaction #closeResearchPanel, #interaction #closeCreepPanel{
+#interaction #closeBuildingPanel, #interaction #closeResearchPanel, #interaction #closeCreepPanel, #interaction #closeGaragePanel{
   background-image: url("../images/buildings/transparent1x1.png");
   cursor: pointer;
   height: 35px;
@@ -164,7 +164,7 @@
   z-index : 10;
 }
 
-#interaction #buildingsTrigger, #interaction #researchBuildingsTrigger, #interaction #creepTrigger{
+#interaction #buildingsTrigger, #interaction #researchBuildingsTrigger, #interaction #creepTrigger, #interaction #garageTrigger{
   display : inline-block;
 }
 
@@ -172,7 +172,7 @@
   display : inline-block;
 }
     
-#interaction #buildingsPanel .item, #interaction #researchBuildings .item, #interaction #creeps .item  {
+#interaction #buildingsPanel .item, #interaction #researchBuildings .item, #interaction #creeps .item, #interaction .creeps .item  {
   float: left;
   height: 130px;
   width: 80px;
@@ -228,14 +228,47 @@
   left: 30px;
   z-index : 10;
 }
+#interaction #garageDisplay #garageCapacityContainer{ 
+    left: 45px;
+    position: absolute;
+    top: 227px;
+    width:502px;
+    z-index: 100;
+}
+#gameContainer.arabic #interaction #garageDisplay #garageCapacityContainer{
+  direction:rtl;  
+}
+#interaction #garageDisplay #garageCapacity{ 
+  
+}
+#interaction #garageDisplay #garageCapacity .barFiller{
+   margin-left: 9px;
+   margin-right:9px;
+   overflow:hidden;
+   margin-top: -51px;
+}
 
 #interaction #buildingsPanel .item .background, #interaction #researchBuildings .item .background,
-#interaction #creeps .item .background  {
+#interaction #creepDisplay .creeps .item .background,#interaction #garageDisplay .creeps .item .background  {
   position : relative;
   top : -130px;
   height : 75px;
   float : none;
   z-index : 100;
+}
+#interaction #garageDisplay .creeps .creepSize{
+    color: white;
+    font-size: 21px;
+    left: 12px;
+    position: absolute;
+    top: 5px;
+    z-index: 100;
+}
+#gameContainer.arabic #interaction #garageDisplay .creeps .creepSize{
+   left:58px; 
+}
+#interaction #garageDisplay .creeps .item .background{
+  top:0
 }
 
 #creepDisplay #creepInProgress{
@@ -248,7 +281,8 @@
   float : none;
   z-index : 100;
 }
-#interaction #buildingsPanel .item .hover, #interaction #researchBuildings .item .hover, #interaction #creeps .item .hover {
+#interaction #buildingsPanel .item .hover, #interaction #researchBuildings .item .hover, #interaction #creeps .item .hover,
+ #interaction .creeps .item .hover  {
   position : absolute;
   top : -8px;
   left : -8px;
@@ -257,7 +291,7 @@
   z-index : 50;
 }
 #gameContainer.arabic #interaction #buildingsPanel .item .hover, #gameContainer.arabic #interaction #researchBuildings .item .hover,
- #gameContainer.arabic #interaction #creeps .item .hover{
+ #gameContainer.arabic #interaction #creeps .item .hover,#gameContainer.arabic #interaction .creeps .item .hover{
   left : -10px;
 }
 #interaction #buildingsPanel .item .hoverArrow, #interaction #researchBuildings .item .hoverArrow,
@@ -299,7 +333,7 @@
   text-transform: capitalize;
 }
 #interaction #buildingsPanel .item .itemData .image, #interaction #researchBuildings .item .itemData .image,
- #interaction #creeps .item .itemData .image{
+ #interaction #creeps .item .itemData .image, #interaction #garageDisplay .item .itemData .image{
   height : 74px;
 }
 #interaction #buildingsPanel .item .disabledMsgBackground, #interaction #researchBuildings .item .disabledMsgBackground,
@@ -388,70 +422,70 @@
 }
 
 
-#buildings div, #defense div, #researchBuildings div,#creeps div {
+#buildings div, #defense div, #researchBuildings div,#creeps div, #garageDisplay .creeps div{
 	float :left;	
 }
 #gameContainer.arabic #buildings div, #gameContainer.arabic #defense div, #gameContainer.arabic #researchBuildings div {
 	float :right;	
 }
 
-#buildings-container, #defense-container, #research-buildings-container,#creeps-container {
+#buildings-container, #defense-container, #research-buildings-container,#creeps-container, #garageDisplay .container {
 	width : 430px;
 	overflow: hidden;
   padding : 0px 2px;
 }
-#buildings-ul, #defense-ul, #researches-ul, #creeps-ul{
+#buildings-ul, #defense-ul, #researches-ul, #creeps-ul, .contents-ul{
 	width : 2000px;
 	height :150px;			
 	margin : 0px;
 	padding : 0px;
 }
 #buildings .right, #buildings .left, #defense .right, #defense .left,
-#researchBuildings .right, #researchBuildings .left, #creeps .right, #creeps .left {
+#researchBuildings .right, #researchBuildings .left, #creeps .right, #creeps .left, .contents-ul .right, #garageDisplay .creeps .left, #garageDisplay .creeps .right{
   width : 30px;
   margin : 10px 8px 0px 8px;
   text-align : center;
   overflow : hidden;
   direction : ltr;
 }
-#buildings li, #defense li, #researchBuildings li, #creeps li {
+#buildings li, #defense li, #researchBuildings li, #creeps li, #garageDisplay .contents-ul li {
 	float : left;
 	list-style : none;			
   height: 150px;
   width: 86px;
 }
 #gameContainer.arabic #buildings li, #gameContainer.arabic #defense li,
-#gameContainer.arabic #researchBuildings li, #gameContainer.arabic #creeps li {
+#gameContainer.arabic #researchBuildings li, #gameContainer.arabic #creeps li, #gameContainer.arabic #garageDisplay li {
 	float : right;
 }
-#buildingsPanel .leftOff, #researchBuildings .leftOff, #creeps .leftOff  {
+#buildingsPanel .leftOff, #researchBuildings .leftOff, #creeps .leftOff, #garageDisplay .creeps .leftOff  {
   margin-left : 0px;
 }
-#buildingsPanel .leftOn, #researchBuildings .leftOn, #creeps .leftOn {
+#buildingsPanel .leftOn, #researchBuildings .leftOn, #creeps .leftOn, #garageDisplay .creeps .leftOn{
   margin-left : -60px;
   cursor : pointer;
 }
-#buildingsPanel .rightOff, #researchBuildings .rightOff, #creeps .rightOff{
+#buildingsPanel .rightOff, #researchBuildings .rightOff, #creeps .rightOff, #garageDisplay .rightOff{
   margin-left : -30px;
 }
-#buildingsPanel .rightOn, #researchBuildings .rightOn, #creeps .rightOn{
+#buildingsPanel .rightOn, #researchBuildings .rightOn, #creeps .rightOn, #garageDisplay .rightOn{
   margin-left : -90px;
   cursor : pointer;
 }
 #gameContainer.arabic #buildingsPanel .leftOff, #gameContainer.arabic #researchBuildings .leftOff, 
-#gameContainer.arabic #creeps .leftOff {
+#gameContainer.arabic #creeps .leftOff , #gameContainer.arabic #garageDisplay .leftOff{
   margin-left : -30px;
 }
 #gameContainer.arabic #buildingsPanel .leftOn, #gameContainer.arabic #researchBuildings .leftOn,
-#gameContainer.arabic #creeps .leftOn, {
+#gameContainer.arabic #creeps .leftOn, #gameContainer.arabic #garageDisplay .leftOn{
   margin-left : -90px;
 }
 #gameContainer.arabic #buildingsPanel .rightOff, #gameContainer.arabic #researchBuildings .rightOff,
- #gameContainer.arabic #creeps .rightOff{
+ #gameContainer.arabic #creeps .rightOff, #gameContainer.arabic #garageDisplay .rightOff{
   margin-left : 0px;
 }
 #gameContainer.arabic #buildingsPanel .rightOn, #gameContainer.arabic #researchBuildings .rightOn,
- #gameContainer.arabic #creeps .rightOn{
+ #gameContainer.arabic #creeps .rightOn, #gameContainer.arabic #garageDisplay .rightOn{
   margin-left : -60px;
 }
 #interaction  #researchBuildings .ongoingResearch { 

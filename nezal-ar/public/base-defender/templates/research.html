@@ -1,7 +1,5 @@
-<textarea id="research-panel">
-  
-  <div id="researchBuildings" class="researchBuildings">
-    
+<textarea id="research-panel">  
+  <div id="researchBuildings" class="researchBuildings"> 
     <div class="left">
       <img class="leftOff" src="images/quests/arrows_horizontal.png" />
     </div>
@@ -91,7 +89,7 @@
       <img class="rightOff" src="images/quests/arrows_horizontal.png" />
     </div>
   </div>
-  
+
   <div id="researchMilitary"></div>
   
   {for research in researches}
@@ -311,5 +309,67 @@
   <div class="closeContainer">
     <div class="alignDiv" style="width:87%;"> </div>
     <div id="closeCreepPanel"  onclick="Animation.hide('creepDisplay');"></div>
+  </div>
+</textarea>
+
+
+<!-- garage panel -->
+<textarea id="garage-panel">
+  <div class="creeps">
+    <div class="left">
+      <img class="leftOff" src="images/quests/arrows_horizontal.png" />
+    </div>
+    
+    <div class="container">
+      <ul class='contents-ul'>
+        {for creep in creeps}
+          <li>
+            <div id="${creep_index}" class="item">
+                <span imgId="${creep_index}_image" 
+                      class="loadedImg"
+                      imgClasses="background"
+                      imgSrc="images/creeps/${creep_index}_button.png">
+                </span>
+                <div class="creepSize"> ${creep} </div>
+            </div>
+          </li>
+        {/for}
+        <li>
+          <div class="item">
+            <div class="itemData" style="cursor:auto;"> </div>
+            <span class="loadedImg" imgSrc="images/quests/empty.png" imgClasses="background" ></span>
+          </div>
+        </li>
+      </ul>
+    </div>
+    
+    <div class="right">
+      <img class="rightOff" src="images/quests/arrows_horizontal.png" />
+    </div>
+    
+  </div>
+  <div id="garageCapacityContainer">
+    <div id="garageCapacity"> 
+      <span class="loadedImg" imgClasses="garageFillingBg" imgSrc="images/creeps/background_bar.png"></span>
+      <div class="barFiller">
+        <span class="loadedImg" imgClasses="garageFillingImg flippedImg" imgSrc="images/creeps/filling_bar.png"></span>
+      </div>
+    </div>
+    <div id="garageCapacityAlign"> </div>
+  </div>
+   
+  <span class="loadedImg" imgClasses="buildingPanelBg flippedImg" imgSrc="images/quests/buildingPanelBg.png"></span>
+  <span class="loadedImg" imgClasses="buildingsBg flippedImg" imgSrc="images/quests/buildingsBg.png"></span>
+  <span class="loadedImg" imgClasses="buildingPanelLine" imgSrc="images/quests/line.png"></span>
+  
+  <div class="triggers">
+    <div id="garageTrigger" class="creepPanelTriggers activeTrigger" onclick="Javascript:void(0);">
+      ${Text.labels.garage}
+    </div>
+  </div>
+  
+  <div class="closeContainer">
+    <div class="alignDiv" style="width:87%;"> </div>
+    <div id="closeGaragePanel"  onclick="Animation.hide('garageDisplay');"></div>
   </div>
 </textarea>

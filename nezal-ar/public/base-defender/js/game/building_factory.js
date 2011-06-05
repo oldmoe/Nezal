@@ -3,11 +3,11 @@ var BuildingFactory = Class.create({
   //This will store the specs and upgrade costs of different building levels
   bluePrints : null,
   maximumNubmer : null,
-  newBuildingSpecs : {'state' : Building.prototype.states.NOT_PLACED, 'level' : 0, 'coords' : {'x' : null, 'y' : null}},
   buildingClass : null,
   buildingDisplayClass :null,
   noOfBuildings : 0,
-  initialize : function(game){  
+  initialize : function(game){
+    this.newBuildingSpecs = {'state' : Building.prototype.states.NOT_PLACED, 'level' : 0, 'coords' : {'x' : null, 'y' : null}}  
     this.buildingClass = eval(this.name.dasherize().capitalize().camelize());  
 		 //To get the class name: "defense_center-> defense-center -> Defence-center -> DefenceCenter"
 		this.buildingDisplayClass = eval(this.name.dasherize().capitalize().camelize() + "Display");
