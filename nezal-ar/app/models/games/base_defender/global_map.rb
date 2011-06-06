@@ -87,6 +87,5 @@ module BD
         u['rank_diff'] = u['user_rank'] - @rank
       end
     end
-
   end
 end

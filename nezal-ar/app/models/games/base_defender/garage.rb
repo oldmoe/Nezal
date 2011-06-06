@@ -22,7 +22,7 @@ module BD
     def change_garage_capacity
           game_metadata = BaseDefender.adjusted_game_metadata
           @ugp.metadata['total_garage_units']=0 if(@ugp.metadata['total_garage_units'].nil?)
-          @ugp.metadata['garage_units_used']=0 if(!@ugp.metadata['garage_units_used'].nil?)
+          @ugp.metadata['garage_units_used']=0 if(@ugp.metadata['garage_units_used'].nil?)
           garage_levels = game_metadata['buildings']['garage']['levels']
           puts "level = #{garage_levels[(@level-1).to_s]['storage_units']}"
           @ugp.metadata['total_garage_units']+= (garage_levels[@level.to_s]['storage_units']-garage_levels[(@level-1).to_s]['storage_units'])

@@ -7,7 +7,7 @@ var WarFactory = Class.create(Building, {
         })
     },
     processCreepGeneration : function(){
-      if(this.queue.size>0 && !this.queue.stopped){
+      if(this.queue && this.queue.size>0 && !this.queue.stopped){
         this.queue.remaining_time--;
         if(this.queue.remaining_time<=0){
           var self = this;
