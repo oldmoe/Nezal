@@ -160,9 +160,9 @@ class BaseDefender < Metadata
   
   def self.repair_jobs user_game_profile
     now = Time.now.utc.to_i
-    research_hp_bonus = BD::Research.total_hp_bonus( user_game_profile )
     repair_factor = 40
     profile_metadata = user_game_profile.metadata
+    research_hp_bonus = BD::Research.total_hp_bonus( profile_metadata )
     building_names = @@game_metadata['buildings'].keys
     building_names.each do |building_name|
       if(!profile_metadata[building_name].nil?)
@@ -361,8 +361,8 @@ class BaseDefender < Metadata
   
   def self.repair_buildings user_game_profile
     user_game_profile.metadata['attacked'] = 0
-    research_hp_bonus = BD::Research.total_hp_bonus( user_game_profile )
     profile_metadata = user_game_profile.metadata
+    research_hp_bonus = BD::Research.total_hp_bonus( profile_metadata )
     building_names = @@game_metadata['buildings'].keys
     building_names.each do |building_name|
       if(!profile_metadata[building_name].nil?)
@@ -415,7 +415,7 @@ class BaseDefender < Metadata
   
   def self.simulate_attack profile_metadata, data
     creeps_coords = data['creeps']
-    research_hp_bonus = BD::Research.total_hp_bonus( user_game_profile )
+    research_hp_bonus = BD::Research.total_hp_bonus( profile_metadata )
     map = BD::Map.new profile_metadata['map']
     building_names = @@game_metadata['buildings'].keys
     creeps = []

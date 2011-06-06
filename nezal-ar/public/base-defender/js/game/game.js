@@ -112,35 +112,37 @@ var Game = Class.create({
     var self = this;
     var loaderFinishCallback = function(){
         var mapView = ""
-        var friendIDs = self.network.neighbourIDs();
-        var mapping = {};
-        var ids = []
-        friendIDs.each(function(user, index){
-          mapping[user["service_id"]] = { "index" : index };
-          ids[index]= user["service_id"]
-        });
-        // getUsersInfo takes array of service_ids & a hash of service_ids to fill with retrieved names
-        serviceProvider.getUsersInfo(ids, mapping , function(){
-          friendIDs.each(function(friendID, i){
-            if(mapping[friendID["service_id"]].name)
-              friendID["name"] = mapping[friendID["service_id"]].name
-            else
-              friendID["name"] = friendID["service_id"]
-            
-            mapView += self.templatesManager.load("friend-record", 
-                      {'friendId' : friendID["user_id"], 'serviceId' : friendID["service_id"], 'friendName' : friendID["name"]} );
+        self.network.neighbourIDs( function(friendIDs){
+          var mapping = {};
+          var ids = []
+          friendIDs.each(function(user, index){
+            mapping[user["service_id"]] = { "index" : index };
+            ids[index]= user["service_id"]
           });
-          $('friends-ul').innerHTML = mapView;
-          var images =  {
-                          'left' : 'images/quests/arrows_horizontal.png',
-                          'left-disabled' : 'images/quests/arrows_horizontal.png',
-                          'right' : 'images/quests/arrows_horizontal.png',
-                          'right-disabled' :'images/quests/arrows_horizontal.png'
-                        }
-          var friendsCarousel = null;
-          friendsCarousel = new Carousel("friends", images, 5);
-          friendsCarousel.checkButtons();
+          // getUsersInfo takes array of service_ids & a hash of service_ids to fill with retrieved names
+          serviceProvider.getUsersInfo(ids, mapping , function(){
+            friendIDs.each(function(friendID, i){
+              if(mapping[friendID["service_id"]].name)
+                friendID["name"] = mapping[friendID["service_id"]].name
+              else
+                friendID["name"] = friendID["service_id"]
+              
+              mapView += self.templatesManager.load("friend-record", 
+                        {'friendId' : friendID["user_id"], 'serviceId' : friendID["service_id"], 'friendName' : friendID["name"]} );
+            });
+            $('friends-ul').innerHTML = mapView;
+            var images =  {
+                            'left' : 'images/quests/arrows_horizontal.png',
+                            'left-disabled' : 'images/quests/arrows_horizontal.png',
+                            'right' : 'images/quests/arrows_horizontal.png',
+                            'right-disabled' :'images/quests/arrows_horizontal.png'
+                          }
+            var friendsCarousel = null;
+            friendsCarousel = new Carousel("friends", images, 5);
+            friendsCarousel.checkButtons();
+          });
         });
+        
         //////////////////////////////////
         self.reInitialize();
         //Sounds.gameSounds.Intro[0].stop()
@@ -217,26 +219,30 @@ var Game = Class.create({
   
   reInitialize : function(callback){
     this.neighborGame = false;
-  	$('home').hide()
-    this.gameStatus = this.network.initializeGame();
-    this.data = this.gameStatus.game_data.metadata;
+  	$('home').hide();
     var self = this;
-    Language.getLanguage(this.gameStatus.user_data.locale, function() {
-      var language = Language.userLanguage;
-      $('gameContainer').addClassName(language);
-      if(!Language[language])
-      {
-        self.network.fetchTemplate( "statics/" + language + ".html", function(responseText){
-          Language[language] = responseText;
-          Text = JSON.parse(responseText);
+    this.network.initializeGame( function(gameStatus){
+      self.gameStatus = gameStatus;
+      self.data = gameStatus.game_data.metadata;
+    
+      Language.getLanguage(gameStatus.user_data.locale, function() {
+        var language = Language.userLanguage;
+        $('gameContainer').addClassName(language);
+        if(!Language[language])
+        {
+          self.network.fetchTemplate( "statics/" + language + ".html", function(responseText){
+            Language[language] = responseText;
+            Text = JSON.parse(responseText);
+            self.reflectStatusChange();
+            self.scene.render();
+          });
+        }else{
           self.reflectStatusChange();
           self.scene.render();
-        });
-      }else{
-        self.reflectStatusChange();
-        self.scene.render();
-      }
-    });
+        }
+      });
+      if(callback) callback();
+    } );
   },
 
   selectLanguage : function(lang){
@@ -326,13 +332,15 @@ var Game = Class.create({
   
   loadUserEmpire : function(user_id){
   	$('home').show();
-    this.gameStatus.user_data = this.network.neighbourEmpire(user_id);
-    
-    this.neighborGame = true;
-    this.visitedNeighborId = user_id;
-    this.collectedRewardBags = 0;
-    this.updateGameStatus( this.gameStatus );
-    this.scene.adjustNeighborScene();
+    var self = this;
+    this.network.neighbourEmpire(user_id, function(userData){
+      self.gameStatus.user_data = userData;
+      self.neighborGame = true;
+      self.visitedNeighborId = user_id;
+      self.collectedRewardBags = 0;
+      self.updateGameStatus( self.gameStatus );
+      self.scene.adjustNeighborScene();
+    });
   },
 
   isTouchDevice: function(){

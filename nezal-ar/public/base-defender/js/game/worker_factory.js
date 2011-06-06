@@ -56,12 +56,15 @@ var WorkerFactory = Class.create({
   
   buyWorker : function(){
     if(this.validateBuyWorker()){
+      var self = this;
 			var buyWorkerCallback = function(){
-	  		var response = this.game.network.buyWorker();
-	  		this.game.updateGameStatus(response['gameStatus']);
+	  		self.game.network.buyWorker(function(response){
+          self.game.updateGameStatus(response.gameStatus);
+        });
+	  		
 	  	}
-			this.game.townhallFactory.getTownhall().producingCallback = buyWorkerCallback
-			this.game.townhallFactory.getTownhall().producing = true
+			this.game.townhallFactory.getTownhall().producingCallback = buyWorkerCallback;
+			this.game.townhallFactory.getTownhall().producing = true;
     }
   },
   

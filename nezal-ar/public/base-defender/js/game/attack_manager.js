@@ -28,6 +28,7 @@ var AttackManager = Class.create({
 			creepsArr.push({'x':creep.coords.x,'y':creep.coords.y,'type':"Car"})
 		}
 		this.game.network.simulateAttack(creepsArr);
+    console.log("after, should displayed first");
 	},
 	notifyDoneAttack : function(){
 		this.creepsDone++

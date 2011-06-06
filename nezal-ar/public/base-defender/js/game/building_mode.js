@@ -117,16 +117,16 @@ var BuildingMode = Class.create({
 				this.cancelBuildingMode()
 				this.showBuildingBases()
 			}
-		}
-    	else if (this.selectedBuilding.build(x,y)) {
-			if (this.selectedBuilding.name != 'palm') {
-				this.hideBuildingBases()
-				this.off()
-				$('cancelBuilding').hide()
-			}
-      		this.callback();
-      		//this.off();
-    	}
+		} else { 
+      this.selectedBuilding.build(x,y);
+  		if (this.selectedBuilding.name != 'palm') {
+  			this.hideBuildingBases()
+  			this.off()
+  			$('cancelBuilding').hide()
+  		}
+  		this.callback();
+  		//this.off();
+  	}
   },
 
 	_AttachCancelBuildingListener : function(){
@@ -147,8 +147,11 @@ var BuildingMode = Class.create({
 	},
 	
 	repair : function(){
-		var response = this.game.network.repairBuildings();
-		this.game.updateGameStatus(response['gameStatus']);
+    var self = this;
+		this.game.network.repairBuildings(function(response){
+      self.game.updateGameStatus(response.gameStatus);
+    });
+		
 	},
 		
 	collect : function(building){

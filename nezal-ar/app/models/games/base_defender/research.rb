@@ -11,9 +11,8 @@ module BD
       #user_game_profile.save
     end
     
-    def self.total_hp_bonus( user_game_profile )
+    def self.total_hp_bonus( user_profile_metadata )
       bonus_hp_percent = 0;
-      user_profile_metadata = user_game_profile.metadata
       researches = user_profile_metadata['researches'].keys
       researches.each do |research_index|
         research = user_profile_metadata['researches'][research_index]

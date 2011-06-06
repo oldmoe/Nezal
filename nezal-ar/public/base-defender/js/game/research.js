@@ -75,12 +75,16 @@ var Research = Class.create({
   },
   
   cancelResearch : function(researchName){
-    var response = this.game.network.cancelResearch(researchName);
-    this.game.updateGameStatus(response['gameStatus']);
+    var self = this;
+    this.game.network.cancelResearch(researchName, function(response){
+      self.game.updateGameStatus(response.gameStatus);
+    });
   },
   
   start : function(researchName){
-    var response = this.game.network.startResearch(researchName);
-    this.game.updateGameStatus(response['gameStatus']);
+    var self = this;
+    this.game.network.startResearch(researchName, function(response){
+      self.game.updateGameStatus(response.gameStatus);
+    });
   }
 });

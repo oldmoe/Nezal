@@ -136,8 +136,9 @@ var RewardsPanel = Class.create({
     this.rewards.each(function(reward){
       if(reward.id==id){
         if(self.validateReward(reward)){
-          self.game.network.useReward(id)
-          self.game.reInitialize()
+          self.game.network.useReward(id, function(){
+            self.game.reInitialize();
+          });
         }else{
           Notification.alert('You need more storage. Try to build or upgrade your storage buildings.')
         }
