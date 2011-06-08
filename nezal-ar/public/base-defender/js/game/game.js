@@ -294,7 +294,7 @@ var Game = Class.create({
 	  this.militaryResearchFactory = new MilitaryResearchFactory(this);
     this.wedgeFactory = new WedgeFactory(this);
     this.gaddafiFactory = new GaddafiFactory(this);
-    this.friendsManager = new FriendsManager(this);
+    this.globalMapManager = new GlobalMapManager(this);
     if( !this.buildingMode )
       this.buildingMode = new BuildingMode(this);
     else{
