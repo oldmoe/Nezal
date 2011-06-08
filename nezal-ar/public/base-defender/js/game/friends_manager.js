@@ -22,6 +22,10 @@ var FriendsManager = Class.create({
         })	
    },
    getNeighbors : function(){
-     this.global_map = this.game.network.globalMap(this.friendIds).map(function(x){return x.user_game_profile})
+     var self = this;
+     this.game.network.globalMap(this.friendIds, function(users){
+       self.global_map = users.map(function(x){return x.user_game_profile})
+     });
+     
    }
 })
