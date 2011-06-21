@@ -75,9 +75,35 @@ class BaseDefender < Metadata
     repair_jobs user_game_profile
     energy_gain user_game_profile
     creeps_generation user_game_profile
+    protection_jobs user_game_profile
     BD::Research.operate user_game_profile
     user_game_profile.metadata['last_loaded'] = Time.now.utc.to_i
     user_game_profile.save
+  end
+  
+  def self.start_protection ugp , data
+    now = Time.now.utc.to_i
+    profile_metadata = ugp.metadata
+    profile_metadata['protection']['working'] = true
+    profile_metadata['protection']['started'] = now
+    profile_metadata['protection']['started'] = data['time']
+    ugp.needs_saving
+  end
+  
+  def self.protection_jobs ugp
+    profile_metadata = ugp.metadata    
+    if(profile_metadata['protection'].nil?)
+      profile_metadata['protection'] = {'started'=>0 ,'time'=> 0,'working'=>false}
+    end
+    now = Time.now.utc.to_i
+    if(profile_metadata['protection']['working'])
+      if(profile_metadata['protection']['started'] + profile_metadata['protection']['time'] < now)
+        profile_metadata['protection']['working'] = false
+        profile_metadata['protection']['started'] = 0
+        profile_metadata['protection']['time'] = 0
+      end
+    end
+    ugp.needs_saving
   end
   
   def self.creeps_generation ugp
@@ -622,6 +648,7 @@ class BaseDefender < Metadata
       'attack_history' => {},
       'notifications' => {'id_generator' => 0, 'queue' => []},
       'attacks' => {},
+      'protection' => {'started'=>0 ,'time'=> 0, 'working'=>false},
       'map' => (0..72).to_a.map{(0..24).to_a.map{0}},
       'xp_info' => {
         'xp_level' => 1,
