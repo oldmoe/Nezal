@@ -607,28 +607,29 @@ class BaseDefender < Metadata
   end
 
   def self.init_game_profile(user_game_profile)
-    user_game_profile.metadata= 
-    { 'townhall' => nil,
-      'lumbermill' => nil,
-      'quarry' => nil,
-      'workers' => 1,
-      'idle_workers' => 1,
-      'rock' => 50000,
-      'lumber' => 50000,
-      'creeps' => {},
-      'garage_units_used' => 0, 
-      'total_garage_units'=> 0,
-      'reward_bags' => {'id_generator' => 0, 'queue' => []},
-      'attack_history' => {},
-      'notifications' => {'id_generator' => 0, 'queue' => []},
-      'attacks' => {},
-      'map' => (0..72).to_a.map{(0..24).to_a.map{0}},
-      'xp_info' => {
-        'xp_level' => 1,
-        'energy' => 0,
-        'bonus_seconds' => 0,
-        'xp' => 0
+    user_game_profile.metadata = 
+      { 'varsion' => { 'currnet' => 0, 'sequence' => 1},
+        'townhall' => nil,
+        'lumbermill' => nil,
+        'quarry' => nil,
+        'workers' => 1,
+        'idle_workers' => 1,
+        'rock' => 50000,
+        'lumber' => 50000,
+        'creeps' => {},
+        'garage_units_used' => 0, 
+        'total_garage_units'=> 0,
+        'reward_bags' => {'id_generator' => 0, 'queue' => []},
+        'attack_history' => {},
+        'notifications' => {'id_generator' => 0, 'queue' => []},
+        'attacks' => {},
+        'map' => (0..72).to_a.map{(0..24).to_a.map{0}},
+        'xp_info' => {
+          'xp_level' => 1,
+          'energy' => 0,
+          'bonus_seconds' => 0,
+          'xp' => 0
+        }
       }
-    }
   end
 end
