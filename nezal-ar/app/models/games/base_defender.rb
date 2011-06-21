@@ -634,7 +634,8 @@ class BaseDefender < Metadata
 
   def self.init_game_profile(user_game_profile)
     user_game_profile.metadata= 
-    { 'townhall' => nil,
+    { 'varsion' => { 'currnet' => 0, 'sequence' => 1},
+      'townhall' => nil,
       'lumbermill' => nil,
       'quarry' => nil,
       'workers' => 1,
