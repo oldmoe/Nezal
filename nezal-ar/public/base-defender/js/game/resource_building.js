@@ -99,5 +99,13 @@ var ResourceBuilding = Class.create(Building, {
     }
     
     return true;
+  },
+  getStolenResources : function(){
+    this.damage = Math.min(this.damage,this.maxHp)
+    var stolenResources = Math.floor(this[this.factory.collect]* this.game.data.battle.steal_percentage * this.damage/(this.maxHp*1.0))
+    this.damage = 0
+    var ret = {}
+    ret[this.factory.collect] = stolenResources
+    return ret   
   }
 });

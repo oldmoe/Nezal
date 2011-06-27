@@ -156,7 +156,7 @@ data={
             "hp": 800,
             "time" : 0,
             "storage_units": 0,
-            "display" : {"xdim":35,"ydim":35,"zdim":93,"imgWidth":124,"imgHeight":155,
+            "display" : {"xdim":35,"ydim":35,"zdim":0,"imgWidth":124,"imgHeight":62,
                          "area":"109,116,104,106,104,94,86,85,90,49,76,41,63,30,52,28,48,17,45,14,43,27,30,39,17,56,18,62,28,88,25,104,16,101,22,116,20,122,54,136,106,117"}
       },
       "1":{
@@ -164,7 +164,7 @@ data={
             "storage_units" :10,
             "dependency" :{"buildings":{"townhall":1}}, "limited_by":null,"limiting":{"global":3,"others":{}},
             "hp": 800, "rock":2000, "lumber":2000, "time":15,
-            "display" : {"xdim":35,"ydim":35,"zdim":93,"imgWidth":124,"imgHeight":155,
+            "display" : {"xdim":35,"ydim":35,"zdim":0,"imgWidth":124,"imgHeight":62,
                          "area":"109,116,104,106,104,94,86,85,90,49,76,41,63,30,52,28,48,17,45,14,43,27,30,39,17,56,18,62,28,88,25,104,16,101,22,116,20,122,54,136,106,117"}
       },
       "2":{
@@ -172,7 +172,7 @@ data={
             "storage_units" :20,
             "dependency" :{"buildings":{"townhall":1}}, "limited_by":null,"limiting":{"global":3,"others":{}},
             "hp": 800, "rock":2000, "lumber":2000, "time":15,
-            "display" : {"xdim":35,"ydim":35,"zdim":93,"imgWidth":124,"imgHeight":155,
+            "display" : {"xdim":35,"ydim":35,"zdim":0,"imgWidth":124,"imgHeight":62,
                          "area":"109,116,104,106,104,94,86,85,90,49,76,41,63,30,52,28,48,17,45,14,43,27,30,39,17,56,18,62,28,88,25,104,16,101,22,116,20,122,54,136,106,117"}
       }
 	  }
@@ -306,14 +306,19 @@ data={
       "car" : {
           "hp" : 100,
           "power" : 10,
-          "speed" : 3,
+          "speed" : 10,
           "garage_units":2,
          "needs" : {
-          time : 60,
+          time : 5,
           rock : 100,
           lumber : 100
         }
       }
+  },
+  "battle" : {
+    "bigginer_protection" : 2000,
+    "level_difference" : 3,
+    "steal_percentage" : 0.2,
   },
   "xp_levels" : {
     "1" :{"max_helping_power" : 5, "helping_power_unit_every" : 1800, "max_xp" : 100},

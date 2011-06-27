@@ -1,0 +1,82 @@
+#invadeDisplay img{
+  cursor:pointer;
+}
+#invadeDisplay #upRightInvade{
+    left: 500px;
+    position: absolute;
+}
+#invadeDisplay #downLeftInvade{
+    left: 0;
+    position: absolute;
+    top: 310px;
+}
+#invadeDisplay #downRightInvade{
+    left: 500px;
+    position: absolute;
+    top: 310px;
+}
+#invadeDisplay .creeps{
+  height: 150px;
+  left: 36px;
+  overflow: hidden;
+  position: absolute;
+  top: 80px;
+  width: 530px;
+  z-index: 12;
+}
+
+#invadeDisplay .item img{ 
+  width: 68px;
+  height: 74px;
+ }
+ 
+ #invadeDisplay .contents-ul{
+	width : 2000px;
+	height :150px;			
+	margin : 0px;
+	padding : 0px;
+}
+#invadeDisplay .right, #invadeDisplay .left{
+  width : 30px;
+  margin : 10px 8px 0px 8px;
+  text-align : center;
+  overflow : hidden;
+  direction : ltr;
+}
+#invadeDisplay .contents-ul li {
+	float : left;
+	list-style : none;			
+  height: 150px;
+  width: 86px;
+}
+
+#gameContainer.arabic #invadeDisplay li{
+	float : right;
+}
+#invadeDisplay .leftOff, #researchBuildings .leftOff, #creeps .leftOff, #garageDisplay .creeps .leftOff  {
+  margin-left : 0px;
+}
+#invadeDisplay .leftOn{
+  margin-left : -60px;
+  cursor : pointer;
+}
+#invadeDisplay .rightOff{
+  margin-left : -30px;
+}
+#invadeDisplay .rightOn{
+  margin-left : -90px;
+  cursor : pointer;
+}
+#gameContainer.arabic #invadeDisplay .leftOff{
+  margin-left : -30px;
+}
+#gameContainer.arabic #invadeDisplay .leftOn{
+  margin-left : -90px;
+}
+#gameContainer.arabic #invadeDisplay .rightOff{
+  margin-left : 0px;
+}
+#gameContainer.arabic #invadeDisplay .rightOn{
+  margin-left : -60px;
+}
+ 

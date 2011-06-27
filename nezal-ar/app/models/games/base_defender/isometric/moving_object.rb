@@ -23,35 +23,37 @@ module BD
     :no_of_states, :state, :tick_counter, :map, :moving_path, :target_point
     def tick
       @tick_counter= @tick_counter+1 
-      if(!@moving_path.nil? && @moving_path.length>0)
-        if(@target_angle!=@angle)
+      if(@target_angle!=@angle)
           change_angle()
           return
         end
-        values = @map.value(@moving_path[@moving_path.length-1].x,@moving_path[@moving_path.length-1].y)
-        if(!@moving)
-          @moving = true
-          @distance_to_next_tile = Util.distance(@coords['x'],@coords['y'],values[0],values[1])  
-          @target_angle = @map.get_direction(@coords['x'],@coords['y'],values[0],values[1])
-        end
-        movements = Util.get_next_move(@coords['x'], @coords['y'], values[0], values[1], @speed)
-        @state = (@state+1)%8 if(@tick_counter%3==0)
-        @coords['x']+=movements[0]
-        @coords['y']+=movements[1]
-        map_values = @map.tile_value(@coords['x'], @coords['y'])
-        if(@coords['x'] == values[0] && @coords['y'] == values[1])
-          @moving_path.pop()
-          if(@moving_path.length>0)
-            values = @map.value(@moving_path[@moving_path.length-1].x, @moving_path[@moving_path.length-1].y)
-            @target_angle = @map.get_direction(@coords['x'], @coords['y'], values[0], values[1])
+      if(!@moving_path.nil?)
+        if(@moving_path.length>0)
+          values = @map.value(@moving_path[@moving_path.length-1].x,@moving_path[@moving_path.length-1].y)
+          if(!@moving)
+            @moving = true
+            @distance_to_next_tile = Util.distance(@coords['x'],@coords['y'],values[0],values[1])  
+            @target_angle = @map.get_direction(@coords['x'],@coords['y'],values[0],values[1])
           end
-        end
-        if(@moving_path.length == 0)
-         if(@moving)
-          if ((@coords['x'] - @target_point['x']).abs <0.01 && (@coords['y'] - @target_point['y']).abs <0.01) 
+          movements = Util.get_next_move(@coords['x'], @coords['y'], values[0], values[1], @speed)
+          @state = (@state+1)%8 if(@tick_counter%3==0)
+          @coords['x']+=movements[0]
+          @coords['y']+=movements[1]
+          map_values = @map.tile_value(@coords['x'], @coords['y'])
+          if(@coords['x'] == values[0] && @coords['y'] == values[1])
+            @moving_path.pop()
+            if(@moving_path.length>0)
+              values = @map.value(@moving_path[@moving_path.length-1].x, @moving_path[@moving_path.length-1].y)
+              @target_angle = @map.get_direction(@coords['x'], @coords['y'], values[0], values[1])
+            end
+          end
+         elsif(@moving_path.length == 0)
+          if(@moving)
+            if ((@coords['x'] - @target_point['x']).abs <0.01 && (@coords['y'] - @target_point['y']).abs <0.01) 
             @moving = false
             @state = 0
           else
+            @target_angle = @map.get_direction(@coords['x'],@coords['y'],@target_point['x'], @target_point['y'])
             movements = Util.get_next_move(@coords['x'], @coords['y'], @target_point['x'], @target_point['y'], @speed)
             @coords['x']+=movements[0]
             @coords['y']+=movements[1]

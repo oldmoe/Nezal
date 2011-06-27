@@ -1,7 +1,7 @@
 #panel-buttons-container {
   height: 103px;
   float: left;
-  margin-top: 20px;
+  margin-top: 19px;
   margin-left: 12px;
   width: 81px;
 }
@@ -20,12 +20,12 @@
 #panel-buttons-container .panel-button.hovered{
 	background-image:url('../images/game_elements/building_menu_hover.png');
 }
-#panel-buttons-container .panel-button span {
+#panel-buttons-container .panel-button span{
   color: white;
   font-size: 12px;
   font-weight: bold;
   left: 19px;
-  margin-top: 2px;
+  margin-top: 4px;
   position: absolute;
   text-align: center;
   width: 58px;

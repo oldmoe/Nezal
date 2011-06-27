@@ -18,6 +18,8 @@ var DomTextSprite = Class.create(DomSprite, {
     {
       this.styleClass = 'DomTxtSprite';
     }
+    this.span.addClassName(this.styleClass);
+    this.span.addClassName('smallBlackOutline');
   },
   
   render : function($super){
@@ -35,7 +37,6 @@ var DomTextSprite = Class.create(DomSprite, {
       this.span.setStyle({                  
                          marginLeft :(-this.owner.imgWidth*this.owner.angle  + "px"),
                          marginTop : (-this.currentAnimationFrame * this.owner.imgHeight + "px")})
-      this.span.addClassName(this.styleClass);
     }catch(e){
  //     console.log('Sprite#render: ',e)
     }

@@ -22,12 +22,14 @@ var BuildingFactory = Class.create({
 				var display = new this.buildingDisplayClass(building, this.bluePrints['levels'][this.game.user.data[this.name][buildingInstanceCoords]['level']]['display']);
         building.init();
 				this.game.scene.push(building);
-				this.game.scene.map.addElement(building);
+        this.addToMap(building)
 				this.game.scene.pushAnimation(display);
       }
     }
   },
-  
+  addToMap : function(building){
+    this.game.scene.map.addElement(building);
+  },
   newBuilding : function(){
     var building = new this.buildingClass(this, this.newBuildingSpecs);
 		this.game.scene.push(building);

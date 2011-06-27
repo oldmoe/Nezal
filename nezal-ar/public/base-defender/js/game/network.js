@@ -83,7 +83,7 @@ var Network = Class.create({
       })},
       onSuccess: function(response) {
          var users = JSON.parse(response.responseText);
-         callback(users);
+         if(callback)callback(users);
       }
     });
   },
