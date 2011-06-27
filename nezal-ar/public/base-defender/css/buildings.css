@@ -48,13 +48,14 @@
   text-shadow: 3px 3px 0px #5A3815;
   text-transform: uppercase;
 }
-#interaction #buildingDisplay, #interaction #researchDisplay, #interaction #creepDisplay, #interaction #garageDisplay{
+#interaction #buildingDisplay, #interaction #researchDisplay, #interaction #creepDisplay, #interaction #garageDisplay,
+#interaction #invadeDisplay{
   overflow: visible;
   position: absolute;
   top: 80px;
   left: 80px;
   width: 600px;
-  height: 500px;
+  height: 410px;
   z-index: 10;
 }
 #interaction #buildingsPanel, #interaction #researchBuildings, #interaction #creepDisplay #creeps, #interaction #garageDisplay .creeps{

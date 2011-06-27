@@ -183,7 +183,7 @@
         <span class="loadedImg" imgSrc ="images/game_elements/upper_bar.png"></span>
       </div>
       
-      <div class="topGameElement" id="energy_bar">
+      <div class="topGameElement" id="energy_bar" style="display:none;">
         <span id="more_energy_text"></span>
         <span id="energy_text"></span>
         <span class="loadedImg" imgSrc ="images/game_elements/energy_bar_background.png"></span>
@@ -207,6 +207,8 @@
         <span id="hire-worker-text"> Hire </span>
 			</div>
 			
+      <div class="gameElement smallBlackOutline" id="protectionTime" style="display:none;">
+      </div>
 			<div class="gameElement" id="monitor" style="display:none;">
 				<span class="loadedImg" imgSrc ="images/game_elements/monitor.png"></span>
 			</div>
@@ -233,7 +235,7 @@
           </div>
         </div>
       </div>
-      <div id="home" style="display:none;" onclick="Javascript:game.reInitialize(function(){game.scene.render()})">
+      <div id="home" style="display:none;" onclick="$('invadeDisplay').hide();Javascript:game.reInitialize(function(){game.scene.render()});">
           <span class="loadedImg" imgSrc ="images/friends/home_icon.png"></span>
           <div class='name'>Home</div>
         </div>
@@ -319,7 +321,10 @@
         <div id="buildingDisplay" style="display:none;"> </div>
         <div id="researchDisplay" style="display:none;"> </div>
         <div id="creepDisplay" style="display:none;"> </div>
+        <div id="invadeDisplay" style="display:none;"> </div>
         <div id="garageDisplay" style="display:none;"> </div>
+        <div id="globalMap" style="display:none;"></div>
+        <div id="neighborListDisplay" style="display:none;"> </div>
         <div id="alert" style="display:none;"> </div>
         <div id="prompt" style="display:none;"> </div>
 				<div id="notify" style="display:none;"> </div>
@@ -618,3 +623,106 @@
     		  </div>
     	  </div>
 </textarea>
+<textarea id="neighbor-list" style = "display:none">
+     <div id="neighbors">
+       {for neighbor in neighbors}
+         <div class="neighbor">
+            <div class="neighborInfo">
+              <img class='photo' src='http://graph.facebook.com/${neighbor.service_id}/picture' />	
+              <div class='name' >${neighbor.name.split(' ')[0]}</div>
+            </div>
+            <div class="attackNeighbor">
+              Attack
+            </div>
+            <div class="visitNeighbor">
+              Visit
+            </div>
+         </div>
+       {/for}
+       
+     </div>  
+</textarea>
+
+<textarea id="globalMap" style="display:none;">
+			<div id="neighborsContainer">
+				<div id="globalMapNeigbors">
+          <span class="loadedImg" imgId="globalMapImg" imgSrc ="images/globalMap/user_map.png"></span>
+					{for neighbor in neighbors}
+						<div id="neighbor${neighbor.user_id}" serviceId="${neighbor.service_id}" protected="${neighbor.protection}" class="neighbor" style="left:${neighbor.position.x}px;top:${neighbor.position.y}px;position:absolute;width:62px;height:65px;">
+				      {if neighbor.service_id == userID}		  
+                <span class="loadedImg" imgSrc="images/globalMap/me.png"></span>
+                <img class="photo friend" src='http://graph.facebook.com/${neighbor.service_id}/picture' />
+                <div class="neighborName friend smallBlackOutline">${neighbor.name}</div>
+							{elseif neighbor.friend}
+                <span class="loadedImg" imgSrc="images/globalMap/friend_user.png"></span>
+                <img class="photo friend" src='http://graph.facebook.com/${neighbor.service_id}/picture' />
+                <div class="neighborName friend smallBlackOutline">${neighbor.name}</div>
+              {else}
+                <span class="loadedImg" imgSrc="images/globalMap/normal_user.png"></span>
+                <img class="photo enemy" src='http://graph.facebook.com/${neighbor.service_id}/picture' />
+                <div class="neighborName enemy smallBlackOutline">${neighbor.name}</div>
+              {/if}
+						</div>
+					{/for}
+				</div>
+			</div>
+      <span class="loadedImg" imgId="globalMapBorder" imgSrc="images/globalMap/borders_compass.png"></span>			
+			<div id="leftArrow">
+        <span class="loadedImg" imgSrc="images/globalMap/arrows.png"></span>
+			</div>
+			<div id="rightArrow">
+				<span class="loadedImg" imgSrc="images/globalMap/arrows.png"></span>
+			</div>
+			<div id="globalMapNeighborMenu" style="display:none;">
+        <span class="loadedImg" imgSrc="images/globalMap/panel_background.png"></span>
+				<div id="globalMapNeighborMenuButtons">
+					<div id="visitButton" class="mapNeighborPanelButton">
+						<span class="loadedImg" imgSrc="images/globalMap/buttons.png"></span>
+						<span class="mapNeighborPanelButtonTxt">Visit</span>
+					</div>
+					<div id="invadeButton" class="mapNeighborPanelButton">
+						<span class="loadedImg" imgSrc="images/globalMap/buttons.png"></span>
+						<span class="mapNeighborPanelButtonTxt">Invade</span>
+					</div>
+					<div id="truceButton" class="mapNeighborPanelButton">
+						<span class="loadedImg" imgSrc="images/globalMap/buttons.png"></span>
+						<span class="mapNeighborPanelButtonTxt">Truce</span>
+					</div>
+					<div id="messageButton" class="mapNeighborPanelButton">
+						<span class="loadedImg" imgSrc="images/globalMap/buttons.png"></span>
+						<span class="mapNeighborPanelButtonTxt">Message</span>
+					</div>
+				</div>
+			</div>	
+		</textarea>
+    
+    <textarea id="invadeScene" style="display:none">
+      <div id="creeps">
+          <div id="leftArrow" class="left">
+            <span class="loadedImg" imgSrc="images/globalMap/arrows.png"></span>
+  			  </div>  
+          <div id="userCreepsContainer">
+            <ul class='contents-ul'>
+              {for creep in creeps}
+                <li>
+                  <div class="item ${creep_index}">
+                      <span imgId="${creep_index}_image" 
+                            class="loadedImg"
+                            imgClasses="background"
+                            imgSrc="images/creeps/${creep_index}_button.png">
+                      </span>
+                      <div class="creepSize"> ${creep} </div>
+                  </div>
+                </li>
+              {/for}
+            </ul>
+          </div>
+          <div id="rightArrow" class="right">
+            <span class="loadedImg" imgSrc="images/globalMap/arrows.png"></span>
+  			  </div>
+        </div>
+        <span imgId="upLeftInvade" class="loadedImg" imgSrc="images/invasion/up_left.png"></span>
+        <span imgId="upRightInvade" class="loadedImg" imgSrc="images/invasion/up_right.png"></span>
+        <span imgId="downLeftInvade" class="loadedImg" imgSrc="images/invasion/down_left.png"></span>
+        <span imgId="downRightInvade" class="loadedImg" imgSrc="images/invasion/down_right.png"></span>
+    </textarea>

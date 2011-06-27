@@ -52,6 +52,7 @@ var Slingshot = Class.create({
     for( var i = 0; i < this.game.creepFactory.registery.length; i++ )
     {
       var creep = this.game.creepFactory.registery[i];
+      if(creep.dontAttack) continue
       if(creep.hp > 0 )
       {
         var dist = Util.distance(this.coords.x, this.coords.y, creep.coords.x, creep.coords.y);

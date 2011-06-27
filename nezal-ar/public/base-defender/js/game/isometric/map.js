@@ -140,7 +140,7 @@ var Map={
 		var retList = []
 		for (var k=0;k<8;k++){
 			var neighbor = Map.getNeighbor(i,j,k)
-			if(neighbor && (Map.grid[neighbor[0]][neighbor[1]].value ==0 || Map.grid[neighbor[0]][neighbor[1]].target)  &&Map.grid[neighbor[0]][neighbor[1]].terrainType==0 ) retList.push(Map.grid[neighbor[0]][neighbor[1]])
+			if(neighbor && (Map.grid[neighbor[0]][neighbor[1]].value ==0 || Map.grid[neighbor[0]][neighbor[1]].target|| Map.grid[neighbor[0]][neighbor[1]].ignorePlace)  &&Map.grid[neighbor[0]][neighbor[1]].terrainType==0 ) retList.push(Map.grid[neighbor[0]][neighbor[1]])
 		}
 		return retList
 	},
@@ -263,7 +263,7 @@ var Map={
 		return Map.value(tileValues[0],tileValues[1])		
 	},
 
-	addObjectToGrid : function(obj){
+	addObjectToGrid : function(obj,ignorePlace){
 		var noOfRows = Math.ceil(obj.xdim/Map.tileIsoLength)
 		var noOfColumns = Math.ceil(obj.ydim/Map.tileIsoLength)
 		var topX = obj.owner.coords.x 
@@ -277,6 +277,7 @@ var Map={
 			var loopingTile = [];loopingTile[0] = originTile[0]; loopingTile[1] = originTile[1]
 			for(var j=0;j<noOfColumns+1;j++){
 				Map.grid[loopingTile[0]][loopingTile[1]].value = obj
+        Map.grid[loopingTile[0]][loopingTile[1]].ignorePlace = ignorePlace
 				mapTiles.push(Map.grid[loopingTile[0]][loopingTile[1]])
 				loopingTile = Map.getNeighbor(loopingTile[0],loopingTile[1],Map.SE)
 			}
@@ -306,11 +307,11 @@ var Map={
 		return !collide
 	},
 	
-	addElement : function(obj){
+	addElement : function(obj,ignorePlace){
 		var valid = this.validateLocation(obj)
 		if(valid) {
 	  	this.objects.push(obj)
-	  	this.addObjectToGrid(obj)
+	  	this.addObjectToGrid(obj,ignorePlace)
 	  }
 		return valid
 	},
@@ -380,7 +381,7 @@ var Map={
 		var srcTiles = Map.tileValue(object.coords.x,object.coords.y)
 		var destTiles = Map.tileValue(x,y)
 		Map.grid[destTiles[0]][destTiles[1]].target = true
-	if(Map.grid[destTiles[0]][destTiles[1]].value!=0 && !ignorePlace) destTiles = Map.getNearestEmptyTile(destTiles)
+	  if(Map.grid[destTiles[0]][destTiles[1]].value!=0 && !ignorePlace) destTiles = Map.getNearestEmptyTile(destTiles)
 		var path = astar.getOptimalPath(Map,Map.grid[srcTiles[0]][srcTiles[1]],Map.grid[destTiles[0]][destTiles[1]])
 		for(var i=0;i<Math.ceil(this.mapHeight*2/this.tileHeight)+1;i++){
 				for(var j=0;j<Math.ceil(this.mapWidth/this.tileWidth)+1;j++){
@@ -408,7 +409,7 @@ var Map={
 			var tile = openList[0]
 		 	for (var k=0;k<8;k++){
 				var neighbor = Map.getNeighbor(tile[0],tile[1],k)
-				if(neighbor && Map.grid[neighbor[0]][neighbor[1]].value ==0 &&Map.grid[neighbor[0]][neighbor[1]].terrainType==0 )return neighbor
+				if(neighbor && (Map.grid[neighbor[0]][neighbor[1]].value ==0 || Map.grid[neighbor[0]][neighbor[1]].ignorePlace)  &&Map.grid[neighbor[0]][neighbor[1]].terrainType==0 )return neighbor
 				else if(neighbor) openList.push(neighbor)
 			}
 			openList.splice(0,1)			

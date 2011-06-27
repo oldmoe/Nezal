@@ -10,8 +10,10 @@ var Building = Class.create({
   nextLevelBluePrints : null,
   locationValid : true,
   state : 0,
+  underAttack : false,
   working : true,
   repairing : false,
+  damage : 0,
   states : {NOT_PLACED : 0, UNDER_CONSTRUCTION : 1, UPGRADING : 2, NORMAL : 3},
   initialize : function(factory, buildingSpecs){
     this.name = factory.name;
@@ -35,7 +37,7 @@ var Building = Class.create({
     } 
     if(this.hp<this.maxHp ){
       this.working = false
-      if(!buildingSpecs.started_repairing_at) this.game.attackManager.showRepairMsg()
+      if(!buildingSpecs.started_repairing_at && !game.neighborGame) this.game.attackManager.showRepairMsg()
     } 
     if(buildingSpecs.started_repairing_at > 0){
       this.startRepairing()
@@ -307,5 +309,8 @@ var Building = Class.create({
         }
     }
     return upgradableSpecs
+  },
+  getStolenResources : function(){
+    return {} 
   }
 });

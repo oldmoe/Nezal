@@ -10,9 +10,21 @@ var Animation = {
 			duration: 0.3
 		});
 	},
-  springFade : function(div,yTransition){
+  springFade : function(div,yTransition,afterFinishFn){
     if(this.sf)this.sf.cancel()
-    this.sf = new Effect.Move(div, {mode : 'relative', y: yTransition, transition : Effect.Transitions.spring, afterFinish : function(){new Effect.Fade(div)}})
+    this.sf = new Effect.Move(div, {
+      mode: 'relative',
+      y: yTransition,
+      transition: Effect.Transitions.spring,
+      afterFinish: function(){
+        new Effect.Fade(div, {
+          afterFinish: function(){
+            if (afterFinishFn) 
+              afterFinishFn()
+          }
+        })
+      }
+    })
     
   }
 }

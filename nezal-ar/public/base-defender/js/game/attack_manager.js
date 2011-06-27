@@ -1,7 +1,8 @@
 var AttackManager = Class.create({
-	noOfCreeps : 10,
+	noOfCreeps : 0,
 	creepsDone :0,	
 	attacking : false,
+  stolenResources : {},
 	initialize: function(game){
 		this.creeps = []
     var self = this;
@@ -15,23 +16,32 @@ var AttackManager = Class.create({
     $("sendAttack").observe(game.mouseClickEvent, function(){
 		Sounds.play(Sounds.gameSounds.click);
       	self.simulateAttack();
-		$('attackDiv').show();
+		    $('attackDiv').show();
     });
 	},
-	simulateAttack : function(){
+	simulateAttack : function(attackDirection,creeps){
 		if(this.attacking) return
+    if(!game.neighborGame) creeps = game.user.data.creeps
+    this.stolenResources = {}
 		var creepsArr = [] 
 		this.attacking = true
-		for(var i=0;i<this.noOfCreeps;i++){
-			var creep = this.game.creepFactory.newCreep("Car",i)
-			this.creeps.push({'x':creep.coords.x,'y':creep.coords.y, 'creep':creep})
-			creepsArr.push({'x':creep.coords.x,'y':creep.coords.y,'type':"Car"})
-		}
+    var creepId = 0
+    this.noOfCreeps =0
+    for(var c in creeps){
+      var noOfCreeps = creeps[c]
+      for(var i=0;i<noOfCreeps;i++){
+			  var creep = this.game.creepFactory.newCreep(c.capitalize(),creepId++,attackDirection)
+        this.noOfCreeps++
+			  this.creeps.push({'x':creep.coords.x,'y':creep.coords.y, 'creep':creep})
+			  creepsArr.push({'x':creep.coords.x,'y':creep.coords.y,'type':c.capitalize()})
+		  } 
+    }
 		this.game.network.simulateAttack(creepsArr);
-    console.log("after, should displayed first");
+    
 	},
-	notifyDoneAttack : function(){
+	notifyDoneAttack : function(stolenResources){
 		this.creepsDone++
+    if(stolenResources)this.addStolenResources(stolenResources)
 		var attackSuccess = false
 		if(this.creepsDone == this.noOfCreeps){
 			$('attackDiv').hide()
@@ -88,5 +98,13 @@ var AttackManager = Class.create({
 	},
 	showAttackFailMsg : function(){
 		Notification.notify("Attack failed, try again later.")
-	}
+	},
+  addStolenResources : function(resources){
+    for(var resource in resources){
+      if(!this.stolenResources[resource]){
+        this.stolenResources[resource] = 0
+      }
+      this.stolenResources[resource]+=resources[resource]
+    }
+  }
 })

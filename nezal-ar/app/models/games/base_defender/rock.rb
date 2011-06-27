@@ -31,7 +31,7 @@ module BD
       @attacker = @owner.attacker
       @extraXStep = 0
       @extraYStep = 0
-      puts "New Rock :: #{self.__id__} :: #{@coords[:x]} :: #{@coords[:y]} :: #{@owner.angle}"
+      #puts "New Rock :: #{self.__id__} :: #{@coords[:x]} :: #{@coords[:y]} :: #{@owner.angle}"
     end  
 
     def tick
@@ -49,12 +49,12 @@ module BD
         end
         @coords[:x] = @coords[:x] + @extraXStep
         @coords[:y] = @coords[:y] + @extraYStep
-        puts "Rock Tick #{self.__id__} :: #{@attacker.__id__} :: #{@attacker.coords['x']} :: #{@attacker.coords['y']} :: #{@coords[:x]}  ::  #{@coords[:y]}"
+        #puts "Rock Tick #{self.__id__} :: #{@attacker.__id__} :: #{@attacker.coords['x']} :: #{@attacker.coords['y']} :: #{@coords[:x]}  ::  #{@coords[:y]}"
         if(@coords[:x] == target_x && @coords[:y] == target_y )
           @done = true
-          puts "Rock Fire #{self.__id__} :: #{@attacker.__id__} :: #{@attacker.coords['x']} :: #{@attacker.coords['y']} :: #{@coords[:x]}  ::  #{@coords[:y]}"
+          #puts "Rock Fire #{self.__id__} :: #{@attacker.__id__} :: #{@attacker.coords['x']} :: #{@attacker.coords['y']} :: #{@coords[:x]}  ::  #{@coords[:y]}"
           @attacker.hp -= @owner.specs['power']
-          puts "================================== FIREEEEEEEEEEEEE ====================== #{@attacker.hp}"
+          #puts "================================== FIREEEEEEEEEEEEE ====================== #{@attacker.hp}"
         end
       else
         @done = true

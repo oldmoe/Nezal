@@ -20,19 +20,31 @@ module BD
     
     def generate
       if @friend_ids.length >= MAP_LIMIT
-        return @friends.sort{|a,b| weight(a) <=> weight(b)}
+        result = @friends.sort{|a,b| weight(a) <=> weight(b)} 
       else
         @users = get_nearby_users
         add_battles(@users)
         index = 0
-        return merge(@friends, @users, add_ranks_to_battles).sort{|a,b| weight(a) <=> weight(b)}.select do |u|
+        result =  merge(@friends, @users, add_ranks_to_battles).sort{|a,b| weight(a) <=> weight(b)}.select do |u|
           index += 1
           index <= MAP_LIMIT || u['friend']
         end
       end
+      result = result.collect{|r| {'id'=>r.id,'rank_id'=> r.rank_id, 'battles'=>r['battles'], 'friend'=>r['friend']}}
+      profile_ids = result.collect{|r|r['id']}
+      users_profiles =  UserGameProfile.select('user_id, metadata').where(['id in (?)', profile_ids])
+      result.each_with_index do |r,i|
+        r['service_id'] = users_profiles[i].user.service_id
+        r['user_id'] = users_profiles[i].user.id
+        if(r['protection'] = users_profiles[i].metadata['protection'].nil?)
+          r['protection']  =false
+        else 
+          r['protection'] = users_profiles[i].metadata['protection']['working']
+        end
+      end
+      return result
     end
-    
-     def weight(user)
+    def weight(user)
       user['battles'] * BATTLE_WEIGHT - user['rank_diff'].abs * RANK_WEIGHT
     end
 

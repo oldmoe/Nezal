@@ -1,0 +1,121 @@
+ #neighborListDisplay #neighbors{
+    background-color: Peru;
+    left: 200px;
+    position: absolute;
+    top: 30px;
+    color:white;
+    width: 500px; 
+ }
+ 
+ #neighborListDisplay #neighbors .neighbor .neighborInfo{
+      display: inline-block;
+      width: 386px;
+ }
+ #neighborListDisplay #neighbors .neighbor .attackNeighbor{
+   width:50px;
+   cursor:pointer;
+   display:inline-block;
+ }
+ #neighborListDisplay #neighbors .neighbor .visitNeighbor{
+   width:50px;
+   cursor:pointer;
+   display:inline-block;
+ }
+ 
+ #globalMap{
+			width:760px;
+			height:550px;
+			overflow:hidden;
+		}
+#globalMap #neighborsContainer{
+	height: 550px;
+	overflow: hidden;
+	position: absolute;
+	width: 760px;
+}
+#globalMap #globalMapBorder{
+	position: absolute;
+	top: 13px;
+}
+#globalMap #globalMapNeigbors{
+	 height: 550px;
+	left: -760px;
+	overflow: hidden;
+	position: absolute;
+	top: 0;
+	width: 2280px;
+}
+#globalMap #globalMapNeigbors .neighbor{
+  cursor:pointer;
+	z-index:1;
+}
+#globalMap #globalMapNeigbors .neighbor .photo{
+    z-index: 10;
+    position: absolute;
+    left: 13px;
+    width: 32px;
+    height: 29px;
+    top: 8px;
+}
+#globalMap #globalMapNeigbors .neighbor .neighborName{
+    color: white;
+    font-size: 14px;
+    position: absolute;
+    top: 32px;
+    width: 62px;
+    text-align: center;
+}
+#globalMap #globalMapNeigbors .neighbor .neighborName.enemy{
+    top: 36px;
+}  
+#globalMap #globalMapNeigbors .neighbor .photo.enemy{
+  top:12px;
+  left:17px;
+ }
+#globalMap #leftArrow{
+ left: 37px;
+ overflow: hidden;
+ position: absolute;
+ top: 225px;
+ width: 36px;
+ z-index:100;
+}
+#globalMap #leftArrow img{
+	margin-left:0px;
+}
+#globalMap #rightArrow{
+ left: 700px;
+ overflow: hidden;
+ position: absolute;
+ top: 225px;
+ z-index:100;
+ width: 36px;
+}
+#globalMap #rightArrow img{
+	margin-left:-36px;
+}
+#globalMap #globalMapNeighborMenu{
+	position:absolute;
+	z-index:100;
+}
+#globalMap #globalMapNeighborMenu #globalMapNeighborMenuButtons{
+   margin-left: 10px;
+   margin-top: -89px;
+}
+#globalMap #globalMapNeighborMenu #globalMapNeighborMenuButtons .mapNeighborPanelButton{
+  height: 20px;
+  cursor:pointer;
+  overflow: hidden;
+  width: 50px;
+}
+#globalMap #globalMapNeighborMenu #globalMapNeighborMenuButtons .mapNeighborPanelButton span{
+	color: white;
+	font-size: 11px;
+	font-weight: bold;
+	left: 6px;
+	margin-top: 2px;
+	position: absolute;
+	text-align: center;
+  font-family: none;
+	width: 58px;
+}
