@@ -49,6 +49,7 @@ EOF
       @row_even_directions = {}
       @row_odd_directions = {}
       @objects = []
+      @zone_points = [{'x'=>1495,'y'=>551},{'x'=>765,'y'=>914},{'x'=>25,'y'=>550},{'x'=>771,'y'=>157}]
     end
     attr_accessor :grid, :tile_width, :tile_height, :view_width, :view_height, :map_width, :map_height, :x, :y, :speed,
       :origin, :row_even_directions, :row_odd_directions, :objects, :tile_angle
@@ -226,7 +227,8 @@ EOF
         break
       end
     end
-    return valid
+    inside_polygon = Util.is_inside(obj,@zone_points)
+    return valid && inside_polygon
   end
   
   def add_element obj

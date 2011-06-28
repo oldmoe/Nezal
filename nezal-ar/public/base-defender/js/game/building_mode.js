@@ -83,6 +83,7 @@ var BuildingMode = Class.create({
 		}
 		else {
 			this.selectedBuilding.destroy();
+      game.scene.remove(this.selectedBuilding)
 			this.selectedBuilding = null;
 			if (!this.moveMode) {
 				this.hideBuildingBases()

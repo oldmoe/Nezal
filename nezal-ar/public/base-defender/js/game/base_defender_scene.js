@@ -15,8 +15,8 @@ var BaseDefenderScene = Class.create(Scene, {
 		this.gamePanel = new GamePanel(game);
     this.map = Map;
 		this.rawMap = this.game.user.data["map"];
+    this.map.init(this);
 		this.map.clear();
-		this.map.init(this);
 		this.createRenderLoop('animations', 1);
 		this.createRenderLoop('hand', 3);
 		this.createRenderLoop('info', this.reactor.everySeconds(1));
