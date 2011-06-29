@@ -1,6 +1,7 @@
 require "json"
 
 class BaseDefender < Metadata
+
   @@game_name = 'base-defender'
   @@speed_factor = 1
   @@resource_building_modules = {
@@ -272,9 +273,6 @@ class BaseDefender < Metadata
   def self.initialize_game_metadata( game )
     #Applying Speed Factor!
     @@building_modules.keys.each do |building_name|
-      puts building_name
-      puts game.metadata['buildings'][building_name]
-      puts "----------------------------------------------------"
       building_levels = game.metadata['buildings'][building_name]['levels']
       building_levels.keys.each do |level|
         building_levels[level]['time'] /= @@speed_factor
@@ -508,7 +506,6 @@ class BaseDefender < Metadata
       validation = @@building_modules[name].upgrade(user_game_profile, data['coords'])
       return validation
     end
-    
   end
   
   def self.collect_building(user_game_profile, data)
@@ -541,55 +538,6 @@ class BaseDefender < Metadata
   
   def self.add_reward_bag user_game_profile, data
     user_game_profile['reward_bag']  
-  end
-  
-  def self.init_language_data(game, lang)
-    load_game(game)
-    data = LanguageManager.load_data(@@game_name, lang)
-    data['buildings'] ||= {}
-    data['quests'] ||= {}
-    @@game_metadata['buildings'].keys.each do |key|
-      data['buildings'][key] ||= { 'name' => '', 'desc' => '', 'upgrade_desc' => {} } 
-    end
-    game.quests.each do |quest|
-      data['quests'][quest.id] ||= {}
-      data['quests'][quest.id]['conditionMsgs'] ||= {}
-      if quest.metadata['conditions']['buildings']
-        quest.metadata['conditions']['buildings'].each_pair do |building, hash|
-          data['quests'][quest.id]['conditionMsgs'][building] ||= {}
-          hash.keys.each do |key|
-            data['quests'][quest.id]['conditionMsgs'][building][key] = ''
-          end
-        end
-      end
-      if quest.metadata['conditions']['resources']
-        quest.metadata['conditions']['resources'].keys do |key|
-          data['quests'][quest.id]['conditionMsgs'][key] = ''
-        end
-      end
-    end
-    LanguageManager.save_data(@@game_name, lang, data)
-  end
-
-  def self.load_language_data(game)
-    load_game(game)
-    data = {}
-    if @@game_metadata['languages']
-      @@game_metadata['languages'].each_key do |lang|
-        data[lang] = LanguageManager.load_data(@@game_name, lang)
-      end
-    end
-    data
-  end
-
-  def self.edit_language_data(game, language, data)
-    load_game(game)
-    data = JSON.parse(data)
-    if @@game_metadata['languages']
-      @@game_metadata['languages'].each_key do |lang|
-        LanguageManager.save_data(@@game_name, lang, data[lang])
-      end
-    end
   end
   
   def self.list_map user_game_profile, data
@@ -626,4 +574,5 @@ class BaseDefender < Metadata
       }
     }
   end
+
 end
