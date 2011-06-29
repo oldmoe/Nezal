@@ -62,7 +62,7 @@ var Game = Class.create({
 	
   initializeGame : function(){
     var self = this
-    var gameElementsImages = ['upper_bar.png', 'energy_bar_background.png','monitor.png','background.png','cancel.png','button.png',
+    var gameElementsImages = ['upper_bar.png', 'energy_bar_background.png','monitor.png','background.png','zone2.png','cancel.png','button.png',
                               'zoom.png','hover.png','sound.png','music.png','control_button.png','click.png','move.png','flag.png',
                             	'panel_background.png', 'resource_meter_background.png','resource_meter_rock.png','resource_meter_wood.png',
                             	'button_clicked.png', 'building_menu_hover.png', 'build_button.png','language_button.png','language_click.png']

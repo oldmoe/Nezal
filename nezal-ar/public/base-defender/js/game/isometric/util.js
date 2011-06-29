@@ -59,7 +59,11 @@ var Util = {
 	 pointDirection : function(p,line){
 		var v1 = [line[0]-p[0],line[1]-p[1]]
 		var v2 = [line[2]-p[0],line[3]-p[1]]
-		return v1[0]*v2[1] - v2[0]*v1[1]
+    var res = v1[0]*v2[1] - v2[0]*v1[1]
+    var ret = 0
+    if(res>0)ret = 1
+    else if(res<0) ret = -1
+    return ret
 	 },
 	 
 	 //determines whether two isometric objects intersect or not
@@ -97,6 +101,32 @@ var Util = {
 		}
 		return false
 	 },
+   isInside : function(u1,polygon){
+    var A = [u1.owner.coords.x,u1.owner.coords.y-u1.imgHeight/2+u1.zdim]
+		var B = [u1.owner.coords.x-u1.imgWidth/2,u1.owner.coords.y+u1.zdim/2]
+		var C = [u1.owner.coords.x,u1.owner.coords.y+u1.imgHeight/2]
+		var D = [u1.owner.coords.x+u1.imgWidth/2,u1.owner.coords.y+u1.zdim/2]
+     
+    var XY =  [polygon[0].x,polygon[0].y,polygon[1].x,polygon[1].y]
+		var YZ =  [polygon[1].x,polygon[1].y,polygon[2].x,polygon[2].y]
+		var ZW =  [polygon[2].x,polygon[2].y,polygon[3].x,polygon[3].y]
+		var WX =  [polygon[3].x,polygon[3].y,polygon[0].x,polygon[0].y]
+    
+    var v =  [XY,YZ,ZW,WX]
+    var points = [A,B,C,D]
+    var dirs = []
+    for (var i = 0; i < 4; i++) {
+      for (var j = 0; j < 4; j++) {
+        dirs[j] = Util.pointDirection(points[i],v[j])
+      }
+      var m = 1;
+      for (var j = 1; j < 4; j++) {
+        if (dirs[j] != dirs[j - 1]) 
+          return false
+      }
+    }
+    return true
+   },
 	 distance : function(x1,y1,x2,y2){
 		return Math.sqrt(Math.pow(x1-x2,2)+Math.pow(y1-y2,2))
 	 },

@@ -54,6 +54,9 @@ img{
   width:auto;
   height:auto;
 }
+#map_zone{
+  position:absolute;
+}
 .yellowText {
   color: #FAC200;
 }

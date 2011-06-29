@@ -16,6 +16,7 @@ var Map={
 	rowOddDirections : {},
 	objects : [],
 	inViewObjects : [],
+  zonePoints : [{x:1495,y:551},{x:765,y:914},{x:25,y:550},{x:771,y:157}],
 	init : function (scene){
 		this.scene = scene;
 		var rawMap = scene.rawMap;
@@ -25,9 +26,6 @@ var Map={
 						if(!Map.grid[i])Map.grid[i]=[];
 						Map.grid[i][j] = new Node(i,j);
 						Map.grid[i][j].terrainType = rawMap[i][j];
-						if(Map.grid[i][j].terrainType != 0){
-							scene.renderDisplayUnit(Map.value(i, j), rawMap[i][j]);
-					}
 				}
 			}			
 			Map.navigation = new Navigation(Map);
@@ -304,7 +302,8 @@ var Map={
 				break
 			}			
 		}
-		return !collide
+    var insidePolygon = Util.isInside(obj,Map.zonePoints)
+		return !collide && insidePolygon
 	},
 	
 	addElement : function(obj,ignorePlace){
@@ -323,7 +322,43 @@ var Map={
 	},
 	clear :function(){
 		if(this.objects)this.objects = []
-		if(this.div)this.div.innerHTML = ""
+    	if(this.objects)this.objects = []
+		if(this.div)this.div.innerHTML = '<img id="map_zone" src="images/game_elements/zone2.png">'
+    $('map_zone').observe(game.mouseStartEvent,function(event){
+			if (event.button != 2) {
+			  	if (event.preventDefault) {
+			  		event.preventDefault();
+			  	}
+	  		}
+		})
+//    var tile = Map.tileValue(767,185)
+//    var count =0
+//    var loopingTile = tile.clone()
+//    while(loopingTile && loopingTile[0]>0 && loopingTile[1]< Map.mapHeight){
+//      count++
+//      loopingTile = Map.getNeighbor(loopingTile[0],loopingTile[1],Map.SW)
+//    }
+//    count--;
+//    loopingTile = tile.clone()
+//    
+//    while(loopingTile && loopingTile[0]>0 && loopingTile[0]<Map.mapWidth && loopingTile[1] >0 &&   loopingTile[1]< Map.mapHeight ){
+//      var startTile = loopingTile.clone()
+//        console.log(loopingTile[0],loopingTile[1])
+//      for(var i=0;i<count;i++){
+//        Map.grid[loopingTile[0]][loopingTile[1]].terrainType = 0 
+//        loopingTile = Map.getNeighbor(loopingTile[0],loopingTile[1],Map.SW)
+//      }
+//      loopingTile = Map.getNeighbor(startTile[0],startTile[1],Map.SE)
+//    } 
+    this.div.observe('mousemove',function(e){
+      var x = e.pointerX()
+      var y = e.pointerY()
+      var realCoords = Map.getRealCoords(x,y)
+//      var tv = Map.tileValue(realCoords.x,realCoords.y)
+   //   console.log(Map.grid[tv[0]][tv[1]].terrainType)
+        Map.tmpValue = [realCoords.x,realCoords.y]
+    })
+    
 	},
 	occupied : function(x,y){
 		var mapTiles = Map.tileValue(x,y)
