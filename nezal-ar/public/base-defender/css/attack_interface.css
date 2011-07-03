@@ -1,0 +1,270 @@
+#attackInterfaceContainer{
+		left:0px;
+		overflow:hidden;
+		width:760px;
+		height:550px;
+		position:absolute;
+		top:0px;
+}
+#attackInterface .attackCorner{
+	 height: 150px;
+	overflow: hidden;
+	position: absolute;
+	width: 150px;
+}
+#attackInterface #topLeft{
+		left: -150px;
+		top: -150px;
+}
+#attackInterface #topRight{
+		left: 760px;
+		top:-150px;
+}
+#attackInterface #bottomRight{
+		left: 760px;
+		top: 550px;
+}
+#attackInterface #bottomLeft{
+		left: -150px;
+		top: 550px;
+}
+#attackInterface #topLeft .cornerImg{
+	-webkit-transform: rotate(270deg);
+	-moz-transform: rotate(270deg);
+	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);	
+}
+#attackInterface #bottomRight .cornerImg{
+	-webkit-transform: rotate(90deg);
+	-moz-transform: rotate(90deg);
+	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);	
+}
+#attackInterface #bottomLeft .cornerImg{
+	-webkit-transform: rotate(180deg);
+	-moz-transform: rotate(180deg);
+	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);	
+}
+ #attackInterface .attackCorner .cornerImg{
+	position:absolute;
+ }
+ #attackInterface .attackCorner .triangle_hover{
+	z-index:1;
+ }
+ #attackInterface .attackCorner .triangle, #attackInterface .attackCorner .triangle_selected{
+	z-index:2;
+ }
+ #attackInterface #topRight .triangle_hover{
+	left:5px;
+ }
+ #attackInterface #topRight .triangle, #attackInterface #topRight .triangle_selected{
+	left:12px;
+ }
+ #attackInterface #bottomRight .triangle, #attackInterface #bottomRight .triangle_selected,
+ #attackInterface #bottomLeft .triangle, #attackInterface #bottomLeft .triangle_selected{
+	top:12px;
+ }
+ #attackInterface #bottomRight .triangle_hover,
+ #attackInterface #bottomLeft .triangle_hover{
+	top:5px;
+ }
+ #attackInterface #bottomRight .triangle_hover{
+	left:5px;
+ }
+ #attackInterface #bottomRight .triangle, #attackInterface #bottomRight .triangle_selected{
+	left:12px;
+ }
+ #attackInterface .attackCorner .creep{		
+	z-index:3;
+	width:32px;
+	height:34px;
+ }
+ #attackInterface .attackCorner .creep .count{
+	position:absolute;
+	font-size:12px;
+	margin-left: 2px;
+	margin-top: 2px;
+	color:white;
+}
+ #attackInterface .attackCorner .topCreeps, #attackInterface .attackCorner .middleCreeps, #attackInterface .attackCorner .bottomCreeps{
+	position:absolute;
+	z-index:3;
+ }
+ #attackInterface .attackCorner .topCreeps div, #attackInterface .attackCorner .middleCreeps div, #attackInterface .attackCorner .bottomCreeps div{
+	float:left;
+ }
+ #attackInterface #topLeft .topCreeps{
+	left:5px;
+	top:3px;
+ }
+#attackInterface #topLeft .middleCreeps{
+	left:5px;
+	top:37px;
+ }	 	 
+ #attackInterface #topLeft .bottomCreeps{
+	left:5px;
+	top:71px;
+ }
+ #attackInterface #topRight .topCreeps{
+	left:50px;
+	top:3px;
+ }
+#attackInterface #topRight .middleCreeps{
+	left:82px;
+	top:37px;
+ }	 	 
+ #attackInterface #topRight .bottomCreeps{
+	left:114px;
+	top:71px;
+ }
+ #attackInterface #bottomLeft .topCreeps{
+	left:5px;
+	top:45px;
+ }
+#attackInterface #bottomLeft .middleCreeps{
+	left:5px;
+	top:79px;
+ }	 	 
+ #attackInterface #bottomLeft .bottomCreeps{
+	left:5px;
+	top:113px;
+ }
+#attackInterface #bottomRight .topCreeps{
+	left:114px;
+	top:45px;
+ }
+#attackInterface #bottomRight .middleCreeps{
+	left:82px;
+	top:79px;
+ }	 	 
+ #attackInterface #bottomRight .bottomCreeps{
+	left:50px;
+	top:113px;
+ }
+ #attackInterface .attackCorner .creepImg{
+	width:100%;
+	height:100%;
+ }
+ #attackInterface #attackPanel{
+	position:absolute;
+	left:143px;
+	top:555px;
+ }
+ #attackInterface .attackCorner .
+ #attackInterface #attackPanel #panelBackground{
+	position:absolute;
+ }
+ #attackInterface #attackPanel #panelTitle{
+	font-size: 15px;
+	font-weight: bold;
+	left: 70px;
+	position: absolute;
+	top: 36px;
+	width: 129px;
+	z-index: 1;
+ }
+ #attackInterface #attackPanel #attackButton{
+	cursor:pointer;
+	height: 24px;
+	left: 334px;
+	position: absolute;
+	top: 79px;
+	width: 80px;
+ }
+ 
+ #attackInterface #attackPanel #endAttack{
+	cursor:pointer;
+	height: 24px;
+	left: 334px;
+	top: 110px;
+	width: 80px;
+	position:absolute;
+ }
+ #attackInterface #attackPanel .panelButtonTxt{
+	position: absolute;
+	text-align: center;
+	top: 1px;
+	left:0;
+	width: 82px;
+ }
+ #attackPanel #creepsAvailable{
+	height: 132px;
+	left: 10px;
+	overflow: visible;
+	position: absolute;
+	top: 10px;
+	width: 311px;
+	z-index: 10;
+}
+#attackPanel #creepsAvailable #creepsScroll{
+	height: 150px;
+	left: 36px;
+	overflow: hidden;
+	position: absolute;
+	top: 80px;
+	width: 280px;
+	z-index: 12;
+}
+#attackPanel #creepsAvailable #creepsScroll #creeps-container{
+	overflow: hidden;
+	padding: 0 2px;
+	width: 218px;
+}
+#attackPanel #creepsAvailable #creepsScroll #creeps-container #creeps-ul{
+	height: 150px;
+	margin: 0;
+	padding: 0;
+}
+#attackPanel #creepsAvailable #creepsScroll #creeps-container #creeps-ul li{
+	float: left;
+	height: 150px;
+	list-style: none outside none;
+	width: 45px;
+}
+#attackPanel #creepsAvailable #creepsScroll #creeps-container #creeps-ul li img{
+	width:38px;
+	height:42px;
+}
+#attackPanel #creepsAvailable #creepsScroll #creeps-container #creeps-ul li div .count{
+	color: white;
+	font-size: 13px;
+	margin-left: 3px;
+	margin-top: 3px;
+	position: absolute;
+}
+#attackPanel #creeps-container #creeps-ul li div{
+	cursor:pointer;
+}
+#attackPanel #creepsAvailable #creepsScroll .left, #attackPanel #creepsAvailable #creepsScroll .right {
+	direction: ltr;
+	margin: 0px 8px 0;
+	overflow: hidden;
+	text-align: center;
+	width: 13px;
+}
+#attackPanel #creepsAvailable #creepsScroll .right{
+	margin-left:5px;
+}
+#attackPanel #creepsAvailable #creepsScroll .left img, #attackPanel #creepsAvailable #creepsScroll .right img{
+	height: 42px;
+	width: 52px;
+}
+#attackPanel #creepsAvailable #creepsScroll .leftOn, #attackPanel #creepsAvailable #creepsScroll .rightOn{
+	cursor : pointer;
+}
+#attackPanel #creepsAvailable #creepsScroll .leftOn{
+	margin-left:-26px;
+	
+}
+#attackPanel #creepsAvailable #creepsScroll .rightOn{
+	margin-left:-39px;
+	
+}
+
+#attackPanel #creepsAvailable #creepsScroll div{
+	float:left;
+}
+#attackPanel #creepsAvailable #creepsScroll .rightOff {
+	margin-left:-13px;
+}
+#attackPanel #creepsAvailable #creepsScroll .leftOff {
+	margin-left: 0;
+}
