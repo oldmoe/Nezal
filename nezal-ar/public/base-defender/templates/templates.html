@@ -235,7 +235,7 @@
           </div>
         </div>
       </div>
-      <div id="home" style="display:none;" onclick="$('invadeDisplay').hide();Javascript:game.reInitialize(function(){game.scene.render()});">
+      <div id="home" style="display:none;" onclick="$('attackDiv').hide();Javascript:game.reInitialize(function(){game.scene.render()});">
           <span class="loadedImg" imgSrc ="images/friends/home_icon.png"></span>
           <div class='name'>Home</div>
         </div>
@@ -307,6 +307,11 @@
         <div id="buildText" class="yellowText"> build </div>
       </div>
       
+      <div id="mapButton" style="display:none;">
+	      <span class="loadedImg" imgSrc ="images/game_elements/map_button.png"></span>
+        <div id="mapText" class="yellowText"> Map </div>
+      </div>
+      
       <div id="sendAttack">
         <span class="loadedImg" imgSrc ="images/game_elements/button.png"></span>
         <div id="sendAttackText" class="yellowText"> Attack </div>
@@ -324,6 +329,7 @@
         <div id="creepDisplay" style="display:none;"> </div>
         <div id="invadeDisplay" style="display:none;"> </div>
         <div id="garageDisplay" style="display:none;"> </div>
+        <div id="attackInterfaceContainer" style="display:none;"> </div>
         <div id="globalMap" style="display:none;"></div>
         <div id="neighborListDisplay" style="display:none;"> </div>
         <div id="alert" style="display:none;"> </div>
@@ -727,3 +733,193 @@
         <span imgId="downLeftInvade" class="loadedImg" imgSrc="images/invasion/down_left.png"></span>
         <span imgId="downRightInvade" class="loadedImg" imgSrc="images/invasion/down_right.png"></span>
     </textarea>
+    
+<!-- attack panel -->    
+<textarea id="attackPanelCreeps" style="display:none;">
+		<div id="attackInterface">
+			<div id="topLeft" class="attackCorner"> 
+				<div class="topCreeps">
+					<div class="creep1 creep"> 
+						<div class="count"></div>
+						<img src="images/quests/empty.png" class="creepImg">
+					</div>
+					<div class="creep2 creep"> 
+						<div class="count"></div>
+						<img src="images/quests/empty.png" class="creepImg">
+					</div>
+					<div class="creep3 creep"> 
+						<div class="count"></div>
+						<img src="images/quests/empty.png" class="creepImg">
+					</div>
+				</div>
+				<div class="middleCreeps">
+					<div class="creep4 creep">
+						<div class="count"></div>
+						<img src="images/quests/empty.png" class="creepImg">
+					</div>
+					<div class="creep5 creep">
+						<div class="count"></div>					
+						<img src="images/quests/empty.png" class="creepImg">
+					</div>
+				</div>
+				<div class="bottomCreeps">
+					<div class="creep6 creep"> 
+						<div class="count"></div>
+						<img src="images/quests/empty.png" class="creepImg">
+					</div>
+				</div>
+				<img src="images/attack/triangle.png" class="triangle cornerImg">
+				<img src="images/attack/triangle_hover.png" class="triangle_hover cornerImg" style="display:none;">
+				<img src="images/attack/triangle_shadow.png" class="triangle_shadow cornerImg">
+				<img src="images/attack/triangle_selected.png" class="triangle_selected cornerImg" style="display:none;">
+			</div>
+			<div id="topRight" class="attackCorner">
+				<div class="topCreeps">
+					<div class="creep1 creep"> 
+						<div class="count"></div>
+						<img src="images/quests/empty.png" class="creepImg">
+					</div>
+					<div class="creep2 creep"> 
+						<div class="count"></div>	
+						<img src="images/quests/empty.png" class="creepImg">
+					</div>
+					<div class="creep3 creep"> 
+						<div class="count"></div>
+						<img src="images/quests/empty.png" class="creepImg">
+					</div>
+				</div>
+				<div class="middleCreeps">
+					<div class="creep4 creep">
+						<div class="count"></div>					
+						<img src="images/quests/empty.png" class="creepImg">
+					</div>
+					<div class="creep5 creep"> 
+						<div class="count"></div>
+						<img src="images/quests/empty.png" class="creepImg">
+					</div>
+				</div>
+				<div class="bottomCreeps">
+					<div class="creep6 creep"> 
+						<div class="count"></div>
+						<img src="images/quests/empty.png" class="creepImg">
+					</div>
+				</div>
+				<img src="images/attack/triangle.png" class="triangle cornerImg">
+				<img src="images/attack/triangle_hover.png" class="triangle_hover cornerImg" style="display:none;">
+				<img src="images/attack/triangle_shadow.png" class="triangle_shadow cornerImg">
+				<img src="images/attack/triangle_selected.png" class="triangle_selected cornerImg" style="display:none;">
+			</div>
+			<div id="bottomLeft" class="attackCorner"> 
+				<div class="topCreeps">
+					<div class="creep1 creep">
+						<div class="count"></div>					
+						<img src="images/quests/empty.png" class="creepImg">
+					</div>
+				</div>
+				<div class="middleCreeps">
+					<div class="creep2 creep"> 
+						<div class="count"></div>
+						<img src="images/quests/empty.png" class="creepImg">
+					</div>
+					<div class="creep3 creep">
+						<div class="count"></div>
+						<img src="images/quests/empty.png" class="creepImg">
+					</div>
+				
+				</div>
+				<div class="bottomCreeps">
+					<div class="creep4 creep">
+						<div class="count"></div>					
+						<img src="images/quests/empty.png" class="creepImg">
+					</div>
+					<div class="creep5 creep"> 
+						<div class="count"></div>					
+						<img src="images/quests/empty.png" class="creepImg">
+					</div>
+					<div class="creep6 creep"> 
+						<div class="count"></div>
+						<img src="images/quests/empty.png" class="creepImg">
+					</div>
+				</div>
+				<img src="images/attack/triangle.png" class="triangle cornerImg">
+				<img src="images/attack/triangle_hover.png" class="triangle_hover cornerImg" style="display:none;">
+				<img src="images/attack/triangle_shadow.png" class="triangle_shadow cornerImg">
+				<img src="images/attack/triangle_selected.png" class="triangle_selected cornerImg" style="display:none;">
+			</div>
+			<div id="bottomRight" class="attackCorner">
+				<div class="topCreeps">
+					<div class="creep1 creep">
+						<div class="count"></div>
+						<img src="images/quests/empty.png" class="creepImg">
+					</div>
+				</div>
+				<div class="middleCreeps">
+					<div class="creep2 creep">
+						<div class="count"></div>
+						<img src="images/quests/empty.png" class="creepImg">
+					</div>
+					<div class="creep3 creep"> 
+						<div class="count"></div>
+						<img src="images/quests/empty.png" class="creepImg">
+					</div>
+				</div>
+				<div class="bottomCreeps">
+					<div class="creep4 creep">
+						<div class="count"></div>
+						<img src="images/quests/empty.png" class="creepImg">
+					</div>
+					<div class="creep5 creep">
+						<div class="count"></div>
+						<img src="images/quests/empty.png" class="creepImg">
+					</div>
+					<div class="creep6 creep">
+						<div class="count"></div>
+						<img src="images/quests/empty.png" class="creepImg">
+					</div>
+				</div>
+				<img src="images/attack/triangle.png" class="triangle cornerImg">
+				<img src="images/attack/triangle_hover.png" class="triangle_hover cornerImg" style="display:none;">
+				<img src="images/attack/triangle_shadow.png" class="triangle_shadow cornerImg">
+				<img src="images/attack/triangle_selected.png" class="triangle_selected cornerImg" style="display:none;">
+			</div>
+			<div id="attackPanel">
+				<img src="images/attack/panel.png" id="panelBackground">
+				<div id="panelTitle">
+					Choose your units
+				</div>
+				<div id="creepsAvailable">
+					<div id="creepsScroll" class="creepsScroll">
+						<div class="left">
+							<img class="leftOff" src="images/quests/arrows_horizontal".png" />
+						</div>	
+						<div id="creeps-container" class="container">
+							<ul id='creeps-ul'>
+								{for creep in creeps}
+									{if creep >0 }
+									<li>
+										<div id="${creep_index}" class="item">
+											<div class="count">${creep}</div>
+											<img src="images/creeps/menu/${creep_index}_button.png"/>
+										</div>
+									</li>
+									{/if}
+								{/for}
+							</ul>
+						</div>
+						<div class="right">
+							<img class="rightOff" src="images/quests/arrows_horizontal".png" />
+						</div>
+					</div>			
+				</div>
+				<div id="attackButton">
+					<img src="images/attack/home_button.png">
+					<div class="panelButtonTxt">Attack</div>
+				</div>
+				<div id="endAttack">
+					<div class="panelButtonTxt">Home</div>
+					<img src="images/attack/home_button.png">
+				</div>
+			</div>
+		</div>
+	</textarea>	
+	

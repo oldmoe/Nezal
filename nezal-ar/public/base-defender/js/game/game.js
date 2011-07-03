@@ -65,7 +65,8 @@ var Game = Class.create({
     var gameElementsImages = ['upper_bar.png', 'energy_bar_background.png','monitor.png','background.png','zone2.png','cancel.png','button.png',
                               'zoom.png','hover.png','sound.png','music.png','control_button.png','click.png','move.png','flag.png',
                             	'panel_background.png', 'resource_meter_background.png','resource_meter_rock.png','resource_meter_wood.png',
-                            	'button_clicked.png', 'building_menu_hover.png', 'build_button.png','language_button.png','language_click.png']
+                            	'button_clicked.png', 'building_menu_hover.png', 'build_button.png','language_button.png','language_click.png',
+                              'map_button.png','map_button.png']
                               
     var globalMapImages = ['borders_compass.png','arrows.png','buttons.png','friend_user.png','list_button.png','normal_user.png','panel_background.png',
     'user_map.png', 'me.png', 'ai.png']           
@@ -345,6 +346,7 @@ var Game = Class.create({
     if(!this.globalMapManager)this.globalMapManager  = new GlobalMapManager(this);
     this.invadeDisplay = new InvadeDisplay(this);
     this.protectionDisplay = new ProtectionDisplay(this)
+    if(!this.attackIterfaceManager)this.attackIterfaceManager = new AttackIterfaceManager(this)
     if( !this.buildingMode )
       this.buildingMode = new BuildingMode(this);
     else{
@@ -375,7 +377,7 @@ var Game = Class.create({
     this.reInitializationNotifications.each(function(fn){fn()});
   },
   
-  loadUserEmpire : function(user_id){
+  loadUserEmpire : function(user_id,callback){
   	$('home').show();
     var self = this;
     this.originalUserData = this.user.data
@@ -386,6 +388,7 @@ var Game = Class.create({
       self.collectedRewardBags = 0;
       self.updateGameStatus( self.gameStatus );
       self.scene.adjustNeighborScene();
+      if(callback)callback()
     });
   },
 
