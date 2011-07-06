@@ -7,20 +7,33 @@
   right: 177px;
 }
 
+#mapButton {
+    bottom: 0;
+    cursor: pointer;
+    height: 63px;
+    position: absolute;
+    right: 259px;
+    width: 64px;
+}
+
 #buildButton:hover {
   bottom: 4px;
   right: 180px;
 }
 
-#buildButton img {
+#mapButton:hover {
+  bottom: 4px;
+  right: 262px;
+}
+#buildButton img , #mapButton img{
   width: 60px;
 }
 
-#buildButton:hover img {
+#buildButton:hover img, #mapButton:hover img {
   width: 64px;
 }
 
-#buildButton #buildText{
+#buildButton #buildText,#mapButton #mapText {
   color: white;
   cursor: pointer;
   display: block;
@@ -34,7 +47,7 @@
   left: -1px;
 }
 
-#buildButton:hover #buildText{
+#buildButton:hover #buildText, #mapButton:hover #mapText{
   top: -38px;
   left: 3px;
   font-size: 14px;

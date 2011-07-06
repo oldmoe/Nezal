@@ -7,6 +7,9 @@ var GlobalMapManager = Class.create({
     this.game = game
     var self = this
     this.getFriends(function(){self.getNeighbors()})
+    $('mapButton').observe('click',function(){
+      self.displayWorldMap()
+    })
    },
    getFriends :function(callback){
         var self = this
@@ -22,6 +25,7 @@ var GlobalMapManager = Class.create({
    getNeighbors : function(){
      var self = this
      this.game.network.globalMap(this.friendIds,function(users){
+     $('mapButton').show()
      self.globalMap = users
      var ids = []
      var mapping = {}
@@ -171,8 +175,9 @@ var GlobalMapManager = Class.create({
 			})
       $$('#globalMap #globalMapNeighborMenuButtons #invadeButton')[0].observe('mouseup',function(){
         if ($$('#globalMapNeigbors #neighbor'+self.selectedNeighborId)[0].getAttribute('protected') == 'false') {
-          self.game.loadUserEmpire(self.selectedNeighborId)
-          game.invadeDisplay.show(self.selectedNeighborId)
+          self.game.loadUserEmpire(self.selectedNeighborId,function(){
+            self.game.attackIterfaceManager.show()  
+          })          
         }
       })
       $$('#globalMap #globalMapNeighborMenuButtons #visitButton')[0].observe('mouseup',function(){

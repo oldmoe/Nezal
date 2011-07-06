@@ -19,7 +19,7 @@ var AttackManager = Class.create({
 		    $('attackDiv').show();
     });
 	},
-	simulateAttack : function(attackDirection,creeps){
+	simulateAttack : function(attackCreeps){
 		if(this.attacking) return
     if(!game.neighborGame) creeps = game.user.data.creeps
     this.stolenResources = {}
@@ -27,15 +27,21 @@ var AttackManager = Class.create({
 		this.attacking = true
     var creepId = 0
     this.noOfCreeps =0
-    for(var c in creeps){
-      var noOfCreeps = creeps[c]
-      for(var i=0;i<noOfCreeps;i++){
-			  var creep = this.game.creepFactory.newCreep(c.capitalize(),creepId++,attackDirection)
-        this.noOfCreeps++
-			  this.creeps.push({'x':creep.coords.x,'y':creep.coords.y, 'creep':creep})
-			  creepsArr.push({'x':creep.coords.x,'y':creep.coords.y,'type':c.capitalize()})
-		  } 
+    var attackDirectionMapping = {"topLeft" : Map.NW, "topRight":Map.NE, "bottomLeft":Map.SW, "bottomRight":Map.SE}
+    for(var direction in attackCreeps){
+      var attackDirection = attackDirectionMapping[direction]
+      var creeps = attackCreeps[direction]
+      for(var c in creeps){
+        var noOfCreeps = creeps[c]
+        for(var i=0;i<noOfCreeps;i++){
+			    var creep = this.game.creepFactory.newCreep(c.capitalize(),creepId++,attackDirection)
+          this.noOfCreeps++
+			    this.creeps.push({'x':creep.coords.x,'y':creep.coords.y, 'creep':creep})
+			    creepsArr.push({'x':creep.coords.x,'y':creep.coords.y,'type':c.capitalize()})
+		    } 
+      }
     }
+    
 		this.game.network.simulateAttack(creepsArr);
     
 	},
