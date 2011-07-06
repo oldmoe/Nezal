@@ -53,6 +53,7 @@ var CreepPanel = Class.create({
       Notification.alert('You have reached maximum number of creeps to generate.');
     }
   },
+  
   displayTime : function(){
     var div = $$('#creepInProgress #remainingTime')[0]
     if(div){

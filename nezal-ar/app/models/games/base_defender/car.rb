@@ -1,14 +1,14 @@
 module BD
   class Car < Creep
-    def initialize(map,initial_x, initial_y,id,game_metadata)
+    def initialize(map,initial_x, initial_y, id, game_data)
       super(map,initial_x, initial_y)
       @map = map
       @id = id
-#      @specs = game_metadata['creeps']['car']
+#      @specs = game_data['creeps']['car']
       @specs = {
                 "hp" => 100,
                 "power" => 3,
-                "speed" => 3
+                "speed" => 5
             }
       @map_direction = Map.N  
       @coords = {}
@@ -27,16 +27,22 @@ module BD
       @target = nil 
       @dead = false
       @attacked = false
+      @stolen_resources  = {}
     end
-    attr_accessor :target, :dead, :done_attack, :coords, :moving_path, :attacked, :target_edge, :hp, :tick_counter
+    attr_accessor :target, :dead, :done_attack, :coords, :moving_path,
+    :attacked, :target_edge, :hp, :tick_counter,:stolen_resources
     def tick
+      return if(@done_attack)
       @tick_counter = @tick_counter + 1
       if @hp <= 0 
         @done_attack = true
+        puts "Car dead"
+        add_stolen_resources(@target.get_stolen_resources) if(!@target.nil?)
         return
       end
       unless @target
-        @target = pick_target 
+        @target = pick_target
+        @target.damage = 0 if(!@target.nil?)
       end
       unless(@target)
         @done_attack = true
@@ -45,11 +51,14 @@ module BD
       super
       if(@target && @moving_path.length == 0)
         @target.hp -=@power
+        @target.damage+=@power
 #        puts "Car Fire :: #{self.__id__} :: #{self.hp} :: #{@coords['x']} :: #{@coords['y']} "
         @attacked = true
       end
       if (@target.hp <= 1)
+        puts "target dead"
         @target.hp = 1
+        add_stolen_resources(@target.get_stolen_resources)
         @target = nil
       end
 #      puts "Car Tick :: #{self.__id__} :: #{self.hp} :: #{@coords['x']} :: #{@coords['y']} "
@@ -114,7 +123,15 @@ module BD
       edges.push({'x'=>origin['x']+obj.img_width/4, 'y'=>origin['y']+obj.zdim+left*3/2})
       return edges
     end
-  
+    
+    def add_stolen_resources resources
+      resources.each_pair do |resource,val|
+        if(@stolen_resources[resource].nil?)
+           @stolen_resources[resource] = 0
+       end
+       @stolen_resources[resource]+=val
+      end
+    end
     
   end  
 end

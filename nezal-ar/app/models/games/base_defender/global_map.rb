@@ -7,32 +7,44 @@ module BD
     def initialize(ugp, data)
       @ugp = ugp
       @friend_ids = data['friend_ids']
-      if !ugp.metadata['battle_history']
-        ugp.metadata['battle_history'] = {}
+      if !ugp.battle_history
+        ugp.battle_history= {}
         ugp.needs_saving
       end
-      @battle_history = ugp.metadata['battle_history'].clone
-      @ranks = get_ranks(@ugp['game_id'])
-      @rank = @ranks[@ugp.rank_id]
+      @battle_history = ugp.battle_history.clone
+      @ranks = Game::current.ranks
+      @rank = @ranks[@ugp.rank]
       @friends = get_users_with_ranks(@friend_ids)
       add_battles(@friends, true)
     end
     
     def generate
       if @friend_ids.length >= MAP_LIMIT
-        return @friends.sort{|a,b| weight(a) <=> weight(b)}
+        result = @friends.sort{|a,b| weight(a) <=> weight(b)} 
       else
         @users = get_nearby_users
         add_battles(@users)
         index = 0
-        return merge(@friends, @users, add_ranks_to_battles).sort{|a,b| weight(a) <=> weight(b)}.select do |u|
+        result =  merge(@friends, @users, add_ranks_to_battles).sort{|a,b| weight(a) <=> weight(b)}.select do |u|
           index += 1
           index <= MAP_LIMIT || u['friend']
         end
       end
+      result = result.collect{|r| {'id'=>r.id,'rank_id'=> r.rank_id, 'battles'=>r['battles'], 'friend'=>r['friend']}}
+      profile_ids = result.collect{|r|r['id']}
+      users_profiles =  UserGameProfile.select('user_id, metadata').where(['id in (?)', profile_ids])
+      result.each_with_index do |r,i|
+        r['service_id'] = users_profiles[i].user.service_id
+        r['user_id'] = users_profiles[i].user.id
+        if(r['protection'] = users_profiles[i].metadata['protection'].nil?)
+          r['protection']  =false
+        else 
+          r['protection'] = users_profiles[i].metadata['protection']['working']
+        end
+      end
+      return result
     end
-    
-     def weight(user)
+    def weight(user)
       user['battles'] * BATTLE_WEIGHT - user['rank_diff'].abs * RANK_WEIGHT
     end
 
@@ -61,12 +73,6 @@ module BD
       list1.each { |el| hash.delete(el.id) }
       list1 = list1 + hash.values + list3
     end
-            
-    def get_ranks(game_id)
-      ranks = {}
-      Rank.where({:game_id => game_id}).order('lower_exp asc').each{|r| ranks[r.id] = r.name.to_i}
-      ranks
-    end
     
     def get_nearby_users
       rank = @ranks[@ugp.rank_id]
@@ -87,6 +93,5 @@ module BD
         u['rank_diff'] = u['user_rank'] - @rank
       end
     end
-
   end
 end

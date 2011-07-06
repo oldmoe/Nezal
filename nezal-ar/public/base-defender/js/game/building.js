@@ -10,8 +10,10 @@ var Building = Class.create({
   nextLevelBluePrints : null,
   locationValid : true,
   state : 0,
+  underAttack : false,
   working : true,
   repairing : false,
+  damage : 0,
   states : {NOT_PLACED : 0, UNDER_CONSTRUCTION : 1, UPGRADING : 2, NORMAL : 3},
   initialize : function(factory, buildingSpecs){
     this.name = factory.name;
@@ -24,19 +26,22 @@ var Building = Class.create({
     this.remainingBuildTime = buildingSpecs.remainingTime;
     this.currentLevelBluePrints = this.factory.bluePrints['levels'][this.level];
     this.nextLevelBluePrints = this.factory.bluePrints['levels'][this.level+1];
-  if(this.level>0)this.maxHp = this.currentLevelBluePrints.hp
-  else this.maxHp = this.nextLevelBluePrints.hp
-  if(buildingSpecs.hp!=null)this.hp = buildingSpecs.hp;
-  else{
-    this.hp = this.maxHp;
-  } 
-  if(this.hp<this.maxHp ){
-    this.working = false
-    if(!buildingSpecs.started_repairing_at) this.game.attackManager.showRepairMsg()
-  } 
-  if(buildingSpecs.started_repairing_at > 0){
-    this.startRepairing()
-  }
+    if( this.level > 0 )
+      this.maxHp = this.currentLevelBluePrints.hp;
+    else
+      this.maxHp = this.nextLevelBluePrints.hp;
+    if( buildingSpecs.hp != null )
+      this.hp = buildingSpecs.hp;
+    else{
+      this.hp = this.maxHp;
+    } 
+    if(this.hp<this.maxHp ){
+      this.working = false
+      if(!buildingSpecs.started_repairing_at && !game.neighborGame) this.game.attackManager.showRepairMsg()
+    } 
+    if(buildingSpecs.started_repairing_at > 0){
+      this.startRepairing()
+    }
     this.initialState = buildingSpecs.state;
     this.stateNotifications = {};
     for(var state in this.states){
@@ -112,13 +117,14 @@ var Building = Class.create({
   /** This should return if we need to off the building mood or no*/
   build : function(xBlock, yBlock){
     this.coords['x'] = xBlock;
-    this.coords['y'] = yBlock;    
+    this.coords['y'] = yBlock;
+    var self = this;    
     if(this.isValidToBuild(xBlock, yBlock)) {
-      var response = this.game.network.upgradeBuilding(this.name, this.coords);
+      this.game.network.upgradeBuilding(this.name, this.coords, function(response){
+        self.game.updateGameStatus(response.gameStatus);
+      });
       Sounds.play(Sounds.gameSounds.constructions)
-    this.game.buildingMode = null
-      this.game.updateGameStatus(response['gameStatus']);
-      return response['done'];
+      this.game.buildingMode = null
     } else {
       //this.game.buildingMode.cancelBuildingMode();
       return false;
@@ -126,28 +132,32 @@ var Building = Class.create({
   },
 
   upgrade: function(){
-    if(this.isValidToUpgrade()){
-      var response = this.game.network.upgradeBuilding(this.name, this.coords);
-      this.game.updateGameStatus(response['gameStatus']);
+    if (this.isValidToUpgrade()) {
+      var self = this;
+      this.game.network.upgradeBuilding(this.name, this.coords, function(response){
+        self.game.updateGameStatus(response.gameStatus);
+      });
     }
   },
 
   move : function(x,y){
     this.coords['x'] = x;
-      this.coords['y'] = y;
-      if(this.validateLocation(x,y)){
-      this.setState(this.states.NORMAL)
-        var response = this.game.network.moveBuilding(this.name, this.coords, this.oldCoords);
-        this.game.updateGameStatus(response['gameStatus']);
-        return response['done'];
-      }else{
-      //this.game.reInitialize()
-        return false;
-      }
+    this.coords['y'] = y;
+    if(this.validateLocation(x,y)){
+      this.setState(this.states.NORMAL);
+      var self = this;
+      this.game.network.moveBuilding(this.name, this.coords, this.oldCoords, function(response){
+        self.game.updateGameStatus(response.gameStatus);
+      });
+      return true;
+    }else{
+    //this.game.reInitialize()
+      return false;
+    }
   },
   
   inProgress : function(){
-      return this.state == this.states.UNDER_CONSTRUCTION || this.state == this.states.UPGRADING;   
+    return this.state == this.states.UNDER_CONSTRUCTION || this.state == this.states.UPGRADING;   
   },
 
   elapsedTime : function(){
@@ -299,5 +309,8 @@ var Building = Class.create({
         }
     }
     return upgradableSpecs
+  },
+  getStolenResources : function(){
+    return {} 
   }
 });

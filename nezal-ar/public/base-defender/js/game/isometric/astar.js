@@ -3,6 +3,7 @@ var Node = Class.create({
 	y:0,
 	terrainType :0,
 	value :0,
+  ignorePlace : false,
 	h:0,
 	g:0,
 	f:0,

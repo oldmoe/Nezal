@@ -1,3 +1,0 @@
-class TunisiaDefenderController < GamesController
-
-end

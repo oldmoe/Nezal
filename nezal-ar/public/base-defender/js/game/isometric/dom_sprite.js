@@ -13,7 +13,7 @@ var DomSprite = Class.create(Sprite, {
 		z = properties.zIndex
 		this.zIndex = z
 	}  
-	else z = this.owner.coords.y + this.owner.zdim
+	else z = this.owner.coords.y + this.owner.zdim + this.shiftZ
     this.div.setStyle ({zIndex :(z)});
 		if(properties.width)this.div.style.width = properties.width + "px";
     else this.div.style.width = this.owner.imgWidth + "px";
@@ -72,7 +72,7 @@ var DomSprite = Class.create(Sprite, {
     var position = {};
     position.x = Math.round(this.owner.coords.x - Math.round(this.owner.imgWidth / 2));
     position.y = Math.round(this.owner.coords.y - Math.round(this.owner.imgHeight / 2));
-	if(this.zIndex) position.zIndex = this.Index 
+	if(this.zIndex) position.zIndex = this.zIndex 
     else position.zIndex = this.owner.coords.y + this.owner.zdim + this.shiftZ;
     return position;
   },

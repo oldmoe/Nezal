@@ -64,20 +64,27 @@ var ResourceBuilding = Class.create(Building, {
   
   _AssignWorker: function(){
     if(this._ValidateAssignWorker()){
-      var response = this.game.network.assignWorker(this.name, this.coords);
-      this.game.updateGameStatus(response['gameStatus']);
+      var self = this;
+      this.game.network.assignWorker(this.name, this.coords, function(response){
+        self.game.updateGameStatus(response.gameStatus);
+      });
+      
     }
   },
 
   _CollectResources: function(){
-    var response = this.game.network.collectResources(this.name, this.coords);
-    this.game.updateGameStatus(response['gameStatus']);
+    var self = this;
+    this.game.network.collectResources(this.name, this.coords, function(response){
+      self.game.updateGameStatus( response.gameStatus );
+    });
   },
   
   _CollectNeighborResources: function(){
-    var response = this.game.network.collectResources(this.name, this.coords);
-    this.game.gameStatus.user_data = response;
-    this.game.updateGameStatus(this.game.gameStatus);
+    var self = this;
+    this.game.network.collectResources(this.name, this.coords, function(response){
+      self.game.gameStatus.user_data = response;
+      self.game.updateGameStatus(self.game.gameStatus);
+    });
   },
 
   _ValidateAssignWorker: function(){
@@ -92,5 +99,13 @@ var ResourceBuilding = Class.create(Building, {
     }
     
     return true;
+  },
+  getStolenResources : function(){
+    this.damage = Math.min(this.damage,this.maxHp)
+    var stolenResources = Math.floor(this[this.factory.collect]* this.game.data.battle.steal_percentage * this.damage/(this.maxHp*1.0))
+    this.damage = 0
+    var ret = {}
+    ret[this.factory.collect] = stolenResources
+    return ret   
   }
 });

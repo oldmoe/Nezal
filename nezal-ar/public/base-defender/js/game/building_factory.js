@@ -3,11 +3,11 @@ var BuildingFactory = Class.create({
   //This will store the specs and upgrade costs of different building levels
   bluePrints : null,
   maximumNubmer : null,
-  newBuildingSpecs : {'state' : Building.prototype.states.NOT_PLACED, 'level' : 0, 'coords' : {'x' : null, 'y' : null}},
   buildingClass : null,
   buildingDisplayClass :null,
   noOfBuildings : 0,
-  initialize : function(game){  
+  initialize : function(game){
+    this.newBuildingSpecs = {'state' : Building.prototype.states.NOT_PLACED, 'level' : 0, 'coords' : {'x' : null, 'y' : null}}  
     this.buildingClass = eval(this.name.dasherize().capitalize().camelize());  
 		 //To get the class name: "defense_center-> defense-center -> Defence-center -> DefenceCenter"
 		this.buildingDisplayClass = eval(this.name.dasherize().capitalize().camelize() + "Display");
@@ -15,19 +15,21 @@ var BuildingFactory = Class.create({
     this.bluePrints = this.game.data.buildings[this.name];    
     if( this.game.user.data[this.name]){
       for( var buildingInstanceCoords in game.user.data[this.name]){
-	  	this.noOfBuildings++
+  	  	this.noOfBuildings++
 				var building = new this.buildingClass(this, this.game.user.data[this.name][buildingInstanceCoords]);
         building.id = buildingInstanceCoords;
         this.factoryRegistrar( buildingInstanceCoords,building);
 				var display = new this.buildingDisplayClass(building, this.bluePrints['levels'][this.game.user.data[this.name][buildingInstanceCoords]['level']]['display']);
         building.init();
 				this.game.scene.push(building);
-				this.game.scene.map.addElement(building);
+        this.addToMap(building)
 				this.game.scene.pushAnimation(display);
       }
     }
   },
-  
+  addToMap : function(building){
+    this.game.scene.map.addElement(building);
+  },
   newBuilding : function(){
     var building = new this.buildingClass(this, this.newBuildingSpecs);
 		this.game.scene.push(building);

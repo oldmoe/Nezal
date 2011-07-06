@@ -12,7 +12,7 @@ var FriendsManager = Class.create({
    },
    getFriends :function(callback){
         var self = this
-				userID = FB.getSession().uid
+				var userID = FB.getSession().uid
 				var	query = FB.Data.query("SELECT uid FROM user WHERE is_app_user=1 and uid IN (SELECT uid2 FROM friend WHERE uid1 = {0})", FB.getSession().uid);
 				FB.Data.waitOn([query], function(){
 					if(!query.value.length)query.value=[]
@@ -22,6 +22,10 @@ var FriendsManager = Class.create({
         })	
    },
    getNeighbors : function(){
-     this.global_map = this.game.network.globalMap(this.friendIds).map(function(x){return x.user_game_profile})
+     var self = this;
+     this.game.network.globalMap(this.friendIds, function(users){
+       self.global_map = users.map(function(x){return x.user_game_profile})
+     });
+     
    }
 })

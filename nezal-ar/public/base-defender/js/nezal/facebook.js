@@ -73,21 +73,37 @@ var FBConnect = {
         FB.getLoginStatus(function(response) {
 			      if (response.session) {
 			          FBConnect.session = response.session;
+                
+                console.log(response);
+                if( !response.perms || 
+                    !JSON.parse(response.perms).extended || 
+                    JSON.parse(response.perms).extended.indexOf('publish_stream') == -1 ) {
+                      
+                      var redirect_url = "http://www.facebook.com/connect/uiserver.php?app_id=" + 
+                                   FBConnect.appIds[FBConnect.url()] +  
+                                   "&next=http://apps.facebook.com/"+ 
+                                   FBConnect.url() + "/" +
+                                 "?display=page&locale=en_US&return_session=0&" +
+                                 "fbconnect=0&canvas=1&legacy_return=1&method=permissions.request&perms=publish_stream";
+                                 
+                      window.top.location = redirect_url;
+                      return;
+                }
 			          Ajax.Responders.register({
 				          onCreate: function(req) {
-							var inviter = ''
-							var search = window.location.search
-							if(search){
-								search = search.split('?')[1]
-								if(search){
-									search = search.split('&').find(function(pair){ return pair.include('inviter')})
-										if(search){
-											inviter = search
-										}
-									}
-							}
-					        req.url += (req.url.include('?') ? '&' : '?') + Object.toQueryString(FBConnect.session) + '&' + inviter
-					        return true
+      							var inviter = ''
+      							var search = window.location.search
+      							if(search){
+      								search = search.split('?')[1]
+      								if(search){
+      									search = search.split('&').find(function(pair){ return pair.include('inviter')})
+      										if(search){
+      											inviter = search
+      										}
+      									}
+      							}
+  					        req.url += (req.url.include('?') ? '&' : '?') + Object.toQueryString(FBConnect.session) + '&' + inviter
+  					        return true
 				          }
 			          });
                 if(document.getElementsByTagName('fb:fan')[0]) 

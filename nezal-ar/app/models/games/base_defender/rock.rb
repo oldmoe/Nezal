@@ -23,15 +23,15 @@ module BD
       @extraXStep = 0
       @extraYStep = 0
       @coords = { x: 0, y: 0}
-      img_width = BaseDefender.adjusted_game_metadata['buildings']['wedge']['levels'][@owner.owner.owner['level'].to_s]['display']['imgWidth']
-      img_height = BaseDefender.adjusted_game_metadata['buildings']['wedge']['levels'][@owner.owner.owner['level'].to_s]['display']['imgHeight']
+      img_width = Game::current.data['buildings']['wedge']['levels'][@owner.owner.owner['level'].to_s]['display']['imgWidth']
+      img_height = Game::current.data['buildings']['wedge']['levels'][@owner.owner.owner['level'].to_s]['display']['imgHeight']
       @coords[:x] = @owner.coords['x'] + POSITION[@owner.angle][:x] + @extraXStep - img_width/2.0 + IMG_WIDTH/2.0;
       @coords[:y] = @owner.coords['y'] + POSITION[@owner.angle][:y] + @extraYStep - img_height/2.0 + IMG_HEIGHT/2.0;
       @done = false
       @attacker = @owner.attacker
       @extraXStep = 0
       @extraYStep = 0
-      puts "New Rock :: #{self.__id__} :: #{@coords[:x]} :: #{@coords[:y]} :: #{@owner.angle}"
+      #puts "New Rock :: #{self.__id__} :: #{@coords[:x]} :: #{@coords[:y]} :: #{@owner.angle}"
     end  
 
     def tick
@@ -49,12 +49,12 @@ module BD
         end
         @coords[:x] = @coords[:x] + @extraXStep
         @coords[:y] = @coords[:y] + @extraYStep
-        puts "Rock Tick #{self.__id__} :: #{@attacker.__id__} :: #{@attacker.coords['x']} :: #{@attacker.coords['y']} :: #{@coords[:x]}  ::  #{@coords[:y]}"
+        #puts "Rock Tick #{self.__id__} :: #{@attacker.__id__} :: #{@attacker.coords['x']} :: #{@attacker.coords['y']} :: #{@coords[:x]}  ::  #{@coords[:y]}"
         if(@coords[:x] == target_x && @coords[:y] == target_y )
           @done = true
-          puts "Rock Fire #{self.__id__} :: #{@attacker.__id__} :: #{@attacker.coords['x']} :: #{@attacker.coords['y']} :: #{@coords[:x]}  ::  #{@coords[:y]}"
+          #puts "Rock Fire #{self.__id__} :: #{@attacker.__id__} :: #{@attacker.coords['x']} :: #{@attacker.coords['y']} :: #{@coords[:x]}  ::  #{@coords[:y]}"
           @attacker.hp -= @owner.specs['power']
-          puts "================================== FIREEEEEEEEEEEEE ====================== #{@attacker.hp}"
+          #puts "================================== FIREEEEEEEEEEEEE ====================== #{@attacker.hp}"
         end
       else
         @done = true

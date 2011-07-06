@@ -102,8 +102,34 @@ module BD
 
    def self.distance(x1,y1,x2,y2)
     return Math.sqrt((x1-x2)**2 + (y1-y2)**2)
-   end
-   
+  end
+  def self.is_inside u1,polygon
+    a = [u1.owner['coords']['x'],u1.owner['coords']['y']-u1.img_height/2+u1.zdim]
+    b = [u1.owner['coords']['x']-u1.img_width/2,u1.owner['coords']['y']+u1.zdim/2]
+    c = [u1.owner['coords']['x'],u1.owner['coords']['y']+u1.img_height/2]
+    d = [u1.owner['coords']['x']+u1.img_width/2,u1.owner['coords']['y']+u1.zdim/2]
+    
+    xy =  [polygon[0]['x'],polygon[0]['y'],polygon[1]['x'],polygon[1]['y']]
+    yz =  [polygon[1]['x'],polygon[1]['y'],polygon[2]['x'],polygon[2]['y']]
+    zw =  [polygon[2]['x'],polygon[2]['y'],polygon[3]['x'],polygon[3]['y']]
+    wx =  [polygon[3]['x'],polygon[3]['y'],polygon[0]['x'],polygon[0].y]
+    
+    v = [xy,yz,zw,wx]
+    points  = [a,b,c,d]
+    dirs = []
+    0.upto(3) do |i|
+      0.upto(3) do |j|
+        dirs[j] = Util.point_direction(points[i],v[j])
+      end
+      1.upto(3) do |j|
+        return false if(dirs[j]!= dirs[j-1])
+      end
+    end
+    
+    return true
+  end
+  
+  
   end  
 end
 

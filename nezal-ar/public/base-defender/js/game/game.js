@@ -23,6 +23,7 @@ var Game = Class.create({
   mouseClickEvent : null,
   mouseMoveEvent : null,
   zoomFactor : 1,
+  persistentObjects : [],
   reInitializationNotifications : [],
   resources : {
     rock : 0,
@@ -38,7 +39,7 @@ var Game = Class.create({
   		this.mouseStartEvent = 'mousedown'
   		this.mouseEndEvent = 'mouseup'
   		this.mouseMoveEvent = 'mousemove'
-  	} else {
+  	}else {
   		this.mouseClickEvent = 'touchstart'
   		this.mouseStartEvent = 'touchstart'
   		this.mouseEndEvent = 'touchend'
@@ -61,11 +62,14 @@ var Game = Class.create({
 	
   initializeGame : function(){
     var self = this
-    var gameElementsImages = ['upper_bar.png', 'energy_bar_background.png','monitor.png','background.png','cancel.png','button.png',
+    var gameElementsImages = ['upper_bar.png', 'energy_bar_background.png','monitor.png','background.png','zone2.png','cancel.png','button.png',
                               'zoom.png','hover.png','sound.png','music.png','control_button.png','click.png','move.png','flag.png',
                             	'panel_background.png', 'resource_meter_background.png','resource_meter_rock.png','resource_meter_wood.png',
                             	'button_clicked.png', 'building_menu_hover.png', 'build_button.png','language_button.png','language_click.png']
                               
+    var globalMapImages = ['borders_compass.png','arrows.png','buttons.png','friend_user.png','list_button.png','normal_user.png','panel_background.png',
+    'user_map.png', 'me.png', 'ai.png']           
+                   
     var friendsImages = ['1st_blank.png', 'bar.png', 'home_icon.png']
     var buildingImages = ['townhall.png']
     var panelImages = ['buttons.png']
@@ -86,6 +90,7 @@ var Game = Class.create({
     new Loader().load([ {images : gameElementsImages, path: 'images/game_elements/', store: 'game_elements'},
                         {images : friendsImages, path: 'images/friends/', store: 'friends'},
                         {images : questsImages, path: 'images/quests/', store: 'quests'},
+                        {images : globalMapImages, path: 'images/global_map/', store: 'globalMap'},
                         {images : panelImages, path: 'images/buildings/panel/', store: 'panel'},
                         {images : buildingImages, path: 'images/buildings/', store: 'buildings'},
                         {images : specialDefaultActionImages, path: 'images/buildings/special_default_actions/', store: 'default_actions'},
@@ -112,35 +117,37 @@ var Game = Class.create({
     var self = this;
     var loaderFinishCallback = function(){
         var mapView = ""
-        var friendIDs = self.network.neighbourIDs();
-        var mapping = {};
-        var ids = []
-        friendIDs.each(function(user, index){
-          mapping[user["service_id"]] = { "index" : index };
-          ids[index]= user["service_id"]
-        });
-        // getUsersInfo takes array of service_ids & a hash of service_ids to fill with retrieved names
-        serviceProvider.getUsersInfo(ids, mapping , function(){
-          friendIDs.each(function(friendID, i){
-            if(mapping[friendID["service_id"]].name)
-              friendID["name"] = mapping[friendID["service_id"]].name
-            else
-              friendID["name"] = friendID["service_id"]
-            
-            mapView += self.templatesManager.load("friend-record", 
-                      {'friendId' : friendID["user_id"], 'serviceId' : friendID["service_id"], 'friendName' : friendID["name"]} );
+        self.network.neighbourIDs( function(friendIDs){
+          var mapping = {};
+          var ids = []
+          friendIDs.each(function(user, index){
+            mapping[user["service_id"]] = { "index" : index };
+            ids[index]= user["service_id"]
           });
-          $('friends-ul').innerHTML = mapView;
-          var images =  {
-                          'left' : 'images/quests/arrows_horizontal.png',
-                          'left-disabled' : 'images/quests/arrows_horizontal.png',
-                          'right' : 'images/quests/arrows_horizontal.png',
-                          'right-disabled' :'images/quests/arrows_horizontal.png'
-                        }
-          var friendsCarousel = null;
-          friendsCarousel = new Carousel("friends", images, 5);
-          friendsCarousel.checkButtons();
+          // getUsersInfo takes array of service_ids & a hash of service_ids to fill with retrieved names
+          serviceProvider.getUsersInfo(ids, mapping , function(){
+            friendIDs.each(function(friendID, i){
+              if(mapping[friendID["service_id"]].name)
+                friendID["name"] = mapping[friendID["service_id"]].name
+              else
+                friendID["name"] = friendID["service_id"]
+              
+              mapView += self.templatesManager.load("friend-record", 
+                        {'friendId' : friendID["user_id"], 'serviceId' : friendID["service_id"], 'friendName' : friendID["name"]} );
+            });
+            $('friends-ul').innerHTML = mapView;
+            var images =  {
+                            'left' : 'images/quests/arrows_horizontal.png',
+                            'left-disabled' : 'images/quests/arrows_horizontal.png',
+                            'right' : 'images/quests/arrows_horizontal.png',
+                            'right-disabled' :'images/quests/arrows_horizontal.png'
+                          }
+            var friendsCarousel = null;
+            friendsCarousel = new Carousel("friends", images, 5);
+            friendsCarousel.checkButtons();
+          });
         });
+        
         //////////////////////////////////
         self.reInitialize();
         //Sounds.gameSounds.Intro[0].stop()
@@ -158,7 +165,8 @@ var Game = Class.create({
     buildingImages.push("storage_2.png");
     buildingImages.push("defense_research_animation.png");
     buildingImages.push("military_research_animation.png");
-
+    buildingImages.push("garage_action.png")
+    buildingImages.push("garage_action.png")
     var buildingOutlineImages = BuildingMode.prototype.buildings.collect(function(building){
       return building + "_outline.png";
     });
@@ -189,10 +197,11 @@ var Game = Class.create({
     //var buildingPanelImages = ["panel.png"]
 		
     var creepsImages = ["car.png",'explosion.png','car_fight.png']
-    var creepsMenuImages = ['car_button.png','car_button_disabled.png','cancel.png']
+    var creepsMenuImages = ['car_button.png','car_button_disabled.png','cancel.png', 'filling_bar.png', 'background_bar.png']
 		//This is duplicated to avoid a problem in the loader that can't deal with an array of a single item
     var smokeImages = ["smoke_big.png", "smoke_big.png"]
     
+    var invasionImages = ['down_left.png','down_right.png','up_left.png','up_right.png']
     var researchImages = ["cement.png", "cement_disabled.png", "laser.png", "laser_disabled.png",
                          'blue_bubble.png', 'red_bubble.png', 'green_bubble.png', 'yellow_bubble.png', 'white_bubble.png'];
     var creepGenerationImages = ["",""]
@@ -203,6 +212,7 @@ var Game = Class.create({
                        {images : buildingImages, path: 'images/buildings/', store: 'buildings'},
 											 {images : buildingModeImages, path: 'images/buildings/', store: 'buildingModes'},
 											 {images : iconsImages, path: 'images/icons/', store: 'icons'},
+                        {images : invasionImages, path: 'images/invasion/', store: 'invasion'},
 										 	 {images : workerImages, path: 'images/worker/', store: 'worker'},
 											 {images : creepsImages, path: 'images/creeps/', store: 'creeps'},
                        {images : creepsMenuImages, path: 'images/creeps/menu/', store: 'creeps'},
@@ -217,28 +227,66 @@ var Game = Class.create({
   
   reInitialize : function(callback){
     this.neighborGame = false;
-  	$('home').hide()
-    this.gameStatus = this.network.initializeGame();
-    this.data = this.gameStatus.game_data.metadata;
+  	$('home').hide();
     var self = this;
-    Language.getLanguage(this.gameStatus.user_data.locale, function() {
-      var language = Language.userLanguage;
-      $('gameContainer').addClassName(language);
-      if(!Language[language])
-      {
-        self.network.fetchTemplate( "statics/" + language + ".html", function(responseText){
-          Language[language] = responseText;
-          Text = JSON.parse(responseText);
+    this.network.initializeGame( function(gameStatus){
+      self.gameStatus = gameStatus;
+      self.data = gameStatus.game_data.metadata;
+    
+      Language.getLanguage(gameStatus.user_data.locale, function() {
+        var language = Language.userLanguage;
+        $('gameContainer').addClassName(language);
+        if(!Language[language])
+        {
+          self.network.fetchTemplate( "statics/" + language + ".html", function(responseText){
+            Language[language] = responseText;
+            Text = JSON.parse(responseText);
+            self.reflectStatusChange();
+            self.scene.render();
+          });
+        }else{
           self.reflectStatusChange();
           self.scene.render();
-        });
-      }else{
-        self.reflectStatusChange();
-        self.scene.render();
-      }
-    });
+        }
+      });
+      self.addPersistentObjects()
+      if(callback) callback();
+    } );
   },
-
+  addPersistentObjects : function(){
+    this.persistentObjects.each(function(obj){
+      game[obj.factory+"Factory"].registery.push(obj.obj)
+		  game.scene.push(obj.obj)
+      var displayClass = eval(obj.type+"Display")
+		  var display = new displayClass(obj.obj)
+  		game.scene.pushAnimation(display)
+    })
+  },
+  updateGameData : function(){
+     this.neighborGame = false;
+  	$('home').hide();
+    var self = this;
+    this.network.initializeGame( function(gameStatus){
+      self.gameStatus = gameStatus;
+      self.data = gameStatus.game_data.metadata;
+    
+      Language.getLanguage(gameStatus.user_data.locale, function() {
+        var language = Language.userLanguage;
+        $('gameContainer').addClassName(language);
+        if(!Language[language])
+        {
+          self.network.fetchTemplate( "statics/" + language + ".html", function(responseText){
+            Language[language] = responseText;
+            Text = JSON.parse(responseText);
+            self.scene.render();
+          });
+        }else{
+          self.scene.render();
+        }
+      });
+      if(callback) callback();
+    } );
+  },
   selectLanguage : function(lang){
     if(!$$('#controlPanel #languages')[0].hasClassName('opened'))return
     var self = this;
@@ -294,7 +342,9 @@ var Game = Class.create({
 	  this.militaryResearchFactory = new MilitaryResearchFactory(this);
     this.wedgeFactory = new WedgeFactory(this);
     this.gaddafiFactory = new GaddafiFactory(this);
-    this.friendsManager = new FriendsManager(this);
+    if(!this.globalMapManager)this.globalMapManager  = new GlobalMapManager(this);
+    this.invadeDisplay = new InvadeDisplay(this);
+    this.protectionDisplay = new ProtectionDisplay(this)
     if( !this.buildingMode )
       this.buildingMode = new BuildingMode(this);
     else{
@@ -321,18 +371,22 @@ var Game = Class.create({
     new EnergyDisplay(this);
     this.research = new Research(this);
     this.creepPanel = new CreepPanel(this)
+    this.garagePanel = new GaragePanel(this)
     this.reInitializationNotifications.each(function(fn){fn()});
   },
   
   loadUserEmpire : function(user_id){
   	$('home').show();
-    this.gameStatus.user_data = this.network.neighbourEmpire(user_id);
-    
-    this.neighborGame = true;
-    this.visitedNeighborId = user_id;
-    this.collectedRewardBags = 0;
-    this.updateGameStatus( this.gameStatus );
-    this.scene.adjustNeighborScene();
+    var self = this;
+    this.originalUserData = this.user.data
+    this.network.neighbourEmpire(user_id, function(userData){
+      self.gameStatus.user_data = userData;
+      self.neighborGame = true;
+      self.visitedNeighborId = user_id;
+      self.collectedRewardBags = 0;
+      self.updateGameStatus( self.gameStatus );
+      self.scene.adjustNeighborScene();
+    });
   },
 
   isTouchDevice: function(){
@@ -368,7 +422,7 @@ var Game = Class.create({
 	      }
       }
 	  var style = imgSpan.getAttribute('imgStyle')
-	  if(style)img.setAttribute('style',style)
+	  if(style) img.setAttribute('style',style)
     })
   }
 

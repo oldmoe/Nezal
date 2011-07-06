@@ -5,25 +5,32 @@ var Car = Class.create(MovingObject,{
 	tickCounter :0,
 	name: "car",
 	targetLocated : false,
-	mapDirection : Map.N, 
+	mapDirection : Map.NW, 
 	done_attack : false,
 	attacked : false,
 	specs : null,
-	initialize : function(game){
+  dontAttack : false,
+	initialize : function(game,direction,dontAttack,coords){
+    this.dontAttack = dontAttack
+    this.mapDirection = direction
 		this.target = null
+    this.stolenResources = {}
 //		this.specs  = game.data.creeps.car
     this.specs = {
                 "hp" : 100,
                 "power" : 3,
-                "speed" : 3
+                "speed" : 5
             }
 		this.hp = this.maxHp =  this.specs.hp
 		this.speed = this.specs.speed
 		this.power = this.specs.power
 		this.hitting = false
 		this.game = game
-		this.coords = {}
-		this.setInitialCoords()
+    if(coords)this.coords = coords
+		else{
+      this.coords = {}
+		  this.setInitialCoords()
+    }
 		this.movingPath = []
 		this.startHittingObservers = []
 		this.finishHittingObservers = []
@@ -31,11 +38,19 @@ var Car = Class.create(MovingObject,{
 	},
 	
 	tick : function($super){
+    if(this.dontAttack){
+      $super()
+      return
+    }
 		this.tickCounter++
 		if(this.hp <=0 ){
 			this.done_attack = true
 			this.hitting = false
-			this.game.attackManager.notifyDoneAttack()
+      if (this.target) {
+        this.target.underAttack = false
+        this.addStolenResources(this.target.getStolenResources()) 
+      }
+			this.game.attackManager.notifyDoneAttack(this.stolenResources)
 			this.game.creepFactory.remove(this)
 			Sounds.play(Sounds.gameSounds.explosion)
 			return
@@ -43,14 +58,16 @@ var Car = Class.create(MovingObject,{
 		if(!this.target){
 			this.hitting = false
 			this.target = this.pickTarget()
+      if(this.target)this.target.damage = 0
 		}
 		if (!this.target) {
 			this.done_attack = true
 			this.hitting = false
-			this.game.attackManager.notifyDoneAttack()
+			this.game.attackManager.notifyDoneAttack(this.stolenResources)
 			this.game.creepFactory.remove(this)
 			return
 		}
+    this.target.underAttack = true
 		$super()
 		if(this.target && this.movingPath.length == 0){
 			this.hitting = true
@@ -58,6 +75,7 @@ var Car = Class.create(MovingObject,{
 //      console.log("Car Fire :: ", this.id, " :: ", this.hp, " :: ", this.coords.x , " :: ", this.coords.y);
 			this.angle = Map.getGeneralDirectoin(this.coords.x, this.coords.y, this.target.coords.x, this.target.coords.y);
 			this.target.hp -=this.power
+      this.target.damage+=this.power
 			this.attacked = true
 		}else{
 			this.hitting = false
@@ -67,11 +85,13 @@ var Car = Class.create(MovingObject,{
 			this.target.hp = 1
 			this.target.working = false
 			this.target.setState(this.target.states.NORMAL)
+      this.addStolenResources(this.target.getStolenResources()) 
 			if(this.target.name == 'palm'){
 				Map.objects.remove(this.target);
 				game.scene.objects.remove(this.target)
 				this.target.destroy()
 			}
+      this.target.underAttack = false
 			this.target = null
 		} 
 //    console.log("Car Tick :: ", this.id, " :: ", this.hp, " :: ", this.coords.x , " :: ", this.coords.y);
@@ -154,20 +174,20 @@ var Car = Class.create(MovingObject,{
 				this.coords.y = Map.y + Map.viewHeight
 				break;
 			case Map.NE:
-				this.coords.x = Map.x + Map.viewWidth
-				this.coords.y = Map.y
+				this.coords.x = Map.x + Map.viewWidth - Math.round(100*Math.random())
+				this.coords.y = Map.y + Math.round(100*Math.random())
 				break;
 			case Map.NW:
-				this.coords.x = Map.x
-				this.coords.y = Map.y
+				this.coords.x = Map.x + Math.round(100*Math.random())
+				this.coords.y = Map.y + Math.round(100*Math.random())
 				break;
 			case Map.SE:
-				this.coords.x = Map.x + Map.viewWidth
-				this.coords.y = Map.y + Map.viewHeight
+				this.coords.x = Map.x + Map.viewWidth - Math.round(100*Math.random())
+				this.coords.y = Map.y + Map.viewHeight+ Math.round(100*Math.random())
 				break;
 			case Map.SW:
-				this.coords.x = Map.x
-				this.coords.y = Map.y + Map.viewHeight
+				this.coords.x = Map.x + Math.round(100*Math.random())
+				this.coords.y = Map.y + Map.viewHeight+ Math.round(100*Math.random())
 				break;
 			default: 
 				break;		
@@ -192,6 +212,14 @@ var Car = Class.create(MovingObject,{
 	  return function(){
     	return self.hp/self.maxHp	
 	  }
+  },
+  addStolenResources : function(resources){
+    for(var resource in resources){
+      if(!this.stolenResources[resource]){
+        this.stolenResources[resource] = 0
+      }
+      this.stolenResources[resource]+=resources[resource]
+    }
   }	
 })
 

@@ -3,92 +3,52 @@ class GamesController < ApplicationController
   enable :sessions
   
   set :views, ::File.dirname(::File.dirname(__FILE__)) +  '/views/facebook/games'
-    
-  get '/:game_name/challenges' do
-    camps = Campaign.find_all_by_game_id(@game.id)
-    JSON.generate(camps)
-  end
 
   # get the game object metadata
-  get '/:game_name/metadata' do 
-    klass = get_helper_klass()
-    game_metadata = klass.load_game(@game)
-    user_metadata = klass.load_game_profile(@game_profile)
-    ranks = {}
-    @game.ranks.each { |rank| ranks[rank.name] = [rank.lower_exp, rank.upper_exp]}
+  get '/:game_name/data' do 
     data = {
-      :game_data => { :metadata => game_metadata,
-                      :current_campaign => @game.current_campaign.path} , 
-      :user_data => { :coins => @user.coins, 
-                      :rank => @game_profile.rank.name,
-                      :exp => @game_profile.exp, 
-                      :newbie => @game_profile.newbie,
-                      :locale => @game_profile.locale, 
-                      :bookmarked => @game_profile.bookmarked,
-                      :like => @game_profile.like,
-                      :metadata => user_metadata
+      :game_data => { :metadata => Game::current.data } , 
+      :user_data => { :coins => user.coins, 
+                      :rank => user_game_profile.rank,
+                      :exp => user_game_profile.exp,
+                      :locale => user_game_profile.locale, 
+                      :metadata => user_game_profile.data
                     },
-      :ranks => ranks
+      :ranks => Game::current.ranks
     }
-    data[:user_data][:volatile_data] = @game_profile['volatile_data'] || {}
+    data[:user_data][:volatile_data] = user_game_profile['volatile_data'] || {}
     JSON.generate(data)
   end
   
-  # get the game object metadata
-  post '/:game_name/metadata' do 
-    klass = get_helper_klass()
-    user_metadata = klass.edit_game_profile(@game_profile, params['data'])
-    user_metadata = klass.load_game_profile(@game_profile)
+  # update the user game profile
+  post '/:game_name/data' do
+    user_metadata = BaseDefender.edit_game_profile(user_game_profile, params['data'])
     data = {
-      :user_data => { :coins => @game_profile.user.coins, 
-                      :rank => @game_profile.rank.name,
-                      :exp => @game_profile.exp, 
-                      :newbie => @game_profile.newbie,
-                      :locale => @game_profile.locale, 
-                      :bookmarked => @game_profile.bookmarked,
-                      :like => @game_profile.like,
-                      :metadata => user_metadata
+      :user_data => { :coins => user_game_profile.user.coins, 
+                      :rank => @game_profile.rank,
+                      :exp => user_game_profile.exp, 
+                      :newbie => user_game_profile.newbie,
+                      :locale => user_game_profile.locale, 
+                      :metadata => user_game_profile.data
                       }
     }
     JSON.generate(data)
   end
-  
-  # get the game object metadata
-  get '/:game_name/:camp_path/metadata' do 
-    klass = get_helper_klass()
-    camp = Campaign.where(:game_id => @game.id, :path => params['camp_path']).first
-    camp_metadata = klass.load_campaign(camp)
-    user_camp = UserCampaign.where( 'user_id' => @user.id, 'campaign_id'=> camp.id).first
-    if !user_camp
-      user_camp = UserCampaign.new(:profile_id => @game_profile.id, 'campaign_id'=> camp.id, 'user_id' => @user.id)
-      klass.init_user_campaign(user_camp)
-    end
-    user_camp_metadata = klass.load_user_campaign(user_camp)
-    data = {
-      :camp_data => { :metadata => camp_metadata} , 
-      :user_data => { :metadata => user_camp_metadata }
-    } 
-    JSON.generate(data)
+
+  get '/:game_name/neighbor/:id' do
+    neighbor_user_profile = BD::Neighbor.neighbor_empire(user_game_profile, id)
+    result = {
+              :user_data => { 
+                :rank => neighbor_user_profile.rank,
+                :exp => neighbor_user_profile.exp, 
+                :newbie => neighbor_user_profile.newbie,
+                :locale => neighbor_user_profile.locale, 
+                :metadata => user_game_profile.data
+              }
+            }
+    JSON.generate(result)
   end
-    
-  # get the game object metadata
-  post '/:game_name/:camp_path/metadata' do 
-    klass = get_helper_klass()
-    camp = Campaign.where(:game_id => @game.id, :path => params['camp_path']).first
-    user_camp = UserCampaign.where( 'user_id' => @user.id, 'campaign_id'=> camp.id ).first
-    klass.edit_user_campaign(user_camp, params['data'])
-    user_camp_metadata = klass.load_user_campaign(user_camp)
-    data = {
-      :user_data => { 
-                      :metadata => user_camp_metadata,
-                      :rank => user_camp.profile.rank.name,
-                      :exp => user_camp.profile.exp,
-                      :coins => user_camp.profile.user.coins
-                   }
-    }
-    JSON.generate(data)
-  end
-  
+
   get '/:game_name/generic' do
     klass = get_helper_klass()
     result = klass.process_request(@game_profile, params['data'])
@@ -185,10 +145,9 @@ class GamesController < ApplicationController
     data.to_json
   end
 
-  # User bookmarked the application
   post '/:game_name/users/reset' do
-    get_helper_klass.init_game_profile(@game_profile)
-    @game_profile.save!()
+    user_game_profile.destroy
+    user.destroy
   end
 
 

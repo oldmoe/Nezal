@@ -24,53 +24,59 @@ var MovingObject = Class.create({
 	 
 	 tick : function(){
 	 		this.tickCounter++
-	 		if(this.movingPath && this.movingPath.length>0){
-			if(this.targetAngle!=this.angle){
+      if(this.targetAngle!=this.angle){
 				this.changeAngle();
 				return
 			}
-			var values = Map.value(this.movingPath[this.movingPath.length-1].x,this.movingPath[this.movingPath.length-1].y)
-			if(!this.moving){
-				this.moving = true
-				this.distanceToNextTile = Util.distance(this.coords.x,this.coords.y,values[0],values[1])  
-				this.targetAngle = Map.getDirection(this.coords.x,this.coords.y,values[0],values[1])
-			}
-			//this.state = this.calculateCurrentState(values)
-			var movements = Util.getNextMove(this.coords.x,this.coords.y,values[0],values[1],this.speed)
-			if(this.tickCounter%3==0)this.state = (this.state+1)%8
-			this.coords.x+=movements[0]
-			this.coords.y+=movements[1]
-			var mapValues = Map.tileValue(this.coords.x,this.coords.y)
-			if(this.coords.x == values[0] && this.coords.y == values[1]){
-				this.movingPath.pop()
-				if(this.movingPath.length>0){
-					values = Map.value(this.movingPath[this.movingPath.length-1].x,this.movingPath[this.movingPath.length-1].y)
-					this.targetAngle = Map.getDirection(this.coords.x,this.coords.y,values[0],values[1])
-					//this.angle = Map.getDirection(this.x,this.y,values[0],values[1])
-				}
-			}
-			if(this.movingPath.length == 0){
-			    if(this.moving){
-					if (Math.abs(this.coords.x - this.targetPoint.x)<0.01 && Math.abs(this.coords.y - this.targetPoint.y)<0.01) {
-						this.moving = false
-						this.state = 0
-					}
-					else {
-						var movements = Util.getNextMove(this.coords.x, this.coords.y, this.targetPoint.x, this.targetPoint.y, this.speed)
-						this.coords.x+=movements[0]
-						this.coords.y+=movements[1]
-					}
-				}
-			} 
-		}
-		else if(this.randomMove){
-			var rand = Math.random()
-			if (rand <= 0.05) {
-		  	var x = Math.round(game.scene.map.x + game.scene.map.viewWidth * Math.random())
-		  	var y = Math.round(game.scene.map.y + game.scene.map.viewHeight * Math.random())
-		  	this.movingPath = Map.moveObject(this, x, y)
-	  	}
-		}
+	 		if(this.movingPath){
+        	if (this.movingPath.length > 0) {
+            var values = Map.value(this.movingPath[this.movingPath.length - 1].x, this.movingPath[this.movingPath.length - 1].y)
+            if (!this.moving) {
+              this.moving = true
+              this.distanceToNextTile = Util.distance(this.coords.x, this.coords.y, values[0], values[1])
+              this.targetAngle = Map.getDirection(this.coords.x, this.coords.y, values[0], values[1])
+            }
+            //this.state = this.calculateCurrentState(values)
+            var movements = Util.getNextMove(this.coords.x, this.coords.y, values[0], values[1], this.speed)
+            if (this.tickCounter % 3 == 0) 
+              this.state = (this.state + 1) % 8
+            this.coords.x += movements[0]
+            this.coords.y += movements[1]
+            var mapValues = Map.tileValue(this.coords.x, this.coords.y)
+            if (this.coords.x == values[0] && this.coords.y == values[1]) {
+              this.movingPath.pop()
+              if (this.movingPath.length > 0) {
+                values = Map.value(this.movingPath[this.movingPath.length - 1].x, this.movingPath[this.movingPath.length - 1].y)
+                this.targetAngle = Map.getDirection(this.coords.x, this.coords.y, values[0], values[1])
+              //this.angle = Map.getDirection(this.x,this.y,values[0],values[1])
+              }
+            }
+          }
+			    else if(this.movingPath.length == 0){
+    			  if(this.moving){
+    					if (Math.abs(this.coords.x - this.targetPoint.x)<0.01 && Math.abs(this.coords.y - this.targetPoint.y)<0.01) {        
+    						this.moving = false
+    						this.state = 0
+                if(this.movementFinishCallback)this.movementFinishCallback()
+    					}
+    					else {
+                this.targetAngle = Map.getDirection(this.coords.x, this.coords.y, this.targetPoint.x, this.targetPoint.y)
+    						var movements = Util.getNextMove(this.coords.x, this.coords.y, this.targetPoint.x, this.targetPoint.y, this.speed)
+    						this.coords.x+=movements[0]
+    						this.coords.y+=movements[1]
+    					}
+    				}	else if(this.randomMove){
+        			var rand = Math.random()
+        			if (rand <= 0.01) {
+        		  	var x = Math.round(game.scene.map.x + game.scene.map.viewWidth * Math.random())
+        		  	var y = Math.round(game.scene.map.y + game.scene.map.viewHeight * Math.random())
+        		  	this.movingPath = Map.moveObject(this, x, y)
+        	  	}else if(rand<=0.05){
+                this.targetAngle = Math.floor(Math.random()*8)
+              }
+        	  }
+			    } 
+		    }
 	},
 	changeAngle : function(){
 		if(this.angle > this.targetAngle){

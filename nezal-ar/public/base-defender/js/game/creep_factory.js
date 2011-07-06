@@ -5,14 +5,15 @@ var CreepFactory = Class.create({
 		this.registery = []
   },
   
-  newCreep : function(type,id){
+  newCreep : function(type,id,direction,dontAttack,coords){
 		var creepClass = eval(type)
-		var creep = new creepClass(this.game)
+		var creep = new creepClass(this.game,direction,dontAttack,coords)
 		creep.id = id
 		this.registery.push(creep)
 		this.game.scene.push(creep)
 		var displayClass = eval(type+"Display")
 		var creepDisplay = new displayClass(creep)
+    creep.display = creepDisplay
 		this.game.scene.pushAnimation(creepDisplay)
 		return creep
   }, 

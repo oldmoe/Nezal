@@ -1,11 +1,18 @@
-class User < ActiveRecord::Base
+class User < DataStore::Model
+
+
+  class << self
+
+    SEP = '-'.freeze
+
+    def generate_key(*args)
+      args.join(SEP)
+    end    
   
-  attr_accessible :service_id
-  attr_accessible :service_type
-  has_many  :game_profiles, :class_name => "UserGameProfile", :dependent => :destroy, :foreign_key => 'user_id'
+  end
 
   # Get Global Top Scorers 
-  def top_scorers(camp_id, user_service_ids = [], limit = 3)
+  def top_scorers(user_service_ids = [], limit = 3)
     conditions = " campaign_id = #{camp_id} AND service_type = #{self.service_type} "    
     if user_service_ids && !(user_service_ids.empty?)
       ids = User.all(:conditions => " service_id IN (#{user_service_ids}) ").collect { |user| user.id }.join(',')
@@ -14,14 +21,14 @@ class User < ActiveRecord::Base
     UserCampaign.all( :conditions => conditions, :limit => limit, :order=> 'user_campaigns.score DESC, user_campaigns.user_id' )
   end
   
-  def friends_top_scorers(camp_id, friends, limit = 3)
-    top_scorers(camp_id, friends, limit)
+  def friends_top_scorers(friends, limit = 3)
+    top_scorers(friends, limit)
   end
   
   # Get User Ranking
   # Call it with empty list to get user global ranking 
   # Call it with friends service_ids to get user among friends ranking
-  def ranking(camp_id, user_ids = [], list_size = 10, top_score_size = 3 )
+  def ranking(user_ids = [], list_size = 10, top_score_size = 3 )
     result = {}   
     before_length = list_size/2 
     after_length = list_size - before_length

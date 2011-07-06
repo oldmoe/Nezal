@@ -168,8 +168,9 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
         'top': owner.coords.y + "px",
         'left': (owner.coords.x - 15) + "px"
       })
+      collectionDiv.addClassName('smallBlackOutline')
       $('gameCanvas').appendChild(collectionDiv)
-      Animation.springFade(collectionDiv, -105)
+      Animation.springFade(collectionDiv, -105, function(){if(collectionDiv.parentNode)collectionDiv.parentNode.removeChild(collectionDiv)})
   },
 
   _NeighborCollectionAnimation : function(){

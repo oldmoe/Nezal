@@ -16,6 +16,7 @@ var Map={
 	rowOddDirections : {},
 	objects : [],
 	inViewObjects : [],
+  zonePoints : [{x:1495,y:551},{x:765,y:914},{x:25,y:550},{x:771,y:157}],
 	init : function (scene){
 		this.scene = scene;
 		var rawMap = scene.rawMap;
@@ -25,9 +26,6 @@ var Map={
 						if(!Map.grid[i])Map.grid[i]=[];
 						Map.grid[i][j] = new Node(i,j);
 						Map.grid[i][j].terrainType = rawMap[i][j];
-						if(Map.grid[i][j].terrainType != 0){
-							scene.renderDisplayUnit(Map.value(i, j), rawMap[i][j]);
-					}
 				}
 			}			
 			Map.navigation = new Navigation(Map);
@@ -140,7 +138,7 @@ var Map={
 		var retList = []
 		for (var k=0;k<8;k++){
 			var neighbor = Map.getNeighbor(i,j,k)
-			if(neighbor && (Map.grid[neighbor[0]][neighbor[1]].value ==0 || Map.grid[neighbor[0]][neighbor[1]].target)  &&Map.grid[neighbor[0]][neighbor[1]].terrainType==0 ) retList.push(Map.grid[neighbor[0]][neighbor[1]])
+			if(neighbor && (Map.grid[neighbor[0]][neighbor[1]].value ==0 || Map.grid[neighbor[0]][neighbor[1]].target|| Map.grid[neighbor[0]][neighbor[1]].ignorePlace)  &&Map.grid[neighbor[0]][neighbor[1]].terrainType==0 ) retList.push(Map.grid[neighbor[0]][neighbor[1]])
 		}
 		return retList
 	},
@@ -263,7 +261,7 @@ var Map={
 		return Map.value(tileValues[0],tileValues[1])		
 	},
 
-	addObjectToGrid : function(obj){
+	addObjectToGrid : function(obj,ignorePlace){
 		var noOfRows = Math.ceil(obj.xdim/Map.tileIsoLength)
 		var noOfColumns = Math.ceil(obj.ydim/Map.tileIsoLength)
 		var topX = obj.owner.coords.x 
@@ -277,6 +275,7 @@ var Map={
 			var loopingTile = [];loopingTile[0] = originTile[0]; loopingTile[1] = originTile[1]
 			for(var j=0;j<noOfColumns+1;j++){
 				Map.grid[loopingTile[0]][loopingTile[1]].value = obj
+        Map.grid[loopingTile[0]][loopingTile[1]].ignorePlace = ignorePlace
 				mapTiles.push(Map.grid[loopingTile[0]][loopingTile[1]])
 				loopingTile = Map.getNeighbor(loopingTile[0],loopingTile[1],Map.SE)
 			}
@@ -303,14 +302,15 @@ var Map={
 				break
 			}			
 		}
-		return !collide
+    var insidePolygon = Util.isInside(obj,Map.zonePoints)
+		return !collide && insidePolygon
 	},
 	
-	addElement : function(obj){
+	addElement : function(obj,ignorePlace){
 		var valid = this.validateLocation(obj)
 		if(valid) {
 	  	this.objects.push(obj)
-	  	this.addObjectToGrid(obj)
+	  	this.addObjectToGrid(obj,ignorePlace)
 	  }
 		return valid
 	},
@@ -322,7 +322,43 @@ var Map={
 	},
 	clear :function(){
 		if(this.objects)this.objects = []
-		if(this.div)this.div.innerHTML = ""
+    	if(this.objects)this.objects = []
+		if(this.div)this.div.innerHTML = '<img id="map_zone" src="images/game_elements/zone2.png">'
+    $('map_zone').observe(game.mouseStartEvent,function(event){
+			if (event.button != 2) {
+			  	if (event.preventDefault) {
+			  		event.preventDefault();
+			  	}
+	  		}
+		})
+//    var tile = Map.tileValue(767,185)
+//    var count =0
+//    var loopingTile = tile.clone()
+//    while(loopingTile && loopingTile[0]>0 && loopingTile[1]< Map.mapHeight){
+//      count++
+//      loopingTile = Map.getNeighbor(loopingTile[0],loopingTile[1],Map.SW)
+//    }
+//    count--;
+//    loopingTile = tile.clone()
+//    
+//    while(loopingTile && loopingTile[0]>0 && loopingTile[0]<Map.mapWidth && loopingTile[1] >0 &&   loopingTile[1]< Map.mapHeight ){
+//      var startTile = loopingTile.clone()
+//        console.log(loopingTile[0],loopingTile[1])
+//      for(var i=0;i<count;i++){
+//        Map.grid[loopingTile[0]][loopingTile[1]].terrainType = 0 
+//        loopingTile = Map.getNeighbor(loopingTile[0],loopingTile[1],Map.SW)
+//      }
+//      loopingTile = Map.getNeighbor(startTile[0],startTile[1],Map.SE)
+//    } 
+    this.div.observe('mousemove',function(e){
+      var x = e.pointerX()
+      var y = e.pointerY()
+      var realCoords = Map.getRealCoords(x,y)
+//      var tv = Map.tileValue(realCoords.x,realCoords.y)
+   //   console.log(Map.grid[tv[0]][tv[1]].terrainType)
+        Map.tmpValue = [realCoords.x,realCoords.y]
+    })
+    
 	},
 	occupied : function(x,y){
 		var mapTiles = Map.tileValue(x,y)
@@ -380,7 +416,7 @@ var Map={
 		var srcTiles = Map.tileValue(object.coords.x,object.coords.y)
 		var destTiles = Map.tileValue(x,y)
 		Map.grid[destTiles[0]][destTiles[1]].target = true
-	if(Map.grid[destTiles[0]][destTiles[1]].value!=0 && !ignorePlace) destTiles = Map.getNearestEmptyTile(destTiles)
+	  if(Map.grid[destTiles[0]][destTiles[1]].value!=0 && !ignorePlace) destTiles = Map.getNearestEmptyTile(destTiles)
 		var path = astar.getOptimalPath(Map,Map.grid[srcTiles[0]][srcTiles[1]],Map.grid[destTiles[0]][destTiles[1]])
 		for(var i=0;i<Math.ceil(this.mapHeight*2/this.tileHeight)+1;i++){
 				for(var j=0;j<Math.ceil(this.mapWidth/this.tileWidth)+1;j++){
@@ -408,7 +444,7 @@ var Map={
 			var tile = openList[0]
 		 	for (var k=0;k<8;k++){
 				var neighbor = Map.getNeighbor(tile[0],tile[1],k)
-				if(neighbor && Map.grid[neighbor[0]][neighbor[1]].value ==0 &&Map.grid[neighbor[0]][neighbor[1]].terrainType==0 )return neighbor
+				if(neighbor && (Map.grid[neighbor[0]][neighbor[1]].value ==0 || Map.grid[neighbor[0]][neighbor[1]].ignorePlace)  &&Map.grid[neighbor[0]][neighbor[1]].terrainType==0 )return neighbor
 				else if(neighbor) openList.push(neighbor)
 			}
 			openList.splice(0,1)			

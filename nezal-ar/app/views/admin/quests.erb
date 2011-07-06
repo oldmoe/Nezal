@@ -1,7 +1,7 @@
-<%= erb :language %>
+<%= erb :language_loader %>
 <script type='text/javascript'>
 Language.display = function(){
-    Quests.arrange ();
+    Quests.arrange();
 }
 Language.deleteQuest = function(questId){
     for(lang in Language.metadata)
@@ -58,15 +58,15 @@ $(document).observe('dom:loaded',function(){
           <INPUT type="text" id="quest_name" name='name'><BR>
         </div>
         <div class="form_row">  
-          <LABEL for="primary">Primary</LABEL>
-          <INPUT type="checkbox" id="unlocked" name="primary" value=true><BR>
+          <LABEL for="primal">Primal</LABEL>
+          <INPUT type="checkbox" id="primal" name="primal" value=true><BR>
         </div>
         <div class="form_row">  
           <LABEL for="parent">Parent</LABEL>
           <select id="parent" name="parent">
             <option value=""> none </option>
-            <% @game.quests.each do | quest | %>                      
-              <option value="<%=quest.id%>"> <%=quest.name%> </option>
+            <% @quests.each_value do | quest | %>                      
+              <option value="<%=quest['id']%>"> <%=quest['name']%> </option>
             <% end %>
           </select>
         </div>
@@ -77,16 +77,16 @@ $(document).observe('dom:loaded',function(){
     </div>
     <LABEL for="game_quests" class="label">Quests</LABEL>
     <div id="quests">
-      <% @game.quests.each do | quest | %>
-        <div id="<%=quest[:id]%>" parent="<%=quest.parent%>">
+      <% @quests.each_pair do | id, quest | %>
+        <div id="<%=id%>"  parent="<%=quest['parent']%>" >
           <span style="width : 20%; display : block; float : left;">
-            <a href="/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/quests/<%=quest[:id]%>/metadata/edit">
-              <%=quest[:name]%>
+            <a href="/<%=AdminController::ADMIN_URL%>/<%=@game.name%>/quests/<%=id%>">
+              <%=quest['name']%>
             </a>
           </span>
-          <form id="delete_quest_<%=quest.id%>" action="/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/quests/<%=quest.id%>" method="POST" style="display:inline">
+          <form id="delete_quest_<%=id%>" action="/<%=AdminController::ADMIN_URL%>/<%=@game.name%>/quests/<%=id%>" method="POST" style="display:inline">
             <input type="hidden" name="_method" value="put"/>
-            <a href="#" onclick="Quests.remove(<%=quest.id%>);" class="submit_links"> x </a>
+            <a href="#" onclick="Quests.remove(<%=id%>);" class="submit_links"> x </a>
           </form> 
         </div>
       <% end %>

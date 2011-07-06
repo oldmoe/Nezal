@@ -1,13 +1,12 @@
 .gameElement {
 	position : absolute;
 	z-index : 1000;
-	text-shadow:-1px 2px 1px #000000;
 }
 
 .topGameElement {
   position : absolute;
   z-index : 1000;
-  text-shadow:-1px 2px 1px #000000;
+  text-shadow : -1px -1px black, 1px 1px black, 0px -1px black, 0px 1px black, -1px 0px black, 1px 0px black;
   top: 5px;
   overflow: hidden;
 }
@@ -33,7 +32,8 @@
 
 #energy_bar{
   left: 250px;
-  top: 55px;
+  top: 0px;
+  z-index: 10000;
 }
 
 #energy_bar #energy_text {
@@ -215,4 +215,13 @@
 	top:449px;
 	left:24px;
 	z-index:2000;
+}
+#protectionTime{
+  left: 12px;
+  top: 77px;
+  color: white;
+  font-size: 13px;
+}
+#gameContainer.arabic #protectionTime{
+  left: 629px;
 }
