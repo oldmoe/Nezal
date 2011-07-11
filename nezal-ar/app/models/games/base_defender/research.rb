@@ -36,7 +36,7 @@ module BD
       
       lumber_to_refund = research_data['needs']['lumber'] * 75 / 100
       rock_to_refund = research_data['needs']['lumber'] * 75 / 100
-      total_storage = BD::ResourceBuilding.calculate_total_storage(user_profile)
+      total_storage = BD::ResourceBuilding.calculate_total_storage(user_game_profile)
       
       free_lumber_space = total_storage - user_game_profile.lumber
       lumber_to_refund = lumber_to_refund > free_lumber_space ? free_lumber_space : lumber_to_refund

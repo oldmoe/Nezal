@@ -40,6 +40,7 @@ module BD
         user_game_profile.data[building_name][location_hash]['state'] = states['UNDER_CONSTRUCTION']
         user_game_profile.data[building_name][location_hash]['coords'] = coords
         user_game_profile.data[building_name][location_hash]['hp'] = game_data['buildings'][building_name]['levels']['1']['hp']
+        user_game_profile.data[building_name][location_hash]['remainingTime'] = game_data['buildings'][building_name]['levels']['1']['time']
         user_game_profile.rock -= game_data['buildings'][building_name]['levels']['1']['rock']
         user_game_profile.lumber -= game_data['buildings'][building_name]['levels']['1']['lumber']
         return validation
@@ -167,6 +168,7 @@ module BD
         building['coords'] = coords
         building_level_info = game_data['buildings'][building_name]['levels'][(current_level+1).to_s]
         building['hp'] = building_level_info['hp']      
+        user_game_profile.data[building_name][location_hash]['remainingTime'] =  building_level_info['time']      
         user_game_profile.rock -= building_level_info['rock']
         user_game_profile.lumber -= building_level_info['lumber']
         return validation

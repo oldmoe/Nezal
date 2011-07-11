@@ -38,7 +38,7 @@ module BD
             BD::Quest::all().each_pair do |id, quest|
               data['quests'][id] ||= {}
               data['quests'][id]['conditionMsgs'] ||= {}
-              if quest['conditions']['buildings']
+              if quest['conditions'] && quest['conditions']['buildings']
                 quest['conditions']['buildings'].each_pair do |building, hash|
                   data['quests'][id]['conditionMsgs'][building] ||= {}
                   hash.keys.each do |key|
@@ -46,9 +46,9 @@ module BD
                   end
                 end
               end
-              if quest['conditions']['resources']
+              if quest['conditions'] && quest['conditions']['resources']
                 quest['conditions']['resources'].keys do |key|
-                  data['quests'][id]['conditionMsgs'][key] = ''
+                  data['quests'][ id]['conditionMsgs'][key] = ''
                 end
               end
             end

@@ -14,6 +14,7 @@ class AdminController < ApplicationController
   # Add a new Game
   post '/' do
     @game = Game.create(params["name"], {"name" => params["name"], "description" => params["description"]})
+    puts @game
     redirect "/#{ADMIN_URL}/#{@game.name}"
   end
 
@@ -66,7 +67,7 @@ class AdminController < ApplicationController
 
   # Add new Level
   post '/:game_name/buildings/:name/levels/new' do
-    @game = Game.get(params[:name])
+    @game = Game.get(params[:game_name])
   	building = @game.data['buildings'][params[:name]]
   	@newLevel = building['levels'].size
   	building['levels'][@newLevel] = building['levels'][building['levels'].keys.last]
@@ -117,11 +118,16 @@ class AdminController < ApplicationController
       ''
     else
       BD::Quest.delete(quest_id)
+      data = BD::Language.load()
+      data.values.each do |language_data|
+        language_data['quests'].delete(quest_id)
+      end
+      BD::Language::save(Metadata.encode(data))
       redirect "/#{ADMIN_URL}/#{@game.name}/quests"
     end
   end
 
-  # Serve the quest metadata edit page
+  # Serve the quest data edit page
   get '/:game_name/quests/:quest_id' do 
     @game = Game.get(params[:game_name])
     @quests = BD::Quest::all()
@@ -129,7 +135,7 @@ class AdminController < ApplicationController
     erb :quest , {:layout => :app}
   end
   
-  # Serve the quest object metadata
+  # Serve the quest object data
   get '/:game_name/quests/:quest_id/metadata' do 
     @quest = BD::Quest.find(params["quest_id"])
     Metadata.encode(@quest)

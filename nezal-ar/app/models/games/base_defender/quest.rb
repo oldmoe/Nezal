@@ -30,26 +30,27 @@ module BD
 
     def initialize(quest_data)
       game = Game::current
-      game.data['quests'] ||= {'id_generator' => 0, 'list' => {}}
+      game.quests ||= {'id_generator' => 0, 'list' => {}}
       parent = if quest_data["parent"] && !(quest_data["parent"].empty?)
                 quest_data["parent"]
               else
                 nil
               end
-      quest = {:name => quest_data["name"], :parent => parent, :conditions => {}, :rewards => {}}
-      quest[:primal] = (quest_data["primal"]) ? true : false
-      quest['id'] = (game.data['quests']['id_generator']).to_s
+      new_quest = {"name" => quest_data["name"], "parent" => parent, "conditions" => { "buildings" => {}, "resources" => {} }, "rewards" => {}}
+      new_quest["primal"] = (quest_data["primal"]) ? true : false
+      new_quest['id'] = (game.data['quests']['id_generator']).to_s
       game.quests['id_generator'] += 1
-      game.quests['list'][quest['id']] = quest
+      game.quests['list'][new_quest['id']]= new_quest
+      p Game.current.quests
       game.save
+      p Game.current.quests
     end
 
     class << self
 
       def init()
         game = Game::current
-        game.data['quests'] ||= {'id_generator' => 0, 'list' => {}}
-        game.save
+        game.quests ||= {'id_generator' => 0, 'list' => {}}
       end
 
       # Base Defender Quests : 
@@ -70,23 +71,20 @@ module BD
     
   
       def delete(quest_id)
-        init()
         game = Game::current
-        puts game.quests['list'].delete(quest_id)
+        game.quests['list'].delete(quest_id)
         game.save
+        p Game::current.quests
       end
 
       def find(quest_id)
-        init()
         game = Game::current
-        game.data['quests']['list'][quest_id]
+        game.quests['list'][quest_id] if game.data['quests']['list']
       end
 
       def all()
-        init()
         game = Game::current
-        p game.quests['list']
-        game.quests['list']
+        game.quests['list'] || {}
       end
 
       def assess_user_quests(user_game_profile)
@@ -170,42 +168,44 @@ module BD
 
       # Status each condition in the quest
       def status(profile, quest)
-        status = { :buildings => {}, :resources => {} }
-        quest['conditions']['buildings'].each_pair do | item, conditions |
-          status[:buildings][item] = {}
-          if profile.data[item]
-            profile.data[item].each_pair do |key, value|
-              condition_met = true
-              conditions.each_pair do |cond, cond_val|
-                condition = false
-                condition_status = { :id => key, :status => self::STATUS[:not_started], :value => value[cond] || 0, :target => cond_val }
-                if value[cond] && value[cond] >= cond_val
-                  condition_status[:status] = self::STATUS[:done]
-                  condition = true
-                elsif value[cond]
-                  condition_status[:status] = self::STATUS[:in_progress]
+        status = { "buildings" => {}, "resources" => {} }
+        if quest['conditions'] && quest['conditions']['buildings']
+          quest['conditions']['buildings'].each_pair do | item, conditions |
+            status["buildings"][item] = {}
+            if profile.data[item]
+              profile.data[item].each_pair do |key, value|
+                condition_met = true
+                conditions.each_pair do |cond, cond_val|
                   condition = false
-                else
-                  condition_status[:status] = self::STATUS[:not_started]
-                  condition = false
+                  condition_status = { "id" => key, "status" => self::STATUS[:not_started], "value" => value[cond] || 0, "target" => cond_val }
+                  if value[cond] && value[cond] >= cond_val
+                    condition_status["status"] = self::STATUS[:done]
+                    condition = true
+                  elsif value[cond].nil? == false
+                    condition_status["status"] = self::STATUS[:in_progress]
+                    condition = false
+                  else
+                    condition_status["status"] = self::STATUS[:not_started]
+                    condition = false
+                  end
+                  status["buildings"][item][cond] = condition_status
+                  condition_met &&= condition
                 end
-                status[:buildings][item][cond] = condition_status
-                condition_met &&= condition
+                break if condition_met
               end
-              break if condition_met
-            end
-          else
-            conditions.each_pair do |cond, cond_val|
-              status[:buildings][item][cond] =  { :status => self::STATUS[:not_started], :value => 0, :target => cond_val }
+            else
+              conditions.each_pair do |cond, cond_val|
+                status["buildings"][item][cond] =  { "status" => self::STATUS[:not_started], "value" => 0, "target" => cond_val }
+              end
             end
           end
         end
         quest['conditions']['resources'].each_pair do | item, conditions |
-          condition_status = { :status => self::STATUS[:done], :value => profile.item || 0, :target => conditions}
+          condition_status = { "status" => self::STATUS[:done], "value" => profile[item] || 0, "target" => conditions}
           if profile.data[item] && (profile.data[item] < conditions)
-            condition_status[:status] = self::STATUS[:not_started]
+            condition_status["status"] = self::STATUS[:not_started]
           end
-          status[:resources][item] = condition_status
+          status["resources"][item] = condition_status
         end 
         status
       end

@@ -2,6 +2,8 @@ class UserGameProfile < DataStore::Model
 
   SEP = '-'.freeze
 
+  index :rank, :method => :rank_index
+
   @@resource_building_modules = {
     "quarry" => BD::Quarry,
     "lumbermill" => BD::Lumbermill
@@ -24,7 +26,19 @@ class UserGameProfile < DataStore::Model
 
   def user
     key_parts = key.split(self.class::SEP)
-    User.get(User.generate_key(key_parts.first, key_parts.last))
+    @user ||= User.get(User.generate_key(key_parts.first, key_parts.last))
+  end
+
+  def service_type
+    key.split(self.class::SEP).first
+  end
+
+  def service_id
+    key.split(self.class::SEP).last
+  end
+
+  def rank_index
+   self.class.generate_key(service_type, rank)
   end
 
   def init
@@ -45,6 +59,7 @@ class UserGameProfile < DataStore::Model
       'attacks' => {},
       'protection' => {'started'=>0 ,'time'=> 0, 'working'=>false},
       'map' => (0..72).to_a.map{(0..24).to_a.map{0}},
+      'researches' => {},
       'xp_info' => {
         'xp_level' => 1,
         'energy' => 0,
@@ -53,6 +68,7 @@ class UserGameProfile < DataStore::Model
       }
     }
     if self.rank.nil?
+      game = Game::current
       min_rank = Game::current.ranks.first[1]
       Game::current.ranks.each_value do |rank |
         if rank['lower_exp'] < min_rank['lower_exp']   
@@ -76,7 +92,7 @@ class UserGameProfile < DataStore::Model
     creeps_generation
     protection_jobs
     BD::Research.operate self
-    last_loaded= Time.now.utc.to_i
+    self.last_loaded= Time.now.utc.to_i
   end
   
   def repair_buildings
@@ -116,36 +132,15 @@ class UserGameProfile < DataStore::Model
     now = Time.now.utc.to_i
     war_factories = self.war_factory
     if(!war_factories.nil?)
-      war_factories.each_pair do |k,building|
-         next if(building['state'] != BD::Building.states['NORMAL'] || building['queue']['stopped'])
-         building['queue'] = {"size"=>0,"creep"=>nil,"last_creep_start"=>nil, "creep_production_time"=>nil,
-         "remaining_time"=>nil} if(building['queue'].nil?)
-         war_factory = BD::WarFactory.new building['coords'],self
-         war_factory.process_creeps_generation
+      war_factories.each_pair do |k, building|
+        next if(building['state'] != BD::Building.states['NORMAL'] || building['queue']['stopped'])
+        building['queue'] = {"size"=>0,"creep"=>nil,"last_creep_start"=>nil, "creep_production_time"=>nil,
+        "remaining_time"=>nil} if(building['queue'].nil?)
+        war_factory = BD::WarFactory.new building['coords'],self
+        war_factory.process_creeps_generation
       end
     end
   end
-  
-  def self.generate_creep ugp, data
-    war_factory_key = data['war_factory']
-    wf = ugp.metadata['war_factory'][war_factory_key]
-    #if(wf.nil?)return error no building
-    return if(wf.nil?)
-    war_factory = BD::WarFactory.new wf['coords'],ugp
-    validation = war_factory.generate_creep data['creep']
-    valid = validation['valid'] ?  {'valid' => true, 'error' => ''} : validation
-  end
-  
-  def self.cancel_creep_generation ugp,data
-    war_factory_key = data['war_factory']
-    wf = ugp.metadata['war_factory'][war_factory_key]
-    war_factory = BD::WarFactory.new wf['coords'],ugp
-    validation = war_factory.cancel_creep_generation
-    return validation if(!validation['valid'])
-    ugp.needs_saving
-    return {'valid' => true, 'error' => ''}
-  end
-  
   
   def energy_gain
     if( [xp_info, xp_info['xp_level'], xp_info['energy'], xp_info['bonus_seconds']].include? nil )
@@ -226,9 +221,9 @@ class UserGameProfile < DataStore::Model
     #Looping on every resource building module
     @@resource_building_modules.keys.each do |resource_building_name|
       #Checking if the user have built this type of building or not yet
-      if( data['resource_building_name'].present? )
+      if( data[resource_building_name].present? )
         resource_building_module = @@building_modules[resource_building_name]
-        resource_building = self.resource_building_name
+        resource_building = data[resource_building_name]
         #Looping on every resource building instance
         resource_building.keys.each do |building_instance_coords|
           resource_building_instance = resource_building[building_instance_coords]
@@ -285,6 +280,16 @@ class UserGameProfile < DataStore::Model
       Notification.new( {:metadata => data, :notification_type => "building", :notification_text => building_name + " construction is completed!"} )
     else
       building['remainingTime'] = remaining
+    end
+  end
+
+  def ranking(friends_ids)
+    before_users = self.previous(:rank, 5)
+    after_users = self.next(:rank, 5)
+    friends = []
+    friends_ids.each do |id|
+      friend = self.class.get(id)
+      friends << friend if friend
     end
   end
 

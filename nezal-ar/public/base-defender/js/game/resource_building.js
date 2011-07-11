@@ -17,7 +17,6 @@ var ResourceBuilding = Class.create(Building, {
     }
   	this.fullObservers = []
   },
-	
   
   resourceInfo : function(){
   	if(!this.capacity)return ''
@@ -27,8 +26,9 @@ var ResourceBuilding = Class.create(Building, {
   	}
 	  return data
   },
+
   isFull : function(){
-  	   return parseInt(this[this.factory.collect]) == this.capacity
+	   return parseInt(this[this.factory.collect]) == this.capacity
   },
 	
   getResourceMeterLength : function(){
@@ -50,7 +50,7 @@ var ResourceBuilding = Class.create(Building, {
   
   remainingTime : function(){
   	var seconds = Math.round((this.capacity-this[this.factory.collect])*60/ (this.assignedWorkers*this.unitPerWorkerMinute))
-	return Util.timeDisplay(seconds) 
+  	return Util.timeDisplay(seconds) 
   },
 
    tick : function($super){
@@ -100,6 +100,7 @@ var ResourceBuilding = Class.create(Building, {
     
     return true;
   },
+
   getStolenResources : function(){
     this.damage = Math.min(this.damage,this.maxHp)
     var stolenResources = Math.floor(this[this.factory.collect]* this.game.data.battle.steal_percentage * this.damage/(this.maxHp*1.0))

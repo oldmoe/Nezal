@@ -20,9 +20,9 @@ module BD
       if(@queue['size']!=0)
           creeps_generated = (now - @queue['last_creep_start'])/@queue['creep_production_time']
           creep_storage_units = game_data['creeps'][@queue['creep']]['garage_units']
-          ugp.total_garage_units = 0 if (ugp.total_garage_units.nil?)
-          ugp.garage_units_used = 0 if (ugp.garage_units_used.nil?)
-          garage_remaining = ugp.total_garage_units - ugp.garage_units_used
+          @ugp.total_garage_units = 0 if (@ugp.total_garage_units.nil?)
+          @ugp.garage_units_used = 0 if (@ugp.garage_units_used.nil?)
+          garage_remaining = @ugp.total_garage_units - @ugp.garage_units_used
           
           if(@queue['size'] < creeps_generated)
             creeps_generated = @queue['size'] 
@@ -36,10 +36,10 @@ module BD
             creeps_generated = (garage_remaining/creep_storage_units).floor
             @queue['size']-= creeps_generated
           end
-          ugp.garage_units_used+= creeps_generated * creep_storage_units
-          ugp.creeps= {} if(ugp.creeps.nil?)
-          ugp.creeps[@queue['creep']] = 0 if(ugp.creeps[@queue['creep']].nil?)
-          ugp.creeps[@queue['creep']]+= creeps_generated
+          @ugp.garage_units_used+= creeps_generated * creep_storage_units
+          @ugp.creeps= {} if(@ugp.creeps.nil?)
+          @ugp.creeps[@queue['creep']] = 0 if(@ugp.creeps[@queue['creep']].nil?)
+          @ugp.creeps[@queue['creep']]+= creeps_generated
           if(@queue['size']!=0)
             @queue['last_creep_start'] = @queue['last_creep_start'] + creeps_generated * @queue['creep_production_time']
             time_passed = now - @queue['last_creep_start'] 

@@ -1,6 +1,7 @@
 require 'yaml'
 require 'logger'
 require 'active_record'
+require 'data_store'
 
 LOGGER = Logger.new(STDOUT)
 LOGGER.level = Logger::DEBUG

@@ -1,5 +1,7 @@
 module BD
+
   class Garage < Building
+
     @name = "garage"
     @can_be_built_on = "grass"
     
@@ -11,6 +13,7 @@ module BD
       @location_hash = BaseDefender.convert_location(coords)
       @level = @ugp.data[@name][@location_hash]['level']
     end
+
     def set_state state
       @ugp.data[@name][@location_hash]['state'] = state
       if(state==BD::Building.states['NORMAL'])
@@ -19,6 +22,7 @@ module BD
           check_stopped_war_factories @ugp, game_data
       end
     end
+
     def change_garage_capacity
       game_data = Game::current.data
       @ugp.total_garage_units=0 if(@ugp.total_garage_units.nil?)
@@ -27,6 +31,7 @@ module BD
       puts "level = #{garage_levels[(@level-1).to_s]['storage_units']}"
       @ugp.total_garage_units+= (garage_levels[@level.to_s]['storage_units']-garage_levels[(@level-1).to_s]['storage_units'])
     end
+
     def check_stopped_war_factories ugp, game_metadata
       war_factories = ugp.war_factory
       return if(war_factories.nil?)
@@ -52,8 +57,10 @@ module BD
         end
       end
     end
+
     class << self
       
     end
+
   end
 end

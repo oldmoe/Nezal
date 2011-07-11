@@ -12,20 +12,5 @@ class BaseDefenderController < GamesController
     result = BD::GlobalMap.new(user_game_profile, Metadata.decode(params['data'])).generate
     return Metadata.encode(result)
   end
-  
-  post '/:game_name/generate_creep' do
-    data = Metadata.decode(params['data']) 
-    klass = get_helper_klass()
-    result = klass.generate_creep user_game_profile, data
-    return Metadata.encode(result)
-  end
-  
-  post '/:game_name/cancel_creep_generation' do
-    data = Metadata.decode(params['data']) 
-    klass = get_helper_klass()
-    result = klass.cancel_creep_generation user_game_profile, data
-    return Metadata.encode(result)
-  end
-  
 
 end

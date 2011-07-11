@@ -37,17 +37,6 @@ class BaseDefender < Metadata
     }
   end
   
-  def self.process_request (profile, data)
-    data = self.decode(data)
-    result = {}
-    if data['request'] == 'neighbor_empire'
-      result = BD::Neighbor.neighbor_empire(profile, data)
-    elsif data['request'] == 'friends'
-      result = BD::Neighbor.friends(profile)
-    end
-    return JSON.generate(result);
-  end
-  
   def self.convert_location( location )
     @@adjustment_size = 4
     if location.class == String
@@ -91,7 +80,6 @@ class BaseDefender < Metadata
     when 'cancel_research'
       validation = BD::Research.cancel user_game_profile, data['name']
     end
-    
     user_game_profile.error= validation['valid'] ? validation['error'] :  nil
     BD::Quest::assess_user_quests user_game_profile
     #### TODO We need to check why they need the stringified one 
@@ -320,10 +308,30 @@ class BaseDefender < Metadata
   def self.add_reward_bag user_game_profile, data
     user_game_profile['reward_bag']  
   end
+
+  def self.generate_creep ugp, data
+    war_factory_key = data['war_factory']
+    wf = ugp.war_factory[war_factory_key]
+    #if(wf.nil?)return error no building
+    return if(wf.nil?)
+    war_factory = BD::WarFactory.new wf['coords'],ugp
+    validation = war_factory.generate_creep data['creep']
+    ugp.save
+    valid = validation['valid'] ?  {'valid' => true, 'error' => ''} : validation
+  end
   
+  def self.cancel_creep_generation ugp,data
+    war_factory_key = data['war_factory']
+    wf = ugp.war_factory[war_factory_key]
+    war_factory = BD::WarFactory.new wf['coords'],ugp
+    validation = war_factory.cancel_creep_generation
+    return validation if(!validation['valid'])
+    ugp.save
+    return {'valid' => true, 'error' => ''}
+  end
+
   def self.list_map user_game_profile, data
     friend_ids = data['friend_ids']
-    
     attack_history = user_game_profile.metadata['attack_history']
     for user in attack_hitory.keys
       

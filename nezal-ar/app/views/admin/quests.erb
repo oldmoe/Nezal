@@ -1,15 +1,4 @@
-<%= erb :language_loader %>
-<script type='text/javascript'>
-Language.display = function(){
-    Quests.arrange();
-}
-Language.deleteQuest = function(questId){
-    for(lang in Language.metadata)
-    {
-      delete(Language.metadata[lang].quests[questId]);
-    }
-    Language.saveToServer();
-}
+<script>
 var Quests = {
     gameName: "<%=@game.name%>",
     arrange : function() {
@@ -25,12 +14,11 @@ var Quests = {
                                         });  
     },
     remove : function(questId){
-      Language.deleteQuest(questId);
       document.getElementById('delete_quest_' + questId).submit()
     } 
 }
 $(document).observe('dom:loaded',function(){
-    Language.initialize();
+   Quests.arrange();
 });
 </script>
 
@@ -54,8 +42,8 @@ $(document).observe('dom:loaded',function(){
       <LABEL for="new_quest" class="label add">Add New Quest</LABEL>
       <form id="new_quest" action="/nezal-admin/<%=@game.name%>/quests" method="post" enctype="multipart/form-data">
         <div class="form_row">  
-          <LABEL for="quest_name">Name</LABEL>
-          <INPUT type="text" id="quest_name" name='name'><BR>
+          <LABEL for="name">Name</LABEL>
+          <INPUT type="text" id="name" name='name'><BR>
         </div>
         <div class="form_row">  
           <LABEL for="primal">Primal</LABEL>
@@ -81,7 +69,7 @@ $(document).observe('dom:loaded',function(){
         <div id="<%=id%>"  parent="<%=quest['parent']%>" >
           <span style="width : 20%; display : block; float : left;">
             <a href="/<%=AdminController::ADMIN_URL%>/<%=@game.name%>/quests/<%=id%>">
-              <%=quest['name']%>
+              <%=quest["name"]%>
             </a>
           </span>
           <form id="delete_quest_<%=id%>" action="/<%=AdminController::ADMIN_URL%>/<%=@game.name%>/quests/<%=id%>" method="POST" style="display:inline">
@@ -93,4 +81,6 @@ $(document).observe('dom:loaded',function(){
     </div>
   </div>
 
+</div>
+<div id="langReqStatus">
 </div>

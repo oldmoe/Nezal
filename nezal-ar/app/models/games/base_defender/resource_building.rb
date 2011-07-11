@@ -95,7 +95,7 @@ module BD
       
     end
     
-    def self.validate_collect(user_profile_data, game_data, location_hash)
+    def self.validate_collect(user_profile_data, location_hash)
       return {}
     end
 
