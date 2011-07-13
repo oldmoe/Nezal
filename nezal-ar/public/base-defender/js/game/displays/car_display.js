@@ -7,7 +7,6 @@ var CarDisplay = Class.create(CreepDisplay,{
   hitFrames : 6,
   hitFramesIncreasing : true,
   initialize: function($super, owner, properties){
-    alert(owner.name)
     $super(owner, properties,owner.name);
   }
 });
