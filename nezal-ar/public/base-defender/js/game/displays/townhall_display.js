@@ -1,5 +1,6 @@
 var TownhallDisplay = Class.create(BuildingDisplay, {
   animationRepeats : 2,
+  defaultActionName : "Build",
   animationEverySeconds : 4,
   tickDelay : 4,
   doorOpening : false,

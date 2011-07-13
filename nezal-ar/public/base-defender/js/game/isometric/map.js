@@ -456,17 +456,19 @@ var Map={
 		}	
 	},
 	
-	registerListeners : function(div,owner){
+	registerListeners : function(div,owner,clickCall){
     if(owner.game.neighborGame)
     {
       this.registerNeighborListeners(div, owner);
       return;
     }
-		div.observe(game.mouseClickEvent,function(){
+		div.observe(game.mouseClickEvent,function(e){
+      Map.clickPositionX = e.pointerX()
+      Map.clickPositionY = e.pointerY()
 			if(!game.buildingMode.isOn && owner.working && owner.state == owner.states.NORMAL){
 				if (!owner.game.buildingMode.moveMode) {
-				  game.buildingMode.fillBuildingPanel(owner)
-					owner.defaultAction();
+				  owner.fillBuildingPanel(owner)
+           owner[clickCall]();
 				}else{
 					if(owner.game.selectedBuildingPanel){
 						owner.game.selectedBuildingPanel.hide();

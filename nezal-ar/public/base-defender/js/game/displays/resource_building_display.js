@@ -1,5 +1,6 @@
 var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
   initialize : function($super,owner,properties){
+    this.defaultActionName = "collect"
     this.defaultAction = this.collectResources;
     this.defaultNeighborAction = this.collectNeighborResources;
     $super(owner,properties)
@@ -83,37 +84,7 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
     if(this.owner.full) this.sprites.attention.show();
   },
   
-  renderPanelButtons: function($super){
-    $super();
-    if(this.owner.full) this.sprites.attention.show();
-    var owner = this.owner;
-    var self = this;
-    this.game.domConverter.convert( this.game.templatesManager.load("resource-building-buttons") );
-    $('panel-buttons-container').insertBefore( $("collect_resource_trigger"),$('upgrade_trigger') );
-    $('panel-buttons-container').insertBefore( $("assign_worker_trigger"),$('upgrade_trigger') );
-    
-    $('collect_resource_trigger').observe('moousedown', function(){
-		  $('collect_resource_trigger').select("img")[0].setStyle( {marginTop: "-76px"} );
-    });
-  	$('collect_resource_trigger').observe('mouseup',function(){
-  		$('collect_resource_trigger').select("img")[0].setStyle( {marginTop: "-26px"} );
-  		$('building-panel').hide();
-        	self.collectResources();
-  	})
-    
-    $('assign_worker_trigger').observe('mousedown', function(){
-	    $('assign_worker_trigger').select("img")[0].setStyle( {marginTop: "-76px"} );
-    });
-	  $('assign_worker_trigger').observe('mouseup',function(){
-		  $('assign_worker_trigger').select("img")[0].setStyle( {marginTop: "-26px"} );
-		  owner._AssignWorker();
-      $('building-panel').hide();
-	  })
-    this.registerHoverEvents('collect_resource');
-	  this.registerHoverEvents('assign_worker');
-    this.renderingPanelButtonsDone();
-  },
-
+  
   collectResources : function(){
     var owner = this.owner
     if (owner.assignedWorkers > 0) {
