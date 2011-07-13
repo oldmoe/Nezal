@@ -5,6 +5,7 @@ var AxeDisplay = Class.create(CreepDisplay,{
   ydim : 93,
   zdim : 10,
   hitFrames : 6,
+  hitFrames : 6,
   hitFramesIncreasing : true,
   initialize: function($super, owner, properties){
     $super(owner, properties,owner.name);
