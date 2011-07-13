@@ -27,7 +27,7 @@ class Game < DataStore::Model
   class << self  
 
     def current
-      @game = get('local-base-defender')
+      @game = get(GAME_NAME)
     end
 
   end
