@@ -1,6 +1,7 @@
 var Network = Class.create({
+
   initializeGame : function(callback){
-    new Ajax.Request('metadata', {
+    new Ajax.Request('data', {
       method : 'get',
       //asynchronous : false,
       onSuccess: function(response) {
@@ -13,7 +14,7 @@ var Network = Class.create({
   contactTheBoss : function(params, callback){
     var done = true;
     var gameStatus = null;
-    new Ajax.Request('metadata', {
+    new Ajax.Request('data', {
       method : 'post',
       //asynchronous : false,
       parameters: { 'data' : Object.toJSON(params)},
@@ -43,11 +44,11 @@ var Network = Class.create({
     });
     return {'done' : done, 'gameStatus' : gameStatus};
   },
+
   neighbourEmpire : function(user_id, callback){
-    new Ajax.Request('generic', {
+    new Ajax.Request('neighbor' + '/' +  user_id, {
       method : 'get',
       //asynchronous : false,
-      parameters: { 'data' : Object.toJSON({'user_id' : user_id, 'request' : 'neighbor_empire'})},
       onSuccess: function(response) {
         userData = JSON.parse(response.responseText).user_data;
         if(callback) callback( userData );
@@ -58,6 +59,7 @@ var Network = Class.create({
   generate_creep :function(data, callback){
     this.genericPostRequest('generate_creep',data, callback)
   },
+
   cancel_creep_generation: function(data, callback){
     this.genericPostRequest('cancel_creep_generation',data, callback)
   },
@@ -87,6 +89,7 @@ var Network = Class.create({
       }
     });
   },
+
   performNeighborAction : function(data, callback){
     var url = data['url'] || '';
     new Ajax.Request( 'neighbor' + '/' + url, {

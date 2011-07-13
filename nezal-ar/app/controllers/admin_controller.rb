@@ -6,138 +6,88 @@ class AdminController < ApplicationController
   
   set :views, ::File.dirname(::File.dirname(__FILE__)) +  '/views/admin'
 
-  # View list of all games in Database
-  get '/' do 
-    @games = Game.all()
+  # Serve the add new game page
+  get '/' do
     erb :index , {:layout => :app}
   end
 
   # Add a new Game
   post '/' do
-    @game = Game.create({:name => params["name"], :description => params["description"]})
-    @app_configs = FB_CONFIGS::find('name', @game.name)
-    helper = ActiveSupport::Inflector.camelize(@app_configs['game_name'].sub("-", "_"))
-    klass = Kernel.const_get(helper)
-    klass.init_game(@game)
+    @game = Game.create(params["name"], {"name" => params["name"], "description" => params["description"]})
+    puts @game
     redirect "/#{ADMIN_URL}/#{@game.name}"
-  end
-
-  # Serve the add new game page
-  get '/new' do
-    erb :new , {:layout => :app}
-  end  
-
-  ######################################################################
-  # Game requests
-  # Serve default game page located under admin, game specific edit game page (show.erb) under the game directory 
-  # Serve game metadata, save metadata requests
-  ######################################################################
-  # Serve the show.erb to display game details { Ranks, Campaigns .. doesnt include the metadata}
-  get '/:game_name' do 
-    @game = Game.where(:name => params["game_name"]).first
-    @game.campaigns.each { |campaign| puts campaign }
-    erb :show , {:layout => :app}
-  end
-
-  # Serve the game metadata edit page
-  # show.erb file residing inside admin/{game-name} directory
-  get '/:game_name/metadata/edit' do 
-    @game = Game.find_by_name(params[:game_name])
-    erb "#{@app_configs['game_name']}/show".to_sym , {:layout => :app}
-  end
-  
-  # Serve the game object metadata
-  get '/:game_name/metadata' do 
-    @game = Game.find_by_name(params[:game_name])
-    klass = self.get_helper_klass
-    Metadata.encode(klass.load_game(@game))
-  end
-  
-  # Edit game metadata object
-  put '/:game_name/metadata' do
-    @game = Game.find_by_name(params[:game_name])
-    klass = self.get_helper_klass
-    data = params["data"] 
-    data ||= params
-    klass.edit_game(@game, data)
-    redirect "/#{ADMIN_URL}/#{@game.name}/metadata/edit"
   end
 
   ######################################################################
   # Game Ranks Requests
   # Add, Remove rank requests
   ######################################################################
-  post '/:game_id/ranks' do
-    @game = Game.find(params[:game_id])
-    @game.ranks << Rank.new({:name => params["name"], :lower_exp => params["lower_exp"], :upper_exp => params["upper_exp"]})
+  post '/:game_name/ranks' do
+    @game = Game.get(params[:game_name])
+    @game.ranks[params["name"]] = {"name" => params["name"], "lower_exp" => params["lower_exp"], "upper_exp" => params["upper_exp"]}
     @game.save
     redirect "/#{ADMIN_URL}/#{@game.name}"
   end
   
   # Delete a rank
-  put '/:game_id/ranks/:rank_id' do
-    @game = Game.find(params[:game_id])
-    rank = Rank.find(params[:rank_id])
-    rank.delete
+  put '/:game_name/ranks/:rank_name' do
+    @game = Game.get(params[:game_name])
+    @game.ranks.delete(params[:rank_name])
+    @game.save
     redirect "/#{ADMIN_URL}/#{@game.name}"
   end
 
   ######################################################################
-  # Game Campaigns Requests
-  # Add, Remove campaigns, Set current campaign
-  # Serve campaign edit page, campaign metadata object, save campaign metadata object
+  # Game Buildings Requests
+  # Add, Remove Buildings requests
   ######################################################################
-  # Set current campaign
-  post '/:game_name/current-campaign' do 
-    @game = Game.find(params[:game_id])
-    @game.current_campaign= Campaign.find(params[:current_campaign])
-    @game.save
-    redirect "/#{ADMIN_URL}/#{@game[:name]}"
-  end
-
-  # Add campaign to a game 
-  post '/:game_name/campaigns' do
-    @game = Game.find_by_name(params[:game_name])
-    campaign = Campaign.new({:name => params["name"], :path => params["config_path"]})
-    klass = self.get_helper_klass
-    @game.campaigns << campaign
-    @game.save
-    klass.init_campaign(campaign)
-    campaign.save
-    redirect "/#{ADMIN_URL}/#{@game[:name]}"
-  end
-  
-  # Delete a campaign
-  put '/:game_name/campaigns/:camp_id' do
-    @game = Game.find_by_name(params[:game_name])
-    campaign = @game.campaigns.find(params[:camp_id])
-    klass = self.get_helper_klass
-    klass.delete_campaign(campaign)
-    @game.campaigns.delete(campaign)
+  # Add a new building
+  post '/:game_name/buildings' do
+    @game = Game.get(params[:game_name])
+    @game.buildings[params["name"]] = { 'levels' => {} }
     @game.save
     redirect "/#{ADMIN_URL}/#{@game.name}"
   end
-  
-  # Serve the campaign metadata edit page
-  get '/:game_name/campaigns/:camp_id/metadata/edit' do 
-    @camp = Campaign.find(params["camp_id"])
-    erb "#{@app_configs['game_name']}/campaign".to_sym , {:layout => :app}
+
+  # Delete a building
+  put '/:game_name/buildings/:name' do
+    @game = Game.get(params[:game_name])
+    @game.buildings.delete([params["name"]])
+    @game.save
+    redirect "/#{ADMIN_URL}/#{@game.name}"
   end
-  
-  # Serve the campaign object metadata
-  get '/:game_name/campaigns/:camp_id/metadata' do 
-    @camp = Campaign.find(params["camp_id"])
-    klass = self.get_helper_klass
-    Metadata.encode(klass.load_campaign(@camp))
+
+  # Serve the edit building page 
+  get '/:game_name/buildings/:name/levels/:level' do 
+    @game = Game.get(params[:game_name])
+	  @building_name = params[:name]
+    @level = params[:level]
+	  erb :building , {:layout => :app}
   end
-  
-  # Edit campaign metadata 
-  put '/:game_name/campaigns/:camp_id/metadata' do 
-    @camp = Campaign.find(params["camp_id"])
-    klass = self.get_helper_klass
-    klass.edit_campaign(@camp, params["data"])
-    ''
+
+  # Add new Level
+  post '/:game_name/buildings/:name/levels/new' do
+    @game = Game.get(params[:game_name])
+  	building = @game.data['buildings'][params[:name]]
+  	@newLevel = building['levels'].size
+  	building['levels'][@newLevel] = building['levels'][building['levels'].keys.last]
+  	@game.save
+  	redirect "/#{ADMIN_URL}/#{@game.name}"
   end
+
+  # Delete a level
+  put '/:game_name/buildings/:name/levels/:level' do
+    @game = Game.get(params[:game_name])
+    @building_name = params[:name]
+    @level = params[:level]
+    # Get yr building hash, make sure there is a building with that name &  is has levels, then delete the required level
+    building = @game.data['buildings'][@building_name]
+    if building && building['levels']
+       building['levels'].delete(@level)
+    end
+    @game.save
+    redirect "/#{ADMIN_URL}/#{@game.name}"
+  end  
 
   ######################################################################
   # Game Quests Requests
@@ -145,85 +95,98 @@ class AdminController < ApplicationController
   ######################################################################  
   # Serve game quests list display page 
   get '/:game_name/quests' do
-    @game = Game.where(:name => params["game_name"]).first
+    @game = Game.get(params[:game_name])
+    @quests = BD::Quest::all()
     erb :quests , {:layout => :app}
   end
 
   # Add a quest to a game 
   post '/:game_name/quests' do
-    @game = Game.where(:name => params["game_name"]).first
-    parent = if params["parent"] && !(params["parent"].empty?)
-              params["parent"]
-            else
-              nil
-            end
-    quest = Quest.new({:name => params["name"], :primal => params["primary"], :parent => parent})
-    klass = self.get_helper_klass
-    @game.quests << quest
-    @game.save
-    klass.init_quest(quest)
-    quest.save
-    redirect "/#{ADMIN_URL}/#{@game[:name]}/quests"
+    BD::Quest.new(params)
+    redirect "/#{ADMIN_URL}/#{params[:game_name]}/quests"
   end
   
-  # Delete a quest
-  put '/:game_name/quests/:quest_id' do
-    @game = Game.where(:name => params["game_name"]).first
-    quest = @game.quests.find(params[:quest_id])
-    klass = self.get_helper_klass
-    klass.delete_quest(quest)
-    @game.quests.delete(quest)
-    @game.save
-    redirect "/#{ADMIN_URL}/#{@game.name}/quests"
+  # Update / Delete a quest
+  # Delete : Put /:game_name/quests/:quest_id
+  # update : Put /:game_name/quests/:quest_id.json
+  put %r{/([0-9A-Za-z_\-]+)(/quests/)([0-9A-Za-z_\-]+)(.json)?} do
+    p params[:captures]
+    @game = Game.get(params[:captures][0])
+    quest_id = (params[:captures][2])
+    if params[:captures][3]
+      BD::Quest.edit(quest_id, params["metadata"])
+      ''
+    else
+      BD::Quest.delete(quest_id)
+      data = BD::Language.load()
+      data.values.each do |language_data|
+        language_data['quests'].delete(quest_id)
+      end
+      BD::Language::save(Metadata.encode(data))
+      redirect "/#{ADMIN_URL}/#{@game.name}/quests"
+    end
   end
 
-  # Serve the quest metadata edit page
-  get '/:game_name/quests/:quest_id/metadata/edit' do 
-    @game = Game.where(:name => params["game_name"]).first
-    @quest = Quest.find(params["quest_id"])
-    erb "#{@app_configs['game_name']}/quest".to_sym , {:layout => :app}
+  # Serve the quest data edit page
+  get '/:game_name/quests/:quest_id' do 
+    @game = Game.get(params[:game_name])
+    @quests = BD::Quest::all()
+    @quest = BD::Quest.find(params["quest_id"])
+    erb :quest , {:layout => :app}
   end
   
-  # Serve the quest object metadata
+  # Serve the quest object data
   get '/:game_name/quests/:quest_id/metadata' do 
-    @quest = Quest.find(params["quest_id"])
-    klass = self.get_helper_klass
-    Metadata.encode(klass.load_quest(@quest))
-  end
-  
-  # Edit Quest metadata 
-  put '/:game_name/quests/:quest_id/metadata' do 
-    @quest = Quest.find(params["quest_id"])
-    klass = self.get_helper_klass
-    klass.edit_quest(@quest, params["data"])
-    ''
+    @quest = BD::Quest.find(params["quest_id"])
+    Metadata.encode(@quest)
   end
 
   ######################################################################
   # Game Language/Locale text files Requests
   ######################################################################
   # Get Language data
-  get '/:game_name/locale/metadata' do 
-    @game = Game.where(:name => params["game_name"]).first
-    klass = self.get_helper_klass
-    Metadata.encode(klass.load_language_data(@game))
+  get '/:game_name/locale.json' do 
+    @game = Game.get(params[:game_name])
+    BD::Language::init()
+    Metadata.encode(BD::Language::load())
   end
 
   # Edit Language data
-  put '/:game_name/locale/metadata' do 
-    @game = Game.where(:name => params["game_name"]).first
-    klass = self.get_helper_klass
-    klass.edit_language_data(@game, params[:language], params['data'])
+  put '/:game_name/locale.json' do 
+    @game = Game.get(params[:game_name])
+    BD::Language::save(params['data'])
     ''
   end
 
   # Serve Language edit page
-  get '/:game_name/locale/:language/edit' do 
-    @game = Game.where(:name => params["game_name"]).first
-    klass = self.get_helper_klass
+  get '/:game_name/locale/:language' do 
+    @game = Game.get(params[:game_name])
     @language = params[:language]
-    @data = klass.load_language_data(@game)
-    erb "#{@app_configs['game_name']}/language".to_sym , {:layout => :app}
+    @data = BD::Language.load()
+    erb :language , {:layout => :app}
+  end
+
+  ######################################################################
+  # Game requests
+  # Serve default game page located under admin, game specific edit game page (show.erb) under the game directory 
+  # Serve game metadata, save metadata requests
+  ######################################################################
+  # Serve the show.erb to display game details { Ranks .. doesnt include the metadata}
+  get %r{/([0-9A-Za-z_\-]+)(.json)?} do
+    @game = Game.get(params[:captures][0])
+    if params[:captures][1]
+      Metadata.encode(@game.data)
+    else
+      erb :show , {:layout => :app}
+    end
+  end
+  
+  # Edit game metadata object
+  put %r{/([0-9A-Za-z_\-]+).json} do
+    @game = Game.get(params[:captures][0])
+    data = params["data"]
+    @game.data= Metadata.decode(data)
+    @game.save
   end
 
   ######################################################################
@@ -246,3 +209,4 @@ class AdminController < ApplicationController
   end
 
 end
+

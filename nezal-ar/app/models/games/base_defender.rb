@@ -1,6 +1,7 @@
 require "json"
 
 class BaseDefender < Metadata
+
   @@game_name = 'base-defender'
   @@speed_factor = 1
   @@resource_building_modules = {
@@ -23,18 +24,8 @@ class BaseDefender < Metadata
     "military_research" => BD::MilitaryResearch
   }.merge @@resource_building_modules ).merge @@wedges
   
-  @@game_metadata = nil
-  
   def self.building_modules
     @@building_modules
-  end
-  
-  def self.adjusted_game_metadata
-    @@game_metadata
-  end
-  
-  def self.new_building_specs 
-    {'level' => 0, 'coords' => {'x' => nil, 'y' => nil}}
   end
   
   def self.land_marks
@@ -44,17 +35,6 @@ class BaseDefender < Metadata
       "rock" => 2,
       "lumber" => 3
     }
-  end
-  
-  def self.process_request (profile, data)
-    data = self.decode(data)
-    result = {}
-    if data['request'] == 'neighbor_empire'
-      result = BD::Neighbor.neighbor_empire(profile, data)
-    elsif data['request'] == 'friends'
-      result = BD::Neighbor.friends(profile)
-    end
-    return JSON.generate(result);
   end
   
   def self.convert_location( location )
@@ -69,321 +49,44 @@ class BaseDefender < Metadata
     end
   end
   
-  def self.calculate_jobs(user_game_profile)    
-    building_jobs user_game_profile
-    resource_collection_jobs user_game_profile
-    repair_jobs user_game_profile
-    energy_gain user_game_profile
-    creeps_generation user_game_profile
-    protection_jobs user_game_profile
-    BD::Research.operate user_game_profile
-    user_game_profile.metadata['last_loaded'] = Time.now.utc.to_i
-    user_game_profile.save
-  end
-  
-  def self.start_protection ugp , data
-    now = Time.now.utc.to_i
-    profile_metadata = ugp.metadata
-    profile_metadata['protection']['working'] = true
-    profile_metadata['protection']['started'] = now
-    profile_metadata['protection']['started'] = data['time']
-    ugp.needs_saving
-  end
-  
-  def self.protection_jobs ugp
-    profile_metadata = ugp.metadata    
-    if(profile_metadata['protection'].nil?)
-      profile_metadata['protection'] = {'started'=>0 ,'time'=> 0,'working'=>false}
-    end
-    now = Time.now.utc.to_i
-    if(profile_metadata['protection']['working'])
-      if(profile_metadata['protection']['started'] + profile_metadata['protection']['time'] < now)
-        profile_metadata['protection']['working'] = false
-        profile_metadata['protection']['started'] = 0
-        profile_metadata['protection']['time'] = 0
-      end
-    end
-    ugp.needs_saving
-  end
-  
-  def self.creeps_generation ugp
-    ugp_metadata = ugp.metadata
-    now = Time.now.utc.to_i
-    war_factories = ugp_metadata['war_factory']
-    if(!war_factories.nil?)
-      war_factories.each_pair do |k,building|
-         next if(building['state'] != BD::Building.states['NORMAL'] || building['queue']['stopped'])
-         building['queue'] = {"size"=>0,"creep"=>nil,"last_creep_start"=>nil, "creep_production_time"=>nil,
-         "remaining_time"=>nil} if(building['queue'].nil?)
-         war_factory = BD::WarFactory.new building['coords'],ugp
-         war_factory.process_creeps_generation
-      end
-    end
-  end
-  
-  def self.generate_creep ugp, data
-      war_factory_key = data['war_factory']
-      wf = ugp.metadata['war_factory'][war_factory_key]
-      #if(wf.nil?)return error no building
-      return if(wf.nil?)
-      war_factory = BD::WarFactory.new wf['coords'],ugp
-      validation = war_factory.generate_creep data['creep']
-      return validation if(!validation['valid'])
-      ugp.needs_saving
-      return {'valid' => true, 'error' => ''}
-  end
-  
-  def self.cancel_creep_generation ugp,data
-      war_factory_key = data['war_factory']
-      wf = ugp.metadata['war_factory'][war_factory_key]
-      war_factory = BD::WarFactory.new wf['coords'],ugp
-      validation = war_factory.cancel_creep_generation
-      return validation if(!validation['valid'])
-      ugp.needs_saving
-      return {'valid' => true, 'error' => ''}
-  end
-  
-  
-  def self.energy_gain user_game_profile
-    profile_metadata = user_game_profile.metadata
-    last_loaded = profile_metadata['last_loaded']
-    xp_info = profile_metadata['xp_info']
-    if( [xp_info, xp_info['xp_level'], xp_info['energy'], xp_info['bonus_seconds']].include? nil )
-      xp_info['xp_level'] = 1
-      xp_info['energy'] = 0
-      xp_info['bonus_seconds'] = 0
-    end
-    uesr_xp_level = xp_info['xp_level']
-    xp_level_metadata = @@game_metadata['xp_levels'][uesr_xp_level.to_s]
-    max_energy = xp_level_metadata['max_helping_power']
-    
-    #The case of first loading a profile, he should have it full energy
-    if( last_loaded.nil? )
-      xp_info['energy'] = max_energy
-      return
-    end
-    
-    current_energy = xp_info['energy']
-    if( current_energy >= max_energy )
-      return
-    end
-    
-    energy_unit_every = xp_level_metadata['helping_power_unit_every']
-    seconds_passed = Time.now.utc.to_i - last_loaded + xp_info['bonus_seconds']
-    net_energy_units = seconds_passed / energy_unit_every
-    needed_energy = max_energy - current_energy
-    
-    if( net_energy_units >= needed_energy )
-      xp_info['bonus_seconds'] = 0
-      xp_info['energy'] = max_energy
-      return
-    end
-    
-    bonus_seconds = seconds_passed % energy_unit_every
-    xp_info['energy'] += net_energy_units
-    xp_info['bonus_seconds'] = bonus_seconds
-  end
-  
-  def self.repair_jobs user_game_profile
-    now = Time.now.utc.to_i
-    repair_factor = 40
-    profile_metadata = user_game_profile.metadata
-    research_hp_bonus = BD::Research.total_hp_bonus( profile_metadata )
-    building_names = @@game_metadata['buildings'].keys
-    building_names.each do |building_name|
-      if(!profile_metadata[building_name].nil?)
-        profile_metadata[building_name].each do |key, building|
-          started_repairing_at = user_game_profile.metadata[building_name][key]['started_repairing_at'] 
-          if(started_repairing_at > 0)
-            max_hp = @@game_metadata['buildings'][building_name]['levels'][building['level'].to_s]['hp']
-            max_hp += research_hp_bonus * max_hp / 100
-            hp = building['hp']
-            if((max_hp-hp) < (now - started_repairing_at)*repair_factor)
-              user_game_profile.metadata[building_name][key]['hp'] = max_hp
-              user_game_profile.metadata[building_name][key]['started_repairing_at'] = 0
-              if(user_game_profile.metadata[building_name][key]['last_collect'])
-                user_game_profile.metadata[building_name][key]['last_collect'] = 
-                user_game_profile.metadata[building_name][key]['last_collect'] + ((max_hp-hp)/repair_factor).round
-              end
-            else 
-              user_game_profile.metadata[building_name][key]['hp'] = hp + (now - started_repairing_at)* repair_factor
-              user_game_profile.metadata[building_name][key]['started_repairing_at'] = now
-            end
-          end
-        end
-      end
-    end
-    validation = {}
-    validation['valid'] = true
-    return validation  
-  end
-  
-   def self.resource_collection_jobs(user_game_profile)
-    #This is the case in the first load of user profile
-    if user_game_profile.metadata['last_loaded'].nil?
-      return
-    end
-    now = Time.now.utc.to_i
-    #Looping on every resource building module
-    @@resource_building_modules.keys.each do |resource_building_name|
-      #Checking if the user have built this type of building or not yet
-      if( user_game_profile.metadata[resource_building_name].present? )
-        resource_building_module = @@building_modules[resource_building_name]
-        resource_building = user_game_profile.metadata[resource_building_name]
-        #Looping on every resource building instance
-        resource_building.keys.each do |building_instance_coords|
-          resource_building_instance = resource_building[building_instance_coords]
-          next if(resource_building_instance['state'] == BD::Building.states['UPGRADING'])
-          collects = resource_building_module.collects
-          resource_building_level = resource_building_instance['level']
-          resource_building_instance[collects] = 0 if resource_building_instance[collects].nil?
-          if( resource_building_instance['assigned_workers'].present? && 
-            resource_building_instance['assigned_workers'] > 0 && 
-            resource_building_instance[collects] < @@game_metadata['buildings'][resource_building_name]['levels'][resource_building_level.to_s]['capacity'])
-            start_resources = @@building_modules[resource_building_name].calculate_collected_resources(user_game_profile, resource_building_instance,
-                                                                                                       @@game_metadata , now)
-            resource_building_instance[collects] += start_resources[0]+start_resources[1]
-            
-            resource_building_instance['last_collect'] = now
-          end
-        end
-      end
-    end
-  end
-   
-  def self.building_jobs(user_game_profile)
-    metadata = user_game_profile.metadata
-    @@building_modules.keys.each do |building_name|
-      building = metadata[building_name]
-      if( building.present? )
-        metadata[building_name].keys.each do |building_instance_coords|
-          coords = building[building_instance_coords]
-          if ['UNDER_CONSTRUCTION', 'UPGRADING'].find{|state| BD::Building.states[state] == coords['state'] } 
-            building_job(user_game_profile, coords, building_name , @@game_metadata['buildings'][building_name] )
-          end
-        end
-      end
-    end
-  end
-  
-  def self.building_job(user_game_profile, building, building_name, blue_prints )
-    metadata = user_game_profile.metadata
-    since = building['startedBuildingAt']
-    now = Time.now.utc.to_i
-    next_level = building['level'] + 1
-    required = blue_prints['levels'][next_level.to_s]['time']
-    remaining = required - (now - since)
-    if( remaining <= 0 )
-      building['level'] += 1
-      if(building_name=="garage")
-         garage = BD::Garage.new building['coords'], user_game_profile
-         garage.set_state BD::Building.states['NORMAL']
-      else 
-         building['state'] = BD::Building.states['NORMAL']
-      end
-      building['startedBuildingAt'] = nil
-      metadata['idle_workers'] += 1
-      if @@building_modules[building_name].respond_to? 'assign_worker'
-        #        @@building_modules[building_name].assign_worker(user_game_profile, building['coords']) 
-      end
-      if building.key?('last_collect')
-        building['last_collect'] = now
-        #        @@building_modules[building_name].assign_worker(user_game_profile, building['coords']) 
-      end
-      Notification.new( {:metadata => metadata, :notification_type => "building", :notification_text => building_name + " construction is completed!"} )
-      
-    else
-      building['remainingTime'] = remaining
-    end
-  end
-  
-  def self.initialize_game_metadata( game )
-    #Applying Speed Factor!
-    @@building_modules.keys.each do |building_name|
-      #puts building_name
-      #puts "----------------------------------------------------"
-      building_levels = game.metadata['buildings'][building_name]['levels']
-      building_levels.keys.each do |level|
-        building_levels[level]['time'] /= @@speed_factor
-        building_levels[level]['unit_per_worker_minute'] *= @@speed_factor if building_levels[level]['unit_per_worker_minute']
-      end
-    end
-    game.metadata
-  end
-  
-  def self.load_game(game)
-    @@game_metadata = initialize_game_metadata game || {}
-  end
-  
-  def self.init_quest(quest)
-    BD::Quest::init_quest(quest)
-  end
-  
-  def self.edit_quest(quest, data)
-    BD::Quest::edit_quest(quest, data)
-  end
-
-  def self.load_game_profile(user_game_profile)
-    #reading a -maybe- attached error message from the object and porting it to the metadata!
-    if(user_game_profile['error'])
-      origin = user_game_profile.metadata
-      origin['error'] = user_game_profile['error']
-      user_game_profile.metadata= origin
-    end
-    
-    @@game_metadata = initialize_game_metadata user_game_profile.game
-#    if( user_game_profile['helping_power'].nil? )
-#      user_game_profile.metadata['helping_power'] = @@game_metadata['xp_levels']["1"]["max_helping_power"]
-#    end
-    BD::Research.init user_game_profile
-    calculate_jobs user_game_profile
-    BD::Quest::assess_user_quests user_game_profile
-    #### TODO We need to check why they need the stringified one 
-    #### and see what we gonna do about that
-    user_game_profile.metadata || {}
-    user_game_profile.metadata['quests']['descriptions'] = BD::Quest::load_quests(user_game_profile)
-    user_game_profile.metadata
-  end
-  
   def self.edit_game_profile(user_game_profile, data)
     data = self.decode(data)
-    if data['event'] == 'upgrade'
-      resource_collection_jobs user_game_profile
+    case data['event']
+    when 'upgrade'
       validation = upgrade_building(user_game_profile, data)
-    elsif data['event'] == 'move' 
+    when 'move' 
       validation = move_building(user_game_profile, data)
-    elsif data['event'] == 'buy_worker'
+    when 'buy_worker'
       validation = buy_worker(user_game_profile)
-    elsif data['event'] == 'assign_worker'
+    when 'assign_worker'
       validation = assign_worker(user_game_profile, data)
-    elsif data['event'] == 'collect_resources'
+    when 'collect_resources'
       validation = collect_building(user_game_profile, data)
-    elsif data['event'] == 'notification_ack'
+    when 'notification_ack'
       validation = Notification.delete({:profile => user_game_profile, :id => data['id']})
-    elsif data['event'] == 'use_reward'
+    when 'use_reward'
       validation = BD::RewardBag.use({:profile => user_game_profile, :id => data['id']})
-    elsif data['event'] == 'attack_done'
+    when 'attack_done'
       validation = store_attack_result user_game_profile, data
-    elsif data['event'] == 'attack'
+    when 'attack'
       repair_jobs user_game_profile
       validation = initialize_simulate_attack user_game_profile, data
-    elsif data['event'] == 'repair_buildings'
+    when 'repair_buildings'
       validation = repair_buildings user_game_profile
-    elsif data['event'] == 'reward_bag'
+    when 'reward_bag'
       validation = add_reward_bag user_game_profile, data
-    elsif data['event'] == 'list_map'
+    when 'list_map'
       validation = list_map user_game_profile, data
-    elsif data['event'] == 'start_research'
+    when 'start_research'
       validation = BD::Research.start user_game_profile, data['name']
-    elsif data['event'] == 'cancel_research'
+    when 'cancel_research'
       validation = BD::Research.cancel user_game_profile, data['name']
     end
-    
-    user_game_profile['error'] = validation['error'] unless validation['valid']
+    user_game_profile.error= validation['valid'] ? validation['error'] :  nil
     BD::Quest::assess_user_quests user_game_profile
     #### TODO We need to check why they need the stringified one 
     #### and see what we gonna do about that
-    user_game_profile.metadata || {}
+    user_game_profile.save
   end
   
   def self.store_attack_result ugp, data
@@ -479,7 +182,7 @@ class BaseDefender < Metadata
       building_modules.keys.each do |building_name|
         if(!profile_metadata[building_name].nil?)
             buildings = profile_metadata[building_name]
-            building_data = adjusted_game_metadata['buildings'][building_name]['levels']
+            building_data = Game::current.buildings[building_name]['levels']
             buildings.each_pair do |k,v|
               total_hp+=v['hp']
               total_max_hp+=building_data[v['level'].to_s]['hp']
@@ -572,7 +275,7 @@ class BaseDefender < Metadata
       end
     end
     if(bag_won)
-     BD::RewardBag.new({ :metadata => ugp.metadata, :reward_data => stolen_resources })
+     BD::RewardBag.new({ :profile => ugp, :reward_data => stolen_resources })
     end
     puts "stolen resources: #{stolen_resources}"
     map.objects.each do |obj|
@@ -612,7 +315,7 @@ class BaseDefender < Metadata
     building = data['building']
     coords = data['coords']
     name = data['building']
-    building = user_game_profile.metadata[name]
+    building = user_game_profile.data[name]
     location = self.convert_location(coords)
     if building.nil? || building[location].nil?
       validation = @@building_modules[name].build(user_game_profile, data['coords'])
@@ -621,7 +324,6 @@ class BaseDefender < Metadata
       validation = @@building_modules[name].upgrade(user_game_profile, data['coords'])
       return validation
     end
-    
   end
   
   def self.collect_building(user_game_profile, data)
@@ -639,7 +341,7 @@ class BaseDefender < Metadata
       building_data = neighbor_profile.metadata[building][location_hash]
       reward_data[@@building_modules[building].collects] = (building_data[@@building_modules[building].collects]/100).to_i
       @@building_modules[building].collect(neighbor_profile, coords)
-      BD::RewardBag.new({ :metadata => user_game_profile.metadata, :reward_data => reward_data })
+      BD::RewardBag.new({ :profile => user_game_profile, :reward_data => reward_data })
       user_game_profile.metadata['xp_info']['energy'] -= 1
       user_game_profile.save
     end
@@ -655,90 +357,34 @@ class BaseDefender < Metadata
   def self.add_reward_bag user_game_profile, data
     user_game_profile['reward_bag']  
   end
-  
-  def self.init_language_data(game, lang)
-    load_game(game)
-    data = LanguageManager.load_data(@@game_name, lang)
-    data['buildings'] ||= {}
-    data['quests'] ||= {}
-    @@game_metadata['buildings'].keys.each do |key|
-      data['buildings'][key] ||= { 'name' => '', 'desc' => '', 'upgrade_desc' => {} } 
-    end
-    game.quests.each do |quest|
-      data['quests'][quest.id] ||= {}
-      data['quests'][quest.id]['conditionMsgs'] ||= {}
-      if quest.metadata['conditions']['buildings']
-        quest.metadata['conditions']['buildings'].each_pair do |building, hash|
-          data['quests'][quest.id]['conditionMsgs'][building] ||= {}
-          hash.keys.each do |key|
-            data['quests'][quest.id]['conditionMsgs'][building][key] = ''
-          end
-        end
-      end
-      if quest.metadata['conditions']['resources']
-        quest.metadata['conditions']['resources'].keys do |key|
-          data['quests'][quest.id]['conditionMsgs'][key] = ''
-        end
-      end
-    end
-    LanguageManager.save_data(@@game_name, lang, data)
-  end
 
-  def self.load_language_data(game)
-    load_game(game)
-    data = {}
-    if @@game_metadata['languages']
-      @@game_metadata['languages'].each_key do |lang|
-        data[lang] = LanguageManager.load_data(@@game_name, lang)
-      end
-    end
-    data
-  end
-
-  def self.edit_language_data(game, language, data)
-    load_game(game)
-    data = JSON.parse(data)
-    if @@game_metadata['languages']
-      @@game_metadata['languages'].each_key do |lang|
-        LanguageManager.save_data(@@game_name, lang, data[lang])
-      end
-    end
+  def self.generate_creep ugp, data
+    war_factory_key = data['war_factory']
+    wf = ugp.war_factory[war_factory_key]
+    #if(wf.nil?)return error no building
+    return if(wf.nil?)
+    war_factory = BD::WarFactory.new wf['coords'],ugp
+    validation = war_factory.generate_creep data['creep']
+    ugp.save
+    valid = validation['valid'] ?  {'valid' => true, 'error' => ''} : validation
   end
   
+  def self.cancel_creep_generation ugp,data
+    war_factory_key = data['war_factory']
+    wf = ugp.war_factory[war_factory_key]
+    war_factory = BD::WarFactory.new wf['coords'],ugp
+    validation = war_factory.cancel_creep_generation
+    return validation if(!validation['valid'])
+    ugp.save
+    return {'valid' => true, 'error' => ''}
+  end
+
   def self.list_map user_game_profile, data
     friend_ids = data['friend_ids']
-    
     attack_history = user_game_profile.metadata['attack_history']
     for user in attack_hitory.keys
       
     end
   end
 
-  def self.init_game_profile(user_game_profile)
-    user_game_profile.metadata= 
-    { 'varsion' => { 'currnet' => 0, 'sequence' => 1},
-      'townhall' => nil,
-      'lumbermill' => nil,
-      'quarry' => nil,
-      'workers' => 1,
-      'idle_workers' => 1,
-      'rock' => 50000,
-      'lumber' => 50000,
-      'creeps' => {},
-      'garage_units_used' => 0, 
-      'total_garage_units'=> 0,
-      'reward_bags' => {'id_generator' => 0, 'queue' => []},
-      'attack_history' => {},
-      'notifications' => {'id_generator' => 0, 'queue' => []},
-      'attacks' => {},
-      'protection' => {'started'=>0 ,'time'=> 0, 'working'=>false},
-      'map' => (0..72).to_a.map{(0..24).to_a.map{0}},
-      'xp_info' => {
-        'xp_level' => 1,
-        'energy' => 0,
-        'bonus_seconds' => 0,
-        'xp' => 0
-      }
-    }
-  end
 end

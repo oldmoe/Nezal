@@ -1,17 +1,18 @@
 <div class="main-title">
-   The Awesome Games List 
-   <a href="/<%=AdminController::ADMIN_URL%>/new" style=" margin-left : 20px;">
-    + 
-   </a>
+  Add New Game
 </div>
-<% @games.each do |game | %>
-  <div class="game">
-    <div>
-      <a href="/<%=AdminController::ADMIN_URL%>/<%=game.name%>"><%=game.name%></a> 
-      <span>
-        <%=game.description%>
-      </span>
-    </div>
-    <div style="clear:both"></div>
+
+<form id="new_game" action="/<%=AdminController::ADMIN_URL%>/" method="post" enctype="multipart/form-data">
+  <div class="form_row">  
+    <LABEL for="name">Name</LABEL>
+    <INPUT type="text" id="name" name='name'><BR>
   </div>
-<% end %>
+  <div class="form_row">
+    <LABEL for="description">Description</LABEL>
+	  <textarea name='description' type="text"></textarea>  
+  </div>	  
+  <div class="form_row">
+    <input type="submit" value="Save" class="submit"/>
+  </div>
+</form> 
+

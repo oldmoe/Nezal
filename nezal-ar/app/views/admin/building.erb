@@ -1,6 +1,6 @@
 <script type='text/javascript'>
   var name = "<%=@building_name%>"
-  var data = <%=JSON.generate(@game.metadata)%>
+  var data = <%=JSON.generate(@game.data)%>
   var level = <%=@level%>
   var buildingLevel = data.buildings[name].levels[<%=@level%>]
   var buildingNames = new Hash(data.buildings).keys();
@@ -16,7 +16,7 @@
   }
 </script>
 
-<%= erb :language %>
+<%= erb :language_loader %>
 
 <script type='text/javascript'>
 
@@ -25,14 +25,14 @@ Language.display = function(){
   for (defaultLang in data.languages) break;
   $('globalData').innerHTML = TrimPath.processDOMTemplate("globalDataTemplate", { languages : data.languages,
                                                                                   defaultLang : defaultLang,
-                                                                                  data : this.metadata[defaultLang].buildings[name] });
+                                                                                  data : this.data[defaultLang].buildings[name] });
 }
     
 Language.save = function(){
   var language = $('language').value;
-  this.metadata[language].buildings[name].name = $('name').value;
-  this.metadata[language].buildings[name].desc = $('description').value;
-  this.metadata[language].buildings[name].upgrade_desc[level]  = $('levelDesc').value;
+  this.data[language].buildings[name].name = $('name').value;
+  this.data[language].buildings[name].desc = $('description').value;
+  this.data[language].buildings[name].upgrade_desc[level]  = $('levelDesc').value;
   this.saveToServer();
 }
 
@@ -40,12 +40,12 @@ Language.changeLanguage = function(){
   var defaultLang = $('language').value;      
   $('globalData').innerHTML = TrimPath.processDOMTemplate("globalDataTemplate", { languages : data.languages,
                                                                                   defaultLang : defaultLang,
-                                                                                  data : this.metadata[defaultLang].buildings[name] });
+                                                                                  data : this.data[defaultLang].buildings[name] });
 }
 </script>
 
 <div id="backLink">
-  <a href="/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/metadata/edit">
+  <a href="/<%=AdminController::ADMIN_URL%>/<%=@game.name%>">
     Back
   </a>
 </div>
@@ -212,7 +212,7 @@ Language.changeLanguage = function(){
 <label class="label"><%= @building_name.capitalize %> level <%= @level %></label>
 <div id="buildingAttributes" class="subItem" style="width : 70%;"></div>
 <input type="button" value="Save" id="submit" class="submit"/> or 
-<a href='/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/metadata/edit'>Go back</a>
+<a href='/<%=AdminController::ADMIN_URL%>/<%=@game.name%>'>Go back</a>
 <br/>
 <span id="requestStatus"></span>
 
@@ -262,7 +262,7 @@ $("submit").observe("click", function(e){
     buildingLevel["limiting"]["others"][limBuildingName] = limBuildingNumber;
   }
   
-  new Ajax.Request( '/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/metadata' , {
+  new Ajax.Request( '/<%=AdminController::ADMIN_URL%>/<%=@game.name%>' , {
                      method : 'put',
                      parameters : { "data" : JSON.stringify(data) },
                      onSuccess : function(response){

@@ -6,33 +6,24 @@ var Quest = {
     metadata : {},
 
     init : function() {
-        this.id = <%=@quest.id%>;
-        this.name = "<%=@quest.name%>";
-        this.primary = <%=@quest.primal || false%>;
         this.parents = {};
-        this.parent = <%=@quest.parent || 'null'%>;
-        <% @game.quests.each do | quest | %>                      
-          this.parents['<%=quest.name%>'] = <%=quest.id%> ;
+        <% @quests.each_value do | quest | %>                      
+          this.parents["<%=quest['name']%>"] = "<%=quest['id']%>";
         <% end %>
-        this.metadata = <%=Metadata.encode(@quest.metadata)%>;
+        this.metadata = <%=Metadata.encode(@quest)%>;
         this.rewards = <%=Metadata.encode(BD::Quest::REWARDS)%>;
         this.categories = <%=Metadata.encode(BD::Quest::CATEGORIES)%>;
         this.conditions = { buildings : ['level', 'assigned_workers', 'hp'],
                             resources : ['lumber', 'rock', 'workers'] };        
-        this.gameMetadata = <%=Metadata.encode(@game.metadata)%>;
+        this.gameData = <%=Metadata.encode(@game.data)%>;
         Quest.display();
         Language.initialize();
     },
 
     saveToServer : function(){
-      new Ajax.Request( '/<%=AdminController::ADMIN_URL%>/<%=@game[:name]%>/quests/<%=@quest.id%>/metadata' , {
+      new Ajax.Request( '/<%=AdminController::ADMIN_URL%>/<%=@game.name%>/quests/<%=@quest["id"]%>.json' , {
                         method : 'put',
-                        parameters : { "data" : JSON.stringify({ 
-                                                  name : Quest.name,
-                                                  primal : Quest.primary,
-                                                  parent : Quest.parent,
-                                                  metadata : this.metadata
-                                                }) },
+                        parameters : { "metadata" : JSON.stringify(this.metadata) },
                         onSuccess : function(response){
                           Quest.showSuccessMsg();
                           window.location = window.location;
@@ -136,13 +127,12 @@ var Quest = {
     },
 
     retrieveFormData : function(){
-      this.name = $$('#basicData #name')[0].value;
+      this.metadata.name = $$('#basicData #name')[0].value;
       if($$('#basicData #parent')[0].value.length > 0)
-        this.parent = parseInt($$('#basicData #parent')[0].value);
+        this.metadata.parent = $$('#basicData #parent')[0].value;
       else 
-        this.parent = 'null';
-      this.primary = $$('#basicData #primal')[0].checked;
-      console.log(this.name, this.parent, this.primary);
+        this.metadata.parent = 'null';
+      this.metadata.primal = $$('#basicData #primal')[0].checked;
       this.metadata.mandatory = $$('#basicData #mandatory')[0].checked;
       this.metadata.category = parseInt($$('#basicData #category')[0].value);
       var conditions = { buildings : {}, resources : {}};
@@ -205,23 +195,23 @@ var Quest = {
 <!----------- Quest Basic Data Template --------->
 <div id="basicDataTemplate" style="display:none;" >
   <div id="game_name">
-    <%=@quest.game.name%> : 
+    <%=@game.name%> : 
     <span id="quest_name" class="title" style="color :  DarkOliveGreen;">
-      <%=@quest.name%> 
+      <%=@quest['name']%> 
     </span>
   </div>
   <div>
     <LABEL class="label">Basic Quest Data </LABEL>
     <div class="form_row">
       <LABEL for="name">Name </LABEL>
-      <INPUT type="text" id="name" name='name' value="${Quest.name}">
+      <INPUT type="text" id="name" name='name' value="${Quest.metadata.name}">
     </div>
     <div class="form_row">  
       <LABEL for="parent">Parent</LABEL>
       <select id="parent" name="parent">
         <option value=""> none </option>
         {for quest in Quest.parents}       
-          {if (quest==Quest.parent)}                
+          {if (quest==Quest.metadata.parent)}                
             <option value="${quest}" SELECTED> ${quest_index} </option>
           {else}
             <option value="${quest}"> ${quest_index} </option>
@@ -242,8 +232,8 @@ var Quest = {
       </select>
     </div>
     <div class="form_row">  
-      <LABEL for="primal">Primary</LABEL>
-      {if Quest.primary == true }
+      <LABEL for="primal">Primal</LABEL>
+      {if Quest.metadata.primal == true }
         <INPUT type="checkbox" id="primal" name="primal" checked=true><BR>
       {else}
         <INPUT type="checkbox" id="primal" name="primal"><BR>
@@ -296,7 +286,7 @@ var Quest = {
       <div class="form_row building_condition">  
         <LABEL for="condition">Building</LABEL>
         <select style="width:20%;">
-          {for game_building in Quest.gameMetadata.buildings}                      
+          {for game_building in Quest.gameData.buildings}                      
             {if (game_building_index==building_index)}         
               <option value="${game_building_index}" SELECTED> ${game_building_index} </option>
             {else}
@@ -357,7 +347,7 @@ var Quest = {
   <div class="form_row new_building_condition">  
     <LABEL for="condition">Building</LABEL>
     <select style="width:20%;">
-      {for game_building in Quest.gameMetadata.buildings}                      
+      {for game_building in Quest.gameData.buildings}                      
         <option value="${game_building_index}"> ${game_building_index} </option>
       {/for}
     </select>
@@ -410,7 +400,7 @@ var Quest = {
 
 <div id="game">
   <div id="backLink"> 
-    <a href="/<%=AdminController::ADMIN_URL%>/<%=@quest.game[:name]%>/quests">
+    <a href="/<%=AdminController::ADMIN_URL%>/<%=@game.name%>/quests">
       Back
     </a>
   </div>
@@ -430,45 +420,45 @@ var Quest = {
 
 </div>
 
-<%= erb :language %>
+<%= erb :language_loader %>
 
 <script type='text/javascript'>
 
 Language.initializeHash = function(){
   var updated = false;
-  for(defaultLang in Language.metadata)
+  for(defaultLang in Language.data)
   {
-    if(!Language.metadata[defaultLang].quests)
+    if(!Language.data[defaultLang].quests)
     {
       updated = true;
-      Language.metadata[defaultLang].quests = {};
+      Language.data[defaultLang].quests = {};
     }
-    if(!Language.metadata[defaultLang].quests[Quest.id])
+    if(!Language.data[defaultLang].quests[Quest.metadata['id']])
     {
       updated = true;
-      Language.metadata[defaultLang].quests[Quest.id]={};
+      Language.data[defaultLang].quests[Quest.metadata['id']]={};
     }
-    if(!Language.metadata[defaultLang].quests[Quest.id]['conditionMsgs'])
+    if(!Language.data[defaultLang].quests[Quest.metadata['id']]['conditionMsgs'])
     {
       updated = true;
-      Language.metadata[defaultLang].quests[Quest.id]['conditionMsgs']={};
+      Language.data[defaultLang].quests[Quest.metadata['id']]['conditionMsgs']={};
     }
     for(var building in Quest.metadata.conditions.buildings)
     {
-      if(!Language.metadata[defaultLang].quests[Quest.id].conditionMsgs[building])
+      if(!Language.data[defaultLang].quests[Quest.metadata['id']].conditionMsgs[building])
       {
-        Language.metadata[defaultLang].quests[Quest.id].conditionMsgs[building] = {};
+        Language.data[defaultLang].quests[Quest.metadata['id']].conditionMsgs[building] = {};
         updated = true;
       }
     }
   }
-  for(defaultLang in Language.metadata)
+  for(defaultLang in Language.data)
   {
-    for(var condition in Language.metadata[defaultLang].quests[Quest.id].conditionMsgs)
+    for(var condition in Language.data[defaultLang].quests[Quest.metadata['id']].conditionMsgs)
     {
       if(!(Quest.metadata.conditions.buildings[condition] || Quest.metadata.conditions.resources[condition]))
       {
-        delete(Language.metadata[defaultLang].quests[Quest.id].conditionMsgs[condition]);
+        delete(Language.data[defaultLang].quests[Quest.metadata['id']].conditionMsgs[condition]);
         updated = true;
       }
     }
@@ -479,37 +469,37 @@ Language.initializeHash = function(){
 
 Language.display = function(){
   var defaultLang = null;
-  for (defaultLang in Language.metadata) break;
+  for (defaultLang in Language.data) break;
   this.initializeHash();
-  $('globalData').innerHTML = TrimPath.processDOMTemplate("globalDataTemplate", { languages : Language.metadata	,
+  $('globalData').innerHTML = TrimPath.processDOMTemplate("globalDataTemplate", { languages : Language.data	,
                                                                                   defaultLang : defaultLang,
-                                                                                  data : this.metadata[defaultLang].quests[Quest.name] });
+                                                                                  data : this.data[defaultLang].quests[Quest.name] });
 }
 
 Language.save = function(){
   var language = $('language').value;
-  this.metadata[language].quests[Quest.id].title = $$('#globalData #title')[0].value;
-  this.metadata[language].quests[Quest.id].description = $$('#globalData #description')[0].value;
-  this.metadata[language].quests[Quest.id].congratesMsg = $$('#globalData #congratesMsg')[0].value;
-  this.metadata[language].quests[Quest.id].conditionMsgs = {};
+  this.data[language].quests[Quest.metadata['id']].title = $$('#globalData #title')[0].value;
+  this.data[language].quests[Quest.metadata['id']].description = $$('#globalData #description')[0].value;
+  this.data[language].quests[Quest.metadata['id']].congratesMsg = $$('#globalData #congratesMsg')[0].value;
+  this.data[language].quests[Quest.metadata['id']].conditionMsgs = {};
   $$('#globalData .building_condition_msg input').each(function(input){
                                                         var building = input.id.split('__')[0];
                                                         var cond = input.id.split('__')[1];
-                                                        if(!Language.metadata[language].quests[Quest.id].conditionMsgs[building])
-                                                          Language.metadata[language].quests[Quest.id].conditionMsgs[building] = {};
-                                                        Language.metadata[language].quests[Quest.id].conditionMsgs[building][cond] = input.value;
+                                                        if(!Language.data[language].quests[Quest.metadata['id']].conditionMsgs[building])
+                                                          Language.data[language].quests[Quest.metadata['id']].conditionMsgs[building] = {};
+                                                        Language.data[language].quests[Quest.metadata['id']].conditionMsgs[building][cond] = input.value;
                                                       });
   $$('#globalData .resource_condition_msg input').each(function(input){
-                                                        Language.metadata[language].quests[Quest.id].conditionMsgs[input.id] = input.value;
+                                                        Language.data[language].quests[Quest.metadata['id']].conditionMsgs[input.id] = input.value;
                                                       });
   this.saveToServer();
 }
 
 Language.changeLanguage = function(){
   var defaultLang = $('language').value;
-  $('globalData').innerHTML = TrimPath.processDOMTemplate("globalDataTemplate", { languages : Language.metadata,
+  $('globalData').innerHTML = TrimPath.processDOMTemplate("globalDataTemplate", { languages : Language.data,
                                                                                   defaultLang : defaultLang,
-                                                                                  data : this.metadata[defaultLang].quests[Quest.id] });
+                                                                                  data : this.metadata[defaultLang].quests[Quest.metadata['id']] });
 }
 </script>
 
@@ -534,15 +524,15 @@ Language.changeLanguage = function(){
   </div>
   <div class="form_row">
     <LABEL for="tile">Title </LABEL>
-    <INPUT type="text" id="title" name='title' value="${languages[defaultLang]['quests'][Quest.id].title}">
+    <INPUT type="text" id="title" name='title' value="${languages[defaultLang]['quests'][Quest.metadata['id']].title}">
   </div>
   <div class="form_row">
     <LABEL for="description"> Description </LABEL>
-    <textarea id="description" name="description" type="text">${languages[defaultLang]['quests'][Quest.id].description}</textarea>
+    <textarea id="description" name="description" type="text">${languages[defaultLang]['quests'][Quest.metadata['id']].description}</textarea>
   </div>
   <div class="form_row">
     <LABEL for="congratesMsg"> Congrates Msg </LABEL>
-    <textarea id="congratesMsg" name="congratesMsg" type="text">${languages[defaultLang]['quests'][Quest.id].congratesMsg}</textarea>
+    <textarea id="congratesMsg" name="congratesMsg" type="text">${languages[defaultLang]['quests'][Quest.metadata['id']].congratesMsg}</textarea>
   </div>
   <LABEL for="condition_msgs" class="label">Condition Messages</LABEL>
   <div id='condition_msgs'>
@@ -551,14 +541,14 @@ Language.changeLanguage = function(){
       <div class="form_row building_condition_msg">  
         <LABEL for="condition">${building_index} ${condition_index}</LABEL>
         <INPUT type="text" id="${building_index}__${condition_index}" 
-                value="${languages[defaultLang]['quests'][Quest.id].conditionMsgs[building_index][condition_index]}"> 
+                value="${languages[defaultLang]['quests'][Quest.metadata['id']].conditionMsgs[building_index][condition_index]}"> 
       </div>      
       {/for}
     {/for}
     {for condition in Quest.metadata.conditions.resources}
       <div class="form_row resource_condition_msg">  
         <LABEL for="condition">${condition_index}</LABEL>
-        <INPUT type="text" id="${condition_index}" value="${languages[defaultLang]['quests'][Quest.id].conditionMsgs[condition_index]}"> 
+        <INPUT type="text" id="${condition_index}" value="${languages[defaultLang]['quests'][Quest.metadata['id']].conditionMsgs[condition_index]}"> 
       </div>
     {/for}
   </div>

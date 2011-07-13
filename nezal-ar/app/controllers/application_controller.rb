@@ -22,6 +22,7 @@ class ApplicationController < Sinatra::Base
   def service_provider
     @service_provider
   end
+
   before do 
     app_name = env['PATH_INFO'].split('/')[1]
     @service_provider = env['SCRIPT_NAME'].split('/')[1].split('-')[0]
@@ -30,19 +31,17 @@ class ApplicationController < Sinatra::Base
       @app_configs ||= K_CONFIGS::find('name', app_name)
       if @app_configs && get_provider_session
         begin
-          @game = Game.where( 'name'=>app_name ).first
-          @user = User.where( 'service_type'=>Service::PROVIDERS[@service_provider], 'service_id'=>@service_id ).first
+          @game = Game.get(app_name)
+          key = User::generate_key(Service::PROVIDERS[@service_provider], @service_id)
+          @user = User.get(key)
           if(!@user)
-            @user = User.create( 'service_type'=>Service::PROVIDERS[@service_provider], 'service_id'=>@service_id, 'coins'=>0 )
+            @user = User.create(key,  { 'coins'=> 1000 })
+            puts "Creating new user !! #{@user}"
           end
-          @game_profile = UserGameProfile.where('game_id'=>@game.id, 'user_id'=>@user.id).first
+          key = UserGameProfile::generate_key(Service::PROVIDERS[@service_provider], Game::current.key, @service_id)
+          @game_profile = UserGameProfile.get(key)
           if !(@game_profile)
-            LOGGER.debug "Game profile not found, creating one"
-            @game_profile = UserGameProfile.new()
-            @game_profile.game= @game
-            @game_profile.user= @user
-            get_helper_klass.init_game_profile(@game_profile)
-            @game_profile.save!()
+            @game_profile = UserGameProfile.create(key)
             LOGGER.debug params["inviter"]
             if(params["inviter"])
               get_helper_klass.reward_invitation(params["inviter"])
@@ -50,6 +49,7 @@ class ApplicationController < Sinatra::Base
           end
         rescue Exception => e   
           LOGGER.debug e
+          LOGGER.debug e.backtrace
           ''
         end
       else

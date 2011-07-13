@@ -1,4 +1,5 @@
 data={
+  "name" : "local-base-defender",
   "buildings" : {
     "townhall":{
       "levels":{
@@ -341,10 +342,22 @@ data={
     "7" :{"max_helping_power" : 11, "helping_power_unit_every" : 1800, "max_xp" : 8000},
     "8" :{"max_helping_power" : 12, "helping_power_unit_every" : 1800, "max_xp" : 12000}
   }, 
+
+  "ranks" : {"1":{"name":"1","lower_exp":"0","upper_exp":"10"}},
+
+  "quests" : {  "id_generator" : 1, 
+                "list" : { "0" : { 
+                                  "name":"townhall","parent":null,
+                                  "conditions":{"buildings":{"townhall":{"level":1}},"resources":{}},
+                                  "rewards":{"coins":100} , "primal":true,"id":"0","mandatory":true,"category":1
+                                }
+                        }
+            },
+
   "languages" : { 'english' : {}, 'arabic' : {} }
 }
 
-new Ajax.Request( '/nezal-admin/local-base-defender/metadata' , {
+new Ajax.Request( '/nezal-admin/local-base-defender.json' , {
                 method : 'put',
                 parameters : { "data" : JSON.stringify(data) }
             });

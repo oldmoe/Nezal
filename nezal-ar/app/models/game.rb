@@ -1,38 +1,35 @@
-class Game < ActiveRecord::Base
+class Game < DataStore::Model
 
-  include MetadataManager  
+  @@data = { "buildings" => {}, "workers" => {}, "weapons" => {}, "creeps" => {}, "ranks" => [], "researches" => {}, "ranks" => {} }
+  @@speed_factor = 1
 
-  attr_accessible :name, :description
-
-  has_many   :ranks, :dependent => :destroy, :autosave => true
-  has_many   :campaigns, :dependent => :destroy, :autosave => true
-  has_many   :quests, :dependent => :destroy, :autosave => true
-  belongs_to    :current_campaign, :class_name => "Campaign", :foreign_key => "current_campaign_id",  :autosave => false
- 
-  before_validation do
-    if ( self.current_campaign.nil? && self.campaigns.empty? )
-      campaign = Campaign.new(:name => 'curr_camp')
-      self.campaigns << campaign  
-      self.current_campaign = campaign
-    elsif ( self.current_campaign.nil? ) 
-      self.current_campaign = self.campaigns.first()
+  def init
+    if @data
+      @@data.clone.each_pair do |k, v|
+        @data[k] = v.clone unless @data[k]
+      end
+    else
+      @data = @@data.clone
+    end
+    buildings.each_pair do |building_name, building_data|
+      building_levels = self.buildings[building_name]['levels']
+      building_levels.keys.each do |level|
+        building_levels[level]['time'] /= @@speed_factor
+        building_levels[level]['unit_per_worker_minute'] *= @@speed_factor if building_levels[level]['unit_per_worker_minute']
+      end
     end
   end
- 
-  validates_each :current_campaign do |record, attr, value|
-    record.errors.add attr, 'Current campaign must be one of the game campaigns' unless (record.campaigns.include? value)
+
+  def path
+    FB_CONFIGS::find('name', name)['game_name']       
   end
-  
-  # Save the current_campaign object
-  after_save do
-    unless self.current_campaign.game &&   self.id == self.current_campaign.game.id
-      self.current_campaign.game = self 
-      self.current_campaign.save
+
+  class << self  
+
+    def current
+      @game = get('local-base-defender')
     end
-    unless self.current_campaign_id == self.current_campaign.id 
-      self.current_campaign_id = self.current_campaign.id
-      self.save
-    end
-  end  
-  
+
+  end
+
 end
