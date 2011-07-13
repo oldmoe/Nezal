@@ -408,10 +408,24 @@
   </div>
 </textarea>
 
+<textarea id="menuCollect" style="display:none;">
+	<div id="collect_resourceDesc" class="menuItem">
+		Click to collect the resources. 
+	</div>
+</textarea>
+<textarea id="menuWorker" style="display:none;">
+	<div id="assign_workerDesc" class="menuItem">
+		Click to assign worker. 
+	</div>
+</textarea>
+
+
 <textarea id="menuUpgrade" style="display:none;">
 	<div id="upgradeDesc" class="menuItem">
 		{if maxUpgrade}
-			You have reached maximum upgrade. 
+      <div class="maxUpgrade">
+			You have reached maximum upgrade.
+      </div> 
 		{else}
 			<div id="upgradeTitle"> Upgrade to level ${level}.</div>
 		   <img class="resourcesImg" src='images/buildings/panel/resources.png' />
@@ -488,17 +502,6 @@
 <textarea id="menuMove" style="display:none;">
 	<div id="moveDesc" class="menuItem">
 		Click to move the building. 
-	</div>
-</textarea>
-
-<textarea id="menuCollect" style="display:none;">
-	<div id="collect_resourceDesc" class="menuItem">
-		Click to collect the resources. 
-	</div>
-</textarea>
-<textarea id="menuWorker" style="display:none;">
-	<div id="assign_workerDesc" class="menuItem">
-		Click to assign worker. 
 	</div>
 </textarea>
 

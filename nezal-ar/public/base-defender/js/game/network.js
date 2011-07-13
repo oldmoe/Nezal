@@ -149,7 +149,9 @@ var Network = Class.create({
 		else 	
 			return this.contactTheBoss({ 'event' : 'attack','creeps': creeps ,'user_id':game.visitedNeighborId}, callback);
 	},
-	
+	storeAttackResult : function(userData,creepArr){
+      return  this.contactTheBoss({'event' : 'attack_done', 'creeps':creepArr,'user_data':userData, 'user_id':game.visitedNeighborId })
+  },
 	repairBuildings : function(callback){
 		return this.contactTheBoss({ 'event' : 'repair_buildings'}, callback);
 	},

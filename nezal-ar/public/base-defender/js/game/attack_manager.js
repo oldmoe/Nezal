@@ -23,7 +23,7 @@ var AttackManager = Class.create({
 		if(this.attacking) return
     if(!game.neighborGame) creeps = game.user.data.creeps
     this.stolenResources = {}
-		var creepsArr = [] 
+		this.creepsArr = [] 
 		this.attacking = true
     var creepId = 0
     this.noOfCreeps =0
@@ -37,19 +37,33 @@ var AttackManager = Class.create({
 			    var creep = this.game.creepFactory.newCreep(c.capitalize(),creepId++,attackDirection)
           this.noOfCreeps++
 			    this.creeps.push({'x':creep.coords.x,'y':creep.coords.y, 'creep':creep})
-			    creepsArr.push({'x':creep.coords.x,'y':creep.coords.y,'type':c.capitalize()})
+			    this.creepsArr.push({'x':creep.coords.x,'y':creep.coords.y,'type':c.capitalize()})
 		    } 
       }
     }
     
-		this.game.network.simulateAttack(creepsArr);
+		//this.game.network.simulateAttack(creepsArr);
     
 	},
+  formUserData : function(){
+    var userData = {}
+    for(var key in BuildingFactory._GlobalRegistry){
+      var building = BuildingFactory._GlobalRegistry[key]
+      if(!userData[building.name]){
+        userData[building.name] = {}
+      }
+      userData[building.name][key] = {"hp":BuildingFactory._GlobalRegistry[key]['hp']}
+    }
+    return userData
+  },
 	notifyDoneAttack : function(stolenResources){
 		this.creepsDone++
     if(stolenResources)this.addStolenResources(stolenResources)
 		var attackSuccess = false
+    console.log(this.creepsDone, this.noOfCreeps)
 		if(this.creepsDone == this.noOfCreeps){
+      var userData = this.formUserData()
+      this.game.network.storeAttackResult(userData, this.creepsArr)
 			$('attackDiv').hide()
 			for(var i=0;i<this.creeps.length;i++){
 				if (this.creeps[i].creep.attacked) {

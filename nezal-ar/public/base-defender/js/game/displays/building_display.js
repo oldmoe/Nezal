@@ -116,21 +116,6 @@ var BuildingDisplay = Class.create(Display, {
     this.sprites.defaultMouseover = this.sprites.mouseover;
     this.sprites.neighborMouseover = new DomImgSprite(this.owner, {img: this.transparentImg});
     this.sprites.neighborMouseover.hide();
-    if(!this.owner.game.neighborGame)
-    {
-      this.staticSprites.moreContainer = new DomSpriteContainer(this.owner, {zIndex : this.sprites.clickSprite.minAreaZIndex + 1100,
-                                                          width :this.buttonImg.width, height : this.buttonImg.height });
-      this.staticSprites.moreContainer.shiftX = (this.imgWidth - this.buttonImg.width)/2+2;
-      this.staticSprites.moreContainer.shiftY = this.imgHeight - this.buttonImg.height - 15;
-      this.staticSprites.moreButton = this.staticSprites.moreContainer.newDomImgSprite(this.owner, { img: this.buttonImg,
-                                                                                         width :this.buttonImg.width,
-                                                                                         height : this.buttonImg.height });
-      this.owner.moreButtonText = function(){ return "menu"};
-      this.staticSprites.moreButtonText = this.staticSprites.moreContainer.newDomTextSprite(this.owner, 'moreButtonText',
-                                                      {centered: true, styleClass : 'moreButtonText', divClass : 'moreButtonText',
-                                                        width :this.buttonImg.width, height : this.buttonImg.height });
-      Map.registerSpecialListeners(this.staticSprites.moreContainer.div, this.owner, 'renderPanel');
-    }
     for(var sprite in this.staticSprites){
       this.staticSprites[sprite].render();
     }
@@ -160,7 +145,6 @@ var BuildingDisplay = Class.create(Display, {
       if(self.sprites.flag)self.sprites.flag.hide() 
       if(self.sprites.text)self.sprites.text.hide();
       self.sprites.invalid.hide();
-      if(self.staticSprites.moreContainer) self.staticSprites.moreContainer.hide();
     });
     this.owner.stateNotifications[this.owner.states.UNDER_CONSTRUCTION].push(function(){
       self.createUnderConstructionElements();
@@ -180,7 +164,6 @@ var BuildingDisplay = Class.create(Display, {
       if(self.sprites.flag)self.sprites.flag.hide()
       if(self.sprites.moving) self.sprites.moving.hide();
       self.sprites.invalid.hide();
-      if(self.staticSprites.moreContainer) self.staticSprites.moreButton.hide();
     });
     this.owner.stateNotifications[this.owner.states.UPGRADING].push(function(){
       var top =  self.owner.coords.y+Math.round(self.imgHeight/2) - 50
@@ -199,7 +182,6 @@ var BuildingDisplay = Class.create(Display, {
       if(self.sprites.text)self.sprites.text.hide()
       if(self.sprites.moving) self.sprites.moving.hide();
       self.sprites.invalid.hide();
-      if(self.staticSprites.moreContainer) self.staticSprites.moreButton.hide();
     });
     this.owner.stateNotifications[this.owner.states.NORMAL].push(function(){
       self.sprites.building.show();
@@ -218,9 +200,6 @@ var BuildingDisplay = Class.create(Display, {
       if(self.sprites.flag) self.sprites.flag.show();
       if(self.sprites.moving) self.sprites.moving.hide();
       self.sprites.invalid.hide();
-      if(self.staticSprites.moreContainer) self.staticSprites.moreContainer.hide();
-      if(self.staticSprites.moreButton) self.staticSprites.moreButton.show();
-      if(self.staticSprites.moreButtonText) self.staticSprites.moreButtonText.show();
     });
   },
   
@@ -257,24 +236,24 @@ var BuildingDisplay = Class.create(Display, {
     $('upgrade_trigger').stopObserving('mouseup');
     $('move_trigger').stopObserving('mouseup');
     $('move_trigger').observe('mousedown',function(){
-      $('move_trigger').select("img")[0].setStyle( {marginTop: "-50px"} );
+      $('move_trigger').select("img")[0].setStyle( {marginTop: "-76px"} );
     });
     $('move_trigger').observe('mouseup',function(){
-      $('move_trigger').select("img")[0].setStyle( {marginTop: "-25px"} );
+      $('move_trigger').select("img")[0].setStyle( {marginTop: "-26px"} );
       $('building-panel').hide();
       owner.game.buildingMode.move();
       owner.game.buildingMode.moveMode = true;
     })
 
     if (!owner.isValidToUpgrade(true)) {
-      $('upgrade_trigger').select("img")[0].setStyle({marginTop : "-75px"});
+      $('upgrade_trigger').select("img")[0].setStyle({marginTop : "-51px"});
       $('upgrade_trigger').setAttribute("disabled", "disabled");
     }else {
       $('upgrade_trigger').observe('mousedown', function(){
-      $('upgrade_trigger').select("img")[0].setStyle( {marginTop: "-50px"} );
+      $('upgrade_trigger').select("img")[0].setStyle( {marginTop: "-76px"} );
     });
     $('upgrade_trigger').observe('mouseup',function(){
-      $('upgrade_trigger').select("img")[0].setStyle( {marginTop: "-25px"} );
+      $('upgrade_trigger').select("img")[0].setStyle( {marginTop: "-26px"} );
       owner.upgrade();
       $('building-panel').hide();
     })
@@ -302,9 +281,9 @@ var BuildingDisplay = Class.create(Display, {
       });
   },
   
-  defaultActionSprite : function(){
-    return this.sprites.mouseover;
-  },
+//  defaultActionSprite : function(){
+//    return this.sprites.mouseover;
+//  },
 
   defaultNeighborActionSprite : function(){
     return this.sprites.neighborMouseover;
@@ -319,11 +298,11 @@ var BuildingDisplay = Class.create(Display, {
     if(this.owner.game.neighborGame) {
       this.sprites.defaultMouseover = this.defaultNeighborActionSprite();
     }
-    else if( this.owner.game.buildingMode && this.owner.game.buildingMode.moveMode ){
-      this.sprites.defaultMouseover = this.sprites.defaultMove;
-    } else {
-      this.sprites.defaultMouseover = this.defaultActionSprite();
-    }
+//    else if( this.owner.game.buildingMode && this.owner.game.buildingMode.moveMode ){
+//      this.sprites.defaultMouseover = this.sprites.defaultMove;
+//    } else {
+//      this.sprites.defaultMouseover = this.defaultActionSprite();
+//    }
   	if (this.owner.state == this.owner.states.UNDER_CONSTRUCTION) this.renderUnderConstruction();
     if (this.owner.state == this.owner.states.UNDER_CONSTRUCTION || this.owner.state == this.owner.states.UPGRADING) {
       this.sprites.clickSprite.setCursor("default");

@@ -89,23 +89,23 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
     var owner = this.owner;
     var self = this;
     this.game.domConverter.convert( this.game.templatesManager.load("resource-building-buttons") );
-    $('panel-buttons-container').appendChild( $("collect_resource_trigger") );
-    $('panel-buttons-container').appendChild( $("assign_worker_trigger") );
+    $('panel-buttons-container').insertBefore( $("collect_resource_trigger"),$('upgrade_trigger') );
+    $('panel-buttons-container').insertBefore( $("assign_worker_trigger"),$('upgrade_trigger') );
     
     $('collect_resource_trigger').observe('moousedown', function(){
-		  $('collect_resource_trigger').select("img")[0].setStyle( {marginTop: "-50px"} );
+		  $('collect_resource_trigger').select("img")[0].setStyle( {marginTop: "-76px"} );
     });
   	$('collect_resource_trigger').observe('mouseup',function(){
-  		$('collect_resource_trigger').select("img")[0].setStyle( {marginTop: "-25px"} );
+  		$('collect_resource_trigger').select("img")[0].setStyle( {marginTop: "-26px"} );
   		$('building-panel').hide();
         	self.collectResources();
   	})
     
     $('assign_worker_trigger').observe('mousedown', function(){
-	    $('assign_worker_trigger').select("img")[0].setStyle( {marginTop: "-50px"} );
+	    $('assign_worker_trigger').select("img")[0].setStyle( {marginTop: "-76px"} );
     });
 	  $('assign_worker_trigger').observe('mouseup',function(){
-		  $('assign_worker_trigger').select("img")[0].setStyle( {marginTop: "-25px"} );
+		  $('assign_worker_trigger').select("img")[0].setStyle( {marginTop: "-26px"} );
 		  owner._AssignWorker();
       $('building-panel').hide();
 	  })

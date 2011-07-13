@@ -1,17 +1,17 @@
 #panel-buttons-container {
-  height: 103px;
-  float: left;
-  margin-top: 19px;
-  margin-left: 12px;
-  width: 81px;
+   float: left;
+    height: 103px;
+    margin-left: 4px;
+    margin-top: 19px;
+    width: 81px;
 }
 
 #panel-buttons-container .panel-button {
-  overflow: hidden;
-  height: 25px;
-  width: 81px;
-  margin-left:3px;
-  cursor: pointer;
+    cursor: pointer;
+    height: 27px;
+    margin-left: 3px;
+    overflow: hidden;
+    width: 85px;
 }
 
 #panel-buttons-container .panel-button img {
@@ -21,14 +21,13 @@
 	background-image:url('../images/game_elements/building_menu_hover.png');
 }
 #panel-buttons-container .panel-button span{
-  color: white;
-  font-size: 12px;
-  font-weight: bold;
-  left: 19px;
-  margin-top: 4px;
-  position: absolute;
-  text-align: center;
-  width: 58px;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: 4px;
+    position: absolute;
+    text-align: center;
+    width: 84px;
 }
 
 #panel-buttons-container #panel-button-upgrade span {
@@ -59,7 +58,7 @@
 	background-repeat : repeat-y;
 	padding-left:93px;
 	padding-right: 25px;
-	min-height:83px;
+ min-height: 95px;
 	margin-top: -10px;
 }
 
@@ -69,6 +68,12 @@
 #building-panel .menuBody #upgradeDesc{
 	font-family: helvetica;
 	font-size: 11px;
+}
+#building-panel .menuBody #upgradeDesc .maxUpgrade{
+    margin-left: 5px;
+    margin-top: 5px;
+    font-size:12px;
+    font-weight:bold;
 }
 #building-panel .menuBody #upgradeDesc #upgradeTitle{
 	font-weight:bold;
@@ -139,7 +144,10 @@ img.icon {
 	position:absolute;
 	visibility:hidden;
 	top:23px;
+  font-family: helvetica;
 	font-size:12px;
+  margin-left:5px;
+  margin-top:5px;
 	font-weight:bold;
 }
 #panel-buttons-container .panel-button{
