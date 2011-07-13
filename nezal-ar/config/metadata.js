@@ -345,16 +345,30 @@ data={
 
   "ranks" : {"1":{"name":"1","lower_exp":"0","upper_exp":"10"}},
 
-  "quests" : {  "id_generator" : 1, 
-                "list" : { "0" : { 
-                                  "name":"townhall","parent":null,
-                                  "conditions":{"buildings":{"townhall":{"level":1}},"resources":{}},
-                                  "rewards":{"coins":100} , "primal":true,"id":"0","mandatory":true,"category":1
-                                }
-                        }
+  "quests":{ 
+        "id_generator":6,
+        "list":{
+            "0":{"name":"townhall","parent":null,
+                "conditions":{"buildings":{"townhall":{"level":1}},"resources":{}},
+                "rewards":{"coins":10,"exp":10,"lumber":10},
+                "primal":true,"id":"0","mandatory":true,"category":1
             },
+            "2":{"name":"workers","parent":"0","conditions":{"buildings":{},"resources":{"workers":3}},
+                "rewards":{"coins":10,"exp":10,"lumber":1000},
+                "primal":false,"id":"2","mandatory":true,"category":1
+            },
+            "3":{"name":"lumbermill","parent":"2",
+                "conditions":{"buildings":{"lumbermill":{"level":1,"assigned_workers":1}},"resources":{}},
+                "rewards":{"coins":10,"lumber":10},"primal":false,"id":"3","mandatory":true,"category":1
+            },
+            "5":{"name":"quarry","parent":"3",
+                "conditions":{"buildings":{"quarry":{"level":1,"assigned_workers":1}},"resources":{}},
+                "rewards":{"lumber":100,"rock":100},"primal":false,"id":"5","mandatory":false,"category":1
+            }
+        }
+    },
 
-  "languages" : { 'english' : {}, 'arabic' : {} }
+    "languages" : { 'english' : {}, 'arabic' : {} }
 }
 
 new Ajax.Request( '/nezal-admin/local-base-defender.json' , {
