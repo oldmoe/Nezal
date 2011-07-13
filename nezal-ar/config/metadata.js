@@ -1,28 +1,25 @@
 data={
   "name" : "local-base-defender",
   "buildings" : {
-    "townhall":{
-      "levels":{
-            "0" : { "dependency" :{"buildings":{}}, "limited_by":null,"limiting":{"global":3,"others":{"lumbermill":2}},
-                    "hp": 1000, "time" : 0,
-                    "display":{"xdim":48,"ydim":52,"zdim":100,"imgWidth":160,"imgHeight":186,
-                               "area":"158,115,167,40,162,12,144,30,141,42,100,29,85,14,78,1,71,17,54,26,26,40,18,44,9,52,14,112,61,134,76,149,93,136,133,120,152,122,157,117"},
-                    "storageCapacity":50000
+        "townhall": {
+            "levels":{
+                "0": {"dependency":{"buildings":{}},"limited_by":null,"limiting":{"global":3,"others":{"lumbermill":2}},"hp":1000,"time":0,
+                      "display":{"xdim":48,"ydim":52,"zdim":100,"imgWidth":160,"imgHeight":186,"area":"158,117"},"storageCapacity":20000
+                },
+                "1": {"dependency":{"buildings":{}},"limited_by":null,
+                    "limiting" : { "global":1, "others" : {"lumbermill":2,"quarry":2,"house":2,"defense_center":1,"war_factory":1} },
+                    "hp":800,"rock":12000,"lumber":3000,"time":10,
+                    "display":{"xdim":48,"ydim":52,"zdim":100,"imgWidth":157,"imgHeight":186,"area":"158,117"}, "storageCapacity":50000
+                },
+                "2": {"dependency":{"buildings":{"storage":"2","defense_center":"1"}},"limited_by":null,
+                      "limiting":{"global":1,"others" : {"lumbermill":2,"quarry":2,"house":2,"defense_center":1,"war_factory":1}},
+                      "hp":1000,"rock":100000,"lumber":25000,"time":21600,
+                      "display":{"xdim":48,"ydim":52,"zdim":100,"imgWidth":157,"imgHeight":186,"area":"158,117"},"storageCapacity":100000
+                }
             },
-            "1" : { "dependency" :{"buildings":{}}, "limited_by":null,"limiting":{"global":3,"others":{"lumbermill":2}},
-                    "hp": 1000,"rock":4000,"lumber":2000,"time":15,
-                    "display":{"xdim":48,"ydim":52,"zdim":100,"imgWidth":160,"imgHeight":186,
-                               "area":"158,115,167,40,162,12,144,30,141,42,100,29,85,14,78,1,71,17,54,26,26,40,18,44,9,52,14,112,61,134,76,149,93,136,133,120,152,122,157,117"},
-                    "storageCapacity":50000
-            },
-            "2" : { "dependency" :{"buildings":{}}, "limited_by":null,"limiting":{"global":3,"others":{"lumbermill":2}},
-                    "hp": 2000,"rock":3000,"lumber":3000,"time":15,
-                    "display":{"xdim":48,"ydim":52,"zdim":100,"imgWidth":160,"imgHeight":186,
-                               "area":"158,115,167,40,162,12,144,30,141,42,100,29,85,14,78,1,71,17,54,26,26,40,18,44,9,52,14,112,61,134,76,149,93,136,133,120,152,122,157,117"},
-                    "storageCapacity":50000
-            }
-      }
-    },
+            "defense":false,"displayable":{"hp":false,"rock":false,"lumber":false,"time":false,"storageCapacity":false}
+        },
+
     "quarry":{
       "levels":{
         "0" : {
