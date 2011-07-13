@@ -205,25 +205,15 @@ var BuildingDisplay = Class.create(Display, {
   },
   
   renderPanel : function(){
-//    var rightLimit = this.panelWidth + this.owner.coords.x - Map.x;
-//    if( rightLimit < Map.viewWidth ) {
       var left = Map.clickPositionX - 50;
-//    } else {
-//      var left = this.owner.coords.x - Map.x - this.panelWidth;
-//    }
-//    var topLimit = this.owner.coords.y - Map.y - Math.round(this.owner.imgHeight / 2);
-//    if( topLimit > 55 ) {
       var top = Map.clickPositionY - 30
-//    } else {
-//      var top = this.owner.coords.y - Map.y - Math.round(this.owner.imgHeight / 2) + 55;
-//    }
-    $('building-panel').setStyle({
-      top: top + "px",
-      left: left + "px"
-    });
-    this.renderPanelButtons();
-    $('building-panel').show();
-    this.game.buildingMode.selectedBuilding = this;
+      $('building-panel').setStyle({
+        top: top + "px",
+        left: left + "px"
+      });
+      this.renderPanelButtons();
+      $('building-panel').show();
+      this.game.buildingMode.selectedBuilding = this;
   },
   
   renderPanelButtons : function(){

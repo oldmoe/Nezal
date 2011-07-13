@@ -28,7 +28,14 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
     });
 
   },
-  
+  fillBuildingPanel : function($super,owner){
+    if (this.owner.assignedWorkers > 0) {
+      this.defaultActionName = "Collect"
+    }else{
+      this.defaultActionName = "Worker"
+    }
+    $super(owner)
+  },
   renderPanel : function($super){
     $super();
     var self = this.owner;
@@ -49,14 +56,6 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
                                                           width :this.buttonImg.width, height : this.buttonImg.height });
       this.staticSprites.collectContainer.shiftX = (this.imgWidth- this.buttonImg.width)/2+2;
       this.staticSprites.collectContainer.shiftY = 0;
-/*      this.staticSprites.collectContainer = this.staticSprites.moreContainer.newDomImgSprite(this.owner, { img: this.buttonImg,
-                                                                                         width :this.buttonImg.width,
-                                                                                         height : this.buttonImg.height });*/
-      this.owner.moreButtonText = function(){ return "collect"};
-      this.staticSprites.moreButtonText = this.staticSprites.collectContainer.newDomTextSprite(this.owner, 'moreButtonText',
-                                                      {centered: true, styleClass : 'collectButtonText', divClass : 'collectButtonText',
-                                                        width :this.buttonImg.width, height : this.buttonImg.height });
-//      Map.registerSpecialListeners(this.staticSprites.collectContainer.div, this.owner, 'collectNeighborResources');
     }
     for(var sprite in this.staticSprites){
       this.staticSprites[sprite].render();
@@ -64,11 +63,7 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
   },
   
   defaultActionSprite : function(){
-    if( this.owner.assignedWorkers > 0) {
       return this.sprites.defaultMouseover = this.sprites.mouseover;
-    } else {
-      return this.sprites.defaultMouseover = this.sprites.defaultAssign;
-    }
   },
 
   defaultNeighborActionSprite : function(){
@@ -79,8 +74,7 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
   },
   
   render : function($super){
-    $super();
-    
+    $super();    
     if(this.owner.full) this.sprites.attention.show();
   },
   
@@ -114,7 +108,6 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
   collectNeighborResources : function(){
     var hasEnergy = this.owner.game.energy.energy > 0;
     if( (this.owner[this.owner.factory.collect] > 0 || this.owner.assignedWorkers > 0) && hasEnergy ) {
-      
       this.owner.game.energy.energy--;
       this.owner._CollectNeighborResources();
       this.owner.game.collectedRewardBags ++;
