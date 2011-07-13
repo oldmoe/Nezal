@@ -41,16 +41,17 @@ module BD
       new_quest['id'] = (game.data['quests']['id_generator']).to_s
       game.quests['id_generator'] += 1
       game.quests['list'][new_quest['id']]= new_quest
-      p Game.current.quests
       game.save
-      p Game.current.quests
     end
 
     class << self
 
       def init()
         game = Game::current
-        game.quests ||= {'id_generator' => 0, 'list' => {}}
+        unless game.quests
+          game.quests ||= {'id_generator' => 0, 'list' => {}}
+          game.save
+        end
       end
 
       # Base Defender Quests : 
@@ -59,7 +60,7 @@ module BD
       #     - conditions : hash of items defining the quest. If the user profile data qualifies for passing the quest
       #                    Then the user is assigned the next quest and rewarded with the quest rewards as described above.
       def edit(quest_id, data)
-        init()
+        init
         game = Game::current
         quest_data = Metadata.decode(data)
         if !quest_data['parent'] || !(game.quests['list'][quest_data['parent']])
@@ -71,6 +72,7 @@ module BD
     
   
       def delete(quest_id)
+        init
         game = Game::current
         game.quests['list'].delete(quest_id)
         game.save
@@ -78,11 +80,13 @@ module BD
       end
 
       def find(quest_id)
+        init
         game = Game::current
         game.quests['list'][quest_id] if game.data['quests']['list']
       end
 
       def all()
+        init
         game = Game::current
         game.quests['list'] || {}
       end
@@ -103,24 +107,25 @@ module BD
         # Get newly added primal quests that the user hasnt yet begun
         # Add the conquered ones to conquered list, others to current
         quests = Game::current.quests['list'].select do | key, val |
-                                                              val['primal'] && ! user_game_profile.quests['primal'].index(key)
-                                                          end
+          val['primal'] && ! user_game_profile.quests['primal'].index(key)
+        end
 
         quests.each_pair do |key, quest|
           self.conquered?(user_game_profile, quest) ? 
-                      user_game_profile.quests['conquered'] << quest['id'] : user_game_profile.quests['current'] << quest['id']
+            user_game_profile.quests['conquered'] << quest['id'] : user_game_profile.quests['current'] << quest['id']
         end
         new_quests = quests.values.collect {|quest| quest['id']}
         user_game_profile.quests['primal'].concat(new_quests)
+        deleted = []
         # Pass on all conquered and add the next one to the current list if not conquered to
         user_game_profile.quests['conquered'].each do |id|
           quests = Game::current.quests['list'].select do | key, val |
-                                                              val['parent']==id
-                                                          end
+            val['parent']==id
+          end
           # If all children are conquered remove their parent from conquered
           remove_parent = quests.keys.length > 0 ? true : false
           quests.each_pair do |id, value|
-          if user_game_profile.quests['conquered'].index(id)
+            if user_game_profile.quests['conquered'].index(id)
               quests.delete(id)
             else
               if self.conquered?(user_game_profile, value)
@@ -132,9 +137,10 @@ module BD
             end
           end
           if remove_parent
-            user_game_profile.quests['conquered'].delete(id)
+            deleted << id
           end
         end
+        deleted.each {|id| user_game_profile.quests['conquered'].delete(id) }
       end
 
       def conquered?(profile, quest)
@@ -157,9 +163,9 @@ module BD
           end
           break unless conquered
         end
-        quest['conditions']['resources'].each_pair do | item, conditions |
+        quest['conditions']['resources'].each_pair do | item, condition |
           condition_met = true
-          condition_met = false if profile.data[item] < conditions 
+          condition_met = false if profile[item] < condition
           conquered &= condition_met
           break unless conquered
         end
