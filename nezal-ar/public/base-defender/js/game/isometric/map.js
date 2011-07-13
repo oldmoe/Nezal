@@ -48,6 +48,11 @@ var Map={
 		Map.mapHeight = backgroundImg.height;
 		Map.centerMap(1)
 	},
+  setToOrigin : function(){
+        Map.x = 0
+		    Map.y=0
+		    Map.move(0,0)
+  },
 	centerMap : function(zoomFactor){
 		Map.x = 0
 		Map.y=0
@@ -499,7 +504,6 @@ var Map={
 	  		if (owner.state != owner.states.UNDER_CONSTRUCTION) owner.sprites.outline.show();
         owner.sprites.info.show();
 	  		if(owner.sprites.text) owner.sprites.text.show()
-        if(owner.state == owner.states.NORMAL && owner.staticSprites.moreContainer && !owner.game.buildingMode.moveMode) owner.staticSprites.moreContainer.show();
         if(owner.progressDisplays[0]){
           progressDisplay = owner.progressDisplays[0] 
           progressDisplay.actionContainer.show()
@@ -513,8 +517,6 @@ var Map={
 			if(owner.sprites.text) owner.sprites.text.hide()
 	    if(owner.sprites.defaultMouseover) 
         owner.sprites.defaultMouseover.hide();
-      if(owner.state == owner.states.NORMAL && owner.staticSprites.moreContainer) 
-        owner.staticSprites.moreContainer.hide();
       if(owner.progressDisplays[0]){
           progressDisplay = owner.progressDisplays[0] 
           progressDisplay.actionContainer.hide()
@@ -591,8 +593,6 @@ var Map={
           progressDisplay.actionContainer.show()
           progressDisplay.timeContainer.hide()
         }
-        if(owner.state == owner.states.NORMAL && owner.staticSprites.moreContainer && !owner.game.buildingMode.moveMode) 
-          owner.staticSprites.moreContainer.show();
 	  	}
 		})
 		div.observe('mouseout',function(){
@@ -606,8 +606,6 @@ var Map={
           progressDisplay.actionContainer.hide()
           progressDisplay.timeContainer.show()
       }
-      if(owner.state == owner.states.NORMAL && owner.staticSprites.moreContainer) 
-        owner.staticSprites.moreContainer.hide();
 		})
 	},
 

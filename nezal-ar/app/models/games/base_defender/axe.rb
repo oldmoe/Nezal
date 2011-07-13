@@ -1,7 +1,7 @@
 module BD
-  class Car < Creep
+  class Axe < Creep
     def initialize(map,initial_x, initial_y,id,game_metadata)
-      super(map,initial_x, initial_y,id,game_metadata,"car")
+      super(map,initial_x, initial_y,id,game_metadata,"axe")
     end
   end  
 end

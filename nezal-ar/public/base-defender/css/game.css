@@ -147,6 +147,7 @@ img{
 #gameCanvas{
 	position:absolute;
 	z-index:0;
+  background-repeat: no-repeat;
 	top:-275px;
 	left:-380px;
   direction : ltr;
@@ -203,6 +204,8 @@ img{
 	-webkit-transform:scale(0.5);
 	-o-transform:scale(0.5);
 	-ms-transform:scale(0.5);
+  -ms-zoom:scale(0.5);
+  transform:scale(0.5);
 }
 .healthFull{
 	background-color:green;
@@ -310,35 +313,40 @@ img{
 	text-align: center;	
 	top: -42px;
 }
-.resourceBarEmpty{
-	height: 20px;
-    left: 54px;
+
+#rockBar.resourceBarEmpty {
+    left: 48px;
+}
+.resourceBarEmpty {
+   height: 21px;
+    left: 44px;
     position: absolute;
-    top: 18px;
-    width: 60px;
+    top: 20px;
+    width: 64px;
     z-index: 1;
 }
 .resourceBarEmpty div{
 	float:left;
+  overflow:hidden;
 }
 #rockBar.resourceBarEmpty{
 	left:48px;
 }
 .resourceBarLeft{
 	width:5px;
-	height:20px;
-	margin-left:-5px;
+	height:15px;
+	margin-left:2px;
 	background-image : url('../images/game_elements/resource_bar_left.png')
 }
 .resourceBarMiddle{
-	height:20px;
+	height:15px;
 	width:1%;
 	background-repeat:repeat-x;
 	background-image : url('../images/game_elements/resource_bar_middle.png')
 }
 .resourceBarRight{
 	width:5px;
-	height:20px;
+	height:15px;
 
 }
 .resourceBarRight.full{

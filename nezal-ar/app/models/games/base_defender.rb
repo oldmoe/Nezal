@@ -362,6 +362,8 @@ class BaseDefender < Metadata
       validation = Notification.delete({:profile => user_game_profile, :id => data['id']})
     elsif data['event'] == 'use_reward'
       validation = BD::RewardBag.use({:profile => user_game_profile, :id => data['id']})
+    elsif data['event'] == 'attack_done'
+      validation = store_attack_result user_game_profile, data
     elsif data['event'] == 'attack'
       repair_jobs user_game_profile
       validation = initialize_simulate_attack user_game_profile, data
@@ -382,6 +384,33 @@ class BaseDefender < Metadata
     #### TODO We need to check why they need the stringified one 
     #### and see what we gonna do about that
     user_game_profile.metadata || {}
+  end
+  
+  def self.store_attack_result ugp, data
+     attacked_user_data = data['user_data']
+     creeps_coords = data['creeps']
+     neighbor_profile = BD::Neighbor.neighbor_profile(ugp, data)
+     neighbor_profile_metadata = neighbor_profile.metadata
+     my_metadata= ugp.metadata
+    creeps_coords.each do |creep|
+      creep_class = eval("BD::"+creep['type'])
+      creep_name = creep['type'][0].downcase << creep['type'][1...creep['type'].length]
+      my_metadata['creeps'][creep_name]-=1
+      my_metadata['garage_units_used']-=@@game_metadata['creeps'][creep_name]["garage_units"]
+      my_metadata['garage_units_used'] = 0 if my_metadata['garage_units_used'] < 0 
+    end
+    first_garage_coords = my_metadata['garage'].keys[0]
+    garage = BD::Garage.new my_metadata['garage'][first_garage_coords]['coords'], ugp
+    garage.check_stopped_war_factories ugp, @@game_metadata
+    @@building_modules.keys.each do |building_name|
+      if(!attacked_user_data[building_name].nil?)
+        attacked_user_data[building_name].each do |key,building|
+          neighbor_profile_metadata[building_name][key]['hp'] = building['hp']
+        end
+      end
+    end
+    neighbor_profile.save
+    return {'valid' => true, 'error' => ''}
   end
   
   def self.repair_buildings user_game_profile

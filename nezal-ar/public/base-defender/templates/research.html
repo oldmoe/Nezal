@@ -323,6 +323,7 @@
     <div class="container">
       <ul class='contents-ul'>
         {for creep in creeps}
+          {if creep > 0}
           <li>
             <div id="${creep_index}" class="item">
                 <span imgId="${creep_index}_image" 
@@ -333,6 +334,7 @@
                 <div class="creepSize"> ${creep} </div>
             </div>
           </li>
+          {/if}
         {/for}
         <li>
           <div class="item">

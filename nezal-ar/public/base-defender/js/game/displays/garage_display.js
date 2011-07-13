@@ -57,10 +57,10 @@ var GarageDisplay = Class.create(BuildingDisplay, {
         var creepDiv = this.owner.receivedCreep.sprites.body.div
         var divHeight = parseInt(creepDiv.getStyle('height').replace("px", ""))
         if (divHeight > 0) {
-            this.owner.receivedCreep.coords.y+=10
-            creepDiv.setStyle({
-              height: Math.max(divHeight - 10,0) + "px"
-            })
+//            this.owner.receivedCreep.coords.y+=10
+//            creepDiv.setStyle({
+//              height: Math.max(divHeight - 10,0) + "px"
+//            })
         }else{
           this.sprites.building.replaceImg(Loader.images.buildings['garage.png'])
           this.sprites.building.currentAnimationFrame =0

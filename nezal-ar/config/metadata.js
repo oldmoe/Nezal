@@ -313,6 +313,17 @@ data={
           rock : 100,
           lumber : 100
         }
+      },
+      "axe" : {
+          "hp" : 100,
+          "power" : 10,
+          "speed" : 10,
+          "garage_units":2,
+         "needs" : {
+          time : 5,
+          rock : 100,
+          lumber : 100
+        }
       }
   },
   "battle" : {
