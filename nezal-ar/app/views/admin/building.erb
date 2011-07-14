@@ -262,7 +262,7 @@ $("submit").observe("click", function(e){
     buildingLevel["limiting"]["others"][limBuildingName] = limBuildingNumber;
   }
   
-  new Ajax.Request( '/<%=AdminController::ADMIN_URL%>/<%=@game.name%>' , {
+  new Ajax.Request( '/<%=AdminController::ADMIN_URL%>/<%=@game.name%>.json' , {
                      method : 'put',
                      parameters : { "data" : JSON.stringify(data) },
                      onSuccess : function(response){
