@@ -8,7 +8,7 @@ var GlobalMapManager = Class.create({
     var self = this
     this.getFriends(function(){self.getNeighbors()})
     $('mapButton').observe('click',function(){
-      self.displayWorldMap()
+      self.getNeighbors(function(){self.displayWorldMap()})
     })
    },
    getFriends :function(callback){
@@ -22,7 +22,7 @@ var GlobalMapManager = Class.create({
           if(callback)callback()
         })	
    },
-   getNeighbors : function(){
+   getNeighbors : function(callback){
      var self = this
      this.game.network.globalMap(this.friendIds,function(users){
      $('mapButton').show()
@@ -41,7 +41,7 @@ var GlobalMapManager = Class.create({
             else
               user["name"] = user["service_id"].split(" ")[0]
           });
-//          self.list_map()
+           if(callback)callback()
         });
        })
    },

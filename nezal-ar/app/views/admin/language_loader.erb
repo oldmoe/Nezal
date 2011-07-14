@@ -1,0 +1,59 @@
+<script type='text/javascript'>
+  var Language = {
+    
+    data : null,
+
+    initialize : function(){
+      console.log("Initing")
+      new Ajax.Request( '/<%=AdminController::ADMIN_URL%>/<%=@game.name%>/locale.json' + '?' + Math.random(), {
+                       method : 'get',
+                       onSuccess : function(response){
+                          console.log("Initing Succeeded updating then display")
+                          Language.data = JSON.parse(response.responseText);
+                          Language.display();
+                       }
+                      });
+    },
+
+    saveToServer : function(options){
+      var options = options;
+      console.log("Saving To server")
+      new Ajax.Request( '/<%=AdminController::ADMIN_URL%>/<%=@game.name%>/locale.json' , {
+                        method : 'put',
+                        parameters : { "data" : JSON.stringify(this.data) },
+                        onSuccess : function(response){
+                          if(options && options['successCallback'])
+                            options['successCallback']();
+                          Language.showSuccessMsg();
+                          console.log("Saving Succeeded going to reinitialize now")
+                          Language.initialize();  
+                        },
+                        onFailure : function(response){
+                          if(options && options['failureCallback'])
+                            options['failureCallback']();
+                          Language.showErrorMsg();
+                        }
+                       
+                   });    
+    },
+
+    showSuccessMsg : function(){
+      $('langReqStatus').innerHTML = "Saved successfully"
+      $('langReqStatus').className = "success"
+      $('langReqStatus').show();
+      window.setTimeout( function(){$('langReqStatus').hide()}, 5000 )
+    },
+
+    showErrorMsg : function(){
+      $('langReqStatus').innerHTML = "Error, your changes are not saved!"
+      $('langReqStatus').className = "error"
+      $('langReqStatus').show();
+      window.setTimeout( function(){$('langReqStatus').hide()}, 10000 )
+    },
+
+    display : function(){
+
+    }
+
+  };
+</script>

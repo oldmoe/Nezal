@@ -144,7 +144,7 @@ var Game = Class.create({
                             'right-disabled' :'images/quests/arrows_horizontal.png'
                           }
             var friendsCarousel = null;
-            friendsCarousel = new Carousel("friends", images, 5);
+            friendsCarousel = new Carousel("friends", images, 6);
             friendsCarousel.checkButtons();
           });
         });
@@ -154,6 +154,7 @@ var Game = Class.create({
         //Sounds.gameSounds.Intro[0].stop()
         //Sounds.resumeTrack()
     };	
+    
     var buildingImages = BuildingMode.prototype.buildings.collect(function(building){
       return building + ".png";
     });
@@ -168,6 +169,7 @@ var Game = Class.create({
     buildingImages.push("military_research_animation.png");
     buildingImages.push("garage_action.png")
     buildingImages.push("garage_action.png")
+  
     var buildingOutlineImages = BuildingMode.prototype.buildings.collect(function(building){
       return building + "_outline.png";
     });
@@ -197,12 +199,13 @@ var Game = Class.create({
     var workerImages = ["worker.png", "worker_shadow.png"];
     //var buildingPanelImages = ["panel.png"]
 		
-    var creepsImages = ["car.png",'explosion.png','car_fight.png']
-    var creepsMenuImages = ['car_button.png','car_button_disabled.png','cancel.png', 'filling_bar.png', 'background_bar.png']
+    var creepsImages = ["car.png",'explosion.png','car_fight.png','axe.png','axe_fight.png']
+    var creepsMenuImages = ['car_button.png','car_button_disabled.png','axe_button.png','axe_button_disabled.png',
+    'cancel.png', 'filling_bar.png', 'background_bar.png']
 		//This is duplicated to avoid a problem in the loader that can't deal with an array of a single item
     var smokeImages = ["smoke_big.png", "smoke_big.png"]
     
-    var invasionImages = ['down_left.png','down_right.png','up_left.png','up_right.png']
+    //var invasionImages = ['down_left.png','down_right.png','up_left.png','up_right.png']
     var researchImages = ["cement.png", "cement_disabled.png", "laser.png", "laser_disabled.png",
                          'blue_bubble.png', 'red_bubble.png', 'green_bubble.png', 'yellow_bubble.png', 'white_bubble.png'];
     var creepGenerationImages = ["",""]
@@ -213,7 +216,6 @@ var Game = Class.create({
                        {images : buildingImages, path: 'images/buildings/', store: 'buildings'},
 											 {images : buildingModeImages, path: 'images/buildings/', store: 'buildingModes'},
 											 {images : iconsImages, path: 'images/icons/', store: 'icons'},
-                        {images : invasionImages, path: 'images/invasion/', store: 'invasion'},
 										 	 {images : workerImages, path: 'images/worker/', store: 'worker'},
 											 {images : creepsImages, path: 'images/creeps/', store: 'creeps'},
                        {images : creepsMenuImages, path: 'images/creeps/menu/', store: 'creeps'},

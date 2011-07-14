@@ -1,3 +1,0 @@
-class CityDefenderController < GamesController
-
-end

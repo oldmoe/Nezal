@@ -1,6 +1,7 @@
 require 'yaml'
 require 'logger'
 require 'active_record'
+require 'data_store'
 
 LOGGER = Logger.new(STDOUT)
 LOGGER.level = Logger::DEBUG
@@ -8,6 +9,8 @@ LOGGER.level = Logger::DEBUG
 # Initialize the database connection 
 ActiveRecord::Base.establish_connection(YAML::load(File.open('config/database.yml'))[ENV['RACK_ENV']])
 ActiveRecord::Base.logger = Logger.new(File.open('log/database.log', 'a'))
+
+GAME_NAME = (ENV['RACK_ENV']=='production' ? 'base-defender' : 'local-base-defender')
 
 # Initialize and load the facebook app definition
 FB_CONFIGS = YAML.load_file("config/facebook_apps.yml")

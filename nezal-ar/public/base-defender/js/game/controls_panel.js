@@ -140,6 +140,7 @@ var ControlsPanel = Class.create({
     })  
   },
   zoom : function(){
+    Map.centerMap(this.game.zoomFactor)
 		if(this.game.zoomFactor ==1){
 			this.game.zoomFactor = 0.5
 			$('gameCanvas').addClassName('zoomed')
@@ -151,6 +152,6 @@ var ControlsPanel = Class.create({
 			$('zoom').removeClassName('out')
 			$('zoom').addClassName('in')
 		}
-		Map.centerMap(this.game.zoomFactor) 
+    //Map.setToOrigin()
 	}
 })

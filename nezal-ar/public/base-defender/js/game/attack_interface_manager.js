@@ -63,6 +63,7 @@ var AttackIterfaceManager = Class.create({
 		})
    },
    show : function(){
+     if(this.game.originalUserData) this.availableCreeps = this.game.originalUserData.creeps
        this.totalCreepsAvailable= 0
       for(var type in this.availableCreeps){
         this.totalCreepsAvailable+=this.availableCreeps[type]
@@ -83,12 +84,13 @@ var AttackIterfaceManager = Class.create({
     			new Effect.Move('attackPanel', {y:-147})
        
    },
-   hide : function(){
+   hide : function(callback){
       new Effect.Move('topLeft', {x:-150,y:-150})
 			new Effect.Move('topRight', {x:150,y:-150})
 			new Effect.Move('bottomLeft', {x:-150,y:150})
 			new Effect.Move('bottomRight', {x:150,y:150,afterFinish:function(){
         $('attackInterfaceContainer').hide()
+        if(callback)callback()
        }})
 			new Effect.Move('attackPanel', {y:147})
    },
@@ -113,12 +115,11 @@ var AttackIterfaceManager = Class.create({
       self.game.attackManager.simulateAttack(self.creeps)
     })
     $$('#attackInterface #attackPanel #endAttack')[0].observe('click',function(){
-      self.hide()
+      self.hide(function(){game.reInitialize(function(){game.scene.render()});})
       $('attackDiv').hide();
       if (self.game.zoomFactor == 0.5) {
         game.controlsPanel.zoom()
       }
-      game.reInitialize(function(){game.scene.render()});
     })
    }
    

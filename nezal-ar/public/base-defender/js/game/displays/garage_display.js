@@ -4,6 +4,7 @@ var GarageDisplay = Class.create(BuildingDisplay, {
   tickDelay : 2,
   doorFrames : 8,
   initialize : function($super,owner,properties){
+    this.defaultActionName = "Inhabitants"
       this.defaultAction = this.renderGarageMenu;
       $super(owner,properties)
       var self = this;

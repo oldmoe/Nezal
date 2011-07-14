@@ -383,6 +383,12 @@
   </div>
 </textarea>
 
+<textarea style="display:none;" id='default-button'>
+  <div class="panel-button" id="default_trigger">
+    <span>${defaultAction}</span>
+    <img src="${Loader.images.panel['buttons.png'].src}">
+  </div>
+</textarea>
 
 <textarea style="display:none;" id='resource-building-buttons'>
   <div class="panel-button" id="collect_resource_trigger">
@@ -408,10 +414,24 @@
   </div>
 </textarea>
 
+<textarea id="menuCollect" style="display:none;">
+	<div id="collect_resourceDesc" class="menuItem">
+		Click to collect the resources. 
+	</div>
+</textarea>
+<textarea id="menuWorker" style="display:none;">
+	<div id="assign_workerDesc" class="menuItem">
+		Click to assign worker. 
+	</div>
+</textarea>
+
+
 <textarea id="menuUpgrade" style="display:none;">
 	<div id="upgradeDesc" class="menuItem">
 		{if maxUpgrade}
-			You have reached maximum upgrade. 
+      <div class="maxUpgrade">
+			You have reached maximum upgrade.
+      </div> 
 		{else}
 			<div id="upgradeTitle"> Upgrade to level ${level}.</div>
 		   <img class="resourcesImg" src='images/buildings/panel/resources.png' />
@@ -491,16 +511,12 @@
 	</div>
 </textarea>
 
-<textarea id="menuCollect" style="display:none;">
-	<div id="collect_resourceDesc" class="menuItem">
-		Click to collect the resources. 
+<textarea id="menuDefault" style="display:none;">
+	<div id="defaultDesc" class="menuItem">
+		Click to ${defaultAction}. 
 	</div>
 </textarea>
-<textarea id="menuWorker" style="display:none;">
-	<div id="assign_workerDesc" class="menuItem">
-		Click to assign worker. 
-	</div>
-</textarea>
+
 
 <textarea id="collectAnimation" style="display:none;">
 <div class="collectionAnimation">

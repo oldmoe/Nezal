@@ -15,9 +15,9 @@ class Notification
   def self.delete(options)
     profile = options[:profile]
     ack_ids = options[:ids] || [options[:id]] || []
-    profile.metadata['notifications']['queue'].each_with_index do |notification, index|
+    profile.data['notifications']['queue'].each_with_index do |notification, index|
       if (ack_ids.include? (notification['id']).to_s) || (ack_ids.include? notification['id'])
-        profile.metadata['notifications']['queue'].delete_at index 
+        profile.data['notifications']['queue'].delete_at index 
       end
     end
     profile.save

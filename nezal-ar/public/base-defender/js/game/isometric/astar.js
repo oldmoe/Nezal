@@ -7,6 +7,7 @@ var Node = Class.create({
 	h:0,
 	g:0,
 	f:0,
+  weight:0,
 	closed :false,
 	visited : false,
 	node: null,
@@ -66,7 +67,7 @@ var Astar = Class.create({
 			    if(gScoreIsBest) {
 				    neighbor.parent = currentNode;
 				    neighbor.g = gScore;
-				    neighbor.f = neighbor.g + neighbor.h;
+				    neighbor.f = neighbor.g + neighbor.h + neighbor.weight;
 				}
 		    }
         }

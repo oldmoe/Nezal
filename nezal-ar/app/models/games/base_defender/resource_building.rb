@@ -9,20 +9,21 @@ module BD
     end
 
     def self.collect(user_game_profile, coords)
-      game_metadata = user_game_profile.game.metadata
+      game_data = Game::current.data
       location_hash = BaseDefender.convert_location(coords)
-      building = user_game_profile.metadata[@name][location_hash]
+      building = user_game_profile.data[@name][location_hash]
       time = Time.now.utc.to_i
-      collected_resources, remaining_resources = self.calculate_collected_resources(user_game_profile, building, game_metadata, time)
+      collected_resources, remaining_resources = self.calculate_collected_resources(user_game_profile, building, time)
       building[self.collects] += collected_resources
-      user_game_profile.metadata[@collect]= building[self.collects] + user_game_profile.metadata[@collect]
-      user_game_profile.metadata[@name][location_hash][self.collects] = remaining_resources
-      user_game_profile.metadata[@name][location_hash]['last_collect'] = time
+      user_game_profile.data[@collect]= building[self.collects] + user_game_profile.data[@collect]
+      user_game_profile.data[@name][location_hash][self.collects] = remaining_resources
+      user_game_profile.data[@name][location_hash]['last_collect'] = time
       user_game_profile.save
-      return validate_collect( user_game_profile.metadata, game_metadata, location_hash)
+      return validate_collect( user_game_profile.data, location_hash)
     end
 
-    def self.calculate_collected_resources(user_game_profile, building, game_metadata, time_now)
+    def self.calculate_collected_resources(user_game_profile, building, time_now)
+      game_data = Game::current.data
       if(!building['started_repairing_at'].nil? && building['started_repairing_at']>0)
         return 0,0
       end
@@ -31,9 +32,9 @@ module BD
       collecting_time = time_now - last_collect_time
       assigned_workers = building['assigned_workers']
       assigned_workers = 0 if(assigned_workers.nil?)
-      building_capacity = game_metadata['buildings'][@name]['levels'][building['level'].to_s]['capacity']
-      total_storage = self.calculate_total_storage(user_game_profile.metadata, game_metadata)
-      unit_per_worker_minute = game_metadata['buildings'][@name]['levels'][building['level'].to_s]['unit_per_worker_minute']
+      building_capacity = game_data['buildings'][@name]['levels'][building['level'].to_s]['capacity']
+      total_storage = self.calculate_total_storage(user_game_profile)
+      unit_per_worker_minute = game_data['buildings'][@name]['levels'][building['level'].to_s]['unit_per_worker_minute']
 
       total_per_minute = unit_per_worker_minute * assigned_workers
       collected = ((total_per_minute/60.0) * collecting_time).round
@@ -41,51 +42,46 @@ module BD
         collected = building_capacity - building_collected_resources
       end
       remained = 0
-      if(total_storage <= user_game_profile.metadata[@collect])
-        remained = user_game_profile.metadata[@collect] - total_storage
-        user_game_profile.metadata[@collect] = total_storage
-        user_game_profile.metadata[@collect]
+      if(total_storage <= user_game_profile.data[@collect])
+        remained = user_game_profile.data[@collect] - total_storage
+        user_game_profile.data[@collect] = total_storage
+        user_game_profile.data[@collect]
       end
       return collected, remained
     end
     
-    def self.calculate_total_storage(profile_metadata, game_metadata)
+    def self.calculate_total_storage(profile)
+      game_data = Game::current.data
       total_storage = 0
-      profile_metadata['townhall'].values.each do |townhall|
-        total_storage += game_metadata['buildings']['townhall']['levels'][townhall['level'].to_s]['storageCapacity'].to_i
+      profile.townhall.values.each do |townhall|
+        total_storage += game_data['buildings']['townhall']['levels'][townhall['level'].to_s]['storageCapacity'].to_i
       end
-      if(!profile_metadata['storage'].nil?)
-        profile_metadata['storage'].values.each do |storage|
-          total_storage += game_metadata['buildings']['storage']['levels'][storage['level'].to_s]['storageCapacity'].to_i
+      if(!profile.storage.nil?)
+        profile.storage.values.each do |storage|
+          total_storage += game_data['buildings']['storage']['levels'][storage['level'].to_s]['storageCapacity'].to_i
         end
       end
       total_storage
     end 
   
     def self.assign_worker(user_game_profile, coords)
+      game_data = Game::current.data
       location_hash = BaseDefender.convert_location(coords)
-      game_metadata = BaseDefender.adjusted_game_metadata
-      
-      validation = validate_worker_assignment(user_game_profile.metadata, game_metadata, location_hash)
+      validation = validate_worker_assignment(user_game_profile.data, game_data, location_hash)
       return validation if validation['valid'] == false
-      
-      current_level = user_game_profile.metadata[@name][location_hash]['level'].to_s
-      assigned_workers = user_game_profile.metadata[@name][location_hash]['assigned_workers'] || 0
-      
-      user_game_profile.metadata['idle_workers'] -= 1
-      user_game_profile.metadata[@name][location_hash]['assigned_workers'] = assigned_workers + 1
-      
-      user_game_profile.save
-      
+      current_level = user_game_profile.data[@name][location_hash]['level'].to_s
+      assigned_workers = user_game_profile.data[@name][location_hash]['assigned_workers'] || 0
+      user_game_profile.data['idle_workers'] -= 1
+      user_game_profile.data[@name][location_hash]['assigned_workers'] = assigned_workers + 1      
       return validation
     end
     
-    def self.validate_worker_assignment(user_profile_metadata, game_metadata, location_hash)
-      assigned_workers = user_profile_metadata[@name][location_hash]['assigned_workers'] || 0
-      current_level = user_profile_metadata[@name][location_hash]['level'].to_s
-      max_workers = game_metadata['buildings'][@name]['levels'][current_level]['max_workers']
+    def self.validate_worker_assignment(user_profile_data, game_data, location_hash)
+      assigned_workers = user_profile_data[@name][location_hash]['assigned_workers'] || 0
+      current_level = user_profile_data[@name][location_hash]['level'].to_s
+      max_workers = game_data['buildings'][@name]['levels'][current_level]['max_workers']
       
-      if(user_profile_metadata['idle_workers'] == 0)
+      if(user_profile_data['idle_workers'] == 0)
         return {'valid' => false,
                 'error' => "Not enough workers, all your workers are busy"}
       end
@@ -99,7 +95,7 @@ module BD
       
     end
     
-    def self.validate_collect(user_profile_metadata, game_metadata, location_hash)
+    def self.validate_collect(user_profile_data, location_hash)
       return {}
     end
 
