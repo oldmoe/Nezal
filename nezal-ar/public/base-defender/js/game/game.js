@@ -317,9 +317,10 @@ var Game = Class.create({
   
   reflectStatusChange : function(){
     this.reInitializationNotifications = [];
-    if(this.reactor) this.reactor.stop();
-    this.reactor = new Reactor(80);
-    this.reactor.run();
+    if(!this.reactor){
+      this.reactor = new Reactor(80);
+      this.reactor.run();
+    } 
     this.user = new User(this);
 	  this.attackManager = new AttackManager(this);
     this.scene = new BaseDefenderScene(this);	

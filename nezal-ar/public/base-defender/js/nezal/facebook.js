@@ -74,7 +74,6 @@ var FBConnect = {
 			      if (response.session) {
 			          FBConnect.session = response.session;
                 
-                console.log(response);
                 if( !response.perms || 
                     !JSON.parse(response.perms).extended || 
                     JSON.parse(response.perms).extended.indexOf('publish_stream') == -1 ) {
