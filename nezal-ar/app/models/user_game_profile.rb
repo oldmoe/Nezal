@@ -183,25 +183,26 @@ class UserGameProfile < DataStore::Model
     now = Time.now.utc.to_i
     repair_factor = 40
     research_hp_bonus = BD::Research.total_hp_bonus( self )
-    building_names = Game::current.buildings.keys
+    game = Game::current
+    building_names = game.buildings.keys
     building_names.each do |building_name|
-      if(!self.building_name.nil?)
-        self.building_name.each do |key, building|
-          started_repairing_at = user_game_profile.metadata[building_name][key]['started_repairing_at'] 
+      unless self[building_name].nil?
+        self[building_name].each do |key, building|
+          started_repairing_at = self[building_name][key]['started_repairing_at'] 
           if(started_repairing_at > 0)
-            max_hp = @@game_metadata['buildings'][building_name]['levels'][building['level'].to_s]['hp']
+            max_hp = game.buildings[building_name]['levels'][building['level'].to_s]['hp']
             max_hp += research_hp_bonus * max_hp / 100
             hp = building['hp']
             if((max_hp-hp) < (now - started_repairing_at)*repair_factor)
-              user_game_profile.metadata[building_name][key]['hp'] = max_hp
-              user_game_profile.metadata[building_name][key]['started_repairing_at'] = 0
-              if(user_game_profile.metadata[building_name][key]['last_collect'])
-                user_game_profile.metadata[building_name][key]['last_collect'] = 
-                user_game_profile.metadata[building_name][key]['last_collect'] + ((max_hp-hp)/repair_factor).round
+              self[building_name][key]['hp'] = max_hp
+              self[building_name][key]['started_repairing_at'] = 0
+              if(self[building_name][key]['last_collect'])
+                self[building_name][key]['last_collect'] = 
+                self[building_name][key]['last_collect'] + ((max_hp-hp)/repair_factor).round
               end
             else 
-              user_game_profile.metadata[building_name][key]['hp'] = hp + (now - started_repairing_at)* repair_factor
-              user_game_profile.metadata[building_name][key]['started_repairing_at'] = now
+              self[building_name][key]['hp'] = hp + (now - started_repairing_at)* repair_factor
+              self[building_name][key]['started_repairing_at'] = now
             end
           end
         end
@@ -291,6 +292,18 @@ class UserGameProfile < DataStore::Model
       friend = self.class.get(id)
       friends << friend if friend
     end
+  end
+
+  def friends(ids)
+    game = Game::current
+    records = []
+    ids.each do |id|
+      record = self.class.get(self.class.generate_key(service_type, game.name, id))
+      records << record if record
+    end
+    records << self
+    records.sort{|a,b| a.rank <=> b.rank} 
+    records.collect { | record | {'service_id' => record.service_id, 'rank' => record.rank} }
   end
 
   class << self

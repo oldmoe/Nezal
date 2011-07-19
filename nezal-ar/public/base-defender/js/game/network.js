@@ -64,11 +64,10 @@ var Network = Class.create({
     this.genericPostRequest('cancel_creep_generation',data, callback)
   },
   
-  neighbourIDs : function(callback){
-    new Ajax.Request('generic', {
+  friends : function(ids, callback){
+    new Ajax.Request('friends', {
       method : 'get',
-      //asynchronous : false,
-      parameters: { 'data' : Object.toJSON({'request' : 'friends'})},
+      parameters: { 'data' : Object.toJSON({'friends_ids' : ids}) },
       onSuccess: function(response) {
         IDs = JSON.parse(response.responseText);
         if(callback) callback(IDs);

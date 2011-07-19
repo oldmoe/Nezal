@@ -3,11 +3,11 @@ var AttackIterfaceManager = Class.create({
     creepTypes : {"topLeft":0,"topRight":0,"bottomLeft":0,"bottomRight":0},
     creepIndeces : {"topLeft":{},"topRight":{},"bottomLeft":{},"bottomRight":{}},
     selectedDiv : null,
-   initialize:function(game){
-     this.game = game
-     this.availableCreeps = this.game.user.data.creeps
-   },
-   registerPanelListeners : function(){
+    initialize:function(game){
+      this.game = game
+      this.availableCreeps = this.game.user.data.creeps
+    },
+    registerPanelListeners : function(){
     this.creeps = {"topLeft":{},"topRight":{},"bottomLeft":{},"bottomRight":{}}
 		this.creepTypes = {"topLeft":0,"topRight":0,"bottomLeft":0,"bottomRight":0}
 		this.creepIndeces = {"topLeft":{},"topRight":{},"bottomLeft":{},"bottomRight":{}}

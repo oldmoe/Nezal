@@ -36,30 +36,21 @@ class GamesController < ApplicationController
   end
 
   get '/:game_name/neighbor/:id' do
-    neighbor_user_profile = BD::Neighbor.neighbor_empire(user_game_profile, id)
+    neighbor_user_profile = BD::Neighbor.neighbor_empire(user_game_profile, params[:id])
     result = {
               :user_data => { 
                 :rank => neighbor_user_profile.rank,
                 :exp => neighbor_user_profile.exp, 
                 :newbie => neighbor_user_profile.newbie,
                 :locale => neighbor_user_profile.locale, 
-                :metadata => user_game_profile.data
+                :metadata => neighbor_user_profile.data
               }
             }
     JSON.generate(result)
   end
 
   get '/:game_name/friends' do
-    neighbor_user_profile = BD::Neighbor.neighbor_empire(user_game_profile, id)
-    result = {
-              :user_data => { 
-                :rank => neighbor_user_profile.rank,
-                :exp => neighbor_user_profile.exp, 
-                :newbie => neighbor_user_profile.newbie,
-                :locale => neighbor_user_profile.locale, 
-                :metadata => user_game_profile.data
-              }
-            }
+    result = user_game_profile.friends(Metadata.decode(params['data'])['friends_ids'])
     JSON.generate(result)
   end
 
@@ -77,10 +68,8 @@ class GamesController < ApplicationController
 
   post '/:game_name/neighbor/building/collect' do
     data = Metadata.decode(params['data'])
-    @neighbor_profile = UserGameProfile.where('game_id'=>game.id, 'user_id'=> data['user_id']).first
-    klass = get_helper_klass()
-    result = klass.collect_neighbor_building(user_game_profile, @neighbor_profile, data)
-    return Metadata.encode(result)
+    profile = BaseDefender.collect_neighbor_building(user_game_profile, data)
+    Metadata.encode(profile.data)
   end
 
   get '/:game_name/global_map' do
