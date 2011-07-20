@@ -160,7 +160,7 @@ var Game = Class.create({
     var buildingImages = BuildingMode.prototype.buildings.collect(function(building){
       return building + ".png";
     });
-    var wedgeFaceImages = BuildingMode.prototype.wedges.collect(function(building){
+    var wedgeFaceImages = ['wedge', 'gaddafi'].collect(function(building){
       return building + "_face.png";
     });
     buildingImages = buildingImages.concat(wedgeFaceImages);
@@ -346,6 +346,8 @@ var Game = Class.create({
 	  this.militaryResearchFactory = new MilitaryResearchFactory(this);
     this.wedgeFactory = new WedgeFactory(this);
     this.gaddafiFactory = new GaddafiFactory(this);
+    this.greenWedgeFactory = new GreenWedgeFactory(this);
+    this.blueWedgeFactory = new BlueWedgeFactory(this);
     if(!this.globalMapManager)this.globalMapManager  = new GlobalMapManager(this);
     this.invadeDisplay = new InvadeDisplay(this);
     this.protectionDisplay = new ProtectionDisplay(this)

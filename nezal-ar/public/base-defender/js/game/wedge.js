@@ -1,5 +1,7 @@
 var Wedge = Class.create(Building, {
-  
+
+  faceImg : "wedge",  
+
   weapon : null,
 
   shot : "rock",
