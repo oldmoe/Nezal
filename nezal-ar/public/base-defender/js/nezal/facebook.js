@@ -217,6 +217,20 @@ var FBConnect = {
 /*          var size = FB.UIServer.Methods['fbml.dialog'].size;
           FB.UIServer.Methods['fbml.dialog'].size.height = 500;*/
           
+    },
+
+    friends : function(callback){
+        var callback = callback;
+        FB.api(
+            {  
+            method: 'friends.getAppUsers' 
+            },
+            function(response) 
+            {
+                var ids = response;
+                if(callback) callback(ids);
+            }
+        );
     }
 
 }

@@ -114,7 +114,7 @@ var ResourceBuildingDisplay = Class.create(BuildingDisplay, {
       this._NeighborCollectionAnimation();
       this.owner.game.rewardsPanel.handleRewards();
     }
-    
+    console.log("Here Here")
     if( !hasEnergy ){
       Notification.alert('You need more energy.');
     }

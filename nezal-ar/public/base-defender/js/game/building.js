@@ -18,6 +18,7 @@ var Building = Class.create({
   initialize : function(factory, buildingSpecs){
     this.name = factory.name;
     this.game = factory.game;
+    this.awaitingResponse = false;
     this.canBeBuiltOn = factory.canBeBuiltOn;
     this.factory = factory;
     this._LoadTime = new Date().getTime();
@@ -77,10 +78,12 @@ var Building = Class.create({
   tick : function(){
     var self = this;
     if (this.state == this.states.UNDER_CONSTRUCTION || this.state == this.states.UPGRADING ) {
-      if(this.elapsedTime() >= this.nextLevelBluePrints.time) {
+      if(this.elapsedTime() >= this.nextLevelBluePrints.time && ! this.awaitingResponse) {
+        this.awaitingResponse = true;
         var delayRequest = this.game.scene.reactor.everySeconds(2);
         self.game.scene.reactor.push(delayRequest, function(){
           self.game.reInitialize();
+          this.awaitingResponse = false;
         });
       }
     } else if (this.state == this.states.NOT_PLACED) {
