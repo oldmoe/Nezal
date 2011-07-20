@@ -82,6 +82,7 @@ var ResourceBuilding = Class.create(Building, {
   _CollectNeighborResources: function(){
     var self = this;
     this.game.network.collectResources(this.name, this.coords, function(response){
+      console.log(response)
       self.game.gameStatus.user_data = response;
       self.game.updateGameStatus(self.game.gameStatus);
     });

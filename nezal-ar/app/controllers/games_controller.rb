@@ -68,8 +68,17 @@ class GamesController < ApplicationController
 
   post '/:game_name/neighbor/building/collect' do
     data = Metadata.decode(params['data'])
-    profile = BaseDefender.collect_neighbor_building(user_game_profile, data)
-    Metadata.encode(profile.data)
+    neighbor_user_profile = BaseDefender.collect_neighbor_building(user_game_profile, data)
+    result = {
+              :user_data => { 
+                :rank => neighbor_user_profile.rank,
+                :exp => neighbor_user_profile.exp, 
+                :newbie => neighbor_user_profile.newbie,
+                :locale => neighbor_user_profile.locale, 
+                :metadata => neighbor_user_profile.data
+              }
+            }
+    Metadata.encode(result)
   end
 
   get '/:game_name/global_map' do
