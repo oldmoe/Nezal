@@ -1,5 +1,5 @@
 var BlueWedgeFactory = Class.create(WedgeFactory, {
-  name : "green_wedge",
+  name : "blue_wedge",
 
   newBlueWedge : function(){
     return this.newBuilding();
