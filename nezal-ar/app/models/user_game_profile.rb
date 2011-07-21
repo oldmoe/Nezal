@@ -10,7 +10,9 @@ class UserGameProfile < DataStore::Model
   }
   @@wedges = {
     'wedge' => BD::Wedge.new('wedge'),
-    'gaddafi' => BD::Wedge.new('gaddafi')
+    'gaddafi' => BD::Wedge.new('gaddafi'),
+    'blue_wedge' => BD::Wedge.new('blue_wedge'),
+    'green_wedge' => BD::Wedge.new('green_wedge')
   }
   @@building_modules = ( {
     "townhall" => BD::Townhall,

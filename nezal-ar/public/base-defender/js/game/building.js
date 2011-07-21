@@ -174,9 +174,9 @@ var Building = Class.create({
   textInfo : function(){
     text = '&nbsp;&nbsp;'
     if(this.state == this.states.UNDER_CONSTRUCTION)
-      text += this.name.humanize();
+      text += Text.buildings[this.name].name;
     else
-      text += this.name.humanize() + " [" + this.level + "]";
+      text += Text.buildings[this.name].name + " [" + this.level + "]";
       text +='&nbsp;&nbsp;'
     return text
   },

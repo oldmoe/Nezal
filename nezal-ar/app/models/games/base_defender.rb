@@ -9,7 +9,9 @@ class BaseDefender < Metadata
   }
   @@wedges = {
     'wedge' => BD::Wedge.new('wedge'),
-    'gaddafi' => BD::Wedge.new('gaddafi')
+    'gaddafi' => BD::Wedge.new('gaddafi'),
+    'green_wedge' => BD::Wedge.new('green_wedge'),
+    'blue_wedge' => BD::Wedge.new('blue_wedge')
   }
   @@building_modules = ( {
     "townhall" => BD::Townhall,

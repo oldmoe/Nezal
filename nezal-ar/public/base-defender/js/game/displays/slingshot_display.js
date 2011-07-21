@@ -28,7 +28,7 @@ SlingshotDisplay = Class.create( Display, {
   },
 
   createSprites : function(){
-    this.faceImg = Loader.images.buildings[this.owner.owner.name + '_face.png'];
+    this.faceImg = Loader.images.buildings[this.owner.owner.faceImg + '_face.png'];
     this.weaponImg = Loader.images.weapons[this.owner.name + ".png"];
     this.sprites.face = this.container.newDomImgSprite(this.owner, {img: this.faceImg},null,'slingshot');
     this.sprites.weapon = this.container.newDomImgSprite(this.owner, {img: this.weaponImg});
