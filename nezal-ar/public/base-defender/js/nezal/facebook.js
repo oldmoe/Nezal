@@ -30,6 +30,24 @@ var FBConnect = {
         FBConnect.retry --;
         FBConnect.callback();
 	  },
+    
+    share : function(shareable){
+      var message = shareable.userMessage;
+      var picture = shareable.picture;
+      var link = shareable.link.url;
+      var name = shareable.link.name;
+      var caption = shareable.link.caption;
+      var description = shareable.gameMessage
+      FB.api('/me/feed', 'post', {
+        message: message,
+        picture: picture,
+        link: link,
+        name: name,
+        caption: caption
+      }, function(response) {
+        
+      });
+    },
 	  
 	  getUsersInfo : function(ids, result, callback){
 			var	query2 = FB.Data.query("SELECT name,uid FROM user WHERE uid IN ({0})", ids);
@@ -74,7 +92,6 @@ var FBConnect = {
 			      if (response.session) {
 			          FBConnect.session = response.session;
                 
-                console.log(response);
                 if( !response.perms || 
                     !JSON.parse(response.perms).extended || 
                     JSON.parse(response.perms).extended.indexOf('publish_stream') == -1 ) {
@@ -140,7 +157,7 @@ var FBConnect = {
                                    "&next=http://apps.facebook.com/"+ 
                                    FBConnect.url() + "/" + appendParam +
                                  "&display=page&locale=en_US&return_session=0&" +
-                                 "fbconnect=0&canvas=1&legacy_return=1&method=permissions.request";
+                                 "fbconnect=0&canvas=1&legacy_return=1&method=permissions.request&perms=publish_stream";
                 }
                 window.top.location = redirect_url;
             }

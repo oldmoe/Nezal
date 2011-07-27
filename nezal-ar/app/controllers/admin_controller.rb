@@ -190,7 +190,7 @@ class AdminController < ApplicationController
   end
 
   ######################################################################
-  # Adminstrative Requests
+  # Administrative Requests
   ######################################################################
   # Delete all user game profiles
   # DANGEROUS METHOD !!!!!!!!!!!
