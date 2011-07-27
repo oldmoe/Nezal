@@ -14,4 +14,9 @@ BuildingFactory.SourceClasses = {
   blue_wedge : { factory : WedgeFactory, klass : Wedge },
   green_wedge : { factory : WedgeFactory, klass : Wedge },
   gaddafi : { factory : WedgeFactory, klass : Gaddafi }
-}
+};
+
+BuildingFactory.prototype.buildings = ['townhall', 'quarry', 'lumbermill','storage','defense_center',
+  'palm','wedge','war_factory','house', 'gaddafi', 'garage', 'defense_research',
+  'military_research', 'green_wedge', 'blue_wedge'];
+BuildingFactory.prototype.wedges = ['wedge', 'green_wedge', 'blue_wedge', 'gaddafi'];

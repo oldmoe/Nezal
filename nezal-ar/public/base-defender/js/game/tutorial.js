@@ -41,7 +41,7 @@ var Tutorial = Class.create({
       var buildButtonCallBack = function(){
                                     Hand.hide();
                                     $('questDisplay').hide();
-                                    var disabled =  BuildingMode.prototype.buildings.clone();
+                                    var disabled =  BuildingFactory.prototype.buildings.clone();
                                     disabled.remove('townhall');
                                     self.game.buildingsManager.displayBuildingsPanel({'disabled' : disabled});
                                     setTimeout(function(){
@@ -92,7 +92,7 @@ var Tutorial = Class.create({
       var buildButtonCallBack = function(){
                                     Hand.hide();
                                     $('questDisplay').hide();
-                                    var disabled =  BuildingMode.prototype.buildings.clone();
+                                    var disabled =  BuildingFactory.prototype.buildings.clone();
                                     disabled.remove('quarry');
                                     self.game.buildingsManager.displayBuildingsPanel({'disabled' : disabled});
                                     setTimeout(function(){
@@ -131,7 +131,7 @@ var Tutorial = Class.create({
       var buildButtonCallBack = function(){
                                     Hand.hide();
                                     $('questDisplay').hide();
-                                    var disabled =  BuildingMode.prototype.buildings.clone();
+                                    var disabled =  BuildingFactory.prototype.buildings.clone();
                                     disabled.remove('lumbermill');
                                     self.game.buildingsManager.displayBuildingsPanel({'disabled' : disabled});
                                     setTimeout(function(){

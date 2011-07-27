@@ -79,10 +79,10 @@ var Game = Class.create({
                           'button.png','cursor.png',"social.png", "civil.png", "military.png", "circles.png", "hover.png", "animated_circles.gif", 
                           "line.png", "resources_needed_for_building.png", "building_hover.png", "building_hover_arrow.png", "empty.png",
                           "cancel_in_progress.png"];
-    questsImages = questsImages.concat(BuildingMode.prototype.buildings.collect(function(building){
+    questsImages = questsImages.concat(BuildingFactory.prototype.buildings.collect(function(building){
                                                                       return building + "_info.png";
                                                                   }));
-    questsImages = questsImages.concat(BuildingMode.prototype.buildings.collect(function(building){
+    questsImages = questsImages.concat(BuildingFactory.prototype.buildings.collect(function(building){
                                                                       return building + "_info_dimmed.png";
                                                                   }));
     rewardsImages = ['reward_notification.png', 'gold_bag.png', 'background.png', 'gold_bag_button.png',
@@ -157,7 +157,7 @@ var Game = Class.create({
       //Sounds.resumeTrack()
     };	
     
-    var buildingImages = BuildingMode.prototype.buildings.collect(function(building){
+    var buildingImages = BuildingFactory.prototype.buildings.collect(function(building){
       return building + ".png";
     });
     var wedgeFaceImages = ['wedge', 'gaddafi'].collect(function(building){
@@ -172,16 +172,16 @@ var Game = Class.create({
     buildingImages.push("garage_action.png")
     buildingImages.push("garage_action.png")
   
-    var buildingOutlineImages = BuildingMode.prototype.buildings.collect(function(building){
+    var buildingOutlineImages = BuildingFactory.prototype.buildings.collect(function(building){
       return building + "_outline.png";
     });
     buildingOutlineImages.push("storage_outline_2.png");
 
-    var buildingShadowImages = BuildingMode.prototype.buildings.collect(function(building){
+    var buildingShadowImages = BuildingFactory.prototype.buildings.collect(function(building){
       return building + "_shadow.png";
     });
     
-    var buildingMovingImages = BuildingMode.prototype.wedges.collect(function(building){
+    var buildingMovingImages = BuildingFactory.prototype.wedges.collect(function(building){
       return building + "_moving.png";
     });
 
@@ -191,10 +191,10 @@ var Game = Class.create({
 
 
     var iconsImages = [ "lumber.png", "rock.png", "workers.png", "attention.png" ];
-    iconsImages = iconsImages.concat( BuildingMode.prototype.buildings.collect(function(building){
+    iconsImages = iconsImages.concat( BuildingFactory.prototype.buildings.collect(function(building){
                                         return building + ".png";
                                       }));
-    iconsImages = iconsImages.concat( BuildingMode.prototype.buildings.collect(function(building){
+    iconsImages = iconsImages.concat( BuildingFactory.prototype.buildings.collect(function(building){
                                         return building + "_icon.png";
                                       }));
 
@@ -331,8 +331,7 @@ var Game = Class.create({
     BuildingFactory._GlobalRegistry = {};
     this.attackManager = new AttackManager(this);
     var self = this;
-    BuildingMode.prototype.buildings.each(function(buildingName){
-        console.log(buildingName);
+    BuildingFactory.prototype.buildings.each(function(buildingName){
         self[buildingName.dasherize().camelize() + "Factory"] = new BuildingFactory.SourceClasses[buildingName]['factory'](self, buildingName);
       });
     this.creepFactory = new CreepFactory(this);

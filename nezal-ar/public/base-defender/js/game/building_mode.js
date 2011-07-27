@@ -1,8 +1,5 @@
 var BuildingMode = Class.create({
   game : null,
-  buildings : ['townhall', 'quarry', 'lumbermill','storage','defense_center',
-  'palm','wedge','war_factory','house', 'gaddafi', 'garage', 'defense_research', 'military_research', 'green_wedge', 'blue_wedge'],
-  wedges : ['wedge', 'green_wedge', 'blue_wedge', 'gaddafi'],
   inProgressImage : 'progress.png',
   isOn : false,
   selectedBuilding : null,
