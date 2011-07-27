@@ -1,0 +1,10 @@
+#container{
+	width:760px;
+	height:550px;
+	overflow: hidden;
+	position: absolute
+}
+
+.skyline{
+	position: absolute
+}
