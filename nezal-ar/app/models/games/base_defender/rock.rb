@@ -23,8 +23,8 @@ module BD
       @extraXStep = 0
       @extraYStep = 0
       @coords = { x: 0, y: 0}
-      img_width = BaseDefender.adjusted_game_metadata['buildings']['wedge']['levels'][@owner.owner.owner['level'].to_s]['display']['imgWidth']
-      img_height = BaseDefender.adjusted_game_metadata['buildings']['wedge']['levels'][@owner.owner.owner['level'].to_s]['display']['imgHeight']
+      img_width = Game::current.data['buildings']['wedge']['levels'][@owner.owner.owner['level'].to_s]['display']['imgWidth']
+      img_height = Game::current.data['buildings']['wedge']['levels'][@owner.owner.owner['level'].to_s]['display']['imgHeight']
       @coords[:x] = @owner.coords['x'] + POSITION[@owner.angle][:x] + @extraXStep - img_width/2.0 + IMG_WIDTH/2.0;
       @coords[:y] = @owner.coords['y'] + POSITION[@owner.angle][:y] + @extraYStep - img_height/2.0 + IMG_HEIGHT/2.0;
       @done = false

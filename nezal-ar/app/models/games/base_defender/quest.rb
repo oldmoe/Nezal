@@ -28,185 +28,224 @@ module BD
       :social => 3
     }
 
-    # Base Defender Quests : 
-    #   metadata construction : Admin Controlling method to update a game quest data
-    #     - rewards : hash of items rewarded to the user for passing the quest. can include exp, coins.
-    #     - conditions : hash of items defining the quest. If the user profile data qualifies for passing the quest
-    #                    Then the user is assigned the next quest and rewarded with the quest rewards as described above.
-    def self.edit_quest(quest, data)
-      quest_data = Metadata.decode(data)
-      if quest_data['name']
-        quest.name = quest_data['name']
-      end
-      if quest_data['primal']
-        quest.primal = quest_data['primal']
-      end
-      if quest_data['parent'] && (quest_data['parent'].is_a? Integer)
-        quest.parent = quest_data['parent']
-      elsif quest_data['parent']
-        quest.parent = nil
-      end
-      quest.metadata ||= { :conditions => {}, :rewards => {} }
-      quest.metadata = quest_data['metadata']
-      quest.save
-    end
-
-    # Admin Controlling method to add a new quest
-    def self.init_quest(quest)
-      quest.metadata = {:conditions => {}, :rewards => {}}
-    end
-
-    def self.assess_user_quests(user_game_profile)
-      # Decode metadata, initialize the user quest hash if not found
-      user_game_profile.metadata['quests'] ||= {'primal' => [], 'current' => [], 'conquered' => []}
-      # Pass by the current quests, check for conquered ones, reward them & move them to conquered ones 
-      user_game_profile.metadata['quests']['current'].each do |id|
-        quest = ::Quest.where(:id => id).first
-        if quest && self.conquered?(user_game_profile, quest)
-          # Reward, move to conquered
-          user_game_profile.metadata['quests']['conquered'] << id
-          user_game_profile.metadata['quests']['current'].delete(id)
-          self.reward(user_game_profile, quest)
-        end
-      end
-      # Get newly added primal quests that the user hasnt yet begun
-      # Add the conquered ones to conquered list, others to current
-      quests = user_game_profile.game.quests.where(" primal='t' AND id NOT IN ( #{user_game_profile.metadata['quests']['primal'].join(',')} )").all
-      quests.each do |quest|
-        self.conquered?(user_game_profile, quest) ? 
-                user_game_profile.metadata['quests']['conquered'] << quest.id : user_game_profile.metadata['quests']['current'] << quest.id
-      end
-      new_quests = quests.collect {|quest| quest.id}
-      user_game_profile.metadata['quests']['primal'].concat(new_quests)
-      # Pass on all conquered and add the next one to the current list if not conquered to
-      user_game_profile.metadata['quests']['conquered'].each do |id|
-        quests = ::Quest.where(:parent => id).all
-        # If all children are conquered remove their parent from conquered
-        remove_parent = true
-        quests.each do |id|
-          if user_game_profile.metadata['quests']['conquered'].index(id)
-            quests.delete(id)
-          else
-            quest = ::Quest.where(:id => id).first
-            if self.conquered?(user_game_profile, quest)
-              user_game_profile.metadata['quests']['conquered'] << quest.id unless user_game_profile.metadata['quests']['conquered'].index(quest.id)
-            else
-              user_game_profile.metadata['quests']['current'] << quest.id unless user_game_profile.metadata['quests']['current'].index(quest.id)
-              remove_parent = false
-            end
-          end
-        end
-        if remove_parent
-          # If that was not end of chain, remove it .. else keep it for next quests
-          quests = ::Quest.where(:parent => id).all
-          user_game_profile.metadata['quests']['conquered'].delete(id) if (quests && quests.length > 0)
-        end
-      end
-      user_game_profile.save
-    end
-
-    def self.conquered?(profile, quest)
-      conquered = true
-      metadata = profile.metadata
-      quest.metadata['conditions']['buildings'].each_pair do | item, conditions |
-        if metadata[item]
-          metadata[item].each_pair do |key, value|
-            condition_met = true
-            conditions.each_pair do |cond, cond_val|
-              if value[cond].nil? || (value[cond] && value[cond] < cond_val)
-                condition_met = false 
-                break
-              end
-            end
-            conquered = condition_met
-            break if conquered
-          end
-        else
-          conquered = false 
-        end
-        break unless conquered
-      end
-      quest.metadata['conditions']['resources'].each_pair do | item, conditions |
-        condition_met = true
-        condition_met = false if metadata[item] < conditions 
-        conquered &= condition_met
-        break unless conquered
-      end
-      conquered
-    end
-
-    # Status each condition in the quest
-    def self.status(profile, quest)
-      status = { :buildings => {}, :resources => {} }
-      metadata = profile.metadata
-      quest.metadata['conditions']['buildings'].each_pair do | item, conditions |
-        status[:buildings][item] = {}
-        if metadata[item]
-          metadata[item].each_pair do |key, value|
-            condition_met = true
-            conditions.each_pair do |cond, cond_val|
-              condition = false
-              condition_status = { :id => key, :status => self::STATUS[:not_started], :value => value[cond] || 0, :target => cond_val }
-              if value[cond] && value[cond] >= cond_val
-                condition_status[:status] = self::STATUS[:done]
-                condition = true
-              elsif value[cond]
-                condition_status[:status] = self::STATUS[:in_progress]
-                condition = false
+    def initialize(quest_data)
+      game = Game::current
+      game.quests ||= {'id_generator' => 0, 'list' => {}}
+      parent = if quest_data["parent"] && !(quest_data["parent"].empty?)
+                quest_data["parent"]
               else
-                condition_status[:status] = self::STATUS[:not_started]
-                condition = false
+                nil
               end
-              status[:buildings][item][cond] = condition_status
-              condition_met &&= condition
+      new_quest = {"name" => quest_data["name"], "parent" => parent, "conditions" => { "buildings" => {}, "resources" => {} }, "rewards" => {}}
+      new_quest["primal"] = (quest_data["primal"]) ? true : false
+      new_quest['id'] = (game.data['quests']['id_generator']).to_s
+      game.quests['id_generator'] += 1
+      game.quests['list'][new_quest['id']]= new_quest
+      game.save
+    end
+
+    class << self
+
+      def init()
+        game = Game::current
+        unless game.quests
+          game.quests ||= {'id_generator' => 0, 'list' => {}}
+          game.save
+        end
+      end
+
+      # Base Defender Quests : 
+      #   metadata construction : update a game quest data
+      #     - rewards : hash of items rewarded to the user for passing the quest. can include exp, coins.
+      #     - conditions : hash of items defining the quest. If the user profile data qualifies for passing the quest
+      #                    Then the user is assigned the next quest and rewarded with the quest rewards as described above.
+      def edit(quest_id, data)
+        init
+        game = Game::current
+        quest_data = Metadata.decode(data)
+        if !quest_data['parent'] || !(game.quests['list'][quest_data['parent']])
+          quest_data['parent'] = nil
+        end
+        game.quests['list'][quest_id] = quest_data
+        game.save
+      end
+    
+  
+      def delete(quest_id)
+        init
+        game = Game::current
+        game.quests['list'].delete(quest_id)
+        game.save
+        p Game::current.quests
+      end
+
+      def find(quest_id)
+        init
+        game = Game::current
+        game.quests['list'][quest_id] if game.data['quests']['list']
+      end
+
+      def all()
+        init
+        game = Game::current
+        game.quests['list'] || {}
+      end
+
+      def assess_user_quests(user_game_profile)
+        # Decode metadata, initialize the user quest hash if not found
+        user_game_profile.quests ||= {'primal' => [], 'current' => [], 'conquered' => []}
+        # Pass by the current quests, check for conquered ones, reward them & move them to conquered ones 
+        user_game_profile.quests['current'].each do |id|
+          quest = Game::current.quests['list'][id]
+          if quest && self.conquered?(user_game_profile, quest)
+            # Reward, move to conquered
+            user_game_profile.quests['conquered'] << id
+            user_game_profile.quests['current'].delete(id)
+            self.reward(user_game_profile, quest)
+          end
+        end
+        # Get newly added primal quests that the user hasnt yet begun
+        # Add the conquered ones to conquered list, others to current
+        quests = Game::current.quests['list'].select do | key, val |
+          val['primal'] && ! user_game_profile.quests['primal'].index(key)
+        end
+
+        quests.each_pair do |key, quest|
+          self.conquered?(user_game_profile, quest) ? 
+            user_game_profile.quests['conquered'] << quest['id'] : user_game_profile.quests['current'] << quest['id']
+        end
+        new_quests = quests.values.collect {|quest| quest['id']}
+        user_game_profile.quests['primal'].concat(new_quests)
+        deleted = []
+        # Pass on all conquered and add the next one to the current list if not conquered to
+        user_game_profile.quests['conquered'].each do |id|
+          quests = Game::current.quests['list'].select do | key, val |
+            val['parent']==id
+          end
+          # If all children are conquered remove their parent from conquered
+          remove_parent = quests.keys.length > 0 ? true : false
+          quests.each_pair do |id, value|
+            if user_game_profile.quests['conquered'].index(id)
+              quests.delete(id)
+            else
+              if self.conquered?(user_game_profile, value)
+                user_game_profile.quests['conquered'] << id unless user_game_profile.quests['conquered'].index(id)
+              else
+                user_game_profile.quests['current'] << id unless user_game_profile.quests['current'].index(id)
+                remove_parent = false
+              end
             end
-            break if condition_met
           end
-        else
-          conditions.each_pair do |cond, cond_val|
-            status[:buildings][item][cond] =  { :status => self::STATUS[:not_started], :value => 0, :target => cond_val }
+          if remove_parent
+            deleted << id
           end
         end
+        deleted.each {|id| user_game_profile.quests['conquered'].delete(id) }
       end
-      quest.metadata['conditions']['resources'].each_pair do | item, conditions |
-        condition_status = { :status => self::STATUS[:done], :value => metadata[item] || 0, :target => conditions}
-        if metadata[item] && (metadata[item] < conditions)
-          condition_status[:status] = self::STATUS[:not_started]
-        end
-        status[:resources][item] = condition_status
-      end 
-      status
-    end
 
-    def self.reward(user_game_profile, quest)
-      Notification.new( {:metadata => user_game_profile.metadata, :notification_type => "quest",
-                          :notification_data => {:rewards => quest.metadata['rewards'], :id => quest.id} })
-      if quest.metadata['rewards']['exp']
-        user_game_profile.exp = user_game_profile.exp.to_i + quest.metadata['rewards']['exp']
-      end
-      reward_data = {}
-      if quest.metadata['rewards']['coins']
-        reward_data['gold'] = quest.metadata['rewards']['coins']
-      end
-      self::REWARDS[:resources].each do | reward |
-        if quest.metadata['rewards'][reward]  
-          reward_data[reward] = quest.metadata['rewards'][reward].to_i
+      def conquered?(profile, quest)
+        conquered = true
+        quest['conditions']['buildings'].each_pair do | item, conditions |
+          if profile.data[item]
+            profile.data[item].each_pair do |key, value|
+              condition_met = true
+              conditions.each_pair do |cond, cond_val|
+                if value[cond].nil? || (value[cond] && value[cond] < cond_val)
+                  condition_met = false 
+                  break
+                end
+              end
+              conquered = condition_met
+              break if conquered
+            end
+          else
+            conquered = false 
+          end
+          break unless conquered
         end
+        quest['conditions']['resources'].each_pair do | item, condition |
+          condition_met = true
+          condition_met = false if profile[item] < condition
+          conquered &= condition_met
+          break unless conquered
+        end
+        conquered
       end
-      BD::RewardBag.new({ :metadata => user_game_profile.metadata, :reward_data => reward_data })
-    end
 
-    def self.load_quests user_game_profile
-      descriptions = {}
-      user_game_profile.metadata['quests']['current'].each do | id |
-        quest = ::Quest.where(:id=>id).first
-        if quest
-          descriptions[id] = quest.metadata
-          descriptions[id]['status'] = self.status(user_game_profile, quest)
-          descriptions[id]['name'] = quest.name
+      # Status each condition in the quest
+      def status(profile, quest)
+        status = { "buildings" => {}, "resources" => {} }
+        if quest['conditions'] && quest['conditions']['buildings']
+          quest['conditions']['buildings'].each_pair do | item, conditions |
+            status["buildings"][item] = {}
+            if profile.data[item]
+              profile.data[item].each_pair do |key, value|
+                condition_met = true
+                conditions.each_pair do |cond, cond_val|
+                  condition = false
+                  condition_status = { "id" => key, "status" => self::STATUS[:not_started], "value" => value[cond] || 0, "target" => cond_val }
+                  if value[cond] && value[cond] >= cond_val
+                    condition_status["status"] = self::STATUS[:done]
+                    condition = true
+                  elsif value[cond].nil? == false
+                    condition_status["status"] = self::STATUS[:in_progress]
+                    condition = false
+                  else
+                    condition_status["status"] = self::STATUS[:not_started]
+                    condition = false
+                  end
+                  status["buildings"][item][cond] = condition_status
+                  condition_met &&= condition
+                end
+                break if condition_met
+              end
+            else
+              conditions.each_pair do |cond, cond_val|
+                status["buildings"][item][cond] =  { "status" => self::STATUS[:not_started], "value" => 0, "target" => cond_val }
+              end
+            end
+          end
         end
+        quest['conditions']['resources'].each_pair do | item, conditions |
+          condition_status = { "status" => self::STATUS[:done], "value" => profile[item] || 0, "target" => conditions}
+          if profile.data[item] && (profile.data[item] < conditions)
+            condition_status["status"] = self::STATUS[:not_started]
+          end
+          status["resources"][item] = condition_status
+        end 
+        status
       end
-      descriptions
+
+      def reward(user_game_profile, quest)
+        Notification.new( {:metadata => user_game_profile.data, :notification_type => "quest",
+                            :notification_data => {:rewards => quest['rewards'], :id => quest['id']} })
+        if quest['rewards']['exp']
+          user_game_profile.exp= user_game_profile.exp.to_i + quest['rewards']['exp']
+        end
+        reward_data = {}
+        if quest['rewards']['coins']
+          reward_data['gold'] = quest['rewards']['coins']
+        end
+        self::REWARDS[:resources].each do | reward |
+          if quest['rewards'][reward]  
+            reward_data[reward] = quest['rewards'][reward].to_i
+          end
+        end
+        BD::RewardBag.new({ :profile => user_game_profile, :reward_data => reward_data })
+      end
+
+      def load_quests user_game_profile
+        descriptions = {}
+        user_game_profile.quests['current'].each do | id |
+          quest = Game::current.quests['list'][id]
+          if quest
+            descriptions[id] = quest
+            descriptions[id]['status'] = self.status(user_game_profile, quest)
+          end
+        end
+        descriptions
+      end
+      
     end
 
   end

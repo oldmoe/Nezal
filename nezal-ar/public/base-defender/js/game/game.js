@@ -117,48 +117,50 @@ var Game = Class.create({
   start : function(){
     var self = this;
     var loaderFinishCallback = function(){
-        var mapView = ""
-        self.network.neighbourIDs( function(friendIDs){
-          var mapping = {};
-          var ids = []
-          friendIDs.each(function(user, index){
-            mapping[user["service_id"]] = { "index" : index };
-            ids[index]= user["service_id"]
-          });
-          // getUsersInfo takes array of service_ids & a hash of service_ids to fill with retrieved names
-          serviceProvider.getUsersInfo(ids, mapping , function(){
-            friendIDs.each(function(friendID, i){
-              if(mapping[friendID["service_id"]].name)
-                friendID["name"] = mapping[friendID["service_id"]].name
-              else
-                friendID["name"] = friendID["service_id"]
-              
-              mapView += self.templatesManager.load("friend-record", 
-                        {'friendId' : friendID["user_id"], 'serviceId' : friendID["service_id"], 'friendName' : friendID["name"]} );
-            });
-            $('friends-ul').innerHTML = mapView;
-            var images =  {
-                            'left' : 'images/quests/arrows_horizontal.png',
-                            'left-disabled' : 'images/quests/arrows_horizontal.png',
-                            'right' : 'images/quests/arrows_horizontal.png',
-                            'right-disabled' :'images/quests/arrows_horizontal.png'
-                          }
-            var friendsCarousel = null;
-            friendsCarousel = new Carousel("friends", images, 6);
-            friendsCarousel.checkButtons();
-          });
-        });
-        
-        //////////////////////////////////
-        self.reInitialize();
-        //Sounds.gameSounds.Intro[0].stop()
-        //Sounds.resumeTrack()
+      var mapView = ""
+      serviceProvider.friends( function(ids) {
+                                  self.network.friends(ids, function(friendIDs){
+                                    var mapping = {};
+                                    var ids = []
+                                    friendIDs.each(function(user, index){
+                                      mapping[user["service_id"]] = { "index" : index };
+                                      ids[index]= user["service_id"]
+                                    });
+                                    // getUsersInfo takes array of service_ids & a hash of service_ids to fill with retrieved names
+                                    serviceProvider.getUsersInfo(ids, mapping , function(){
+                                      friendIDs.each(function(friendID, i){
+                                        if(mapping[friendID["service_id"]].name)
+                                          friendID["name"] = mapping[friendID["service_id"]].name
+                                        else
+                                          friendID["name"] = friendID["service_id"]
+                                        
+                                        mapView += self.templatesManager.load("friend-record", 
+                                                  {'friendId' : friendID["user_id"], 'serviceId' : friendID["service_id"], 'friendName' : friendID["name"]} );
+                                      });
+                                      $('friends-ul').innerHTML = mapView;
+                                      var images =  {
+                                                      'left' : 'images/quests/arrows_horizontal.png',
+                                                      'left-disabled' : 'images/quests/arrows_horizontal.png',
+                                                      'right' : 'images/quests/arrows_horizontal.png',
+                                                      'right-disabled' :'images/quests/arrows_horizontal.png'
+                                                    }
+                                      var friendsCarousel = null;
+                                      friendsCarousel = new Carousel("friends", images, 6);
+                                      friendsCarousel.checkButtons();
+                                    });
+                                  });
+                              })
+    
+      //////////////////////////////////
+      self.reInitialize();
+      //Sounds.gameSounds.Intro[0].stop()
+      //Sounds.resumeTrack()
     };	
     
     var buildingImages = BuildingMode.prototype.buildings.collect(function(building){
       return building + ".png";
     });
-    var wedgeFaceImages = BuildingMode.prototype.wedges.collect(function(building){
+    var wedgeFaceImages = ['wedge', 'gaddafi'].collect(function(building){
       return building + "_face.png";
     });
     buildingImages = buildingImages.concat(wedgeFaceImages);
@@ -266,7 +268,7 @@ var Game = Class.create({
     })
   },
   updateGameData : function(){
-     this.neighborGame = false;
+    this.neighborGame = false;
   	$('home').hide();
     var self = this;
     this.network.initializeGame( function(gameStatus){
@@ -319,11 +321,11 @@ var Game = Class.create({
   
   reflectStatusChange : function(){
     this.reInitializationNotifications = [];
-    if(this.reactor) this.reactor.stop();
-    this.reactor = new Reactor(80);
-    this.reactor.run();
+    if(!this.reactor){
+      this.reactor = new Reactor(80);
+      this.reactor.run();
+    } 
     this.user = new User(this);
-	  this.attackManager = new AttackManager(this);
     this.scene = new BaseDefenderScene(this);	
     this.resources.rock = this.user.data.rock;
     this.resources.lumber = this.user.data.lumber;
@@ -345,6 +347,8 @@ var Game = Class.create({
 	  this.militaryResearchFactory = new MilitaryResearchFactory(this);
     this.wedgeFactory = new WedgeFactory(this);
     this.gaddafiFactory = new GaddafiFactory(this);
+    this.greenWedgeFactory = new GreenWedgeFactory(this);
+    this.blueWedgeFactory = new BlueWedgeFactory(this);
     if(!this.globalMapManager)this.globalMapManager  = new GlobalMapManager(this);
     this.invadeDisplay = new InvadeDisplay(this);
     this.protectionDisplay = new ProtectionDisplay(this)

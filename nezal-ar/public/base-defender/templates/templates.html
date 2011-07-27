@@ -383,6 +383,12 @@
   </div>
 </textarea>
 
+<textarea style="display:none;" id='default-button'>
+  <div class="panel-button" id="default_trigger">
+    <span>${defaultAction}</span>
+    <img src="${Loader.images.panel['buttons.png'].src}">
+  </div>
+</textarea>
 
 <textarea style="display:none;" id='resource-building-buttons'>
   <div class="panel-button" id="collect_resource_trigger">
@@ -504,6 +510,13 @@
 		Click to move the building. 
 	</div>
 </textarea>
+
+<textarea id="menuDefault" style="display:none;">
+	<div id="defaultDesc" class="menuItem">
+		Click to ${defaultAction}. 
+	</div>
+</textarea>
+
 
 <textarea id="collectAnimation" style="display:none;">
 <div class="collectionAnimation">

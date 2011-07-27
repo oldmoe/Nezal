@@ -140,7 +140,7 @@
 img.icon {
 	height : 32px;
 }
-.menuBody #moveDesc,.menuBody #collect_resourceDesc, .menuBody #assign_workerDesc{
+.menuBody #moveDesc,.menuBody #collect_resourceDesc, .menuBody #assign_workerDesc, .menuBody #defaultDesc {
 	position:absolute;
 	visibility:hidden;
 	top:23px;

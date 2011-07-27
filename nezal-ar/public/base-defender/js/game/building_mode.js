@@ -1,8 +1,8 @@
 var BuildingMode = Class.create({
   game : null,
   buildings : ['townhall', 'quarry', 'lumbermill','storage','defense_center',
-  'palm','wedge','war_factory','house', 'gaddafi', 'garage', 'defense_research', 'military_research'],
-  wedges : ['wedge', 'gaddafi'],
+  'palm','wedge','war_factory','house', 'gaddafi', 'garage', 'defense_research', 'military_research', 'green_wedge', 'blue_wedge'],
+  wedges : ['wedge', 'green_wedge', 'blue_wedge', 'gaddafi'],
   inProgressImage : 'progress.png',
   isOn : false,
   selectedBuilding : null,
@@ -170,17 +170,5 @@ var BuildingMode = Class.create({
 			worker.movingPath = Map.moveObject(worker, building.coords.x,building.coords.y-10, callback2, true);
 		}
 		worker.movingPath = Map.moveObject(worker, townHall.coords.x, townHall.coords.y, callback1, true);
-	},
-	fillBuildingPanel : function(owner){
-		$$('#building-panel .menuBody')[0].innerHTML = ""
-		this.game.domConverter.convert(game.templatesManager.load('menuUpgrade',
-		  owner.getUpgradeSpecs(),owner.getUpgradableSpecs()))
-		  $$('#building-panel .menuBody')[0].appendChild($('upgradeDesc'))
-		  this.game.domConverter.convert(game.templatesManager.load('menuMove'))
-		  $$('#building-panel .menuBody')[0].appendChild($('moveDesc'))
-		  this.game.domConverter.convert(game.templatesManager.load('menuCollect'))
-		  $$('#building-panel .menuBody')[0].appendChild($('collect_resourceDesc'))
-		  this.game.domConverter.convert(game.templatesManager.load('menuWorker'))
-		  $$('#building-panel .menuBody')[0].appendChild($('assign_workerDesc')) 
 	}
 });

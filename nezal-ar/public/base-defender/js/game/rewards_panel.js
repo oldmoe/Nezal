@@ -124,10 +124,12 @@ var RewardsPanel = Class.create({
   validateReward : function(reward){
     var totalStorage = this.game.quarryFactory.getTotalStorageCapacity()
     reward_data = reward.reward_data
-     if(reward_data.rock+game.resources.rock <=totalStorage && 
+    if(!reward_data.rock) reward_data.rock = 0
+    if(!reward_data.lumber) reward_data.lumber = 0
+    if(reward_data.rock+game.resources.rock <= totalStorage && 
         reward_data.lumber+game.resources.lumber <= totalStorage){
-       return true
-     }
+      return true
+    }
     else return false
   },
 
