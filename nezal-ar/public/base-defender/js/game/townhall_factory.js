@@ -4,9 +4,9 @@ var TownhallFactory = Class.create(BuildingFactory, {
   canBeBuiltOn : "grass",
   factoryRegistry : {},
   
-  initialize : function($super, game){
+  initialize : function($super, game, name){
   	this.factoryRegistry = {}
-    $super(game);
+    $super(game, name);
     for (var buildingInstanceCoords in this.factoryRegistry) {
       this.townhall = this.factoryRegistry[buildingInstanceCoords];
     }

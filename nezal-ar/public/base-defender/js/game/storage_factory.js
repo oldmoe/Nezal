@@ -3,8 +3,8 @@ var StorageFactory = Class.create(BuildingFactory, {
   canBeBuiltOn : "grass",
   buildingClass : Storage,
   factoryRegistry : {}, 
-  initialize : function($super, game){
-    $super(game);
+  initialize : function($super, game, name){
+    $super(game, name);
   },
   
   newStorage : function(){

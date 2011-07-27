@@ -330,24 +330,14 @@ var Game = Class.create({
     this.resources.lumber = this.user.data.lumber;
     BuildingFactory._GlobalRegistry = {};
     this.attackManager = new AttackManager(this);
-    this.townhallFactory = new TownhallFactory(this);
-  	this.storageFactory = new StorageFactory(this);
-    this.quarryFactory = new QuarryFactory(this);
-    this.lumbermillFactory = new LumbermillFactory(this);
-    this.workerFactory = new WorkerFactory(this);
+    var self = this;
+    BuildingMode.prototype.buildings.each(function(buildingName){
+        console.log(buildingName);
+        self[buildingName.dasherize().camelize() + "Factory"] = new BuildingFactory.SourceClasses[buildingName]['factory'](self, buildingName);
+      });
     this.creepFactory = new CreepFactory(this);
-    this.defenseCenterFactory = new DefenseCenterFactory(this);
-    this.warFactoryFactory = new WarFactoryFactory(this);
-    this.houseFactory = new HouseFactory(this);
+    this.workerFactory = new WorkerFactory(this);
     this.workerPanel = new WorkerPanel();
-	  this.palmFactory = new PalmFactory(this);
-	  this.garageFactory = new GarageFactory(this);
-	  this.defenseResearchFactory = new DefenseResearchFactory(this);
-	  this.militaryResearchFactory = new MilitaryResearchFactory(this);
-    this.wedgeFactory = new WedgeFactory(this);
-    this.gaddafiFactory = new GaddafiFactory(this);
-    this.greenWedgeFactory = new GreenWedgeFactory(this);
-    this.blueWedgeFactory = new BlueWedgeFactory(this);
     if(!this.globalMapManager)this.globalMapManager  = new GlobalMapManager(this);
     this.invadeDisplay = new InvadeDisplay(this);
     this.protectionDisplay = new ProtectionDisplay(this)

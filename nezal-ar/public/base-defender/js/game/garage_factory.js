@@ -4,8 +4,8 @@ var GarageFactory = Class.create(BuildingFactory, {
   buildingClass : Garage,
   factoryRegistry : {},
    
-  initialize : function($super, game){
-    $super(game);
+  initialize : function($super, game, name){
+    $super(game, name);
   },
   addToMap : function(building){
     this.game.scene.map.addElement(building,true);

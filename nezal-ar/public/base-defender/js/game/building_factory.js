@@ -6,9 +6,11 @@ var BuildingFactory = Class.create({
   buildingClass : null,
   buildingDisplayClass :null,
   noOfBuildings : 0,
-  initialize : function(game){
+  initialize : function(game, buildingName){
+    this.factoryRegistry = {};
+    this.name = buildingName;
     this.newBuildingSpecs = {'state' : Building.prototype.states.NOT_PLACED, 'level' : 0, 'coords' : {'x' : null, 'y' : null}}  
-    this.buildingClass = eval(this.name.dasherize().capitalize().camelize());  
+    this.buildingClass = BuildingFactory.SourceClasses[buildingName]['klass']
 		 //To get the class name: "defense_center-> defense-center -> Defence-center -> DefenceCenter"
 		this.buildingDisplayClass = eval(this.name.dasherize().capitalize().camelize() + "Display");
     this.game = game;

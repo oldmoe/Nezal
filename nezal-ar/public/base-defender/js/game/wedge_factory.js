@@ -4,8 +4,8 @@ var WedgeFactory = Class.create(BuildingFactory, {
   buildingClass : Wedge,
   factoryRegistry : {},
 
-  initialize : function($super, game){
-    $super(game);
+  initialize : function($super, game, name){
+    $super(game, name);
   },
   
   newWedge : function(){

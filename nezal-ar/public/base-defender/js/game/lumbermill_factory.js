@@ -5,8 +5,8 @@ var LumbermillFactory = Class.create(ResourceBuildingFactory, {
   factoryRegistry : {},
   lumberPerMinute : 0,
   collect : "lumber",
-  initialize : function($super, game){
-    $super(game);
+  initialize : function($super, game, name){
+    $super(game, name);
     this.lumberPerMinute = this.resourcePerMinute;
   },
   

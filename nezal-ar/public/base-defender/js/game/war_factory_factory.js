@@ -3,8 +3,8 @@ var WarFactoryFactory = Class.create(BuildingFactory, {
   canBeBuiltOn : "grass",
   buildingClass : WarFactory,
   factoryRegistry : {}, 
-  initialize : function($super, game){
-    $super(game);
+  initialize : function($super, game, name){
+    $super(game, name);
     for(var key in game.user.data.war_factory){
       var wf = this.factoryRegistry[key]
       wf.queue = game.user.data.war_factory[key].queue

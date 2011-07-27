@@ -2,8 +2,8 @@ var ResourceBuildingFactory = Class.create(BuildingFactory, {
 
   resourcePerMinute : 0,
 
-  initialize : function($super, game){
-    $super(game);
+  initialize : function($super, game, name){
+    $super(game, name);
     for( var buildingLocation in this.factoryRegistry ){
       var building = this.factoryRegistry[buildingLocation];
 			if (building.state == building.states.NORMAL) {
