@@ -10,7 +10,7 @@ var Game = Class.create({
 			self.tsquareScene.start()
 		}})
 		
-	},
+	}
 	
 	
 });
