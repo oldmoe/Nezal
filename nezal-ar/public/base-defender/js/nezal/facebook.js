@@ -249,6 +249,26 @@ var FBConnect = {
                 if(callback) callback(ids);
             }
         );
+    }, 
+
+    buyItem : function(itemId){
+      var callback = function(data) {
+      if (data['order_id']) {
+          console.log(true);
+        } else {
+          
+          //handle errors here
+          console.log(false, data);
+        }
+      };
+      var obj = {
+          method: 'pay',
+          order_info: itemId,
+          purchase_type: 'item'
+      };
+      console.log("here")
+      FB.ui(obj, callback);
+      console.log("here")
     }
 
 }

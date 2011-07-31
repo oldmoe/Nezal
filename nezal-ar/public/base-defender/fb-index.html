@@ -171,8 +171,9 @@
 	      serviceProvider = FBConnect
 	      serviceProvider.init(function(){
 	        try {
-	          game = new Game();
-	          game.startLoading();
+//	          game = new Game();
+//	          game.startLoading();
+            serviceProvider.buyItem(1);
 	        } catch(e){}
 	      });
 			})

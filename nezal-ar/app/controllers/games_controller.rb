@@ -136,6 +136,10 @@ class GamesController < ApplicationController
     @game_profile.save
     @game_profile.locale
   end
+
+  get '/:game_name/credits' do
+    puts env
+  end
   
   # Do not remove 127.0.0.1 from the valid gateway, it is safe 
   @@valid_gateways = ['195.58.177.2','195.58.177.3','195.58.177.4','195.58.177.5', "127.0.0.1"]
