@@ -141,11 +141,12 @@ class GamesController < ApplicationController
     LOGGER.debug ">>>>>>>>>>>> Facebook credits"
     LOGGER.debug ">>>>>>>>  #{params}"
     result = nil
+    data = parse_fb_signed_request params['signed_reques'] if params['signed_reques']
     case params['method']
     when 'payments_get_items'
       result = {'content' => [], 'method' => 'payments_get_items' }
       product = {}
-      product['item_id'] = params['order_info']
+      product['item_id'] = data['order_info']
       product['title'] = 'Test purchase'
       product['price'] = 1
       product['description'] = 'Test purhcase description'
@@ -156,7 +157,7 @@ class GamesController < ApplicationController
       result = {'content' => {}, 'method' => 'payments_status_update' }
       if params['status'] == 'placed'
         result['content']['status'] = 'settled'
-        result['content']['order_id'] = params['order_id']
+        result['content']['order_id'] = data['order_id']
       end
     end
     JSON.generate(result)
@@ -194,6 +195,19 @@ class GamesController < ApplicationController
   
   def payment_fault_redirection
     "/fb-games/#{@app_configs["game_name"]}/"
+  end
+
+  def parse_fb_signed_request signed_request
+    return if signed_request.blank?
+  
+    # We only care about the data after the '.'
+    payload = signed_request.split(".")[1]
+  
+    # Facebook gives us a base64URL encoded string. Ruby only supports base64 out of the box, so we have to add padding to make it work
+    payload += '=' * (4 - payload.length.modulo(4))
+  
+    decoded_json = Base64.decode64(payload)
+    JSON.parse(Metadata.decode)  
   end
 
 end
