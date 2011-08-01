@@ -137,8 +137,29 @@ class GamesController < ApplicationController
     @game_profile.locale
   end
 
-  get '/:game_name/credits' do
-    puts env
+  post '/:game_name/credits' do
+    LOGGER.debug ">>>>>>>>>>>> Facebook credits"
+    LOGGER.debug ">>>>>>>>  #{params}"
+    result = nil
+    case params['method']
+    when 'payments_get_items'
+      result = {'content' => [], 'method' => 'payments_get_items' }
+      product = {}
+      product['item_id'] = params['order_info']
+      product['title'] = 'Test purchase'
+      product['price'] = 1
+      product['description'] = 'Test purhcase description'
+      product['image_url'] = 'http://base-defender.nezal.com:4500/fb-games/base-defender/images/buildings/moving/green_wedge_moving.png'
+      product['product_url'] = 'http://apps.facebook.com/base-defender/'
+      result['content'] << product
+    when 'payments_status_update'
+      result = {'content' => {}, 'method' => 'payments_status_update' }
+      if params['status'] == 'placed'
+        result['content']['status'] = 'settled'
+        result['content']['order_id'] = params['order_id']
+      end
+    end
+    JSON.generate(result)
   end
   
   # Do not remove 127.0.0.1 from the valid gateway, it is safe 
