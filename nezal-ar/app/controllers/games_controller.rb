@@ -141,14 +141,14 @@ class GamesController < ApplicationController
     LOGGER.debug ">>>>>>>>>>>> Facebook credits"
     LOGGER.debug ">>>>>>>>  #{params}"
     result = nil
-    data = parse_fb_signed_request params['signed_reques'] if params['signed_reques']
+    data = parse_fb_signed_request params['signed_request'] if params['signed_request']
     case params['method']
     when 'payments_get_items'
       result = {'content' => [], 'method' => 'payments_get_items' }
       product = {}
       product['item_id'] = data['order_info']
       product['title'] = 'Test purchase'
-      product['price'] = 1
+      product['price'] = 10
       product['description'] = 'Test purhcase description'
       product['image_url'] = 'http://base-defender.nezal.com:4500/fb-games/base-defender/images/buildings/moving/green_wedge_moving.png'
       product['product_url'] = 'http://apps.facebook.com/base-defender/'
@@ -207,7 +207,7 @@ class GamesController < ApplicationController
     payload += '=' * (4 - payload.length.modulo(4))
   
     decoded_json = Base64.decode64(payload)
-    JSON.parse(Metadata.decode)  
+    Metadata.decode(decoded_json)
   end
 
 end
