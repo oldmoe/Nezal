@@ -199,15 +199,19 @@ class GamesController < ApplicationController
 
   def parse_fb_signed_request signed_request
     return if signed_request.blank?
-  
-    # We only care about the data after the '.'
-    payload = signed_request.split(".")[1]
-  
-    # Facebook gives us a base64URL encoded string. Ruby only supports base64 out of the box, so we have to add padding to make it work
-    payload += '=' * (4 - payload.length.modulo(4))
-  
-    decoded_json = Base64.decode64(payload)
-    Metadata.decode(decoded_json)
+
+    # Signature part before '.'
+    # Data part after '.'
+    decoded_request_parts = []
+    request_parts = signed_request.split(".")
+    signature = OpenSSL::HMAC.hexdigest('sha256', request_parts[1], app_configs['secret'])
+    puts signature, request_parts[0]
+    request_parts.each do |part|
+      # Facebook gives us a base64URL encoded string. Ruby only supports base64 out of the box, so we have to add padding to make it work
+      part += '=' * (4 - part.length.modulo(4))
+      decoded_request_parts << Base64.decode64(part)
+    end
+    Metadata.decode(decoded_request_parts[1])
   end
 
 end
