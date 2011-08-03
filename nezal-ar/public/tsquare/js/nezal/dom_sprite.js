@@ -2,6 +2,7 @@ var DomSprite = Class.create(Sprite, {
   shiftX : 0,
   shiftY : 0,
   shiftZ : 0,
+  defaultShiftY : 165,
   initialize : function(owner, assets, properties,name){
   	properties = properties || {}
     this.createDiv();
@@ -52,7 +53,7 @@ var DomSprite = Class.create(Sprite, {
         var position = this.position();
         this.div.setStyle({
           left: position.x + this.shiftX + "px",
-          top: position.y + this.shiftY + "px",
+          top: position.y + this.defaultShiftY +this.shiftY + "px",
           zIndex: position.zIndex
         });
       }
@@ -70,8 +71,8 @@ var DomSprite = Class.create(Sprite, {
 
   position : function(){
     var position = {};
-    position.x = Math.round(this.owner.coords.x - Math.round(this.owner.imgWidth / 2));
-    position.y = Math.round(this.owner.coords.y - Math.round(this.owner.imgHeight / 2));
+    position.x = Math.round(this.owner.coords.x);
+    position.y = Math.round(this.owner.coords.y-this.owner.imgHeight/2);
 	if(this.zIndex) position.zIndex = this.zIndex 
     else position.zIndex = this.owner.coords.y + this.owner.zdim + this.shiftZ;
     return position;

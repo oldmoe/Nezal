@@ -5,9 +5,9 @@ var Background = Class.create({
 		this.scene = scene
 		this.speed = options.speed
 		this.images = options.images
+    if(options.alwaysMove) this.alwaysMove = true
 		this.y = options.y || 0
-		console.log(this.images)
-		this.container = document.createElement('div')
+		this.container = $(document.createElement('div'))
 		$("container").appendChild(this.container)
 		this.container.addClassName('skyline')
 		this.offsetX = 0
@@ -25,10 +25,12 @@ var Background = Class.create({
 	},
 	
 	render: function(){
+    if(this.scene.moving || this.alwaysMove)
 		this.container.children[0].setStyle({marginLeft:this.offsetX+"px"})
 	},
 	
 	tick : function(){
+    if(!this.scene.moving && !this.alwaysMove)return
 		this.offsetX -= this.speed
 		var firstImg = this.container.children[0]
 		if(firstImg.getWidth()+this.offsetX <= 0){

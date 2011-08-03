@@ -5,6 +5,9 @@ var DomImgSprite = Class.create(DomSprite, {
 	initialize : function($super, owner, imgAssets, properties,name){
     $super(owner, imgAssets, properties,name);
     //console.log( imgAssets )
+    if(properties && properties.flipped){
+      this.div.addClassName('flippedSprite')
+    }
 		this.img = $(imgAssets.img).clone()
 		if(this.img){
 			this.img.observe('mousedown',function(event){
@@ -14,6 +17,7 @@ var DomImgSprite = Class.create(DomSprite, {
 				 }
 			})
 		}
+    
     if( imgAssets.shadeImg )
       this.shadeImg = imgAssets.shadeImg.clone();
 		this.div.appendChild(this.img)
@@ -26,6 +30,7 @@ var DomImgSprite = Class.create(DomSprite, {
 				this.clickDiv =this.img
 				Map.registerListeners(this.clickDiv,this.owner);
 		}
+    this.render()
 	},
   
   setCursor : function( style ){
@@ -56,8 +61,8 @@ var DomImgSprite = Class.create(DomSprite, {
 			})
     }else{
       this.img.setStyle({
-        marginLeft: (-this.owner.imgWidth * this.owner.angle + "px"),
-        marginTop: (-this.currentAnimationFrame * this.owner.imgHeight + "px")
+        marginLeft: (-this.owner.imgWidth * this.currentAnimationFrame + "px"),
+        marginTop: (-this.owner.angle * this.owner.imgHeight + "px")
       });
     }
     
