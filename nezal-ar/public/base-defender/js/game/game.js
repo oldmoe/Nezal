@@ -199,8 +199,9 @@ var Game = Class.create({
     var workerImages = ["worker.png", "worker_shadow.png"];
     //var buildingPanelImages = ["panel.png"]
 		
-    var creepsImages = ["car.png",'explosion.png','car_fight.png','axe.png','axe_fight.png']
+    var creepsImages = ["car.png",'explosion.png','car_fight.png','axe.png','axe_fight.png', 'sonic.png', 'sonic_fight.png']
     var creepsMenuImages = ['car_button.png','car_button_disabled.png','axe_button.png','axe_button_disabled.png',
+    'sonic_button.png','sonic_button_disabled.png',
     'cancel.png', 'filling_bar.png', 'background_bar.png']
 		//This is duplicated to avoid a problem in the loader that can't deal with an array of a single item
     var smokeImages = ["smoke_big.png", "smoke_big.png"]
