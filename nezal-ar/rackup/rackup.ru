@@ -36,15 +36,9 @@ app = Rack::Builder.new do
       end
     end
   end
-  app_configs.values.uniq.each do | game_name|
-    admin_class_name = ActiveSupport::Inflector.camelize(game_name.sub("-", "_") + '_admin_controller')
-    admin_class = Kernel.const_get(admin_class_name)
-    map "/nezal-admin" do run admin_class end
-    game_class_name = ActiveSupport::Inflector.camelize(game_name.sub("-", "_") + '_controller')
-    game_class = Kernel.const_get(game_class_name)
-    map "/fb-games" do run game_class end
-    map "/k-games" do run game_class end
-  end
+  map "/fb-games" do run GamesController end
+  map "/k-games" do run GamesController end
+  map "/nezal-admin" do run AdminController end
   map "/fb-games/users" do run UsersController end
 end
 

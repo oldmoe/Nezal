@@ -24,7 +24,7 @@ var DomImgSprite = Class.create(DomSprite, {
 		this.img.setStyle({height:"auto"});
 		if(this.clickable){
 				this.clickDiv =this.img
-				Map.registerListeners(this.clickDiv,this.owner);
+				Map.registerListeners(this.clickDiv,this.owner,'renderPanel');
 		}
 	},
   

@@ -3,6 +3,7 @@ var WarFactoryDisplay = Class.create(BuildingDisplay, {
     animationEverySeconds : 0,
     tickDelay : 2,
     initialize : function($super,owner,properties){
+      this.defaultActionName = "Units"
       this.defaultAction = this.renderCreepMenu;
       $super(owner,properties)
       var self = this;

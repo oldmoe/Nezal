@@ -69,7 +69,7 @@ var Sounds = {
 				} else {
 					Sounds.channels.push([store, new Date])
 					store[2]++
-					store[0].play()				
+					if(store[0])store[0].play()				
 				}
 			}
 		}catch(e){

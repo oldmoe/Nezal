@@ -1,3 +1,29 @@
+*{
+	-moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+body{
+	padding : 0px;
+	margin : 0px;
+}
+
+.smallBlackOutline {
+  text-shadow : -1px -1px black, 1px 1px black, 0px -1px black, 0px 1px black, -1px 0px black, 1px 0px black;
+}
+
+.mediumBlackOutline {
+  text-shadow : -2px -2px black, 2px 2px black, 0px -2px black, 0px 2px black, -2px 0px black, 2px 0px black;
+}
+
+.largeBlackOutline {
+  text-shadow : -3px -3px black, 3px 3px black, 0px -3px black, 0px 3px black, -3px 0px black, 3px 0px black;
+}
+
+
 #container{
 	width:760px;
 	height:550px;
@@ -7,4 +33,67 @@
 
 .skyline{
 	position: absolute
+}
+#gameCanvas{
+  height: 550px;
+  position: absolute;
+  top: 0px;
+  overflow: hidden;
+  width: 760px;
+}
+.DomSprite{
+  position : absolute;
+	overflow : hidden;
+	font-family:verdana;
+	font-size:12px;
+	color : black;	
+	font-weight:bold;
+}
+.flippedSprite{
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: FlipH;
+    -ms-filter: "FlipH";
+}
+.energyEmpty, .energyFull{
+  -moz-border-radius : 8px;
+  -webkit-border-radius : 8px;
+  -o-border-radius : 8px;
+  border-radius : 8px;
+}
+.energyEmpty{
+	background-color:black;
+}
+.energyFull{
+	background-color:green;
+}
+
+#modalWindowMsg{
+  background-color: black;
+  border-radius: 20px 20px 20px 20px;
+  height: 300px;
+  left: 180px;
+  opacity: 0.8;
+  position: absolute;
+  top: 60px;
+  width: 400px;
+  z-index: 1000;
+}
+#modalWindowMsg #continueButton{
+  color: white;
+  position: absolute;
+  top: 257px;
+  left: 295px;
+  background-color: brown;
+  width: 78px;
+  text-align: center;
+  opacity: 1;
+  border-radius: 5px;
+  cursor:pointer;
+}
+#modalWindowMsg #contents{
+  color : white;
+  padding: 25px;
 }

@@ -1,0 +1,309 @@
+<script type='text/javascript'>
+  var name = "<%=@building_name%>"
+  var data = <%=JSON.generate(@game.data)%>
+  var level = <%=@level%>
+  var buildingLevel = data.buildings[name].levels[<%=@level%>]
+  var buildingNames = new Hash(data.buildings).keys();
+  var maxBuildingLevel = 0;
+  var idGenerator = 0;
+  buildingNames.each(function(buildingName){
+    var maxLevel = new Hash(data.buildings[buildingName].levels).keys().last();
+    if(maxBuildingLevel < maxLevel) maxBuildingLevel = maxLevel;
+  });
+  var allBuildingLevels = [];
+  for(var i=1; i<=maxBuildingLevel; i++){
+    allBuildingLevels.push(i);
+  }
+</script>
+
+<%= erb :language_loader %>
+
+<script type='text/javascript'>
+
+Language.display = function(){
+  var defaultLang = null;
+  for (defaultLang in data.languages) break;
+  $('globalData').innerHTML = TrimPath.processDOMTemplate("globalDataTemplate", { languages : data.languages,
+                                                                                  defaultLang : defaultLang,
+                                                                                  data : this.data[defaultLang].buildings[name] });
+}
+    
+Language.save = function(){
+  var language = $('language').value;
+  this.data[language].buildings[name].name = $('name').value;
+  this.data[language].buildings[name].desc = $('description').value;
+  this.data[language].buildings[name].upgrade_desc[level]  = $('levelDesc').value;
+  this.saveToServer();
+}
+
+Language.changeLanguage = function(){
+  var defaultLang = $('language').value;      
+  $('globalData').innerHTML = TrimPath.processDOMTemplate("globalDataTemplate", { languages : data.languages,
+                                                                                  defaultLang : defaultLang,
+                                                                                  data : this.data[defaultLang].buildings[name] });
+}
+</script>
+
+<div id="backLink">
+  <a href="/<%=AdminController::ADMIN_URL%>/<%=@game.name%>">
+    Back
+  </a>
+</div>
+<div class="separator"></div>
+<LABEL for="globalData" class="label">Building Text</LABEL>
+<div id="globalData" class="subItem " style="width:70%;">
+</div>
+<div id="langReqStatus">
+</div>
+<div class="separator"></div>
+<!----------- Building Description Template -------->
+<div id="globalDataTemplate" style="display:none;" >
+  <div class="form_row">
+    <LABEL for="language">Language</LABEL>
+    <select id="language" onChange="Language.changeLanguage();">
+      {for language in languages}
+        {if (language_index==defaultLang)} 
+          <option value="${language_index}" SELECTED>
+            ${language_index}
+          </option>
+        {else}  
+          <option value="${language_index}">
+            ${language_index}
+          </option>
+        {/if}
+      {/for}
+    </select>
+  </div>
+  <div class="form_row">
+    <LABEL for="name">Name </LABEL>
+    <INPUT type="text" id="name" name='name' value="${data.name}">
+  </div>
+  <div class="form_row">
+    <LABEL for="description"> Description </LABEL>
+    <textarea id="description" name="description" type="text">${data.desc}</textarea>
+  </div>
+  <div class="form_row">
+    <LABEL for="levelDesc"> Level Description </LABEL>
+    <textarea id="levelDesc" name="levelDesc" type="text">${data.upgrade_desc[level]}</textarea>
+  </div>
+  <div class="form_row">  
+    <input class="submit" type="submit" value="Save" onclick="Language.save();">
+  </div>
+</div>
+<!-------------------- Templates -------------------->
+<div id="basicRow" style="display:none;">
+  <div class="form_row">
+    <LABEL for="${attrName}">${attrName}</LABEL>
+    <textarea id="${attrName}" type="text" style="width:20%;">${attrValue}</textarea>
+    <LABEL for="${attrName}_display" style="width:25%;margin-left : 30px;">Display it in an upgrade : </LABEL>
+    {if data.buildings[name].displayable == null || data.buildings[name].displayable[attrName] == false  }
+      <INPUT type="checkbox" id="${attrName}_display" name="display" value=true>
+    {elseif data.buildings[name].displayable[attrName.replace('spec_', '')] == false  }
+      <INPUT type="checkbox" id="${attrName}_display" name="display" value=true>
+    {else}
+      <INPUT type="checkbox" id="${attrName}_display" name="display" value=true checked=true>
+    {/if} 
+  </div>
+</div>
+
+<textarea id="comboRow" style="display:none;">
+  <div class="form_row">
+    <LABEL for="${attrName}">${attrName}</LABEL>
+    <select id="${attrName}">
+      <option value="" {if attrValue=="" || attrValue == null} SELECTED {/if}></option>
+      {for buildingName in buildingNames}
+        <option value="${buildingName}" {if attrValue == buildingName} SELECTED {/if}>${buildingName}</option>
+      {/for}
+    </select>
+  </div>
+</textarea>
+
+<textarea id="newDependencyUnit" style="display:none;">
+  <div id="${idGenerator}">
+    <select>
+    {for buildingName in buildingNames}
+      <option value="${buildingName}">${buildingName}</option>
+    {/for}
+    </select>
+    <select>
+    {for level in allBuildingLevels}
+      <option value="${level}">${level}</option>
+    {/for}
+    </select>
+    <a style="margin-left:10px" href="javascript:void(0)" onclick="$('${idGenerator}').remove(); //${idGenerator++}">X</a>
+    <br>
+  </div>
+</textarea>
+
+
+<textarea id="newLimitingUnit" style="display:none;">
+  <div id="${idGenerator}">
+    <select>
+    {for buildingName in buildingNames}
+      <option value="${buildingName}">${buildingName}</option>
+    {/for}
+    </select>
+    <input type="text" value="1">
+    <a style="margin-left:10px" href="javascript:void(0)" onclick="$('${idGenerator}').remove(); //${idGenerator++}">X</a>
+    <br>
+  </div>
+</textarea>
+
+<textarea id="populateLimTwins" style="display:none;">
+  {for building in buildings.keys()}
+    <div id="${idGenerator}">
+      <select>
+      {for buildingName in buildingNames}
+        <option value="${buildingName}" {if buildingName == building} SELECTED {/if}>${buildingName}</option>
+      {/for}
+      </select>
+      <input type="text" value="${buildings.get(building)}">
+      <a style="margin-left:10px" href="javascript:void(0)" onclick="$('${idGenerator}').remove(); //${idGenerator++}">X</a>
+      <br>
+    </div>
+  {/for}
+</textarea>
+
+<textarea id="populateDepTwins" style="display:none;">
+  {for building in buildings.keys()}
+    <div id="${idGenerator}">
+      <select>
+      {for buildingName in buildingNames}
+        <option value="${buildingName}" {if buildingName == building} SELECTED {/if}>${buildingName}</option>
+      {/for}
+      </select>
+      <select>
+      {for level in allBuildingLevels}
+        <option value="${level}" {if level == buildings.get(building)} SELECTED {/if}>${level}</option>
+      {/for}
+      </select>
+      <a style="margin-left:10px" href="javascript:void(0)" onclick="$('${idGenerator}').remove(); //${idGenerator++}">X</a>
+      <br>
+    </div>
+  {/for}
+</textarea>
+
+<textarea id="dependencyRow" style="display:none;">
+  <div class="">
+    <LABEL>Dependencies</LABEL><br>
+    <LABEL style="margin-left: 20px;">Buildings</LABEL><br>
+    <div id="buildingDependencies" style="margin-left: 40px;">
+    </div>
+    <a style="display:block;margin: 0px 0px 20px 40px;" 
+       href="javascript:void(0)" 
+       onclick="$('buildingDependencies').innerHTML += TrimPath.processDOMTemplate('newDependencyUnit');">Add new</a>
+  </div>
+</textarea>
+
+<textarea id="limitingRow" style="display:none;">
+  <div class="">
+    <label>Limiting</label><br>
+    <div id="othersLimited" style="margin-left: 40px;">
+    </div>
+    <a style="display:block;margin: 0px 0px 20px 40px;" 
+       href="javascript:void(0)" 
+       onclick="$('othersLimited').innerHTML += TrimPath.processDOMTemplate('newLimitingUnit');">Add new</a>
+    <label style="float:left;margin-left: 20px;width:auto;" for="global">Global</label>
+    <textarea style="float:none;width:auto;" id="global" type="text">1</textarea>
+  </div>
+</textarea>
+<!---------------- End Templates -------------------->
+
+<label class="label"><%= @building_name.capitalize %> level <%= @level %></label>
+<div id="buildingAttributes" class="subItem" style="width : 70%;"></div>
+<input type="button" value="Save" id="submit" class="submit"/> or 
+<a href='/<%=AdminController::ADMIN_URL%>/<%=@game.name%>'>Go back</a>
+<br/>
+<span id="requestStatus"></span>
+
+
+<script type='text/javascript'>  
+$("submit").observe("click", function(e){
+  $$('#buildingAttributes div.form_row textarea').each( function(textarea){
+    if(!data.buildings[name].displayable) data.buildings[name].displayable = {};
+    if( textarea.id.startsWith("spec_") ){
+      buildingLevel["specs"][textarea.id.split("_")[1]] = parseInt(textarea.value);
+      data.buildings[name].displayable[textarea.id.split("_")[1]] = $( textarea.id + '_display').checked;      
+      
+    } else {
+      console.log(textarea.id);
+      buildingLevel[textarea.id] = parseInt(textarea.value);
+      if( isNaN(buildingLevel[textarea.id]) ){
+        buildingLevel[textarea.id] = textarea.value;
+      }
+      data.buildings[name].displayable[textarea.id] = $( textarea.id + '_display').checked;
+    }
+  } );
+  
+  $$('#buildingAttributes div select#limited_by').each( function(select){
+    buildingLevel[select.id] = select[select.selectedIndex].value
+    if( select[select.selectedIndex].value == "" )
+      buildingLevel[select.id] = null;
+  });
+  
+  buildingLevel["dependency"]["buildings"] = {};
+  var dependenciesList = $$('#buildingDependencies select');
+  for(var i=0; i<dependenciesList.length; i+=2){
+    var depBuildingSelect = dependenciesList[i];
+    var depBuildingName = depBuildingSelect[depBuildingSelect.selectedIndex].value;
+    var depBuildingLevelSelect = dependenciesList[i+1];
+    var depBuildingLevel = depBuildingLevelSelect[depBuildingLevelSelect.selectedIndex].value;
+    buildingLevel["dependency"]["buildings"][depBuildingName] = depBuildingLevel;
+  }
+  
+  buildingLevel["limiting"]["global"] = parseInt($("global").value);
+  buildingLevel["limiting"]["others"] = {};
+  var buildingsListNames = $$('#othersLimited select');
+  var buildingsListNumbers = $$('#othersLimited input');
+  for(var i=0; i<buildingsListNames.length; i++){
+    var limBuildingSelect = buildingsListNames[i];
+    var limBuildingName = limBuildingSelect[limBuildingSelect.selectedIndex].value;
+    var limBuildingNumber = parseInt(buildingsListNumbers[i].value);
+    buildingLevel["limiting"]["others"][limBuildingName] = limBuildingNumber;
+  }
+  
+  new Ajax.Request( '/<%=AdminController::ADMIN_URL%>/<%=@game.name%>.json' , {
+                     method : 'put',
+                     parameters : { "data" : JSON.stringify(data) },
+                     onSuccess : function(response){
+                       $('requestStatus').innerHTML = "Saved successfully"
+                       $('requestStatus').className = "success"
+                     },
+                     onFailure : function(response){
+                       $('requestStatus').innerHTML = "Error, your changes are not saved!"
+                       $('requestStatus').className = "error"
+                     }
+                     
+                 });    
+});
+  
+for( attrName in buildingLevel ){
+  var attrValue = buildingLevel[attrName];
+  if( attrName == "limited_by" ){
+     $('buildingAttributes').innerHTML += TrimPath.processDOMTemplate("comboRow", {attrName : attrName, attrValue : attrValue});
+  } else if(attrName == "dependency"){
+    $('buildingAttributes').innerHTML += TrimPath.processDOMTemplate("dependencyRow");
+    $('buildingDependencies').innerHTML = TrimPath.processDOMTemplate("populateDepTwins", {buildings : new Hash(attrValue["buildings"])});
+  } else if(attrName == "limiting"){
+    $('buildingAttributes').innerHTML += TrimPath.processDOMTemplate("limitingRow", {global : attrValue["global"]});
+    $('othersLimited').innerHTML = TrimPath.processDOMTemplate("populateLimTwins", {buildings : new Hash(attrValue["others"])});
+  } else if( attrName == "specs" ){
+    for (specName in attrValue) {
+      $('buildingAttributes').innerHTML += TrimPath.processDOMTemplate("basicRow", {attrName : "spec_" + specName, attrValue : attrValue[specName]});
+    }
+  } else if( typeof attrValue != "object" )
+    $('buildingAttributes').innerHTML += TrimPath.processDOMTemplate("basicRow", {attrName : attrName, attrValue : attrValue});
+}
+
+Language.initialize();
+</script>
+<style>
+  select {
+    float: none;
+    width: auto;
+  }
+  
+  #main {
+    min-height: 0;
+  }
+</style>

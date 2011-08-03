@@ -1,15 +1,17 @@
 module BD
+
   module WorkerFactory
+
     def self.buy_worker(user_game_profile)
-      
-      current_number_of_workers = user_game_profile.metadata['workers']
-      total_workers_allowed = user_game_profile.game.metadata['workers']['initial_allowed'];
-      house_metadata = user_game_profile.game.metadata['buildings']['house']
-      user_houses = user_game_profile.metadata['house']
+      game = Game::current
+      current_number_of_workers = user_game_profile.workers
+      total_workers_allowed = game.workers['initial_allowed'];
+      house_data = game.buildings['house']
+      user_houses = user_game_profile.house
       if(!user_houses.nil?)
         user_houses.values.each do |house|
          if(house['state']==BD::Building.states['NORMAL'])
-          total_workers_allowed += house_metadata['levels'][house['level'].to_s]['workers']
+          total_workers_allowed += house_data['levels'][house['level'].to_s]['workers']
          end
        end
       end
@@ -17,23 +19,15 @@ module BD
         return {'valid' => false,
                 'error' => "You need to build more houses"}
       end
-      
-      factor  = user_game_profile.game.metadata['workers']['factor']
-      required_coins = user_game_profile.game.metadata['workers']['initial_coins'] * factor
-      
+      factor  = game.workers['factor']
+      required_coins = game.workers['initial_coins'] * factor
       validation = validate_buy_worker(user_game_profile.user, required_coins)
       return validation if validation['valid'] == false
-      
-      user_game_profile.metadata['workers'] += 1
-      user_game_profile.metadata['idle_workers'] += 1
-      user_game_profile.save
-      
-      user_game_profile.user.coins -= required_coins
-      
-      puts ">>>>>>>>>>>> 1!!!!" + user_game_profile.user.coins.to_s
-      
-      user_game_profile.user.save
-      
+      user_game_profile.workers += 1
+      user_game_profile.idle_workers += 1
+      user = user_game_profile.user
+      user.coins -= required_coins
+      user.save
       return validation
     end
     
@@ -46,5 +40,7 @@ module BD
                 'error' => ""}
       end
     end
+
   end
+
 end

@@ -79,13 +79,13 @@ var Scene = Class.create({
 
 	render : function(){
 		try{
-			for(var storeIndex in this.renderStores){
-				var store = this.renderStores[storeIndex]
-				if(this.reactor.ticks >= store.tick + store.delay && store.working){
-					store.tick = this.reactor.ticks
-					store.objects.invoke('render')
-				}
-			}
+			for (var storeIndex in this.renderStores) {
+        var store = this.renderStores[storeIndex]
+        if (this.reactor.ticks >= store.tick + store.delay && store.working) {
+          store.tick = this.reactor.ticks
+          store.objects.invoke('render')
+        }
+      }      
 		}catch(x){
 		//	console.log(x.message);
 		}

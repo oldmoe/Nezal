@@ -1,4 +1,5 @@
 var BuildingDisplay = Class.create(Display, {
+  defaultAction : null,
   panelWidth : 350,
   numberOfSmokes : 3,
   smokes : null,
@@ -204,37 +205,41 @@ var BuildingDisplay = Class.create(Display, {
   },
   
   renderPanel : function(){
-    var rightLimit = this.panelWidth + this.owner.coords.x - Map.x;
-    if( rightLimit < Map.viewWidth ) {
-      var left = this.owner.coords.x - Map.x;
-    } else {
-      var left = this.owner.coords.x - Map.x - this.panelWidth;
-    }
-    var topLimit = this.owner.coords.y - Map.y - Math.round(this.owner.imgHeight / 2);
-    if( topLimit > 55 ) {
-      var top = this.owner.coords.y - Map.y - Math.round(this.owner.imgHeight / 2);
-    } else {
-      var top = this.owner.coords.y - Map.y - Math.round(this.owner.imgHeight / 2) + 55;
-    }
-    $('building-panel').setStyle({
-      top: top + "px",
-      left: left + "px"
-    });
-    this.renderPanelButtons();
-    $('building-panel').show();
-    this.game.buildingMode.selectedBuilding = this;
+      var left = Map.clickPositionX - 50;
+      var top = Map.clickPositionY - 30
+      $('building-panel').setStyle({
+        top: top + "px",
+        left: left + "px"
+      });
+      this.renderPanelButtons();
+      $('building-panel').show();
+      this.game.buildingMode.selectedBuilding = this;
   },
   
   renderPanelButtons : function(){
+    var self = this
     var owner = this.owner;
+    this.game.domConverter.convert(this.game.templatesManager.load("default-button",{defaultAction:this.defaultActionName}));
     $('panel-buttons-container').innerHTML = this.game.templatesManager.load("upgrade-button");
     this.owner.game.addLoadedImagesToDiv('panel-buttons-container')
+    if(this.defaultActionName)
+    $('panel-buttons-container').insertBefore( $("default_trigger"),$('upgrade_trigger'));
     this.game.domConverter.convert(this.game.templatesManager.load("move-button"))
     $('panel-buttons-container').appendChild($('move_trigger'));
     $('upgrade_trigger').stopObserving('mousedown');
     $('move_trigger').stopObserving('mousedown');
     $('upgrade_trigger').stopObserving('mouseup');
     $('move_trigger').stopObserving('mouseup');
+    if(this.defaultActionName){
+      $('default_trigger').observe('mousedown',function(){
+        $('default_trigger').select("img")[0].setStyle( {marginTop: "-76px"} );
+      });
+      $('default_trigger').observe('mouseup',function(){
+        $('move_trigger').select("img")[0].setStyle( {marginTop: "-26px"} );
+        $('building-panel').hide();
+        self.defaultAction()
+      })
+    }
     $('move_trigger').observe('mousedown',function(){
       $('move_trigger').select("img")[0].setStyle( {marginTop: "-76px"} );
     });
@@ -265,7 +270,27 @@ var BuildingDisplay = Class.create(Display, {
     var self = this
     this.registerHoverEvents('upgrade')
     this.registerHoverEvents('move')
+    if(this.defaultActionName)this.registerHoverEvents('default')
   },
+  
+	fillBuildingPanel : function(owner){
+		$$('#building-panel .menuBody')[0].innerHTML = ""
+    if (this.defaultActionName) {
+      this.game.domConverter.convert(game.templatesManager.load('menuDefault', {
+        defaultAction: this.defaultActionName
+      }))
+      $$('#building-panel .menuBody')[0].appendChild($('defaultDesc'))
+    }
+		this.game.domConverter.convert(game.templatesManager.load('menuUpgrade',
+		  owner.getUpgradeSpecs(),owner.getUpgradableSpecs()))
+		  $$('#building-panel .menuBody')[0].appendChild($('upgradeDesc'))
+		  this.game.domConverter.convert(game.templatesManager.load('menuMove'))
+		  $$('#building-panel .menuBody')[0].appendChild($('moveDesc'))
+		  this.game.domConverter.convert(game.templatesManager.load('menuCollect'))
+		  $$('#building-panel .menuBody')[0].appendChild($('collect_resourceDesc'))
+		  this.game.domConverter.convert(game.templatesManager.load('menuWorker'))
+		  $$('#building-panel .menuBody')[0].appendChild($('assign_workerDesc')) 
+	},
   registerHoverEvents : function(elementName){
       var element = $(elementName+'_trigger')
       element.stopObserving("mouseover");
