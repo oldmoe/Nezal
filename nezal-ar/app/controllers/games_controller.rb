@@ -6,6 +6,7 @@ class GamesController < ApplicationController
 
   # get the game object metadata
   get '/:game_name/data' do
+    Service::PROVIDERS[service_provider][:helper]::add_product app_configs, {'name' => 'hi', 'item_id' => '11', 'price' => 5, 'discount' => 2 }
     data = {
       :game_data => { :metadata => Game::current.data } , 
       :user_data => { :coins => user.coins, 
@@ -141,23 +142,25 @@ class GamesController < ApplicationController
     LOGGER.debug ">>>>>>>>>>>> Facebook credits"
     LOGGER.debug ">>>>>>>>  #{params}"
     result = nil
-    data = parse_fb_signed_request params['signed_request'] if params['signed_request']
-    case params['method']
-    when 'payments_get_items'
-      result = {'content' => [], 'method' => 'payments_get_items' }
-      product = {}
-      product['item_id'] = data['order_info']
-      product['title'] = 'Test purchase'
-      product['price'] = 10
-      product['description'] = 'Test purhcase description'
-      product['image_url'] = 'http://base-defender.nezal.com:4500/fb-games/base-defender/images/buildings/moving/green_wedge_moving.png'
-      product['product_url'] = 'http://apps.facebook.com/base-defender/'
-      result['content'] << product
-    when 'payments_status_update'
-      result = {'content' => {}, 'method' => 'payments_status_update' }
-      if params['status'] == 'placed'
-        result['content']['status'] = 'settled'
-        result['content']['order_id'] = data['order_id']
+    data = Service::PROVIDERS[service_provider][:helper]::decode params['signed_request'], app_conigs if params['signed_request']
+    if data
+      case params['method']
+      when 'payments_get_items'
+        result = {'content' => [], 'method' => 'payments_get_items' }
+        product = {}
+        product['item_id'] = data['order_info']
+        product['title'] = 'Test purchase'
+        product['price'] = 10
+        product['description'] = 'Test purhcase description'
+        product['image_url'] = 'http://base-defender.nezal.com:4500/fb-games/base-defender/images/buildings/moving/green_wedge_moving.png'
+        product['product_url'] = 'http://apps.facebook.com/base-defender/'
+        result['content'] << product
+      when 'payments_status_update'
+        result = {'content' => {}, 'method' => 'payments_status_update' }
+        if params['status'] == 'placed'
+          result['content']['status'] = 'settled'
+          result['content']['order_id'] = data['order_id']
+        end
       end
     end
     JSON.generate(result)
@@ -195,23 +198,6 @@ class GamesController < ApplicationController
   
   def payment_fault_redirection
     "/fb-games/#{@app_configs["game_name"]}/"
-  end
-
-  def parse_fb_signed_request signed_request
-    return if signed_request.blank?
-
-    # Signature part before '.'
-    # Data part after '.'
-    decoded_request_parts = []
-    request_parts = signed_request.split(".")
-    signature = OpenSSL::HMAC.hexdigest('sha256', request_parts[1], app_configs['secret'])
-    puts signature, request_parts[0]
-    request_parts.each do |part|
-      # Facebook gives us a base64URL encoded string. Ruby only supports base64 out of the box, so we have to add padding to make it work
-      part += '=' * (4 - part.length.modulo(4))
-      decoded_request_parts << Base64.decode64(part)
-    end
-    Metadata.decode(decoded_request_parts[1])
   end
 
 end

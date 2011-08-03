@@ -32,13 +32,13 @@ class ApplicationController < Sinatra::Base
       if @app_configs && get_provider_session
         begin
           @game = Game.get(app_name)
-          key = User::generate_key(Service::PROVIDERS[@service_provider], @service_id)
+          key = User::generate_key(Service::PROVIDERS[@service_provider][:prefix], @service_id)
           @user = User.get(key)
           if(!@user)
             @user = User.create(key,  { 'coins'=> 1000 })
             puts "Creating new user !! #{@user}"
           end
-          key = UserGameProfile::generate_key(Service::PROVIDERS[@service_provider], Game::current.key, @service_id)
+          key = UserGameProfile::generate_key(Service::PROVIDERS[@service_provider][:prefix], Game::current.key, @service_id)
           @game_profile = UserGameProfile.get(key)
           if !(@game_profile)
             @game_profile = UserGameProfile.create(key)
@@ -70,7 +70,7 @@ class ApplicationController < Sinatra::Base
   protected
     
   def get_provider_session
-    if Service::PROVIDERS[@service_provider] == Service::KONGREGATE
+    if Service::PROVIDERS[@service_provider][:prefix] == Service::KONGREGATE
       LOGGER.debug ">>>>>> Kongregate - We will check for session in params"
       if params[:kongregate_user_id] && params[:kongregate_game_auth_token]
         @service_id = params[:kongregate_user_id]
@@ -86,7 +86,7 @@ class ApplicationController < Sinatra::Base
       else
         false
       end
-    elsif Service::PROVIDERS[@service_provider] == Service::FACEBOOK
+    elsif Service::PROVIDERS[@service_provider][:prefix] == Service::FACEBOOK
       if env['rack.request.cookie_hash'] && 
               (fb_cookie = env['rack.request.cookie_hash']["fbs_#{@app_configs['id']}"] ||
                env['rack.request.cookie_hash']["fbs_#{@app_configs['key']}"]) # if
