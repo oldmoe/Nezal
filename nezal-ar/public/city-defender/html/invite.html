@@ -36,10 +36,10 @@ $(document).observe('dom:loaded',function(){
                                         'method="GET" invite="true" ' +
                                         'type="' + appName + '"' +  ' ' +
                                         'content="' + inviteMsg + ' ' +
-                                  	     '<fb:req-choice url=' + appUrl + '?inviter=' + FB.getSession().uid + ' '  +
+                                  	     '<fb:req-choice url=' + appUrl + '?inviter=' + FB.getAuthResponse().userID + ' '  +
                                   	                       'label=\'Accept\'  /' + '> '  + '" ' +
                             ' >' + ' ' +
-                                '<input id="inviter" type="hidden" fb_protected="true" value="' + FB.getSession().uid + '"/' + '> ' + 
+                                '<input id="inviter" type="hidden" fb_protected="true" value="' + FB.getAuthResponse().userID + '"/' + '> ' + 
                                 '<div style="width : 83%; margin:auto; padding : 10px 0px 15px 0px;"> ' +
                                     '<fb:multi-friend-selector  showborder="false"' + ' ' +
                                                           'exclude_ids="' + ids + '"' + ' ' +

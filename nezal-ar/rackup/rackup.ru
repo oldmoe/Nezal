@@ -13,7 +13,7 @@ Yajl::Encoder.enable_json_gem_compatability
 
 use	Rack::MethodOverride
 
-use Rack::Static, :urls => [ "/stylesheets", "/javascripts", "/favicon.ico", "/game_images", "/html/facebook"], :root => "public"  
+use Rack::Static, :urls => [ "/stylesheets", "/javascripts", "/favicon.ico", "/game_images", "/html"], :root => "public"  
 
 app = Rack::Builder.new do
   app_configs = {}

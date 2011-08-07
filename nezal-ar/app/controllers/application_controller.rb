@@ -87,26 +87,8 @@ class ApplicationController < Sinatra::Base
         false
       end
     elsif Service::PROVIDERS[@service_provider][:prefix] == Service::FACEBOOK
-      if env['rack.request.cookie_hash'] && 
-              (fb_cookie = env['rack.request.cookie_hash']["fbs_#{@app_configs['id']}"] ||
-               env['rack.request.cookie_hash']["fbs_#{@app_configs['key']}"]) # if
-        cookie = CGI::parse(fb_cookie)
-        @service_id = cookie['uid'][0].split('"')[0]
-        @session_key = cookie['session_key'][0]
-        LOGGER.debug ">>>>>> Cookie - service_id : #{@service_id}"
-        LOGGER.debug ">>>>>> Cookie - session_key : #{@session_key}"
-        true
-      elsif params[:fb_sig_session_key] && params[:fb_sig_user]
-        @service_id = params[:fb_sig_user] 
-        @session_key = params[:fb_sig_session_key]
-        LOGGER.debug ">>>>>> Params - service_id : #{@service_id}"
-        LOGGER.debug ">>>>>> Params - session_key : #{@session_key}"
-        true
-      elsif params[:session_key] && params[:uid]
-        @service_id = params[:uid] 
-        @session_key = params[:session_key]
-        LOGGER.debug ">>>>>> Our Params - service_id : #{@service_id}"
-        LOGGER.debug ">>>>>> Our Params - session_key : #{@session_key}"
+      @service_id = Service::PROVIDERS[@service_provider][:helper].authenticate params, app_configs
+      if @service_id
         true
       else
         false

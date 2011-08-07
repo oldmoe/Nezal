@@ -6,7 +6,6 @@ class GamesController < ApplicationController
 
   # get the game object metadata
   get '/:game_name/data' do
-    Service::PROVIDERS[service_provider][:helper]::add_product app_configs, {'name' => 'hi', 'item_id' => '11', 'price' => 5, 'discount' => 2 }
     data = {
       :game_data => { :metadata => Game::current.data } , 
       :user_data => { :coins => user.coins, 
@@ -165,6 +164,12 @@ class GamesController < ApplicationController
     end
     JSON.generate(result)
   end
+
+  post %r{/([0-9A-Za-z_\-]+)(/friends_request/)([0-9A-Za-z_\-|=.&]+)} do
+    puts params
+    session = CGI::parse(params['captures'].last)
+    puts session
+  end
   
   # Do not remove 127.0.0.1 from the valid gateway, it is safe 
   @@valid_gateways = ['195.58.177.2','195.58.177.3','195.58.177.4','195.58.177.5', "127.0.0.1"]
@@ -182,6 +187,10 @@ class GamesController < ApplicationController
   end
 
   get '/:game_name/' do
+    File.read(File.join( 'public', @app_configs["game_name"], @service_provider + '-' + 'index.html'))
+  end
+
+  post '/:game_name/' do
     File.read(File.join( 'public', @app_configs["game_name"], @service_provider + '-' + 'index.html'))
   end
 

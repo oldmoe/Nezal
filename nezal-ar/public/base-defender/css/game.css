@@ -49,6 +49,16 @@ area {
   font-family: "Cairo";
   src: url("fonts/CAIRO_.TTF");
 }
+
+#invite {
+  position : absolute;
+  width : 600px;
+  height : 600px;
+  left : 200px;
+  top : 200px;
+  z-index : 10000000;
+}
+
 img{
 	border:none;
   width:auto;
