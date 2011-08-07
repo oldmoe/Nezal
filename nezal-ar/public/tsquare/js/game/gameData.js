@@ -1,8 +1,1 @@
-var gameData = [[{"x":2,"name":"block"},
-{'name':'event','attribute':'energy','value':6,'msg':'el energy dy elly bt5leek bab w enta btl3ab'},
-{"x":4,name:"scenario","scenario":[
-{index:0,lane:0,msg:"hello"},
-{index:0,lane:1,msg:"hello ya5oya"}
-]}
-,
-{"x":7,"name":"block"},{"x":9,"name":"block"},{"x":10,"name":"block"}],[{"x":4,"name":"block"},{"name":"crowdMember","x":8}]]
+var gameData = {"data":[[{"name":"crowd","type":"crowd","lane":0,"x":0,"index":0},{"x":2,"name":"scenario","scenario":[{"index":0,"msg":"hello","lane":"0"},{"index":0,"msg":"hello back","lane":"1"},{"index":0,"msg":"what's up","lane":"1"},{"index":0,"msg":"great","lane":"0"}]},{"name":"block","type":"enemy","lane":0,"x":5,"index":1}],[{"name":"crowd","type":"crowd","lane":1,"x":2,"index":0}]],"events":[{"energy":"6","message":"upper bar is energy to boost your speed"}]}

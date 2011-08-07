@@ -15,7 +15,7 @@ var Scene = Class.create({
 		this.init()
 		var self = this
 		this.reactor.run()
-		this.reactor.push(0, function(){self._tick()})
+		this.reactor.push(0, function(){self._tick()},undefined,'batee5a')
 		return this
 	},
 	

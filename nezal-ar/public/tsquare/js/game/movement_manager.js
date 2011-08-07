@@ -8,8 +8,8 @@ var MovementManager = Class.create({
   totalMoveTicks : 0,
   moveLength : 0,
   extraSpeed : 0,
-  moveSpeed : 15,
   lastMoveClicked : false,
+  moveSpeed : 15,
   initialize : function(scene){
     this.scene = scene
     this.registerListeners()
@@ -34,6 +34,10 @@ var MovementManager = Class.create({
     this.ticksPassed = 0
   },
   tick : function(){
+    if(this.scene.moving){
+      this.ticksPassed = 0
+      return
+    }
     this.ticksPassed++
     this.totalMoveTicks++  
   },
@@ -42,6 +46,10 @@ var MovementManager = Class.create({
     var self = this
     document.stopObserving('keydown')
     document.observe('keydown', function(e){
+      if(self.scene.moving){
+        self.scene.moving = false
+        self.reset()
+      }
       var click = -1
       if (e.keyCode == 38) {
         click = 0
@@ -102,7 +110,7 @@ var MovementManager = Class.create({
     if(m.length==self.move.length){
      this.move=[]
      this.moveLength = 0
-     this.scene.startMove(moveIndex)
+     this.scene.startMove(moveIndex,self.nextTick*m.length)
      Sounds.play(Sounds.gameSounds.correct_move)
     }
   }

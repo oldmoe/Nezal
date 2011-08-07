@@ -24,7 +24,7 @@ var TsquareScene = Class.create(Scene,{
     this.inScenarios = []
     this.inEvents = []
     //this.network.fetchTemplate('missions/1.json',function(response){
-      self.data = gameData
+      self.data = gameData.data
       self.noOfLanes = self.data.length
       for(var i =0;i<self.data.length;i++){
         self.inObstacles[i] = []
@@ -33,12 +33,12 @@ var TsquareScene = Class.create(Scene,{
         for(var j=0;j<self.data[i].length;j++){
           var elem = self.data[i][j] 
           if(elem.name=='block')self.inObstacles[i].push({'name':elem.name, x:elem.x*self.tileWidth,y:self.laneMiddle*2*i+self.laneMiddle})
-          else if(elem.name=='crowdMember')self.inCrowdMembers[i].push({'name':elem.name, x:elem.x*self.tileWidth,y:i})
+          else if(elem.name=='crowd')self.inCrowdMembers[i].push({'name':elem.name, x:elem.x*self.tileWidth,y:i})
           else if(elem.name=='scenario')self.inScenarios.push({'name':elem.name, x:elem.x*self.tileWidth,y:self.laneMiddle*2*i+self.laneMiddle, "scenario":
           elem.scenario})
-          else if(elem.name=='event') self.inEvents.push(elem)
         }
       }
+      self.inEvents = gameData.events
     //})
     this.obstacles = []
 	},
@@ -76,13 +76,11 @@ var TsquareScene = Class.create(Scene,{
   },
   checkEvents : function(){
     for(var i=0;i<this.inEvents.length;i++){
-      if(this.inEvents[i].attribute=='energy'){
-        if(this.energy>=this.inEvents[i].value){
-          this.showMsg(this.inEvents[i].msg)
+        if(this.energy>=this.inEvents[i].energy){
+          this.showMsg(this.inEvents[i].message)
           this.inEvents.splice(i,1)
         }
-      }
-    }
+     }
   },
   showMsg : function(msg){
     $$('#modalWindowMsg #contents')[0].innerHTML =  msg
@@ -186,7 +184,6 @@ var TsquareScene = Class.create(Scene,{
     this.canvasHeight = $('gameCanvas').getHeight()
 		this.skyLine = new SkyLine(this)
     this.movementManager = new MovementManager(this)
-    this.addCrowdMember(10,0)
     this.addNpcs()
 	},
   createEnergyBar : function(){
@@ -199,7 +196,7 @@ var TsquareScene = Class.create(Scene,{
     }})
     this.pushToRenderLoop('characters',energySprite)
   },
-  startMove : function(commandIndex){
+  startMove : function(commandIndex,noOfTicks){
     if(this.conversationOn) return
 //    for(var i=0;i<this.crowdMembers.length;i++){
 //      for(var j=0;j<this.obstacles.length;j++){
@@ -209,8 +206,12 @@ var TsquareScene = Class.create(Scene,{
 //        } 
 //      }
 //    }
-    this.energy+=3
     this.moving = true
+    var self = this
+    this.reactor.push(noOfTicks,function(){
+      self.moving = false
+      self.energy+=3
+    })
   }
   
 });
