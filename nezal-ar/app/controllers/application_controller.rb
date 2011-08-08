@@ -87,7 +87,7 @@ class ApplicationController < Sinatra::Base
         false
       end
     elsif Service::PROVIDERS[@service_provider][:prefix] == Service::FACEBOOK
-      @service_id = Service::PROVIDERS[@service_provider][:helper].authenticate params, app_configs
+      @service_id = Service::PROVIDERS[@service_provider][:helper].authenticate params, env['rack.request.cookie_hash'], app_configs
       if @service_id
         true
       else

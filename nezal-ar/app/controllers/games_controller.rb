@@ -165,10 +165,15 @@ class GamesController < ApplicationController
     JSON.generate(result)
   end
 
-  post %r{/([0-9A-Za-z_\-]+)(/friends_request/)([0-9A-Za-z_\-|=.&]+)} do
-    puts params
-    session = CGI::parse(params['captures'].last)
-    puts session
+  post '/:game_name/friends_request' do
+    friendsIds = params['ids']
+    timestamp = params['timestamp']
+    request = FriendRequest.get(user.key)
+    request = FriendRequest.create(key, {'receivers' => friendsIds })
+  end
+
+  post '/:game_name/accept_request' do 
+    "Yes we will reward him now or whatevuh"
   end
   
   # Do not remove 127.0.0.1 from the valid gateway, it is safe 

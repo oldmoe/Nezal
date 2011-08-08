@@ -23,6 +23,56 @@ var FBConnect = {
 	  
 	  user : null,
 	  
+    getStatus : function(successCallback) {
+        FB.getLoginStatus(function(response) {
+		      if (response.status == "connected") {
+		          FBConnect.session = response.authResponse;
+        		  var	query = FB.Data.query("SELECT publish_stream FROM permissions where uid = {0}", FB.getAuthResponse().userID);
+    		      FB.Data.waitOn([query], function(){
+                  if(query.value[0]['publish_stream'] == "0")
+                  {
+                      var redirect_url = "https://www.facebook.com/dialog/oauth?client_id=" + 
+                                        FBConnect.appIds[FBConnect.url()] + "&redirect_uri=" + 
+                                        "http://apps.facebook.com/" + FBConnect.url() + "/" + 
+                                        "&scope=publish_stream&response_type=token";              
+                      window.top.location = redirect_url;
+                      return;
+                  }else{
+                      successCallback();
+                  }
+              })
+
+          }else{
+              /* He is either not logged in or doesnt have the application added 
+               * First case he is not logged in : status = unknown
+               * He is logged in but hasnot added the application : status = notConnected
+               */
+              if(response.status == "unknown" )
+              {
+                  // redirect to login page
+                  redirect_url = "http://www.facebook.com/login.php?v=1.0&app_id=" +
+                                 FBConnect.appIds[FBConnect.url()] + 
+                                 "&canvas=1&next=http://apps.facebook.com/" + 
+                                 FBConnect.url();
+              }else if(response.status == "not_authorized" )
+              {
+                  var inviter = FBConnect.location.split("inviter")[1];
+                  var appendParam = '';
+                  if(inviter)
+                  {
+                      var id = inviter.split('&')[0];
+                      appendParam = '?inviter' + id;
+                  }
+                  redirect_url = "https://www.facebook.com/dialog/oauth?client_id=" + 
+                                        FBConnect.appIds[FBConnect.url()] + "&redirect_uri=" + 
+                                        "http://apps.facebook.com/" + FBConnect.url() + "/" + 
+                                        "&scope=publish_stream&response_type=token";          
+              }
+              window.top.location = redirect_url;
+          }
+      });
+    },
+
     init : function( successCallback ) {
         FBConnect.location = document.URL;
         /* Add fb-root dic required for the FB SDK */
@@ -50,81 +100,41 @@ var FBConnect = {
             oauth  : true // enable OAuth 2.0
         });
         FBConnect.callback = successCallback;
-        FB.getLoginStatus(function(response) {
-			      if (response.status == "connected") {
-			          FBConnect.session = response.authResponse;
-          		  var	query = FB.Data.query("SELECT publish_stream FROM permissions where uid = {0}", FB.getAuthResponse().userID);
-      		      FB.Data.waitOn([query], function(){
-                    if(query.value[0]['publish_stream'] == "0")
-                    {
-                        var redirect_url = "https://www.facebook.com/dialog/oauth?client_id=" + 
-                                          FBConnect.appIds[FBConnect.url()] + "&redirect_uri=" + 
-                                          "http://apps.facebook.com/" + FBConnect.url() + "/" + 
-                                          "&scope=publish_stream&response_type=token";              
-                        window.top.location = redirect_url;
-                        return;
-                    }else{
-			                  Ajax.Responders.register({
-				                    onCreate: function(req) {
-                  							var inviter = ''
-                  							var search = window.location.search
-                  							if(search){
-                  								search = search.split('?')[1]
-                  								if(search){
-                  									search = search.split('&').find(function(pair){ return pair.include('inviter')})
-                  										if(search){
-                  											inviter = search
-                  										}
-                  									}
-                  							}
-              					        req.url += (req.url.include('?') ? '&' : '?') + Object.toQueryString(FBConnect.session) + '&' + inviter
-              					        return true
-				                    }
-			                  });
-                        if(document.getElementsByTagName('fb:fan')[0]) 
-                        {
-                            document.getElementsByTagName('fb:fan')[0].writeAttribute('profile_id', FBConnect.appIds[FBConnect.url()]);
-                            FB.XFBML.parse();
-                        }
-                        FBConnect.callback();
-			                  FBConnect.getUserInfo(function(){});
-                        FBConnect.registerStatusChangeHandlers();
-                    }
-                })
-
-            }else{
-                /* He is either not logged in or doesnt have the application added 
-                 * First case he is not logged in : status = unknown
-                 * He is logged in but hasnot added the application : status = notConnected
-                 */
-                if(response.status == "unknown" )
-                {
-                    // redirect to login page
-                    redirect_url = "http://www.facebook.com/login.php?v=1.0&app_id=" +
-                                   FBConnect.appIds[FBConnect.url()] + 
-                                   "&canvas=1&next=http://apps.facebook.com/" + 
-                                   FBConnect.url();
-                }else if(response.status == "not_authorized" )
-                {
-                    var inviter = FBConnect.location.split("inviter")[1];
-                    var appendParam = '';
-                    if(inviter)
-                    {
-                        var id = inviter.split('&')[0];
-                        appendParam = '?inviter' + id;
-                    }
-                    redirect_url = "https://www.facebook.com/dialog/oauth?client_id=" + 
-                                          FBConnect.appIds[FBConnect.url()] + "&redirect_uri=" + 
-                                          "http://apps.facebook.com/" + FBConnect.url() + "/" + 
-                                          "&scope=publish_stream&response_type=token";          
+        callback = function(){
+		                  Ajax.Responders.register({
+			                    onCreate: function(req) {
+                							var inviter = ''
+                							var search = window.location.search
+                							if(search){
+                								search = search.split('?')[1]
+                								if(search){
+                									search = search.split('&').find(function(pair){ return pair.include('inviter')})
+                										if(search){
+                											inviter = search
+                										}
+                									}
+                							}
+                              var user = { 'fb_sig_user' : FBConnect.session.userID,
+                                         'fb_sig_expires' : FBConnect.session.expiresIn,
+                                         'signed_request' : FBConnect.session.signedRequest }
+            					        req.url += (req.url.include('?') ? '&' : '?') + Object.toQueryString(user) + '&' + inviter
+            					        return true
+			                    }
+		                  });
+                      if(document.getElementsByTagName('fb:fan')[0]) 
+                      {
+                          document.getElementsByTagName('fb:fan')[0].writeAttribute('profile_id', FBConnect.appIds[FBConnect.url()]);
+                          FB.XFBML.parse();
+                      }
+                      FBConnect.callback();
+		                  FBConnect.getUserInfo(function(){});
+                      FBConnect.registerStatusChangeHandlers();
+                    FBConnect.request()
                 }
-                window.top.location = redirect_url;
-            }
-        });
+          FBConnect.getStatus(callback);
     },
 
     registerStatusChangeHandlers : function(){
-        console.log("hre")
         FB.Event.subscribe('auth.statusChange', function(response) {
             console.log(response);
         });
@@ -240,6 +250,12 @@ var FBConnect = {
           FB.UIServer.Methods['fbml.dialog'].size.height = 500;*/
           
     },
+
+    request : function(inviteMsg, userPrompt, appName) {
+        $('invite').src = "html/request_condensed.html?" +
+                                "msg=" + escape(inviteMsg) + "&propmt=" + escape(userPrompt) + "&name=" + escape(appName)
+        $('invite').show();
+    },  
 
     friends : function(callback){
         var callback = callback;

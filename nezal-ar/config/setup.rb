@@ -2,8 +2,6 @@ require 'yaml'
 require 'logger'
 require 'active_record'
 require 'data_store'
-require 'base64'
-require 'openssl'
 
 LOGGER = Logger.new(STDOUT)
 LOGGER.level = Logger::DEBUG

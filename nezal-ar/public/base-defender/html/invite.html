@@ -1,0 +1,65 @@
+<html>
+<head>
+    <script src="http://connect.facebook.net/en_US/all.js"></script>
+    <script src="../js/base/prototype.js" type="text/javascript"></script>
+    <script src="../js/nezal/facebook.js" type="text/javascript"></script>
+</head>
+
+<body style="margin:auto;width:600px; height:535px;">
+  <div id="close" 
+       style="position: absolute; top:5px; right:5px; cursor:pointer; font-family : tahoma; color:white;"
+       onclick="window.parent.document.getElementById('invite').hide(); return false;">x</div>
+
+  <div id="fbml" style="margin-top:10px;">
+
+  </div>
+</body>
+
+
+<script type="text/javascript">
+$(document).observe('dom:loaded',function(){
+		FBConnect.init(function(){        
+        var params = window.location.toString().split('html/invite.html');
+        var sent =  { 'invite' : "false",
+                    'msg' : "Can u help me out", 
+                    'userPrompt' : "Ask friends for help",
+                    'appName' : "local-base-defender",
+                    'execludedIDs' : '',
+                    'redirectUrl' : "http://127.0.0.1:5500/fb-games/" + FBConnect.url() + "/friends_request?&amp;session=testing&amp;id=test" ,
+                    'acceptRequestUrl' : "http://apps.facebook.com/" + FBConnect.url() + "/accept_request?sender=" + FB.getAuthResponse().userID
+                  }
+        var appUrl = "http://apps.facebook.com/" + FBConnect.url() + "/";
+        var params = window.location.toString().split('?')[1].split("&")
+
+
+        FB.api(
+              {  
+              method: 'friends.getAppUsers' 
+              },
+              function(response) 
+              {
+                  var ids = response;
+                  var fbml = '<fb:serverfbml width="600px" height="535px"> ' +
+                             '<script type="text/fbml"> ' +
+                                  '<fb:fbml width="600px" height="535px">	'  +
+                              		      '<fb:request-form action="' +  sent['redirectUrl'] + '"' +  ' ' +
+                                                 'method="post" invite="false" type="Gift" content="' + sent['msg'] + '" ' +
+                                                  ' &lt;fb:req-choice url="' + sent['acceptRequestUrl'] + '"  label=\'Accept\' &gt;> ' +
+                                          '<input id="inviter" type="hidden" fb_protected="true" value="' + FB.getAuthResponse().userID + '"/' + '> ' + 
+                                          '<div style="width : 83%; margin:auto; padding : 10px 0px 15px 0px;"> ' +
+                                              '<fb:multi-friend-selector import_external_friends="false" showborder="false"' + ' ' +
+                                                                    'actiontext="' + sent['userPrompt'] + '" '+
+                                                                    'cols="3" rows="4"/' +'>' + ' ' +        
+                                          '<div/' + '>' + ' ' +
+                                        ' </fb:request-form>' + ' ' +
+                            '</fb:fbml> '+
+                            '<' + '/script> '  +
+                            '</fb:serverfbml> ' 
+                  $('fbml').innerHTML = fbml;
+                  FB.XFBML.parse();
+            }
+        );
+    });
+})
+</script>
+</html>

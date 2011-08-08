@@ -1,5 +1,7 @@
 require 'net/https'
+require 'base64'
 require 'uri'
+require 'openssl'
 
 class FBHelper
 
@@ -9,24 +11,32 @@ class FBHelper
 
   class << self
 
-    def authenticate params, app_configs
-      if params[:signedRequest] && params[:userID]
-        session = decode params[:signedRequest], app_configs
-        request_expire = params['expiresIn'].to_i
+    def authenticate params, cookie_hash, app_configs
+      # Check for signed request
+      #   If exists then authenticate it
+      #   else check for request cookie string
+      cookie = cookie_hash['fbsr_' + app_configs['id']] ? cookie_hash['fbsr_' + app_configs['id']] : params['signed_request']
+      if cookie
+        session = decode cookie, app_configs
+        request_expire = params['fb_sig_expires'].to_i
         expires_in = if request_expire < SESSION_EXPIRE_TIME
                         request_expire
                     else
                         SESSION_EXPIRE_TIME
                     end
         # If authenticated, same user in signed_request & params, session not expired return true
-        puts session['issued_at'] 
         if session && session['user_id'] && 
-            session['user_id'].to_s == params[:userID] 
+            session['user_id'].to_s == params[:fb_sig_user] 
 #            && session['issued_at'] + expires_in > Time.now.to_i
           return session['user_id'].to_s
         else
           return nil
         end
+      elsif params["fb_sig_user"] &&
+          params["fb_sig_added"] == "1" &&
+          params["fb_sig_expires"].to_i > Time.now.to_i &&
+          params["fb_sig_api_key"] == app_configs['secret']
+        return params['fb_sig_user']
       end 
       nil
     end
