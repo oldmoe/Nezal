@@ -61,9 +61,13 @@ var DomImgSprite = Class.create(DomSprite, {
 			})
     }else{
       this.img.setStyle({
-        marginLeft: (-this.owner.imgWidth * this.currentAnimationFrame + "px"),
-        marginTop: (-this.owner.angle * this.owner.imgHeight + "px")
+        marginLeft: (-this.owner.imgWidth * this.owner.angle + "px"),
+        marginTop: (-this.currentAnimationFrame * this.owner.imgHeight + "px")
       });
+      if(this.owner.shake){
+        Effect.Shake(this.div)
+        this.owner.shake = false
+      }
     }
     
   },

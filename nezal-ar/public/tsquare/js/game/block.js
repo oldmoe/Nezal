@@ -4,7 +4,9 @@ var Block = Class.create(Unit,{
   },
   tick : function($super){
     $super()
-    if(this.scene.moving)
-    this.coords.x-=this.scene.speed
+    if(this.scene.moving){
+      if(this.scene.moveBack)this.coords.x+=this.scene.speed
+      else this.coords.x-=this.scene.speed
+    }
   }
 })

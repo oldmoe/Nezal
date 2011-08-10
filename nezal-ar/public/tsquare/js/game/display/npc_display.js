@@ -1,5 +1,5 @@
 var NpcDisplay = Class.create(Display,{
-  noOfFrames : 8,  
+  noOfFrames : 1,  
   initialize : function($super,owner,properties){
     this.characterImg = Loader.images.characters['npc.png'];
     this.imgWidth = this.characterImg.width/this.noOfFrames

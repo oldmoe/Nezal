@@ -5,6 +5,9 @@ var TsquareScene = Class.create(Scene,{
   maxEnergy : 30,
   conversationOn : false,
   coords: {x:200,y:10},
+  moveBack : false,
+  moving : false,
+  beatMoving : false,
 	initialize: function($super,game){
 		$super(game)
     this.network = new Network()
@@ -44,11 +47,11 @@ var TsquareScene = Class.create(Scene,{
 	},
   addNpcs : function(){
     var rand = Math.random()
-    if(rand < 0.1){
+    if(rand < 0.0001){
       var direction = Math.randomSign()
       var x = 0
       if(direction==-1)x = this.width
-      var y = this.laneMiddle + (this.noOfLanes-1)*this.laneMiddle*2
+      var y = this.laneMiddle + Math.round(Math.random()*(this.noOfLanes-1))*this.laneMiddle*2
       var npc = this.addObject({name:'npc','x':x,y:y, 'options':{direction:direction}})
       this.npcs.push(npc)
     }
@@ -64,12 +67,15 @@ var TsquareScene = Class.create(Scene,{
 	tick : function($super){
     $super()
     var self = this
-    if(this.moving)this.xPos+=this.speed
+    if (this.moving) {
+      if(this.moveBack)this.xPos -= this.speed
+      else this.xPos += this.speed
+    }
     this.checkObstacles()
-    this.checkNpcs()
-    this.checkScenarios()
+    //this.checkNpcs()
+    //this.checkScenarios()
     this.checkCrowdMembers()
-    this.checkEvents()
+    //this.checkEvents()
     this.tickObjects(this.npcs)
     this.crowdMembers.each(function(laneCrowdMembers){self.tickObjects(laneCrowdMembers)})
     this.obstacles.each(function(laneObstacles){self.tickObjects(laneObstacles)})
@@ -99,6 +105,15 @@ var TsquareScene = Class.create(Scene,{
     }    
   },
   checkCrowdMembers : function(){
+    for (var i = 0; i < this.crowdMembers.length; i++) {
+      for (var j = 0; j < this.crowdMembers[i].length; j++) {
+         if(this.crowdMembers[i][j].dead){
+           this.crowdMembers[i][j].destroy()
+           this.crowdMembers[i].splice(j, 1)
+           j--
+         }  
+      }
+    }
     for(var i=0;i<this.inCrowdMembers.length;i++){
       for(var j=0;j<this.inCrowdMembers[i].length;j++){
         if (this.inCrowdMembers[i][j].x < this.xPos + this.width) {
@@ -116,7 +131,7 @@ var TsquareScene = Class.create(Scene,{
     var self = this
     var remainingObjects = []
     this.npcs.each(function(obj){
-      if(obj.coords.x>=0 && obj.coords.x <=self.width) remainingObjects.push(obj)
+      if(obj.coords.x>=0 && obj.coords.x <=self.width && !obj.dead) remainingObjects.push(obj)
       else obj.destroy()        
     })
     this.npcs = remainingObjects
@@ -126,7 +141,7 @@ var TsquareScene = Class.create(Scene,{
     for(var i=0;i<this.obstacles.length;i++){
       remainingObstacles[i] = []
       for (var j = 0; j < this.obstacles[i].length; j++) {
-        if (this.obstacles[i][j].coords.x > 0) 
+        if (this.obstacles[i][j].coords.x > 0 && !this.obstacles[i][j].dead) 
           remainingObstacles[i].push(this.obstacles[i][j])
         else {
           this.obstacles[i][j].destroy()
@@ -198,20 +213,45 @@ var TsquareScene = Class.create(Scene,{
   },
   startMove : function(commandIndex,noOfTicks){
     if(this.conversationOn) return
-//    for(var i=0;i<this.crowdMembers.length;i++){
-//      for(var j=0;j<this.obstacles.length;j++){
-//        if(this.crowdMembers[i].coords.x+this.crowdMembers[i].imgWidth > this.obstacles[j].coords.x){
-//          this.moving = false
-//          return
-//        } 
-//      }
-//    }
-    this.moving = true
+    var moves = {forward:0,backward:1,rotating:2}
+    var collision = this.detectCollisions()
+    if(commandIndex == moves.forward){
+      this.moveBack = false
+      if(collision){
+        this.moving = false
+        return
+      }else{
+        this.moving = this.beatMoving = true    
+      }
+    }else if(commandIndex == moves.backward){
+        this.moveBack = true
+        this.moving = this.beatMoving = true
+    }else if(this.commandIndex == moves.rotating){
+      collision.crowd.rotate(collision.obstacle)
+    }
     var self = this
-    this.reactor.push(noOfTicks,function(){
-      self.moving = false
-      self.energy+=3
-    })
+    if (commandIndex == moves.forward || commandIndex == moves.backward) {
+      this.reactor.push(noOfTicks, function(){
+        self.beatMoving = false
+        self.energy += 3
+      })
+    }
+  },
+  detectCollisions : function(){
+    for(var i=0;i<this.crowdMembers.length;i++){
+      for(var j=0;j<this.crowdMembers[i].length;j++){
+        for (var k = 0; k < this.obstacles[i].length; k++) {
+          if (this.crowdMembers[i][j].coords.x + this.crowdMembers[i][j].imgWidth > this.obstacles[i][k].coords.x) {
+            this.moving = false
+            return {
+              crowd: this.crowdMembers[i][j],
+              obstacle: this.obstacles[i][k]
+            }
+          }
+        } 
+      }
+    }
+    return null
   }
   
 });

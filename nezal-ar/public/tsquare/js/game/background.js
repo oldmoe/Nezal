@@ -31,17 +31,28 @@ var Background = Class.create({
 	
 	tick : function(){
     if(!this.scene.moving && !this.alwaysMove)return
-		this.offsetX -= this.speed
-		var firstImg = this.container.children[0]
-		if(firstImg.getWidth()+this.offsetX <= 0){
-			this.reset()
-		}
+    if(!this.scene.moveBack){
+  		this.offsetX -= this.speed
+  		var firstImg = this.container.children[0]
+  		if(firstImg.getWidth()+this.offsetX <= 0){
+  			this.reset()
+  		}
+    }else{
+      if(this.offsetX >= 0)this.reset()
+      this.offsetX+=this.speed
+    }
 	},
 	
 	reset : function(){
-		this.offsetX =0
-	    this.container.removeChild(this.container.children[0])
-	    this.container.appendChild(this.images.random().clone())
+    if (!this.scene.moveBack) {
+      this.offsetX = 0
+      this.container.removeChild(this.container.children[0])
+      this.container.appendChild(this.images.random().clone())
+    }else{
+      this.offsetX = -this.images[0].width
+      this.container.children[0].insert({before:this.images.random().clone()})
+      this.container.removeChild(this.container.children[this.container.children.length-1])
+    }
 	}
 	
 });

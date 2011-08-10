@@ -1,7 +1,7 @@
 var Game = Class.create({
   
   initialize: function(){
-    this.startLoading()				
+    this.startLoading()		
 	},
   startLoading : function(){
     var self = this
@@ -12,14 +12,16 @@ var Game = Class.create({
                          $('inProgress').show();
                         $('inProgress').innerHTML = self.templatesManager.load("loadingScreen");
  					            self.addLoadedImagesToDiv('inProgress');
-                        self.initializeGame();
+                          self.initializeGame();
                       }});
   },
 	initializeGame : function(){
     $('inProgress').hide()
     $('gameCanvas').show()
     $('container').show()
-    
+    $('gameCanvas').observe('mouseover',function(e){
+     //   console.log(e.pointerX(),e.pointerY())
+    })
     this.scene = new TsquareScene()
 		
 		var backgroundImages = ['skyline.png', 'skyline_transparent.png', 'cloud.jpg', 'road.jpg']

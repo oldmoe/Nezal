@@ -1,5 +1,5 @@
 var MovementManager = Class.create({
-  moves : [[0,0,0,0],[1,1,1,0],[0,1,0,1],[1,1,1,1]],
+  moves : [[0,0,0,0],[1,1,1,1],[0,1,0,1],[1,1,1,1]],
   UP : 0, DOWN : 1,
   move : [],
   movements : [],
@@ -30,11 +30,12 @@ var MovementManager = Class.create({
     this.turnOn = false
     this.move = []
     this.scene.moving = false
+    this.scene.beatMoving = false
     this.extraSpeed = 0
     this.ticksPassed = 0
   },
   tick : function(){
-    if(this.scene.moving){
+    if(this.scene.beatMoving){
       this.ticksPassed = 0
       return
     }
@@ -46,32 +47,33 @@ var MovementManager = Class.create({
     var self = this
     document.stopObserving('keydown')
     document.observe('keydown', function(e){
-      if(self.scene.moving){
+      if(self.scene.beatMoving){
         self.scene.moving = false
+        self.scene.beatMoving = false
         self.reset()
       }
       var click = -1
-      if (e.keyCode == 38) {
+      if (e.keyCode == 39) {
         click = 0
       }
-      else if (e.keyCode == 40) {
+      else if (e.keyCode == 37) {
           click = 1
         }
       if(!self.turnOn) self.turnOn = true
-       if(click!=-1 && self.ticksPassed >= self.nextTick-5 && self.ticksPassed <= self.nextTick+5){
-      				self.move.push(click)
-      			  self.moveLength++
+       if(click!=-1 && self.ticksPassed >= self.nextTick-5 && self.ticksPassed <= self.nextTick+5){		
+      		self.move.push(click)
+      		self.moveLength++
       }else if(self.ticksPassed < 2){
-              self.reset()
-              self.moveLength = 1
-      				self.move = [click]
-              self.totalMoveTicks =0
+            self.reset()
+            self.moveLength = 1
+      		self.move = [click]
+            self.totalMoveTicks =0
       }else if(self.ticksPassed > 14){
-              self.extraSpeed = 0
-              self.reset()
-              self.moveLength = 1
-      			  self.move = [click]
-              self.totalMoveTicks =0
+            self.extraSpeed = 0
+            self.reset()
+            self.moveLength = 1
+			self.move = [click]
+            self.totalMoveTicks =0
       }
       self.checkMove()
       self.ticksPassed = 0
@@ -95,23 +97,32 @@ var MovementManager = Class.create({
     var found = false
     var moveIndex = this.getNextMoveIndex()
     var self = this
-    var m = this.moves[moveIndex]
-    console.log(self.move)
-  	for(var i=0;i<self.moveLength;i++){
-  		if(self.move[i]!=m[i]){
-        self.moveLength = 0
-        self.totalMoveTicks = 0
-  			self.move = []
-        self.extraSpeed = 0
-  			self.turnOn = false
-  			return
-  		}
-  	}
-    if(m.length==self.move.length){
+    var found  = false
+    var moveIndex = 0
+   for (moveIndex = 0; moveIndex < this.moves.length; moveIndex++) {
+     var m = this.moves[moveIndex]
+     found = true
+     for (var i = 0; i < self.moveLength; i++) {
+       if (self.move[i] != m[i]) {
+         found = false
+         break
+       }
+     }
+     if(found){
+       break
+     }
+   }
+   console.log(this.move)
+   if(!found){
+     self.reset()
+     return
+   }
+   var m = this.moves[moveIndex]
+   if(m.length==self.move.length){
      this.move=[]
      this.moveLength = 0
      this.scene.startMove(moveIndex,self.nextTick*m.length)
      Sounds.play(Sounds.gameSounds.correct_move)
-    }
+   }
   }
 });
