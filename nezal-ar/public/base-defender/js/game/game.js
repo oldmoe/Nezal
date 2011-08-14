@@ -118,8 +118,10 @@ var Game = Class.create({
     var self = this;
     var loaderFinishCallback = function(){
       var mapView = ""
-      serviceProvider.friends( function(ids) {
-                                  self.network.friends(ids, function(friendIDs){
+      serviceProvider.friends( function(friends) {
+                                  var friend_ids = [];
+                                  friends.each(function(friend){friend_ids.push(friend.id)})
+                                  self.network.friends(friend_ids, function(friendIDs){
                                     var mapping = {};
                                     var ids = []
                                     friendIDs.each(function(user, index){

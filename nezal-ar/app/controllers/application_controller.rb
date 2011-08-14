@@ -23,6 +23,10 @@ class ApplicationController < Sinatra::Base
     @service_provider
   end
 
+  def build_game_profile_key service_id
+    UserGameProfile::generate_key(Service::PROVIDERS[@service_provider][:prefix], Game::current.key, service_id)
+  end
+
   before do 
     app_name = env['PATH_INFO'].split('/')[1]
     @service_provider = env['SCRIPT_NAME'].split('/')[1].split('-')[0]
@@ -38,7 +42,7 @@ class ApplicationController < Sinatra::Base
             @user = User.create(key,  { 'coins'=> 1000 })
             puts "Creating new user !! #{@user}"
           end
-          key = UserGameProfile::generate_key(Service::PROVIDERS[@service_provider][:prefix], Game::current.key, @service_id)
+          key = build_game_profile_key(@service_id)
           @game_profile = UserGameProfile.get(key)
           if !(@game_profile)
             @game_profile = UserGameProfile.create(key)

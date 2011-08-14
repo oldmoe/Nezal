@@ -103,21 +103,10 @@ var FBConnect = {
         callback = function(){
 		                  Ajax.Responders.register({
 			                    onCreate: function(req) {
-                							var inviter = ''
-                							var search = window.location.search
-                							if(search){
-                								search = search.split('?')[1]
-                								if(search){
-                									search = search.split('&').find(function(pair){ return pair.include('inviter')})
-                										if(search){
-                											inviter = search
-                										}
-                									}
-                							}
                               var user = { 'fb_sig_user' : FBConnect.session.userID,
                                          'fb_sig_expires' : FBConnect.session.expiresIn,
                                          'signed_request' : FBConnect.session.signedRequest }
-            					        req.url += (req.url.include('?') ? '&' : '?') + Object.toQueryString(user) + '&' + inviter
+            					        req.url += (req.url.include('?') ? '&' : '?') + Object.toQueryString(user);
             					        return true
 			                    }
 		                  });
@@ -126,12 +115,27 @@ var FBConnect = {
                           document.getElementsByTagName('fb:fan')[0].writeAttribute('profile_id', FBConnect.appIds[FBConnect.url()]);
                           FB.XFBML.parse();
                       }
-                      FBConnect.callback();
+                      FBConnect.callback(FBConnect.getUrlParams());
 		                  FBConnect.getUserInfo(function(){});
                       FBConnect.registerStatusChangeHandlers();
-                    FBConnect.request()
                 }
           FBConnect.getStatus(callback);
+    },
+
+    getUrlParams : function(){
+      var params = {};
+			var search = window.location.search
+			if(search){
+				search = search.split('?')[1]
+				if(search){
+					var paramStrings = search.split('&')
+					paramStrings.each(function(string){
+            pair = string.split('=');
+            params[pair[0]] = pair[1];
+          })          
+        }
+			}
+      return params
     },
 
     registerStatusChangeHandlers : function(){
@@ -164,11 +168,11 @@ var FBConnect = {
 				    query2.value.each(function(row){
 	  				    result[row.uid].name = row.name
 				    })
-				  if(callback)callback()
+  				  if(callback)callback();
 			  })
 	  },
     
-    share : function(shareable){
+    shareWithAppUsers : function(shareable){
       var userId = shareable.userId;
       var message = shareable.userMessage;
       var picture = shareable.picture;
@@ -183,14 +187,77 @@ var FBConnect = {
         link: link,
         name: name,
         caption: caption,
-//        actions : [{name : , link : }, {name : , link : }, {name : , link : }],
-        privacy : privacy,
-        to : []
+//        actions : [{name : , link : }],
+        privacy : privacy
       }, function(response) {
         
       });
     },
-	  
+
+    shareWithAll : function(shareable){
+      var userId = shareable.userId;
+      var message = shareable.userMessage;
+      var picture = shareable.picture;
+      var link = shareable.link.url;
+      var name = shareable.link.name;
+      var caption = shareable.link.caption;
+      var description = shareable.gameMessage;
+      FB.api('/' + userId + '/feed', 'post', {
+        message: message,
+        picture: picture,
+        link: link,
+        name: name,
+        caption: caption
+//        actions : [{name : , link : }],
+      }, function(response) {
+        
+      });
+    },	  
+
+    requestFromAppUsers : function(request, callback) {
+        request['filters'] = ['app_users'];
+        FBConnect.sendRequest(request, callback);
+    },
+
+    requestFromNoneAppUsers : function(request, callback){
+        request['filters'] = ['app_non_users'];
+        FBConnect.sendRequest(request, callback);
+    },
+
+    requestFromAll : function(request, callback){
+        request['filters'] = ['all'];
+        FBConnect.sendRequest(request, callback);
+    },
+
+    requestFromId : function(id, request, callback){
+        request['to'] = id;
+        FBConnect.sendRequest(request, callback);
+    },
+
+    sendRequest : function(request, callback){
+        var requestObject = {
+                              method: 'apprequests',
+                              title : request['title'],
+                              message : request['message']
+                        }
+        var options = ['data', 'to', 'filters', 'exclude_ids'];
+        for(var i=0; i<options.length; i++)
+        {
+            if(request[options[i]])
+                requestObject[options[i]] = request[options[i]];
+        }
+        FB.ui( requestObject, 
+            function(response){
+                  var ids = null;
+                  if(response && response['request_ids'])
+                      var ids = response['request_ids'].join(',');
+                  FB.api('/?ids=' + ids, function(response) 
+                  {
+                      if(callback) callback(response);
+                  });
+            });
+    },
+
 	  isFan : function(callback) {
 	      var query = FB.Data.query("SELECT page_id FROM page_fan WHERE uid={0}", FB.getAuthResponse().userID);
         FB.Data.waitOn([query], function(){
@@ -203,6 +270,19 @@ var FBConnect = {
         });
 	  },
     
+    getObject : function(id, callback) {
+        FB.api('/?ids=' + id, function(response){
+                                if(callback) callback(response);
+            });
+            
+    },
+
+    deleteObject : function(id){
+        FB.api( id, 'delete', function(response){
+                            if(callback) callback(response);
+              });
+    },
+
     bookmark : function(callback){
         FB.ui({ method: 'bookmark.add' },  
               function(response) {
@@ -261,15 +341,14 @@ var FBConnect = {
         var callback = callback;
         FB.api( 'me/friends', function(response) 
             {
-                var ids = response;
-                if(callback) callback(ids);
+               if(callback && response && response.data) callback(response.data);
             }
         );
     }, 
 
     buyItem : function(itemId){
       var callback = function(data) {
-      if (data['order_id']) {
+        if (data['order_id']) {
           console.log(true);
         } else {
           
@@ -279,7 +358,7 @@ var FBConnect = {
       };
       var obj = {
           method: 'pay',
-          order_info: itemId,
+          order_info: itemId  ,
           purchase_type: 'item'
       };
       FB.ui(obj, callback);

@@ -146,13 +146,8 @@ class GamesController < ApplicationController
       case params['method']
       when 'payments_get_items'
         result = {'content' => [], 'method' => 'payments_get_items' }
-        product = {}
+        product = Product.get(data['order_info'])
         product['item_id'] = data['order_info']
-        product['title'] = 'Test purchase'
-        product['price'] = 10
-        product['description'] = 'Test purhcase description'
-        product['image_url'] = 'http://base-defender.nezal.com:4500/fb-games/base-defender/images/buildings/moving/green_wedge_moving.png'
-        product['product_url'] = 'http://apps.facebook.com/base-defender/'
         result['content'] << product
       when 'payments_status_update'
         result = {'content' => {}, 'method' => 'payments_status_update' }
@@ -165,11 +160,31 @@ class GamesController < ApplicationController
     JSON.generate(result)
   end
 
-  post '/:game_name/friends_request' do
-    friendsIds = params['ids']
-    timestamp = params['timestamp']
-    request = FriendRequest.get(user.key)
-    request = FriendRequest.create(key, {'receivers' => friendsIds })
+  get '/:game_name/requests/exclude' do
+    ids = []
+    user_requests = Request.get(user_game_profile.key)    
+    ids = user_requests.excluded_friends unless user_requests.nil?
+    JSON.generate(ids)
+  end
+
+  post '/:game_name/requests' do
+    user_requests = Request.get(user_game_profile.key)
+    if user_requests.nil?
+      user_requests = Request.create(user_game_profile.key)
+    end
+    data = Metadata.decode(params['data'])
+    data['requests'].each do |id, request|
+      user_requests.requests[id] = request
+    end
+    user_requests.save
+  end
+
+  post '/:game_name/requests/accept' do 
+    data = Metadata.decode(params['data'])
+    request_id = data['request_id']
+    from_user_key = data['from']
+    user_requests = Request.get(build_game_profile_key(from_user_key))
+    request = user_requests.process user_game_profile.service_id, request_id
   end
 
   post '/:game_name/accept_request' do 
