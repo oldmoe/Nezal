@@ -141,7 +141,7 @@ class GamesController < ApplicationController
     LOGGER.debug ">>>>>>>>>>>> Facebook credits"
     LOGGER.debug ">>>>>>>>  #{params}"
     result = nil
-    data = Service::PROVIDERS[service_provider][:helper]::decode params['signed_request'], app_conigs if params['signed_request']
+    data = Service::PROVIDERS[service_provider][:helper]::decode params['signed_request'], app_configs if params['signed_request']
     if data
       case params['method']
       when 'payments_get_items'

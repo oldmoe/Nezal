@@ -15,7 +15,7 @@ class FBHelper
       # Check for signed request
       #   If exists then authenticate it
       #   else check for request cookie string
-      cookie = cookie_hash['fbsr_' + app_configs['id']] ? cookie_hash['fbsr_' + app_configs['id']] : params['signed_request']
+      cookie = cookie_hash && cookie_hash['fbsr_' + app_configs['id']] ? cookie_hash['fbsr_' + app_configs['id']] : params['signed_request']
       if cookie
         session = decode cookie, app_configs
         request_expire = params['fb_sig_expires'].to_i

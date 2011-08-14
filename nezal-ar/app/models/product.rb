@@ -2,7 +2,7 @@ class Product < DataStore::Model
 
   @@data = { 'fb' => { 'title'=>'', 'description'=>'', 'image_url'=>'', 'product_url'=>'' } }
 
-  def get key
+  def get(key)
     {
        'tilte' => 'Test',
        'price' => 10,
