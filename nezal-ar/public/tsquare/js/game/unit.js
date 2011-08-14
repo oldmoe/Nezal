@@ -2,17 +2,23 @@ var Unit = Class.create({
   x:0,y:0,
   speed : 1,
   angle :0,
+  power: 10,
   stateChanged : false,
   rotating : false,
-  rotationSpeed : 3,
+  rotationSpeed : 6,
   directionsCovered : 0,
   kickedoutYShift : 0,
   maxkickedoutYShift : 57,
   kickedOutXShift : false,
   dead : false,
-  initialize : function(scene,x,y){
-    this.coords ={x:x, y:y}
+  enterSpeed : 3,
+  movingToTarget : false,
+  initialize : function(scene,x,lane){
+    this.target = null
     this.scene = scene
+    this.lane = lane
+    var y = this.scene.laneMiddle*2*this.lane+this.scene.laneMiddle - 10 + Math.round(Math.random()*100)
+    this.coords ={x:x, y:y}
   },
   
   tick : function(){ 
@@ -20,8 +26,12 @@ var Unit = Class.create({
     if(this.kickedout) this.kickout() 
     if(this.rotating){
         this.rotationMove()
+    }else if(this.movingToTarget){
+      if(this.target.x - this.enterSpeed > this.coords.x) this.coords.x+=this.enterSpeed
+      else if(this.target.x + this.enterSpeed < this.coords.x) this.coords.x-=this.enterSpeed
+      else this.movingToTarget = false
     }
-    if(this.scene.moving || this.rotating || this.kickedout)
+    if(this.scene.moving || this.rotating || this.kickedout || this.movingToTarget)
       this.stateChanged = true
     else 
       this.stateChanged = false
@@ -37,7 +47,7 @@ var Unit = Class.create({
   },
   
   createRandomRotationDistance : function(){
-    return Math.random()*50
+    return Math.random()*20
   },
   
   rotationMove : function(){
@@ -80,8 +90,16 @@ var Unit = Class.create({
     }
     if(this.directionsCovered == 5){
         this.rotating = false
+        this.target.takeHit(this.power)
         return
     }
+  },
+  takeHit : function(power){
+    this.hp-= power
+    if(this.hp <=0){
+      this.scene.obstacles[this.lane].remove(this)
+      this.destroy()
+    }   
   },
   
   move : function(dx,dy){
@@ -106,6 +124,10 @@ var Unit = Class.create({
         this.move(-3, 0)
       }
     }
+  },
+  moveToTarget : function(target){
+   this.movingToTarget = true
+   this.target = target
   }
 })
 var DIRECTIONS =  {U:0,D: 1, L : 2, R : 3}

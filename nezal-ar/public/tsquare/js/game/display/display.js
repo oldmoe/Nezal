@@ -2,8 +2,6 @@ var Display = Class.create({
   xdim :0,
 	ydim :0,
 	zdim :0,
-	imgWidth :0,
-	imgHeight :0,
 	sprites : null,
 	initialize : function(owner,properties){
 		Object.extend(this,properties)
@@ -16,7 +14,6 @@ var Display = Class.create({
   createSprites : function(){
     
   },
-
   render : function(){
     for(var sprite in this.sprites){
       this.sprites[sprite].render()

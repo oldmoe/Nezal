@@ -24,13 +24,17 @@ var MovementManager = Class.create({
    this.nextTick = this.moveSpeed-this.extraSpeed
     Sounds.play(Sounds.gameSounds.beat)
     var self = this
-    this.scene.reactor.push(this.moveSpeed-this.extraSpeed,function(){self.playSounds()})
+    this.scene.reactor.push(this.nextTick,function(){self.playSounds()})
   },
   reset : function(){
     this.turnOn = false
     this.move = []
     this.scene.moving = false
     this.scene.beatMoving = false
+    this.scene.comboStart = false
+    this.scene.currentCombos = 0
+    this.scene.speed = 3
+    if(this.scene.energy > 0)this.scene.energy-=this.scene.energyIncrease
     this.extraSpeed = 0
     this.ticksPassed = 0
   },
@@ -51,6 +55,8 @@ var MovementManager = Class.create({
         self.scene.moving = false
         self.scene.beatMoving = false
         self.reset()
+      }else if(self.scene.moving){
+        self.scene.comboStart = true
       }
       var click = -1
       if (e.keyCode == 39) {
@@ -60,20 +66,25 @@ var MovementManager = Class.create({
           click = 1
         }
       if(!self.turnOn) self.turnOn = true
+      console.log(self.ticksPassed, self.nextTick)
        if(click!=-1 && self.ticksPassed >= self.nextTick-5 && self.ticksPassed <= self.nextTick+5){		
-      		self.move.push(click)
-      		self.moveLength++
-      }else if(self.ticksPassed < 2){
+            console.log('=')
+      		  self.move.push(click)
+      		  self.moveLength++
+      }else if(self.ticksPassed <  self.nextTick-5){
+            console.log('<')
             self.reset()
             self.moveLength = 1
-      		self.move = [click]
+      		  self.move = [click]
             self.totalMoveTicks =0
-      }else if(self.ticksPassed > 14){
-            self.extraSpeed = 0
+      }else if(self.ticksPassed > self.ticksPassed <= self.nextTick+5){
+            console.log('>')
             self.reset()
             self.moveLength = 1
-			self.move = [click]
+			      self.move = [click]
             self.totalMoveTicks =0
+      }else{
+            alert('!!!')            
       }
       self.checkMove()
       self.ticksPassed = 0

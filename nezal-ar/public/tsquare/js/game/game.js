@@ -24,10 +24,11 @@ var Game = Class.create({
     })
     this.scene = new TsquareScene()
 		
-		var backgroundImages = ['skyline.png', 'skyline_transparent.png', 'cloud.jpg', 'road.jpg']
+		var backgroundImages = ['skyline.png', 'sky1.png', 'land.png' , '3amod.png', 'street_marks.png']
 		var gameElementsImages = ['arrow_up.png','arrow_down.png', 'bubble.png', 'world.png']
-    var characterImages = ['crowd_member.png','follower.png', 'npc.png']
-    var enemiesImages = ['block.png']
+    var characterImages = ['healer.png','dehydrator.png','follower.png', 'npc.png',
+    'ultras_white_walk.png','ultras_red_walk.png','ultras_normal_walk.png','salafi_walk.png']
+    var enemiesImages = ['block.png','amn_markazy_hit.png']
 		var self = this
 		new Loader().load([{images: backgroundImages, path: 'images/background/', store: 'background'},
     {images: gameElementsImages, path: 'images/game_elements/', store: 'gameElements'},

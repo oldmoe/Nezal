@@ -1,15 +1,25 @@
 var CrowdMember = Class.create(Unit,{
-  noOfFollowers : 5,
   xShift : 100,
-  hp : 30,
-  maxHp : 30,
-  hydra : 30,
-  maxHydra : 30,
-  initialize : function($super,scene,x,y){
+  hp : 300,
+  maxHp : 300,
+  water : 300,
+  maxWater : 300,
+  initialize : function($super,scene,x,y,options){
     x = x + this.xShift
     $super(scene,x,y)
+    if(options && options.level) this.level = options.level
+    else this.level = 4
     this.followers = []
-    this.createFollowers()
+    //this.createFollowers()
+  },
+  createFollower : function(){
+      if(this.followers.length >= this.level)return
+      var x = this.coords.x - Math.floor(((this.followers.length/4)+1)*15 * Math.random())
+      var y = this.coords.y + parseInt(50 * Math.random()) - 25
+      var follower = this.scene.addObject({name:"follower", x:this.scene.xPos - 30, y:y})
+      this.scene.push(follower)
+      this.followers.push(follower)
+      follower.moveToTarget({x:x,y:y})
   },
   createFollowers : function(){
     for(var i=0;i<this.noOfFollowers;i++){
