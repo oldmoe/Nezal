@@ -1,13 +1,6 @@
-"156711934356799" : 
-  id : "156711934356799"
-  name : local-base-defender
+"119464494818795" : 
+  id : "119464494818795"
+  name : tahrir-square
   key : "59cde5fd0d13844ba08f50a8e00ff824"
-  secret : "e4d78ff55c23165a378464a798c93bcb"
-  game_name : base-defender
-
-"111103738948774" : 
-  id : "111103738948774"
-  name : base-defender
-  key : "46133ae13c1631c8bd3b56db7ec7d865"
-  secret : "7a93abb8197660f7031dc592c321958e"
-  game_name : base-defender
+  secret : "9ba3593c2055052165eaf8ae9cd74672"
+  game_name : tsquare
