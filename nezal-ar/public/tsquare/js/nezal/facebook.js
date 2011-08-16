@@ -5,7 +5,8 @@ var FBConnect = {
         		'city-defender' : "107418339291733",
         		'defenderofarabia' : "122519734470004",
         		'local-base-defender' : "156711934356799",
-        		'base-defender' : "111103738948774"
+        		'base-defender' : "111103738948774",
+			'tahrir-square' : "119464494818795"
 	  },
     
     location : null,
