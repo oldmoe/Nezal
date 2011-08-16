@@ -15,7 +15,7 @@ var SkyLine = Class.create({
     
     var background_cloud = new Background(this.scene, {speed : function(){return self.scene.speed-2}, y: 0, imagesCount: 3, images:images_cloud})
     var background_road = new Background(this.scene, {speed : function(){return self.scene.speed}, y: 167, imagesCount: 6, images:images_road})
-		var background_transparent = new Background(this.scene, {speed : function(){return self.scene.speed-2}, y: 0, imagesCount: 3, images:images_transparent})
+		var background_transparent = new Background(this.scene, {speed : function(){return self.scene.speed-2}, y: 0, imagesCount: 3, images:images_transparent},{opacity:0.4})
 		var background = new Background(this.scene, {speed : function(){return self.scene.speed-1}, y: 20, imagesCount: 3, images:images})
     var background_street_marks = new Background(this.scene, {speed : function(){return self.scene.speed}, y: 265, imagesCount: 2, images:images_streetMarks})
 		

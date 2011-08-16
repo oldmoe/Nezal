@@ -17,7 +17,7 @@ var Unit = Class.create({
     this.target = null
     this.scene = scene
     this.lane = lane
-    var y = this.scene.laneMiddle*2*this.lane+this.scene.laneMiddle - 10 + Math.round(Math.random()*100)
+    var y = this.scene.laneMiddle*2*this.lane+this.scene.laneMiddle
     this.coords ={x:x, y:y}
   },
   
