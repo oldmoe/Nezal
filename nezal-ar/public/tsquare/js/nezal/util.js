@@ -163,7 +163,9 @@ var Util = {
 		   return game.domConverter.getHTML(link);
 	}
 }
-
+String.prototype.formClassName = function(){
+  return this.dasherize().capitalize().camelize()
+}
 Array.prototype.random = function(){
 	return this[Math.round(Math.random()*(this.length-1))]
 }

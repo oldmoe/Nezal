@@ -1,6 +1,6 @@
 var Background = Class.create({
 	
-	initialize: function(scene, options){
+	initialize: function(scene, options,style){
 		this.imagesCount = options.imagesCount
 		this.scene = scene
 		this.speed = options.speed
@@ -10,7 +10,7 @@ var Background = Class.create({
 		this.container = $(document.createElement('div'))
 		$("container").appendChild(this.container)
 		this.container.addClassName('skyline')
-			
+		if(style && style.opacity)this.container.style.opacity = style['opacity']
 		var maxWidth = this.images[0].width
 		for(var i=1; i<this.images.length; i++){
 			if( maxWidth < this.images[i].width)

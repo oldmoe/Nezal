@@ -1,4 +1,4 @@
-var BlockDisplay = Class.create(Display,{
+var AmnMarkazyDisplay = Class.create(Display,{
   imgWidth:80,
   imgHeight:80,
   noOfFrames : 8,
