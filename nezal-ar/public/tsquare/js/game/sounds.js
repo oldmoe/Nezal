@@ -50,7 +50,7 @@ var Sounds = {
 		Sounds.gameSounds.game[0].togglePause()
 	},
 	stopTrack : function(){
-		if(!Sounds.gameSounds.game||Sounds.muted)return
+		if(!Sounds.gameSounds.game||Sounds.muted)returnss
 		Sounds.gameSounds.game[0].stop()
 	},
 	play : function(store, direct){
@@ -69,6 +69,7 @@ var Sounds = {
 				} else {
 					Sounds.channels.push([store, new Date])
 					store[2]++
+					if(store[0])store[0].load()			
 					if(store[0])store[0].play()				
 				}
 			}

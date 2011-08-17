@@ -136,6 +136,60 @@ class GamesController < ApplicationController
     @game_profile.save
     @game_profile.locale
   end
+
+  post '/:game_name/credits' do
+    LOGGER.debug ">>>>>>>>>>>> Facebook credits"
+    LOGGER.debug ">>>>>>>>  #{params}"
+    result = nil
+    data = Service::PROVIDERS[service_provider][:helper]::decode params['signed_request'], app_configs if params['signed_request']
+    if data
+      case params['method']
+      when 'payments_get_items'
+        result = {'content' => [], 'method' => 'payments_get_items' }
+        product = Product.get(data['order_info'])
+        product['item_id'] = data['order_info']
+        result['content'] << product
+      when 'payments_status_update'
+        result = {'content' => {}, 'method' => 'payments_status_update' }
+        if params['status'] == 'placed'
+          result['content']['status'] = 'settled'
+          result['content']['order_id'] = data['order_id']
+        end
+      end
+    end
+    JSON.generate(result)
+  end
+
+  get '/:game_name/requests/exclude' do
+    ids = []
+    user_requests = Request.get(user_game_profile.key)    
+    ids = user_requests.excluded_friends unless user_requests.nil?
+    JSON.generate(ids)
+  end
+
+  post '/:game_name/requests' do
+    user_requests = Request.get(user_game_profile.key)
+    if user_requests.nil?
+      user_requests = Request.create(user_game_profile.key)
+    end
+    data = Metadata.decode(params['data'])
+    data['requests'].each do |id, request|
+      user_requests.requests[id] = request
+    end
+    user_requests.save
+  end
+
+  post '/:game_name/requests/accept' do 
+    data = Metadata.decode(params['data'])
+    request_id = data['request_id']
+    from_user_key = data['from']
+    user_requests = Request.get(build_game_profile_key(from_user_key))
+    request = user_requests.process user_game_profile.service_id, request_id
+  end
+
+  post '/:game_name/accept_request' do 
+    "Yes we will reward him now or whatevuh"
+  end
   
   # Do not remove 127.0.0.1 from the valid gateway, it is safe 
   @@valid_gateways = ['195.58.177.2','195.58.177.3','195.58.177.4','195.58.177.5', "127.0.0.1"]
@@ -153,6 +207,10 @@ class GamesController < ApplicationController
   end
 
   get '/:game_name/' do
+    File.read(File.join( 'public', @app_configs["game_name"], @service_provider + '-' + 'index.html'))
+  end
+
+  post '/:game_name/' do
     File.read(File.join( 'public', @app_configs["game_name"], @service_provider + '-' + 'index.html'))
   end
 

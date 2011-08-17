@@ -1,10 +1,23 @@
 var TsquareScene = Class.create(Scene,{
-	laneMiddle : 57,
-  tileWidth : 80,
+	laneMiddle : 45,
+  tileWidth : 50,
   energy : 0,
   maxEnergy : 30,
   conversationOn : false,
   coords: {x:200,y:10},
+  moveBack : false,
+  energyIncrease : 3,
+  moving : false,
+  beatMoving : false,
+  moves : 0,
+  combos : 0,
+  comboStart : false,
+  currentCombos : 0,
+  noOfLanes : 3,
+  crowdMemberInitialX : 200,
+  crowdMemberInitialY : 100,
+  numberOfCrowdMembersPerColumn : 2,
+  nextFollower : {lane:0,index:0},
 	initialize: function($super,game){
 		$super(game)
     this.network = new Network()
@@ -15,7 +28,7 @@ var TsquareScene = Class.create(Scene,{
 		this.createRenderLoop('skyline',1)
     this.createRenderLoop('characters',2)
     this.xPos = 0
-    this.speed = 1
+    this.speed = 3
     this.moving = false
     var self = this
     this.bubbles = []
@@ -24,49 +37,77 @@ var TsquareScene = Class.create(Scene,{
     this.inScenarios = []
     this.inEvents = []
     //this.network.fetchTemplate('missions/1.json',function(response){
-      self.data = gameData
-      self.noOfLanes = self.data.length
-      for(var i =0;i<self.data.length;i++){
-        self.inObstacles[i] = []
-        self.inCrowdMembers[i] = []
-        self.crowdMembers[i] = []
-        for(var j=0;j<self.data[i].length;j++){
-          var elem = self.data[i][j] 
-          if(elem.name=='block')self.inObstacles[i].push({'name':elem.name, x:elem.x*self.tileWidth,y:self.laneMiddle*2*i+self.laneMiddle})
-          else if(elem.name=='crowdMember')self.inCrowdMembers[i].push({'name':elem.name, x:elem.x*self.tileWidth,y:i})
-          else if(elem.name=='scenario')self.inScenarios.push({'name':elem.name, x:elem.x*self.tileWidth,y:self.laneMiddle*2*i+self.laneMiddle, "scenario":
-          elem.scenario})
-          else if(elem.name=='event') self.inEvents.push(elem)
+    self.data = gameData.data
+    self.noOfLanes = self.data.length
+    for(var i =0;i<self.data.length;i++){
+      self.inObstacles[i] = []
+      self.inCrowdMembers[i] = []
+      self.crowdMembers[i] = []
+      for(var j=0;j<self.data[i].length;j++){
+        var elem = self.data[i][j] 
+        if(elem.type=='enemy'){
+          self.inObstacles[i].push({'name':elem.name, x:elem.x*self.tileWidth,y:i})
+          if(elem.name=="block"){
+            self.inObstacles[i][self.inObstacles[i].length-1].options = {rows:elem.rows, columns:elem.columns, obj : elem.object}
+          }
         }
+        else if(elem.type=='crowd')self.inCrowdMembers[i].push({'name':elem.name, x:elem.x*self.tileWidth,y:i})
+        else if(elem.type=='scenario')self.inScenarios.push({'name':elem.name, x:elem.x*self.tileWidth,y:i, "scenario":
+        elem.scenario})
       }
+    }
+      self.inEvents = gameData.events
     //})
     this.obstacles = []
 	},
+  addBlock : function(){
+    var elements = []
+    for(var i=0;i<9;i++){
+      var obj = new AmnMarkazy(this,0,0)
+      elements.push(obj)
+      var displayKlass =eval("AmnMarkazyDisplay") 
+      var objDisplay = new displayKlass(obj)
+      this.pushToRenderLoop('characters',objDisplay)
+    }
+    if(!this.obstacles[0])this.obstacles[0]=[]
+    this.block = new Block(this,500,0,{rows:3,columns:3,elements:elements})
+    this.inObstacles = [[]]
+    this.obstacles[0] = [this.block]
+     this.pushToRenderLoop('characters',objDisplay)
+  },
   addNpcs : function(){
     var rand = Math.random()
-    if(rand < 0.1){
+    if(rand < 0.0001){
       var direction = Math.randomSign()
       var x = 0
       if(direction==-1)x = this.width
-      var y = this.laneMiddle + (this.noOfLanes-1)*this.laneMiddle*2
+      var y = this.laneMiddle + Math.round(Math.random()*(this.noOfLanes-1))*this.laneMiddle*2
       var npc = this.addObject({name:'npc','x':x,y:y, 'options':{direction:direction}})
       this.npcs.push(npc)
     }
     var self = this
     this.reactor.push(10,function(){self.addNpcs()})
   },
-  addCrowdMember : function(x,laneNumber){
-   var crowdMember = new CrowdMember(this,x,laneNumber*this.laneMiddle*2+this.laneMiddle)
-   var crowdMemberDisplay = new CrowdMemberDisplay(crowdMember)
-   this.crowdMembers[laneNumber].push(crowdMember)
-   this.pushToRenderLoop('characters',crowdMemberDisplay)
+  addCrowdMember : function(x,laneNumber,name){
+     var klassName = name.capitalize()
+     var klass = eval(klassName)
+     var obj = new klass(this,x,laneNumber)
+     var displayKlass =eval(klassName+"Display") 
+     var objDisplay = new displayKlass(obj)
+     this.pushToRenderLoop('characters',objDisplay)
+     this.crowdMembers[laneNumber].push(obj)
+     return obj    
   },
 	tick : function($super){
     $super()
     var self = this
-    if(this.moving)this.xPos+=this.speed
+    if (this.moving) {
+      if(this.moveBack)this.xPos -= this.speed
+      else this.xPos += this.speed
+      this.detectCollisions()
+    }
     this.checkObstacles()
-    this.checkNpcs()
+    //this.checkNpcs()
     this.checkScenarios()
     this.checkCrowdMembers()
     this.checkEvents()
@@ -76,13 +117,11 @@ var TsquareScene = Class.create(Scene,{
   },
   checkEvents : function(){
     for(var i=0;i<this.inEvents.length;i++){
-      if(this.inEvents[i].attribute=='energy'){
-        if(this.energy>=this.inEvents[i].value){
-          this.showMsg(this.inEvents[i].msg)
+        if(this.energy>=this.inEvents[i].energy){
+          this.showMsg(this.inEvents[i].message)
           this.inEvents.splice(i,1)
         }
-      }
-    }
+     }
   },
   showMsg : function(msg){
     $$('#modalWindowMsg #contents')[0].innerHTML =  msg
@@ -101,10 +140,19 @@ var TsquareScene = Class.create(Scene,{
     }    
   },
   checkCrowdMembers : function(){
+    for (var i = 0; i < this.crowdMembers.length; i++) {
+      for (var j = 0; j < this.crowdMembers[i].length; j++) {
+         if(this.crowdMembers[i][j].dead){
+           this.crowdMembers[i][j].destroy()
+           this.crowdMembers[i].splice(j, 1)
+           j--
+         }  
+      }
+    }
     for(var i=0;i<this.inCrowdMembers.length;i++){
       for(var j=0;j<this.inCrowdMembers[i].length;j++){
         if (this.inCrowdMembers[i][j].x < this.xPos + this.width) {
-          this.addCrowdMember(this.inCrowdMembers[i][j].x, this.inCrowdMembers[i][j].y)
+          this.addCrowdMember(this.inCrowdMembers[i][j].x, this.inCrowdMembers[i][j].y,this.inCrowdMembers[i][j].name)
           this.inCrowdMembers[i].splice(0, 1)
           j--;
         }
@@ -118,7 +166,7 @@ var TsquareScene = Class.create(Scene,{
     var self = this
     var remainingObjects = []
     this.npcs.each(function(obj){
-      if(obj.coords.x>=0 && obj.coords.x <=self.width) remainingObjects.push(obj)
+      if(obj.coords.x>=0 && obj.coords.x <=self.width && !obj.dead) remainingObjects.push(obj)
       else obj.destroy()        
     })
     this.npcs = remainingObjects
@@ -128,7 +176,7 @@ var TsquareScene = Class.create(Scene,{
     for(var i=0;i<this.obstacles.length;i++){
       remainingObstacles[i] = []
       for (var j = 0; j < this.obstacles[i].length; j++) {
-        if (this.obstacles[i][j].coords.x > 0) 
+        if (this.obstacles[i][j].coords.x > 0 && !this.obstacles[i][j].dead) 
           remainingObstacles[i].push(this.obstacles[i][j])
         else {
           this.obstacles[i][j].destroy()
@@ -151,12 +199,15 @@ var TsquareScene = Class.create(Scene,{
     }
   },
   addObject : function(objHash){
-     var klassName = objHash.name.capitalize()
+     var klassName = objHash.name.formClassName()
      var klass = eval(klassName)
+     console.log(this,objHash.x)
      var obj = new klass(this,objHash.x - this.xPos,objHash.y,objHash.options)
-     var displayKlass =eval(klassName+"Display") 
+     var displayKlass = eval(klassName + "Display")
      var objDisplay = new displayKlass(obj)
-     this.pushToRenderLoop('characters',objDisplay)
+     if (!obj.noDisplay) {
+       this.pushToRenderLoop('characters', objDisplay)
+     }
      return obj
   },
   addBubble : function(crowdMemberIndex,laneNumber, msg){
@@ -186,8 +237,8 @@ var TsquareScene = Class.create(Scene,{
     this.canvasHeight = $('gameCanvas').getHeight()
 		this.skyLine = new SkyLine(this)
     this.movementManager = new MovementManager(this)
-    this.addCrowdMember(10,0)
     this.addNpcs()
+    //this.addBlock()
 	},
   createEnergyBar : function(){
     var self = this
@@ -199,18 +250,79 @@ var TsquareScene = Class.create(Scene,{
     }})
     this.pushToRenderLoop('characters',energySprite)
   },
-  startMove : function(commandIndex){
+  startMove : function(commandIndex,noOfTicks){
     if(this.conversationOn) return
-//    for(var i=0;i<this.crowdMembers.length;i++){
-//      for(var j=0;j<this.obstacles.length;j++){
-//        if(this.crowdMembers[i].coords.x+this.crowdMembers[i].imgWidth > this.obstacles[j].coords.x){
-//          this.moving = false
-//          return
-//        } 
-//      }
-//    }
-    this.energy+=3
-    this.moving = true
+    var moves = {forward:0,backward:1,rotating:2}
+    var collision = this.detectCollisions()
+    if(commandIndex == moves.forward){
+      this.moveBack = false
+      if(collision){
+        this.moving = false
+        return
+      }else{
+        this.moving = this.beatMoving = true    
+      }
+    }else if(commandIndex == moves.backward){
+        this.moveBack = true
+        this.moving = this.beatMoving = true
+    }else if(commandIndex == moves.rotating){
+      if (collision) {
+        console.log(1)
+        for(var i=0;i<this.crowdMembers[collision.lane].length;i++)
+          this.crowdMembers[collision.lane][i].rotate(collision.obstacle)
+      }
+    }
+    var self = this
+    if (commandIndex == moves.forward || commandIndex == moves.backward) {
+      this.moves++
+      this.reactor.push(noOfTicks, function(){
+        if(self.comboStart){
+          self.comboStart= false
+          self.combos++
+          if(self.speed < 20)self.speed+=3
+          if(self.movementManager.extraSpeed<9)self.movementManager.extraSpeed+=2
+          self.currentCombos++ 
+        }
+        self.beatMoving = false
+        if(self.energy < self.maxEnergy)self.energy+=self.energyIncrease
+        if(self.currentCombos % 2==0 && self.currentCombos >0)self.createNextFollower()
+      })
+    }
+  },
+  createNextFollower : function(){
+     if(this.crowdMembers[this.nextFollower.lane][this.nextFollower.index]){
+       var index = this.nextFollower.index
+       var lane = this.nextFollower.lane
+       this.crowdMembers[lane][index].createFollower()
+       this.nextFollower.index = this.nextFollower.index+1
+       if(index+1 == this.crowdMembers[lane].length){
+         this.nextFollower.index = 0
+         this.nextFollower.lane = (this.nextFollower.lane +1) % this.crowdMembers.length   
+       }else{
+         this.nextFollower.index++
+       }
+     }
+  },
+  detectCollisions : function(){
+    for(var i=0;i<this.crowdMembers.length;i++){
+      for(var j=0;j<this.crowdMembers[i].length;j++){
+        for (var k = 0; k < this.obstacles[i].length; k++) {
+          if (this.crowdMembers[i][j].coords.x + this.crowdMembers[i][j].getWidth() + 25 > this.obstacles[i][k].coords.x) {
+            if (!this.moveBack) {
+              this.moving = false
+              this.beatMoving = false
+              this.currentCombos = 0
+            }
+            return {
+              crowd: this.crowdMembers[i][j],
+              obstacle: this.obstacles[i][k],
+              lane : i,
+            }
+          }
+        } 
+      }
+    }
+    return null
   }
   
 });
