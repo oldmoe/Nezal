@@ -24,6 +24,10 @@ class Game < DataStore::Model
     FB_CONFIGS::find('name', name)['game_name']       
   end
 
+  def process_service_request user_key, request_data
+    
+  end
+
   class << self  
 
     def current
