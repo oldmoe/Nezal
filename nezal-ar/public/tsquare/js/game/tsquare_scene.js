@@ -45,7 +45,12 @@ var TsquareScene = Class.create(Scene,{
       self.crowdMembers[i] = []
       for(var j=0;j<self.data[i].length;j++){
         var elem = self.data[i][j] 
-        if(elem.type=='enemy')self.inObstacles[i].push({'name':elem.name, x:elem.x*self.tileWidth,y:i})
+        if(elem.type=='enemy'){
+          self.inObstacles[i].push({'name':elem.name, x:elem.x*self.tileWidth,y:i})
+          if(elem.name=="block"){
+            self.inObstacles[i][self.inObstacles[i].length-1].options = {rows:elem.rows, columns:elem.columns, obj : elem.object}
+          }
+        }
         else if(elem.type=='crowd')self.inCrowdMembers[i].push({'name':elem.name, x:elem.x*self.tileWidth,y:i})
         else if(elem.type=='scenario')self.inScenarios.push({'name':elem.name, x:elem.x*self.tileWidth,y:i, "scenario":
         elem.scenario})
@@ -63,10 +68,11 @@ var TsquareScene = Class.create(Scene,{
       var displayKlass =eval("AmnMarkazyDisplay") 
       var objDisplay = new displayKlass(obj)
       this.pushToRenderLoop('characters',objDisplay)
-      if(!this.obstacles[0])this.obstacles[0]=[]
-      this.obstacles[0].push(obj)
     }
-    this.block = new Block(this,{x:500,y:60,rows:3,columns:3,elements:elements})
+    if(!this.obstacles[0])this.obstacles[0]=[]
+    this.block = new Block(this,500,0,{rows:3,columns:3,elements:elements})
+    this.inObstacles = [[]]
+    this.obstacles[0] = [this.block]
      this.pushToRenderLoop('characters',objDisplay)
   },
   addNpcs : function(){
@@ -195,10 +201,13 @@ var TsquareScene = Class.create(Scene,{
   addObject : function(objHash){
      var klassName = objHash.name.formClassName()
      var klass = eval(klassName)
+     console.log(this,objHash.x)
      var obj = new klass(this,objHash.x - this.xPos,objHash.y,objHash.options)
-     var displayKlass =eval(klassName+"Display") 
+     var displayKlass = eval(klassName + "Display")
      var objDisplay = new displayKlass(obj)
-     this.pushToRenderLoop('characters',objDisplay)
+     if (!obj.noDisplay) {
+       this.pushToRenderLoop('characters', objDisplay)
+     }
      return obj
   },
   addBubble : function(crowdMemberIndex,laneNumber, msg){
@@ -258,6 +267,7 @@ var TsquareScene = Class.create(Scene,{
         this.moving = this.beatMoving = true
     }else if(commandIndex == moves.rotating){
       if (collision) {
+        console.log(1)
         for(var i=0;i<this.crowdMembers[collision.lane].length;i++)
           this.crowdMembers[collision.lane][i].rotate(collision.obstacle)
       }
@@ -297,7 +307,7 @@ var TsquareScene = Class.create(Scene,{
     for(var i=0;i<this.crowdMembers.length;i++){
       for(var j=0;j<this.crowdMembers[i].length;j++){
         for (var k = 0; k < this.obstacles[i].length; k++) {
-          if (this.crowdMembers[i][j].coords.x + this.crowdMembers[i][j].imgWidth + 25 > this.obstacles[i][k].coords.x) {
+          if (this.crowdMembers[i][j].coords.x + this.crowdMembers[i][j].getWidth() + 25 > this.obstacles[i][k].coords.x) {
             if (!this.moveBack) {
               this.moving = false
               this.beatMoving = false

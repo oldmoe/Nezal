@@ -3,7 +3,7 @@ var DomSprite = Class.create(Sprite, {
   shiftY : 0,
   shiftZ : 0,
   defaultShiftY : 200,
-  initialize : function(owner, assets, properties,name){
+  initialize : function(owner, assets, properties){
   	properties = properties || {}
     this.createDiv();
     this.div.addClassName('DomSprite');

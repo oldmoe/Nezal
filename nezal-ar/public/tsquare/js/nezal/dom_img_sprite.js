@@ -13,7 +13,7 @@ var DomImgSprite = Class.create(DomSprite, {
     this.currentAnimation = this.animations['normal']
     owner.imgWidth = this.currentAnimation.imgWidth
     owner.imgHeight = this.currentAnimation.imgHeight
-    $super(owner, imgAssets, properties,name);
+    $super(owner, imgAssets, properties);
     //console.log( imgAssets )
     if(properties && properties.flipped){
       this.div.addClassName('flippedSprite')

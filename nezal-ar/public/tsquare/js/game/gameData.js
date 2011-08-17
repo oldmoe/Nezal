@@ -12,6 +12,15 @@ var gameData = {
     "x": 1,
     "index": 0
   },{
+    "name": "block",
+    "type": "enemy",
+    "rows": 3,
+    "columns" : 3,
+    "object" : "amn_markazy",
+    "lane": 0,
+    "x": 10,
+    "index": 0
+  },{
     "name": "salafi",
     "type": "crowd",
     "lane": 0,

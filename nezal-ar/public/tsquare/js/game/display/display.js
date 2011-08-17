@@ -24,5 +24,11 @@ var Display = Class.create({
 		for(var sprite in this.sprites){
 			this.sprites[sprite].destroy();
 	  }
-	}
+	},
+  getWidth : function(){
+    return this.imgWidth 
+  },
+  getHeight: function(){
+    return this.imgHeight
+  }
 });
