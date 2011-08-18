@@ -45,18 +45,18 @@ var TsquareScene = Class.create(Scene,{
       self.crowdMembers[i] = []
       for(var j=0;j<self.data[i].length;j++){
         var elem = self.data[i][j] 
-        if(elem.type=='enemy'){
+        if(elem.category=='enemy'){
           self.inObstacles[i].push({'name':elem.name, x:elem.x*self.tileWidth,y:i})
           if(elem.name=="block"){
             self.inObstacles[i][self.inObstacles[i].length-1].options = {rows:elem.rows, columns:elem.columns, obj : elem.object}
           }
         }
-        else if(elem.type=='crowd')self.inCrowdMembers[i].push({'name':elem.name, x:elem.x*self.tileWidth,y:i})
-        else if(elem.type=='scenario')self.inScenarios.push({'name':elem.name, x:elem.x*self.tileWidth,y:i, "scenario":
+        else if(elem.category=='crowd')self.inCrowdMembers[i].push({'name':elem.name, x:elem.x*self.tileWidth,y:i})
+        else if(elem.category=='scenario')self.inScenarios.push({'name':elem.name, x:elem.x*self.tileWidth,y:i, "scenario":
         elem.scenario})
       }
     }
-      self.inEvents = gameData.events
+      if(gameData.events) self.inEvents = gameData.events
     //})
     this.obstacles = []
 	},
@@ -282,10 +282,14 @@ var TsquareScene = Class.create(Scene,{
           if(self.speed < 20)self.speed+=3
           if(self.movementManager.extraSpeed<9)self.movementManager.extraSpeed+=2
           self.currentCombos++ 
+          self.createNextFollower()
         }
         self.beatMoving = false
         if(self.energy < self.maxEnergy)self.energy+=self.energyIncrease
-        if(self.currentCombos % 2==0 && self.currentCombos >0)self.createNextFollower()
+        console.log('combos',self.currentCombos)
+        if (self.currentCombos % 2 == 0 && self.currentCombos > 0) {
+          console.log('double')
+        }
       })
     }
   },

@@ -32,8 +32,10 @@ var CrowdMember = Class.create(Unit,{
   createFollower : function(){
       if(this.followers.length >= this.level)return
       var x = this.coords.x - Math.floor(((this.followers.length/4)+1)*15 * Math.random())
-      var y = this.coords.y + parseInt(50 * Math.random()) - 25
-      var follower = this.scene.addObject({name:"follower", x:this.scene.xPos - 30, y:y})
+      var randomOffset = Math.round(50 * Math.random()) - 25
+      var y = this.coords.y + randomOffset
+      var follower = this.scene.addObject({name:"follower", x:this.scene.xPos - 30, y:this.lane})
+      follower.coords.y+=randomOffset
       this.scene.push(follower)
       this.followers.push(follower)
       follower.moveToTarget({x:x,y:y})

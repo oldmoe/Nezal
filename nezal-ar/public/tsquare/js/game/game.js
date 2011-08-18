@@ -1,7 +1,8 @@
 var Game = Class.create({
   
   initialize: function(){
-    this.startLoading()		
+    this.startLoading()
+    this.data = gameData		
 	},
   startLoading : function(){
     var self = this
@@ -24,7 +25,14 @@ var Game = Class.create({
     })
     this.scene = new TsquareScene()
 		
-		var backgroundImages = ['skyline.png', 'sky1.png', 'land.png' , '3amod.png', 'street_marks.png']
+		var backgroundImages = ['land.png' , '3amod.png', 'street_marks.png']
+    console.log(this.data.backgrounds[0][0].name)
+    console.log(this.data.backgrounds[1][0].name)
+    console.log(this.data.backgrounds[2][0].name)
+    backgroundImages.push(this.data.backgrounds[0][0].name)
+    backgroundImages.push(this.data.backgrounds[1][0].name)
+    backgroundImages.push(this.data.backgrounds[2][0].name)
+    
 		var gameElementsImages = ['arrow_up.png','arrow_down.png', 'bubble.png', 'world.png']
     var characterImages = ['healer.png','dehydrator.png','follower.png', 'npc.png',
     'ultras_white_walk.png','ultras_red_walk.png','ultras_normal_walk.png','salafi_walk.png']
