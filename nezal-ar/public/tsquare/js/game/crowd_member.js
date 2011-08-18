@@ -1,12 +1,13 @@
 var CrowdMember = Class.create(Unit,{
   xShift : 100,
-  hp : 300,
-  maxHp : 300,
   water : 300,
   maxWater : 300,
   randomDx : 0,
   randomDy : 0,
   initialize : function($super,scene,x,y,options){
+	this.hp = 30;
+	this.maxHp = 300;
+  	
     x = x + this.xShift
     this.originalPosition = {x:0,y:0}
     $super(scene,x,y)
@@ -60,11 +61,21 @@ var CrowdMember = Class.create(Unit,{
       }
     }
   },
+  
   rotate : function($super,target){
     $super(target)
     for(var i=0;i<this.followers.length;i++){
       this.followers[i].rotate(target)
     }
+  },
+  
+  takeHit: function($super, power){
+  	if(this.followers.length > 0)
+  		this.followers[0].takeHit(power);
+  	else
+  		$super(power)	
   }
+  
+  
 })
   

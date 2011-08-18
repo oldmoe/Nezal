@@ -3,6 +3,8 @@ var Unit = Class.create({
   speed : 1,
   angle :0,
   power: 10,
+  hp : 30,
+  maxHp : 30,
   stateChanged : false,
   rotating : false,
   rotationSpeed : 6,
@@ -14,6 +16,7 @@ var Unit = Class.create({
   enterSpeed : 3,
   movingToTarget : false,
   noDisplay : false,
+  
   initialize : function(scene,x,lane){
     this.target = null
     this.scene = scene

@@ -1,5 +1,5 @@
 var TsquareScene = Class.create(Scene,{
-	laneMiddle : 45,
+  laneMiddle : 45,
   tileWidth : 50,
   energy : 0,
   maxEnergy : 30,
@@ -24,7 +24,7 @@ var TsquareScene = Class.create(Scene,{
     this.crowdMembers = []
     this.npcs = []
 		this.width = 760
-		this.height = 550
+		this.height = 410
 		this.createRenderLoop('skyline',1)
     this.createRenderLoop('characters',2)
     this.xPos = 0
@@ -60,21 +60,15 @@ var TsquareScene = Class.create(Scene,{
     //})
     this.obstacles = []
 	},
-  addBlock : function(){
-    var elements = []
-    for(var i=0;i<9;i++){
-      var obj = new AmnMarkazy(this,0,0)
-      elements.push(obj)
-      var displayKlass =eval("AmnMarkazyDisplay") 
-      var objDisplay = new displayKlass(obj)
-      this.pushToRenderLoop('characters',objDisplay)
-    }
-    if(!this.obstacles[0])this.obstacles[0]=[]
-    this.block = new Block(this,500,0,{rows:3,columns:3,elements:elements})
-    this.inObstacles = [[]]
-    this.obstacles[0] = [this.block]
-     this.pushToRenderLoop('characters',objDisplay)
-  },
+	init: function(){
+	    this.createEnergyBar()
+	    this.canvasWidth = $('gameCanvas').getWidth()
+	    this.canvasHeight = $('gameCanvas').getHeight()
+			this.skyLine = new SkyLine(this)
+	    this.movementManager = new MovementManager(this)
+	    this.addNpcs()
+    //this.addBlock()
+	},
   addNpcs : function(){
     var rand = Math.random()
     if(rand < 0.0001){
@@ -231,15 +225,7 @@ var TsquareScene = Class.create(Scene,{
 		}
 		return this
   },
-	init: function(){
-    this.createEnergyBar()
-    this.canvasWidth = $('gameCanvas').getWidth()
-    this.canvasHeight = $('gameCanvas').getHeight()
-		this.skyLine = new SkyLine(this)
-    this.movementManager = new MovementManager(this)
-    this.addNpcs()
-    //this.addBlock()
-	},
+	
   createEnergyBar : function(){
     var self = this
     var energySprite = new DomMeterSprite(this,{styleClass:{empty:'energyEmpty',full:'energyFull'},shiftZ:1000,

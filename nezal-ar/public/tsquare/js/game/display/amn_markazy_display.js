@@ -20,5 +20,10 @@ var AmnMarkazyDisplay = Class.create(Display,{
       //console.log(this.sprites.block.currentAnimationFrame)
       $super()
     //}
+    
+    if(this.owner.hitting == true && this.sprites.block.currentAnimation.name != 'hit')
+    	this.sprites.block.switchAnimation('hit')
+    else if(this.owner.hitting == false && this.sprites.block.currentAnimation.name != 'normal')
+    	this.sprites.block.switchAnimation('normal')
   }
 })

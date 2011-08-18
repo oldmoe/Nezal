@@ -1,5 +1,5 @@
 var MovementManager = Class.create({
-  moves : [[0,0,0,0],[1,1,1,1],[0,1,0,1],[1,1,1,1]],
+  moves : [[0,0,0,0],[2],[1]],
   UP : 0, DOWN : 1,
   move : [],
   movements : [],
