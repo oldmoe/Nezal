@@ -2,6 +2,7 @@ var AmnMarkazy = Class.create(Enemy,{
 	
 	hitting : false,
 	hittingTime: 0,
+	hitOffset: 10,
 		
   initialize : function($super,scene,x,y){
      $super(scene,x,y) 
@@ -40,7 +41,7 @@ var AmnMarkazy = Class.create(Enemy,{
   	var yDiff = Math.abs(this.coords.y-obj.coords.y);
   	if(yDiff < obj.imgHeight || yDiff < this.imgHeight){
   		var xDiff = Math.abs(this.coords.x-obj.coords.x);
-  		if(xDiff < (obj.imgWidth+20) || xDiff < (this.imgWidth+20))
+  		if(xDiff < (obj.imgWidth) || xDiff < (this.imgWidth))
   			return true;
   	}
   	return false;	

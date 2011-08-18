@@ -48,7 +48,9 @@ var DomSprite = Class.create(Sprite, {
       if(this.owner.dead){
         return this.destroy()
       }
-      
+      var scale = ((this.owner.coords.y) / (this.owner.scene.height - this.defaultShiftY)) * 0.8 + 0.5
+      this.div.style.WebkitTransform = 'scale('+scale+')';
+      this.div.style.MozTransform = 'scale('+scale+')';
       if (this.visible) {
         var position = this.position();
         this.div.setStyle({

@@ -36,7 +36,7 @@ var DomImgSprite = Class.create(DomSprite, {
     this.replaceImg(this.currentAnimation.img)
     this.div.style.width = this.currentAnimation.imgWidth + "px"
     this.div.style.height = this.currentAnimation.imgHeight + "px"
-    this.div.style.top = this.position().y + prevAnimation.imgHeight -  this.currentAnimation.imgHeight +"px"
+    //this.div.style.top = this.position().y + prevAnimation.imgHeight -  this.currentAnimation.imgHeight +"px"
     this.img = this.currentAnimation.img
 		this.noOfAnimationFrames = this.currentAnimation.noOfFrames
   },
@@ -56,7 +56,7 @@ var DomImgSprite = Class.create(DomSprite, {
       imgHeight = img.height / noOfFrames
     }
     var animation = {img:img.clone(), noOfFrames : noOfFrames, imgWidth : imgWidth, imgHeight : imgHeight,
-    startY:startY, direction:direction}
+    startY:startY, direction:direction, name: options.name}
     this.animations[options.name] = animation
     return animation
   },

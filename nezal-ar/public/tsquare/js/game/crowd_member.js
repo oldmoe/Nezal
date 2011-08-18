@@ -1,12 +1,13 @@
 var CrowdMember = Class.create(Unit,{
   xShift : 100,
-  water : 300,
-  maxWater : 300,
+  water : 700,
+  maxWater : 700,
   randomDx : 0,
   randomDy : 0,
+  waterDecreaseRate : 0.5,
   initialize : function($super,scene,x,y,options){
 	this.hp = 30;
-	this.maxHp = 300;
+	this.maxHp = 30;
   	
     x = x + this.xShift
     this.originalPosition = {x:0,y:0}
@@ -33,8 +34,10 @@ var CrowdMember = Class.create(Unit,{
   createFollower : function(){
       if(this.followers.length >= this.level)return
       var x = this.coords.x - Math.floor(((this.followers.length/4)+1)*15 * Math.random())
-      var y = this.coords.y + parseInt(50 * Math.random()) - 25
-      var follower = this.scene.addObject({name:"follower", x:this.scene.xPos - 30, y:y})
+      var randomOffset = Math.round(50 * Math.random()) - 25
+      var y = this.coords.y + randomOffset
+      var follower = this.scene.addObject({name:"follower", x:this.scene.xPos - 30, y:this.lane})
+      follower.coords.y+=randomOffset
       this.scene.push(follower)
       this.followers.push(follower)
       follower.moveToTarget({x:x,y:y})
@@ -50,16 +53,27 @@ var CrowdMember = Class.create(Unit,{
   },
   tick : function($super){
     $super()
+    this.water-=this.waterDecreaseRate
+    if(this.water <= 0) this.dead = true   
     if(!this.scene.moving)return
     if(this.coords.x !=this.originalPosition.x || this.coords.y !=this.originalPosition.y ){
       var move = Util.getNextMove(this.coords.x,this.coords.y,this.originalPosition.x,this.originalPosition.y,this.scene.speed)
       this.coords.x+=move[0]
       this.coords.y+=move[1]
-      for(var i=0;i<this.followers.length;i++){
+      this.tickFollowers(move)
+    }
+  },
+  tickFollowers : function(move){
+     for(var i=0;i<this.followers.length;i++){
         this.followers[i].coords.x+=move[0]
         this.followers[i].coords.y+=move[1]
+        this.followers[i].water -=this.waterDecreaseRate
+        if(this.followers[i].water <=0){
+          this.followers[i].destroy()
+          this.followers.splice(i,1)
+          
+        }
       }
-    }
   },
   
   rotate : function($super,target){
@@ -70,6 +84,7 @@ var CrowdMember = Class.create(Unit,{
   },
   
   takeHit: function($super, power){
+  	console.log("takehit")
   	if(this.followers.length > 0)
   		this.followers[0].takeHit(power);
   	else

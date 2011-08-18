@@ -16,8 +16,10 @@ var Unit = Class.create({
   enterSpeed : 3,
   movingToTarget : false,
   noDisplay : false,
+  rotationPoints : null,
   
   initialize : function(scene,x,lane){
+    this.rotationPoints = []
     this.target = null
     this.scene = scene
     this.lane = lane
@@ -42,6 +44,7 @@ var Unit = Class.create({
   },
   
   rotate : function(target){
+    this.addRotationPoints(target)
     this.direction = DIRECTIONS.D
     this.directionsCovered = 0
     this.rotating = true   
@@ -49,53 +52,37 @@ var Unit = Class.create({
     this.target = target
     this.direction = DIRECTIONS.D 
   },
-  
+  addRotationPoints : function(target){
+    this.rotationPoints.push({x:target.coords.x - this.getWidth()/2,y:target.coords.y+target.getHeight()/2})
+    this.rotationPoints.push({x:target.coords.x + target.getWidth() - this.getWidth()/2,y:target.coords.y+target.getHeight()/2})
+    this.rotationPoints.push({x:target.coords.x + target.getWidth() - this.getWidth()/2,y:target.coords.y-target.getHeight()/2})
+    this.rotationPoints.push({x:target.coords.x - this.getWidth()/2,y:target.coords.y -target.getHeight()/2})
+    this.rotationPoints.push({x:target.coords.x - this.getWidth()/2,y:target.coords.y})
+  },
   createRandomRotationDistance : function(){
     return Math.random()*20
   },
   
   rotationMove : function(){
-    if(this.direction == DIRECTIONS.D){
-      this.move(0,this.rotationSpeed)
-      if (this.directionsCovered == 0) {
-        if (this.coords.y  > this.target.coords.y + this.target.getHeight()/2) {
-          this.direction = DIRECTIONS.R
-          this.directionsCovered++
-          this.rotationRandomDistance = this.createRandomRotationDistance()
-        }
-      }else{
-        if (this.coords.y - this.rotationRandomDistance > this.target.coords.y) {
-          this.direction = DIRECTIONS.R
-          this.directionsCovered++
-          this.rotationRandomDistance = this.createRandomRotationDistance()
-        }
-      }
-    }else if(this.direction == DIRECTIONS.R){
-      this.move(this.rotationSpeed,0)
-      if(this.coords.x + 2*this.rotationRandomDistance > this.target.coords.x + this.target.getWidth()){
-        this.direction = DIRECTIONS.U
-        this.directionsCovered++
-        this.rotationRandomDistance = this.createRandomRotationDistance()
-      }
-    }else if(this.direction == DIRECTIONS.U){
-      this.move(0,-this.rotationSpeed)
-      if(this.coords.y + 3*this.rotationRandomDistance < this.target.coords.y  ){
-        this.direction = DIRECTIONS.L
-        this.directionsCovered++
-        this.rotationRandomDistance = this.createRandomRotationDistance()
-      }
-    }else if(this.direction == DIRECTIONS.L){
-      if(this.coords.x + this.getWidth() - 2*this.rotationRandomDistance < this.target.coords.x){
-        this.direction = DIRECTIONS.D
-        this.directionsCovered++
-        this.rotationRandomDistance = this.createRandomRotationDistance()
-      }
-      this.move(-this.rotationSpeed,0)
-    }
-    if(this.directionsCovered == 5){
-        this.rotating = false
+    if(this.scene.rotating){
+      if (this.rotationPoints.length == 0) {
         this.target.takeHit(this.power)
-        return
+        if (this.target.hp < 0) {
+          this.target = null
+          this.rotating = false
+          this.scene.moving = true
+          this.scene.rotating = false
+          return
+        }else{
+          this.rotate(this.target)
+        }
+      }
+      var move = Util.getNextMove(this.coords.x,this.coords.y,this.rotationPoints[0].x,this.rotationPoints[0].y,this.scene.speed)
+      this.coords.x+=move[0]
+      this.coords.y+=move[1]
+      if(this.coords.x <= this.rotationPoints[0].x + 0.001 && this.coords.x >= this.rotationPoints[0].x - 0.001
+      &&this.coords.y <= this.rotationPoints[0].y + 0.001 && this.coords.y >= this.rotationPoints[0].y - 0.001)
+      this.rotationPoints.shift()
     }
   },
   takeHit : function(power){

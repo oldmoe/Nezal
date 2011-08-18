@@ -2,8 +2,8 @@ var Block = Class.create(Unit,{
     //params contains x,y(initial @x, @y of the block) and @rows,@columns which are the dimensions of the block
     //params also contain elememnts which are the objects in the block
     elements: null,
-    elementWidth : 40,
-    elementHeight : 32,
+    elementWidth : 30,
+    elementHeight : 18,
     noDisplay : true,
     initialize : function($super,scene,x,y,options){
       this.elements = []
@@ -19,7 +19,7 @@ var Block = Class.create(Unit,{
         }
       }
       if(this.scene.moving){
-        if(this.scene.moveBack)this.coords.x+=this.scene.speed
+        if(this.scene.moveBack)this.coords.x+=this.scene.speed 
         else this.coords.x-=this.scene.speed
       }
     },
@@ -30,8 +30,10 @@ var Block = Class.create(Unit,{
         this.elements[i] = []
         for (var j = 0; j < options.columns; j++) {
             this.elements[i][j] = new blockObjectKlass(this.scene,0,0)
-            this.elements[i][j].coords.x = this.coords.x + this.elementWidth * i
-            this.elements[i][j].coords.y = this.coords.y + this.elementHeight * j
+            var randomY = Math.round(Math.random()*12) - 6
+            var randomX = Math.round(Math.random()*12) - 6
+            this.elements[i][j].coords.x = this.coords.x + this.elementWidth * i - 20*j + randomX
+            this.elements[i][j].coords.y = this.coords.y + this.elementHeight * j + randomY
         }
       }
     },

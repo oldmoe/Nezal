@@ -45,18 +45,18 @@ var TsquareScene = Class.create(Scene,{
       self.crowdMembers[i] = []
       for(var j=0;j<self.data[i].length;j++){
         var elem = self.data[i][j] 
-        if(elem.type=='enemy'){
+        if(elem.category=='enemy'){
           self.inObstacles[i].push({'name':elem.name, x:elem.x*self.tileWidth,y:i})
           if(elem.name=="block"){
             self.inObstacles[i][self.inObstacles[i].length-1].options = {rows:elem.rows, columns:elem.columns, obj : elem.object}
           }
         }
-        else if(elem.type=='crowd')self.inCrowdMembers[i].push({'name':elem.name, x:elem.x*self.tileWidth,y:i})
-        else if(elem.type=='scenario')self.inScenarios.push({'name':elem.name, x:elem.x*self.tileWidth,y:i, "scenario":
+        else if(elem.category=='crowd')self.inCrowdMembers[i].push({'name':elem.name, x:elem.x*self.tileWidth,y:i})
+        else if(elem.category=='scenario')self.inScenarios.push({'name':elem.name, x:elem.x*self.tileWidth,y:i, "scenario":
         elem.scenario})
       }
     }
-      self.inEvents = gameData.events
+      if(gameData.events) self.inEvents = gameData.events
     //})
     this.obstacles = []
 	},
@@ -195,7 +195,6 @@ var TsquareScene = Class.create(Scene,{
   addObject : function(objHash){
      var klassName = objHash.name.formClassName()
      var klass = eval(klassName)
-     console.log(this,objHash.x)
      var obj = new klass(this,objHash.x - this.xPos,objHash.y,objHash.options)
      var displayKlass = eval(klassName + "Display")
      var objDisplay = new displayKlass(obj)
@@ -253,27 +252,41 @@ var TsquareScene = Class.create(Scene,{
         this.moving = this.beatMoving = true
     }else if(commandIndex == moves.rotating){
       if (collision) {
-        console.log(1)
-        for(var i=0;i<this.crowdMembers[collision.lane].length;i++)
-          this.crowdMembers[collision.lane][i].rotate(collision.obstacle)
+        this.beatMoving = true
+        this.rotating = true
+        this.rotateObjects(collision)
       }
     }
     var self = this
-    if (commandIndex == moves.forward || commandIndex == moves.backward) {
-      this.moves++
-      this.reactor.push(noOfTicks, function(){
-        if(self.comboStart){
-          self.comboStart= false
-          self.combos++
-          if(self.speed < 20)self.speed+=3
-          if(self.movementManager.extraSpeed<9)self.movementManager.extraSpeed+=2
-          self.currentCombos++ 
-        }
-        self.beatMoving = false
-        if(self.energy < self.maxEnergy)self.energy+=self.energyIncrease
-        if(self.currentCombos % 2==0 && self.currentCombos >0)self.createNextFollower()
-      })
+    this.moves++
+    this.reactor.push(noOfTicks, function(){
+      self.moveEnd()
+    })
+    
+  },
+  rotateObjects : function(collision){
+     for (var i = 0; i < this.crowdMembers[collision.lane].length; i++) {
+         if (this.crowdMembers[collision.lane][i].rotating) {
+            this.crowdMembers[collision.lane][i].rotationMove()
+         }else{
+            this.crowdMembers[collision.lane][i].rotate(collision.obstacle)
+         }
     }
+  },
+  moveEnd : function(){
+    if(this.comboStart){
+        this.comboStart= false
+        this.combos++
+        if(this.speed < 20)self.speed+=3
+        if(this.movementManager.extraSpeed<9)this.movementManager.extraSpeed+=2
+        this.currentCombos++ 
+        this.createNextFollower()
+      }
+      this.beatMoving = false
+      if(this.energy < this.maxEnergy)this.energy+=this.energyIncrease
+      if (this.currentCombos % 2 == 0 && this.currentCombos > 0) {
+      }
+    
   },
   createNextFollower : function(){
      if(this.crowdMembers[this.nextFollower.lane][this.nextFollower.index]){
@@ -294,16 +307,19 @@ var TsquareScene = Class.create(Scene,{
       for(var j=0;j<this.crowdMembers[i].length;j++){
         for (var k = 0; k < this.obstacles[i].length; k++) {
           if (this.crowdMembers[i][j].coords.x + this.crowdMembers[i][j].getWidth() + 25 > this.obstacles[i][k].coords.x) {
-            if (!this.moveBack) {
-              this.moving = false
-              this.beatMoving = false
-              this.currentCombos = 0
-            }
-            return {
+            var collision = {
               crowd: this.crowdMembers[i][j],
               obstacle: this.obstacles[i][k],
               lane : i,
             }
+            if (!this.moveBack) {
+              if(this.moving){
+                this.rotateObjects(collision)            
+                this.moving = false
+                this.rotating = true
+              }
+            }
+            return collision
           }
         } 
       }

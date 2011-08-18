@@ -1,5 +1,5 @@
 var Dehydrator = Class.create(CrowdMember,{
-  rate : 30,
+  rate : 10,
   waterAmount : 10,
   initialize : function($super,scene,x,y,options){
     $super(scene,x,y)

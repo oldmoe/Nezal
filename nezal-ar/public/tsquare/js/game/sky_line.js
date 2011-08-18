@@ -5,10 +5,10 @@ var SkyLine = Class.create({
 		this.backgrounds = []
 		this.scene = scene
 		
-		var images_cloud = [Loader.images.background['sky1.png']]
-		var images = [Loader.images.background['skyline.png'], Loader.images.background['skyline.png']]
+		var images_cloud = [Loader.images.background[game.data.backgrounds[2][0].name]]
+		var images = [Loader.images.background[game.data.backgrounds[1][0].name]]
     var images_streetMarks = [Loader.images.background['street_marks.png'], Loader.images.background['street_marks.png']]
-		var images_transparent = [Loader.images.background['skyline.png'], Loader.images.background['skyline.png']]
+		var images_transparent = [Loader.images.background[game.data.backgrounds[0][0].name]]
 		var images_road = [Loader.images.background['land.png'], Loader.images.background['land.png']]
 		
     var self = this
