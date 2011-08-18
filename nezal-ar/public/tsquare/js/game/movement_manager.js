@@ -18,14 +18,14 @@ var MovementManager = Class.create({
   },
   
   playSounds : function(){
-   if(this.ticksPassed > this.nextTick+5){
+   if(this.ticksPassed > this.nextTick+10){
       this.reset()
    } 
    this.nextTick = this.moveSpeed-this.extraSpeed
    Sounds.play(Sounds.gameSounds.beat)
    var self = this
    $('beatFlash').show()
-   var fadeDuration = (this.nextTick - 2)*this.scene.reactor.delay / 1000
+   var fadeDuration = (this.nextTick - 3)*this.scene.reactor.delay / 1000
    this.scene.reactor.push(0,function(){new Effect.Fade('beatFlash',{duration: fadeDuration})})
    this.scene.reactor.push(this.nextTick,function(){self.playSounds()})
   },
@@ -33,6 +33,7 @@ var MovementManager = Class.create({
     this.turnOn = false
     this.move = []
     this.scene.moving = false
+    this.scene.rotating = false
     this.scene.beatMoving = false
     this.scene.comboStart = false
     this.scene.currentCombos = 0
@@ -70,17 +71,17 @@ var MovementManager = Class.create({
         }
       if(!self.turnOn) self.turnOn = true
       console.log(self.ticksPassed, self.nextTick)
-       if(click!=-1 && self.ticksPassed >= self.nextTick-5 && self.ticksPassed <= self.nextTick+5){		
+       if(click!=-1 && self.ticksPassed >= self.nextTick-10 && self.ticksPassed <= self.nextTick+10){		
             console.log('=')
       		  self.move.push(click)
       		  self.moveLength++
-      }else if(self.ticksPassed <  self.nextTick-5){
+      }else if(self.ticksPassed <  self.nextTick-10){
             console.log('<')
             self.reset()
             self.moveLength = 1
       		  self.move = [click]
             self.totalMoveTicks =0
-      }else if(self.ticksPassed > self.ticksPassed <= self.nextTick+5){
+      }else if(self.ticksPassed > self.ticksPassed <= self.nextTick+10){
             console.log('>')
             self.reset()
             self.moveLength = 1

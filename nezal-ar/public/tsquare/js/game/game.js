@@ -1,20 +1,20 @@
 var Game = Class.create({
   
   initialize: function(){
-    this.startLoading()
-    this.data = gameData		
+    this.data = gameData	
+    this.startLoading()	
 	},
   startLoading : function(){
     var self = this
     this.network = new Network()
-    this.templatesManager = new TemplatesManager(this.network);
-    new Loader().load([{images : ['logo.png'], path: 'images/loading/', store: 'loading'}],
-                      {onFinish : function(){
-                         $('inProgress').show();
-                        $('inProgress').innerHTML = self.templatesManager.load("loadingScreen");
- 					            self.addLoadedImagesToDiv('inProgress');
+//    this.templatesManager = new TemplatesManager(this.network);
+//    new Loader().load([{images : ['logo.png'], path: 'images/loading/', store: 'loading'}],
+//                      {onFinish : function(){
+//                         $('inProgress').show();
+//                        $('inProgress').innerHTML = self.templatesManager.load("loadingScreen");
+// 					            self.addLoadedImagesToDiv('inProgress');
                           self.initializeGame();
-                      }});
+//                      }});
   },
 	initializeGame : function(){
     $('inProgress').hide()

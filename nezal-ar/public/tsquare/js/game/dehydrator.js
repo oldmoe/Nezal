@@ -1,5 +1,5 @@
 var Dehydrator = Class.create(CrowdMember,{
-  rate : 30,
+  rate : 10,
   waterAmount : 10,
   initialize : function($super,scene,x,y,options){
     $super(scene,x,y)
@@ -21,6 +21,7 @@ var Dehydrator = Class.create(CrowdMember,{
       }
     }
     if(minLane!=-1){
+      console.log(minLane, minIndex)
       var crowd = this.scene.crowdMembers[minLane][minIndex] 
       crowd.water = Math.min(crowd.water+this.waterAmount, crowd.maxWater)
     }

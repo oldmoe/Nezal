@@ -267,31 +267,43 @@ var TsquareScene = Class.create(Scene,{
         this.moving = this.beatMoving = true
     }else if(commandIndex == moves.rotating){
       if (collision) {
-        console.log(1)
-        for(var i=0;i<this.crowdMembers[collision.lane].length;i++)
-          this.crowdMembers[collision.lane][i].rotate(collision.obstacle)
+        this.beatMoving = true
+        this.rotating = true
+        this.rotateObjects(collision)
       }
     }
     var self = this
-    if (commandIndex == moves.forward || commandIndex == moves.backward) {
-      this.moves++
-      this.reactor.push(noOfTicks, function(){
-        if(self.comboStart){
-          self.comboStart= false
-          self.combos++
-          if(self.speed < 20)self.speed+=3
-          if(self.movementManager.extraSpeed<9)self.movementManager.extraSpeed+=2
-          self.currentCombos++ 
-          self.createNextFollower()
-        }
-        self.beatMoving = false
-        if(self.energy < self.maxEnergy)self.energy+=self.energyIncrease
-        console.log('combos',self.currentCombos)
-        if (self.currentCombos % 2 == 0 && self.currentCombos > 0) {
-          console.log('double')
-        }
-      })
+    this.moves++
+    this.reactor.push(noOfTicks, function(){
+      self.moveEnd()
+    })
+    
+  },
+  rotateObjects : function(collision){
+     for (var i = 0; i < this.crowdMembers[collision.lane].length; i++) {
+         if (this.crowdMembers[collision.lane][i].rotating) {
+            this.crowdMembers[collision.lane][i].rotationMove()
+         }else{
+            this.crowdMembers[collision.lane][i].rotate(collision.obstacle)
+         }
     }
+  },
+  moveEnd : function(){
+    if(this.comboStart){
+        this.comboStart= false
+        this.combos++
+        if(this.speed < 20)self.speed+=3
+        if(this.movementManager.extraSpeed<9)this.movementManager.extraSpeed+=2
+        this.currentCombos++ 
+        this.createNextFollower()
+      }
+      this.beatMoving = false
+      if(this.energy < this.maxEnergy)this.energy+=this.energyIncrease
+      console.log('combos',this.currentCombos)
+      if (this.currentCombos % 2 == 0 && this.currentCombos > 0) {
+        console.log('double')
+      }
+    
   },
   createNextFollower : function(){
      if(this.crowdMembers[this.nextFollower.lane][this.nextFollower.index]){
@@ -312,16 +324,19 @@ var TsquareScene = Class.create(Scene,{
       for(var j=0;j<this.crowdMembers[i].length;j++){
         for (var k = 0; k < this.obstacles[i].length; k++) {
           if (this.crowdMembers[i][j].coords.x + this.crowdMembers[i][j].getWidth() + 25 > this.obstacles[i][k].coords.x) {
-            if (!this.moveBack) {
-              this.moving = false
-              this.beatMoving = false
-              this.currentCombos = 0
-            }
-            return {
+            var collision = {
               crowd: this.crowdMembers[i][j],
               obstacle: this.obstacles[i][k],
               lane : i,
             }
+            if (!this.moveBack) {
+              if(this.moving){
+                this.rotateObjects(collision)            
+                this.moving = false
+                this.rotating = true
+              }
+            }
+            return collision
           }
         } 
       }
