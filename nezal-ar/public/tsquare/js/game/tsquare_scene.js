@@ -277,7 +277,7 @@ var TsquareScene = Class.create(Scene,{
     if(this.comboStart){
         this.comboStart= false
         this.combos++
-        if(this.speed < 20)self.speed+=3
+        if(this.speed < 20)this.speed+=3
         if(this.movementManager.extraSpeed<9)this.movementManager.extraSpeed+=2
         this.currentCombos++ 
         this.createNextFollower()
