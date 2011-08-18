@@ -3,6 +3,8 @@ var Unit = Class.create({
   speed : 1,
   angle :0,
   power: 10,
+  hp : 30,
+  maxHp : 30,
   stateChanged : false,
   rotating : false,
   rotationSpeed : 6,
@@ -15,6 +17,7 @@ var Unit = Class.create({
   movingToTarget : false,
   noDisplay : false,
   rotationPoints : null,
+  
   initialize : function(scene,x,lane){
     this.rotationPoints = []
     this.target = null
@@ -55,16 +58,6 @@ var Unit = Class.create({
     this.rotationPoints.push({x:target.coords.x + target.getWidth() - this.getWidth()/2,y:target.coords.y-target.getHeight()/2})
     this.rotationPoints.push({x:target.coords.x - this.getWidth()/2,y:target.coords.y -target.getHeight()/2})
     this.rotationPoints.push({x:target.coords.x - this.getWidth()/2,y:target.coords.y})
-//    for(var i=0;i<5;i++){
-//      var div = document.createElement('div')
-//      div.addClassName('DomSprite')
-//      div.style.top = this.rotationPoints[i].y + 200 + "px"
-//      div.style.left = this.rotationPoints[i].x + "px"
-//      div.style.backgroundColor = "black"
-//      div.style.width = "5px"
-//      div.style.height = "5px"
-//      $('gameCanvas').appendChild(div)
-//    }
   },
   createRandomRotationDistance : function(){
     return Math.random()*20
@@ -92,50 +85,6 @@ var Unit = Class.create({
       this.rotationPoints.shift()
     }
   },
-//  rotationMove : function(){
-//    if(this.direction == DIRECTIONS.D){
-//      this.move(0,this.rotationSpeed)
-//      if (this.directionsCovered == 0) {
-//        if (this.coords.y  > this.target.coords.y + this.target.getHeight()/2) {
-//          this.direction = DIRECTIONS.R
-//          this.directionsCovered++
-//          this.rotationRandomDistance = this.createRandomRotationDistance()
-//        }
-//      }else{
-//        if (this.coords.y - this.rotationRandomDistance > this.target.coords.y) {
-//          this.direction = DIRECTIONS.R
-//          this.directionsCovered++
-//          this.rotationRandomDistance = this.createRandomRotationDistance()
-//        }
-//      }
-//    }else if(this.direction == DIRECTIONS.R){
-//      this.move(this.rotationSpeed,0)
-//      if(this.coords.x + 2*this.rotationRandomDistance > this.target.coords.x + this.target.getWidth()){
-//        this.direction = DIRECTIONS.U
-//        this.directionsCovered++
-//        this.rotationRandomDistance = this.createRandomRotationDistance()
-//      }
-//    }else if(this.direction == DIRECTIONS.U){
-//      this.move(0,-this.rotationSpeed)
-//      if(this.coords.y + 3*this.rotationRandomDistance < this.target.coords.y  ){
-//        this.direction = DIRECTIONS.L
-//        this.directionsCovered++
-//        this.rotationRandomDistance = this.createRandomRotationDistance()
-//      }
-//    }else if(this.direction == DIRECTIONS.L){
-//      if(this.coords.x + this.getWidth() - 2*this.rotationRandomDistance < this.target.coords.x){
-//        this.direction = DIRECTIONS.D
-//        this.directionsCovered++
-//        this.rotationRandomDistance = this.createRandomRotationDistance()
-//      }
-//      this.move(-this.rotationSpeed,0)
-//    }
-//    if(this.directionsCovered == 5){
-//        this.rotating = false
-//        this.target.takeHit(this.power)
-//        return
-//    }
-//  },
   takeHit : function(power){
     this.hp-= power
     if(this.hp <=0){
