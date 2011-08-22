@@ -2,6 +2,9 @@ var Scene = Class.create({
 	//initializes the delay of the reactor
 	initialize : function(game){
 		this.game = game;
+    this.fpsCounter = 0
+    this.fps = 0
+    this.fpsTime = 0
 		this.reactor = new Reactor();
 		this.objects = [];
 		this.renderStores = {};
@@ -48,10 +51,19 @@ var Scene = Class.create({
 	},
 	//moves objects in the scene 
 	_tick : function(){
+    var t1 = new Date().getTime()
 		this.tick()
 		this.render()
 		var self = this
 		this.reactor.push(0, function(){self._tick()})
+    this.fpsCounter++
+    this.fpsTime+= new Date().getTime() - t1
+    if(this.fpsCounter == 50){
+      this.fps = Math.round(this.fpsCounter * 1000/ this.fpsTime) 
+      $('fps').innerHTML = this.fps
+      this.fpsCounter = 0
+      this.fpsTime = 0
+    }
 	},
 
 	createRenderLoop : function(name, delay){

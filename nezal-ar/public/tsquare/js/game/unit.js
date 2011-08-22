@@ -122,6 +122,6 @@ var Unit = Class.create({
   },
   getCoods : function(){
     return {x: this.coords.x+this.scene.x}
-  },
+  }
 })
 var DIRECTIONS =  {U:0,D: 1, L : 2, R : 3}

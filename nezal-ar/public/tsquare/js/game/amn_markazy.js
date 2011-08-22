@@ -23,6 +23,7 @@ var AmnMarkazy = Class.create(Enemy,{
   checkCollision: function(){
   	var crowdMembers = this.scene.crowdMembers[this.lane];
   	var length = crowdMembers.length; 
+    return
   	for(var i=0; i<length; i++){
   		if(this.isCollide(crowdMembers[i])){
   			this.hitting = true;

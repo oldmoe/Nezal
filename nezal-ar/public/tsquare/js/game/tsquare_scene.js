@@ -60,6 +60,11 @@ var TsquareScene = Class.create(Scene,{
     //})
     this.obstacles = []
 	},
+  rotate : function(){
+     for(var i=0;i<this.crowdMembers[0].length;i++){
+       setTimeout(1,this.crowdMembers[0][i].rotate)
+     }
+  },
 	init: function(){
 	    this.createEnergyBar()
 	    this.canvasWidth = $('gameCanvas').getWidth()
@@ -310,7 +315,7 @@ var TsquareScene = Class.create(Scene,{
             var collision = {
               crowd: this.crowdMembers[i][j],
               obstacle: this.obstacles[i][k],
-              lane : i,
+              lane : i
             }
             if (!this.moveBack) {
               if(this.moving){
