@@ -35,7 +35,8 @@ var Game = Class.create({
     
 		var gameElementsImages = ['arrow_up.png','arrow_down.png', 'bubble.png', 'world.png']
     var characterImages = ['healer.png','dehydrator.png','follower.png', 'npc.png',
-    'ultras_white_walk.png','ultras_red_walk.png','ultras_normal_walk.png','salafi_walk.png']
+    'ultras_white_walk.png','ultras_red_walk.png','ultras_normal_walk.png','salafi_walk.png',
+    'journalist_walk.png','journalist_run.png','journalist_front.png','journalist_back.png']
     var enemiesImages = ['block.png','amn_markazy_hit.png']
 		var self = this
 		new Loader().load([{images: backgroundImages, path: 'images/background/', store: 'background'},

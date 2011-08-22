@@ -90,7 +90,7 @@ var Reactor = Class.create({
 		}
 	},
 	
-	push : function(ticks, func, callback,batee5a){
+	push : function(ticks, func, callback){
 		var delay = this.ticks + ticks
 		this.events.splice(this._eventIndex(delay, true), 0, [delay, func, callback])
 	},

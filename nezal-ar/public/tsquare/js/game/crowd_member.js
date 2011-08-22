@@ -6,25 +6,24 @@ var CrowdMember = Class.create(Unit,{
   randomDy : 0,
   waterDecreaseRate : 0.5,
   initialize : function($super,scene,x,y,options){
-	this.hp = 30;
-	this.maxHp = 30;
-  	
+	  this.hp = 30;
+	  this.maxHp = 30;
     x = x + this.xShift
     this.originalPosition = {x:0,y:0}
     $super(scene,x,y)
-    this.originalPosition.y = this.scene.crowdMemberInitialY - this.scene.numberOfCrowdMembersPerColumn * 30
+    this.originalPosition.y = this.scene.crowdMemberInitialY - this.scene.numberOfCrowdMembersPerColumn * 10
     this.originalPosition.x = this.scene.crowdMemberInitialX
-    if(this.scene.numberOfCrowdMembersPerColumn % 2 == 1){
-      this.originalPosition.x = this.scene.crowdMemberInitialX -=30  
+    if(this.scene.numberOfCrowdMembersPerColumn % 2 == 0){
+      this.originalPosition.x = this.scene.crowdMemberInitialX -=20  
     }
     this.scene.numberOfCrowdMembersPerColumn-- 
     if(this.scene.numberOfCrowdMembersPerColumn == -1){
       this.scene.numberOfCrowdMembersPerColumn = 2
       this.scene.crowdMemberInitialX-=30
     }
-    this.randomDx = Math.round(Math.random()*60)
+    this.randomDx = Math.round(Math.random()*50)
     this.coords.x +=this.randomDx
-    this.randomDy = Math.round(Math.random()*20)
+    this.randomDy = Math.round(Math.random()*30)
     this.coords.y+= this.randomDy
     if(options && options.level) this.level = options.level
     else this.level = 4
@@ -90,7 +89,5 @@ var CrowdMember = Class.create(Unit,{
   	else
   		$super(power)	
   }
-  
-  
 })
   

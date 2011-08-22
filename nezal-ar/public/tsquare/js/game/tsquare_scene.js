@@ -1,5 +1,5 @@
 var TsquareScene = Class.create(Scene,{
-  laneMiddle : 45,
+  laneMiddle : 28,
   tileWidth : 50,
   energy : 0,
   maxEnergy : 30,
@@ -16,7 +16,7 @@ var TsquareScene = Class.create(Scene,{
   noOfLanes : 3,
   crowdMemberInitialX : 200,
   crowdMemberInitialY : 100,
-  numberOfCrowdMembersPerColumn : 2,
+  numberOfCrowdMembersPerColumn : 1,
   nextFollower : {lane:0,index:0},
 	initialize: function($super,game){
 		$super(game)
@@ -311,7 +311,7 @@ var TsquareScene = Class.create(Scene,{
     for(var i=0;i<this.crowdMembers.length;i++){
       for(var j=0;j<this.crowdMembers[i].length;j++){
         for (var k = 0; k < this.obstacles[i].length; k++) {
-          if (this.crowdMembers[i][j].coords.x + this.crowdMembers[i][j].getWidth() + 25 > this.obstacles[i][k].coords.x) {
+          if (this.crowdMembers[i][j].coords.x + this.crowdMembers[i][j].getWidth() > this.obstacles[i][k].coords.x) {
             var collision = {
               crowd: this.crowdMembers[i][j],
               obstacle: this.obstacles[i][k],
@@ -319,9 +319,9 @@ var TsquareScene = Class.create(Scene,{
             }
             if (!this.moveBack) {
               if(this.moving){
-                this.rotateObjects(collision)            
+       //         this.rotateObjects(collision)            
                 this.moving = false
-                this.rotating = true
+         //       this.rotating = true
               }
             }
             return collision
