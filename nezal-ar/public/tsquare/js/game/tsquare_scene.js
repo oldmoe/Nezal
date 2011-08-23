@@ -1,5 +1,5 @@
 var TsquareScene = Class.create(Scene,{
-  laneMiddle : 45,
+  laneMiddle : 28,
   tileWidth : 50,
   energy : 0,
   maxEnergy : 30,
@@ -7,6 +7,7 @@ var TsquareScene = Class.create(Scene,{
   coords: {x:200,y:10},
   moveBack : false,
   energyIncrease : 3,
+  running : false,
   moving : false,
   holding: false,
   beatMoving : false,
@@ -17,7 +18,7 @@ var TsquareScene = Class.create(Scene,{
   noOfLanes : 3,
   crowdMemberInitialX : 200,
   crowdMemberInitialY : 100,
-  numberOfCrowdMembersPerColumn : 2,
+  numberOfCrowdMembersPerColumn : 1,
   nextFollower : {lane:0,index:0},
 	initialize: function($super,game){
 		$super(game)
@@ -30,6 +31,7 @@ var TsquareScene = Class.create(Scene,{
     this.createRenderLoop('characters',2)
     this.xPos = 0
     this.speed = 3
+    this.maxSpeed = 20
     this.moving = false
     var self = this
     this.bubbles = []
@@ -61,6 +63,11 @@ var TsquareScene = Class.create(Scene,{
     //})
     this.obstacles = []
 	},
+  rotate : function(){
+     for(var i=0;i<this.crowdMembers[0].length;i++){
+       setTimeout(1,this.crowdMembers[0][i].rotate)
+     }
+  },
 	init: function(){
 	    this.createEnergyBar()
 	    this.canvasWidth = $('gameCanvas').getWidth()
@@ -292,25 +299,41 @@ var TsquareScene = Class.create(Scene,{
   
   gatherCrowdMembers: function(collision){
      var holdingPoint = {x:0, y:0};
-     for (var i = 0; i < this.crowdMembers[0].length; i++) {
-         holdingPoint.x += this.crowdMembers[0][i].coords.x;
-         holdingPoint.y += this.crowdMembers[0][i].coords.y;
+     var controlLane = 1;
+     for (var i = 0; i < this.crowdMembers[controlLane].length; i++) {
+         holdingPoint.x += this.crowdMembers[controlLane][i].coords.x;
+         holdingPoint.y += this.crowdMembers[controlLane][i].coords.y;
      }
      
-     holdingPoint.x /= this.crowdMembers[0].length;
-     holdingPoint.y /= this.crowdMembers[0].length;
+     holdingPoint.x /= this.crowdMembers[controlLane].length;
+     holdingPoint.y /= this.crowdMembers[controlLane].length;
         
-     for (var i = 0; i < this.crowdMembers[0].length; i++) {
-         this.crowdMembers[0][i].setMovingTarget(holdingPoint);
+     for (var i = 0; i < this.crowdMembers[controlLane].length; i++) {
+         this.crowdMembers[controlLane][i].setMovingTarget(holdingPoint);
      }
 
+  },
+  
+  setCrowdMembersState : function(state){
+    for(var i=0;i<this.crowdMembers.length;i++){
+      for(var j=0;j<this.crowdMembers[i].length;j++){
+        this.crowdMembers[i][j].setState(state)
+      }
+    }
   },
   
   moveEnd : function(){
     if(this.comboStart){
         this.comboStart= false
         this.combos++
-        if(this.speed < 20)this.speed+=3
+        if (this.speed < this.maxSpeed) {
+          var oldSpeed = this.speed
+          this.speed += 3
+          if(this.speed > this.maxSpeed / 2 && oldSpeed < this.maxSpeed / 2){
+            this.setCrowdMembersState("run")
+            this.running = true
+          } 
+        }
         if(this.movementManager.extraSpeed<9)this.movementManager.extraSpeed+=2
         this.currentCombos++ 
         this.createNextFollower()
@@ -339,17 +362,17 @@ var TsquareScene = Class.create(Scene,{
     for(var i=0;i<this.crowdMembers.length;i++){
       for(var j=0;j<this.crowdMembers[i].length;j++){
         for (var k = 0; k < this.obstacles[i].length; k++) {
-          if (this.crowdMembers[i][j].coords.x + this.crowdMembers[i][j].getWidth() + 25 > this.obstacles[i][k].coords.x) {
+          if (this.crowdMembers[i][j].coords.x + this.crowdMembers[i][j].getWidth() > this.obstacles[i][k].coords.x) {
             var collision = {
               crowd: this.crowdMembers[i][j],
               obstacle: this.obstacles[i][k],
-              lane : i,
+              lane : i
             }
             if (!this.moveBack) {
               if(this.moving){
-                this.rotateObjects(collision)            
+       //         this.rotateObjects(collision)            
                 this.moving = false
-                this.rotating = true
+         //       this.rotating = true
               }
             }
             return collision

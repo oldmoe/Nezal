@@ -8,7 +8,6 @@ var Unit = Class.create({
   stateChanged : false,
   rotating : false,
   rotationSpeed : 6,
-  directionsCovered : 0,
   kickedoutYShift : 0,
   maxkickedoutYShift : 57,
   kickedOutXShift : false,
@@ -17,9 +16,10 @@ var Unit = Class.create({
   movingToTarget : false,
   noDisplay : false,
   rotationPoints : null,
-  
-  
+  observers : null,  
+
   initialize : function(scene,x,lane){
+    this.observers = {}
     this.rotationPoints = []
     this.target = null
     this.scene = scene
@@ -45,45 +45,81 @@ var Unit = Class.create({
 
   rotate : function(target){
     this.addRotationPoints(target)
-    this.direction = DIRECTIONS.D
-    this.directionsCovered = 0
     this.rotating = true   
-    this.rotationRandomDistance = this.createRandomRotationDistance()
     this.target = target
+    this.setState(this.rotationPoints[0].state)
   },
   
   addRotationPoints : function(target){
-    this.rotationPoints.push({x:target.coords.x - this.getWidth()/2,y:target.coords.y+target.getHeight()/2})
-    this.rotationPoints.push({x:target.coords.x + target.getWidth() - this.getWidth()/2,y:target.coords.y+target.getHeight()/2})
-    this.rotationPoints.push({x:target.coords.x + target.getWidth() - this.getWidth()/2,y:target.coords.y-target.getHeight()/2})
-    this.rotationPoints.push({x:target.coords.x - this.getWidth()/2,y:target.coords.y -target.getHeight()/2})
-    this.rotationPoints.push({x:target.coords.x - this.getWidth()/2,y:target.coords.y})
+    this.rotationPoints.push({
+      values: {
+        x: target.coords.x - this.getWidth() / 2 - target.getHeight()/4,
+        y: target.coords.y + target.getHeight() / 2 - 20
+      },
+      state: "front"
+    })
+    this.rotationPoints.push({
+      values: {
+        x: target.coords.x + target.getWidth() - this.getWidth() / 2 - target.getHeight()/4,
+        y: target.coords.y + target.getHeight() / 2 - 20
+      },
+      state : this.getMovingState()
+    })
+    this.rotationPoints.push({
+      values: {
+        x: target.coords.x + target.getWidth() - this.getWidth() / 2,
+        y: target.coords.y - 20
+      },
+      state : "back"
+    })
+    this.rotationPoints.push({
+      values: {
+        x: target.coords.x - this.getWidth() / 2,
+        y: target.coords.y - 20
+      },
+      state : "reverse"
+    })
   },
-  
-  createRandomRotationDistance : function(){
-    return Math.random()*20
+  getMovingState : function(){
+    if(this.scene.running)return "run"
+    return "normal"
   },
-  
+  getReverseState : function(){
+    if(this.scene.running)return "reverseRun"
+    return "reverse"
+  },
+  resetRotation : function(){
+    this.target = null
+    this.rotating = false
+    this.scene.moving = false
+    this.scene.rotating = false
+    this.setState("normal")
+  },
   rotationMove : function(){
+    if (!this.target|| this.target.hp <= 0) {
+      this.resetRotation()
+    }
     if(this.scene.rotating){
       if (this.rotationPoints.length == 0) {
         this.target.takeHit(this.power)
         if (this.target.hp < 0) {
-          this.target = null
-          this.rotating = false
-          this.scene.moving = true
-          this.scene.rotating = false
+          this.resetRotation()
           return
         }else{
           this.rotate(this.target)
         }
       }
-      var move = Util.getNextMove(this.coords.x,this.coords.y,this.rotationPoints[0].x,this.rotationPoints[0].y,this.scene.speed)
+      var rp = this.rotationPoints[0]
+      var move = Util.getNextMove(this.coords.x,this.coords.y,rp.values.x,rp.values.y,this.scene.speed)
       this.coords.x+=move[0]
       this.coords.y+=move[1]
-      if(this.coords.x <= this.rotationPoints[0].x + 0.001 && this.coords.x >= this.rotationPoints[0].x - 0.001
-      &&this.coords.y <= this.rotationPoints[0].y + 0.001 && this.coords.y >= this.rotationPoints[0].y - 0.001)
-      this.rotationPoints.shift()
+      if (this.coords.x <= rp.values.x + 0.001 && this.coords.x >= rp.values.x - 0.001 &&
+      this.coords.y <= rp.values.y + 0.001 &&this.coords.y >= rp.values.y - 0.001) {
+        this.rotationPoints.shift()
+        if(this.rotationPoints.length > 0 ) this.setState(this.rotationPoints[0].state)
+      }
+    }else{
+      this.rotating = false
     }
   },
   takeHit : function(power){
@@ -124,5 +160,15 @@ var Unit = Class.create({
   getCoods : function(){
     return {x: this.coords.x+this.scene.x}
   },
+  setState : function(state){
+    if(this.observers[state]){
+      for(var i=0;i<this.observers[state].length;i++){
+        this.observers[state][i]()
+      }
+    }
+  },
+  addObserver : function(state,func){
+    if(!this.observers[state])this.observers[state] = []
+    this.observers[state].push(func)
+  }
 })
-var DIRECTIONS =  {U:0,D: 1, L : 2, R : 3}

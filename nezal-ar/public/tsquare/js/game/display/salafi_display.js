@@ -4,5 +4,5 @@ var SalafiDisplay=Class.create(CrowdMemberDisplay,{
   },
   createSprites : function(){
     this.sprites.character = new DomImgSprite(this.owner, {img : this.characterImg,noOfFrames : 9})
-  },
+  }
 })

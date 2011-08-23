@@ -48,11 +48,6 @@ var DomSprite = Class.create(Sprite, {
       if(this.owner.dead){
         return this.destroy()
       }
-      if (this.owner.scene) {
-        var scale = ((this.owner.coords.y) / (this.owner.scene.height - this.defaultShiftY)) * 0.8 + 0.5
-        this.div.style.WebkitTransform = 'scale(' + scale + ')';
-        this.div.style.MozTransform = 'scale(' + scale + ')';
-      }
       if (this.visible) {
         var position = this.position();
         this.div.setStyle({
@@ -78,7 +73,7 @@ var DomSprite = Class.create(Sprite, {
     position.x = Math.round(this.owner.coords.x);
     position.y = Math.round(this.owner.coords.y-this.owner.imgHeight/2) + this.defaultShiftY;
 	if(this.zIndex) position.zIndex = this.zIndex 
-    else position.zIndex = this.owner.coords.y + this.owner.zdim + this.shiftZ;
+    else position.zIndex = Math.round(this.owner.coords.y + this.owner.zdim + this.shiftZ);
     return position;
   },
 

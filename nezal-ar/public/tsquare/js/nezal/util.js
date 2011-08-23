@@ -161,7 +161,21 @@ var Util = {
 		   textSpan.innerHTML = attributes.text || '';
 		   link.appendChild(textSpan);
 		   return game.domConverter.getHTML(link);
-	}
+	},
+  flip : function(div){
+    div.style.MozTransform = "scaleX(-1)"
+    div.style.OTransform = "scaleX(-1)"
+    div.style.WebkitTransform = "scaleX(-1)"
+    div.style.filter = "filpH"
+    div.style.MsFilter = "flipH"
+  },
+  removeTransform : function(div){
+    div.style.MozTransform = ""
+    div.style.OTransform = ""
+    div.style.WebkitTransform = ""
+    div.style.filter = ""
+    div.style.MsFilter = ""
+  }
 }
 String.prototype.formClassName = function(){
   return this.dasherize().capitalize().camelize()

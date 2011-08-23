@@ -36,7 +36,8 @@ var DomImgSprite = Class.create(DomSprite, {
     this.replaceImg(this.currentAnimation.img)
     this.div.style.width = this.currentAnimation.imgWidth + "px"
     this.div.style.height = this.currentAnimation.imgHeight + "px"
-    //this.div.style.top = this.position().y + prevAnimation.imgHeight -  this.currentAnimation.imgHeight +"px"
+    if (this.currentAnimation.flipped)this.flipped = true;
+    else this.flipped = false;
     this.img = this.currentAnimation.img
 		this.noOfAnimationFrames = this.currentAnimation.noOfFrames
   },
@@ -55,8 +56,9 @@ var DomImgSprite = Class.create(DomSprite, {
       imgWidth = img.width
       imgHeight = img.height / noOfFrames
     }
+    var flipped = options.flipped || false 
     var animation = {img:img.clone(), noOfFrames : noOfFrames, imgWidth : imgWidth, imgHeight : imgHeight,
-    startY:startY, direction:direction, name: options.name}
+    startY:startY, direction:direction,flipped: flipped, name: options.name}
     this.animations[options.name] = animation
     return animation
   },
@@ -81,7 +83,7 @@ var DomImgSprite = Class.create(DomSprite, {
   },
   
 	render : function($super){
-    $super();
+      $super();
     if (this.clickable) {
 			this.div.setStyle({
 				zIndex: (this.owner.coords.y + this.minAreaZIndex)
@@ -94,6 +96,13 @@ var DomImgSprite = Class.create(DomSprite, {
       if(this.owner.shake){
         Effect.Shake(this.div)
         this.owner.shake = false
+      }
+      if(this.flipped) Util.flip(this.div)
+      else Util.removeTransform(this.div)
+      if (this.owner.scene) {
+        var scale = ((this.owner.coords.y) / (this.owner.scene.height - this.defaultShiftY)) * 0.8 + 0.5
+        this.div.style.WebkitTransform +=' scale(' + scale + ')';
+        this.div.style.MozTransform +=' scale(' + scale + ')';
       }
     }
     

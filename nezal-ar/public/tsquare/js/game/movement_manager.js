@@ -32,12 +32,18 @@ var MovementManager = Class.create({
   reset : function(){
     this.turnOn = false
     this.move = []
-    this.scene.moving = false
     this.scene.rotating = false
     this.scene.beatMoving = false
     this.scene.comboStart = false
     this.scene.currentCombos = 0
-    this.scene.speed = 3
+    var oldSpeed = this.scene.speed
+    this.scene.speed = Math.max(3,this.scene.speed-3)
+    if(oldSpeed > this.scene.maxSpeed/2 && this.scene.speed < this.scene.maxSpeed/2){
+      this.scene.running = false
+      this.scene.setCrowdMembersState("normal")
+    }
+    if(this.scene.speed <= 3) this.scene.moving = false
+    if(this.scene.speed < this.scene.maxSpeed/2)this.scene.running = false
     if(this.scene.energy > 0)this.scene.energy-=this.scene.energyIncrease
     this.extraSpeed = 0
     this.ticksPassed = 0
@@ -56,8 +62,6 @@ var MovementManager = Class.create({
     document.stopObserving('keydown')
     document.observe('keydown', function(e){
       if(self.scene.beatMoving){
-        self.scene.moving = false
-        self.scene.beatMoving = false
         self.reset()
       }else if(self.scene.moving){
         self.scene.comboStart = true

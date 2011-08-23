@@ -5,8 +5,6 @@ var Enemy = Class.create(Unit, {
   },
   
   tick: function($super){
-	$super();
-	  	
+  	$super();
   }
-	
 });
