@@ -52,7 +52,7 @@ var CrowdMember = Class.create(Unit,{
   },
   tick : function($super){
     $super()
-    this.water-=this.waterDecreaseRate
+    //this.water-=this.waterDecreaseRate
     if(this.water <= 0) this.dead = true   
     if(!this.scene.moving)return
     if(this.coords.x !=this.originalPosition.x || this.coords.y !=this.originalPosition.y ){
