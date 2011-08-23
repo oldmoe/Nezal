@@ -10,6 +10,7 @@ var TsquareScene = Class.create(Scene,{
   running : false,
   moving : false,
   holding: false,
+  holdingTime: 0,
   beatMoving : false,
   moves : 0,
   combos : 0,
@@ -100,8 +101,18 @@ var TsquareScene = Class.create(Scene,{
      this.crowdMembers[laneNumber].push(obj)
      return obj    
   },
-	tick : function($super){
+  
+  tick : function($super){
     $super()
+    if(this.holding){
+        if(this.holdingTime > 50){
+           this.holdingTime = 0
+           this.holding = false 
+           console.log("end");
+        } 
+        else
+            this.holdingTime++
+    }
     var self = this
     if (this.moving) {
       if(this.moveBack)this.xPos -= this.speed
@@ -289,6 +300,7 @@ var TsquareScene = Class.create(Scene,{
   },
   
   holdObjects: function(collision){
+    this.holding = true
     this.gatherCrowdMembers(collision);  
   	if(collision){
             
@@ -309,7 +321,10 @@ var TsquareScene = Class.create(Scene,{
      holdingPoint.y /= this.crowdMembers[controlLane].length;
         
      for (var i = 0; i < this.crowdMembers[controlLane].length; i++) {
-         this.crowdMembers[controlLane][i].setMovingTarget(holdingPoint);
+         this.crowdMembers[controlLane][i].setMovingTarget({
+             x: (holdingPoint.x + Math.randomSign() * Math.random()*40),
+             y: (holdingPoint.y + Math.randomSign() * Math.random()*40)
+         });
      }
 
   },

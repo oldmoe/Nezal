@@ -1,6 +1,6 @@
 var CrowdMember = Class.create(Unit,{
   xShift : 100,
-  water : 700,
+  water : 7000,
   maxWater : 700,
   randomDx : 0,
   randomDy : 0,
@@ -58,11 +58,10 @@ var CrowdMember = Class.create(Unit,{
     this.water-=this.waterDecreaseRate
     if(this.water <= 0) this.dead = true
     
-    if(this.movingToTarget){
+    if(this.scene.holding && this.movingToTarget){
       var move = Util.getNextMove(this.coords.x,this.coords.y,this.holdingPoint.x,this.holdingPoint.y,this.scene.speed)
 
        if(Math.abs(move[0]) < 2 && Math.abs(move[1]) < 2){
-         this.scene.holding = true;
          this.movingToTarget = false;  
        }  
       this.move(move[0], move[1])  
