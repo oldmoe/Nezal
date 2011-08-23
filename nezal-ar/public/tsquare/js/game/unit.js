@@ -18,6 +18,7 @@ var Unit = Class.create({
   noDisplay : false,
   rotationPoints : null,
   
+  
   initialize : function(scene,x,lane){
     this.rotationPoints = []
     this.target = null
@@ -33,16 +34,15 @@ var Unit = Class.create({
     if(this.rotating){
         this.rotationMove()
     }else if(this.movingToTarget){
-      if(this.target.x - this.enterSpeed > this.coords.x) this.coords.x+=this.enterSpeed
-      else if(this.target.x + this.enterSpeed < this.coords.x) this.coords.x-=this.enterSpeed
-      else this.movingToTarget = false
+      // if(this.target.coords.x - this.enterSpeed > this.coords.x) this.coords.x+=this.enterSpeed
+      // else this.movingToTarget = false
     }
     if(this.scene.moving || this.rotating || this.kickedout || this.movingToTarget)
       this.stateChanged = true
     else 
       this.stateChanged = false
   },
-  
+
   rotate : function(target){
     this.addRotationPoints(target)
     this.direction = DIRECTIONS.D
@@ -50,8 +50,8 @@ var Unit = Class.create({
     this.rotating = true   
     this.rotationRandomDistance = this.createRandomRotationDistance()
     this.target = target
-    this.direction = DIRECTIONS.D 
   },
+  
   addRotationPoints : function(target){
     this.rotationPoints.push({x:target.coords.x - this.getWidth()/2,y:target.coords.y+target.getHeight()/2})
     this.rotationPoints.push({x:target.coords.x + target.getWidth() - this.getWidth()/2,y:target.coords.y+target.getHeight()/2})
@@ -59,6 +59,7 @@ var Unit = Class.create({
     this.rotationPoints.push({x:target.coords.x - this.getWidth()/2,y:target.coords.y -target.getHeight()/2})
     this.rotationPoints.push({x:target.coords.x - this.getWidth()/2,y:target.coords.y})
   },
+  
   createRandomRotationDistance : function(){
     return Math.random()*20
   },

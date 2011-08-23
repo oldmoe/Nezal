@@ -8,6 +8,7 @@ var TsquareScene = Class.create(Scene,{
   moveBack : false,
   energyIncrease : 3,
   moving : false,
+  holding: false,
   beatMoving : false,
   moves : 0,
   combos : 0,
@@ -237,7 +238,7 @@ var TsquareScene = Class.create(Scene,{
   },
   startMove : function(commandIndex,noOfTicks){
     if(this.conversationOn) return
-    var moves = {forward:0,backward:1,rotating:2}
+    var moves = {forward:0,backward:1,rotating:2, holding:3}
     var collision = this.detectCollisions()
     if(commandIndex == moves.forward){
       this.moveBack = false
@@ -256,7 +257,12 @@ var TsquareScene = Class.create(Scene,{
         this.rotating = true
         this.rotateObjects(collision)
       }
+    }else if(commandIndex == moves.holding){
+	    this.beatMoving = false
+	    this.holding = true
+	    this.holdObjects(collision)
     }
+
     var self = this
     this.moves++
     this.reactor.push(noOfTicks, function(){
@@ -264,6 +270,7 @@ var TsquareScene = Class.create(Scene,{
     })
     
   },
+  
   rotateObjects : function(collision){
      for (var i = 0; i < this.crowdMembers[collision.lane].length; i++) {
          if (this.crowdMembers[collision.lane][i].rotating) {
@@ -273,6 +280,32 @@ var TsquareScene = Class.create(Scene,{
          }
     }
   },
+  
+  holdObjects: function(collision){
+    this.gatherCrowdMembers(collision);  
+  	if(collision){
+            
+  	}else{
+  		
+  	}
+  },
+  
+  gatherCrowdMembers: function(collision){
+     var holdingPoint = {x:0, y:0};
+     for (var i = 0; i < this.crowdMembers[0].length; i++) {
+         holdingPoint.x += this.crowdMembers[0][i].coords.x;
+         holdingPoint.y += this.crowdMembers[0][i].coords.y;
+     }
+     
+     holdingPoint.x /= this.crowdMembers[0].length;
+     holdingPoint.y /= this.crowdMembers[0].length;
+        
+     for (var i = 0; i < this.crowdMembers[0].length; i++) {
+         this.crowdMembers[0][i].setMovingTarget(holdingPoint);
+     }
+
+  },
+  
   moveEnd : function(){
     if(this.comboStart){
         this.comboStart= false

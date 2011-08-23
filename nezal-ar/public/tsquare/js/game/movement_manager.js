@@ -1,5 +1,5 @@
 var MovementManager = Class.create({
-  moves : [[0,0,0,0],[1,1,1,1],[0,1,0,1]],
+  moves : [[0,0,0,0],[1,1,1,1],[0,1,0,1], [2]],
   UP : 0, DOWN : 1,
   move : [],
   movements : [],
@@ -68,7 +68,10 @@ var MovementManager = Class.create({
       }
       else if (e.keyCode == 37) {
           click = 1
-        }
+      }else if (e.keyCode == 32) {
+          click = 2
+      }
+      
       if(!self.turnOn) self.turnOn = true
       console.log(self.ticksPassed, self.nextTick)
        if(click!=-1 && self.ticksPassed >= self.nextTick-10 && self.ticksPassed <= self.nextTick+10){		

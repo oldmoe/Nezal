@@ -5,9 +5,11 @@ var CrowdMember = Class.create(Unit,{
   randomDx : 0,
   randomDy : 0,
   waterDecreaseRate : 0.5,
+  holdingPoint: null,
+  
   initialize : function($super,scene,x,y,options){
-	this.hp = 30;
-	this.maxHp = 30;
+	this.hp = 1000;
+	this.maxHp = 1000;
   	
     x = x + this.xShift
     this.originalPosition = {x:0,y:0}
@@ -54,7 +56,19 @@ var CrowdMember = Class.create(Unit,{
   tick : function($super){
     $super()
     this.water-=this.waterDecreaseRate
-    if(this.water <= 0) this.dead = true   
+    if(this.water <= 0) this.dead = true
+    
+    if(this.movingToTarget){
+      var move = Util.getNextMove(this.coords.x,this.coords.y,this.holdingPoint.x,this.holdingPoint.y,this.scene.speed)
+
+       if(Math.abs(move[0]) < 2 && Math.abs(move[1]) < 2){
+         this.scene.holding = true;
+         this.movingToTarget = false;  
+       }  
+      this.move(move[0], move[1])  
+      this.tickFollowers(move)
+    }
+       
     if(!this.scene.moving)return
     if(this.coords.x !=this.originalPosition.x || this.coords.y !=this.originalPosition.y ){
       var move = Util.getNextMove(this.coords.x,this.coords.y,this.originalPosition.x,this.originalPosition.y,this.scene.speed)
@@ -63,6 +77,7 @@ var CrowdMember = Class.create(Unit,{
       this.tickFollowers(move)
     }
   },
+  
   tickFollowers : function(move){
      for(var i=0;i<this.followers.length;i++){
         this.followers[i].coords.x+=move[0]
@@ -76,6 +91,11 @@ var CrowdMember = Class.create(Unit,{
       }
   },
   
+  setMovingTarget: function(targetPoint){
+    this.movingToTarget = true;
+    this.holdingPoint = targetPoint;
+  },
+  
   rotate : function($super,target){
     $super(target)
     for(var i=0;i<this.followers.length;i++){
@@ -84,7 +104,6 @@ var CrowdMember = Class.create(Unit,{
   },
   
   takeHit: function($super, power){
-  	console.log("takehit")
   	if(this.followers.length > 0)
   		this.followers[0].takeHit(power);
   	else
