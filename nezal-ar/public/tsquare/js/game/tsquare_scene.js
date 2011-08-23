@@ -7,6 +7,7 @@ var TsquareScene = Class.create(Scene,{
   coords: {x:200,y:10},
   moveBack : false,
   energyIncrease : 3,
+  running : false,
   moving : false,
   beatMoving : false,
   moves : 0,
@@ -29,6 +30,7 @@ var TsquareScene = Class.create(Scene,{
     this.createRenderLoop('characters',2)
     this.xPos = 0
     this.speed = 3
+    this.maxSpeed = 20
     this.moving = false
     var self = this
     this.bubbles = []
@@ -278,11 +280,25 @@ var TsquareScene = Class.create(Scene,{
          }
     }
   },
+  setCrowdMembersState : function(state){
+    for(var i=0;i<this.crowdMembers.length;i++){
+      for(var j=0;j<this.crowdMembers[i].length;j++){
+        this.crowdMembers[i][j].setState(state)
+      }
+    }
+  },
   moveEnd : function(){
     if(this.comboStart){
         this.comboStart= false
         this.combos++
-        if(this.speed < 20)this.speed+=3
+        if (this.speed < this.maxSpeed) {
+          var oldSpeed = this.speed
+          this.speed += 3
+          if(this.speed > this.maxSpeed / 2 && oldSpeed < this.maxSpeed / 2){
+            this.setCrowdMembersState("run")
+            this.running = true
+          } 
+        }
         if(this.movementManager.extraSpeed<9)this.movementManager.extraSpeed+=2
         this.currentCombos++ 
         this.createNextFollower()

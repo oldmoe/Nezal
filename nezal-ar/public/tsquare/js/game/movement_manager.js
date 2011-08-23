@@ -37,7 +37,13 @@ var MovementManager = Class.create({
     this.scene.beatMoving = false
     this.scene.comboStart = false
     this.scene.currentCombos = 0
-    this.scene.speed = 3
+    var oldSpeed = this.scene.speed
+    this.scene.speed = Math.max(3,this.scene.speed-3)
+    if(oldSpeed > this.scene.maxSpeed/2 && this.scene.speed < this.scene.maxSpeed/2){
+      this.scene.running = false
+      this.setCrowdMembersState("normal")
+    }
+    if(this.scene.speed < this.scene.maxSpeed/2)this.scene.running = false
     if(this.scene.energy > 0)this.scene.energy-=this.scene.energyIncrease
     this.extraSpeed = 0
     this.ticksPassed = 0

@@ -62,7 +62,7 @@ var Unit = Class.create({
         x: target.coords.x + target.getWidth() - this.getWidth() / 2 - target.getHeight()/4,
         y: target.coords.y + target.getHeight() / 2 - 20
       },
-      state :"normal"
+      state : this.getMovingState()
     })
     this.rotationPoints.push({
       values: {
@@ -78,6 +78,14 @@ var Unit = Class.create({
       },
       state : "reverse"
     })
+  },
+  getMovingState : function(){
+    if(this.scene.running)return "run"
+    return "normal"
+  },
+  getReverseState : function(){
+    if(this.scene.running)return "reverseRun"
+    return "reverse"
   },
   resetRotation : function(){
     this.target = null

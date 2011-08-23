@@ -83,7 +83,7 @@ var DomImgSprite = Class.create(DomSprite, {
   },
   
 	render : function($super){
-    $super();
+      $super();
     if (this.clickable) {
 			this.div.setStyle({
 				zIndex: (this.owner.coords.y + this.minAreaZIndex)

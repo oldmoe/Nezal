@@ -11,20 +11,11 @@ var CrowdMemberDisplay = Class.create(Display,{
   },
   registerEvents : function(){
     var self = this
-    this.owner.addObserver("run",function(){
-      self.sprites.character.switchAnimation('run')
-    })
-    this.owner.addObserver("back",function(){
-      self.sprites.character.switchAnimation('back')
-    })
-    this.owner.addObserver("front",function(){
-      self.sprites.character.switchAnimation('front')
-    })
-    this.owner.addObserver("normal",function(){
-      self.sprites.character.switchAnimation('normal')
-    })
-    this.owner.addObserver("reverse",function(){
-      self.sprites.character.switchAnimation('reverse')
+    var states = ["run","back","front","normal","reverse","reverseRun"]
+    states.each(function(state){
+      self.owner.addObserver(state,function(){
+        self.sprites.character.switchAnimation(state)
+      })
     })
   },
   initImages : function(){
@@ -36,6 +27,7 @@ var CrowdMemberDisplay = Class.create(Display,{
     this.sprites.character.createAnimation({name:'back' ,img:this.backImg,noOfFrames:4})
     this.sprites.character.createAnimation({name:'run'  ,img:this.runImg,noOfFrames:7})
     this.sprites.character.createAnimation({name:'reverse'  ,img:this.characterImg,noOfFrames:8, flipped : true})
+    this.sprites.character.createAnimation({name:'reverseRun'  ,img:this.runImg, noOfFrames:7, flipped : true})
   },
   render : function($super){
     if(this.owner.stateChanged){
