@@ -74,31 +74,33 @@ class ApplicationController < Sinatra::Base
   protected
     
   def get_provider_session
-    if Service::PROVIDERS[@service_provider][:prefix] == Service::KONGREGATE
-      LOGGER.debug ">>>>>> Kongregate - We will check for session in params"
-      if params[:kongregate_user_id] && params[:kongregate_game_auth_token]
-        @service_id = params[:kongregate_user_id]
-        @session_key = params[:kongregate_game_auth_token]        
-        LOGGER.debug ">>>>>> Params - service_id : #{@service_id}"
-        LOGGER.debug ">>>>>> Params - session_key : #{@session_key}"
-      elsif params[:session_key] && params[:uid]
-        @service_id = params[:uid] 
-        @session_key = params[:session_key]
-        LOGGER.debug ">>>>>> Our Params - service_id : #{@service_id}"
-        LOGGER.debug ">>>>>> Our Params - session_key : #{@session_key}"
-        true
+    if Service::PROVIDERS[@service_provider]
+      if Service::PROVIDERS[@service_provider][:prefix] == Service::KONGREGATE
+        LOGGER.debug ">>>>>> Kongregate - We will check for session in params"
+        if params[:kongregate_user_id] && params[:kongregate_game_auth_token]
+          @service_id = params[:kongregate_user_id]
+          @session_key = params[:kongregate_game_auth_token]        
+          LOGGER.debug ">>>>>> Params - service_id : #{@service_id}"
+          LOGGER.debug ">>>>>> Params - session_key : #{@session_key}"
+        elsif params[:session_key] && params[:uid]
+          @service_id = params[:uid] 
+          @session_key = params[:session_key]
+          LOGGER.debug ">>>>>> Our Params - service_id : #{@service_id}"
+          LOGGER.debug ">>>>>> Our Params - session_key : #{@session_key}"
+          true
+        else
+          false
+        end
+      elsif Service::PROVIDERS[@service_provider][:prefix] == Service::FACEBOOK
+        @service_id = Service::PROVIDERS[@service_provider][:helper].authenticate params, env['rack.request.cookie_hash'], app_configs
+        if @service_id
+          true
+        else
+          false
+        end
       else
         false
       end
-    elsif Service::PROVIDERS[@service_provider][:prefix] == Service::FACEBOOK
-      @service_id = Service::PROVIDERS[@service_provider][:helper].authenticate params, env['rack.request.cookie_hash'], app_configs
-      if @service_id
-        true
-      else
-        false
-      end
-    else
-      false
     end
   end
     
