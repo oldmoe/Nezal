@@ -20,3 +20,32 @@
   </div>
 </textarea>
 
+
+<textarea style="display:none;" id='friends'>
+  <div  id="friends">
+    <div>
+      ${gameMode}
+    </div>
+    {for friend in friends}
+    <div id="friend">
+      <span> ${friend['scores'][gameMode]} </span>
+      <span> ${friend['name']} </span>
+    </div>
+    {/for}
+  </div>
+</textarea>
+
+<textarea style="display:none;" id='topScorers'>
+  <div  id="topScorers">
+    <div>
+      ${gameMode}
+    </div>
+    {for user in topScorers}
+    <div id="friend">
+      <span> ${user['scores'][gameMode]} </span>
+      <span> ${user['name']} </span>
+    </div>
+    {/for}
+  </div>
+</textarea>
+

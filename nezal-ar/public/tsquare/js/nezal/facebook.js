@@ -162,15 +162,11 @@ var FBConnect = {
         }
 	  },
 
-	  getUsersInfo : function(ids, result, callback){
-			  var	query2 = FB.Data.query("SELECT name,uid FROM user WHERE uid IN ({0})", ids);
-			  FB.Data.waitOn([query2], function(){
-				    if(!query2.value.length) 
-  				      query2.value=[]
-				    query2.value.each(function(row){
-	  				    result[row.uid].name = row.name
-				    })
-  				  if(callback)callback();
+	  getUsersInfo : function(ids, callback){
+			  var	query = FB.Data.query("SELECT uid, pic_square, name, first_name, last_name FROM user WHERE uid IN ({0})", ids);
+			  FB.Data.waitOn([query], function(){
+				    if(!query.value.length) query.value=[]
+  				  if(callback)callback(query.value);
 			  })
 	  },
     
@@ -346,6 +342,16 @@ var FBConnect = {
                if(callback && response && response.data) callback(response.data);
             }
         );
+    }, 
+
+    friendsAppUsers : function(callback){
+        var callback = callback;
+				var	query = FB.Data.query("SELECT uid, pic_square, name, first_name, last_name FROM user" + 
+                            " WHERE is_app_user=1 and uid IN (SELECT uid2 FROM friend WHERE uid1 = {0})", FB.getAuthResponse().userID);
+				FB.Data.waitOn([query], function(){
+					  if(!query.value.length) query.value=[]
+            if(callback && query.value) callback(query.value);
+				});
     }, 
 
     buyItem : function(itemId){
