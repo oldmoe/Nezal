@@ -27,9 +27,17 @@ module DataStore
       driver.after(object.send(method), object.key, count)
     end
 
+    def first(count=1)
+      driver.first(count)
+    end
+
+    def last(count=1)
+      driver.last(count)
+    end
+
     def driver
-      #@driver ||= Driver::Bdb::Index.new(@db_name, @index_name)
-      #@driver ||= Driver::Redis::Index.new(@db_name, @index_name)
+#      @driver ||= Driver::Bdb::Index.new(@db_name, @index_name)
+#      @driver ||= Driver::Redis::Index.new(@db_name, @index_name)
       @driver ||= Driver::SQLite::Index.new(@db_name, @index_name)
     end
 
