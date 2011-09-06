@@ -103,8 +103,6 @@ class ApplicationController < Sinatra::Base
       else
         false
       end
-    else
-      false
     end
   end
   

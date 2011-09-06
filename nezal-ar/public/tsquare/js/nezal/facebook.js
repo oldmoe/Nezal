@@ -1,14 +1,7 @@
 var FBConnect = {
 
-    appIds : {
-        		'local-city-defender' : "110196392331352",
-        		'city-defender' : "107418339291733",
-        		'defenderofarabia' : "122519734470004",
-        		'local-base-defender' : "156711934356799",
-        		'base-defender' : "111103738948774",
-			      'tahrir-square' : "119464494818795",
-			      'local-tahrir-square' : "112012295565473"
-	  },
+    appIds : { 'thawragy' : "280248505323133",
+               'local-thawragy' : "245272925509018" },
     
     location : null,
     
