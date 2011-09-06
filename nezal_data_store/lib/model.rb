@@ -57,28 +57,29 @@ module DataStore
     end
     
     def next(index, count=1)
+      index = index.to_s
+      self.class.check_index_exists index
       result = indexes[index].after(self, count)
       convert_to_objects result
     end
 
     def previous(index, count=1)
+      index = index.to_s
+      self.class.check_index_exists index
       result = indexes[index].before(self, count)
       convert_to_objects result
     end
 
     def [] key
-      @data[key]
+      @data[key.to_s]
     end
 
     def []= key, val
-      @data[key] = val
+      @data[key.to_s] = val
     end
 
     def convert_to_objects(list)
-      list.collect do |key|
-        record = driver.get(key)
-        self.class.new(record[0], self.class.deserialize(record[1]), true)
-      end
+      self.class.convert_to_objects(list)
     end 
 
     def init
@@ -114,10 +115,30 @@ module DataStore
         record
       end
 
+      def first(index, count=1)
+        index = index.to_s
+        check_index_exists index
+        result = indexes[index].first(count)
+        convert_to_objects result
+      end
+
+      def last(index, count=1)
+        index = index.to_s
+        check_index_exists index
+        result = indexes[index].last(count)
+        convert_to_objects result
+      end
+
+      def convert_to_objects(list)
+        list.collect do |key|
+          record = driver.get(key)
+          self.new(record[0], self.deserialize(record[1]), true)
+        end
+      end 
+
       def driver
-        #@driver ||= Driver::Redis::DB.new(store)
-        #@driver ||= Driver::Bdb::DB.new(store)
-        #@driver ||= Driver::Memory.new()
+#        @driver ||= Driver::Redis::DB.new(store)
+#        @driver ||= Driver::Bdb::DB.new(store)
         @driver ||= Driver::SQLite::DB.new(store)
       end
 
@@ -126,12 +147,19 @@ module DataStore
       end
       
       def index(index_name, options)
+        index_name = index_name.to_s
         indexes[index_name] = Index.new(store, index_name, options)
       end
       
       def indexes
         @indexes ||= {}
       end
+
+      def check_index_exists index_name
+        if indexes[index_name].nil?
+          raise StandardError.new "Index '#{index_name}' does not exist"
+        end
+      end 
 
     end
 

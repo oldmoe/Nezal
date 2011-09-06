@@ -46,6 +46,7 @@ module DataStore
 
       class Index < DB
 
+        alias basic_delete delete
 
         def initialize(db_name, index_name)
           @store_name = "#{db_name}_#{index_name}"
@@ -58,7 +59,7 @@ module DataStore
           old_score = @inverted_index.get(member)
           @inverted_index.save(member, score)
           if old_score
-            delete(key(old_score, member))    
+            basic_delete(key(old_score[1], member))    
           end
           super(key(score, member), nil)
         end
@@ -77,10 +78,24 @@ module DataStore
         end
 
         def before(score, member, count=1)
-          result = @@conn.execute("select key from #{store_name} where key < '#{key(score, member)}' order by key asc limit #{count}").collect do |r| 
+          result = @@conn.execute("select key from #{store_name} where key < '#{key(score, member)}' order by key desc limit #{count}").collect do |r| 
                                     r[0].split(SEP).last if r && r[0]
                                   end
         end
+
+        def first(count=1)
+          result = @@conn.execute("select key from #{store_name} order by key limit #{count}").collect do |r|
+                                    r[0].split(SEP).last if r && r[0]
+                                  end
+          result
+        end
+
+        def last(count=1)
+          result = @@conn.execute("select key from #{store_name} order by key desc limit #{count}").collect do |r| 
+                                    r[0].split(SEP).last if r && r[0]
+                                  end
+        end
+
 
         def key(score, member)
           "#{format(score)}#{SEP}#{member}"

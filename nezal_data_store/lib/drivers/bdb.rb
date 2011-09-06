@@ -146,6 +146,36 @@ module DataStore
           result
         end
 
+        def first(count=1)
+          result = []
+          iterate(WRITABLE) do |cursor|
+            record = cursor.get(nil, nil, ::Bdb::DB_FIRST)  
+            unless record.nil? 
+              result << record[1]
+              (count - 1).times do 
+                record =  cursor.get(nil, nil, ::Bdb::DB_NEXT)  
+                record.nil?  ? break : result << record[1]
+              end
+            end
+          end                    
+          result
+        end
+
+        def last(count=1)
+          result = []
+          iterate(WRITABLE) do |cursor|
+            record = cursor.get(nil, nil, ::Bdb::DB_LAST)  
+            unless record.nil? 
+              result << record[1]
+              (count - 1).times do 
+                record =  cursor.get(nil, nil, ::Bdb::DB_PREV)  
+                record.nil?  ? break : result << record[1]
+              end
+            end
+          end                    
+          result
+        end
+
         def iterate(writable=0)
           cursor = connection.cursor(transaction, writable)
           begin

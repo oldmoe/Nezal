@@ -138,7 +138,7 @@ class AdminController < ApplicationController
       data.values.each do |language_data|
         language_data['quests'].delete(quest_id)
       end
-      BD::Language::save(Metadata.encode(data))
+      BD::Language::save(Nezal::Decoder.encode(data))
       redirect "/#{ADMIN_URL}/#{@game.name}/quests"
     end
   end
@@ -154,7 +154,7 @@ class AdminController < ApplicationController
   # Serve the quest object data
   get '/:game_name/quests/:quest_id/metadata' do 
     @quest = BD::Quest.find(params["quest_id"])
-    Metadata.encode(@quest)
+    Nezal::Decoder.encode(@quest)
   end
 
   ######################################################################
@@ -164,7 +164,7 @@ class AdminController < ApplicationController
   get '/:game_name/locale.json' do 
     @game = Game.get(params[:game_name])
     BD::Language::init()
-    Metadata.encode(BD::Language::load())
+    Nezal::Decoder.encode(BD::Language::load())
   end
 
   # Edit Language data
@@ -191,7 +191,7 @@ class AdminController < ApplicationController
   get %r{/([0-9A-Za-z_\-]+)(.json)?} do
     @game = Game.get(params[:captures][0])
     if params[:captures][1]
-      Metadata.encode(@game.data)
+      Nezal::Decoder.encode(@game.data)
     else
       erb :show , {:layout => :app}
     end
@@ -201,7 +201,7 @@ class AdminController < ApplicationController
   put %r{/([0-9A-Za-z_\-]+).json} do
     @game = Game.get(params[:captures][0])
     data = params["data"]
-    @game.data= Metadata.decode(data)
+    @game.data= Nezal::Decoder.decode(data)
     @game.save
   end
 
