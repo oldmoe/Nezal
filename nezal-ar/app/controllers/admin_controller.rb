@@ -100,6 +100,22 @@ class AdminController < ApplicationController
     erb :quests , {:layout => :app}
   end
 
+  get '/:game_name/product' do
+    @game = Game.get(params[:game_name])
+    erb :product , {:layout => :app}
+  end
+  
+  post "/:game_name/product" do
+    File.open('public/tsquare/' + params['image_file'][:filename], "w") do |f|
+      f.write(params['image_file'][:tempfile].read)
+    end
+    
+    FBHelper.add_product app_configs, 
+    
+    "The product was successfully submitted!"
+  end
+
+
   # Add a quest to a game 
   post '/:game_name/quests' do
     BD::Quest.new(params)
