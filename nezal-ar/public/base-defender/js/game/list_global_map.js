@@ -1,3 +1,0 @@
-var ListMapManager = Class.create({
-  
-})
