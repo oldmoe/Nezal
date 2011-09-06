@@ -52,7 +52,7 @@ class FBHelper
       # Data part after '.'
       request_parts = request.split(".")
       data = base64_url_decode(request_parts[1])
-      authenticate_signed_request(request_parts, app_configs) ? Metadata.decode(data) : nil
+      authenticate_signed_request(request_parts, app_configs) ?     Nezal::Decoder.decode(data) : nil
     end
 
     def base64_url_decode(input)
