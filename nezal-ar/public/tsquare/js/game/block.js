@@ -37,14 +37,17 @@ var Block = Class.create(Unit,{
         }
       }
     },
+    
     getWidth : function(){
       if(!this.elements[0])return 0
       return this.elementWidth * this.elements.length + (this.elements[0][0].imgWidth - this.elementWidth)  
     },
+    
     getHeight : function(){
       if(!this.elements[0])return 0
       return this.elementHeight * this.elements.length + (this.elements[0][0].imgHeight - this.elementHeight)
     },
+    
     takeHit : function(power){
       var maxHp = 0
       for (var i = 0; i < this.elements.length; i++) {

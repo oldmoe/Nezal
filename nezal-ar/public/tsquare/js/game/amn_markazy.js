@@ -21,6 +21,7 @@ var AmnMarkazy = Class.create(Enemy,{
   },
   
   checkCollision: function(){
+    return
   	var crowdMembers = this.scene.crowdMembers[this.lane];
   	var length = crowdMembers.length; 
     return

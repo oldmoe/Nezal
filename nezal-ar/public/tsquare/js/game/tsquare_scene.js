@@ -17,9 +17,6 @@ var TsquareScene = Class.create(Scene,{
   comboStart : false,
   currentCombos : 0,
   noOfLanes : 3,
-  crowdMemberInitialX : 200,
-  crowdMemberInitialY : 100,
-  numberOfCrowdMembersPerColumn : 1,
   nextFollower : {lane:0,index:0},
 	initialize: function($super,game){
 		$super(game)
@@ -105,7 +102,7 @@ var TsquareScene = Class.create(Scene,{
   tick : function($super){
     $super()
     if(this.holding){
-        if(this.holdingTime > 50){
+        if(this.holdingTime > 100){
            this.holdingTime = 0
            this.holding = false 
            console.log("end");
@@ -254,6 +251,7 @@ var TsquareScene = Class.create(Scene,{
     }})
     this.pushToRenderLoop('characters',energySprite)
   },
+  
   startMove : function(commandIndex,noOfTicks){
     if(this.conversationOn) return
     var moves = {forward:0,backward:1,rotating:2, holding:3}
@@ -279,7 +277,7 @@ var TsquareScene = Class.create(Scene,{
 	    this.beatMoving = false
 	    this.holding = true
 	    this.holdObjects(collision)
-    }
+    } 
 
     var self = this
     this.moves++
@@ -303,9 +301,9 @@ var TsquareScene = Class.create(Scene,{
     this.holding = true
     this.gatherCrowdMembers(collision);  
   	if(collision){
-            
+        this.energy += this.energyIncrease;        
   	}else{
-  		
+  		this.energy -= 1;
   	}
   },
   
