@@ -1,4 +1,4 @@
-var AmnMarkazy = Class.create(Enemy,{
+var RunningAmnMarkazy = Class.create(RunningEnemy,{
 	
 	hitting : false,
 	hittingTime: 0,
@@ -21,7 +21,6 @@ var AmnMarkazy = Class.create(Enemy,{
   },
   
   checkCollision: function(){
-    return
   	var crowdMembers = this.scene.crowdMembers[this.lane];
   	var length = crowdMembers.length; 
     return

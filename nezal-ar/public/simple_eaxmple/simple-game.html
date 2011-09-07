@@ -1,0 +1,36 @@
+<html>
+	<head>
+		<script src="js/base/prototype.js" type="text/javascript"></script>
+		<script src="js/base/effects.js" type="text/javascript"></script>
+		<script src="js/base/template.js" type="text/javascript"></script>
+		
+		<script src="js/nezal/layer.js" type="text/javascript"></script>
+		<script src="js/nezal/nezal.js" type="text/javascript"></script>
+		<script src="js/nezal/reactor.js" type="text/javascript"></script>
+		<script src="js/nezal/scene.js" type="text/javascript"></script>
+		<script src="js/nezal/sprite.js" type="text/javascript"></script>
+		<script src="js/nezal/baloon.js" type="text/javascript"></script>
+		<script src="js/nezal/loader.js" type="text/javascript"></script>
+		<script src="js/nezal/sprite.js" type="text/javascript"></script>
+
+
+		<script src="js/game/composite_unit_sprite.js" type="text/javascript"></script>
+		<script src="js/game/unit.js" type="text/javascript"></script>		
+		<script src="js/game/bullet.js" type="text/javascript"></script>
+		<script src="js/game/humvee.js" type="text/javascript"></script>
+		<script src="js/game/jet.js" type="text/javascript"></script>
+		<script src="js/game/display.js" type="text/javascript"></script>
+		<script src="js/game/game_scene.js" type="text/javascript"></script>
+		<script src="js/game/game_controller.js" type="text/javascript"></script>
+		<script src="js/game/game.js" type="text/javascript"></script>
+
+		<script type=text/javascript>
+			document.observe("dom:loaded", function(){
+				game = new Game($("mainContainer").getContext("2d"));
+			})
+		</script>
+	</head>
+	<body>
+		<canvas id="mainContainer" width="300" height="450" ></canvas>
+	</body>
+</html>

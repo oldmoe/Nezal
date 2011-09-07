@@ -48,6 +48,7 @@ var MovementManager = Class.create({
     this.extraSpeed = 0
     this.ticksPassed = 0
   },
+  
   tick : function(){
     if(this.scene.beatMoving){
       this.ticksPassed = 0
