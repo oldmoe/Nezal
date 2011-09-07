@@ -26,7 +26,7 @@ class UserGameProfile < DataStore::Model
   end
 
   def timeline_index
-    rank_index(formal(scores['timeline']))
+    rank_index(format(scores['timeline']))
   end
 
   def racing_index
@@ -42,7 +42,7 @@ class UserGameProfile < DataStore::Model
   end
 
   def rank_index(rank)
-   self.class.generate_key(service_type,  Game::current.key, rank)
+    self.class.generate_key(service_type,  Game::current.key, rank)
   end
 
   def format(key)
@@ -79,6 +79,7 @@ class UserGameProfile < DataStore::Model
 #    after_users = filterAppProfiles(self.previous(game_mode + '_score', count)).collect { |record| {'service_id' => record.service_id, 'scores' => record.scores} }
 #    before_users = filterAppProfiles(self.next(game_mode + '_score', count)).collect { |record| {'service_id' => record.service_id, 'scores' => record.scores} }
     top_users = filterAppProfiles(self.class.last(game_mode + '_score', count)).collect { |record| {'service_id' => record.service_id, 'scores' => record.scores} }
+    puts top_users
     { :before => before_users, :after => after_users, :top => top_users }
   end
 

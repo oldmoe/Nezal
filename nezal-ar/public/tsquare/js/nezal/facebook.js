@@ -19,7 +19,7 @@ var FBConnect = {
 	  user : null,
 
     userId : function(){
-        return FBConnect.session.user_id;
+        return FBConnect.session.userID;
     },	  
 
     getStatus : function(successCallback) {

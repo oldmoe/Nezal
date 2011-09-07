@@ -60,7 +60,7 @@ var ScoreManager = Class.create({
             rank ++;
           else
             break;   
-        }
+        }        
         self.carousel.scrollTo(rank);
         self.carousel.checkButtons();
       }
@@ -130,7 +130,6 @@ var ScoreManager = Class.create({
   fillSocialData : function(userList, socialData){
     var socialDataHash = {};
     socialData.each(function(user){ socialDataHash[user.uid] = user });
-    console.log(socialDataHash)
     userList.each(function(user){
                          user.name = socialDataHash[user.service_id].name;
                          user.first_name = socialDataHash[user.service_id].first_name;
