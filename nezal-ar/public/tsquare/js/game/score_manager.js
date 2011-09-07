@@ -51,18 +51,6 @@ var ScoreManager = Class.create({
         self.sortFriends();
         self.fillSocialData(self.friends, socialData);
         self.display();
-        if(self.carousel) self.carousel.destroy();      
-        self.carousel = new Carousel("friends", self.images, 2);
-        var rank = 0;
-        for(var i=0; i< self.friends.length; i++)
-        {
-          if(self.friends[i].service_id != socialEngine.userId())
-            rank ++;
-          else
-            break;   
-        }        
-        self.carousel.scrollTo(rank);
-        self.carousel.checkButtons();
       }
       self.network.friends(friendsIds, callback);
     });
@@ -91,8 +79,24 @@ var ScoreManager = Class.create({
   },
 
   display : function(){
+    var self = this;
     $('scores').innerHTML = this.templateManager.load('scoreTabs', { scoreManager : this}) + 
                  this.templateManager.load(this.modes[this.mode]['display'], { scoreManager : this});
+    if(self.mode == 'friends')
+    {
+      if(self.carousel) self.carousel.destroy();      
+      self.carousel = new Carousel("friends", self.images, 2);
+      var rank = 0;
+      for(var i=0; i< self.friends.length; i++)
+      {
+        if(self.friends[i].service_id != socialEngine.userId())
+          rank ++;
+        else
+          break;   
+      }        
+      self.carousel.scrollTo(rank);
+      self.carousel.checkButtons();
+    }
     this.attachListeners();
   },
 
