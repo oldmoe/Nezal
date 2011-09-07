@@ -56,32 +56,63 @@
   width: 600px;
 }
 
+#scores .users ul{
+	width : 2000px;
+	height :150px;			
+	margin : 0px;
+	padding : 0px;
+}
+#scores .users .left, #scores .users .right {
+  display: inline-block;
+  height: 100%;
+  position: relative;
+  vertical-align: top;
+  width: 20px;
+}
+#scores .users .container {
+  display: inline-block;
+  width: 240px;
+  overflow : hidden;
+}
+
+#scores .users li {
+	float : left;
+	list-style : none;			
+  height: 10px;
+  width: 120px;
+}
+
 #scores .user {
   height: 100px;
   width: 100px;
   margin: 10px;
   display : inline-block;
+  vertical-align : top;
 }
 
 #scores .user .score {
-  position: absolute;
+  position: relative;
   background: none repeat scroll 0 0 gray;
   color: black;
   opacity: 0.5;
   text-align: center;
   width: 100px;
+  top : 0px;
+  height : 20px;
+  z-index : 10;
 }
 #scores .user .name {
+  position: relative;
   background: none repeat scroll 0 0 gray;
   font-weight: bold;
   opacity: 0.5;
-  overflow: visible;
-  position: absolute;
   text-align: center;
-  top: 80px;
+  top: -30px;
   width: 100px;
 }
 #scores .user img {
+  position: relative;
   width : 100%;
+  top : -20px;
 }
 

@@ -23,13 +23,25 @@
 
 <textarea style="display:none;" id='friends'>
   <div  id="friends" class="users">
-    {for friend in scoreManager.friends}
-    <div class="user">
-      <div class="score"> ${friend['scores'][scoreManager.gameMode]} </div>
-			<img class='photo' src='${friend['picture']}' />	
-      <div class="name"> ${friend['name']} </div>
+    <div class="left">
+      <img src="" />
     </div>
-    {/for}
+    <div id="friends-container" class="container">
+      <ul id='defense-ul'>
+        {for friend in scoreManager.friends}
+          <li>
+            <div class="user">
+              <div class="score"> ${friend['scores'][scoreManager.gameMode]} </div>
+			        <img class='photo' src='${friend['picture']}' />	
+              <div class="name"> ${friend['name']} </div>
+            </div>
+          </li>
+        {/for}
+      </ul>
+    </div>
+    <div class="right">
+      <img src="" />
+    </div>
   </div>
 </textarea>
 
@@ -71,31 +83,3 @@
     {/for}
   </div>
 </textarea>
-
-
-
-
-   <div id="defense" class="buildings" style="display:none;">
-      <div class="left">
-        <img src="" />
-      </div>
-      <div id="defense-container" class="container">
-        <ul id='defense-ul'>
-        {for building in buildings}
-          <li>
-            <div id="${building_index}" class="item">
-              <span imgId="${building_index}_image_hover" class="loadedImg" imgClasses="hover" imgSrc="images/quests/building_hover.png" hidden="true">
-              </span>
-              <span imgId="${building_index}_image_arrow" class="loadedImg" imgClasses="hoverArrow"
-                    imgSrc="images/quests/building_hover_arrow.png" hidden="true">
-               </span>
-            </div>
-          </li>
-        {/for}
-        </ul>
-      </div>
-      <div class="right">
-        <img src="" />
-      </div>
-    </div>
-  </div>

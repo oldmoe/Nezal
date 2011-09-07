@@ -1,5 +1,13 @@
 var ScoreManager = Class.create({
 
+
+  images : {
+              'left' : 'images/tmp/left.png',
+              'left-disabled' : 'images/tmp/left-disabled.png',
+              'right' : 'images/tmp/right.png',
+              'right-disabled' :'images/tmp/right-disabled.png'
+            },
+
   modes : {
     'global' : { display : 'topScorers' },
     'friends' : { display : 'friends' }
@@ -43,6 +51,9 @@ var ScoreManager = Class.create({
         self.sortFriends();
         self.fillSocialData(self.friends, socialData);
         self.display();
+        if(self.carousel) self.carousel.destroy();      
+        self.carousel = new Carousel("friends", self.images, 2);
+        self.carousel.checkButtons();
       }
       self.network.friends(friendsIds, callback);
     });
