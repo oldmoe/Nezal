@@ -7,17 +7,24 @@ var CrowdMember = Class.create(Unit,{
   waterDecreaseRate : 0.5,
   holdingPoint: null,
   commandFilters: [],
+  rotationPoints : null,
+  rotationSpeed : 5,
+  rotating : false,
+  
   
   initialize : function($super,scene,x,y,options){
-    $super(scene,x,y)
+    $super(scene,x,y, options)
     
+    this.rotationPoints = []
+    
+    var self = this
     this.commandFilters = [
-      {command: this.rotating, callback: function(){this.rotate()}}
+      {command: function(){return self.rotating}, callback: function(){self.circleMove()}}
     ];
       
     this.hp = 1000;
     this.maxHp = 1000;
-    this.handler = options.handler      
+          
     x = x + this.xShift
     this.originalPosition = {x:0,y:0}
     
@@ -37,6 +44,7 @@ var CrowdMember = Class.create(Unit,{
     this.followers = []
     //this.createFollowers()
   },
+  
   createFollower : function(){
       if(this.followers.length >= this.level)return
       var x = this.coords.x - Math.floor(((this.followers.length/4)+1)*15 * Math.random())
@@ -48,6 +56,7 @@ var CrowdMember = Class.create(Unit,{
       this.followers.push(follower)
       follower.moveToTarget({x:x,y:y})
   },
+  
   createFollowers : function(){
     for(var i=0;i<this.noOfFollowers;i++){
       var x = this.coords.x - parseInt(this.noOfFollowers*15 * Math.random())
@@ -57,8 +66,10 @@ var CrowdMember = Class.create(Unit,{
       this.followers.push(follower)
     }
   },
+  
   tick : function($super){
     $super()
+     this.processCommand()
     this.stateChanged = true
     this.water-=this.waterDecreaseRate
     if(this.water <= 0) this.dead = true
@@ -97,7 +108,11 @@ var CrowdMember = Class.create(Unit,{
   },
   
   processCommand: function(){
-      
+    for(var i=0;i<this.commandFilters.length;i++){
+        if(this.commandFilters[i].command()){
+            if(!this.commandFilters[i].callback()) break;
+        }    
+    }
   },
   
   setMovingTarget: function(targetPoint){
@@ -120,8 +135,14 @@ var CrowdMember = Class.create(Unit,{
   },
   
   circle : function(){
-      this.currentAction = "circle";
-      
+      if(this.target){
+          this.currentAction = "circle";
+          this.rotating = true 
+          this.addRotationPoints(this.target)
+          this.fire(this.rotationPoints[0].state)
+      }else{
+         console.log("invalid command"); 
+      }
   },
   
   retreat : function(){
@@ -130,10 +151,76 @@ var CrowdMember = Class.create(Unit,{
   
   march : function(){
       this.currentAction = "march"
+      console.log("march1");
   },
   
   hold : function(){
       this.currentAction = "hold"
-  }
+      console.log("hold");
+  },
+  
+    addRotationPoints : function(target){
+    this.rotationPoints.push({
+      values: {
+        x: target.coords.x - this.getWidth() / 2 - target.getHeight()/4,
+        y: target.coords.y + target.getHeight() / 2 - 20
+      },
+      state: "front"
+    })
+    this.rotationPoints.push({
+      values: {
+        x: target.coords.x + target.getWidth() - this.getWidth() / 2 - target.getHeight()/4,
+        y: target.coords.y + target.getHeight() / 2 - 20
+      },
+      state : this.getMovingState()
+    })
+    this.rotationPoints.push({
+      values: {
+        x: target.coords.x + target.getWidth() - this.getWidth() / 2,
+        y: target.coords.y - 20
+      },
+      state : "back"
+    })
+    this.rotationPoints.push({
+      values: {
+        x: target.coords.x - this.getWidth() / 2,
+        y: target.coords.y - 20
+      },
+      state : "reverse"
+    })
+  },
+  circleMove : function(){
+    console.log('circle')
+    if (!this.target|| this.target.hp <= 0) {
+      this.resetRotation()
+    }
+      if (this.rotationPoints.length == 0) {
+        this.target.takeHit(this.power)
+        if (this.target.hp < 0) {
+          console.log('reset 2')
+          this.resetRotation()
+          return
+        }else{
+          this.circle(this.target)
+        }
+      }
+      var rp = this.rotationPoints[0]
+      var move = Util.getNextMove(this.coords.x,this.coords.y,rp.values.x,rp.values.y,this.rotationSpeed)
+      this.coords.x+=move[0]
+      this.coords.y+=move[1]
+      if (this.coords.x <= rp.values.x + 0.001 && this.coords.x >= rp.values.x - 0.001 &&
+      this.coords.y <= rp.values.y + 0.001 &&this.coords.y >= rp.values.y - 0.001) {
+          this.rotationPoints.shift()
+          if(this.rotationPoints.length > 0 ) this.fire(this.rotationPoints[0].state)
+      }
+  },
+  resetRotation : function(){
+    this.target = null
+    this.rotating = false
+    this.scene.moving = false
+    this.scene.rotating = false
+    this.fire("normal")
+  },
+ 
 })
   

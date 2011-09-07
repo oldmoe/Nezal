@@ -52,50 +52,39 @@ var UnitHandler = Class.create({
   detectCollisions : function(others){
     var collision = [];
     for(var i=0;i<this.objects.length;i++){
-      if(this.objects[i]){
-         
-         var visited = [];   
-         for (var k = 0; k < others[i].length; k++) {
-             visited[k] = null;
-         }
-     
-          for(var j=0;j<this.objects[i].length;j++){
-            if(others[i]){
-               var collid = -1; 
-                for (var k = 0; k < others[i].length; k++) {
-                  if (this.objects[i][j].coords.x + this.objects[i][j].getWidth() > others[i][k].coords.x) {
-                      collid = k;
-                      visited[k] = j;
-                   }
+        if(this.objects[i] && this.objects[i][0] && !this.objects[i][0].rotating){
+          var collided = false
+          for(var j=0;j<this.objects[i].length;j++){             
+            if(others[i] && others[i][0] ){               
+                if(this.objects[i][j].collidesWith(others[i][0])){
+                    others[i][0].setTarget(this.objects[i][j]);                 
+                    collided = true;
+                    break; 
+                }                
+             }
+           }
+           if(others[i] && others[i][0] && !collided){
+               others[i][0].setTarget(null);                  
+           } 
+           for(var j=0;j<this.objects[i].length;j++){                      
+                if(collided){
+                    this.objects[i][j].setTarget(others[i][0]);       
+                }else{
+                    this.objects[i][j].setTarget(null); 
                 }
-                
-                if(collid >= 0){
-                      collision.push({
-                          crowd: this.objects[i][j],
-                          obstacle: others[i][collid],
-                          lane : i
-                      })
-                    this.objects[i][j].setTarget(others[i][collid]);
-                }
-            }         
-          }
-          
-          for (var k = 0; k < visited.length; k++) {
-              if(visited[k] != null){
-                  collision.push({
-                      crowd: this.objects[i][visited[k]],
-                      obstacle: others[i][k],
-                      lane : i
-                  })
-                  others[i][k].setTarget(this.objects[i][visited[k]]);
-              }
-              else
-                  others[i][k].setTarget(null);
-          }
+           }
        }
     }
     if(collision.length > 0) return true
     return false
-  }    
+  },
+  
+   removeObject: function(object, lane){
+      if(this.objects[lane].indexOf(object)!=-1){
+          object.destroy();
+          this.objects[lane].remove(object);
+      }
+   }
+      
     
 });

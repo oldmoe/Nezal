@@ -4,12 +4,14 @@ var AmnMarkazy = Class.create(Enemy,{
 	hittingTime: 0,
 	hitOffset: 10,
 	hittingTime: 0,
+	
 		
-  initialize : function($super,scene,x,y){
-     $super(scene,x,y) 
+  initialize : function($super,scene,x,y, options){
+     $super(scene,x,y, options) 
      this.hp = 30;
      this.maxHp = 30;
      this.power = 5;
+     
   },
   
   tick : function($super){

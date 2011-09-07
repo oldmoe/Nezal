@@ -9,7 +9,7 @@ var MovementManager = Class.create({
   beatAccelaration : 0,
   lastMoveClicked : false,
   beatDelay : 15,
-  moves : {march:{code:[0,0,0,0],index:0},retreat:{code:[1,1,1,1],index:1},circle:{code:[0,1,0,1],index:2}, holding:{code:[2],index:3}},  
+  moves : {march:{code:[0,0,0,0],index:0},retreat:{code:[1,1,1,1],index:1},circle:{code:[0,1,0,1],index:2}, hold:{code:[2],index:3}},  
   beatMoving: false,
   comboStart: false,
   currentCombos: 0,
@@ -146,29 +146,22 @@ var MovementManager = Class.create({
   startMove : function(commandIndex,noOfTicks){
 //    if(this.conversationOn) return
     var collision = this.scene.detectCollisions()
-    if(this.scene.currentSpeed == 0)this.scene.increaseEnergy()
     if(commandIndex == this.moves.march.index){
-      this.scene.fire('march')
-      if(collision){
-        this.scene.decreaseEnergy()
-        return
-      }else{
-        this.beatMoving = true    
-      }
+        if(this.scene.currentSpeed == 0)this.scene.increaseEnergy()
+        this.scene.fire('march')
+        if(collision){
+          this.scene.decreaseEnergy()
+          return
+        }else{
+          this.beatMoving = true    
+        }
     }else if(commandIndex == this.moves.retreat.index){
         this.scene.fire('retreat')
     }else if(commandIndex == this.moves.circle.index){
         this.scene.fire('circle')
-     // if (collision) {
-       // this.beatMoving = true
-       // this.rotating = true
-       // this.rotateObjects(collision)
+    }else if(commandIndex == this.moves.hold.index){
+        this.scene.fire('hold')
     }
-//    }else if(commandIndex == moves.holding){
-//        this.beatMoving = false
-//        this.holding = true
-//        this.holdObjects(collision)
-//    }
 
     var self = this
     this.scene.reactor.push(noOfTicks, function(){

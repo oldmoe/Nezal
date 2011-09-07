@@ -43,6 +43,10 @@ var TsquareScene = Class.create(Scene,{
         }
     },
     
+    init: function(){
+        this.skyLine = new SkyLine(this)
+    },
+    
     observe: function(event, callback){
         this.observer.addObserver(event, callback);
     },
@@ -77,9 +81,9 @@ var TsquareScene = Class.create(Scene,{
     circle: function(){
         console.log("scene circle");
     },
-    
-    init: function(){
-        this.skyLine = new SkyLine(this)
+
+    hold: function(){
+        console.log("scene hold");
     },
     
     tick: function($super){
@@ -136,7 +140,7 @@ var TsquareScene = Class.create(Scene,{
   },
   
   handleCollision : function(collision){
-      
+      this.currentSpeed = 0;
   },
     
   increaseEnergy : function(){
