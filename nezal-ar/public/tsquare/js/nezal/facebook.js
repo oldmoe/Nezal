@@ -148,10 +148,11 @@ var FBConnect = {
             FB.api( '/me', function(response)
                             {
                                 FBConnect.user = response;
+                                FBConnect.user['uid'] = FBConnect.user['id'];
                                 callback();                                      
                             });
         }else {
-          callback();
+          callback(FBConnect.user);
         }
 	  },
 
@@ -340,7 +341,7 @@ var FBConnect = {
     friendsAppUsers : function(callback){
         var callback = callback;
 				var	query = FB.Data.query("SELECT uid, pic_square, name, first_name, last_name FROM user" + 
-                            " WHERE is_app_user=1 and uid IN (SELECT uid2 FROM friend WHERE uid1 = {0})", FB.getAuthResponse().userID);
+                            " WHERE is_app_user=1 and (uid IN (SELECT uid2 FROM friend WHERE uid1 = {0}) or uid={0})", FB.getAuthResponse().userID);
 				FB.Data.waitOn([query], function(){
 					  if(!query.value.length) query.value=[]
             if(callback && query.value) callback(query.value);

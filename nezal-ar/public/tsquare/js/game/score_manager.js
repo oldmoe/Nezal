@@ -1,9 +1,11 @@
 var ScoreManager = Class.create({
 
   modes : {
-    'global' : { display : '' },
-    'friends' : { display : '' }
+    'global' : { display : 'topScorers' },
+    'friends' : { display : 'friends' }
   }, 
+
+  gameModes : ['timeline', 'racing', 'cooperation', 'global'],
 
   friends : null,
 
@@ -27,19 +29,20 @@ var ScoreManager = Class.create({
   },
 
   loadFriendsTab : function(gameMode) {
-    this.mode = 'friend'
+    this.mode = 'friends'
     this.gameMode = gameMode;
     var self = this;
     socialEngine.friendsAppUsers(function(friends){  
-      var friends = friends;
+      var socialData = [];
+      socialData = socialData.concat(friends);
       var friendsIds =  friends.collect(function(friend){
                                     return friend.uid
                                 });
       var callback = function(scores){
         self.friends = scores;
         self.sortFriends();
+        self.fillSocialData(self.friends, socialData);
         self.display();
-        self.fillSocialData(self.friends, friends);
       }
       self.network.friends(friendsIds, callback);
     });
@@ -54,28 +57,60 @@ var ScoreManager = Class.create({
       var ids = self.topScorers['top'].collect(function(user){return user['service_id']});
       socialEngine.getUsersInfo(ids, function(data){
         self.fillSocialData(self.topScorers['top'], data)
-        self.display();  
+        self.display();
       })
     }
     self.network.globalScores(gameMode, callback);
   },
 
-  switchScoringMode : function(mode, gameMode) {
-    
+  switchScoringMode : function(gameMode) {
+    if(this.mode == 'global')
+      this.loadFriendsTab(this.gameMode);
+    else
+      this.loadGlobalTab(this.gameMode);
   },
 
-  display : function() {
+  display : function(){
+    $('scores').innerHTML = this.templateManager.load('scoreTabs', { scoreManager : this}) + 
+                 this.templateManager.load(this.modes[this.mode]['display'], { scoreManager : this});
+    this.attachListeners();
+  },
+
+  attachListeners : function() {
+    var self = this;
+    $$('#scores .scoreTab').each( function(element) {
+      if(element.id != self.mode)         
+      {
+        element.observe('click', function(event){
+          self.switchScoringMode(self.gameMode);
+        });
+      } 
+    });
+    $$('#scores .gameModeTab').each( function(element) {
+      element.observe('click', function(event){
+        self.gameMode = element.id;
+        if(self.mode == 'global')
+        {
+          self.loadGlobalTab(self.gameMode);      
+        }
+        else
+        {
+          self.sortFriends();
+        } 
+        self.display();
+      });
+    });
   },  
 
   sortFriends : function() {
     var self = this
-    this.friends.sortBy(function(friend){return friend.scores[self.gameMode]})
+    this.friends  = this.friends.sortBy(function(friend){ return friend.scores[self.gameMode]}).reverse();
   }, 
 
   fillSocialData : function(userList, socialData){
-    console.log(userList, socialData);
     var socialDataHash = {};
     socialData.each(function(user){ socialDataHash[user.uid] = user });
+    console.log(socialDataHash)
     userList.each(function(user){
                          user.name = socialDataHash[user.service_id].name;
                          user.first_name = socialDataHash[user.service_id].first_name;

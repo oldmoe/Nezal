@@ -70,9 +70,11 @@
 			document.observe("dom:loaded", function(){
 			      socialEngine = FBConnect
 			      socialEngine.init(function(){
+              score = new ScoreManager();
+              score.loadGlobalTab('global');
 	        		try {
-					game = new Game();
-				} catch(e){}
+    	    				game = new Game();
+      				} catch(e){}
 			      });
 			})
 		</script>
@@ -94,7 +96,6 @@
       </div>
     </div>
     <div id="scores">
-       
     </div>
 	</body>
 </html>

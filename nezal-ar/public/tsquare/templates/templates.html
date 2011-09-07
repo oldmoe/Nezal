@@ -22,30 +22,80 @@
 
 
 <textarea style="display:none;" id='friends'>
-  <div  id="friends">
-    <div>
-      ${gameMode}
-    </div>
-    {for friend in friends}
-    <div id="friend">
-      <span> ${friend['scores'][gameMode]} </span>
-      <span> ${friend['name']} </span>
+  <div  id="friends" class="users">
+    {for friend in scoreManager.friends}
+    <div class="user">
+      <div class="score"> ${friend['scores'][scoreManager.gameMode]} </div>
+			<img class='photo' src='${friend['picture']}' />	
+      <div class="name"> ${friend['name']} </div>
     </div>
     {/for}
   </div>
 </textarea>
 
 <textarea style="display:none;" id='topScorers'>
-  <div  id="topScorers">
-    <div>
-      ${gameMode}
-    </div>
-    {for user in topScorers}
-    <div id="friend">
-      <span> ${user['scores'][gameMode]} </span>
-      <span> ${user['name']} </span>
+  <div  id="topScorers" class="users">
+    {for user in scoreManager.topScorers.top}
+    <div class="user">
+      <div class="score"> ${user['scores'][scoreManager.gameMode]} </div>
+      <div>
+  			<img class='photo' src="${user['picture']}" />	
+      </div>
+      <div class="name"> ${user['name']} </div>
     </div>
     {/for}
   </div>
 </textarea>
 
+<textarea style="display:none;" id='scoreTabs'>
+  <div id="scoringModes">
+  {for mode in scoreManager.modes}
+    <div id="${mode_index}" {if mode_index == scoreManager.mode}
+                              class="scoreTab selected"
+                            {else}
+                              class="scoreTab"     
+                            {/if} >
+      ${mode_index.capitalize()} Score
+    </div>
+  {/for}
+  </div>
+  <div id="gameModes">
+    {for mode in scoreManager.gameModes}
+        <span id="${mode}" {if mode == scoreManager.gameMode}
+                            class="gameModeTab selected"  
+                          {else}  
+                            class="gameModeTab"
+                          {/if} > 
+          ${mode} 
+        </span>                      
+    {/for}
+  </div>
+</textarea>
+
+
+
+
+   <div id="defense" class="buildings" style="display:none;">
+      <div class="left">
+        <img src="" />
+      </div>
+      <div id="defense-container" class="container">
+        <ul id='defense-ul'>
+        {for building in buildings}
+          <li>
+            <div id="${building_index}" class="item">
+              <span imgId="${building_index}_image_hover" class="loadedImg" imgClasses="hover" imgSrc="images/quests/building_hover.png" hidden="true">
+              </span>
+              <span imgId="${building_index}_image_arrow" class="loadedImg" imgClasses="hoverArrow"
+                    imgSrc="images/quests/building_hover_arrow.png" hidden="true">
+               </span>
+            </div>
+          </li>
+        {/for}
+        </ul>
+      </div>
+      <div class="right">
+        <img src="" />
+      </div>
+    </div>
+  </div>
