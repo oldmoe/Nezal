@@ -36,7 +36,7 @@ class GamesController < ApplicationController
   end
 
   get '/:game_name/global_scores' do
-    result = user_game_profile.global_scores(decode(params['data'])['game_mode'], 10)
+    result = user_game_profile.global_scores(decode(params['data'])['game_mode'], 5)
     encode(result)
   end
 
