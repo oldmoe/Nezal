@@ -17,7 +17,11 @@ var FBConnect = {
 	  callback : null,
 	  
 	  user : null,
-	  
+
+    userId : function(){
+        return FBConnect.session.user_id;
+    },	  
+
     getStatus : function(successCallback) {
         FB.getLoginStatus(function(response) {
 		      if (response.status == "connected") {

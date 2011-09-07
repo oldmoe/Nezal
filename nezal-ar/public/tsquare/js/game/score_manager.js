@@ -53,6 +53,15 @@ var ScoreManager = Class.create({
         self.display();
         if(self.carousel) self.carousel.destroy();      
         self.carousel = new Carousel("friends", self.images, 2);
+        var rank = 0;
+        for(var i=0; i< self.friends.length; i++)
+        {
+          if(self.friends[i].service_id != socialEngine.userId())
+            rank ++;
+          else
+            break;   
+        }
+        self.carousel.scrollTo(rank);
         self.carousel.checkButtons();
       }
       self.network.friends(friendsIds, callback);
