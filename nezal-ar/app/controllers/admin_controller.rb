@@ -55,6 +55,7 @@ class AdminController < ApplicationController
   ######################################################################  
   get '/:game_name/products/new' do
     @game = Game::current
+    @product = {}
     erb :edit_product , {:layout => :app}
   end
   
