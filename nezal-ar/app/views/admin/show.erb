@@ -100,6 +100,14 @@ deleteAllUserProfiles = function(){
 </div>
 
 <div class="separator"></div>
+<LABEL class="label">Products</LABEL>
+<% @game.products["fb"].each do | title, product | %>
+  <a href="/<%=AdminController::ADMIN_URL%>/<%=@game.name%>/product/<%=title%>"><%=title%></a>
+  <br>
+<% end %>
+<a href="/<%=AdminController::ADMIN_URL%>/<%=@game.name%>/products/new">Add new product</a>
+
+<div class="separator"></div>
 
 <LABEL for="ranks" class="label">Ranks</LABEL>
 <% @game.ranks.each_value do | rank | %>

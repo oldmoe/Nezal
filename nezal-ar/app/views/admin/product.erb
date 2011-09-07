@@ -4,33 +4,24 @@
   </a>
 </div>
 
-<div class="label">Add New Product</div>
-<form id="new_product" 
-      action="/<%=AdminController::ADMIN_URL%>/<%=@game.name%>/product"
-      method="post"
-      enctype="multipart/form-data">
-  <div class="form_row">  
-    <LABEL for="title">Title</LABEL>
-    <INPUT type="text" id="title" name='title'><BR>
-  </div>
-  <div class="form_row">
-    <LABEL for="description">Description</LABEL>
-    <textarea name='description' type="text"></textarea>  
-  </div>
-  <div class="form_row">
-    <LABEL for="price">Price</LABEL>
-    <textarea name='price' type="text"></textarea>  
-  </div>
-  <div class="form_row">
-    <LABEL for="product_url">Product URL</LABEL>
-    <textarea name='product_url' type="text"></textarea>  
-  </div>
-  <div class="form_row">
-    <LABEL for="image_file">Image file</LABEL>
-    <input name='image_file' type="file"></input>  
-  </div>
-  <div class="form_row">
-    <input type="submit" value="Save" class="submit"/>
-  </div>
-</form> 
+<a href="/<%=AdminController::ADMIN_URL%>/<%=@game.name%>/product/<%=@product["title"]%>/edit">Edit this product</a>
 
+<div class="form_row">  
+  <LABEL>Title</LABEL>
+  <LABEL><%= @product["title"] %></LABEL>
+</div>
+
+<div class="form_row">  
+  <LABEL>Description</LABEL>
+  <LABEL><%= @product["description"] %></LABEL>
+</div>
+
+<div class="form_row">  
+  <LABEL>Price</LABEL>
+  <LABEL><%= @product["price"] %></LABEL>
+</div>
+
+<div class="form_row">
+  <LABEL for="image_file">Image</LABEL>
+  <img src="<%=@product['product_url']%>" />  
+</div>

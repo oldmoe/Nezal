@@ -1,0 +1,32 @@
+<div id="backLink">
+  <a href="/<%=AdminController::ADMIN_URL%>/<%=@game.name%>">
+    Back
+  </a>
+</div>
+
+<div class="label">Add New Product</div>
+
+<form id="new_product" 
+      action="/<%=AdminController::ADMIN_URL%>/<%=@game.name%>/product"
+      method="post"
+      enctype="multipart/form-data">
+  <div class="form_row">  
+    <LABEL for="title">Title</LABEL>
+    <INPUT type="text" id="title" name='title' value="<%=@product["title"]%>"></INPUT>
+  </div>
+  <div class="form_row">
+    <LABEL for="description">Description</LABEL>
+    <textarea name='description' type="text"><%=@product["description"]%></textarea>  
+  </div>
+  <div class="form_row">
+    <LABEL for="price">Price</LABEL>
+    <INPUT name='price' type="text" value="<%=@product["price"]%>"></INPUT>  
+  </div>
+  <div class="form_row">
+    <LABEL for="image_file">Image file</LABEL>
+    <input  id="product_image" name='image_file' type="file"></input>  
+  </div>
+  <div class="form_row">
+    <input type="submit" value="Save" class="submit"/>
+  </div>
+</form> 
