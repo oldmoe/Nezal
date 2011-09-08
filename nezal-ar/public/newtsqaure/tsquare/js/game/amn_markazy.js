@@ -60,7 +60,6 @@ var AmnMarkazy = Class.create(Enemy,{
     if(minIndex!=-1){
         if(this.target!=targets[minIndex] && minDistance < 2*this.getWidth()){
           this.fire('hit')
-            alert(1)
           targetChange = true  
         } 
         this.target = targets[minIndex]
