@@ -39,6 +39,25 @@ var AmnMarkazy = Class.create(Enemy,{
       }
         
       this.target = target;
-  }
+  },
+  pickTarget : function(targets){
+    var minDistance = 100000
+    var minIndex = -1
+    for(var i=0;i<targets.length;i++){
+        var tmpDistance = Util.distance(this.coords.x,this.coords.y,targets[i].coords.x,targets[i].coords.y)
+        if(tmpDistance < minDistance){
+            minDistance = tmpDistance
+            minIndex = i
+        }
+    }
+    if(minIndex!=-1){
+        if(this.target!=targets[minIndex] && minDistance < this.getWidth()) this.fire('hit')
+        this.target = targets[minIndex]
+    }
+    else{
+        this.target = null
+        this.fire('normal')
+    }  
+  },
   
 })

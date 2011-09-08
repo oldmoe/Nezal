@@ -11,12 +11,17 @@ var Unit = Class.create({
   kickedOutXShift : false,
   dead : false,
   movingToTarget : false,
+  movingSpeed : 8,
   noDisplay : false,
   target: null,
   observer: null,
   handler: null,
-
+  movingToTarget : false,
   initialize : function(scene,x,lane, options){
+    var self = this
+    this.commandFilters = [
+      {command: function(){return self.movingToTarget}, callback: function(){self.moveToTarget()}}
+    ];
     this.target = null
     this.observer = new Observer();
     this.scene = scene
@@ -25,11 +30,25 @@ var Unit = Class.create({
     this.coords ={x:x, y:y}
     this.handler = options.handler
   },
-  
-  tick : function(){ 
-    if(this.dead)return
+  processCommand: function(){
+    for(var i=0;i<this.commandFilters.length;i++){
+        if(this.commandFilters[i].command()){
+            if(!this.commandFilters[i].callback()) break;
+        }    
+    }
   },
-
+  tick : function(){
+    if(this.dead)return
+    this.processCommand()
+  },
+  moveToTarget : function(){
+    if(Math.abs(this.target.x - this.coords.x) > this.enterSpeed || Math.abs(this.target.y - this.coords.y) > this.movingSpeed){
+          var move = Util.getNextMove(this.coords.x, this.coords.y , this.target.x, this.target.y, this.movingSpeed)
+          this.coords.x+=move[0]
+          this.coords.y+=move[1]
+      }
+      else this.movingToTarget = false  
+  },
     observe: function(event, callback){
         this.observer.addObserver(event, callback);
     },
@@ -79,20 +98,38 @@ var Unit = Class.create({
       }
     }
   },
-  
+ 
   moveToTarget : function(target){
    this.movingToTarget = true
    this.target = target
   },
   
+  pickTarget : function(targets){
+    var minDistance = 100000
+    var minIndex = -1
+    for(var i=0;i<targets.length;i++){
+        var tmpDistance = Util.distance(this.coords.x,this.coords.y,targets[i].coords.x,targets[i].coords.y)
+        if(tmpDistance < minDistance){
+            minDistance = tmpDistance
+            minIndex = i
+        }
+    }
+    if(minIndex!=-1 && this.target!=targets[minIndex] && minDistance < this.getWidth()){
+        this.target = targets[minIndex]
+    }  
+  },
   getCoods : function(){
     return {x: this.coords.x+this.scene.x}
   },
   
   setTarget: function(target){
-      this.target = target;
+      if (!this.target && target) {
+          this.target = target;
+      }
   },
-  
+  getSize : function(){
+    return 1  
+  },
   collidesWith: function(target){
       if (this.coords.x + this.getWidth() > target.coords.x)
          return true; 
