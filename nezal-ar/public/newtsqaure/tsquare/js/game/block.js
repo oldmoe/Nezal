@@ -59,12 +59,14 @@ var Block = Class.create(Unit,{
           this.elements[i][j].takeHit(power)
           maxHp = Math.max(this.elements[i][j].hp,maxHp ) 
           if (this.elements[i][j].hp <= 0) {
+            this.elements[i][j].destroy()
             this.elements[i].remove(this.elements[i][j])
             j--
           }
         }
       }
       if(maxHp<= 0 && this.handler.objects[this.lane].indexOf(this)!=-1 ){
+        this.dead = true
         this.handler.objects[this.lane].remove(this)
       }
     },
