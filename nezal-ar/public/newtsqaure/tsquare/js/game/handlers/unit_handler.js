@@ -81,8 +81,8 @@ var UnitHandler = Class.create({
   
    removeObject: function(object, lane){
       if(this.objects[lane].indexOf(object)!=-1){
-          object.destroy();
           this.objects[lane].remove(object);
+          object.destroy();
       }
    }
       

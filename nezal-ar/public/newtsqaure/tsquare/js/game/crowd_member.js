@@ -189,6 +189,7 @@ var CrowdMember = Class.create(Unit,{
       state : "reverse"
     })
   },
+  
   circleMove : function(){
     console.log('circle')
     if (!this.target|| this.target.hp <= 0) {
@@ -214,6 +215,7 @@ var CrowdMember = Class.create(Unit,{
           if(this.rotationPoints.length > 0 ) this.fire(this.rotationPoints[0].state)
       }
   },
+  
   resetRotation : function(){
     this.target = null
     this.rotating = false

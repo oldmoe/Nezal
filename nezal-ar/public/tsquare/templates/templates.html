@@ -20,3 +20,66 @@
   </div>
 </textarea>
 
+
+<textarea style="display:none;" id='friends'>
+  <div  id="friends" class="users">
+    <div class="left">
+      <img src="" />
+    </div>
+    <div id="friends-container" class="container">
+      <ul id='defense-ul'>
+        {for friend in scoreManager.friends}
+          <li>
+            <div class="user">
+              <div class="score"> ${friend['scores'][scoreManager.gameMode]} </div>
+			        <img class='photo' src='${friend['picture']}' />	
+              <div class="name"> ${friend['name']} </div>
+            </div>
+          </li>
+        {/for}
+      </ul>
+    </div>
+    <div class="right">
+      <img src="" />
+    </div>
+  </div>
+</textarea>
+
+<textarea style="display:none;" id='topScorers'>
+  <div  id="topScorers" class="users">
+    {for user in scoreManager.topScorers.top}
+    <div class="user">
+      <div class="score"> ${user['scores'][scoreManager.gameMode]} </div>
+      <div>
+  			<img class='photo' src="${user['picture']}" />	
+      </div>
+      <div class="name"> ${user['name']} </div>
+    </div>
+    {/for}
+  </div>
+</textarea>
+
+<textarea style="display:none;" id='scoreTabs'>
+  <div id="scoringModes">
+  {for mode in scoreManager.modes}
+    <div id="${mode_index}" {if mode_index == scoreManager.mode}
+                              class="scoreTab selected"
+                            {else}
+                              class="scoreTab"     
+                            {/if} >
+      ${mode_index.capitalize()} Score
+    </div>
+  {/for}
+  </div>
+  <div id="gameModes">
+    {for mode in scoreManager.gameModes}
+        <span id="${mode}" {if mode == scoreManager.gameMode}
+                            class="gameModeTab selected"  
+                          {else}  
+                            class="gameModeTab"
+                          {/if} > 
+          ${mode} 
+        </span>                      
+    {/for}
+  </div>
+</textarea>

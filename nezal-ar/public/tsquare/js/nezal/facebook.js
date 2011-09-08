@@ -1,13 +1,7 @@
 var FBConnect = {
 
-    appIds : {
-        		'local-city-defender' : "110196392331352",
-        		'city-defender' : "107418339291733",
-        		'defenderofarabia' : "122519734470004",
-        		'local-base-defender' : "156711934356799",
-        		'base-defender' : "111103738948774",
-			'tahrir-square' : "119464494818795"
-	  },
+    appIds : { 'thawragy' : "280248505323133",
+               'local-thawragy' : "245272925509018" },
     
     location : null,
     
@@ -23,7 +17,11 @@ var FBConnect = {
 	  callback : null,
 	  
 	  user : null,
-	  
+
+    userId : function(){
+        return FBConnect.session.userID;
+    },	  
+
     getStatus : function(successCallback) {
         FB.getLoginStatus(function(response) {
 		      if (response.status == "connected") {
@@ -154,22 +152,19 @@ var FBConnect = {
             FB.api( '/me', function(response)
                             {
                                 FBConnect.user = response;
+                                FBConnect.user['uid'] = FBConnect.user['id'];
                                 callback();                                      
                             });
         }else {
-          callback();
+          callback(FBConnect.user);
         }
 	  },
 
-	  getUsersInfo : function(ids, result, callback){
-			  var	query2 = FB.Data.query("SELECT name,uid FROM user WHERE uid IN ({0})", ids);
-			  FB.Data.waitOn([query2], function(){
-				    if(!query2.value.length) 
-  				      query2.value=[]
-				    query2.value.each(function(row){
-	  				    result[row.uid].name = row.name
-				    })
-  				  if(callback)callback();
+	  getUsersInfo : function(ids, callback){
+			  var	query = FB.Data.query("SELECT uid, pic_square, name, first_name, last_name FROM user WHERE uid IN ({0})", ids);
+			  FB.Data.waitOn([query], function(){
+				    if(!query.value.length) query.value=[]
+  				  if(callback)callback(query.value);
 			  })
 	  },
     
@@ -345,6 +340,16 @@ var FBConnect = {
                if(callback && response && response.data) callback(response.data);
             }
         );
+    }, 
+
+    friendsAppUsers : function(callback){
+        var callback = callback;
+				var	query = FB.Data.query("SELECT uid, pic_square, name, first_name, last_name FROM user" + 
+                            " WHERE is_app_user=1 and (uid IN (SELECT uid2 FROM friend WHERE uid1 = {0}) or uid={0})", FB.getAuthResponse().userID);
+				FB.Data.waitOn([query], function(){
+					  if(!query.value.length) query.value=[]
+            if(callback && query.value) callback(query.value);
+				});
     }, 
 
     buyItem : function(itemId){

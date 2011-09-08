@@ -11,22 +11,28 @@ var AmnMarkazy = Class.create(Enemy,{
      this.hp = 30;
      this.maxHp = 30;
      this.power = 5;
-     
   },
   
   tick : function($super){
     $super()
-    this.coords.x -= this.scene.currentSpeed * this.scene.direction
-
+    
+    this.updatePosition();
+    
+    this.handleCollision();
+  },
+  
+  updatePosition: function(){
+    this.move(-1 * this.scene.currentSpeed * this.scene.direction, 0);  
+  },
+  
+  handleCollision: function(){
       if(this.target){
          if(this.hittingTime == 15){
             this.target.takeHit(this.power);
          }
-            
          this.hittingTime += 1;              
          this.hittingTime = this.hittingTime % 16;
       }  
-    
   },
   
   setTarget: function(target){

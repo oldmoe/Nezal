@@ -89,6 +89,7 @@ var TsquareScene = Class.create(Scene,{
     tick: function($super){
         $super()
         this.detectCollisions();
+        this.view.xPos+=this.currentSpeed
         for(var handler in this.handlers){
             this.handlers[handler].tick();
         }

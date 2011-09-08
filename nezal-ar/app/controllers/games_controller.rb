@@ -17,7 +17,7 @@ class GamesController < ApplicationController
       :ranks => Game::current.ranks
     }
     data[:user_data][:volatile_data] = user_game_profile['volatile_data'] || {}
-    JSON.generate(data)
+    encode(data)
   end
   
   # update the user game profile
@@ -32,102 +32,50 @@ class GamesController < ApplicationController
                       :metadata => user_game_profile.data
                       }
     }
-    JSON.generate(data)
+    encode(data)
   end
 
-  get '/:game_name/neighbor/:id' do
-    neighbor_user_profile = BD::Neighbor.neighbor_empire(user_game_profile, params[:id])
-    result = {
-              :user_data => { 
-                :rank => neighbor_user_profile.rank,
-                :exp => neighbor_user_profile.exp, 
-                :newbie => neighbor_user_profile.newbie,
-                :locale => neighbor_user_profile.locale, 
-                :metadata => neighbor_user_profile.data
-              }
-            }
-    JSON.generate(result)
+  get '/:game_name/global_scores' do
+    result = user_game_profile.global_scores(decode(params['data'])['game_mode'], 5)
+    encode(result)
   end
 
   get '/:game_name/friends' do
-    result = user_game_profile.friends(Metadata.decode(params['data'])['friends_ids'])
-    JSON.generate(result)
-  end
-
-  post '/:game_name/generate_creep' do
-    data = Metadata.decode(params['data']) 
-    result = BaseDefender.generate_creep user_game_profile, data
-    return Metadata.encode(result)
-  end
-  
-  post '/:game_name/cancel_creep_generation' do
-    data = Metadata.decode(params['data']) 
-    result = BaseDefender.cancel_creep_generation user_game_profile, data
-    return Metadata.encode(result)
-  end
-
-  post '/:game_name/neighbor/building/collect' do
-    data = Metadata.decode(params['data'])
-    neighbor_user_profile = BaseDefender.collect_neighbor_building(user_game_profile, data)
-    result = {
-              :user_data => { 
-                :rank => neighbor_user_profile.rank,
-                :exp => neighbor_user_profile.exp, 
-                :newbie => neighbor_user_profile.newbie,
-                :locale => neighbor_user_profile.locale, 
-                :metadata => neighbor_user_profile.data
-              }
-            }
-    Metadata.encode(result)
-  end
-
-  get '/:game_name/global_map' do
-    result = BD::GlobalMap.new(user_game_profile, Metadata.decode(params['data'])).generate
-    return Metadata.encode(result)
+    result = user_game_profile.friends(decode(params['data'])['friends_ids'])
+    encode(result)
   end
   
   # Change User to be nolonger a newbie
   post '/:game_name/users/newbie' do
     if @game_profile.newbie
       @game_profile.newbie = false;
-      klass = get_helper_klass()
-      klass.newbie_no_more(@game_profile)
       @game_profile.save
     end
-    JSON.generate( {:user_data => {'exp' => @game_profile.exp, 'rank' => @game_profile.rank.name} })    
-  end
-  
-  post '/:game_name/users/coins' do
-   # @user.coins += params['coins'].to_i;
-   # @user.save
-   # JSON.generate( {:user_data => {'coins' => @user.coins}})
+    encode( {:user_data => {'exp' => @game_profile.exp, 'rank' => @game_profile.rank.name} })    
   end
   
   # User bookmarked the application
   post '/:game_name/users/bookmark' do
     if(!@game_profile.bookmarked)
-      klass = get_helper_klass()
-      klass.bookmark(@game_profile)
+      # Here should go the code to reward the bookmark action
     end
-    JSON.generate( {:user_data => {'coins' => @game_profile.user.coins}} )
+    encode( {:user_data => {'coins' => @game_profile.user.coins}} )
   end
   
   # User likes the application
   post '/:game_name/users/like' do
     if(!@game_profile.like)
-      klass = get_helper_klass()
-      klass.like(@game_profile)
+      # Here should go the code to reward the like action
     end
-    JSON.generate( {:user_data => {'coins' => @game_profile.user.coins}} )
+    encode( {:user_data => {'coins' => @game_profile.user.coins}} )
   end
   
   # User subscribed to the application
   post '/:game_name/users/subscribe' do
     if(!@game_profile.subscribed)
-      klass = get_helper_klass()
-      klass.subscribe(@game_profile)
+      # Here should go the code to reward the subscribe action
     end
-    JSON.generate( {:user_data => {'coins' => @game_profile.user.coins}} )
+    encode( {:user_data => {'coins' => @game_profile.user.coins}} )
   end
 
   # Change User Locale
@@ -157,14 +105,14 @@ class GamesController < ApplicationController
         end
       end
     end
-    JSON.generate(result)
+    encode(result)
   end
 
   get '/:game_name/requests/exclude' do
     ids = []
     user_requests = Request.get(user_game_profile.key)    
     ids = user_requests.excluded_friends unless user_requests.nil?
-    JSON.generate(ids)
+    encode(ids)
   end
 
   post '/:game_name/requests' do
@@ -172,7 +120,7 @@ class GamesController < ApplicationController
     if user_requests.nil?
       user_requests = Request.create(user_game_profile.key)
     end
-    data = Metadata.decode(params['data'])
+    data = decode(params['data'])
     data['requests'].each do |id, request|
       user_requests.requests[id] = request
     end
@@ -180,30 +128,11 @@ class GamesController < ApplicationController
   end
 
   post '/:game_name/requests/accept' do 
-    data = Metadata.decode(params['data'])
+    data = decode(params['data'])
     request_id = data['request_id']
     from_user_key = data['from']
     user_requests = Request.get(build_game_profile_key(from_user_key))
     request = user_requests.process user_game_profile.service_id, request_id
-  end
-
-  post '/:game_name/accept_request' do 
-    "Yes we will reward him now or whatevuh"
-  end
-  
-  # Do not remove 127.0.0.1 from the valid gateway, it is safe 
-  @@valid_gateways = ['195.58.177.2','195.58.177.3','195.58.177.4','195.58.177.5', "127.0.0.1"]
-  
-  @@packages = {"0.8" => 2500, "1.6" => 6000, "2.4" => 10000}
-  
-  
-  get '/:game_name/daopay/confirmation' do
-    redirect payment_fault_redirection unless @@valid_gateways.include? request.ip
-    @package_coins = @@packages[params["price"]]
-    @user.coins += @@packages[params["price"]]
-    @user.save
-  payment = Payment.create!({:profile_id=>@game_profile.id,:price=>params['price']})
-    erb :"#{@app_configs["game_name"]}/daopay_confirmation"
   end
 
   get '/:game_name/' do
@@ -214,19 +143,10 @@ class GamesController < ApplicationController
     File.read(File.join( 'public', @app_configs["game_name"], @service_provider + '-' + 'index.html'))
   end
 
-  post '/:game_name/payment_issues' do
-    Message.create!({:body => params["body"], "type" => 'payment_issue', :profile_id => @game_profile.id})
-  end
-
   post '/:game_name/users/reset' do
     user_game_profile.destroy
     user.destroy
   end
 
-  protected
-  
-  def payment_fault_redirection
-    "/fb-games/#{@app_configs["game_name"]}/"
-  end
 
 end

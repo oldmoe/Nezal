@@ -38,58 +38,6 @@ class AdminController < ApplicationController
   end
 
   ######################################################################
-  # Game Buildings Requests
-  # Add, Remove Buildings requests
-  ######################################################################
-  # Add a new building
-  post '/:game_name/buildings' do
-    @game = Game.get(params[:game_name])
-    @game.buildings[params["name"]] = { 'levels' => {} }
-    @game.save
-    redirect "/#{ADMIN_URL}/#{@game.name}"
-  end
-
-  # Delete a building
-  put '/:game_name/buildings/:name' do
-    @game = Game.get(params[:game_name])
-    @game.buildings.delete([params["name"]])
-    @game.save
-    redirect "/#{ADMIN_URL}/#{@game.name}"
-  end
-
-  # Serve the edit building page 
-  get '/:game_name/buildings/:name/levels/:level' do 
-    @game = Game.get(params[:game_name])
-	  @building_name = params[:name]
-    @level = params[:level]
-	  erb :building , {:layout => :app}
-  end
-
-  # Add new Level
-  post '/:game_name/buildings/:name/levels/new' do
-    @game = Game.get(params[:game_name])
-  	building = @game.data['buildings'][params[:name]]
-  	@newLevel = building['levels'].size
-  	building['levels'][@newLevel] = building['levels'][building['levels'].keys.last]
-  	@game.save
-  	redirect "/#{ADMIN_URL}/#{@game.name}"
-  end
-
-  # Delete a level
-  put '/:game_name/buildings/:name/levels/:level' do
-    @game = Game.get(params[:game_name])
-    @building_name = params[:name]
-    @level = params[:level]
-    # Get yr building hash, make sure there is a building with that name &  is has levels, then delete the required level
-    building = @game.data['buildings'][@building_name]
-    if building && building['levels']
-       building['levels'].delete(@level)
-    end
-    @game.save
-    redirect "/#{ADMIN_URL}/#{@game.name}"
-  end  
-
-  ######################################################################
   # Game Quests Requests
   # View list of Quests, Edit Quest page, Add, Remove, Retrieve and Save metadata
   ######################################################################  
@@ -99,6 +47,53 @@ class AdminController < ApplicationController
     @quests = BD::Quest::all()
     erb :quests , {:layout => :app}
   end
+
+
+  ######################################################################
+  # Game Products Requests
+  # View list of Quests, Edit Quest page, Add, Remove, Retrieve and Save metadata
+  ######################################################################  
+  get '/:game_name/products/new' do
+    @game = Game::current
+    erb :edit_product , {:layout => :app}
+  end
+  
+  get '/:game_name/product/:name/edit' do
+    @game = Game::current
+    @product = @game.products["fb"][params[:name]]
+    erb :edit_product , {:layout => :app}
+  end
+
+  get '/:game_name/product/:name' do
+    @game = Game::current
+    @product = @game.products["fb"][params[:name]]
+    erb :product , {:layout => :app}
+  end
+  
+  #Adding a facebook product
+  post "/:game_name/product" do
+    @game = Game::current
+    if !@game.products["fb"][params[:title]]
+      @game.products["fb"][params[:title]] = {}
+    end
+    
+    product = @game.products["fb"][params[:title]]
+
+    puts "!!!!!!!!!!!!#{params['image_file']}"
+    if !params['image_file'].blank?
+      File.open("public/#{@game.path}/images/products/" + params['image_file'][:filename], "w") do |f|
+        f.write(params['image_file'][:tempfile].read)
+      end
+      product[:product_url] = "/#{@game.name}/images/products/#{params['image_file'][:filename]}"
+    end
+    ["title", "description", "price"].each do |key|
+      product[key] = params[key]
+    end
+    @game.save
+    
+    redirect "/#{ADMIN_URL}/#{@game.name}/product/#{product["title"]}"
+  end
+
 
   # Add a quest to a game 
   post '/:game_name/quests' do
@@ -122,7 +117,7 @@ class AdminController < ApplicationController
       data.values.each do |language_data|
         language_data['quests'].delete(quest_id)
       end
-      BD::Language::save(Metadata.encode(data))
+      BD::Language::save(Nezal::Decoder.encode(data))
       redirect "/#{ADMIN_URL}/#{@game.name}/quests"
     end
   end
@@ -138,7 +133,7 @@ class AdminController < ApplicationController
   # Serve the quest object data
   get '/:game_name/quests/:quest_id/metadata' do 
     @quest = BD::Quest.find(params["quest_id"])
-    Metadata.encode(@quest)
+    Nezal::Decoder.encode(@quest)
   end
 
   ######################################################################
@@ -148,7 +143,7 @@ class AdminController < ApplicationController
   get '/:game_name/locale.json' do 
     @game = Game.get(params[:game_name])
     BD::Language::init()
-    Metadata.encode(BD::Language::load())
+    Nezal::Decoder.encode(BD::Language::load())
   end
 
   # Edit Language data
@@ -175,7 +170,7 @@ class AdminController < ApplicationController
   get %r{/([0-9A-Za-z_\-]+)(.json)?} do
     @game = Game.get(params[:captures][0])
     if params[:captures][1]
-      Metadata.encode(@game.data)
+      Nezal::Decoder.encode(@game.data)
     else
       erb :show , {:layout => :app}
     end
@@ -185,7 +180,7 @@ class AdminController < ApplicationController
   put %r{/([0-9A-Za-z_\-]+).json} do
     @game = Game.get(params[:captures][0])
     data = params["data"]
-    @game.data= Metadata.decode(data)
+    @game.data= Nezal::Decoder.decode(data)
     @game.save
   end
 
