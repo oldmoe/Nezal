@@ -7,8 +7,8 @@ var Display = Class.create({
 		Object.extend(this,properties)
 		this.sprites = {}
 		this.owner = owner
-    Object.extend(this.owner,this)
-    this.createSprites()
+        Object.extend(this.owner,this)
+        this.createSprites()
 	},
   //To be overwridden
   createSprites : function(){

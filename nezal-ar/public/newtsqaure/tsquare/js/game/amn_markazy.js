@@ -4,29 +4,35 @@ var AmnMarkazy = Class.create(Enemy,{
 	hittingTime: 0,
 	hitOffset: 10,
 	hittingTime: 0,
-	
+	showHoveringIcon: true,
 		
   initialize : function($super,scene,x,y, options){
      $super(scene,x,y, options) 
      this.hp = 30;
      this.maxHp = 30;
      this.power = 5;
-     
   },
   
   tick : function($super){
     $super()
-    this.coords.x -= this.scene.currentSpeed * this.scene.direction
-
+    
+    this.updatePosition();
+    
+    this.handleCollision();
+  },
+  
+  updatePosition: function(){
+    this.move(-1 * this.scene.currentSpeed * this.scene.direction, 0);  
+  },
+  
+  handleCollision: function(){
       if(this.target){
          if(this.hittingTime == 15){
             this.target.takeHit(this.power);
          }
-            
          this.hittingTime += 1;              
          this.hittingTime = this.hittingTime % 16;
       }  
-    
   },
   
   setTarget: function(target){
@@ -50,14 +56,23 @@ var AmnMarkazy = Class.create(Enemy,{
             minIndex = i
         }
     }
+    var targetChange = false
     if(minIndex!=-1){
-        if(this.target!=targets[minIndex] && minDistance < this.getWidth()) this.fire('hit')
+        if(this.target!=targets[minIndex] && minDistance < 2*this.getWidth()){
+          this.fire('hit')
+            alert(1)
+          targetChange = true  
+        } 
         this.target = targets[minIndex]
     }
     else{
-        this.target = null
-        this.fire('normal')
-    }  
+        if (this.target) {
+            this.target = null
+            this.fire('normal')
+            targetChange = true
+        }
+    }
+    return targetChange  
   },
   
 })

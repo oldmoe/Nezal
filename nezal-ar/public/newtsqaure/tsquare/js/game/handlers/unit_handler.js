@@ -67,7 +67,6 @@ var UnitHandler = Class.create({
            if(others[i] && others[i][0] && !collided){
                others[i][0].setTarget(null);                  
            }
-            
            for(var j=0;j<this.objects[i].length;j++){                      
                 if(collided){
                     this.objects[i][j].setTarget(others[i][0]);       
@@ -83,8 +82,8 @@ var UnitHandler = Class.create({
   
    removeObject: function(object, lane){
       if(this.objects[lane].indexOf(object)!=-1){
-          object.destroy();
           this.objects[lane].remove(object);
+          object.destroy();
       }
    }
       

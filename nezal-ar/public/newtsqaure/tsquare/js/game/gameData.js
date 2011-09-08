@@ -3,6 +3,8 @@ var gameData =
 {"data":[[],[{"name":"journalist","category":"crowd","index":0,"lane":1,"x":0,"order":0},
     {"name":"journalist","category":"crowd","index":0,"lane":1,"x":1,"order":0},
     {"name":"journalist","category":"crowd","index":0,"lane":1,"x":2,"order":0},
+   {"name":"charging_amn_markazy","category":"enemy","index":0,"lane":1,"x":16,"order":1},
+   {"name":"charging_amn_markazy","category":"enemy","index":0,"lane":1,"x":28,"order":1},
    {
     "name": "block",
     "category": "enemy",
