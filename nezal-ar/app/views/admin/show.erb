@@ -65,29 +65,6 @@ var Game = {
 
 };
 
-var data = <%=JSON.generate(@game.data)%>
-for(i in data.buildings)
-{
-  data.buildings[i]['defense'] = false;
-}
-['wedge', 'gaddafi', 'green_wedge', 'blue_wedge', 'palm'].each(function(name){
-                            if(data.buildings[name])
-                              data.buildings[name]['defense'] = true;
-                          });
-new Ajax.Request( '/<%=AdminController::ADMIN_URL%>/<%=@game.name%>.json' , {
-                   method : 'put',
-                   parameters : { "data" : JSON.stringify(data) },
-                   onSuccess : function(response){
-                     $('requestStatus').innerHTML = "Saved successfully"
-                     $('requestStatus').className = "success"
-                   },
-                   onFailure : function(response){
-                     $('requestStatus').innerHTML = "Error, your changes are not saved!"
-                     $('requestStatus').className = "error"
-                   }
-                   
-               });    
-
 deleteAllUserProfiles = function(){
   new Ajax.Request('/<%=AdminController::ADMIN_URL%>/<%=@game.name%>/user_game_profiles', {
     method: 'put',
@@ -121,6 +98,14 @@ deleteAllUserProfiles = function(){
     <%=@game.description%>
   </div>
 </div>
+
+<div class="separator"></div>
+<LABEL class="label">Products</LABEL>
+<% @game.products["fb"].each do | title, product | %>
+  <a href="/<%=AdminController::ADMIN_URL%>/<%=@game.name%>/product/<%=title%>"><%=title%></a>
+  <br>
+<% end %>
+<a href="/<%=AdminController::ADMIN_URL%>/<%=@game.name%>/products/new">Add new product</a>
 
 <div class="separator"></div>
 
@@ -166,63 +151,6 @@ deleteAllUserProfiles = function(){
     </div>
   </form>
 </div>
-
-<div class="separator"></div>
-
-<LABEL for="game" class="label">Buildings</LABEL>
-
-<div id="game_building_form">
-  <LABEL for="new_building" class="label add">Add New Building</LABEL>
-  <form id="new_rank" action="/nezal-admin/<%=@game.name%>/buildings" method="post" enctype="multipart/form-data">
-    <div class="form_row">  
-      <LABEL for="building_name">Name</LABEL>
-      <INPUT type="text" id="building_name" name='name'><BR>
-    </div>
-    <div class="form_row">
-      <input type="submit" value="Add" class="submit"/>
-    </div>
-  </form>
-</div>
-
-<div class="game">
-  <% game_element = "buildings" %>
-  <% @game.data[game_element].each_key do | building_name | %>
-    <label style="font-size: 15px; color:orange;"><%= building_name.capitalize %></label>
-	  <% unless @game.data[game_element][building_name]["levels"].nil? %>
-		  <div id="<%=building_name%>">
-        <% @game.data[game_element][building_name]["levels"].each_key do |level|%>
-          <% if level != "0" %>
-  				  <a href="/<%=AdminController::ADMIN_URL%>/<%=@game.name%>/buildings/<%= building_name %>/levels/<%=level%>">Level <%= level %></a>
-            <% if level == (@game.data[game_element][building_name]["levels"].size-1).to_s && level != "1" %>
-    			    <form id="delete_<%=building_name%>_level_<%=level%>" 
-                    action="/<%=AdminController::ADMIN_URL%>/<%=@game.name%>/buildings/<%=building_name%>/levels/<%=level%>" 
-                    method="POST" 
-                    style="display:inline">
-                          <input type="hidden" name="_method" value="put"/>
-                          <a style="margin-left: 25px;" 
-                             href="javascript:void(0)" 
-                             onclick="if(confirm('Delete <%=building_name%> level <%=level%>?')) $('delete_<%=building_name%>_level_<%=level%>').submit(); return false;" 
-                             class="submit_links"> Delete </a>
-              </form>
-            <% end %> 
-  				  <br/>
-          <% end %>
-			  <%end%>
-  		  <form id="add_<%=building_name%>_level" 
-              action="/<%=AdminController::ADMIN_URL%>/<%=@game.name%>/buildings/<%=building_name%>/levels/new" 
-              method="POST" 
-              style="display:inline">
-                  <input type="hidden" name="_method" value="post"/>
-                  <a href="javascript:void(0)" 
-                     onclick="$('add_<%=building_name%>_level').submit(); return false;" 
-                     class="submit_links"> Add next level </a>
-        </form> 
-	    </div>
-	  <% end %>
-    <br/>
-  <% end %>                        
-</div>
-
 
 <div class="separator"></div>
 

@@ -1,0 +1,27 @@
+<div id="backLink">
+  <a href="/<%=AdminController::ADMIN_URL%>/<%=@game.name%>">
+    Back
+  </a>
+</div>
+
+<a href="/<%=AdminController::ADMIN_URL%>/<%=@game.name%>/product/<%=@product["title"]%>/edit">Edit this product</a>
+
+<div class="form_row">  
+  <LABEL>Title</LABEL>
+  <LABEL><%= @product["title"] %></LABEL>
+</div>
+
+<div class="form_row">  
+  <LABEL>Description</LABEL>
+  <LABEL><%= @product["description"] %></LABEL>
+</div>
+
+<div class="form_row">  
+  <LABEL>Price</LABEL>
+  <LABEL><%= @product["price"] %></LABEL>
+</div>
+
+<div class="form_row">
+  <LABEL for="image_file">Image</LABEL>
+  <img src="<%=@product['product_url']%>" />  
+</div>

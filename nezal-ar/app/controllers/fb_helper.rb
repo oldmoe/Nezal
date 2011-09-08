@@ -15,6 +15,7 @@ class FBHelper
       # Check for signed request
       #   If exists then authenticate it
       #   else check for request cookie string
+      puts "############### $$$$ #{app_configs['id']}"
       cookie = cookie_hash && cookie_hash['fbsr_' + app_configs['id']] ? cookie_hash['fbsr_' + app_configs['id']] : params['signed_request']
       if cookie
         session = decode cookie, app_configs
@@ -52,7 +53,7 @@ class FBHelper
       # Data part after '.'
       request_parts = request.split(".")
       data = base64_url_decode(request_parts[1])
-      authenticate_signed_request(request_parts, app_configs) ? Metadata.decode(data) : nil
+      authenticate_signed_request(request_parts, app_configs) ?     Nezal::Decoder.decode(data) : nil
     end
 
     def base64_url_decode(input)

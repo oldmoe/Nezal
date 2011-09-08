@@ -10,12 +10,12 @@ var Quest = {
         <% @quests.each_value do | quest | %>                      
           this.parents["<%=quest['name']%>"] = "<%=quest['id']%>";
         <% end %>
-        this.metadata = <%=Metadata.encode(@quest)%>;
-        this.rewards = <%=Metadata.encode(BD::Quest::REWARDS)%>;
-        this.categories = <%=Metadata.encode(BD::Quest::CATEGORIES)%>;
+        this.metadata = <%=Nezal::Decoder.encode(@quest)%>;
+        this.rewards = <%=Nezal::Decoder.encode(BD::Quest::REWARDS)%>;
+        this.categories = <%=Nezal::Decoder.encode(BD::Quest::CATEGORIES)%>;
         this.conditions = { buildings : ['level', 'assigned_workers', 'hp'],
                             resources : ['lumber', 'rock', 'workers'] };        
-        this.gameData = <%=Metadata.encode(@game.data)%>;
+        this.gameData = <%=Nezal::Decoder.encode(@game.data)%>;
         Quest.display();
         Language.initialize();
     },

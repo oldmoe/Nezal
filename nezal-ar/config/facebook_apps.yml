@@ -1,6 +1,11 @@
-"119464494818795" : 
-  id : "119464494818795"
-  name : tahrir-square
-  key : "59cde5fd0d13844ba08f50a8e00ff824"
-  secret : "9ba3593c2055052165eaf8ae9cd74672"
+"280248505323133" : 
+  id : "280248505323133"
+  name : thawragy
+  secret : "f202a8fc92f244e6ff13d47a57d74ce9"
+  game_name : tsquare
+
+"245272925509018" :
+  id : "245272925509018"
+  name : local-thawragy
+  secret : "c40fc22d94f13beaac5ec9c1a1929061"
   game_name : tsquare

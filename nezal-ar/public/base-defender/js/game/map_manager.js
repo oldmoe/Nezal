@@ -1,1 +1,0 @@
-var MapManager = class.c

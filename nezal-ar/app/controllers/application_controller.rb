@@ -1,9 +1,15 @@
-require 'cgi'
-require 'json'
-
 class ApplicationController < Sinatra::Base
 
   enable :sessions
+
+  def decode(data)
+    Nezal::Decoder.decode(data)
+  end
+
+  def encode(data)
+    Nezal::Decoder.encode(data)
+  end
+
   def app_configs
     @app_configs
   end
@@ -48,7 +54,7 @@ class ApplicationController < Sinatra::Base
             @game_profile = UserGameProfile.create(key)
             LOGGER.debug params["inviter"]
             if(params["inviter"])
-              get_helper_klass.reward_invitation(params["inviter"])
+              Game::current.reward_invitation(params["inviter"])
             end
           end
         rescue Exception => e   
@@ -74,7 +80,7 @@ class ApplicationController < Sinatra::Base
   protected
     
   def get_provider_session
-    if Service::PROVIDERS[@service_provider][:prefix] == Service::KONGREGATE
+    if Service::PROVIDERS[@service_provider] && Service::PROVIDERS[@service_provider][:prefix] == Service::KONGREGATE
       LOGGER.debug ">>>>>> Kongregate - We will check for session in params"
       if params[:kongregate_user_id] && params[:kongregate_game_auth_token]
         @service_id = params[:kongregate_user_id]
@@ -90,21 +96,14 @@ class ApplicationController < Sinatra::Base
       else
         false
       end
-    elsif Service::PROVIDERS[@service_provider][:prefix] == Service::FACEBOOK
+    elsif Service::PROVIDERS[@service_provider] && Service::PROVIDERS[@service_provider][:prefix] == Service::FACEBOOK
       @service_id = Service::PROVIDERS[@service_provider][:helper].authenticate params, env['rack.request.cookie_hash'], app_configs
       if @service_id
         true
       else
         false
       end
-    else
-      false
     end
-  end
-    
-  def get_helper_klass
-    helper = ActiveSupport::Inflector.camelize(@app_configs['game_name'].sub("-", "_"))
-    Kernel.const_get(helper)
   end
   
 end
