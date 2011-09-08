@@ -59,6 +59,13 @@ class AdminController < ApplicationController
     erb :edit_product , {:layout => :app}
   end
   
+  put '/:game_name/product/:name' do
+    @game = Game::current
+    @game.products["fb"].delete( params[:name] )
+    @game.save
+    redirect "/#{ADMIN_URL}/#{@game.name}/"
+  end
+  
   get '/:game_name/product/:name/edit' do
     @game = Game::current
     @product = @game.products["fb"][params[:name]]
