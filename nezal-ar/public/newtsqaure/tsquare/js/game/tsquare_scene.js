@@ -132,7 +132,7 @@ var TsquareScene = Class.create(Scene,{
          var handler2 = this.handlers[h2]; 
        if(handler1.type=="left" && handler2.type=="right"){
          var collision = handler1.detectCollisions(handler2.objects)
-         if(collision.length >0){
+         if(collision){
              this.handleCollision(collision)
          } 
        }

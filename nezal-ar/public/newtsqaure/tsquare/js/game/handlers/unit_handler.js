@@ -57,7 +57,8 @@ var UnitHandler = Class.create({
           for(var j=0;j<this.objects[i].length;j++){             
             if(others[i] && others[i][0] ){               
                 if(this.objects[i][j].collidesWith(others[i][0])){
-                    others[i][0].setTarget(this.objects[i][j]);                 
+                    others[i][0].setTarget(this.objects[i][j]);     
+                    collision.push({obj1:this.objects[i][j], obj2:others[i][0], lane:i})            
                     collided = true;
                     break; 
                 }                
@@ -65,7 +66,8 @@ var UnitHandler = Class.create({
            }
            if(others[i] && others[i][0] && !collided){
                others[i][0].setTarget(null);                  
-           } 
+           }
+            
            for(var j=0;j<this.objects[i].length;j++){                      
                 if(collided){
                     this.objects[i][j].setTarget(others[i][0]);       
