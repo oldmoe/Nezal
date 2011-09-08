@@ -4,7 +4,7 @@ var AmnMarkazy = Class.create(Enemy,{
 	hittingTime: 0,
 	hitOffset: 10,
 	hittingTime: 0,
-	
+	showHoveringIcon: true,
 		
   initialize : function($super,scene,x,y, options){
      $super(scene,x,y, options) 

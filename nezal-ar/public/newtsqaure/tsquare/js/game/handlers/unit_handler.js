@@ -67,7 +67,6 @@ var UnitHandler = Class.create({
            if(others[i] && others[i][0] && !collided){
                others[i][0].setTarget(null);                  
            }
-            
            for(var j=0;j<this.objects[i].length;j++){                      
                 if(collided){
                     this.objects[i][j].setTarget(others[i][0]);       

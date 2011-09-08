@@ -1,9 +1,9 @@
 var ChargingAmnMarkazy = Class.create(AmnMarkazy,{
 	
-    speed: 15,	
+  speed: 15,	
 		
   initialize : function($super,scene,x,y, options){
-     $super(scene,x,y, options)
+     $super(scene, x, y, options)
      this.speed = 5; 
   },
   
@@ -15,8 +15,10 @@ var ChargingAmnMarkazy = Class.create(AmnMarkazy,{
   },
   
   setTarget: function($super, target){
-      if(this.target == null && target != null)
-          this.speed = 0;
+      if(this.target == null && target != null){
+         this.speed = 0;
+         this.switchHoveringIcon();
+      }
       $super(target);
   }
   
