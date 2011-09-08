@@ -185,7 +185,6 @@ var CrowdMember = Class.create(Unit,{
     })
   },
   pushMove : function(){
-      return
     if(this.target.getSize() == 1){
       this.pushing = false  
       return
@@ -193,7 +192,7 @@ var CrowdMember = Class.create(Unit,{
     var displacement = 0
     if(this.pushDirection == this.pushDirections.forward)displacement = this.scene.currentSpeed +this.moved*0.1
     else displacement = -1 *(this.scene.currentSpeed + (this.maxPushDisplacement-this.moved)*0.1)
-    this.moved+= displacement
+    this.moved+= Math.abs(displacement)
     this.move(displacement,0)
     var directionDone = false
     if(this.coords.x + this.getWidth()/2 > this.target.coords.x && this.pushDirection == this.pushDirections.forward){
