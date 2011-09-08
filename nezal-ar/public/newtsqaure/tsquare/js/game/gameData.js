@@ -15,7 +15,6 @@ var gameData =
     "x": 10,
     "index": 0
   },
-  {"name":"amn_markazy","category":"enemy","index":0,"lane":1,"x":100,"order":2},
   {"name":"amn_markazy","category":"enemy","index":0,"lane":1,"x":1000,"order":3}]],
   "backgrounds":[[{"name":"skyline.png"}],[{"name":"skyline.png"}],[{"name":"sky1.png"}]],
   "environment":"day","gameModes":["normal"]}
