@@ -74,4 +74,8 @@ var AmnMarkazy = Class.create(Enemy,{
     return targetChange  
   },
   
+  getHoveringState: function(){
+      if()    
+  }
+  
 })

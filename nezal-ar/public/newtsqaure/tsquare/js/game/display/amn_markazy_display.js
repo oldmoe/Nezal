@@ -1,4 +1,5 @@
-var AmnMarkazyDisplay = Class.create(Display,{
+var AmnMarkazyDisplay = Class.create(EnemyDisplay,{
+    
   imgWidth:80,
   imgHeight:80,
   noOfFrames : 8,
@@ -28,13 +29,9 @@ var AmnMarkazyDisplay = Class.create(Display,{
     this.hoverIcon = Loader.images.icons['circle.png']
   },
 
-  createHoveringIconSprite: function(){
-      if(this.owner.showHoveringIcon)
-        this.sprites.hoverIcon = new DomImgSprite(this.owner,{img:this.hoverIcon, noOfFrames : 1}, {shiftY:-10, shiftX:20})
-  },
-
   createSprites:function(){
-    this.createHoveringIconSprite();    
+    if(this.owner.showHoveringIcon)
+        this.sprites.hoverIcon = new DomImgSprite(this.owner,{img:this.hoverIcon, noOfFrames : 1}, {shiftY:-10, shiftX:20})
     this.sprites.block = new DomImgSprite(this.owner,{img:this.blockImg, noOfFrames : 8})
     this.sprites.block.createAnimation({name:'hit',img:this.hitImage, noOfFrames:9})
   },

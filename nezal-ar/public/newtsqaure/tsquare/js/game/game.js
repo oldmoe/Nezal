@@ -36,12 +36,12 @@ var Game = Class.create({
     'ultras_white_walk.png','ultras_red_walk.png','ultras_normal_walk.png','salafi_walk.png',
     'journalist_walk.png','journalist_run.png','journalist_front.png','journalist_back.png']
     var enemiesImages = ['block.png','amn_markazy_hit.png']
-    var iconsImages = ['lock.png', 'circle.png'];
+    var hoveringIconsImages = ['lock.png', 'circle.png', 'march.png', 'push.png'];
 	var self = this
 	new Loader().load([{images: backgroundImages, path: 'images/background/', store: 'background'},
     {images: gameElementsImages, path: 'images/game_elements/', store: 'gameElements'},
     {images: characterImages, path: 'images/characters/', store: 'characters'},
-    {images: iconsImages, path: 'images/icons/', store: 'icons'},
+    {images: hoveringIconsImages, path: 'images/icons/', store: 'hoveringIcons'},
     {images: enemiesImages, path: 'images/enemies/', store: 'enemies'}], {
       onProgress : function(progress){
           if($$('#inProgress #loadingBarFill')[0])
