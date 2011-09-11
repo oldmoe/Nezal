@@ -88,7 +88,9 @@ var TsquareScene = Class.create(Scene,{
     
     tick: function($super){
         $super()
+        this.view.xPos+=this.currentSpeed* this.direction
         this.detectCollisions();
+        this.view.xPos+=this.currentSpeed
         for(var handler in this.handlers){
             this.handlers[handler].tick();
         }
@@ -131,8 +133,10 @@ var TsquareScene = Class.create(Scene,{
          var handler2 = this.handlers[h2]; 
        if(handler1.type=="left" && handler2.type=="right"){
          var collision = handler1.detectCollisions(handler2.objects)
-         if(collision.length >0){
+         if(collision){
              this.handleCollision(collision)
+         }else{
+             this.direction = 1
          } 
        }
      }
@@ -140,7 +144,7 @@ var TsquareScene = Class.create(Scene,{
   },
   
   handleCollision : function(collision){
-      this.currentSpeed = 0;
+      this.direction = 0;
   },
     
   increaseEnergy : function(){

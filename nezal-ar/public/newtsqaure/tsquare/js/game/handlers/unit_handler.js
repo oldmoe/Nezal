@@ -7,7 +7,7 @@ var UnitHandler = Class.create({
    
    initialize: function(scene){
        this.incomming = [];
-       this.objects = [];
+       this.objects = [[],[],[]];
        this.scene = scene;       
    },
    
@@ -52,12 +52,13 @@ var UnitHandler = Class.create({
   detectCollisions : function(others){
     var collision = [];
     for(var i=0;i<this.objects.length;i++){
-        if(this.objects[i] && this.objects[i][0] && !this.objects[i][0].rotating){
+        if(this.objects[i] && this.objects[i][0]){
           var collided = false
           for(var j=0;j<this.objects[i].length;j++){             
             if(others[i] && others[i][0] ){               
                 if(this.objects[i][j].collidesWith(others[i][0])){
-                    others[i][0].setTarget(this.objects[i][j]);                 
+                    others[i][0].pickTarget(this.objects[i]);     
+                    collision.push({obj1:this.objects[i][j], obj2:others[i][0], lane:i})            
                     collided = true;
                     break; 
                 }                
@@ -65,7 +66,7 @@ var UnitHandler = Class.create({
            }
            if(others[i] && others[i][0] && !collided){
                others[i][0].setTarget(null);                  
-           } 
+           }
            for(var j=0;j<this.objects[i].length;j++){                      
                 if(collided){
                     this.objects[i][j].setTarget(others[i][0]);       
@@ -81,8 +82,8 @@ var UnitHandler = Class.create({
   
    removeObject: function(object, lane){
       if(this.objects[lane].indexOf(object)!=-1){
-          object.destroy();
           this.objects[lane].remove(object);
+          object.destroy();
       }
    }
       

@@ -1,5 +1,7 @@
 var CrowdMemberDisplay = Class.create(Display,{
-  noOfFrames : 9,  
+  
+  noOfFrames : 8,  
+  
   states : ["run","back","front","normal","reverse","reverseRun"],
   
   initialize : function($super,owner,properties){

@@ -103,6 +103,13 @@ deleteAllUserProfiles = function(){
 <LABEL class="label">Products</LABEL>
 <% @game.products["fb"].each do | title, product | %>
   <a href="/<%=AdminController::ADMIN_URL%>/<%=@game.name%>/product/<%=title%>"><%=title%></a>
+  <form id="delete_product_<%=title%>"
+        action="/<%=AdminController::ADMIN_URL%>/<%=@game.name%>/product/<%=title%>"
+        method="post"
+        style="display:inline">
+          <input type="hidden" name="_method" value="put"/>
+          <a href="Javascript:void(0);" onclick="if(confirm( 'are you sure you want to delete this product?' )){$('delete_product_<%=title%>').submit()}; return false;">Delete</a>
+  </form>
   <br>
 <% end %>
 <a href="/<%=AdminController::ADMIN_URL%>/<%=@game.name%>/products/new">Add new product</a>

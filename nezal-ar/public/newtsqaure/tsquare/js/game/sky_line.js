@@ -11,12 +11,12 @@ var SkyLine = Class.create({
     	var images_road = [Loader.images.background['land.png'], Loader.images.background['land.png']]
     		
         var self = this
-        var background_cloud = new Background(this.scene, {speed : function(){return self.scene.currentSpeed* self.scene.direction -2}, y: 0, imagesCount: 3, images:images_cloud})
-        var background_road = new Background(this.scene, {speed : function(){return self.scene.currentSpeed* self.scene.direction}, y: 167, imagesCount: 6, images:images_road})
-    	var background_transparent = new Background(this.scene, {speed : function(){return self.scene.currentSpeed* self.scene.direction -2}, y: 0, imagesCount: 3, images:images_transparent},{opacity:0.4})
-    	var background = new Background(this.scene, {speed : function(){return self.scene.currentSpeed* self.scene.direction -1}, y: 20, imagesCount: 3, images:images})
-        var background_street_marks = new Background(this.scene, {speed : function(){return self.scene.currentSpeed* self.scene.direction}, y: 265, imagesCount: 2, images:images_streetMarks})
-    		
+        var background_cloud = new Background(this.scene, {speed : function(){return self.scene.direction*(self.scene.currentSpeed  -2)}, y: 0, imagesCount: 3, images:images_cloud})
+        var background_road = new Background(this.scene, {speed : function(){return  self.scene.direction*(self.scene.currentSpeed)}, y: 167, imagesCount: 6, images:images_road})
+        var background_transparent = new Background(this.scene, {speed : function(){return  self.scene.direction*(self.scene.currentSpeed -2)}, y: 0, imagesCount: 3, images:images_transparent},{opacity:0.4})
+        var background = new Background(this.scene, {speed : function(){return  self.scene.direction*(self.scene.currentSpeed-1)}, y: 20, imagesCount: 3, images:images})
+        var background_street_marks = new Background(this.scene, {speed : function(){return  self.scene.direction*(self.scene.currentSpeed)}, y: 265, imagesCount: 2, images:images_streetMarks})
+            
     	this.backgrounds.push(background_transparent)       
     	this.backgrounds.push(background)
     	this.backgrounds.push(background_cloud)

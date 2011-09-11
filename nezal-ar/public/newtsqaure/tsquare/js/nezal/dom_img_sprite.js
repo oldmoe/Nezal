@@ -11,14 +11,13 @@ var DomImgSprite = Class.create(DomSprite, {
         noOfFrames : imgAssets.noOfFrames || 1
      })
     this.currentAnimation = this.animations['normal']
-    owner.imgWidth = this.currentAnimation.imgWidth
-    owner.imgHeight = this.currentAnimation.imgHeight
+    //owner.imgWidth = this.currentAnimation.imgWidth
+    //owner.imgHeight = this.currentAnimation.imgHeight
     $super(owner, imgAssets, properties);
     //console.log( imgAssets )
     if(properties && properties.flipped){
       this.div.addClassName('flippedSprite')
     }
-    //console.log(imgAssets.noOfFrames)
     this.img = this.currentAnimation.img
 		this.div.appendChild(this.img)
 		this.currentAnimationFrame = 0
