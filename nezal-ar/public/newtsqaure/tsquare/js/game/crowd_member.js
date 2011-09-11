@@ -209,8 +209,7 @@ var CrowdMember = Class.create(Unit,{
     }        
   },
   circleMove : function(){
-    console.log('circle')
-    if (!this.target|| this.target.hp <= 0) {
+    if (!this.target|| this.target.hp <= 0 || this.target.dead) {
       this.resetRotation()
     }
       if (this.rotationPoints.length == 0) {
