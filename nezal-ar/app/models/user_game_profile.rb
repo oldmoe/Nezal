@@ -90,7 +90,24 @@ class UserGameProfile < DataStore::Model
       record = self.class.get(self.class.generate_key(service_type, Game::current.key, id))
       records << record unless record.nil?
     end
-    records.collect { |record| { 'service_id' => record.service_id, 'scores' => record.scores } }
+    # Send only the scores data
+    records.collect do |record| 
+      protected_data = { 'service_id' => record.service_id, 'scores' => record.scores }
+      if record.service_id == service_id
+        record.last_read= record.read_time.nil? ? Time.now.to_i : record.read_time
+        record.read_time= Time.now.to_i
+        record.save
+        protected_data['last_read'] = record.last_read
+# This part here is for testing purposes should be removed
+      else
+        mode = ['timeline', 'racing', 'cooperation', 'global'][(rand * 10).to_i % 4]
+        sign = [-1, 1][(rand * 10).to_i % 2]
+        protected_data['scores'][mode] = self.scores[mode] + sign * ((rand * 10).to_i % 4 + 1)
+        protected_data['scores']['update_time'][mode] = Time.now.to_i + (rand * 10).to_i % 100
+# END OF PART TO REMOVE
+      end
+      protected_data
+    end
   end
 
   def filterAppProfiles(list)

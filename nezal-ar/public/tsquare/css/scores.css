@@ -1,6 +1,6 @@
 #scores{
   position : absolute;
-  top : 700px;
+  top : 540px;
   left : 0px;
   width : 780px;
   height : 200px;
@@ -109,10 +109,74 @@
   text-align: center;
   top: -30px;
   width: 100px;
+  height : 30px;
 }
 #scores .user img {
   position: relative;
   width : 100%;
   top : -20px;
 }
+#scores .notification {
+  height: 25px;
+  left: 75px;
+  opacity: 0.9;
+  position: relative;
+  top: -150px;
+  width: 25px;
+  z-index: 10;
+  -moz-border-radius : 10px;
+  -webkit-border-radius : 10px;
+  -o-border-radius : 10px;
+  border-radius : 10px;
+  cursor : pointer;
+}
+#scores .redNotification {
+  background : red;
+}
+#scores .greenNotification {
+  background : green;
+}
 
+#interaction{
+  position : absolute;
+  top : 0px;
+  left : 0px;
+  width : 760px;
+  height : 500px;
+}
+#interaction .sendChallengePrompt, #interaction .scorePassedAlert {
+  background: none repeat scroll 0 0 gray;
+  border-radius: 20px 20px 20px 20px;
+  height: 200px;
+  left: 100px;
+  opacity: 0.9;
+  position: absolute;
+  top: 100px;
+  width: 560px;
+  z-index : 1000;
+}
+#interaction .button {
+  background: none repeat scroll 0 0 yellow;
+  cursor: pointer;
+  height: 30px;
+  width: 100px;
+  -moz-border-radius : 10px;
+  -webkit-border-radius : 10px;
+  -o-border-radius : 10px;
+  border-radius : 10px;
+  position: absolute;
+  top: 130px;
+  text-align : center;
+}
+#interaction .sendChallengOk {
+  left: 300px;
+}
+#interaction .sendChallengCancel, #interaction .scorePassedCancel {
+  left : 420px;
+}
+#interaction .message {
+  position  : absolute;
+  top : 40px;
+  margin : 0px 20px;
+  font-weight : bold;
+}
