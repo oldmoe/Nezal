@@ -4,3 +4,4 @@ db/test.sqlite3
 db/development.sqlite3-journal/*
 db/test.sqlite3-journal/*
 db/production.sqlite3-journal/*
+log/*
