@@ -10,7 +10,7 @@ var AmnMarkazy = Class.create(Enemy,{
      $super(scene,x,y, options) 
      this.hp = 30;
      this.maxHp = 30;
-     this.power = 100;
+     this.power = 10;
   },
   
   tick : function($super){

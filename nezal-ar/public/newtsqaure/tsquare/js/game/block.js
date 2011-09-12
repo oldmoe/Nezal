@@ -24,8 +24,8 @@ var Block = Class.create(Unit,{
         }
       }
       if (this.movingToTarget) {
-          if (Math.abs(this.target.x - this.coords.x) > this.movingSpeed || Math.abs(this.target.y - this.coords.y) > this.movingSpeed) {
-              var move = Util.getNextMove(this.coords.x, this.coords.y, this.target.x, this.target.y, this.movingSpeed)
+          if (Math.abs(this.targetPoint.x - this.coords.x) > this.movingSpeed || Math.abs(this.targetPoint.y - this.coords.y) > this.movingSpeed) {
+              var move = Util.getNextMove(this.coords.x, this.coords.y, this.targetPoint.x, this.targetPoint.y, this.movingSpeed)
               this.move(move[0], move[1])
               this.moveElements(move[0], move[1])
           }
