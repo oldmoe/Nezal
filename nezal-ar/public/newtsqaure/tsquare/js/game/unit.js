@@ -41,6 +41,7 @@ var Unit = Class.create({
     if(this.dead)return
     this.processCommand()
   },
+  
   moveToTarget : function(){
     if(Math.abs(this.target.x - this.coords.x) > this.enterSpeed || Math.abs(this.target.y - this.coords.y) > this.movingSpeed){
           var move = Util.getNextMove(this.coords.x, this.coords.y , this.target.x, this.target.y, this.movingSpeed)

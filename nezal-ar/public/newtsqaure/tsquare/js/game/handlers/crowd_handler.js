@@ -20,8 +20,24 @@ var CrowdHandler = Class.create(UnitHandler, {
    },
    
    hold: function(){
-       this.executeCommand("hold");
-       console.log("handler hold");
+      this.executeCommand("hold");
+      var averagePoint = {x: 0, y: 0};
+      var count = 0;
+      for(var i=0;i<this.objects.length;i++){
+          for(var j=0;this.objects[i] && j<this.objects[i].length;j++){
+            if(this.objects[i][j]){
+              count++;
+              averagePoint.x += this.objects[i][j].coords.x;
+              averagePoint.y += this.objects[i][j].coords.y; 
+            }
+          }
+      }
+      if(count > 0){
+        averagePoint.x /= count;
+        averagePoint.y /= count;
+      }
+      
+      // this.objects[i][j].
    },
 
    march: function(){
