@@ -10,7 +10,7 @@ var AmnMarkazy = Class.create(Enemy,{
      $super(scene,x,y, options) 
      this.hp = 30;
      this.maxHp = 30;
-     this.power = 1;
+     this.power = 100;
   },
   
   tick : function($super){
@@ -58,7 +58,7 @@ var AmnMarkazy = Class.create(Enemy,{
         }
     }
     var targetChange = false
-    if(minIndex!=-1 && minDistance >= this.getWidth()){
+    if(minIndex!=-1 && minDistance <= 2*this.getWidth()){
         if(this.target == null){
           this.target = targets[minIndex]
           this.fire('hit')

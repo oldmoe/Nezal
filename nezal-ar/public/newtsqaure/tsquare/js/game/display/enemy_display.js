@@ -11,7 +11,7 @@ var EnemyDisplay = Class.create(Display,{
     },
 
     switchHoveringIcon: function(icon){
-      this.sprites.hoverIcon.replaceImg(Loader.images.hoveringIcons[icon]);
+      this.sprites.hoverIcon.replaceImg(Loader.images.hoveringIcons[icon].clone());
     }
 
 });
