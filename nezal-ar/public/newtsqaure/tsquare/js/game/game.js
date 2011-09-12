@@ -18,6 +18,7 @@ var Game = Class.create({
   },
   
   initializeGame : function(){
+      
     $('inProgress').hide()
     $('gameCanvas').show()
     $('container').show()

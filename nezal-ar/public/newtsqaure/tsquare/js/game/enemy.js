@@ -6,5 +6,10 @@ var Enemy = Class.create(Unit, {
   
   tick: function($super){
   	$super();
+  },
+  
+  getHoveringIconState: function(){
+      
   }
+
 });

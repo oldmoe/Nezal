@@ -10,7 +10,7 @@ var AmnMarkazy = Class.create(Enemy,{
      $super(scene,x,y, options) 
      this.hp = 30;
      this.maxHp = 30;
-     this.power = 5;
+     this.power = 100;
   },
   
   tick : function($super){
@@ -46,6 +46,7 @@ var AmnMarkazy = Class.create(Enemy,{
         
       this.target = target;
   },
+  
   pickTarget : function(targets){
     var minDistance = 100000
     var minIndex = -1
@@ -57,14 +58,18 @@ var AmnMarkazy = Class.create(Enemy,{
         }
     }
     var targetChange = false
-    if(minIndex!=-1){
-        if(this.target!=targets[minIndex] && minDistance < this.getWidth()){
+    if(minIndex!=-1 && minDistance >= this.getWidth()){
+        if(this.target == null){
+          this.target = targets[minIndex]
           this.fire('hit')
-          targetChange = true  
-        } 
-        this.target = targets[minIndex]
-    }
-    else{
+          targetChange = true
+        }
+        
+        if(this.target != targets[minIndex]){
+          this.target = targets[minIndex]
+          targetChange = true
+        }
+    }else{
         if (this.target) {
             this.target = null
             this.fire('normal')
@@ -72,10 +77,6 @@ var AmnMarkazy = Class.create(Enemy,{
         }
     }
     return targetChange  
-  },
-  
-  getHoveringState: function(){
-      if()    
   }
   
 })

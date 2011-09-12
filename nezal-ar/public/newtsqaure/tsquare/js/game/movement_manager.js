@@ -65,8 +65,7 @@ var MovementManager = Class.create({
       var click = -1
       if (e.keyCode == 39) {
         click = 0
-      }
-      else if (e.keyCode == 37) {
+      }else if (e.keyCode == 37) {
           click = 1
       }else if (e.keyCode == 32) {
           click = 2

@@ -7,6 +7,7 @@ var Block = Class.create(Unit,{
     noDisplay : true,
     pushes : 2,
     type : "block",
+    
     initialize : function($super,scene,x,y,options){
       this.elements = []
       $super(scene,x,y,options)
@@ -15,6 +16,7 @@ var Block = Class.create(Unit,{
           this.addElementsToBlock(options)
       }
     },
+    
     tick : function(){
       for (var i = 0; i < this.elements.length; i++) {
         for (var j = 0; j < this.elements[0].length; j++) {
@@ -30,6 +32,7 @@ var Block = Class.create(Unit,{
       }
       this.move(-this.scene.currentSpeed * this.scene.direction,0)
     },
+    
     addElementsToBlock : function(options){
       var counter = 0
       var blockObjectKlass = eval(options.obj.formClassName())
@@ -44,14 +47,17 @@ var Block = Class.create(Unit,{
         }
       }
     },
+    
     getWidth : function(){
       if(!this.elements[0] || !this.elements[0][0])return 0
       return this.elementWidth * this.elements.length + (this.elements[0][0].imgWidth - this.elementWidth)  
     },
+    
     getHeight : function(){
       if(!this.elements[0]  || !this.elements[0][0])return 0
       return this.elementHeight * this.elements.length + (this.elements[0][0].imgHeight - this.elementHeight)
     },
+    
     takeHit : function(power){
       var maxHp = 0
       for (var i = 0; i < this.elements.length; i++) {
@@ -70,9 +76,11 @@ var Block = Class.create(Unit,{
         this.handler.objects[this.lane].remove(this)
       }
     },
+    
     getSize : function(){
       return this.elements.length * this.elements[0].length  
     }, 
+    
     split : function(){
         if(this.elements.length == 1){
             for(var i=0;i<this.elements[0].length;i++){

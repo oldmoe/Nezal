@@ -16,17 +16,27 @@ var AmnMarkazyDisplay = Class.create(EnemyDisplay,{
     this.registerEvents()
   },
 
+  createHoveringIcon: function(){
+    this.setHoveringIcon(this.hoveringIcons.march);
+  },
+  
   registerEvents : function(){
     var self = this
     this.states.each(function(state){
       self.owner.observe(state,function(){
-        self.sprites.block.switchAnimation(state)
+        self[state]();
       })
     })
   },
+  
+  hit: function(){
+    this.sprites.block.switchAnimation("hit");
+    this.switchHoveringIcon(this.hoveringIcons.circle);
+  },
 
-  createHoveringIcon: function(){
-    this.hoverIcon = Loader.images.icons['circle.png']
+  normal: function(){
+    this.sprites.block.switchAnimation("normal")
+    this.switchHoveringIcon(this.hoveringIcons.march);
   },
 
   createSprites:function(){
@@ -44,4 +54,5 @@ var AmnMarkazyDisplay = Class.create(EnemyDisplay,{
       $super()
     //}
   }
+  
 })

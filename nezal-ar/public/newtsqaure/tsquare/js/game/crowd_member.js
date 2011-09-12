@@ -75,7 +75,6 @@ var CrowdMember = Class.create(Unit,{
     this.stateChanged = true
     this.water-=this.waterDecreaseRate
     if(this.water <= 0) this.dead = true
-
 /*    
     if(this.scene.holding && this.movingToTarget){
       var move = Util.getNextMove(this.coords.x,this.coords.y,this.holdingPoint.x,this.holdingPoint.y,this.scene.speed)
@@ -146,7 +145,6 @@ var CrowdMember = Class.create(Unit,{
   
   march : function(){
       this.currentAction = "march"
-      console.log("march1");
   },
   
   hold : function(){
@@ -244,7 +242,7 @@ var CrowdMember = Class.create(Unit,{
     this.scene.moving = false
     this.scene.rotating = false
     this.fire("normal")
-  },
+  }  
  
 })
   

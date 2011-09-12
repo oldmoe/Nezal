@@ -3,6 +3,7 @@ var TsquareScene = Class.create(Scene,{
     handlers: null,
     skyline: null,
     currentSpeed : 0,
+    
     speeds : [
       {state :'idle' , value : 0 ,energy : 0},
       {state :'walk' , value : 3 ,energy : 1},
@@ -88,13 +89,12 @@ var TsquareScene = Class.create(Scene,{
     
     tick: function($super){
         $super()
-        this.view.xPos+=this.currentSpeed* this.direction
+        this.view.xPos += this.currentSpeed* this.direction
         this.detectCollisions();
         this.view.xPos+=this.currentSpeed
         for(var handler in this.handlers){
             this.handlers[handler].tick();
         }
-        
     },
 
   addObject : function(objHash){

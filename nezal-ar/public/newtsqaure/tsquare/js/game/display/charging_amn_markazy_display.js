@@ -5,8 +5,17 @@ var ChargingAmnMarkazyDisplay = Class.create(AmnMarkazyDisplay,{
   },
   
   createHoveringIcon: function(){
-    this.hoverIcon = Loader.images.icons['lock.png']
-  }
+    this.hoverIcon = Loader.images.hoveringIcons[this.hoveringIcons.hold]
+  },
 
+  hit: function(){
+    this.sprites.block.switchAnimation("hit");
+    this.switchHoveringIcon(this.hoveringIcons.circle);
+  },
+
+  normal: function(){
+    this.sprites.block.switchAnimation("normal")
+    this.switchHoveringIcon(this.hoveringIcons.hold);
+  }
 
 })

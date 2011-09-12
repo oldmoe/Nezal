@@ -12,13 +12,6 @@ var ChargingAmnMarkazy = Class.create(AmnMarkazy,{
         this.move((this.scene.currentSpeed + this.speed) * this.scene.direction * -1, 0);
      else
         this.move((this.scene.currentSpeed) * this.scene.direction * -1, 0);   
-  },
-  
-  pickTarget : function($super, targets){
-      if($super(targets)){
-         this.speed = 0;
-         this.switchHoveringIcon();
-      }
   }
   
 })
