@@ -13,7 +13,7 @@ var CrowdMember = Class.create(Unit,{
   pushing : false,
   pushDirections : {forward:0,backward:1},
   pushDirection : 0,
-  maxPushDisplacement : 100,
+  maxPushDisplacement : 50,
   extraSpeed : 0,
   moved : 0,
   initialize : function($super,scene,x,y,options){
@@ -88,13 +88,7 @@ var CrowdMember = Class.create(Unit,{
         }
       }
   },
-  
-  
-  setMovingTarget: function(targetPoint){
-    this.movingToTarget = true;
-    this.holdingPoint = targetPoint;
-  },
-  
+ 
   rotate : function($super,target){
     $super(target)
     for(var i=0;i<this.followers.length;i++){
@@ -133,7 +127,7 @@ var CrowdMember = Class.create(Unit,{
       console.log("hold");
   },
   
-    addRotationPoints : function(target){
+  addRotationPoints : function(target){
     this.rotationPoints.push({
       values: {
         x: target.coords.x - this.getWidth() / 2 - target.getHeight()/4,
@@ -164,7 +158,7 @@ var CrowdMember = Class.create(Unit,{
     })
   },
   pushMove : function(){
-    if(this.target.getSize() == 1){
+    if(!this.target || this.target.getSize() == 1){
       this.pushing = false  
       return
     } 
@@ -177,6 +171,10 @@ var CrowdMember = Class.create(Unit,{
     if(this.coords.x + this.getWidth()/2 > this.target.coords.x && this.pushDirection == this.pushDirections.forward){
         directionDone = true
         this.target.takePush()
+        if(this.target.pushes==0){
+            this.target = null
+            this.pushing = false
+        }
     }else if(this.moved > this.maxPushDisplacement){
         directionDone = true
     } 
