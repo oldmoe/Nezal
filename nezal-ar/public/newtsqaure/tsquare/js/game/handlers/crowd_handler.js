@@ -21,6 +21,7 @@ var CrowdHandler = Class.create(UnitHandler, {
    
    hold: function(){
        this.executeCommand("hold");
+       console.log("handler hold");
    },
 
    march: function(){
