@@ -34,6 +34,14 @@
               <div class="score"> ${friend['scores'][scoreManager.gameMode]} </div>
 			        <img class='photo' src='${friend['picture']}' />	
               <div class="name"> ${friend['name']} </div>
+              {if friend['greenNotification']==true}
+                <div class="notification greenNotification" id="${friend.service_id}">  
+                </div>
+              {/if}
+              {if friend['redNotification']==true}
+                <div class="notification redNotification" id="${friend.service_id}">  
+                </div>
+              {/if}
             </div>
           </li>
         {/for}
@@ -81,5 +89,29 @@
           ${mode} 
         </span>                      
     {/for}
+  </div>
+</textarea>
+
+<textarea style="display:none;" id='sendChallengePrompt'>
+  <div class="sendChallengePrompt">
+    <div class="message">
+      You have passed ${friend.name} score of ${friend.scores[scoreManager.gameMode]} !! <br> Send him a challenge
+    </div>
+    <div class="sendChallengOk button" id="${friend.service_id}">
+      OK
+    </div>
+    <div class="sendChallengCancel button">    
+      SKIP
+    </div>
+  </div>
+</textarea>
+<textarea style="display:none;" id='scorePassedAlert'>
+  <div class="scorePassedAlert">
+    <div class="message">
+      With ${friend.scores[scoreManager.gameMode]}, ${friend.name} passed your score!!
+    </div>
+    <div class="scorePassedCancel button">    
+      OK
+    </div>
   </div>
 </textarea>
