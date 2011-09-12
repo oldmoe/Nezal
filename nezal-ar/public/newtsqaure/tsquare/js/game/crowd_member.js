@@ -74,27 +74,7 @@ var CrowdMember = Class.create(Unit,{
     $super()
     this.stateChanged = true
     this.water-=this.waterDecreaseRate
-    if(this.water <= 0) this.dead = true
-
-/*    
-    if(this.scene.holding && this.movingToTarget){
-      var move = Util.getNextMove(this.coords.x,this.coords.y,this.holdingPoint.x,this.holdingPoint.y,this.scene.speed)
-
-       if(Math.abs(move[0]) < 2 && Math.abs(move[1]) < 2){
-         this.movingToTarget = false;  
-       }  
-      this.move(move[0], move[1])  
-      this.tickFollowers(move)
-    }
-       
-    if(!this.scene.moving)return
-    if(this.coords.x !=this.originalPosition.x || this.coords.y !=this.originalPosition.y ){
-      var move = Util.getNextMove(this.coords.x,this.coords.y,this.originalPosition.x,this.originalPosition.y,this.scene.speed)
-      this.coords.x+=move[0]
-      this.coords.y+=move[1]
-      this.tickFollowers(move)
-    }
-*/    
+    if(this.water <= 0) this.dead = true    
   },
   
   tickFollowers : function(move){
@@ -146,7 +126,6 @@ var CrowdMember = Class.create(Unit,{
   
   march : function(){
       this.currentAction = "march"
-      console.log("march1");
   },
   
   hold : function(){
@@ -243,7 +222,7 @@ var CrowdMember = Class.create(Unit,{
     this.scene.moving = false
     this.scene.rotating = false
     this.fire("normal")
-  },
+  }  
  
 })
   

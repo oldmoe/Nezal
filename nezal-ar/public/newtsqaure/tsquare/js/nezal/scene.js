@@ -46,6 +46,7 @@ var Scene = Class.create({
 			})
 			this.objects = remainingObjects
 		}catch(x){//console.log(x)
+		  alert(x)
 		}
 		return this
 	},
