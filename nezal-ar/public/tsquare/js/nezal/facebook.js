@@ -183,6 +183,7 @@ var FBConnect = {
         link: link,
         name: name,
         caption: caption,
+        description : description,
 //        actions : [{name : , link : }],
         privacy : privacy
       }, function(response) {
