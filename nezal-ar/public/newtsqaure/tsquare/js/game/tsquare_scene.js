@@ -10,12 +10,14 @@ var TsquareScene = Class.create(Scene,{
       {state :'jog' ,  value : 10,energy : 10},
       {state :'run' ,  value : 15,energy : 20}
     ],
+    
     speedIndex : 0,
     direction : 1,
     energy : {current:0,rate : 3,max:30},
     view: {width: 760, height: 410, xPos: 0, tileWidth: 50, laneMiddle : 28},
     observer: null,
-    commands : ["circle","march","hold","retreat"],
+    activeLane: 1,
+    commands : ["circle","march","wrongHold","rightHold","retreat"],
     
     initialize: function($super){
         $super();
@@ -31,13 +33,11 @@ var TsquareScene = Class.create(Scene,{
             "enemy" : new EnemyHandler(this)
         };  
         
-        var self = this
-        var self = this;
-        self.data = gameData.data;
-        self.noOfLanes = self.data.length;
-        for(var i =0;i<self.data.length;i++){
-            for(var j=0;j<self.data[i].length;j++){
-                var elem = self.data[i][j]
+        this.data = gameData.data;
+        this.noOfLanes = this.data.length;
+        for(var i =0;i<this.data.length;i++){
+            for(var j=0;j<this.data[i].length;j++){
+                var elem = this.data[i][j]
                 if(this.handlers[elem.category])
                     this.handlers[elem.category].add(elem);
             }
@@ -83,8 +83,12 @@ var TsquareScene = Class.create(Scene,{
         console.log("scene circle");
     },
 
-    hold: function(){
-        console.log("scene hold");
+    wrongHold: function(){
+        this.energy.current -= this.energy.rate;
+    },
+
+    rightHold: function(){
+        console.log("scene right hold");
     },
     
     tick: function($super){

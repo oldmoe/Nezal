@@ -4,6 +4,7 @@ var ChargingAmnMarkazy = Class.create(AmnMarkazy,{
 		
   initialize : function($super,scene,x,y, options){
      $super(scene, x, y, options)
+     this.type = "charging_amn_markazy";
      this.speed = 5; 
   },
   

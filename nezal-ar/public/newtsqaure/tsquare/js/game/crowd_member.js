@@ -1,4 +1,5 @@
 var CrowdMember = Class.create(Unit,{
+  
   xShift : 100,
   water : 7000,
   maxWater : 700,
@@ -16,9 +17,10 @@ var CrowdMember = Class.create(Unit,{
   maxPushDisplacement : 50,
   extraSpeed : 0,
   moved : 0,
+  
   initialize : function($super,scene,x,y,options){
     $super(scene,x,y, options)
-    
+    this.type = "crowd_member";
     this.rotationPoints = []
     
     var self = this
@@ -124,7 +126,6 @@ var CrowdMember = Class.create(Unit,{
   
   hold : function(){
       this.currentAction = "hold"
-      console.log("hold");
   },
   
   addRotationPoints : function(target){
@@ -157,6 +158,7 @@ var CrowdMember = Class.create(Unit,{
       state : "reverse"
     })
   },
+  
   pushMove : function(){
     if(!this.target || this.target.getSize() == 1){
       this.pushing = false  
@@ -184,6 +186,7 @@ var CrowdMember = Class.create(Unit,{
         this.pushDirection = 1 - this.pushDirection
     }        
   },
+  
   circleMove : function(){
     if (!this.target|| this.target.hp <= 0 || this.target.dead) {
       this.resetRotation()
@@ -208,12 +211,14 @@ var CrowdMember = Class.create(Unit,{
           if(this.rotationPoints.length > 0 ) this.fire(this.rotationPoints[0].state)
       }
   },
+  
   setTarget: function($super,target){
     $super(target)
     if(target && target.getSize() > 1){
         this.pushing = true        
     }  
   },
+  
   resetRotation : function(){
     this.target = null
     this.rotating = false

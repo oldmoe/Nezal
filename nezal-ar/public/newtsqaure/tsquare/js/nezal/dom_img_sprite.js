@@ -61,6 +61,7 @@ var DomImgSprite = Class.create(DomSprite, {
     this.animations[options.name] = animation
     return animation
   },
+  
   setCursor : function( style ){
     this.img.setStyle({cursor : style});
   },
