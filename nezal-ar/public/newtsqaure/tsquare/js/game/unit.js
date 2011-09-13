@@ -1,4 +1,5 @@
 var Unit = Class.create({
+  
   x:0,y:0,
   speed : 1,
   angle :0,
@@ -17,10 +18,12 @@ var Unit = Class.create({
   observer: null,
   handler: null,
   movingToTarget : false,
+  type: null,
+  
   initialize : function(scene,x,lane, options){
     var self = this
     this.commandFilters = [
-      {command: function(){return self.movingToTarget}, callback: function(){self.moveToTarget()}}
+      {command: function(){return self.movingToTarget}, callback: function(){self.moveToTargetPoint()}}
     ];
     this.target = null
     this.observer = new Observer();
@@ -30,6 +33,7 @@ var Unit = Class.create({
     this.coords ={x:x, y:y}
     this.handler = options.handler
   },
+  
   processCommand: function(){
     for(var i=0;i<this.commandFilters.length;i++){
         if(this.commandFilters[i].command()){
@@ -41,7 +45,9 @@ var Unit = Class.create({
     if(this.dead)return
     this.processCommand()
   },
-  moveToTarget : function(){
+  
+  moveToTargetPoint : function(){
+    
     if(Math.abs(this.targetPoint.x - this.coords.x) > this.movingSpeed || Math.abs(this.targetPoint.y - this.coords.y) > this.movingSpeed){
           var move = Util.getNextMove(this.coords.x, this.coords.y , this.targetPoint.x, this.targetPoint.y, this.movingSpeed)
           this.coords.x+=move[0]
@@ -49,13 +55,14 @@ var Unit = Class.create({
       }
       else this.movingToTarget = false  
   },
-    observe: function(event, callback){
-        this.observer.addObserver(event, callback);
-    },
-    
-    fire: function(event){
-        this.observer.fire(event);
-    },
+  
+  observe: function(event, callback){
+      this.observer.addObserver(event, callback);
+  },
+  
+  fire: function(event){
+      this.observer.fire(event);
+  },
 
   getMovingState : function(){
     if(this.scene.running)return "run"

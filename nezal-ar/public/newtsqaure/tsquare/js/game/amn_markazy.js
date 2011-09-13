@@ -7,6 +7,7 @@ var AmnMarkazy = Class.create(Enemy,{
 		
   initialize : function($super,scene,x,y, options){
      $super(scene,x,y, options) 
+     this.type = "amn_markazy";
      this.hp = 30;
      this.maxHp = 30;
      this.power = 10;

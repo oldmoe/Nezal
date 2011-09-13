@@ -5,6 +5,8 @@
 	<script src="js/base/prototype.js" type="text/javascript"></script>
 	<script src="js/base/effects.js" type="text/javascript"></script>
     <script src="js/base/template.js" type="text/javascript"></script>
+    <script src="js/base/box2d-all.js" type="text/javascript"></script>
+    <script src="js/base/box2dutils.js" type="text/javascript"></script>
 
 
     <script src="js/game/templatesData.js" type="text/javascript"></script>
@@ -33,6 +35,7 @@
     <script src="js/game/crowd_member.js" type="text/javascript"></script>
     <script src="js/game/amn_markazy.js" type="text/javascript"></script>
     <script src="js/game/charging_amn_markazy.js" type="text/javascript"></script>
+    <script src="js/game/tear_gas_enemy.js" type="text/javascript"></script>
     <script src="js/game/block.js" type="text/javascript"></script>
     <script src="js/game/npc.js" type="text/javascript"></script>
     <script src="js/game/dehydrator.js" type="text/javascript"></script>
@@ -47,12 +50,15 @@
     <script src="js/game/handlers/crowd_handler.js" type="text/javascript"></script>
     <script src="js/game/handlers/enemy_handler.js" type="text/javascript"></script>
     
+    <script src="js/game/physics/physics_handler.js" type="text/javascript"></script>
+    
     
     <script src="js/game/display/enemy_display.js" type="text/javascript"></script>
     <script src="js/game/display/follower_display.js" type="text/javascript"></script>
     <script src="js/game/display/crowd_member_display.js" type="text/javascript"></script>
     <script src="js/game/display/block_display.js" type="text/javascript"></script>
     <script src="js/game/display/amn_markazy_display.js" type="text/javascript"></script>
+    <script src="js/game/display/tear_gas_enemy_display.js" type="text/javascript"></script>
     <script src="js/game/display/charging_amn_markazy_display.js" type="text/javascript"></script>
     <script src="js/game/display/npc_display.js" type="text/javascript"></script>
     <script src="js/game/display/bubble_display.js" type="text/javascript"></script>
@@ -81,6 +87,7 @@
 	  <div id="beatFlash" style="display:none;"></div>
 	  <div id="mySquare"></div>
 	  <div id="inProgress" style=""></div>
+    <canvas id="physics" width="760" height="550" style="position:absolute;left:9px;top:9px;z-index:1000"></canvas>
     <div id="world">
     </div>
 		<div id="container" style="dislay:none;"></div>
