@@ -72,6 +72,9 @@ var CrowdMember = Class.create(Unit,{
   
   tick : function($super){
     $super()
+    if(!this.movinngToTarget && Math.abs(this.coords.x - this.originalPosition.x) > 0.1 || Math.abs(this.coords.y!=this.originalPosition.y) >0.1){
+        this.moveToTarget(this.originalPosition)
+    }  
     this.stateChanged = true
     this.water-=this.waterDecreaseRate
     if(this.water <= 0) this.dead = true    
@@ -217,8 +220,6 @@ var CrowdMember = Class.create(Unit,{
   resetRotation : function(){
     this.target = null
     this.rotating = false
-    this.scene.moving = false
-    this.scene.rotating = false
     this.fire("normal")
   }  
  

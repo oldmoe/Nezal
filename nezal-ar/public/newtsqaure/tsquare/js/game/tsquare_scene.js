@@ -23,12 +23,12 @@ var TsquareScene = Class.create(Scene,{
         
         this.createRenderLoop('skyline',1);
         this.createRenderLoop('characters',2);
-        
+        this.physicsHandler = new PhysicsHandler(this)
         this.movementManager = new MovementManager(this)
         this.addMovementObservers()
         this.handlers = {
             "crowd" : new CrowdHandler(this),
-            "enemy" : new EnemyHandler(this)
+            "enemy" : new EnemyHandler(this)  
         };  
         
         var self = this
@@ -46,6 +46,7 @@ var TsquareScene = Class.create(Scene,{
     
     init: function(){
         this.skyLine = new SkyLine(this)
+        //this.physicsHandler.step()
     },
     
     observe: function(event, callback){

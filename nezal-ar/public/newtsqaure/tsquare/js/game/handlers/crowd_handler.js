@@ -1,7 +1,7 @@
 var CrowdHandler = Class.create(UnitHandler, {
     
    type : "left",   
-   initialPositions : [{x:200,y:30},{x:200,y:100},{x:200,y:200}],
+   initialPositions : [{x:50,y:30},{x:50,y:100},{x:50,y:200}],
    crowdMembersPerColumn : 2,
    marchingStates: ["IDLE", "WALK", "JOG", "RUN"],
    commands: ["circle", "hold", "march", "retreat"],
