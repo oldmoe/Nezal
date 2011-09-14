@@ -20,12 +20,9 @@ var CrowdHandler = Class.create(UnitHandler, {
    },
    
    hold: function(){
-     if(this.scene.handlers.enemy.objects[this.scene.activeLane][0] && 
-       this.scene.handlers.enemy.objects[this.scene.activeLane][0].type == "charging_amn_markazy"){
-         
-        this.scene.fire("rightHold");
-        
-        this.executeCommand("hold");
+     var enemy = this.scene.handlers.enemy.objects[this.scene.activeLane][0]; 
+     if( enemy && enemy.type == "charging_amn_markazy"){
+       
         var averagePoint = {x: 0, y: 0};
         var count = 0;
         for(var i=0;i<this.objects.length;i++){
@@ -43,13 +40,27 @@ var CrowdHandler = Class.create(UnitHandler, {
           averagePoint.y /= count;
         }
   
+        var distance = 0;
+        var minDistance = 100000;
+  
         for(var i=0;i<this.objects.length;i++){
             for(var j=0;this.objects[i] && j<this.objects[i].length;j++){
               if(this.objects[i][j]){
                 this.objects[i][j].moveToTarget({x:averagePoint.x+Math.random()*50, y:averagePoint.y});
+                distance = Util.distance(enemy.coords.x,enemy.coords.y,this.objects[i][j].coords.x,this.objects[i][j].coords.y);
+                if(distance < minDistance)
+                  minDistance = distance;
               }
             }
         }
+        
+        var holdingLevel = 1;
+        if(minDistance < enemy.getWidth()*2)
+          holdingLevel = 2;
+          
+        this.scene.fire("rightHold");
+        this.executeCommand("hold", {holdingLevel: holdingLevel});
+
      }else{
        this.scene.fire("wrongHold");
      }
@@ -68,11 +79,11 @@ var CrowdHandler = Class.create(UnitHandler, {
        this.executeCommand("circle");
    },
    
-   executeCommand : function(event){
+   executeCommand : function(event, options){
      for(var i=0;i<this.objects.length;i++){
        if(this.objects[i])
        for(var j=0;j<this.objects[i].length;j++){
-           this.objects[i][j][event]();
+           this.objects[i][j][event](options);
        }
      }          
    },

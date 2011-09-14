@@ -1,0 +1,83 @@
+<script>
+var Missions = {
+    gameName: "<%=@game.name%>",
+    arrange : function() {
+        $('missions').childElements().each(function(element){
+                                            var next = element.getAttribute('next');
+                                            var id = element.getAttribute('id');
+                                            if(next)
+                                            {
+                                                var mission = $(next);
+                                                if(mission) 
+                                                {
+                                                  mission.setStyle("padding-left : 10px;")
+                                                  $(id).insert(mission);
+                                                }
+                                            }
+                                        });  
+    },
+    remove : function(id){
+      document.getElementById('delete_' + id).submit()
+    } 
+}
+$(document).observe('dom:loaded',function(){
+   Missions.arrange();
+});
+</script>
+
+<div id="game">
+
+  <div id="backLink">   
+    <a href="/<%=AdminController::ADMIN_URL%>/<%=@game.name%>">
+      Back
+    </a>
+  </div>
+
+  <div id="game_name">
+    <%=@game.name%>
+    <span class="title" style="color :  DarkOliveGreen;">
+      Quests
+    </span>
+  </div>
+
+  <div id="game_missions">
+    <div id="mission_form">
+      <LABEL for="new_mission" class="label add">Add New Mission</LABEL>
+      <form id="new_mission" action="/nezal-admin/<%=@game.name%>/missions" method="post" enctype="multipart/form-data">
+        <div class="form_row">  
+          <LABEL for="name">Name</LABEL>
+          <INPUT type="text" id="name" name='name'><BR>
+        </div>
+        <div class="form_row">  
+          <LABEL for="parent">Parent</LABEL>
+          <select id="parent" name="parent">
+            <option value=""> none </option>
+            <% @missions.each_value do | mission | %>                      
+              <option value="<%=mission['id']%>"> <%=mission['name']%> </option>
+            <% end %>
+          </select>
+        </div>
+        <div class="form_row">
+          <input type="submit" value="Add" class="submit"/>
+        </div>
+      </form>
+    </div>
+    <LABEL for="game_missions" class="label">Missions</LABEL>
+    <div id="missions">
+      <% @missions.each_pair do | id, data | %>
+        <div id="<%=id%>"  next="<%=data['next']%>" >
+          <span style="width : 20%; display : block; float : left;">
+            <a href="/<%=AdminController::ADMIN_URL%>/<%=@game.name%>/missions/<%=id%>">
+              <%=data["name"]%>
+            </a>
+          </span>
+          <form id="delete_<%=id%>" action="/<%=AdminController::ADMIN_URL%>/<%=@game.name%>/missions/<%=id%>" method="POST" style="display:inline">
+            <input type="hidden" name="_method" value="put"/>
+            <a href="#" onclick="Missions.remove(<%=id%>);" class="submit_links"> x </a>
+          </form> 
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+</div>

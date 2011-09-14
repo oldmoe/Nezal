@@ -6,12 +6,12 @@ var CrowdMember = Class.create(Unit,{
   randomDx : 0,
   randomDy : 0,
   waterDecreaseRate : 0.5,
-  holdingPoint: null,
   commandFilters: [],
   rotationPoints : null,
   rotationSpeed : 15,
   rotating : false,
   pushing : false,
+  holdingLevel: 0,
   pushDirections : {forward:0,backward:1},
   pushDirection : 0,
   maxPushDisplacement : 50,
@@ -105,10 +105,18 @@ var CrowdMember = Class.create(Unit,{
   },
   
   takeHit: function($super, power){
+    var hitPower = power;
+    if(this.currentAction == "hold"){
+      hitPower = hitPower * (1-this.scene.holdPowerDepression);
+      this.scene.energy.current += this.scene.energy.rate;
+    }else{
+      this.scene.energy.current -= this.scene.energy.rate;
+    }
+        
     if(this.followers.length > 0)
-        this.followers[0].takeHit(power);
+        this.followers[0].takeHit(hitPower);
     else
-        $super(power)   
+        $super(hitPower)   
   },
   
   circle : function(){
@@ -130,8 +138,9 @@ var CrowdMember = Class.create(Unit,{
       this.currentAction = "march"
   },
   
-  hold : function(){
+  hold : function(options){
       this.currentAction = "hold"
+      this.holdingLevel = options.holdingLevel;
   },
   
   addRotationPoints : function(target){

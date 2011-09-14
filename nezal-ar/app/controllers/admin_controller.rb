@@ -38,18 +38,6 @@ class AdminController < ApplicationController
   end
 
   ######################################################################
-  # Game Quests Requests
-  # View list of Quests, Edit Quest page, Add, Remove, Retrieve and Save metadata
-  ######################################################################  
-  # Serve game quests list display page 
-  get '/:game_name/quests' do
-    @game = Game.get(params[:game_name])
-    @quests = BD::Quest::all()
-    erb :quests , {:layout => :app}
-  end
-
-
-  ######################################################################
   # Game Products Requests
   # View list of Quests, Edit Quest page, Add, Remove, Retrieve and Save metadata
   ######################################################################  
@@ -102,47 +90,47 @@ class AdminController < ApplicationController
     redirect "/#{ADMIN_URL}/#{@game.name}/product/#{product["title"]}"
   end
 
-
-  # Add a quest to a game 
-  post '/:game_name/quests' do
-    BD::Quest.new(params)
-    redirect "/#{ADMIN_URL}/#{params[:game_name]}/quests"
+  ######################################################################
+  # Game Missions Requests
+  # View list of Missions, Edit Mission page, Add, Remove, Retrieve and Save metadata
+  ######################################################################  
+  # Serve game mis‭sions list display page 
+  get '/:game_name/missions' do
+    @game = Game.get(params[:game_name])
+    @missions = Mission.all
+    puts @missions
+    erb :missions , {:layout => :app}
   end
-  
-  # Update / Delete a quest
-  # Delete : Put /:game_name/quests/:quest_id
-  # update : Put /:game_name/quests/:quest_id.json
-  put %r{/([0-9A-Za-z_\-]+)(/quests/)([0-9A-Za-z_\-]+)(.json)?} do
-    p params[:captures]
+
+  get '/:game_name/missions/:mission_id' do
+    @game = Game.get(params[:game_name])
+    @missions = Mission.all
+    puts @missions
+#    File.read(File.join( 'public/nezal-admin/leveleditor/index-new.html'))
+    redirect "/admin/leveleditor/index-new.html?mission=#{params['mission_id']}"
+  end
+
+  # Add a mission to a game 
+  post '/:game_name/missions' do
+    Mission.add(params['name'], params['parent'])
+    redirect "/#{ADMIN_URL}/#{params[:game_name]}/missions"
+  end
+
+  # Update / Delete a mission
+  # Delete : Put /:game_name/missions/:mission_id
+  # update : Put /:game_name/missions/:mission_id.json
+  put %r{/([0-9A-Za-z_\-]+)(/missions/)([0-9A-Za-z_\-]+)(.json)?} do
     @game = Game.get(params[:captures][0])
-    quest_id = (params[:captures][2])
+    id = (params[:captures][2])
     if params[:captures][3]
-      BD::Quest.edit(quest_id, params["metadata"])
+      mission = Nezal::Decoder.decode(params['data'])
+      Mission.edit(id, mission)
       ''
     else
-      BD::Quest.delete(quest_id)
-      data = BD::Language.load()
-      data.values.each do |language_data|
-        language_data['quests'].delete(quest_id)
-      end
-      BD::Language::save(Nezal::Decoder.encode(data))
-      redirect "/#{ADMIN_URL}/#{@game.name}/quests"
+      Mission.delete(id)
+      redirect "/#{ADMIN_URL}/#{params[:captures][0]}/missions"
     end
-  end
-
-  # Serve the quest data edit page
-  get '/:game_name/quests/:quest_id' do 
-    @game = Game.get(params[:game_name])
-    @quests = BD::Quest::all()
-    @quest = BD::Quest.find(params["quest_id"])
-    erb :quest , {:layout => :app}
-  end
-  
-  # Serve the quest object data
-  get '/:game_name/quests/:quest_id/metadata' do 
-    @quest = BD::Quest.find(params["quest_id"])
-    Nezal::Decoder.encode(@quest)
-  end
+  end  
 
   ######################################################################
   # Game Language/Locale text files Requests
