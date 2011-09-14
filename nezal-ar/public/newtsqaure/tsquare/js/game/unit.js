@@ -107,7 +107,6 @@ var Unit = Class.create({
   },
  
   moveToTarget : function(targetPoint){
-    console.log(targetPoint);
    this.movingToTarget = true
    this.targetPoint = targetPoint
   },

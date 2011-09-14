@@ -1,12 +1,20 @@
 var EnemyHandler = Class.create(UnitHandler, {
    type : "right",
-   add: function($super, elem){
-       $super(elem)
-       if(elem.name == "block"){
-          this.incomming[elem.lane][this.incomming[elem.lane].length-1].options.rows = elem.rows;
-          this.incomming[elem.lane][this.incomming[elem.lane].length-1].options.columns = elem.columns;
-          this.incomming[elem.lane][this.incomming[elem.lane].length-1].options.obj = elem.object;
-       }
-   }
+   initialize: function($super,scene){
+     $super(scene)  
+     this.unitsClassMappings['wood_stick_cs'] = 'amn_markazy'
+   },
+   addObject : function($super,obj){
+        if(obj.type){
+            var dims = obj.type.split("_")
+            var rows = parseInt(dims[0])
+            var cols =  parseInt(dims[1])
+            obj.options.obj = obj.name
+            obj.name =  "block"
+            obj.options.rows = rows
+            obj.options.columns = cols
+        }
+        return $super(obj)   
+   } 
    
 });

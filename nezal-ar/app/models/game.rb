@@ -1,6 +1,6 @@
 class Game < DataStore::Model
 
-  @@data = { "modes" => {}, "ranks" => {}, "products" => { "fb" => {} } }
+  @@data = { "modes" => {}, "ranks" => {}, "products" => { "fb" => {} }, "missions" => {} }
 
   def init
     if @data

@@ -24,8 +24,11 @@ var CrowdMember = Class.create(Unit,{
     this.rotationPoints = []
     
     var self = this
-    this.commandFilters.push({command: function(){return self.rotating}, callback: function(){self.circleMove()}})
-    this.commandFilters.push({command:function(){return self.pushing}, callback: function(){self.pushMove()}})  
+    var crowdCommandFilters = [
+        {command: function(){return self.rotating}, callback: function(){self.circleMove()}},
+        {command:function(){return self.pushing}, callback: function(){self.pushMove()}}
+    ]
+    this.commandFilters = crowdCommandFilters.concat(this.commandFilters)
       
     this.hp = 1000;
     this.maxHp = 1000;
@@ -34,7 +37,7 @@ var CrowdMember = Class.create(Unit,{
     this.originalPosition = {x:0,y:0}
     
     this.originalPosition.y = this.handler.initialPositions[y].y - this.handler.crowdMembersPerColumn * 10
-    this.originalPosition.x = this.handler.initialPositions[y].x + 10*this.handler.crowdMembersPerColumn
+    this.originalPosition.x = this.handler.initialPositions[y].x + 20*this.handler.crowdMembersPerColumn
     this.handler.crowdMembersPerColumn-- 
     if(this.handler.crowdMembersPerColumn == -1){
       this.handler.crowdMembersPerColumn = 2
@@ -74,6 +77,9 @@ var CrowdMember = Class.create(Unit,{
   
   tick : function($super){
     $super()
+    if(!this.movinngToTarget && Math.abs(this.coords.x - this.originalPosition.x) > 0.1 || Math.abs(this.coords.y!=this.originalPosition.y) >0.1){
+        this.moveToTarget(this.originalPosition)
+    }  
     this.stateChanged = true
     this.water-=this.waterDecreaseRate
     if(this.water <= 0) this.dead = true    
@@ -229,10 +235,9 @@ var CrowdMember = Class.create(Unit,{
   },
   
   resetRotation : function(){
+    console.log('huuuuh')
     this.target = null
     this.rotating = false
-    this.scene.moving = false
-    this.scene.rotating = false
     this.fire("normal")
   }  
  

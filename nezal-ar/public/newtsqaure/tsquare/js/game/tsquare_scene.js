@@ -10,7 +10,6 @@ var TsquareScene = Class.create(Scene,{
       {state :'jog' ,  value : 10,energy : 10},
       {state :'run' ,  value : 15,energy : 20}
     ],
-    
     speedIndex : 0,
     direction : 1,
     holdPowerDepression: 0.2,
@@ -26,12 +25,12 @@ var TsquareScene = Class.create(Scene,{
         
         this.createRenderLoop('skyline',1);
         this.createRenderLoop('characters',2);
-        
+        this.physicsHandler = new PhysicsHandler(this)
         this.movementManager = new MovementManager(this)
         this.addMovementObservers()
         this.handlers = {
             "crowd" : new CrowdHandler(this),
-            "enemy" : new EnemyHandler(this)
+            "enemies" : new EnemyHandler(this)  
         };  
         
         this.data = gameData.data;
@@ -47,6 +46,7 @@ var TsquareScene = Class.create(Scene,{
     
     init: function(){
         this.skyLine = new SkyLine(this)
+        //this.physicsHandler.step()
     },
     
     observe: function(event, callback){
@@ -104,7 +104,7 @@ var TsquareScene = Class.create(Scene,{
   addObject : function(objHash){
      var klassName = objHash.name.formClassName()
      var klass = eval(klassName)
-     var obj = new klass(this,objHash.x - this.view.xPos,objHash.y,objHash.options)
+     var obj = new klass(this,objHash.x * this.view.tileWidth - this.view.xPos,objHash.lane,objHash.options)
      var displayKlass = eval(klassName + "Display")
      var objDisplay = new displayKlass(obj)
      if (!obj.noDisplay) {
