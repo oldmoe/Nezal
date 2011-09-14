@@ -3,9 +3,10 @@ var UnitHandler = Class.create({
    objects: null,
    incomming: null,
    scene: null,
-   
+   unitsClassMappings : null,
    
    initialize: function(scene){
+       this.unitsClassMappings = {}
        this.incomming = [];
        this.objects = [[],[],[]];
        this.scene = scene;       
@@ -21,8 +22,10 @@ var UnitHandler = Class.create({
        if(this.incomming[elem.lane] == null){
          this.incomming[elem.lane] = [];
          this.objects[elem.lane] = [];  
-       } 
-      this.incomming[elem.lane].push({'name':elem.name, x:elem.x*this.scene.view.tileWidth,y:elem.lane,options:{handler:this}})
+       }
+       if(this.unitsClassMappings[elem.name])elem.name =  this.unitsClassMappings[elem.name]
+       elem.options = {handler:this}
+      this.incomming[elem.lane].push(elem)
    },
    
   checkObjectsState : function(){
@@ -38,7 +41,7 @@ var UnitHandler = Class.create({
     for(var i=0;i<this.incomming.length;i++){
       for(var j=0; this.incomming[i] && j<this.incomming[i].length;j++){
         if (this.incomming[i][j].x < this.scene.view.xPos + this.scene.view.width) {
-          this.objects[i].push(this.scene.addObject(this.incomming[i][j]))
+          this.objects[i].push(this.addObject(this.incomming[i][j]))
           this.incomming[i].splice(0, 1)
           j--;
         }
@@ -48,7 +51,9 @@ var UnitHandler = Class.create({
       }
     }
   },
-  
+  addObject : function(obj){
+    return this.scene.addObject(obj)  
+  },
   detectCollisions : function(others){
     var collision = [];
     for(var i=0;i<this.objects.length;i++){
@@ -74,6 +79,8 @@ var UnitHandler = Class.create({
                     this.objects[i][j].setTarget(null); 
                 }
            }
+       }else if(others[i] && others[i][0]){
+           others[i][0].setTarget(null)
        }
     }
     if(collision.length > 0) return true

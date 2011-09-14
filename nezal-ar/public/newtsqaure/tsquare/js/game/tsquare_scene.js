@@ -3,6 +3,7 @@ var TsquareScene = Class.create(Scene,{
     handlers: null,
     skyline: null,
     currentSpeed : 0,
+    
     speeds : [
       {state :'idle' , value : 0 ,energy : 0},
       {state :'walk' , value : 3 ,energy : 1},
@@ -14,7 +15,8 @@ var TsquareScene = Class.create(Scene,{
     energy : {current:0,rate : 3,max:30},
     view: {width: 760, height: 410, xPos: 0, tileWidth: 50, laneMiddle : 28},
     observer: null,
-    commands : ["circle","march","hold","retreat"],
+    activeLane: 1,
+    commands : ["circle","march","wrongHold","rightHold","retreat"],
     
     initialize: function($super){
         $super();
@@ -22,21 +24,19 @@ var TsquareScene = Class.create(Scene,{
         
         this.createRenderLoop('skyline',1);
         this.createRenderLoop('characters',2);
-        
+        this.physicsHandler = new PhysicsHandler(this)
         this.movementManager = new MovementManager(this)
         this.addMovementObservers()
         this.handlers = {
             "crowd" : new CrowdHandler(this),
-            "enemy" : new EnemyHandler(this)
+            "enemies" : new EnemyHandler(this)  
         };  
         
-        var self = this
-        var self = this;
-        self.data = gameData.data;
-        self.noOfLanes = self.data.length;
-        for(var i =0;i<self.data.length;i++){
-            for(var j=0;j<self.data[i].length;j++){
-                var elem = self.data[i][j]
+        this.data = gameData.data;
+        this.noOfLanes = this.data.length;
+        for(var i =0;i<this.data.length;i++){
+            for(var j=0;j<this.data[i].length;j++){
+                var elem = this.data[i][j]
                 if(this.handlers[elem.category])
                     this.handlers[elem.category].add(elem);
             }
@@ -45,6 +45,7 @@ var TsquareScene = Class.create(Scene,{
     
     init: function(){
         this.skyLine = new SkyLine(this)
+        //this.physicsHandler.step()
     },
     
     observe: function(event, callback){
@@ -82,25 +83,27 @@ var TsquareScene = Class.create(Scene,{
         console.log("scene circle");
     },
 
-    hold: function(){
-        console.log("scene hold");
+    wrongHold: function(){
+        this.energy.current -= this.energy.rate;
+    },
+
+    rightHold: function(){
+        console.log("scene right hold");
     },
     
     tick: function($super){
         $super()
-        this.view.xPos+=this.currentSpeed* this.direction
         this.detectCollisions();
-        this.view.xPos+=this.currentSpeed
+        this.view.xPos += this.currentSpeed* this.direction
         for(var handler in this.handlers){
             this.handlers[handler].tick();
         }
-        
     },
 
   addObject : function(objHash){
      var klassName = objHash.name.formClassName()
      var klass = eval(klassName)
-     var obj = new klass(this,objHash.x - this.view.xPos,objHash.y,objHash.options)
+     var obj = new klass(this,objHash.x * this.view.tileWidth - this.view.xPos,objHash.lane,objHash.options)
      var displayKlass = eval(klassName + "Display")
      var objDisplay = new displayKlass(obj)
      if (!obj.noDisplay) {
@@ -121,6 +124,7 @@ var TsquareScene = Class.create(Scene,{
             })
             objects = remainingObjects
         }catch(x){//console.log(x)
+            alert(x)
         }
         return this
   },

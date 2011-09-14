@@ -14,6 +14,7 @@ var Display = Class.create({
   createSprites : function(){
     
   },
+  
   render : function(){
     for(var sprite in this.sprites){
       this.sprites[sprite].render()

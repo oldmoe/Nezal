@@ -1,4 +1,5 @@
 var CrowdMember = Class.create(Unit,{
+  
   xShift : 100,
   water : 7000,
   maxWater : 700,
@@ -13,17 +14,21 @@ var CrowdMember = Class.create(Unit,{
   pushing : false,
   pushDirections : {forward:0,backward:1},
   pushDirection : 0,
-  maxPushDisplacement : 100,
+  maxPushDisplacement : 50,
   extraSpeed : 0,
   moved : 0,
+  
   initialize : function($super,scene,x,y,options){
     $super(scene,x,y, options)
-    
+    this.type = "crowd_member";
     this.rotationPoints = []
     
     var self = this
-    this.commandFilters.push({command: function(){return self.rotating}, callback: function(){self.circleMove()}})
-    this.commandFilters.push({command:function(){return self.pushing}, callback: function(){self.pushMove()}})  
+    var crowdCommandFilters = [
+        {command: function(){return self.rotating}, callback: function(){self.circleMove()}},
+        {command:function(){return self.pushing}, callback: function(){self.pushMove()}}
+    ]
+    this.commandFilters = crowdCommandFilters.concat(this.commandFilters)
       
     this.hp = 1000;
     this.maxHp = 1000;
@@ -32,7 +37,7 @@ var CrowdMember = Class.create(Unit,{
     this.originalPosition = {x:0,y:0}
     
     this.originalPosition.y = this.handler.initialPositions[y].y - this.handler.crowdMembersPerColumn * 10
-    this.originalPosition.x = this.handler.initialPositions[y].x + 10*this.handler.crowdMembersPerColumn
+    this.originalPosition.x = this.handler.initialPositions[y].x + 20*this.handler.crowdMembersPerColumn
     this.handler.crowdMembersPerColumn-- 
     if(this.handler.crowdMembersPerColumn == -1){
       this.handler.crowdMembersPerColumn = 2
@@ -72,29 +77,12 @@ var CrowdMember = Class.create(Unit,{
   
   tick : function($super){
     $super()
+    if(!this.movinngToTarget && Math.abs(this.coords.x - this.originalPosition.x) > 0.1 || Math.abs(this.coords.y!=this.originalPosition.y) >0.1){
+        this.moveToTarget(this.originalPosition)
+    }  
     this.stateChanged = true
     this.water-=this.waterDecreaseRate
-    if(this.water <= 0) this.dead = true
-
-/*    
-    if(this.scene.holding && this.movingToTarget){
-      var move = Util.getNextMove(this.coords.x,this.coords.y,this.holdingPoint.x,this.holdingPoint.y,this.scene.speed)
-
-       if(Math.abs(move[0]) < 2 && Math.abs(move[1]) < 2){
-         this.movingToTarget = false;  
-       }  
-      this.move(move[0], move[1])  
-      this.tickFollowers(move)
-    }
-       
-    if(!this.scene.moving)return
-    if(this.coords.x !=this.originalPosition.x || this.coords.y !=this.originalPosition.y ){
-      var move = Util.getNextMove(this.coords.x,this.coords.y,this.originalPosition.x,this.originalPosition.y,this.scene.speed)
-      this.coords.x+=move[0]
-      this.coords.y+=move[1]
-      this.tickFollowers(move)
-    }
-*/    
+    if(this.water <= 0) this.dead = true    
   },
   
   tickFollowers : function(move){
@@ -108,13 +96,7 @@ var CrowdMember = Class.create(Unit,{
         }
       }
   },
-  
-  
-  setMovingTarget: function(targetPoint){
-    this.movingToTarget = true;
-    this.holdingPoint = targetPoint;
-  },
-  
+ 
   rotate : function($super,target){
     $super(target)
     for(var i=0;i<this.followers.length;i++){
@@ -146,15 +128,13 @@ var CrowdMember = Class.create(Unit,{
   
   march : function(){
       this.currentAction = "march"
-      console.log("march1");
   },
   
   hold : function(){
       this.currentAction = "hold"
-      console.log("hold");
   },
   
-    addRotationPoints : function(target){
+  addRotationPoints : function(target){
     this.rotationPoints.push({
       values: {
         x: target.coords.x - this.getWidth() / 2 - target.getHeight()/4,
@@ -184,21 +164,25 @@ var CrowdMember = Class.create(Unit,{
       state : "reverse"
     })
   },
+  
   pushMove : function(){
-      return
-    if(this.target.getSize() == 1){
+    if(!this.target || this.target.getSize() == 1){
       this.pushing = false  
       return
     } 
     var displacement = 0
     if(this.pushDirection == this.pushDirections.forward)displacement = this.scene.currentSpeed +this.moved*0.1
     else displacement = -1 *(this.scene.currentSpeed + (this.maxPushDisplacement-this.moved)*0.1)
-    this.moved+= displacement
+    this.moved+= Math.abs(displacement)
     this.move(displacement,0)
     var directionDone = false
     if(this.coords.x + this.getWidth()/2 > this.target.coords.x && this.pushDirection == this.pushDirections.forward){
         directionDone = true
         this.target.takePush()
+        if(this.target.pushes==0){
+            this.target = null
+            this.pushing = false
+        }
     }else if(this.moved > this.maxPushDisplacement){
         directionDone = true
     } 
@@ -208,6 +192,7 @@ var CrowdMember = Class.create(Unit,{
         this.pushDirection = 1 - this.pushDirection
     }        
   },
+  
   circleMove : function(){
     if (!this.target|| this.target.hp <= 0 || this.target.dead) {
       this.resetRotation()
@@ -232,19 +217,20 @@ var CrowdMember = Class.create(Unit,{
           if(this.rotationPoints.length > 0 ) this.fire(this.rotationPoints[0].state)
       }
   },
+  
   setTarget: function($super,target){
     $super(target)
     if(target && target.getSize() > 1){
         this.pushing = true        
     }  
   },
+  
   resetRotation : function(){
+    console.log('huuuuh')
     this.target = null
     this.rotating = false
-    this.scene.moving = false
-    this.scene.rotating = false
     this.fire("normal")
-  },
+  }  
  
 })
   

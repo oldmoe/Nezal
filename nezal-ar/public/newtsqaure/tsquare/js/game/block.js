@@ -6,8 +6,9 @@ var Block = Class.create(Unit,{
     elementHeight : 23,
     noDisplay : true,
     pushes : 2,
-    type : "block",
+    
     initialize : function($super,scene,x,y,options){
+      this.type = "block";
       this.elements = []
       $super(scene,x,y,options)
       if (options && options.obj) {
@@ -15,6 +16,7 @@ var Block = Class.create(Unit,{
           this.addElementsToBlock(options)
       }
     },
+    
     tick : function(){
       for (var i = 0; i < this.elements.length; i++) {
         for (var j = 0; j < this.elements[0].length; j++) {
@@ -22,14 +24,15 @@ var Block = Class.create(Unit,{
         }
       }
       if (this.movingToTarget) {
-          if (Math.abs(this.target.x - this.coords.x) > this.movingSpeed || Math.abs(this.target.y - this.coords.y) > this.movingSpeed) {
-              var move = Util.getNextMove(this.coords.x, this.coords.y, this.target.x, this.target.y, this.movingSpeed)
+          if (Math.abs(this.targetPoint.x - this.coords.x) > this.movingSpeed || Math.abs(this.targetPoint.y - this.coords.y) > this.movingSpeed) {
+              var move = Util.getNextMove(this.coords.x, this.coords.y, this.targetPoint.x, this.targetPoint.y, this.movingSpeed)
               this.move(move[0], move[1])
               this.moveElements(move[0], move[1])
           }
       }
       this.move(-this.scene.currentSpeed * this.scene.direction,0)
     },
+    
     addElementsToBlock : function(options){
       var counter = 0
       var blockObjectKlass = eval(options.obj.formClassName())
@@ -41,17 +44,23 @@ var Block = Class.create(Unit,{
             var randomX = Math.round(Math.random()*12) - 6
             this.elements[i][j].coords.x = this.coords.x + this.elementWidth * i - 20*j + randomX
             this.elements[i][j].coords.y = this.coords.y + this.elementHeight * j + randomY
+            this.elements[i][j].showHoveringIcon = false;
         }
       }
+      
+      this.elements[0][0].showHoveringIcon = true;
     },
+    
     getWidth : function(){
       if(!this.elements[0] || !this.elements[0][0])return 0
       return this.elementWidth * this.elements.length + (this.elements[0][0].imgWidth - this.elementWidth)  
     },
+    
     getHeight : function(){
       if(!this.elements[0]  || !this.elements[0][0])return 0
       return this.elementHeight * this.elements.length + (this.elements[0][0].imgHeight - this.elementHeight)
     },
+    
     takeHit : function(power){
       var maxHp = 0
       for (var i = 0; i < this.elements.length; i++) {
@@ -70,10 +79,13 @@ var Block = Class.create(Unit,{
         this.handler.objects[this.lane].remove(this)
       }
     },
+    
     getSize : function(){
       return this.elements.length * this.elements[0].length  
     }, 
+    
     split : function(){
+      console.log("split");
         if(this.elements.length == 1){
             for(var i=0;i<this.elements[0].length;i++){
                 this.handler.objects[this.lane].push(this.elements[0][i])
@@ -97,6 +109,7 @@ var Block = Class.create(Unit,{
         }
         this.handler.objects[this.lane].remove(this)
     },
+    
     setTarget : function(target){
       for(var i=0;i<this.elements.length;i++){
           for(var j=0;j<this.elements[i].length;j++){
@@ -104,6 +117,7 @@ var Block = Class.create(Unit,{
           }
       }  
     },
+    
     pickTarget : function(targets){
         for (var i = 0; i < this.elements.length; i++) {
             for (var j = 0; j < this.elements[i].length; j++) {
@@ -111,10 +125,12 @@ var Block = Class.create(Unit,{
             }
         }
     },
+    
     takePush : function(){
        this.pushes--
        if(this.pushes == 0) this.split()
     },
+    
     moveElements : function(dx,dy){
         for (var i = 0; i < this.elements.length; i++) {
             for (var j = 0; j < this.elements[i].length; j++) {

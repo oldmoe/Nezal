@@ -18,6 +18,7 @@ var Game = Class.create({
   },
   
   initializeGame : function(){
+      
     $('inProgress').hide()
     $('gameCanvas').show()
     $('container').show()
@@ -35,13 +36,14 @@ var Game = Class.create({
     var characterImages = ['healer.png','dehydrator.png','follower.png', 'npc.png',
     'ultras_white_walk.png','ultras_red_walk.png','ultras_normal_walk.png','salafi_walk.png',
     'journalist_walk.png','journalist_run.png','journalist_front.png','journalist_back.png']
-    var enemiesImages = ['block.png','amn_markazy_hit.png']
-    var iconsImages = ['lock.png', 'circle.png'];
+    var enemiesImages = ['block.png','amn_markazy_hit.png','amn_markazy_tear_gas_shooting.png',
+    'amn_markazy_tear_gas_walk.png','amn_markazy_tear_gas_shadow.png']
+    var hoveringIconsImages = ['lock.png', 'circle.png', 'march.png', 'push.png'];
 	var self = this
 	new Loader().load([{images: backgroundImages, path: 'images/background/', store: 'background'},
     {images: gameElementsImages, path: 'images/game_elements/', store: 'gameElements'},
     {images: characterImages, path: 'images/characters/', store: 'characters'},
-    {images: iconsImages, path: 'images/icons/', store: 'icons'},
+    {images: hoveringIconsImages, path: 'images/icons/', store: 'hoveringIcons'},
     {images: enemiesImages, path: 'images/enemies/', store: 'enemies'}], {
       onProgress : function(progress){
           if($$('#inProgress #loadingBarFill')[0])

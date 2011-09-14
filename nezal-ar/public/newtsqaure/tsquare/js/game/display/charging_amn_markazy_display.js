@@ -1,23 +1,21 @@
 var ChargingAmnMarkazyDisplay = Class.create(AmnMarkazyDisplay,{
     
   initialize : function($super,owner){
-      $super(owner)
+      $super(owner) 
   },
   
   createHoveringIcon: function(){
-    this.hoverIcon = Loader.images.icons['lock.png']
+    this.hoverIcon = Loader.images.hoveringIcons[this.hoveringIcons.hold]
   },
 
-  createHoveringIconSprite: function(){
-      if(this.owner.showHoveringIcon)
-        this.sprites.hoverIcon = new DomImgSprite(this.owner,{img:this.hoverIcon, noOfFrames : 1}, {shiftY:-10, shiftX:20})
+  hit: function(){
+    this.sprites.block.switchAnimation("hit");
+    this.switchHoveringIcon(this.hoveringIcons.circle);
   },
-  
-  switchHoveringIcon: function(){
-      this.hoverIcon = Loader.images.icons['circle.png']
-      this.destroy();
-      this.createSprites();
+
+  normal: function(){
+    this.sprites.block.switchAnimation("normal")
+    this.switchHoveringIcon(this.hoveringIcons.hold);
   }
-  
 
 })
