@@ -22,7 +22,7 @@ var LOTile = Class.create({
 			}
 		});	
 				
-		new Draggable(this.domObject, {revert : true});
+		new Draggable(this.domObject.firstChild, {revert : true});
 	},
 
 	getPosition: function(){
@@ -30,10 +30,10 @@ var LOTile = Class.create({
 	},
 	
 	createHTMLElement: function(draggable){
-		return '<div style="float:left">'+
-		'<div class="loCloseIcon"></div>'+
-		'<div class="loSettingsIcon"></div>'+
+		return '<div style="float:left;position:absolute">'+
 		this.createDraggedItem(draggable)+
+    '<div class="loCloseIcon"></div>'+
+    '<div class="loSettingsIcon"></div>'+
 		'</div>';
 	},
 	

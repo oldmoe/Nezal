@@ -1,5 +1,7 @@
 var CrowdMemberDisplay = Class.create(Display,{
-  noOfFrames : 9,  
+  
+  noOfFrames : 8,
+    
   initialize : function($super,owner,properties){
     this.initImages()
     this.imgWidth = this.characterImg.width

@@ -71,6 +71,7 @@ var Tile = Class.create({
 	
 	addObject: function(item, multiple){
 		var obj = {};
+		console.log(item);
 		obj.name = $(item).getAttribute('name');
 		obj.category = $(item).getAttribute('category');
 

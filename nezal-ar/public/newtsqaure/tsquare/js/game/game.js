@@ -27,19 +27,23 @@ var Game = Class.create({
     })
     this.scene = new TsquareScene()
 		
-	var backgroundImages = ['land.png' , '3amod.png', 'street_marks.png']
+	  var backgroundImages = ['land.png' , '3amod.png', 'street_marks.png']
     backgroundImages.push(this.data.backgrounds[0][0].name)
     backgroundImages.push(this.data.backgrounds[1][0].name)
     backgroundImages.push(this.data.backgrounds[2][0].name)
     
     var gameElementsImages = ['arrow_up.png','arrow_down.png', 'bubble.png', 'world.png']
+    
     var characterImages = ['healer.png','dehydrator.png','follower.png', 'npc.png',
     'ultras_white_walk.png','ultras_red_walk.png','ultras_normal_walk.png','salafi_walk.png',
     'journalist_walk.png','journalist_run.png','journalist_front.png','journalist_back.png']
+    
     var enemiesImages = ['block.png','amn_markazy_hit.png']
+    
     var hoveringIconsImages = ['lock.png', 'circle.png', 'march.png', 'push.png'];
-	var self = this
-	new Loader().load([{images: backgroundImages, path: 'images/background/', store: 'background'},
+    
+	  var self = this
+	  new Loader().load([{images: backgroundImages, path: 'images/background/', store: 'background'},
     {images: gameElementsImages, path: 'images/game_elements/', store: 'gameElements'},
     {images: characterImages, path: 'images/characters/', store: 'characters'},
     {images: hoveringIconsImages, path: 'images/icons/', store: 'hoveringIcons'},
