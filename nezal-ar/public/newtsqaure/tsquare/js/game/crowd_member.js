@@ -37,7 +37,7 @@ var CrowdMember = Class.create(Unit,{
     this.originalPosition = {x:0,y:0}
     
     this.originalPosition.y = this.handler.initialPositions[y].y - this.handler.crowdMembersPerColumn * 10
-    this.originalPosition.x = this.handler.initialPositions[y].x + 10*this.handler.crowdMembersPerColumn
+    this.originalPosition.x = this.handler.initialPositions[y].x + 20*this.handler.crowdMembersPerColumn
     this.handler.crowdMembersPerColumn-- 
     if(this.handler.crowdMembersPerColumn == -1){
       this.handler.crowdMembersPerColumn = 2
@@ -226,6 +226,7 @@ var CrowdMember = Class.create(Unit,{
   },
   
   resetRotation : function(){
+    console.log('huuuuh')
     this.target = null
     this.rotating = false
     this.fire("normal")
