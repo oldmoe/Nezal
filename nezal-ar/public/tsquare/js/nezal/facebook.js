@@ -230,6 +230,12 @@ var FBConnect = {
         request['to'] = id;
         FBConnect.sendRequest(request, callback);
     },
+    
+    getAppRequests : function(callback){
+      FB.api( "/me/apprequests", function(response){
+        callback( response['data'] );
+      } )
+    },
 
     sendRequest : function(request, callback){
         var requestObject = {

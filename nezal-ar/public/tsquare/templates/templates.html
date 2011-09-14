@@ -20,6 +20,40 @@
   </div>
 </textarea>
 
+<textarea style="display:none;" id="send_requests">
+  <button id="request_help_button"> Send Help Request </button>
+  <button id="request_gift_button"> Send Gift </button>
+  <button id="request_challenge_button"> Send Challenge </button>
+</textarea>
+
+<textarea style="display:none;" id="inbox">
+  <br/>
+  <h3> Requests </h3>
+  <div id="help">
+    <b>Help Requests</b><br>
+    {for request in inbox.requests.help}
+      <span> ${request.message} from ${request.from.name} </span>
+      <button> Accept </button>
+    {/for}
+    <br> <br>
+  </div>
+  <div id="gift">
+    <b>Gift Requests</b><br>
+    {for request in inbox.requests.gift}
+      <span> ${request.message} from ${request.from.name} </span>
+      <button> Accept </button>
+    {/for}
+    <br> <br>
+  </div>
+  <div id="challenge"><br>
+    <b>Challenge Requests</b><br>
+    {for request in inbox.requests.challenge}
+      <span> ${request.message} from ${request.from.name} </span>
+      <button> Accept </button>
+    {/for}
+    <br> <br>
+  </div>
+</textarea>
 
 <textarea style="display:none;" id='friends'>
   <div  id="friends" class="users">

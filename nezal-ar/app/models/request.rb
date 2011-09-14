@@ -5,8 +5,11 @@
 #                     request2_key => {} .. etc }
 class Request < DataStore::Model
 
-  TIMEOUT = 60*60*2*24
-  EXCLUDE_TIME = 60*60*24
+  REQUEST_TYPES = {
+    'challenge' => { :expire => 60*60*2*24, :exclude => 60*60*24 },
+    'gift' => { :expire => 60*60*2*24, :exclude => 60*60*24 },
+    'help' => { :expire => 60*60*2*24, :exclude => 60*60*24 }
+  }
 
   @@data = { "requests" => {} }
   
@@ -18,11 +21,11 @@ class Request < DataStore::Model
     ids = []
     time = Time.now.to_i
     requests.each do |id, request|
-      if time - request['timestamp'] < EXCLUDE_TIME
+      if time - request['timestamp'] < REQUEST_TYPES[ request['type'] ][ :exclude ]
         ids << request['to']
       end
     end
-    ids
+    ids.uniq
   end
 
   def get_friend_request friend_key, request_id
@@ -34,11 +37,13 @@ class Request < DataStore::Model
   
   def process friend_key, request_id
     request = get_friend_request friend_key, request_id
-    if request && request['timestamp'] + TIMEOUT > Time.now.to_i
-      Game::current.process_service_request(key, request)
-      requests.delete(request_id)
-      save
-    end   
+    expire_time = REQUEST_TYPES[ request['type'] ][ :expire ]
+    if request && request['timestamp'] + expire_time > Time.now.to_i
+      request['expired'] = true
+    end
+    Game::current.process_service_request(key, request)
+    requests.delete(request_id)
+    save
   end
 
 end
