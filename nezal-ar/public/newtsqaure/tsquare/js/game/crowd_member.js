@@ -9,7 +9,7 @@ var CrowdMember = Class.create(Unit,{
   holdingPoint: null,
   commandFilters: [],
   rotationPoints : null,
-  rotationSpeed : 5,
+  rotationSpeed : 15,
   rotating : false,
   pushing : false,
   pushDirections : {forward:0,backward:1},
@@ -37,11 +37,11 @@ var CrowdMember = Class.create(Unit,{
     this.originalPosition = {x:0,y:0}
     
     this.originalPosition.y = this.handler.initialPositions[y].y - this.handler.crowdMembersPerColumn * 10
-    this.originalPosition.x = this.handler.initialPositions[y].x + 20*this.handler.crowdMembersPerColumn
+    this.originalPosition.x = this.handler.initialPositions[y].x + 15*this.handler.crowdMembersPerColumn
     this.handler.crowdMembersPerColumn-- 
     if(this.handler.crowdMembersPerColumn == -1){
       this.handler.crowdMembersPerColumn = 2
-      this.handler.initialPositions[y].x-=30
+      this.handler.initialPositions[y].x-=60
     }
     this.randomDx = Math.round(Math.random()*50)
     this.coords.x +=this.randomDx
@@ -166,7 +166,7 @@ var CrowdMember = Class.create(Unit,{
   },
   
   pushMove : function(){
-    if(!this.target || this.target.getSize() == 1){
+    if(!this.target || this.target.getSize() <4){
       this.pushing = false  
       return
     } 
@@ -196,6 +196,7 @@ var CrowdMember = Class.create(Unit,{
   circleMove : function(){
     if (!this.target|| this.target.hp <= 0 || this.target.dead) {
       this.resetRotation()
+      return
     }
       if (this.rotationPoints.length == 0) {
         this.target.takeHit(this.power)
@@ -220,13 +221,14 @@ var CrowdMember = Class.create(Unit,{
   
   setTarget: function($super,target){
     $super(target)
-    if(target && target.getSize() > 1){
-        this.pushing = true        
+    if(target && target.getSize() > 3){
+        this.pushing = true   
+        this.scene.direction = 0     
     }  
   },
   
   resetRotation : function(){
-    console.log('huuuuh')
+    this.rotationPoints = []
     this.target = null
     this.rotating = false
     this.fire("normal")

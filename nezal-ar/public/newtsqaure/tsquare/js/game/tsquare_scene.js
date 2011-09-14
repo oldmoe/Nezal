@@ -72,6 +72,7 @@ var TsquareScene = Class.create(Scene,{
     },
     
     march : function(){
+      console.log('marching')  
       this.direction = 1  
     },
     

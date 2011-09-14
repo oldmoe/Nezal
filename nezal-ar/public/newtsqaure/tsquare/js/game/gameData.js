@@ -2,10 +2,11 @@ var gameData =
   {"data":[[],[
   {"name":"journalist","category":"crowd","index":0,"lane":1,"x":1,"order":0},
   {"name":"journalist","category":"crowd","index":0,"lane":1,"x":2,"order":0}, 
+  {"name":"journalist","category":"crowd","index":0,"lane":1,"x":3,"order":0},
   {
       "name": "wood_stick_cs",
       "category": 'enemies',
-      "type": '1_1',
+      "type": '3_3',
       "index": 0,
       "lane": 1,
       "x": 10,
@@ -14,9 +15,9 @@ var gameData =
      {
       "category": "enemies",
       "name" : "wood_stick_cs",
-      "type" : '3_3',
+      "type" : '1_1',
       "lane": 1,
-      "x": 1000,
+      "x": 20,
       "index": 0
     },
     {

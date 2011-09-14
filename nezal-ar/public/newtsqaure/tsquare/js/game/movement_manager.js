@@ -60,7 +60,7 @@ var MovementManager = Class.create({
       if(self.beatMoving){
         self.reset()
       }else if(self.scene.currentSpeed > 0){
-        self.scene.comboStart = true
+        self.comboStart = true
       }
       var click = -1
       if (e.keyCode == 39) {
@@ -170,11 +170,12 @@ var MovementManager = Class.create({
   },
 
   moveEnd : function(){
+    console.log('combo start',this.comboStart)
     if(this.comboStart){
         this.comboStart= false
         this.combos++
         if(this.beatAccelaration<9)this.beatAccelaration+=2
-        this.currentCombos++ 
+        this.currentCombos++
         this.scene.fire('comboSuccess')
         //this.createNextFollower()
       }

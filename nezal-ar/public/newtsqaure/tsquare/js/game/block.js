@@ -2,8 +2,8 @@ var Block = Class.create(Unit,{
     //params contains x,y(initial @x, @y of the block) and @rows,@columns which are the dimensions of the block
     //params also contain elememnts which are the objects in the block
     elements: null,
-    elementWidth : 25,
-    elementHeight : 23,
+    elementWidth : 60,
+    elementHeight : 16,
     noDisplay : true,
     pushes : 2,
     
@@ -40,9 +40,9 @@ var Block = Class.create(Unit,{
         this.elements[i] = []
         for (var j = 0; j < options.columns; j++) {
             this.elements[i][j] = new blockObjectKlass(this.scene,0,this.lane, {handler:this.handler})
-            var randomY = Math.round(Math.random()*12) - 6
-            var randomX = Math.round(Math.random()*12) - 6
-            this.elements[i][j].coords.x = this.coords.x + this.elementWidth * i - 20*j + randomX
+            var randomY = Math.round(Math.random()*8) - 4
+            var randomX = Math.round(Math.random()*8) - 4
+            this.elements[i][j].coords.x = this.coords.x + this.elementWidth * i - 10*j + randomX
             this.elements[i][j].coords.y = this.coords.y + this.elementHeight * j + randomY
             this.elements[i][j].showHoveringIcon = false;
         }

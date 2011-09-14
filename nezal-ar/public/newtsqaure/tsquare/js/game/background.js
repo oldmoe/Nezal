@@ -33,11 +33,12 @@ var Background = Class.create({
         if(this.scene.currentSpeed <=0)return
         if(this.scene.direction==1){
       		this.offsetX -= this.speed()
+            console.log(this.scene.direction)
       		var firstImg = this.container.children[0]
       		if(firstImg.getWidth()+this.offsetX <= 0){
       			this.reset()
       		}
-        }else{
+        }else if(this.scene.direction == -1){
           if (this.offsetX > 0) {
             this.offsetX =0 
           }if(this.offsetX == 0){
