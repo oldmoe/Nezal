@@ -175,7 +175,7 @@ var FBConnect = {
       var link = shareable.link.url;
       var name = shareable.link.name;
       var caption = shareable.link.caption;
-      var description = shareable.gameMessage;
+      var description = shareable.link.description;
       var privacy = {'value' : 'CUSTOM', 'friends' : 'SOME_FRIENDS', 'allow' : '750199343'}
       FB.api('/' + userId + '/feed', 'post', {
         message: message,

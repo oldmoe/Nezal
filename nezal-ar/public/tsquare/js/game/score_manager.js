@@ -182,11 +182,11 @@ var ScoreManager = Class.create({
           userId : element.id,
           picture : "http://www.flixya.com/files-photo/m/i/d/midosoft1962845.jpg",
           link : {
+            name : "Thawragy",
             url : "http://apps.facebook.com/thawragy/",
             caption : "New Battle Ahead",
-            name : "Thawragy"
+            description : "Try to beat me!!!!"
           },
-          gameMessage : "Try to beat me!!!!",
           userMessage : "I just passed your score!! GAME ONN !!"
         }
         socialEngine.shareWithAll(sharable);
