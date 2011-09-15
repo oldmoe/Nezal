@@ -17,7 +17,7 @@ var gameData =
       "type": '3_2',
       "index": 0,
       "lane": 1,
-      "x": 100,
+      "x": 10,
       "order": 1
   }, 
      {
