@@ -11,11 +11,11 @@ var Mission = {
     $$('#controls .saveButton')[0].stopObserving('click');
 		$$('#controls .saveButton')[0].observe('click', function(){ Mission.saveToServer(); });
     new Ajax.Request( '/' + this.adminUrl + '/missions/' + this.id + '.json' , {
-                     method : 'get',
-                     onSuccess : function(response){
-                        Mission.currMission = JSON.parse(response.responseText);
-                     }
-                    });
+       method : 'get',
+       onSuccess : function(response){
+          Mission.currMission = JSON.parse(response.responseText);
+       }
+    });
   },
 
   saveToServer : function(){
