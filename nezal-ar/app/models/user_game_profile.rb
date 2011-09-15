@@ -61,7 +61,21 @@ class UserGameProfile < DataStore::Model
               }
 =end
     # generate random scores for now
-    @data ||= { 'scores' => generate_scores }
+    game = Game::current
+    @data ||= {}
+    @data['scores'] ||= generate_scores
+    @data['current_mission'] ||= game.data['missions']['list'].keys.min
+=begin
+    @data['crowd_members'] ||= { 
+      'ultras' : { 1 : {'level' : 1, 'upgrades' : { 'hp' : [], 'h2o' : [], 'attack' : [], 'defense' : [], 'arrest' : 0, 'block' : 0 } },
+      'journalist' : { 1 : {'level' : 1, 'upgrades' : { 'hp' : [], 'h2o' : [], 'attack' : [], 'defense' : [], 'arrest' : 0, 'block' : 0 } },  
+    }
+    @data['holder_items'] ||= { 'cap' : 0, 'umbrella' : 0 }
+    @data['special_items'] ||= { 'energy' : { 1 : count, 2: count, 3: count}, 'wash_powder' : 1 },
+    @data['power_ups'] ||= { id: {level : , amount : }}, 
+    @data['energy'] ||= 20
+    @data['missions'] ||= { mission : score, mission2, score}
+=end
     save
   end
 

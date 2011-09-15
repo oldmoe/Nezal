@@ -11,6 +11,7 @@ class Mission
     end
 
     def all
+      init
       game = Game::current
       missions = game.missions['list']
     end
