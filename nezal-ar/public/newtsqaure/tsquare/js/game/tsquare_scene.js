@@ -5,7 +5,7 @@ var TsquareScene = Class.create(Scene,{
     currentSpeed : 0,
     
     speeds : [
-      {state :'idle' , value : 0 ,energy : 0},
+      {state :'normal' , value : 0 ,energy : 0},
       {state :'walk' , value : 3 ,energy : 1},
       {state :'jog' ,  value : 10,energy : 10},
       {state :'run' ,  value : 15,energy : 20}
@@ -62,8 +62,7 @@ var TsquareScene = Class.create(Scene,{
         this.observe('wrongMove',function(){self.decreaseEnergy()})
         this.observe('comboSuccess',function(){self.increaseEnergy()})
         var addMovementObserver = function(command){
-            self.observe(command,function(){
-                console.log(command)
+            self.observe(command,function(){                
                 self[command]()
             })
         }
@@ -155,6 +154,7 @@ var TsquareScene = Class.create(Scene,{
     
   increaseEnergy : function(){
     if(this.energy.current < this.energy.max)this.energy.current+= this.energy.rate
+    console.log(this.energy)
     var next = this.speeds[this.speedIndex+1]
     if(next){
         if(this.energy.current>=next.energy){

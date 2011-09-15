@@ -7,8 +7,8 @@ var AmnMarkazyDisplay = Class.create(EnemyDisplay,{
   hoverIcon: null,
   
   initialize : function($super,owner){
-    this.blockImg = Loader.images.enemies['block.png']
-    this.hitImage = Loader.images.enemies['amn_markazy_hit.png']
+    this.blockImg = Loader.images.enemies['amn_markazy_stick_walk.png']
+    this.hitImage = Loader.images.enemies['amn_markazy_stick_hit.png']
     this.imgWidth = this.blockImg.width
     this.imgHeight = this.blockImg.height/this.noOfFrames
     this.createHoveringIcon();
@@ -44,8 +44,8 @@ var AmnMarkazyDisplay = Class.create(EnemyDisplay,{
   createSprites:function(){
     if(this.owner.showHoveringIcon)
       this.sprites.hoverIcon = new DomImgSprite(this.owner,{img:this.hoverIcon, noOfFrames : 1}, {shiftY:-10, shiftX:20})
-    this.sprites.block = new DomImgSprite(this.owner,{img:this.blockImg, noOfFrames : 8})
-    this.sprites.block.createAnimation({name:'hit',img:this.hitImage, noOfFrames:9})
+    this.sprites.block = new DomImgSprite(this.owner,{img:this.blockImg, noOfFrames : 8}, {flipped:true})
+    this.sprites.block.createAnimation({name:'hit',img:this.hitImage, noOfFrames:9},{flipped:true})
   },
   
   render : function($super){

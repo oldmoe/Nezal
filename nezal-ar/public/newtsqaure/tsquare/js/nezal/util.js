@@ -196,7 +196,12 @@ Array.prototype.pushInPlaceDescending=function(obj,field){
 		this[index]=obj
 	}
 }
-
+Array.prototype.pushFirst = function(obj){
+    for(var i= this.length-1;i>=0;i--){
+        this[i+1] = this[i]
+    }
+    this[0] = obj
+}
 Array.prototype.pushInPlaceAscending=function(obj,field){
 	var index=0
 	while(this[index]&&this[index][field] > obj[field]){

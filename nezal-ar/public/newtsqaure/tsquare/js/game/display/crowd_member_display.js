@@ -1,8 +1,8 @@
 var CrowdMemberDisplay = Class.create(Display,{
   
-  noOfFrames : 8,  
+  noOfFrames : 7,  
   
-  states : ["run","back","front","normal","reverse","reverseRun"],
+  states : ["normal", "hold", "walk","reverse", "front", "back","run","reverseRun"],
   
   initialize : function($super,owner,properties){
     this.initImages()
@@ -26,12 +26,14 @@ var CrowdMemberDisplay = Class.create(Display,{
     this.characterImg = Loader.images.characters['crowd_member.png'];
   },
   createSprites : function(){
-    this.sprites.character = new DomImgSprite(this.owner, {img : this.characterImg,noOfFrames : 8})
+    this.sprites.character = new DomImgSprite(this.owner, {img : this.characterImg,noOfFrames : 7})
+    this.sprites.character.createAnimation({name:'hold',img:this.holdImg,noOfFrames:1})
+    this.sprites.character.createAnimation({name:'walk',img:this.walkImg,noOfFrames:8})
     this.sprites.character.createAnimation({name:'front',img:this.frontImg,noOfFrames:4})
     this.sprites.character.createAnimation({name:'back' ,img:this.backImg,noOfFrames:4})
-    this.sprites.character.createAnimation({name:'run'  ,img:this.runImg,noOfFrames:7})
-    this.sprites.character.createAnimation({name:'reverse'  ,img:this.characterImg,noOfFrames:8, flipped : true})
-    this.sprites.character.createAnimation({name:'reverseRun'  ,img:this.runImg, noOfFrames:7, flipped : true})
+    this.sprites.character.createAnimation({name:'run'  ,img:this.runImg,noOfFrames:6})
+    this.sprites.character.createAnimation({name:'reverse'  ,img:this.walkImg,noOfFrames:8, flipped : true})
+    this.sprites.character.createAnimation({name:'reverseRun'  ,img:this.runImg, noOfFrames:6, flipped : true})
   },
   render : function($super){
     if(this.owner.stateChanged){

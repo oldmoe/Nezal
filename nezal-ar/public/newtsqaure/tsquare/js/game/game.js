@@ -33,11 +33,17 @@ var Game = Class.create({
     backgroundImages.push(this.data.backgrounds[2][0].name)
     
     var gameElementsImages = ['arrow_up.png','arrow_down.png', 'bubble.png', 'world.png']
-    
-    var characterImages = ['healer.png','dehydrator.png','follower.png', 'npc.png',
-    'ultras_white_walk.png','ultras_red_walk.png','ultras_normal_walk.png','salafi_walk.png',
-    'journalist_walk.png','journalist_run.png','journalist_front.png','journalist_back.png']
-    var enemiesImages = ['block.png','amn_markazy_hit.png','amn_markazy_tear_gas_shooting.png',
+    var characterNames = ['journalist', 'libralymic','medic', 'normal', 'salafy','ultras_green',
+    'ultras_white','ultras_red','girl', 'girl7egab', 'bottleguy', 'hala_man']
+    var characterImages = []
+    var imageNames = ['walk','run','front','back','idle','hold']
+    for(var i=0;i<characterNames.length;i++){
+        for(var j=0;j<imageNames.length;j++){
+            characterImages.push(characterNames[i]+"_"+imageNames[j]+".png")
+        }
+    }
+    console.log(characterImages)
+    var enemiesImages = ['amn_markazy_stick_walk.png','amn_markazy_stick_hit.png','amn_markazy_tear_gas_shooting.png',
     'amn_markazy_tear_gas_walk.png','amn_markazy_tear_gas_shadow.png']
     var hoveringIconsImages = ['lock.png', 'circle.png', 'march.png', 'push.png'];
     

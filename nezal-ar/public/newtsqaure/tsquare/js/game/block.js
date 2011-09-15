@@ -1,9 +1,9 @@
-var Block = Class.create(Unit,{
+var Block = Class.create(Enemy,{
     //params contains x,y(initial @x, @y of the block) and @rows,@columns which are the dimensions of the block
     //params also contain elememnts which are the objects in the block
     elements: null,
     elementWidth : 60,
-    elementHeight : 16,
+    elementHeight : 15,
     noDisplay : true,
     pushes : 2,
     
@@ -17,21 +17,6 @@ var Block = Class.create(Unit,{
       }
     },
     
-    tick : function(){
-      for (var i = 0; i < this.elements.length; i++) {
-        for (var j = 0; j < this.elements[0].length; j++) {
-          this.elements[i][j].tick()
-        }
-      }
-      if (this.movingToTarget) {
-          if (Math.abs(this.targetPoint.x - this.coords.x) > this.movingSpeed || Math.abs(this.targetPoint.y - this.coords.y) > this.movingSpeed) {
-              var move = Util.getNextMove(this.coords.x, this.coords.y, this.targetPoint.x, this.targetPoint.y, this.movingSpeed)
-              this.move(move[0], move[1])
-              this.moveElements(move[0], move[1])
-          }
-      }
-      this.move(-this.scene.currentSpeed * this.scene.direction,0)
-    },
     
     addElementsToBlock : function(options){
       var counter = 0
@@ -42,8 +27,8 @@ var Block = Class.create(Unit,{
             this.elements[i][j] = new blockObjectKlass(this.scene,0,this.lane, {handler:this.handler})
             var randomY = Math.round(Math.random()*8) - 4
             var randomX = Math.round(Math.random()*8) - 4
-            this.elements[i][j].coords.x = this.coords.x + this.elementWidth * i - 10*j + randomX
-            this.elements[i][j].coords.y = this.coords.y + this.elementHeight * j + randomY
+            this.elements[i][j].coords.x = this.coords.x + this.elementWidth * i - 10*j 
+            this.elements[i][j].coords.y = this.coords.y + this.elementHeight * j 
             this.elements[i][j].showHoveringIcon = false;
         }
       }
@@ -88,26 +73,31 @@ var Block = Class.create(Unit,{
       console.log("split");
         if(this.elements.length == 1){
             for(var i=0;i<this.elements[0].length;i++){
-                this.handler.objects[this.lane].push(this.elements[0][i])
+                this.handler.objects[this.lane].pushFirst(this.elements[0][i])
                 this.elements[0][i].moveToTarget({x:this.coords.x+i*100 + this.getWidth()/2,y:this.elements[0][i].coords.y})
             }
         }else if(this.elements.length == 3){
-            var b1 = new Block(this.scene,this.coords.x,0, {handler:this.handler})
+            this.setTarget(null)
+            var b1 = new Block(this.scene,this.elements[0][0].coords.x ,1, {handler:this.handler})
             b1.coords.y = this.coords.y
             b1.elements = [this.elements[0]]
-            b1.moveToTarget({x:this.coords.x,y:this.coords.y - this.getHeight()/2})
-            var b2 = new Block(this.scene,this.coords.x,1,{handler:this.handler})
+            var b2 = new Block(this.scene,this.elements[1][0].coords.x  ,1,{handler:this.handler})
             b2.elements = [this.elements[1]]
             b2.coords.y = this.coords.y
-            var b3 = new Block(this.scene,this.coords.x,2,{handler:this.handler})
+            var b3 = new Block(this.scene,this.elements[2][1].coords.x,1,{handler:this.handler})
             b3.elements = [this.elements[2]]
             b3.coords.y = this.coords.y
-            b3.moveToTarget({x:this.coords.x,y:this.coords.y + this.getHeight()/2})
-            this.handler.objects[this.lane-1].push(b1)
-            this.handler.objects[this.lane].push(b2)
-            this.handler.objects[this.lane+1].push(b3)
+            b1.moveToTarget({x:this.coords.x + 100,y:this.coords.y})
+            b2.moveToTarget({x:this.coords.x + 250,y:this.coords.y})
+            b3.moveToTarget({x:this.coords.x + 400,y:this.coords.y})
+            this.handler.objects[this.lane].pushFirst(b3)
+            this.handler.objects[this.lane].pushFirst(b2)
+            this.handler.objects[this.lane].pushFirst(b1)
         }
         this.handler.objects[this.lane].remove(this)
+    },
+    setElements : function(elements){
+        this.elements = elements
     },
     
     setTarget : function(target){
@@ -125,7 +115,11 @@ var Block = Class.create(Unit,{
             }
         }
     },
-    
+    move : function(dx,dy){
+        this.coords.x+=dx
+        this.coords.y+=dy
+        this.moveElements(dx,dy)
+    },    
     takePush : function(){
        this.pushes--
        if(this.pushes == 0) this.split()

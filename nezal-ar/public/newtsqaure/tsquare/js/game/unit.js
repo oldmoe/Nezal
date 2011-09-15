@@ -47,11 +47,9 @@ var Unit = Class.create({
   },
   
   moveToTargetPoint : function(){
-    
-    if(Math.abs(this.targetPoint.x - this.coords.x) > this.movingSpeed || Math.abs(this.targetPoint.y - this.coords.y) > this.movingSpeed){
-          var move = Util.getNextMove(this.coords.x, this.coords.y , this.targetPoint.x, this.targetPoint.y, this.movingSpeed)
-          this.coords.x+=move[0]
-          this.coords.y+=move[1]
+    if(Math.abs(this.targetPoint.x - this.coords.x) > this.scene.currentSpeed || Math.abs(this.targetPoint.y - this.coords.y) > this.scene.currentSpeed){
+          var move = Util.getNextMove(this.coords.x, this.coords.y , this.targetPoint.x, this.targetPoint.y, this.scene.currentSpeed)
+          this.move(move[0],move[1])
       }
       else this.movingToTarget = false  
   },
@@ -62,16 +60,6 @@ var Unit = Class.create({
   
   fire: function(event){
       this.observer.fire(event);
-  },
-
-  getMovingState : function(){
-    if(this.scene.running)return "run"
-    return "normal"
-  },
-  
-  getReverseState : function(){
-    if(this.scene.running)return "reverseRun"
-    return "reverse"
   },
   
   takeHit : function(power){

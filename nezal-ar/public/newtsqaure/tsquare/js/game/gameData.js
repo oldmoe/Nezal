@@ -1,15 +1,23 @@
 var gameData = 
   {"data":[[],[
-  {"name":"journalist","category":"crowd","index":0,"lane":1,"x":1,"order":0},
   {"name":"journalist","category":"crowd","index":0,"lane":1,"x":2,"order":0}, 
-  {"name":"journalist","category":"crowd","index":0,"lane":1,"x":3,"order":0},
+  {"name":"libralymic","category":"crowd","index":0,"lane":1,"x":3,"order":0},
+  {"name":"girl","category":"crowd","index":0,"lane":1,"x":3,"order":0},
+  {"name":"girl7egab","category":"crowd","index":0,"lane":1,"x":3,"order":0},
+  {"name":"medic","category":"crowd","index":0,"lane":1,"x":4,"order":0},
+  {"name":"normal","category":"crowd","index":0,"lane":1,"x":4,"order":0},
+  {"name":"salafy","category":"crowd","index":0,"lane":1,"x":4,"order":0},
+  {"name":"ultras_green","category":"crowd","index":0,"lane":1,"x":4,"order":0},
+  {"name":"ultras_white","category":"crowd","index":0,"lane":1,"x":4,"order":0},
+  {"name":"ultras_red","category":"crowd","index":0,"lane":1,"x":4,"order":0},
+  {"name":"hala_man","category":"crowd","index":0,"lane":1,"x":4,"order":0},
   {
       "name": "wood_stick_cs",
       "category": 'enemies',
-      "type": '3_3',
+      "type": '3_2',
       "index": 0,
       "lane": 1,
-      "x": 10,
+      "x": 100,
       "order": 1
   }, 
      {
@@ -17,7 +25,7 @@ var gameData =
       "name" : "wood_stick_cs",
       "type" : '1_1',
       "lane": 1,
-      "x": 20,
+      "x": 200,
       "index": 0
     },
     {

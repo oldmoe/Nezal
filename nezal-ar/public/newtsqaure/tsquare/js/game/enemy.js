@@ -12,7 +12,7 @@ var Enemy = Class.create(Unit, {
     this.handleCollision();
   },
   
-  handleColiision : function(){
+  handleCollision : function(){
       
   },
   updatePosition: function(){

@@ -17,12 +17,12 @@ var CrowdMember = Class.create(Unit,{
   maxPushDisplacement : 50,
   extraSpeed : 0,
   moved : 0,
-  
+  name : null,
   initialize : function($super,scene,x,y,options){
     $super(scene,x,y, options)
     this.type = "crowd_member";
     this.rotationPoints = []
-    
+    this.name = options.name
     var self = this
     var crowdCommandFilters = [
         {command: function(){return self.rotating}, callback: function(){self.circleMove()}},
@@ -229,11 +229,11 @@ var CrowdMember = Class.create(Unit,{
   },
   
   setTarget: function($super,target){
-    $super(target)
-    if(target && target.getSize() > 3){
+    if(target && target.getSize() > 3 && this.target!=target){
         this.pushing = true   
-        this.scene.direction = 0     
+        this.scene.direction = 0
     }  
+    $super(target)
   },
   
   resetRotation : function(){
@@ -241,7 +241,16 @@ var CrowdMember = Class.create(Unit,{
     this.target = null
     this.rotating = false
     this.fire("normal")
-  }  
+  },
+  getMovingState : function(){
+    if(this.scene.running)return "run"
+    return "walk"
+  },
+  
+  getReverseState : function(){
+    if(this.scene.running)return "reverseRun"
+    return "reverse"
+  },  
  
 })
   
