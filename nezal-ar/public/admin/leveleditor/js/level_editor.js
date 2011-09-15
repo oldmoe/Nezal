@@ -71,7 +71,6 @@ var LevelEditor = Class.create({
 	      this.grid.lanes[i].tiles[objects[i][j].x-1].loadObject(this.loadImagePath(objects[i][j]));
 			};
 		};
-		
 	},
 	
 	loadImagePath: function(obj){
