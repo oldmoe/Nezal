@@ -62,7 +62,7 @@ var BackgroundHandler = Class.create({
 		var data = [];
 		$(container).childElements().each(function(elem){
 			var obj = {};
-			obj.name = elem.getAttribute('name');
+			obj.name = $(elem.lastChild).getAttribute('name');
 			data.push(obj);
 		});
 		return data;
