@@ -1,27 +1,28 @@
 var Mission = {
 
-  adminUrl : 'nezal-admin/',
+  adminUrl : 'nezal-admin',
 
   currMission : null,
   
   id : null,
 
   initialize : function(){
-    this.id = parseInt(window.location.toString().split('?')[1].split('=')[1]);
+    this.id = parseInt(window.location.toString().split('?')[1].split('&')[0].split('=')[1]);
+    this.game = window.location.toString().split('?')[1].split('&')[1].split('=')[1];
     $$('#controls .saveButton')[0].stopObserving('click');
 		$$('#controls .saveButton')[0].observe('click', function(){ Mission.saveToServer(); });
-    new Ajax.Request( '/' + this.adminUrl + '/missions/' + this.id + '.json' , {
-                     method : 'get',
-                     onSuccess : function(response){
-                        Mission.currMission = JSON.parse(response.responseText);
-                     }
-                    });
+    new Ajax.Request( '/' + this.adminUrl + "/" + this.game + '/missions/' + this.id + '.json' , {
+       method : 'get',
+       onSuccess : function(response){
+          Mission.currMission = JSON.parse(response.responseText);
+       }
+    });
   },
 
   saveToServer : function(){
     var data = levelEditor.dataExporter.exportData();
     this.currMission.data = data;
-    new Ajax.Request( '/' + this.adminUrl + '/missions/' + this.id + '.json' , {
+    new Ajax.Request( '/' + this.adminUrl + "/" + this.game + '/missions/' + this.id + '.json' , {
                       method : 'put',
                       parameters : { "data" : JSON.stringify(Mission.currMission) },
                       onSuccess : function(response){

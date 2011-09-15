@@ -1,4 +1,5 @@
-var BlockDisplay = Class.create({
+var BlockDisplay = Class.create(EnemyDisplay, {
+  
   initialize : function(owner){
     this.owner = owner
     for(var i=0;i<this.owner.elements.length;i++){
@@ -8,5 +9,15 @@ var BlockDisplay = Class.create({
        this.owner.scene.pushToRenderLoop('characters',objDisplay) 
       }
     }
+  },
+  
+  setHoveringIcon: function(icon){
+    this.hoverIcon = Loader.images.hoveringIcons[icon]
+  },
+
+  switchHoveringIcon: function(icon){
+    this.sprites.hoverIcon.replaceImg(Loader.images.hoveringIcons[icon].clone());
   }
+  
+  
 })

@@ -9,6 +9,7 @@
 		<script type="text/javascript" src="js/base/effects.js"></script>
 		<script type="text/javascript" src="js/base/dragdrop.js"></script>
 		
+		<script type="text/javascript" src="js/editor_data.js"> </script>
 		<script type="text/javascript" src="js/level_editor.js"> </script>
 		<script type="text/javascript" src="js/tile.js"> </script>
 		<script type="text/javascript" src="js/lane.js"> </script>
@@ -29,7 +30,7 @@
       		
       var levelEditor = null;  
 			document.observe("dom:loaded", function() {
-        Mission.initialize();
+        //Mission.initialize();
 				levelEditor = new LevelEditor();
 			});
 			
@@ -63,8 +64,8 @@
 				  <div class="draggables" id="objectsContainer"></div>
 		     </div>
 		     <div class="tabbertab">
-				  <h2>Items</h2>
-				  <div class="draggables" id="itemsContainer"></div>
+				  <h2>In Game Powerups</h2>
+				  <div class="draggables" id="powerupsContainer"></div>
 		     </div>
 		     <div class="tabbertab">
 				  <h2>Backgrounds/Landmarks</h2>

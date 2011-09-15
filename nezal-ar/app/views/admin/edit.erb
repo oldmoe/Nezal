@@ -1,0 +1,106 @@
+<script type='text/javascript'>
+
+var Game = {
+  
+  data : null,
+
+  initialize : function(){
+    this.modifiableItems = ['commands', 'upgrades', 'holder_items', 'crowd_items', 'special_items', 'power_ups',
+                             'ingame_power_ups', 'enemies' ];
+    new Ajax.Request( '/<%=AdminController::ADMIN_URL%>/<%=@game.name%>.json' , {
+                     method : 'get',
+                     onSuccess : function(response){
+                        Game.data = JSON.parse(response.responseText);
+                        $('gameData').innerHTML = TrimPath.processDOMTemplate('displayTemplate');
+                        $$('label').each(function(label) {
+                            label.observe('click', function(element){
+                                var subitem = label.getAttribute('subitem');
+                                $$("#" + subitem + " .form")[0].toggle();
+                            });
+                        });
+                     }
+                    });
+  },
+
+  saveItem : function(element){
+    var item = element.getAttribute('item');
+    var subitem = element.getAttribute('subitem');
+  console.log(    Game.data[item][subitem], JSON.parse($$("#" + subitem + " textarea")[0].value))
+    Game.data[item][subitem] = JSON.parse($$("#" + subitem + " textarea")[0].value);
+    Game.saveToServer();
+  },
+
+  saveToServer : function(){
+    new Ajax.Request( '/<%=AdminController::ADMIN_URL%>/<%=@game.name%>.json' , {
+                      method : 'put',
+                      parameters : { "data" : JSON.stringify(this.data) },
+                      onSuccess : function(response){
+                        Game.showSuccessMsg();
+                        Game.initialize();
+                      },
+                      onFailure : function(response){
+                        Game.showErrorMsg();
+                      }
+                     
+                 });    
+  },
+
+  showSuccessMsg : function(){
+    $('saveReqStatus').innerHTML = "Saved successfully"
+    $('saveReqStatus').className = "success"
+    $('saveReqStatus').show();
+    window.setTimeout( function(){$('saveReqStatus').hide()}, 5000 )
+  },
+
+  showErrorMsg : function(){
+    $('saveReqStatus').innerHTML = "Error, your changes are not saved!"
+    $('saveReqStatus').className = "error"
+    $('saveReqStatus').show();
+    window.setTimeout( function(){$('saveReqStatus').hide()}, 10000 )
+  }
+
+};
+Game.initialize();
+</script>
+<STYLE type="text/css">
+textarea {
+    display: block;
+    width: 70%;
+    height : 100px;
+    float : none;
+}
+.subheadline {
+  margin : 15px;
+}
+.link {
+  text-decoration : underline;
+  cursor : pointer;
+}
+</STYLE>
+
+
+<div id="displayTemplate" style="display : none;">
+  {for item in Game.modifiableItems}
+    <div id="${item}" class="label item">
+      ${item}
+      {for subitem in Game.data[item]}
+        <div class="subheadline" id="${subitem_index}">
+          <label class="link" item="${item}" subitem="${subitem_index}">
+            ${subitem_index}
+          </label>
+          <div class="form" style="display:none;">
+            <textarea>${JSON.stringify(subitem)}</textarea>
+            <input class="submit" type="submit" value="save" onclick="Game.saveItem(this);" item="${item}" subitem="${subitem_index}">
+          </div>
+        </div>
+      {/for}
+    </div>
+    <div class="separator"></div>
+  {/for}    
+</div>
+
+<div id="gameData">
+</div>
+
+<div id="saveReqStatus">
+</div>

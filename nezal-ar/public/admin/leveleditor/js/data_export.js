@@ -42,7 +42,12 @@ var DataExporter = Class.create({
 			if(data[l] == null) data[l] = [];
 			for(var j=0; j<lanesData[i].tiles.length; j++){
 				for (var k=0; k < lanesData[i].tiles[j].objects.length; k++) {
-					data[l][x++] = lanesData[i].tiles[j].objects[k];
+				  var obj = Object.clone(lanesData[i].tiles[j].objects[k]);
+				  if(obj.category == "enemy")
+				    obj.type = obj.type.cols + "_" + obj.type.rows;
+				  delete obj.image;
+				  
+					data[l][x++] = obj
 				}
 				if(lanesData[i].tiles[j].messages.length > 0){
 					var obj = {};

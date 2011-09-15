@@ -96,45 +96,39 @@ class AdminController < ApplicationController
   ######################################################################  
   # Serve game mis‭sions list display page 
   get '/:game_name/missions' do
-    @game = Game.get(params[:game_name])
+    @game = Game.current
+    puts @game, @game.name
     @missions = Mission.all
     erb :missions , {:layout => :app}
   end
 
   # Add a mission to a game 
   post '/:game_name/missions' do
+    @game = Game.current
     Mission.add(params['name'], params['parent'])
     redirect "/#{ADMIN_URL}/#{params[:game_name]}/missions"
   end
 
   # Get mission metadata
-  get %r{(/missions/)([0-9A-Za-z_\-]+)(.json)?} do
+  # Send Json mission object
+  # Send Level Editor Page
+  get %r{([0-9A-Za-z_\-]+)(/missions/)([0-9A-Za-z_\-]+)(.json)?} do
     @game = Game.current
-    id = (params[:captures][1])
-    if params[:captures][2]
+    puts params[:captures]
+    id = (params[:captures][2])
+    if params[:captures][3]
       Nezal::Decoder.encode(Mission.get(id))
     else
       @game = Game.get(params[:game_name])
       @missions = Mission.all
-      redirect "/admin/leveleditor/index-new.html?mission=#{params[:captures][1]}"
+      redirect "/admin/leveleditor/index-new.html?mission=#{params[:captures][2]}&game=#{params[:captures][0]}"
     end
   end
 
-  put %r{(/missions/)([0-9A-Za-z_\-]+)(.json)?} do
+  # Update a mission  
+  # Delete Mission
+  put %r{([0-9A-Za-z_\-]+)(/missions/)([0-9A-Za-z_\-]+)(.json)?} do
     @game = Game.current
-    id = (params[:captures][1])
-    if params[:captures][2]
-      mission = Nezal::Decoder.decode(params['data'])
-      Mission.edit(id, mission)
-      ''
-    end
-  end
-
-  # Update / Delete a mission
-  # Delete : Put /:game_name/missions/:mission_id
-  # update : Put /:game_name/missions/:mission_id.json
-  put %r{/([0-9A-Za-z_\-]+)(/missions/)([0-9A-Za-z_\-]+)(.json)?} do
-    @game = Game.get(params[:captures][0])
     id = (params[:captures][2])
     if params[:captures][3]
       mission = Nezal::Decoder.decode(params['data'])
@@ -144,7 +138,7 @@ class AdminController < ApplicationController
       Mission.delete(id)
       redirect "/#{ADMIN_URL}/#{params[:captures][0]}/missions"
     end
-  end  
+  end
 
   ######################################################################
   # Game Language/Locale text files Requests
@@ -176,6 +170,12 @@ class AdminController < ApplicationController
   # Serve default game page located under admin, game specific edit game page (show.erb) under the game directory 
   # Serve game metadata, save metadata requests
   ######################################################################
+  get '/:game_name/data' do 
+    @game = Game.get(params[:game_name])
+    @language = params[:language]
+    erb :edit , {:layout => :app}
+  end
+
   # Serve the show.erb to display game details { Ranks .. doesnt include the metadata}
   get %r{/([0-9A-Za-z_\-]+)(.json)?} do
     @game = Game.get(params[:captures][0])

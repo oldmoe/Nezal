@@ -2,8 +2,8 @@ var DomImgSprite = Class.create(DomSprite, {
 	animated : false,
 	clickable : false,
 	minAreaZIndex : 10000000,
-  animations : null,
-	initialize : function($super, owner, imgAssets, properties){
+    animations : null,
+  initialize : function($super, owner, imgAssets, properties){
     this.animations = {}
     this.createAnimation({
         name : 'normal',
@@ -11,35 +11,34 @@ var DomImgSprite = Class.create(DomSprite, {
         noOfFrames : imgAssets.noOfFrames || 1
      })
     this.currentAnimation = this.animations['normal']
-    owner.imgWidth = this.currentAnimation.imgWidth
-    owner.imgHeight = this.currentAnimation.imgHeight
+    //owner.imgWidth = this.currentAnimation.imgWidth
+    //owner.imgHeight = this.currentAnimation.imgHeight
     $super(owner, imgAssets, properties);
     //console.log( imgAssets )
     if(properties && properties.flipped){
       this.div.addClassName('flippedSprite')
     }
-    //console.log(imgAssets.noOfFrames)
     this.img = this.currentAnimation.img
-		this.div.appendChild(this.img)
-		this.currentAnimationFrame = 0
-		this.currentDirectionFrame = 0
-		this.noOfAnimationFrames = this.currentAnimation.noOfFrames
-		this.noOfDirections = 8
-		this.img.setStyle({height:"auto"});
+	this.div.appendChild(this.img)
+	this.currentAnimationFrame = 0
+	this.currentDirectionFrame = 0
+	this.noOfAnimationFrames = this.currentAnimation.noOfFrames
+	this.noOfDirections = 8
+	this.img.setStyle({height:"auto"});
     this.render()
-	},
+  },
   switchAnimation : function(name){
     var prevAnimation = this.currentAnimation
     this.currentAnimation = this.animations[name]
     this.currentAnimationFrame = 0
-		this.currentDirectionFrame = 0
+    this.currentDirectionFrame = 0
     this.replaceImg(this.currentAnimation.img)
     this.div.style.width = this.currentAnimation.imgWidth + "px"
     this.div.style.height = this.currentAnimation.imgHeight + "px"
     if (this.currentAnimation.flipped)this.flipped = true;
     else this.flipped = false;
     this.img = this.currentAnimation.img
-		this.noOfAnimationFrames = this.currentAnimation.noOfFrames
+	this.noOfAnimationFrames = this.currentAnimation.noOfFrames
   },
   //options contain {name,noOfFrames, img, imageWidth, imgHeight, direction, startY}
   createAnimation : function(options){
@@ -62,6 +61,7 @@ var DomImgSprite = Class.create(DomSprite, {
     this.animations[options.name] = animation
     return animation
   },
+  
   setCursor : function( style ){
     this.img.setStyle({cursor : style});
   },

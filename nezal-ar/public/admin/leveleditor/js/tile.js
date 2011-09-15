@@ -70,24 +70,54 @@ var Tile = Class.create({
 	},
 	
 	addObject: function(item, multiple){
-		var obj = {};
-		console.log(item);
-		obj.name = $(item).getAttribute('name');
-		obj.category = $(item).getAttribute('category');
+	  if(item.innerHTML != ""){//incase of dragging objecdts from level objects.
+	    item = item.firstChild;
+	  }
+	  
+	  var obj = {};
+    obj.image = item.src;
+    obj.name = $(item).getAttribute('name');
+    obj.category = $(item).getAttribute('category');
+		var type = $(item).getAttribute('type');
+    
+    this.loadType(obj, type);
+    
+    if(!this.parent.parent.valid(obj.type, this.getPosition(), this.parent.getPosition())){
+      return;
+    }
+    
+    this.createObject(obj, multiple);
+	},
 
-		if(!multiple){
-			for(var i=0; i<this.objects.length; i++){
-				if(this.objects[i].name == obj.name && this.objects[i].category == obj.category){
-					return false;
-				} 
-			}
-		}
+  loadType: function(obj, type){
+    if(type){
+      if(obj.category == "enemy"){
+        obj.type = {cols:type.split("_")[0], rows:type.split("_")[1]};
+      }else if(obj.category == "powrups"){
+        obj.type = type;
+      }
+    }
+  },
+  	
+  loadObject: function(obj){
+    this.loadType(obj, obj.type);
+    this.createObject(obj, true);
+  },
+	
+	createObject: function(obj, multiple){
+    if(!multiple){
+      for(var i=0; i<this.objects.length; i++){
+        if(this.objects[i].name == obj.name && this.objects[i].category == obj.category){
+          return false;
+        } 
+      }
+    }
 
-		this.objects.push(obj);
-		obj.index = this.objects.length -1 ;
-		 
-		this.domObject.select('div[id=content]')[0].insert({bottom:this.createDraggedItem(item)});
-		return true;
+    this.objects.push(obj);
+    obj.index = this.objects.length -1 ;
+     
+    this.domObject.select('div[id=content]')[0].insert({bottom:this.createDraggedItem(obj)});
+    return true;
 	},
 	
 	removeObject: function(index){
@@ -111,8 +141,8 @@ var Tile = Class.create({
 			'<div id="index" style="float:left;width:100%"></div></td>';
 	},
 	
-	createDraggedItem : function (draggable){
-		return '<img src="'+draggable.src+'" name="'+draggable.name+'" category="'+$(draggable).getAttribute('category')+'" style="width:30px;float:left"/>';
+	createDraggedItem : function (obj){
+		return '<img src="'+obj.image+'" name="'+obj.name+'" category="'+obj.category+'" style="width:30px;float:left"/>';
 	},
 	
 	openContent: function(){
