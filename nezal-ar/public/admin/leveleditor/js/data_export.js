@@ -13,7 +13,7 @@ var DataExporter = Class.create({
 		});
 
 		$('controls').select('[class=exportButton]')[0].observe('click', function(){
-			self.exportData();
+			self.displayData();
 		});
 	},
 
@@ -42,7 +42,10 @@ var DataExporter = Class.create({
 			if(data[l] == null) data[l] = [];
 			for(var j=0; j<lanesData[i].tiles.length; j++){
 				for (var k=0; k < lanesData[i].tiles[j].objects.length; k++) {
-					data[l][x++] = lanesData[i].tiles[j].objects[k];
+				  var obj = Object.clone(lanesData[i].tiles[j].objects[k]);
+				  obj.type = obj.type.cols + "_" + obj.type.rows;
+				  delete obj.image;
+					data[l][x++] = obj
 				}
 				if(lanesData[i].tiles[j].messages.length > 0){
 					var obj = {};
@@ -71,13 +74,15 @@ var DataExporter = Class.create({
 		gameData.energy = settings.energy;
 		gameData.environment = settings.environment;
 		gameData.gameModes = settings.gameModes;
-				
-		$(this.containerId).select('[id=dataMessage]')[0].value = Object.toJSON(gameData);
-		$(this.containerId).style.display = 'block';
 		
 		return gameData;
-	}
-	
+	},
+
+  displayData : function(){
+    var gameData = this.exportData();
+		$(this.containerId).select('[id=dataMessage]')[0].value = Object.toJSON(gameData);
+		$(this.containerId).style.display = 'block';
+  }	
 	
 	
 });

@@ -22,7 +22,7 @@ var LOTile = Class.create({
 			}
 		});	
 				
-		new Draggable(this.domObject.firstChild, {revert : true});
+		new Draggable(this.domObject, {revert : true});
 	},
 
 	getPosition: function(){
@@ -30,7 +30,7 @@ var LOTile = Class.create({
 	},
 	
 	createHTMLElement: function(draggable){
-		return '<div style="float:left;position:absolute">'+
+		return '<div style="float:left">'+
 		this.createDraggedItem(draggable)+
     '<div class="loCloseIcon"></div>'+
     '<div class="loSettingsIcon"></div>'+
@@ -38,7 +38,7 @@ var LOTile = Class.create({
 	},
 	
 	createDraggedItem : function (draggable){
-		return '<img id="draggedImg" src="'+draggable.src+'" name="'+draggable.name+'" category="'+$(draggable).getAttribute('category')+'" />';
+		return '<img id="draggedImg" src="'+draggable.src+'" name="'+draggable.name+'" category="'+$(draggable).getAttribute('category')+'" type="'+$(draggable).getAttribute('type')+'" />';
 	},
 	
 	getDraggedImg: function(){

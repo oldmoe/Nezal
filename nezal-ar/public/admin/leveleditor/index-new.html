@@ -3,12 +3,13 @@
 		<title>TSqaure Level Editor</title>
 		<link type="text/css" href="css/style.css" rel="stylesheet"></link>
 		<link rel="stylesheet" href="css/tabs.css" TYPE="text/css" MEDIA="screen">
-		
+
 		<script type="text/javascript" src="js/base/prototype.js"></script>
 		<script type="text/javascript" src="js/base/tabber-minimized.js"></script>
 		<script type="text/javascript" src="js/base/effects.js"></script>
 		<script type="text/javascript" src="js/base/dragdrop.js"></script>
 		
+		<script type="text/javascript" src="js/editor_data.js"> </script>
 		<script type="text/javascript" src="js/level_editor.js"> </script>
 		<script type="text/javascript" src="js/tile.js"> </script>
 		<script type="text/javascript" src="js/lane.js"> </script>
@@ -22,11 +23,15 @@
 		<script type="text/javascript" src="js/lo_tile.js"> </script>
 		<script type="text/javascript" src="js/lo_settings_handler.js"> </script>
 		<script type="text/javascript" src="js/tile_data_handler.js"> </script>
+
+		<script type="text/javascript" src="js/mission.js"></script>		
 				
 		<script type="text/javascript">
-		
+      		
+      var levelEditor = null;  
 			document.observe("dom:loaded", function() {
-				new LevelEditor();
+        //Mission.initialize();
+				levelEditor = new LevelEditor();
 			});
 			
 		</script>
@@ -37,6 +42,8 @@
 			<div class="addRowButton" > </div>
 			<div class="settingsButton" > </div>
 			<div class="exportButton" > </div>
+			<div class="saveButton" > </div>
+      <div id="saveReqStatus"> </div>
 		</div>
 		
 		<div class="tabber">
@@ -57,7 +64,7 @@
 				  <div class="draggables" id="objectsContainer"></div>
 		     </div>
 		     <div class="tabbertab">
-				  <h2>Items</h2>
+				  <h2>In Game Powerups</h2>
 				  <div class="draggables" id="itemsContainer"></div>
 		     </div>
 		     <div class="tabbertab">

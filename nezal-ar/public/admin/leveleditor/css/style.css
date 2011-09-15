@@ -77,6 +77,33 @@
 	height: 48px;	
 }
 
+.saveButton{
+	background-image: url('../images/save.png') ;
+	background-position: center center;
+	background-repeat: no-repeat;
+	width: 48px;
+	height: 48px;	
+}
+
+#saveReqStatus {
+  
+}
+.success {
+  background-color: #66CC00;
+  border: 1px solid;
+  border-radius: 10px 10px 10px 10px;
+  display: inline-block;
+  margin-top: 5px;
+  padding: 5px;
+}
+.error {
+  background-color: #FFF8F6;
+  border: 1px solid;
+  border-radius: 10px 10px 10px 10px;
+  display: inline-block;
+  margin-top: 5px;
+  padding: 5px;
+}
 .settingsButton{
 	background-image: url('../images/settings_icon.png') ;
 	background-position: center center;

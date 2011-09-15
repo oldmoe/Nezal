@@ -98,22 +98,36 @@ class AdminController < ApplicationController
   get '/:game_name/missions' do
     @game = Game.get(params[:game_name])
     @missions = Mission.all
-    puts @missions
     erb :missions , {:layout => :app}
-  end
-
-  get '/:game_name/missions/:mission_id' do
-    @game = Game.get(params[:game_name])
-    @missions = Mission.all
-    puts @missions
-#    File.read(File.join( 'public/nezal-admin/leveleditor/index-new.html'))
-    redirect "/admin/leveleditor/index-new.html?mission=#{params['mission_id']}"
   end
 
   # Add a mission to a game 
   post '/:game_name/missions' do
     Mission.add(params['name'], params['parent'])
     redirect "/#{ADMIN_URL}/#{params[:game_name]}/missions"
+  end
+
+  # Get mission metadata
+  get %r{(/missions/)([0-9A-Za-z_\-]+)(.json)?} do
+    @game = Game.current
+    id = (params[:captures][1])
+    if params[:captures][2]
+      Nezal::Decoder.encode(Mission.get(id))
+    else
+      @game = Game.get(params[:game_name])
+      @missions = Mission.all
+      redirect "/admin/leveleditor/index-new.html?mission=#{params[:captures][1]}"
+    end
+  end
+
+  put %r{(/missions/)([0-9A-Za-z_\-]+)(.json)?} do
+    @game = Game.current
+    id = (params[:captures][1])
+    if params[:captures][2]
+      mission = Nezal::Decoder.decode(params['data'])
+      Mission.edit(id, mission)
+      ''
+    end
   end
 
   # Update / Delete a mission
