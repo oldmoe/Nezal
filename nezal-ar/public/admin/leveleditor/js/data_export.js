@@ -13,7 +13,7 @@ var DataExporter = Class.create({
 		});
 
 		$('controls').select('[class=exportButton]')[0].observe('click', function(){
-			self.exportData();
+			self.displayData();
 		});
 	},
 
@@ -71,13 +71,15 @@ var DataExporter = Class.create({
 		gameData.energy = settings.energy;
 		gameData.environment = settings.environment;
 		gameData.gameModes = settings.gameModes;
-				
-		$(this.containerId).select('[id=dataMessage]')[0].value = Object.toJSON(gameData);
-		$(this.containerId).style.display = 'block';
 		
 		return gameData;
-	}
-	
+	},
+
+  displayData : function(){
+    var gameData = this.exportData();
+		$(this.containerId).select('[id=dataMessage]')[0].value = Object.toJSON(gameData);
+		$(this.containerId).style.display = 'block';
+  }	
 	
 	
 });

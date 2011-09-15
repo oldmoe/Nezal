@@ -16,11 +16,13 @@ class Mission
     end
 
     def get id 
+      id = id.to_i
       game = Game::current
       game.missions['list'][id]
     end
 
     def edit id, data
+      id = id.to_i
       init
       game = Game::current
       game.missions['list'][id] = data
@@ -28,8 +30,8 @@ class Mission
     end
 
     def delete id
-      init
       id = id.to_i
+      init
       game = Game::current
       deleted_mission = game.missions['list'][id]
       if deleted_mission
@@ -45,9 +47,9 @@ class Mission
     end
 
     def add name, parent
+      parent = parent.to_i
       init
       game = Game::current
-      parent = parent.to_i
       mission = { 'name' => name, 'data' => {} }
       mission['id'] = game.missions['id_generator']
       next_mission = 0 
