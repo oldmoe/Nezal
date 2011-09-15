@@ -59,11 +59,11 @@ var Util = {
 	 pointDirection : function(p,line){
 		var v1 = [line[0]-p[0],line[1]-p[1]]
 		var v2 = [line[2]-p[0],line[3]-p[1]]
-    var res = v1[0]*v2[1] - v2[0]*v1[1]
-    var ret = 0
-    if(res>0)ret = 1
-    else if(res<0) ret = -1
-    return ret
+        var res = v1[0]*v2[1] - v2[0]*v1[1]
+        var ret = 0
+        if(res>0)ret = 1
+        else if(res<0) ret = -1
+        return ret
 	 },
 	 
 	 //determines whether two isometric objects intersect or not
@@ -196,7 +196,12 @@ Array.prototype.pushInPlaceDescending=function(obj,field){
 		this[index]=obj
 	}
 }
-
+Array.prototype.pushFirst = function(obj){
+    for(var i= this.length-1;i>=0;i--){
+        this[i+1] = this[i]
+    }
+    this[0] = obj
+}
 Array.prototype.pushInPlaceAscending=function(obj,field){
 	var index=0
 	while(this[index]&&this[index][field] > obj[field]){

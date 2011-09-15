@@ -52,7 +52,7 @@ var DomSprite = Class.create(Sprite, {
         var position = this.position();
         this.div.setStyle({
           left: position.x + this.shiftX + "px",
-          top: position.y  +this.shiftY + "px",
+          top: position.y  + this.shiftY + "px",
           zIndex: position.zIndex
         });
       }
