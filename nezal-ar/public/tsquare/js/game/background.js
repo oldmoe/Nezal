@@ -5,7 +5,7 @@ var Background = Class.create({
 		this.scene = scene
 		this.speed = options.speed
 		this.images = options.images
-    if(options.alwaysMove) this.alwaysMove = true
+        if(options.alwaysMove) this.alwaysMove = true
 		this.y = options.y || 0
 		this.container = $(document.createElement('div'))
 		$("container").appendChild(this.container)
@@ -16,39 +16,39 @@ var Background = Class.create({
 			if( maxWidth < this.images[i].width)
 				maxWidth = this.images[i].width	
 		}
-    this.offsetX = -Math.round(Math.random()*maxWidth)
+        this.offsetX = -Math.round(Math.random()*maxWidth)
 		this.container.setStyle({width:(maxWidth*this.imagesCount)+"px", top:this.y+"px"})
 		for(var i=0;i<this.imagesCount;i++){
 			this.container.appendChild(this.images.random().clone())
 		}
-    this.render(true)
+        this.render(true)
 	},
 	
 	render: function(forceRender){
-    if(this.scene.moving || this.alwaysMove|| forceRender)
-		this.container.children[0].setStyle({marginLeft:this.offsetX+"px"})
+       if(this.scene.currentSpeed <=0&& !forceRender)return
+	   this.container.children[0].setStyle({marginLeft:this.offsetX+"px"})
 	},
 	
 	tick : function(){
-    if(!this.scene.moving && !this.alwaysMove)return
-    if(!this.scene.moveBack){
-  		this.offsetX -= this.speed()
-  		var firstImg = this.container.children[0]
-  		if(firstImg.getWidth()+this.offsetX <= 0){
-  			this.reset()
-  		}
-    }else{
-      if (this.offsetX > 0) {
-        this.offsetX =-this.speed() 
-      }else if(this.offsetX == 0){
-        this.reset()
-      }
-      this.offsetX+=this.speed()
-    }
+        if(this.scene.currentSpeed <=0)return
+        if(this.scene.direction==1){
+      		this.offsetX -= this.speed()
+      		var firstImg = this.container.children[0]
+      		if(firstImg.getWidth()+this.offsetX <= 0){
+      			this.reset()
+      		}
+        }else if(this.scene.direction == -1){
+          if (this.offsetX > 0) {
+            this.offsetX =0 
+          }if(this.offsetX == 0){
+            this.reset()
+          }
+          this.offsetX-=this.speed()
+        }
 	},
 	
 	reset : function(){
-    if (!this.scene.moveBack) {
+    if (this.scene.direction==1){
       this.offsetX = 0
       this.container.removeChild(this.container.children[0])
       this.container.appendChild(this.images.random().clone())

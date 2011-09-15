@@ -1,27 +1,31 @@
 var MovementManager = Class.create({
-  moves : [[0,0,0,0],[1,1,1,1],[0,1,0,1], [2]],
   UP : 0, DOWN : 1,
   move : [],
   movements : [],
-  turnOn : false,
+  direction : 0,
   ticksPassed : 0,
   totalMoveTicks : 0,
   moveLength : 0,
-  extraSpeed : 0,
+  beatAccelaration : 0,
   lastMoveClicked : false,
-  moveSpeed : 15,
+  beatDelay : 15,
+  moves : {march:{code:[0,0,0,0],index:0},retreat:{code:[1,1,1,1],index:1},circle:{code:[0,1,0,1],index:2}, hold:{code:[2],index:3}},  
+  beatMoving: false,
+  comboStart: false,
+  currentCombos: 0,
+  
   initialize : function(scene){
     this.scene = scene
     this.registerListeners()
     this.playSounds()
     this.scene.push(this)
   },
-  
+
   playSounds : function(){
    if(this.ticksPassed > this.nextTick+10){
       this.reset()
    } 
-   this.nextTick = this.moveSpeed-this.extraSpeed
+   this.nextTick = this.beatDelay-this.beatAccelaration
    Sounds.play(Sounds.gameSounds.beat)
    var self = this
    $('beatFlash').show()
@@ -29,28 +33,19 @@ var MovementManager = Class.create({
    this.scene.reactor.push(0,function(){new Effect.Fade('beatFlash',{duration: fadeDuration})})
    this.scene.reactor.push(this.nextTick,function(){self.playSounds()})
   },
+  
   reset : function(){
-    this.turnOn = false
-    this.move = []
-    this.scene.rotating = false
-    this.scene.beatMoving = false
-    this.scene.comboStart = false
-    this.scene.currentCombos = 0
-    var oldSpeed = this.scene.speed
-    this.scene.speed = Math.max(3,this.scene.speed-3)
-    if(oldSpeed > this.scene.maxSpeed/2 && this.scene.speed < this.scene.maxSpeed/2){
-      this.scene.running = false
-      this.scene.setCrowdMembersState("normal")
-    }
-    if(this.scene.speed <= 3) this.scene.moving = false
-    if(this.scene.speed < this.scene.maxSpeed/2)this.scene.running = false
-    if(this.scene.energy > 0)this.scene.energy-=this.scene.energyIncrease
-    this.extraSpeed = 0
+    this.move = [];
+    this.beatMoving = false;
+    this.comboStart = false;
+    this.currentCombos = 0
+    this.beatAccelaration = 0
     this.ticksPassed = 0
+    this.scene.fire('wrongMove')
   },
   
   tick : function(){
-    if(this.scene.beatMoving){
+    if(this.beatMoving){
       this.ticksPassed = 0
       return
     }
@@ -62,23 +57,19 @@ var MovementManager = Class.create({
     var self = this
     document.stopObserving('keydown')
     document.observe('keydown', function(e){
-      if(self.scene.beatMoving){
+      if(self.beatMoving){
         self.reset()
-      }else if(self.scene.moving){
-        self.scene.comboStart = true
+      }else if(self.scene.currentSpeed > 0){
+        self.comboStart = true
       }
       var click = -1
       if (e.keyCode == 39) {
         click = 0
-      }
-      else if (e.keyCode == 37) {
+      }else if (e.keyCode == 37) {
           click = 1
       }else if (e.keyCode == 32) {
           click = 2
       }
-      
-      if(!self.turnOn) self.turnOn = true
-      console.log(self.ticksPassed, self.nextTick)
        if(click!=-1 && self.ticksPassed >= self.nextTick-10 && self.ticksPassed <= self.nextTick+10){		
             console.log('=')
       		  self.move.push(click)
@@ -101,32 +92,35 @@ var MovementManager = Class.create({
       self.checkMove()
       self.ticksPassed = 0
   		if(e.keyCode == 49){
-        self.extraSpeed = 0
+        self.beatAccelaration = 0
         self.playSounds(0,0)
       }else if(e.keyCode == 50){
-        self.extraSpeed = 0
+        self.beatAccelaration = 0
         self.playSounds(1,0)
       }else if(e.keyCode == 51){
-        self.extraSpeed = 0
+        self.beatAccelaration = 0
         self.playSounds(2,0)
       }
 		})
   },
+  
   getNextMoveIndex : function(){
     return 0
   },
+  
   checkMove : function(){
   	var index = 0
     var found = false
     var moveIndex = this.getNextMoveIndex()
     var self = this
     var found  = false
-    var moveIndex = 0
-   for (moveIndex = 0; moveIndex < this.moves.length; moveIndex++) {
-     var m = this.moves[moveIndex]
-     found = true
-     for (var i = 0; i < self.moveLength; i++) {
-       if (self.move[i] != m[i]) {
+    var command = null
+    for(var move in this.moves){
+      var found = true
+      var code = this.moves[move].code
+      command = move
+      for (var i = 0; i < self.moveLength; i++) {
+       if (self.move[i] != code[i]) {
          found = false
          break
        }
@@ -135,17 +129,57 @@ var MovementManager = Class.create({
        break
      }
    }
-   console.log(this.move)
    if(!found){
      self.reset()
      return
    }
-   var m = this.moves[moveIndex]
-   if(m.length==self.move.length){
+   var code = this.moves[command].code
+   if(code.length==self.move.length){
      this.move=[]
+     this.startMove(this.moves[command].index,self.nextTick*code.length)
      this.moveLength = 0
-     this.scene.startMove(moveIndex,self.nextTick*m.length)
      Sounds.play(Sounds.gameSounds.correct_move)
    }
+  },
+  
+  startMove : function(commandIndex,noOfTicks){
+//    if(this.conversationOn) return
+    var collision = this.scene.detectCollisions()
+    if(commandIndex == this.moves.march.index){
+        if(this.scene.currentSpeed == 0)this.scene.increaseEnergy()
+        this.scene.fire('march')
+        if(collision){
+          this.scene.decreaseEnergy()
+          return
+        }else{
+          this.beatMoving = true    
+        }
+    }else if(commandIndex == this.moves.retreat.index){
+        this.scene.fire('retreat')
+    }else if(commandIndex == this.moves.circle.index){
+        this.scene.fire('circle')
+    }else if(commandIndex == this.moves.hold.index){
+        this.scene.fire('hold')
+    }
+
+    var self = this
+    this.scene.reactor.push(noOfTicks, function(){
+      self.moveEnd()
+    })
+    
+  },
+
+  moveEnd : function(){
+    console.log('combo start',this.comboStart)
+    if(this.comboStart){
+        this.comboStart= false
+        this.combos++
+        if(this.beatAccelaration<9)this.beatAccelaration+=2
+        this.currentCombos++
+        this.scene.fire('comboSuccess')
+        //this.createNextFollower()
+      }
+      this.beatMoving = false
   }
+  
 });

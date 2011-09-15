@@ -1,4 +1,5 @@
 var Unit = Class.create({
+  
   x:0,y:0,
   speed : 1,
   angle :0,
@@ -6,127 +7,65 @@ var Unit = Class.create({
   hp : 30,
   maxHp : 30,
   stateChanged : false,
-  rotating : false,
-  rotationSpeed : 6,
   kickedoutYShift : 0,
   maxkickedoutYShift : 57,
   kickedOutXShift : false,
   dead : false,
-  enterSpeed : 3,
   movingToTarget : false,
+  movingSpeed : 8,
   noDisplay : false,
-  rotationPoints : null,
-  observers : null,  
-
-  initialize : function(scene,x,lane){
-    this.observers = {}
-    this.rotationPoints = []
+  target: null,
+  observer: null,
+  handler: null,
+  movingToTarget : false,
+  type: null,
+  
+  initialize : function(scene,x,lane, options){
+    var self = this
+    this.commandFilters = [
+      {command: function(){return self.movingToTarget}, callback: function(){self.moveToTargetPoint()}}
+    ];
     this.target = null
+    this.observer = new Observer();
     this.scene = scene
     this.lane = lane
-    var y = this.scene.laneMiddle*2*this.lane+this.scene.laneMiddle
+    var y = this.scene.view.laneMiddle*2*this.lane+this.scene.view.laneMiddle
     this.coords ={x:x, y:y}
+    this.handler = options.handler
   },
   
-  tick : function(){ 
-    if(this.dead)return 
-    if(this.kickedout) this.kickout() 
-    if(this.rotating){
-        this.rotationMove()
-    }else if(this.movingToTarget){
-      // if(this.target.coords.x - this.enterSpeed > this.coords.x) this.coords.x+=this.enterSpeed
-      // else this.movingToTarget = false
+  processCommand: function(){
+    for(var i=0;i<this.commandFilters.length;i++){
+        if(this.commandFilters[i].command()){
+            if(!this.commandFilters[i].callback()) break;
+        }    
     }
-    if(this.scene.moving || this.rotating || this.kickedout || this.movingToTarget)
-      this.stateChanged = true
-    else 
-      this.stateChanged = false
   },
-
-  rotate : function(target){
-    this.addRotationPoints(target)
-    this.rotating = true   
-    this.target = target
-    this.setState(this.rotationPoints[0].state)
+  tick : function(){
+    if(this.dead)return
+    this.processCommand()
   },
   
-  addRotationPoints : function(target){
-    this.rotationPoints.push({
-      values: {
-        x: target.coords.x - this.getWidth() / 2 - target.getHeight()/4,
-        y: target.coords.y + target.getHeight() / 2 - 20
-      },
-      state: "front"
-    })
-    this.rotationPoints.push({
-      values: {
-        x: target.coords.x + target.getWidth() - this.getWidth() / 2 - target.getHeight()/4,
-        y: target.coords.y + target.getHeight() / 2 - 20
-      },
-      state : this.getMovingState()
-    })
-    this.rotationPoints.push({
-      values: {
-        x: target.coords.x + target.getWidth() - this.getWidth() / 2,
-        y: target.coords.y - 20
-      },
-      state : "back"
-    })
-    this.rotationPoints.push({
-      values: {
-        x: target.coords.x - this.getWidth() / 2,
-        y: target.coords.y - 20
-      },
-      state : "reverse"
-    })
-  },
-  getMovingState : function(){
-    if(this.scene.running)return "run"
-    return "normal"
-  },
-  getReverseState : function(){
-    if(this.scene.running)return "reverseRun"
-    return "reverse"
-  },
-  resetRotation : function(){
-    this.target = null
-    this.rotating = false
-    this.scene.moving = false
-    this.scene.rotating = false
-    this.setState("normal")
-  },
-  rotationMove : function(){
-    if (!this.target|| this.target.hp <= 0) {
-      this.resetRotation()
-    }
-    if(this.scene.rotating){
-      if (this.rotationPoints.length == 0) {
-        this.target.takeHit(this.power)
-        if (this.target.hp < 0) {
-          this.resetRotation()
-          return
-        }else{
-          this.rotate(this.target)
-        }
+  moveToTargetPoint : function(){
+    if(Math.abs(this.targetPoint.x - this.coords.x) > this.scene.currentSpeed || Math.abs(this.targetPoint.y - this.coords.y) > this.scene.currentSpeed){
+          var move = Util.getNextMove(this.coords.x, this.coords.y , this.targetPoint.x, this.targetPoint.y, this.scene.currentSpeed)
+          this.move(move[0],move[1])
       }
-      var rp = this.rotationPoints[0]
-      var move = Util.getNextMove(this.coords.x,this.coords.y,rp.values.x,rp.values.y,this.scene.speed)
-      this.coords.x+=move[0]
-      this.coords.y+=move[1]
-      if (this.coords.x <= rp.values.x + 0.001 && this.coords.x >= rp.values.x - 0.001 &&
-      this.coords.y <= rp.values.y + 0.001 &&this.coords.y >= rp.values.y - 0.001) {
-        this.rotationPoints.shift()
-        if(this.rotationPoints.length > 0 ) this.setState(this.rotationPoints[0].state)
-      }
-    }else{
-      this.rotating = false
-    }
+      else this.movingToTarget = false  
   },
+  
+  observe: function(event, callback){
+      this.observer.addObserver(event, callback);
+  },
+  
+  fire: function(event){
+      this.observer.fire(event);
+  },
+  
   takeHit : function(power){
-    this.hp-= power
+    this.hp-= power;
     if(this.hp <=0){
-      if(this.scene.obstacles[this.lane].indexOf(this)!=-1)this.scene.obstacles[this.lane].remove(this)
-      this.destroy()
+        this.handler.removeObject(this, this.lane);
     }   
   },
   
@@ -138,6 +77,7 @@ var Unit = Class.create({
   startKickingOut : function(){
     this.kickedout = true
   },
+  
   kickout : function(){
     if(this.coords.x < 0) this.dead = true
     if(this.kickedoutYShift < this.maxkickedoutYShift ){
@@ -153,22 +93,44 @@ var Unit = Class.create({
       }
     }
   },
-  moveToTarget : function(target){
+ 
+  moveToTarget : function(targetPoint){
    this.movingToTarget = true
-   this.target = target
+   this.targetPoint = targetPoint
+  },
+  
+  pickTarget : function(targets){
+    var minDistance = 100000
+    var minIndex = -1
+    for(var i=0;i<targets.length;i++){
+        var tmpDistance = Util.distance(this.coords.x,this.coords.y,targets[i].coords.x,targets[i].coords.y)
+        if(tmpDistance < minDistance){
+            minDistance = tmpDistance
+            minIndex = i
+        }
+    }
+    if(minIndex!=-1 && this.target!=targets[minIndex] && minDistance < this.getWidth()){
+        this.target = targets[minIndex]
+    }  
   },
   getCoods : function(){
     return {x: this.coords.x+this.scene.x}
   },
-  setState : function(state){
-    if(this.observers[state]){
-      for(var i=0;i<this.observers[state].length;i++){
-        this.observers[state][i]()
-      }
-    }
+  
+  setTarget: function(target){
+//      if (!this.target && target) {
+          this.target = target;
+//      }
   },
-  addObserver : function(state,func){
-    if(!this.observers[state])this.observers[state] = []
-    this.observers[state].push(func)
+
+  getSize : function(){
+    return 1  
+  },
+  
+  collidesWith: function(target){
+      if (this.coords.x + this.getWidth() > target.coords.x)
+         return true; 
+      return false;  
   }
+  
 })

@@ -102,7 +102,7 @@ var Carousel = Class.create( {
     },
     
     scrollTo : function(index){
-        if(index > Math.abs(this.listSize - this.displayCount))
+        if(index > (this.listSize - this.displayCount))
             index = this.listSize - this.displayCount
         var distance = this.direction * (this.currIndex - index) * this.width;
         this.currIndex = index;
