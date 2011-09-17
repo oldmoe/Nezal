@@ -22,12 +22,8 @@ class Game < DataStore::Model
 
   def user_data user_profile
     data = {}
-    data = @data.each_pair do |k, v|
-            data[k] = v
-          end
-    data['missions'] = {}
-    data['missions'][user_profile.current_mission] = Mission.get(user_profile.current_mission)
-    data
+    data = @data.clone
+    data.delete('missions')
   end
 
   class << self  
