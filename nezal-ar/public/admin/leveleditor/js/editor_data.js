@@ -10,7 +10,10 @@ var EditorData = [
   {src:'images/objects/box_car.png', name:'box_car', category:'enemy'},
   
   //in game powerups
-  {src:'images/objects/box_car.png', name:'health_boost', category:'powerup'},
+  {src:'images/powerups/health_powerup.jpg', name:'health_boost', category:'powerup', type:"1"},
+  {src:'images/powerups/health_powerup.jpg', name:'health_boost', category:'powerup', type:"2"},
+  {src:'images/powerups/powerup_h2o.jpeg', name:'h2o', category:'powerup', type: "1"},
+  {src:'images/powerups/powerup_h2o.jpeg', name:'h2o', category:'powerup', type: "2"},
   
   {src:'images/objects/normal_man.png', name:'normal_man', category:'crowd'},
   {src:'images/objects/micman.png', name:'micman', category:'crowd'},

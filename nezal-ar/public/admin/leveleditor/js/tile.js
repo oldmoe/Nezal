@@ -75,24 +75,32 @@ var Tile = Class.create({
 	  }
 	  
 	  var obj = {};
-	  
-		var type = $(item).getAttribute('type');
-		if(type){
-      obj.type = {cols:type.split("_")[0], rows:type.split("_")[1]};
-            
-      if(!this.parent.parent.valid(obj.type, this.getPosition(), this.parent.getPosition())){
-        return;
-      }
-		}
-
     obj.image = item.src;
-		obj.name = $(item).getAttribute('name');
-		obj.category = $(item).getAttribute('category');
+    obj.name = $(item).getAttribute('name');
+    obj.category = $(item).getAttribute('category');
+		var type = $(item).getAttribute('type');
+    
+    this.loadType(obj, type);
+    
+    if(!this.parent.parent.valid(obj.type, this.getPosition(), this.parent.getPosition())){
+      return;
+    }
     
     this.createObject(obj, multiple);
 	},
-	
+
+  loadType: function(obj, type){
+    if(type){
+      if(obj.category == "enemy"){
+        obj.type = {cols:type.split("_")[0], rows:type.split("_")[1]};
+      }else if(obj.category == "powrups"){
+        obj.type = type;
+      }
+    }
+  },
+  	
   loadObject: function(obj){
+    this.loadType(obj, obj.type);
     this.createObject(obj, true);
   },
 	

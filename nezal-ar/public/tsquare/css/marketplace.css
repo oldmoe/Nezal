@@ -1,0 +1,56 @@
+@charset "utf-8";
+/* CSS Document */
+body { margin:0px; padding:0px; font-size:12px; font-family:Tahoma, Geneva, sans-serif; }
+ul { list-style:none; margin:0px; padding:0px; }
+
+#marketplace { position: absolute; z-index: 201; }
+
+.container { width:760px; height:685px; background:url(../images/marketplace/dummy/background.gif) no-repeat top; margin:0 auto; }
+.positioned { position:absolute; top:0px; left:0px; z-index:1; }
+
+/*-------Widnow-------*/
+.window { float:left; width:715px; background:url(../images/marketplace/window_background.png) no-repeat top; margin:105px 27px 0 19px; position:relative; height:401px; }
+.windowTitle { float:left; width:254px; height:44px; position:relative; top:-44px; left:240px; }
+.close { float:left; width:39px; height:39px; position:relative; left:436px; top:-15px; overflow:hidden }
+.close a { display:block; width:39px; height:39px; }
+.close a:hover img { position:absolute; top:-39px; }
+
+/*-------Tabs-------*/
+.tabsWrapper { float:left; width:699px; margin:0 8px; top:-35px; position:relative; }
+.tabsContent { float:left; width:694px; background:#dadada; border:3px solid #757575; -webkit-border-radius: 10px; -webkit-border-top-left-radius: 0; -moz-border-radius: 10px; -moz-border-radius-topleft: 0; border-radius: 10px; border-top-left-radius: 0; position:relative; top:-3px; height:339px;}
+
+.tabs { float:left; width:699px;}
+.tabs li { float:left; width:109px; height:43px; margin:0 5px 0 0; position:relative; overflow:hidden;}
+.tabs li a { float:left; width:109px; height:30px;text-align:center; text-decoration:none; font-weight:bold; font-size:1.1em; color:#636363; text-shadow:1px 1px 0px #f0f0f0; padding:13px 0 0 0; position:absolute; z-index:2; }
+.tabs li.selected a { color:#000; }
+.tabs li.selected img { position:absolute; top:-43px; }
+.tabs li:hover a { color:#6b5623; }
+.tabs li:hover img { position:absolute; top:-86px; }
+.tabs li.selected:hover a { color:#000 }
+.tabs li.selected:hover img { position:absolute; top:-43px; }
+
+/*-------Scrolled Items-------*/
+.leftControls { float:left; width:33px; position:absolute; left:-21px; top:130px; }
+.leftControls a { display:block; width:33px; height:33px; margin:3px 0;  overflow:hidden; position:relative; }
+.leftControls a:hover img, .leftControls a.selected img { position:absolute; top:-33px;  }
+
+.rightControls { float:left; width:33px; position:absolute; right:-21px; top:130px; }
+.rightControls a { display:block; width:33px; height:33px; margin:3px 0;  overflow:hidden; position:relative;  }
+.rightControls a:hover img, .rightControls a.selected img { position:absolute; top:-33px;  }
+
+.floatingItems { float:left; width:678px; overflow:hidden; margin:8px 8px 5px 8px; position:relative; }
+.floatingItems ul { float:left; width:680px; }
+.floatingItems ul li { float:left; width:136px; height:167px; }
+
+.crowedItem { float:left; width:120px; height:136px; position:absolute; margin:10px 0 0 5px; }
+.crowedItemTitle { width:117px; height:31px; position:absolute; top:-10px; left:3px;  }
+.crowedItemTitle h2 { position:absolute; width:117px; height:28px; margin:0px; padding:0px; z-index:2; text-align:center; text-shadow:1px 1px 0 #ffce57; padding:3px 0 0 0; font-size:1.4em; }
+
+.crowedItemDetails { float:left; width:97px; height:31px; overflow:hidden; position:absolute; top:115px; left:10px; }
+.crowedItemDetails a { position:absolute; display:block; width:97px; height:26px; z-index:2; font-weight:bold; font-size:1.2em; color:#202020; text-shadow:1px 1px 0 #fbfbfb; text-decoration:none; text-align:center; padding:5px 0 0 0; }
+.crowedItemDetails:hover img { position:absolute; top:-31px;}
+
+.crowedItemPrice { float:left; position:absolute; width:59px; height:33px; top:90px; left:68px; }
+.crowedItemPrice h5 { position:absolute; width:59px; height:20px; z-index:2; margin:0px; padding:2px 0 0 0; text-align:center; font-size:1.1em; text-shadow:1px 1px 0 #fffaae; color:#763d00; }
+
+.crowedItemImage { float:left; width:60px; height:90px; position:absolute; top:23px; left:30px; }

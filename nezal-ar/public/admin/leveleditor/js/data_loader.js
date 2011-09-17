@@ -4,7 +4,7 @@ var DataLoader = Class.create({
 	CAT_CROW_MEMBER: 'crowd',
 	CAT_PROTECTION_REBUILD: 'protection',
 	CAT_OBJECTS: 'objects',
-	CAT_ITEMS: 'items',
+	CAT_POWERUPS: 'powerup',
 	CAT_BACKGROUND: 'background',
 	
 	data : null,
@@ -33,7 +33,8 @@ var DataLoader = Class.create({
 				  break;
 				case self.CAT_OBJECTS:
 				  break;
-				case self.CAT_ITEMS:
+				case self.CAT_POWERUPS:
+				  $('powerupsContainer').appendChild(new Element('img', {"class":'draggablesImg', src: obj.src, name:obj.name, category:obj.category}));
 				  break;
 				case self.CAT_BACKGROUND:
 					$('backgroundContainer').appendChild(new Element('img', {"class":'draggablesImg', src: obj.src, name:obj.name, category:obj.category}));

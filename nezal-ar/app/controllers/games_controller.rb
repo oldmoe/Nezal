@@ -7,12 +7,12 @@ class GamesController < ApplicationController
   # get the game object metadata
   get '/:game_name/data' do
     data = {
-      :game_data => { :metadata => Game::current.data } , 
+      :game_data => { :data => Game::current.user_data(user_game_profile) } , 
       :user_data => { :coins => user.coins, 
                       :rank => user_game_profile.rank,
                       :exp => user_game_profile.exp,
                       :locale => user_game_profile.locale, 
-                      :metadata => user_game_profile.data
+                      :data => user_game_profile.data
                     },
       :ranks => Game::current.ranks
     }

@@ -48,7 +48,7 @@ var LevelEditor = Class.create({
 		this.loSettingsHandler = new LOSettingsHandler(this);
 		this.tileDataHandler = new TileDataHandler(this);
 		
-		this.loadMissionData();
+		// this.loadMissionData();
 	},
 	
 	loadMissionData: function(){
@@ -71,9 +71,6 @@ var LevelEditor = Class.create({
 	      this.grid.lanes[i].tiles[objects[i][j].x-1].loadObject(this.loadImagePath(objects[i][j]));
 			};
 		};
-		
-		
-		
 	},
 	
 	loadImagePath: function(obj){
