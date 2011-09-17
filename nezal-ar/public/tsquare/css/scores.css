@@ -92,7 +92,7 @@ ul { list-style:none; margin:0px; padding:0px; }
 .friendsWrapper .rightControls img.rightOff, .friendsWrapper .leftControls img.leftOff { position:absolute; top:0px; }
 .friendsWrapper .rightControls img.rightOn, .friendsWrapper .leftControls img.leftOn { position:absolute; top:-33px; }
 
-.floatingFriends { display:inline-block; width:183px; overflow:hidden; position:relative; top:3px; }
+.floatingFriends { display:inline-block; width:186px; overflow:hidden; position:relative; top:3px; }
 .floatingFriends ul { width:1200px; }
 .floatingFriends li { display:inline-block; }
 

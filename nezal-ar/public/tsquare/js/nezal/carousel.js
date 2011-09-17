@@ -32,6 +32,7 @@ var Carousel = Class.create( {
                   this.width+=parseInt($$('#' + this.id + ' ul li')[0].getStyle('margin-left'))
           if($$('#' + this.id + ' ul li')[0].getStyle('margin-right')) 
                   this.width+=parseInt($$('#' + this.id + ' ul li')[0].getStyle('margin-right'));
+          this.width = $(this.id + "-container").getWidth()/displayCount;
         }                        
         this.displayCount = displayCount;
         this.scroll = displayCount;
