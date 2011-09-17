@@ -109,7 +109,7 @@ var ScoreManager = Class.create({
         params['list'] = this.friends
     }else
     {
-        params['topThree'] = this.topScorers.top;
+        params['topThree'] = this.topScorers.top.slice(0,3);
         params['list'] = this.topScorers['list'];
     }
     $('scores').innerHTML = this.templateManager.load('friends', params);
