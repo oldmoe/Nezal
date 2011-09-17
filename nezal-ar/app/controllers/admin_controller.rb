@@ -98,7 +98,7 @@ class AdminController < ApplicationController
   get '/:game_name/missions' do
     @game = Game.current
     puts @game, @game.name
-    @missions = Mission.all
+    @missions = Mission.all || {}
     erb :missions , {:layout => :app}
   end
 
