@@ -75,10 +75,14 @@
     <!--Friends-->
     <div class="friendsWrapper">
     	<!--Friend-->
-      {for friend in scoreManager.friends.slice(0,3)}
+      {for friend in topThree}
     	<div class="friend">
       	<a href="#">
         	<img class="rankSign" src="images/friends/${parseInt(friend_index)+1}.png" alt="rank" />
+          <span class="friendsScore">
+          	<span>${friend['scores'][scoreManager.gameMode]}</span>
+          	<img class="positioned" src="images/friends/friendsScore.png" alt="Friends score" />
+          </span>
           <img class="friendAvatar" src="${friend['picture']}" alt="Firend avatar" />
           <span class="friendName">${friend['first_name']}</span>
           <img src="images/friends/friend_box.png" alt="friend" />
@@ -98,11 +102,15 @@
         </div>
         <div id="friends-container" class="floatingFriends">
         	<ul id="friends-ul">
-            {for friend in scoreManager.friends}
+            {for friend in list}
           	<li>
               <!--Friend-->
               <div class="friend">
                 <a href="#">
+                  <span class="friendsScore">
+                  	<span>${friend['scores'][scoreManager.gameMode]}</span>
+                  	<img class="positioned" src="images/friends/friendsScore.png" alt="Friends score" />
+                  </span>
                   <img class="friendAvatar" src="${friend['picture']}" alt="Firend avatar" />
                   <span class="friendName">${friend['first_name']}</span>
                   <img src="images/friends/friend_box.png" alt="friend" />
@@ -124,21 +132,19 @@
       </div>
     	<img class="positioned" src="images/friends/friends_bar.png" alt="friends background" />
     </div>
-    </div>
-  </div>
-</textarea>
 
-<textarea id='topScorers'>
-  <div  id="topScorers" class="users">
-    {for user in scoreManager.topScorers.top}
-    <div class="user">
-      <div class="score"> ${user['scores'][scoreManager.gameMode]} </div>
-      <div>
-  			<img class='photo' src="${user['picture']}" />	
-      </div>
-      <div class="name"> ${user['name']} </div>
+    <!--Switching tabs-->
+    <div class="swithcingTabs">
+      <ul>
+      	<li {if scoreManager.mode=="global"} class="selected" {/if}>
+          <a href="javascript:void(0)"><img src="images/friends/worldRank.png" alt="World Rank" /></a>
+        </li>
+        <li {if scoreManager.mode=="friends"} class="selected" {/if}>
+          <a href="javascript:void(0)"><img src="images/friends/friendsRank.png" alt="Friends Rank" /></a>
+        </li>
+      </ul>
     </div>
-    {/for}
+
   </div>
 </textarea>
 

@@ -64,8 +64,10 @@ var ScoreManager = Class.create({
     var callback = function(result){
       self.topScorers = result;
       var ids = self.topScorers['top'].collect(function(user){return user['service_id']});
+      ids = ids.concat(self.topScorers['list'].collect(function(user){return user['service_id']}));
       socialEngine.getUsersInfo(ids, function(data){
         self.fillSocialData(self.topScorers['top'], data)
+        self.fillSocialData(self.topScorers['list'], data)
         self.display();
       })
     }
@@ -100,30 +102,37 @@ var ScoreManager = Class.create({
         }        
       }
     }
-    $('scores').innerHTML = this.templateManager.load('scoreTabs', { scoreManager : this}) + 
-                 this.templateManager.load(this.modes[this.mode]['display'], { scoreManager : this});
-    if(self.mode == 'friends')
+    var params = {scoreManager:this};
+    if(this.mode == 'friends')
     {
-      if(self.carousel) self.carousel.destroy();      
-      self.carousel = new Carousel("friends", self.images, 2.3);
-      var rank = 0;
-      for(var i=0; i< self.friends.length; i++)
-      {
-        if(self.friends[i].service_id != socialEngine.userId())
-          rank ++;
-        else
-          break;   
-      }
-      self.carousel.scrollTo(rank);
-      self.carousel.checkButtons();
+        params['topThree'] = this.friends.slice(0,3);
+        params['list'] = this.friends
+    }else
+    {
+        params['topThree'] = this.topScorers.top.slice(0,3);
+        params['list'] = this.topScorers['list'];
     }
+    $('scores').innerHTML = this.templateManager.load('friends', params);
+    if(self.carousel) self.carousel.destroy();      
+    self.carousel = new Carousel("friends", self.images, 2);
+    var rank = 0;
+    for(var i=0; i< params['list'].length; i++)
+    {
+      if(params['list'][i].service_id != socialEngine.userId())
+        rank ++;
+      else
+        break;   
+    }
+    console.log(rank)
+    self.carousel.scrollTo(rank);
+    self.carousel.checkButtons();
     this.attachListeners();
   },
 
   attachListeners : function() {
     var self = this;
-    $$('#scores .scoreTab').each( function(element) {
-      if(element.id != self.mode)         
+    $$('#scores .swithcingTabs li').each( function(element) {
+      if(element.hasClassName('selected') == false)         
       {
         element.observe('click', function(event){
           self.switchScoringMode(self.gameMode);
@@ -203,7 +212,7 @@ var ScoreManager = Class.create({
 
   /*
     Set currentUser field
-    Megre the scoring data with the social data(name, picture) in one Aمحمود العسيلى مين انا rray 
+    Megre the scoring data with the social data(name, picture) in one Array 
   */
   fillSocialData : function(userList, socialData){
     var self = this;

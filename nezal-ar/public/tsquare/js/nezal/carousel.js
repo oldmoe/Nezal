@@ -24,7 +24,10 @@ var Carousel = Class.create( {
     initialize : function(id, images, displayCount){
         this.id = id;
         this.images = images;
-				if ($$('#' + this.id + ' ul li')[0]) {
+        var lis = $$('#' + this.id + ' ul li')
+				if (lis[0] && lis[1]) {
+          this.width = Math.abs(lis[1].cumulativeOffset().left - lis[0].cumulativeOffset().left );
+        }else if(lis[0]){
           this.width = parseInt($$('#' + this.id + ' ul li')[0].getStyle('width')) +
           parseInt($$('#' + this.id + ' ul li')[0].getStyle('padding-left')) +
           parseInt($$('#' + this.id + ' ul li')[0].getStyle('padding-right'))
@@ -32,7 +35,9 @@ var Carousel = Class.create( {
                   this.width+=parseInt($$('#' + this.id + ' ul li')[0].getStyle('margin-left'))
           if($$('#' + this.id + ' ul li')[0].getStyle('margin-right')) 
                   this.width+=parseInt($$('#' + this.id + ' ul li')[0].getStyle('margin-right'));
-        }                        
+        }else {
+          this.width = $(this.id + "-container").getWidth()/displayCount;
+        }
         this.displayCount = displayCount;
         this.scroll = displayCount;
         this.ulId = $$('#' + this.id + ' ul')[0].id;
