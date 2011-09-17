@@ -1,7 +1,7 @@
 var CrowdHandler = Class.create(UnitHandler, {
     
    type : "left",   
-   initialPositions : [{x:200,y:30},{x:200,y:100},{x:200,y:200}],
+   initialPositions : [{x:150,y:30},{x:150,y:100},{x:150,y:200}],
    crowdMembersPerColumn : 2,
    marchingStates: ["normal", "walk", "jog", "run"],
    commands: ["circle", "hold", "march", "retreat"],
@@ -11,7 +11,36 @@ var CrowdHandler = Class.create(UnitHandler, {
        this.addCommandObservers()
        this.registerStateObservers();
    },
-   
+    
+    getUserCrowds : function(){
+       this.userCrowds = []
+       var userCrowds = user_data['crowd_members']
+       for(var crowdType in userCrowds){
+           for(var crowd in userCrowds[crowdType]){
+               var crowdMember = userCrowds[crowdType][crowd]
+               var level = crowdMember.level
+               var category = gameData.crowd_members.category[crowdType]
+               if(!category) category = crowdType
+               var specs = gameData.crowd_members.specs[category][level]
+               this.addCrowdMember(crowdType,specs)
+           }
+       } 
+    },
+    start : function(){
+      this.getUserCrowds();  
+    },
+   addCrowdMember : function(name,specs){
+     var klassName = name.formClassName()
+     var klass = eval(klassName)
+     var obj = new klass(specs,{handler : this, scene:this.scene})
+     var displayKlass = eval(klassName + "Display")
+     var objDisplay = new displayKlass(obj)
+     this.objects[this.scene.activeLane].push(obj)
+     if (!obj.noDisplay) {
+       this.scene.pushToRenderLoop('characters', objDisplay)
+     }
+     return obj
+   },  
    addCommandObservers : function(){
        var self = this
        this.commands.each(function(event){

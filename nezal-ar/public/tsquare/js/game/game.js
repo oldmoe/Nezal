@@ -1,7 +1,7 @@
 var Game = Class.create({
   
   initialize: function(){
-    this.data = gameData	
+    this.data = missionData	
     this.startLoading()	
 	},
   startLoading : function(){
@@ -42,7 +42,6 @@ var Game = Class.create({
             characterImages.push(characterNames[i]+"_"+imageNames[j]+".png")
         }
     }
-    console.log(characterImages)
     var enemiesImages = ['amn_markazy_stick_walk.png','amn_markazy_stick_hit.png','amn_markazy_tear_gas_shooting.png',
     'amn_markazy_tear_gas_walk.png','amn_markazy_tear_gas_shadow.png']
     var hoveringIconsImages = ['lock.png', 'circle.png', 'march.png', 'push.png'];

@@ -1,7 +1,15 @@
 var Enemy = Class.create(Unit, {
   target : null,
+  hp : 25, attack : 10 , defense : 25, chargeTolerance : 2, circleSize : 1,
   initialize : function($super,scene,x,y,options){
-     $super(scene,x,y,options) 
+     $super(scene,x,y,options)
+     this.mappingName = options.mappingName
+     this.type = options.type 
+     var specs = gameData.enemies[this.mappingName][this.type];
+     for(var spec in specs){
+         this[spec.dasherize().camelize()] = specs[spec] 
+     }
+     this.maxHp = this.hp
   },
   
   tick : function($super){

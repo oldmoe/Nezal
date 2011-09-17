@@ -31,6 +31,7 @@ var AmnMarkazyDisplay = Class.create(EnemyDisplay,{
   
   hit: function(){
     this.sprites.block.switchAnimation("hit");
+    this.sprites.block.currentAnimationFrame = Math.floor(Math.random()*this.sprites.block.noOfAnimationFrames)
     if(this.owner.showHoveringIcon)
       this.switchHoveringIcon(this.hoveringIcons.circle);
   },
