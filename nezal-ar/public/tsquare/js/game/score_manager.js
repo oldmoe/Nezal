@@ -112,10 +112,10 @@ var ScoreManager = Class.create({
         params['topThree'] = this.topScorers.top;
         params['list'] = this.topScorers['list'];
     }
-    $('scores').innerHTML = this.templateManager.load('scoreTabs', params) + 
-                 this.templateManager.load('friends', params);
+    $('scores').innerHTML = this.templateManager.load('friends', params);
+    
     if(self.carousel) self.carousel.destroy();      
-    self.carousel = new Carousel("friends", self.images, 2.3);
+    self.carousel = new Carousel("friends", self.images, 2);
     var rank = 0;
     for(var i=0; i< self.friends.length; i++)
     {
@@ -131,8 +131,8 @@ var ScoreManager = Class.create({
 
   attachListeners : function() {
     var self = this;
-    $$('#scores .scoreTab').each( function(element) {
-      if(element.id != self.mode)         
+    $$('#scores .swithcingTabs li').each( function(element) {
+      if(element.hasClassName('selected') == false)         
       {
         element.observe('click', function(event){
           self.switchScoringMode(self.gameMode);
