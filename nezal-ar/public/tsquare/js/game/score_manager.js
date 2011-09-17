@@ -113,17 +113,17 @@ var ScoreManager = Class.create({
         params['list'] = this.topScorers['list'];
     }
     $('scores').innerHTML = this.templateManager.load('friends', params);
-    
     if(self.carousel) self.carousel.destroy();      
     self.carousel = new Carousel("friends", self.images, 2);
     var rank = 0;
-    for(var i=0; i< self.friends.length; i++)
+    for(var i=0; i< params['list'].length; i++)
     {
-      if(self.friends[i].service_id != socialEngine.userId())
+      if(params['list'][i].service_id != socialEngine.userId())
         rank ++;
       else
         break;   
     }
+    console.log(rank)
     self.carousel.scrollTo(rank);
     self.carousel.checkButtons();
     this.attachListeners();
