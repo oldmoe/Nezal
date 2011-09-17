@@ -3,7 +3,7 @@ var Unit = Class.create({
   x:0,y:0,
   speed : 1,
   angle :0,
-  power: 10,
+  attack: 10,
   hp : 30,
   maxHp : 30,
   stateChanged : false,
@@ -47,8 +47,8 @@ var Unit = Class.create({
   },
   
   moveToTargetPoint : function(){
-    if(Math.abs(this.targetPoint.x - this.coords.x) > this.scene.currentSpeed || Math.abs(this.targetPoint.y - this.coords.y) > this.scene.currentSpeed){
-          var move = Util.getNextMove(this.coords.x, this.coords.y , this.targetPoint.x, this.targetPoint.y, this.scene.currentSpeed)
+    if(Math.abs(this.targetPoint.x - this.coords.x) > this.movingSpeed || Math.abs(this.targetPoint.y - this.coords.y) > this.movingSpeed){
+          var move = Util.getNextMove(this.coords.x, this.coords.y , this.targetPoint.x, this.targetPoint.y, this.movingSpeed)
           this.move(move[0],move[1])
       }
       else this.movingToTarget = false  
@@ -62,8 +62,8 @@ var Unit = Class.create({
       this.observer.fire(event);
   },
   
-  takeHit : function(power){
-    this.hp-= power;
+  takeHit : function(attack){
+    this.hp-= attack;
     if(this.hp <=0){
         this.handler.removeObject(this, this.lane);
     }   

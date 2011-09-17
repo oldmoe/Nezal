@@ -3,10 +3,11 @@
 		<link type="text/css" href="css/style.css" rel="stylesheet" />
 		<link type="text/css" href="css/scores.css" rel="stylesheet" />
     <link type="text/css" href="css/inbox.css" rel="stylesheet" />
+    <link type="text/css" href="css/marketplace.css" rel="stylesheet" />
 
 		<script src="js/base/prototype.js" type="text/javascript"></script>
-		<script src="js/base/effects.js" type="text/javascript"></script>
-    <script src="js/base/template.js"></script>
+    <script src="js/base/effects.js" type="text/javascript"></script>
+    <script src="js/base/template.js" type="text/javascript"></script>
     <script src="js/base/box2d-all.js" type="text/javascript"></script>
     <script src="js/base/box2dutils.js" type="text/javascript"></script>
 
@@ -33,11 +34,11 @@
 
     <script src="js/game/game_manager.js" type="text/javascript"></script>
     <script src="js/game/score_manager.js" type="text/javascript"></script>
+    <script src="js/game/marketplace.js" type="text/javascript"></script>
     <script src="js/game/inbox.js" type="text/javascript"></script>
-
+    <script src="js/game/tsquare_network.js" type="text/javascript"></script>
 
     <script src="js/game/templatesData.js" type="text/javascript"></script>
-    <script src="js/game/tsquare_network.js" type="text/javascript"></script>
     <script src="js/game/gameData.js" type="text/javascript"></script>
     <script src="js/game/unit.js" type="text/javascript"></script>
     <script src="js/game/enemy.js" type="text/javascript"></script>
@@ -91,16 +92,15 @@
     <script src="js/game/display/girl7egab_display.js" type="text/javascript"></script>
     <script src="js/game/display/bottleguy_display.js" type="text/javascript"></script>
     <script src="js/game/display/hala_man_display.js" type="text/javascript"></script>
-    
-    
-  	<script src="js/game/background.js" type="text/javascript"></script>
-	  <script src="js/game/sky_line.js" type="text/javascript"></script>		
-    <script src="js/game/tsquare_scene.js" type="text/javascript"></script>
-    <script src="js/game/sounds.js" type="text/javascript"></script>
-    <script src="js/game/movement_manager.js" type="text/javascript"></script>
-    <script src="js/game/game.js" type="text/javascript"></script>
+
+  <script src="js/game/background.js" type="text/javascript"></script>
+  <script src="js/game/sky_line.js" type="text/javascript"></script>    
+  <script src="js/game/tsquare_scene.js" type="text/javascript"></script>
+  <script src="js/game/sounds.js" type="text/javascript"></script>
+  <script src="js/game/movement_manager.js" type="text/javascript"></script>
+  <script src="js/game/game.js" type="text/javascript"></script>
+	<script type=text/javascript>
 		
-		<script type=text/javascript>
 			document.observe("dom:loaded", function(){
 			      socialEngine = FBConnect
 			      socialEngine.init(function(){
@@ -127,6 +127,9 @@
       <div id="continueButton" onclick="game.scene.resumeGame()">
           Continue
       </div>
+    </div>
+    
+    <div id="marketplace">
     </div>
     
     <div id="send_requests">

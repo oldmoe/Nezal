@@ -50,6 +50,7 @@ class ApplicationController < Sinatra::Base
           end
           key = build_game_profile_key(@service_id)
           @game_profile = UserGameProfile.get(key)
+          puts "$$$$$$$$$$$$$$#{@game_profile}"
           if !(@game_profile)
             @game_profile = UserGameProfile.create(key)
             LOGGER.debug params["inviter"]

@@ -5,7 +5,6 @@ var Block = Class.create(Enemy,{
     elementWidth : 60,
     elementHeight : 15,
     noDisplay : true,
-    pushes : 2,
     
     initialize : function($super,scene,x,y,options){
       this.type = "block";
@@ -15,6 +14,7 @@ var Block = Class.create(Enemy,{
           this.objectType = options.obj
           this.addElementsToBlock(options)
       }
+      this.options = options
     },
     
     
@@ -23,17 +23,16 @@ var Block = Class.create(Enemy,{
       var blockObjectKlass = eval(options.obj.formClassName())
       for(var i=0;i<options.rows;i++){
         this.elements[i] = []
+        options.type = "1_1"
         for (var j = 0; j < options.columns; j++) {
-            this.elements[i][j] = new blockObjectKlass(this.scene,0,this.lane, {handler:this.handler})
+            this.elements[i][j] = new blockObjectKlass(this.scene,0,this.lane,options)
             var randomY = Math.round(Math.random()*8) - 4
             var randomX = Math.round(Math.random()*8) - 4
-            this.elements[i][j].coords.x = this.coords.x + this.elementWidth * i - 10*j 
-            this.elements[i][j].coords.y = this.coords.y + this.elementHeight * j 
+            this.elements[i][j].coords.x = this.coords.x + this.elementWidth * i - 10*j
+            this.elements[i][j].coords.y = this.coords.y + this.elementHeight * (j-1)
             this.elements[i][j].showHoveringIcon = false;
         }
       }
-      
-      this.elements[0][0].showHoveringIcon = true;
     },
     
     getWidth : function(){
@@ -70,21 +69,25 @@ var Block = Class.create(Enemy,{
     }, 
     
     split : function(){
+      if(this.elements.length == 1)return
       console.log("split");
-        if(this.elements.length == 1){
-            for(var i=0;i<this.elements[0].length;i++){
-                this.handler.objects[this.lane].pushFirst(this.elements[0][i])
-                this.elements[0][i].moveToTarget({x:this.coords.x+i*100 + this.getWidth()/2,y:this.elements[0][i].coords.y})
-            }
-        }else if(this.elements.length == 3){
+//        if(this.elements.length == 1){
+//            for(var i=0;i<this.elements[0].length;i++){
+//                this.handler.objects[this.lane].pushFirst(this.elements[0][i])
+//                this.elements[0][i].moveToTarget({x:this.coords.x+i*100 + this.getWidth()/2,y:this.elements[0][i].coords.y})
+//            }
+//        }else 
+         if(this.elements.length == 3){
+            var options = this.options
+            options.type = "3_1" 
             this.setTarget(null)
-            var b1 = new Block(this.scene,this.elements[0][0].coords.x ,1, {handler:this.handler})
+            var b1 = new Block(this.scene,this.elements[0][0].coords.x ,1, options)
             b1.coords.y = this.coords.y
             b1.elements = [this.elements[0]]
-            var b2 = new Block(this.scene,this.elements[1][0].coords.x  ,1,{handler:this.handler})
+            var b2 = new Block(this.scene,this.elements[1][0].coords.x  ,1,options)
             b2.elements = [this.elements[1]]
             b2.coords.y = this.coords.y
-            var b3 = new Block(this.scene,this.elements[2][1].coords.x,1,{handler:this.handler})
+            var b3 = new Block(this.scene,this.elements[2][1].coords.x,1,options)
             b3.elements = [this.elements[2]]
             b3.coords.y = this.coords.y
             b1.moveToTarget({x:this.coords.x + 100,y:this.coords.y})
@@ -121,8 +124,8 @@ var Block = Class.create(Enemy,{
         this.moveElements(dx,dy)
     },    
     takePush : function(){
-       this.pushes--
-       if(this.pushes == 0) this.split()
+       this.chargeTolerance--
+       if(this.chargeTolerance == 0) this.split()
     },
     
     moveElements : function(dx,dy){

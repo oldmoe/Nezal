@@ -1,7 +1,7 @@
 #send_requests {
   height: 40px;
   position: absolute;
-  top: 540px;
+  top: 685px;
   width: 780px;
   padding: 20px;
   background-color: lightBlue;
@@ -10,7 +10,7 @@
 #inbox {
   height: 300px;
   position: absolute;
-  top: 580px;
+  top: 730px;
   width: 780px;
   padding: 20px;
   background-color: lightBlue;

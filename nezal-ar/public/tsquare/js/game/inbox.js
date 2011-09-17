@@ -19,7 +19,7 @@ var Inbox = Class.create({
       request['title'] = requestType + " me!"
       socialEngine.requestFromAll( request, function(response){
         //Here we should contact the server to save the request details, for exclusion and timeout conditions
-        console.log( response );
+        //console.log( response );
       } )
     })
   },
@@ -29,7 +29,7 @@ var Inbox = Class.create({
      socialEngine.getAppRequests(function(requests){
        requests.each(function(request){
          var data = JSON.parse( request.data )
-         console.log(request)
+         //console.log(request)
          self.requests[ data.type ].push( request );
        });
        $('inbox').innerHTML = self.templateManager.load('inbox', { inbox : self});

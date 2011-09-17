@@ -1,3 +1,4 @@
+var game = null;
 var GameManager = Class.create({
   
   initialize : function(urlParams){
@@ -17,7 +18,9 @@ var GameManager = Class.create({
       self.currentMission = data.current_mission.data;
       self.scoreManager = new ScoreManager(self);
       self.inbox = new Inbox(self);
-      self.game = new Game(self);
+      self.marketplace = new Marketplace(self);
+      game = new Game(self);
+      self.game = game;
     }
     this.network.gameData(callback);
   },

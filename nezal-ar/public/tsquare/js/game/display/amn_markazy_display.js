@@ -31,6 +31,7 @@ var AmnMarkazyDisplay = Class.create(EnemyDisplay,{
   
   hit: function(){
     this.sprites.block.switchAnimation("hit");
+    this.sprites.block.currentAnimationFrame = Math.floor(Math.random()*this.sprites.block.noOfAnimationFrames)
     if(this.owner.showHoveringIcon)
       this.switchHoveringIcon(this.hoveringIcons.circle);
   },
@@ -44,8 +45,8 @@ var AmnMarkazyDisplay = Class.create(EnemyDisplay,{
   createSprites:function(){
     if(this.owner.showHoveringIcon)
       this.sprites.hoverIcon = new DomImgSprite(this.owner,{img:this.hoverIcon, noOfFrames : 1}, {shiftY:-10, shiftX:20})
-    this.sprites.block = new DomImgSprite(this.owner,{img:this.blockImg, noOfFrames : 8}, {flipped:true})
-    this.sprites.block.createAnimation({name:'hit',img:this.hitImage, noOfFrames:9},{flipped:true})
+    this.sprites.block = new DomImgSprite(this.owner,{img:this.blockImg, noOfFrames : 8})
+    this.sprites.block.createAnimation({name:'hit',img:this.hitImage, noOfFrames:9})
   },
   
   render : function($super){

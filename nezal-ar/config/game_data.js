@@ -1,49 +1,4 @@
-var missionData = 
-  {"data":[[],[
-  {
-      "name": "wood_stick_cs",
-      "category": 'enemies',
-      "type": '3_3',
-      "index": 0,
-      "lane": 1,
-      "x": 10,
-      "order": 1
-  }, 
-     {
-      "category": "enemies",
-      "name" : "wood_stick_cs",
-      "type" : '1_1',
-      "lane": 1,
-      "x": 200,
-      "index": 0
-    },
-    {
-        "name": "amn_markazy",
-        "category": "enemy",
-        "index": 0,
-        "lane": 1,
-        "x": 1000,
-        "order": 2
-    },
-    {"name":"amn_markazy","category":"enemy","index":0,"lane":2,"x":1000,"order":3}]],
-   "backgrounds":[[{"name":"skyline.png"}],[{"name":"skyline.png"}],[{"name":"sky1.png"}]],"environment":"day","gameModes":["normal"]} 
-
-
-var user_data = {
-  'crowd_members' : { 
-      'ultras_green' : { 1 : {'level' : 1, 'upgrades' : { 'hp' : [], 'water' : [], 'attack' : [], 'defense' : [], 'arrest' : 0, 'block' : 0 } } },
-      'journalist' : { 1 : {'level' : 1, 'upgrades' : { 'hp' : [], 'water' : [], 'attack' : [], 'defense' : [], 'arrest' : 0, 'block' : 0 } } },  
-   }, 
-  'holder_items' : { 'cap' : 0, 'umbrella' : 0 },
-  'special_items' : { },
-  'power_ups' : {}, 
-  'current_mission': 1,
-  'energy' : 20,
-  'missions' : {}, 
-  'scores' : {}
-}
-
-var gameData = { 
+GameData = { 
       "modes" : {},
       "ranks" : {},
       "products" : { "fb" : {} },
@@ -54,7 +9,7 @@ var gameData = {
                       'defense' : { 1 : 5, 2 : 10, 3 : 20 },
                       'attack' : { 1 : 5, 2 : 10, 3 : 20 },
                       'hp' : { 1 : 5, 2 : 10, 3 : 20 },
-                      'water' : { 1 : 5, 2 : 10, 3 : 20 } 
+                      'h2o' : { 1 : 5, 2 : 10, 3 : 20 } 
                     },
       'holder_items' : { 'cap' : {}, 'umbrella' : {}, 'cola' : {}, 'rag' : {}, 'gas_mask' : {}, 'hammer' : {}, 'lock_pic' : {} },
       'crowd_items' : {  'shield' : { 1 : 10, 2 : 25, 3 : 40 },
@@ -77,9 +32,7 @@ var gameData = {
                      },
       'crowd_members' : {
               'category' : { 'salafi' : 'normal',
-                        'ultras_green' : 'normal',
-                        'ultras_red' : 'normal',
-                        'ultras_white' : 'normal',
+                        'ultras' : 'normal',
                         'journalist' : 'normal',
                         'attacker' : 'special',
                         'leader' : 'special',
@@ -91,26 +44,26 @@ var gameData = {
                         'amr_salama' : 'limited_edition' 
               },
               'specs' : { 
-                    'normal' : { 1 : { 'hp' : 50, 'water' : 50, 'attack' : 5, 'defense' : 50 } } , 
-                    'attacker' : { 1 : { 'special' : { 'attack' : 1 }, 'hp' : 75, 'water' : 50, 'attack' : 10, 'defense' : 50 } },
-                    'leader' : { 1 : { 'special' : { 'followers' : 1 }, 'hp' : 50, 'water' : 25, 'attack' : 5, 'defense' : 25 } },   
+                    'normal' : { 1 : { 'hp' : 50, 'h2o' : 50, 'attack' : 5, 'defense' : 50 } } , 
+                    'attacker' : { 1 : { 'special' : { 'attack' : 1 }, 'hp' : 75, 'h2o' : 50, 'attack' : 10, 'defense' : 50 } },
+                    'leader' : { 1 : { 'special' : { 'followers' : 1 }, 'hp' : 50, 'h2o' : 25, 'attack' : 5, 'defense' : 25 } },   
                     'healer' : { 1 : { 'special' : { 'time' : 2, 'units' : 1, 'hp' : 10 }, 
-                                                       'hp' : 75, 'water' : 75, 'attack' : 2, 'defense' : 75 } 
+                                                       'hp' : 75, 'h2o' : 75, 'attack' : 2, 'defense' : 75 } 
                                 },
-                    'dehydrator' : { 1 : { 'special' : { 'time' : 2, 'units' : 1, 'water' : 10}, 
-                                                            'hp' : 75 , 'water' : 75 , 'attack' : 2  , 'defense' : 75 }  
+                    'dehydrator' : { 1 : { 'special' : { 'time' : 2, 'units' : 1, 'h2o' : 10}, 
+                                                            'hp' : 75 , 'h2o' : 75 , 'attack' : 2  , 'defense' : 75 }  
                                 },
                     'supplier' : { 1 : {'special' : { 'item' : 1, 'slots_to_power' : 1 },
-                                                       'hp' : 50, 'water' : 75, 'attack' : 0, 'defense' : 75 }
+                                                       'hp' : 50, 'h2o' : 75, 'attack' : 0, 'defense' : 75 }
                                 },
                     'energy_booster' : { 1 : { 'special' : { 'slots_to_power' : 1, 'time' : 10, 'energy' : 5 },
-                                                'hp' : 25, 'water' : 75, 'attack' : 2, 'defense' : 25 }
+                                                'hp' : 25, 'h2o' : 75, 'attack' : 2, 'defense' : 25 }
                                 },
                     'amr_salama' : { 1 : { 'special' : { 'followers' : 5, 'slots_to_power' : 1, 'defense' : 4, 'time' : 10, 'energy' : 5 },
-                                            'hp' : 200, 'water' : 200, 'attack' : 15, 'defense' : 200 }
+                                            'hp' : 200, 'h2o' : 200, 'attack' : 15, 'defense' : 200 }
                                 },
                     'wael_ghoneim' : { 1 : { 'special' : { 'followers' : 5, 'slots_to_power' : 1, 'attack' : 2, 'time' : 10, 'energy' : 5 },
-                                            'hp' : 200, 'water' : 200, 'attack' : 15, 'defense' : 200 }
+                                            'hp' : 200, 'h2o' : 200, 'attack' : 15, 'defense' : 200 }
                                 }
               }  
 
@@ -148,3 +101,7 @@ var gameData = {
         }
 }
 
+//Run this in /nezal-admin/local-thawragy/
+Game.data = GameData;
+Game.data.name = "local-thawragy";
+Game.saveToServer();
