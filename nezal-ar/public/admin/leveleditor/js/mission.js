@@ -14,6 +14,7 @@ var Mission = {
        method : 'get',
        onSuccess : function(response){
           Mission.currMission = JSON.parse(response.responseText);
+          var levelLoader = new LevelLoader();
        }
     });
   },

@@ -21,7 +21,13 @@ var gameData =
       "index": 0
     }]],
     
-   "backgrounds":[[{"name":"skyline.png"}],[{"name":"skyline.png"}],[{"name":"sky1.png"}]],"environment":"day","gameModes":["normal"]} 
+   "backgrounds":{
+      layer1: [{"name":"sky1"}],
+      layer2: [{"name":"sky1"}],
+      landmarks: [{"name":"3amod"}]
+    },
+   
+   "environment":"day","gameModes":["normal"]} 
 
 var LevelEditor = Class.create({
 	
@@ -47,48 +53,5 @@ var LevelEditor = Class.create({
 		this.settingsHandler = new SettingsHandler(this);
 		this.loSettingsHandler = new LOSettingsHandler(this);
 		this.tileDataHandler = new TileDataHandler(this);
-		
-		// this.loadMissionData();
-	},
-	
-	loadMissionData: function(){
-	  // var data = Mission.currMission.data;
-	  var missionData = gameData;
-	  var objects = missionData.data;
-    
-    var laneLength = 0;
-    for (var i=0; i < objects.length; i++) {
-      for (var j=0; j < objects[i].length; j++) {
-        if(laneLength < objects[i][j].x)
-          laneLength = objects[i][j].x;
-      };
-    };
-    
-    this.grid.adjustLength(laneLength);
-	  
-	  for (var i=0; i < objects.length; i++) {
-	    for (var j=0; j < objects[i].length; j++) {
-	      this.grid.lanes[i].tiles[objects[i][j].x-1].loadObject(this.loadImagePath(objects[i][j]));
-			};
-		};
-	},
-	
-	loadImagePath: function(obj){
-	  for (var i=0; i < EditorData.length; i++) {
-	    if(obj.name == EditorData[i].name && obj.category == EditorData[i].category){
-	      if(obj.type){
-  	      if(obj.type == EditorData[i].type){
-            obj.image = EditorData[i].src;
-            break;
-  	      }
-	      }else{
-          obj.image = EditorData[i].src;
-          break;
-	      }
-	    }
-		};
-		return obj;
-	}
-	
-	
+	}	
 });

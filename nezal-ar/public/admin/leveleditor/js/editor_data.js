@@ -34,6 +34,6 @@ var EditorData = [
   {src:'images/backgrounds/sky1.png', name:'sky1', category:'background'},
   {src:'images/backgrounds/sky2.png', name:'sky2', category:'background'},
   {src:'images/backgrounds/sky3.png', name:'sky3', category:'background'},
-  {src:'images/backgrounds/skyline.png', name:'skyline', category:'background'},
+  {src:'images/backgrounds/skylines_icon.png', name:'skyline', category:'background'},
   {src:'images/backgrounds/street_marks.png', name:'street_marks', category:'background'} 
 ];
