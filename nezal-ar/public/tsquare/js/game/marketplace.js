@@ -23,7 +23,7 @@ var Marketplace = Class.create({
       $('marketplace').innerHTML = self.templateManager.load('marketplace', { marketplace: self });
     }
     
-    new Loader().load([ {images : ["buy_window_title.png", "close_button.png"], path: 'images/marketplace/', store: 'marketplace'}],
+    new Loader().load([ {images : ["buy_window_title.png", "close_button.png", "tab_background.png"], path: 'images/marketplace/', store: 'marketplace'}],
                       {
                         onFinish: function(){
                           loaderFinishCallback();
