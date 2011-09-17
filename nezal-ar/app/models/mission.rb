@@ -5,15 +5,15 @@ class Mission
     def init
       game = Game::current
       save = false
-      if game.missions.nil
+      if game.missions.nil?
         game.missions = {}
         save = true
       end
-      if game.missions['id_generator']
+      if game.missions['id_generator'].nil?
         game.missions['id_generator'] = 1
         save = true
       end
-      if game.missions['list']
+      if game.missions['list'].nil?
         game.missions['list'] = {}
         save = true
       end
