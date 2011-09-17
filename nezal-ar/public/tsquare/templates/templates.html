@@ -75,7 +75,7 @@
     <!--Friends-->
     <div class="friendsWrapper">
     	<!--Friend-->
-      {for friend in scoreManager.friends.slice(0,3)}
+      {for friend in topThree}
     	<div class="friend">
       	<a href="#">
         	<img class="rankSign" src="images/friends/${parseInt(friend_index)+1}.png" alt="rank" />
@@ -98,7 +98,7 @@
         </div>
         <div id="friends-container" class="floatingFriends">
         	<ul id="friends-ul">
-            {for friend in scoreManager.friends}
+            {for friend in list}
           	<li>
               <!--Friend-->
               <div class="friend">
