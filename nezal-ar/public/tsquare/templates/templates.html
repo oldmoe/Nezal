@@ -1,4 +1,4 @@
-<textarea id="crowdMember-state" style="display:none">
+<textarea id="crowdMember-state" >
   <div id="health">
     
   </div>
@@ -7,7 +7,7 @@
   </div>
 </textarea>
 
-<textarea style="display:none;" id='loadingScreen'>
+<textarea id='loadingScreen'>
   <div id="intro">
 	    <img id="logo" src="${Loader.images.loading['logo.png'].src}"/>
 		  <div id="loadingBarEmpty">
@@ -20,42 +20,42 @@
   </div>
 </textarea>
 
-<textarea style="display:none;" id="send_requests">
+<textarea id="send_requests">
   <button id="request_help_button"> Send Help Request </button>
   <button id="request_gift_button"> Send Gift </button>
   <button id="request_challenge_button"> Send Challenge </button>
 </textarea>
 
-<textarea style="display:none;" id="inbox">
+<textarea id="inbox">
   <br/>
   <h3> Requests </h3>
   <div id="help">
     <b>Help Requests</b><br>
     {for request in inbox.requests.help}
       <span> ${request.message} from ${request.from.name} </span>
-      <button> Accept </button>
+      <button> Accept </button><br>
     {/for}
-    <br> <br>
+    <br>
   </div>
   <div id="gift">
     <b>Gift Requests</b><br>
     {for request in inbox.requests.gift}
       <span> ${request.message} from ${request.from.name} </span>
-      <button> Accept </button>
+      <button> Accept </button><br>
     {/for}
-    <br> <br>
+    <br>
   </div>
   <div id="challenge"><br>
     <b>Challenge Requests</b><br>
     {for request in inbox.requests.challenge}
       <span> ${request.message} from ${request.from.name} </span>
-      <button> Accept </button>
+      <button> Accept </button><br>
     {/for}
-    <br> <br>
+    <br>
   </div>
 </textarea>
 
-<textarea style="display:none;" id='friends'>
+<textarea id='friends'>
   <div  id="friends" class="users">
     <div class="left">
       <img src="" />
@@ -87,7 +87,7 @@
   </div>
 </textarea>
 
-<textarea style="display:none;" id='topScorers'>
+<textarea id='topScorers'>
   <div  id="topScorers" class="users">
     {for user in scoreManager.topScorers.top}
     <div class="user">
@@ -101,7 +101,7 @@
   </div>
 </textarea>
 
-<textarea style="display:none;" id='scoreTabs'>
+<textarea id='scoreTabs'>
   <div id="scoringModes">
   {for mode in scoreManager.modes}
     <div id="${mode_index}" {if mode_index == scoreManager.mode}
@@ -126,7 +126,7 @@
   </div>
 </textarea>
 
-<textarea style="display:none;" id='sendChallengePrompt'>
+<textarea id='sendChallengePrompt'>
   <div class="sendChallengePrompt">
     <div class="message">
       You have passed ${friend.name} score of ${friend.scores[scoreManager.gameMode]} !! <br> Send him a challenge
@@ -139,7 +139,7 @@
     </div>
   </div>
 </textarea>
-<textarea style="display:none;" id='scorePassedAlert'>
+<textarea  id='scorePassedAlert'>
   <div class="scorePassedAlert">
     <div class="message">
       With ${friend.scores[scoreManager.gameMode]}, ${friend.name} passed your score!!

@@ -1,6 +1,6 @@
 class Game < DataStore::Model
 
-  @@data = { "modes" => {}, "ranks" => {}, "products" => { "fb" => {} }, "missions" => {} }
+  @@data = { "modes" => {}, "ranks" => {}, "products" => { "fb" => {} }, "missions" => {}, "items" => {} }
 
   def init
     if @data
@@ -18,6 +18,16 @@ class Game < DataStore::Model
 
   def process_service_request user_key, request_data
     
+  end
+
+  def user_data user_profile
+    data = {}
+    data = @data.each_pair do |k, v|
+            data[k] = v
+          end
+    data['missions'] = {}
+    data['missions'][user_profile.current_mission] = Mission.get(user_profile.current_mission)
+    data
   end
 
   class << self  

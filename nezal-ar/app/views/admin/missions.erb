@@ -43,7 +43,7 @@ $(document).observe('dom:loaded',function(){
   <div id="game_missions">
     <div id="mission_form">
       <LABEL for="new_mission" class="label add">Add New Mission</LABEL>
-      <form id="new_mission" action="/nezal-admin/<%=@game.name%>/missions" method="post" enctype="multipart/form-data">
+      <form id="new_mission" action="/<%=AdminController::ADMIN_URL%>/<%=@game.name%>/missions" method="post" enctype="multipart/form-data">
         <div class="form_row">  
           <LABEL for="name">Name</LABEL>
           <INPUT type="text" id="name" name='name'><BR>

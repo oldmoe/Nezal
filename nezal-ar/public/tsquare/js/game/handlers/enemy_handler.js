@@ -11,6 +11,7 @@ var EnemyHandler = Class.create(UnitHandler, {
             var cols =  parseInt(dims[1])
             obj.options.obj = obj.name
             obj.name =  "block"
+            obj.options.type = obj.type
             obj.options.rows = rows
             obj.options.columns = cols
         }

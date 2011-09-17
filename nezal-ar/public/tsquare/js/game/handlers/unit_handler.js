@@ -17,14 +17,20 @@ var UnitHandler = Class.create({
        var self = this;
        this.objects.each(function(laneObjects){self.scene.tickObjects(laneObjects)})
    },
-   
+   start : function(){
+       
+   },
    add: function(elem){
        if(this.incomming[elem.lane] == null){
          this.incomming[elem.lane] = [];
          this.objects[elem.lane] = [];  
        }
-       if(this.unitsClassMappings[elem.name])elem.name =  this.unitsClassMappings[elem.name]
-       elem.options = {handler:this}
+       elem.options = {}
+       if (this.unitsClassMappings[elem.name]) {
+           elem.options.mappingName =  elem.name
+           elem.name = this.unitsClassMappings[elem.name]
+       }
+       elem.options.handler = this
       this.incomming[elem.lane].push(elem)
    },
    
