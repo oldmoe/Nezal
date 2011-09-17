@@ -1,12 +1,13 @@
 var Game = Class.create({
   
-  initialize: function(){
-    this.data = gameData	
+  initialize: function(gameManager){
+    this.gameManager = gameManager;
+    this.data = this.gameManager.gameData;	
+    this.data = missionData	
     this.startLoading()	
 	},
   startLoading : function(){
     var self = this
-    this.network = new Network()
 //    this.templatesManager = new TemplatesManager(this.network);
 //    new Loader().load([{images : ['logo.png'], path: 'images/loading/', store: 'loading'}],
 //                      {onFinish : function(){
@@ -42,7 +43,6 @@ var Game = Class.create({
             characterImages.push(characterNames[i]+"_"+imageNames[j]+".png")
         }
     }
-    console.log(characterImages)
     var enemiesImages = ['amn_markazy_stick_walk.png','amn_markazy_stick_hit.png','amn_markazy_tear_gas_shooting.png',
     'amn_markazy_tear_gas_walk.png','amn_markazy_tear_gas_shadow.png']
     var hoveringIconsImages = ['lock.png', 'circle.png', 'march.png', 'push.png'];

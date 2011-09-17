@@ -14,7 +14,7 @@ var TsquareScene = Class.create(Scene,{
     direction : 1,
     holdPowerDepression: 0.2,
     energy : {current:0, rate: 3,max:30},
-    view: {width: 760, height: 410, xPos: 0, tileWidth: 50, laneMiddle : 28},
+    view: {width: 760, height: 410, xPos: 0, tileWidth: 50, laneMiddle : 25},
     observer: null,
     activeLane: 1,
     commands : ["circle","march","wrongHold","rightHold","retreat"],
@@ -32,8 +32,7 @@ var TsquareScene = Class.create(Scene,{
             "crowd" : new CrowdHandler(this),
             "enemies" : new EnemyHandler(this)  
         };  
-        
-        this.data = gameData.data;
+        this.data = missionData.data;
         this.noOfLanes = this.data.length;
         for(var i =0;i<this.data.length;i++){
             for(var j=0;j<this.data[i].length;j++){
@@ -46,6 +45,9 @@ var TsquareScene = Class.create(Scene,{
     
     init: function(){
         this.skyLine = new SkyLine(this)
+        for(var handler in this.handlers){
+            this.handlers[handler].start()
+        }
         //this.physicsHandler.step()
     },
     

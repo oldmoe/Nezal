@@ -5,7 +5,7 @@ var CrowdMember = Class.create(Unit,{
   maxWater : 700,
   randomDx : 0,
   randomDy : 0,
-  waterDecreaseRate : 0.5,
+  waterDecreaseRate : 0.001,
   commandFilters: [],
   rotationPoints : null,
   rotationSpeed : 15,
@@ -14,30 +14,33 @@ var CrowdMember = Class.create(Unit,{
   holdingLevel: 0,
   pushDirections : {forward:0,backward:1},
   pushDirection : 0,
-  maxPushDisplacement : 50,
+  maxPushDisplacement : 100,
   extraSpeed : 0,
   moved : 0,
+  
   name : null,
-  initialize : function($super,scene,x,y,options){
-    $super(scene,x,y, options)
+  initialize : function($super,specs,options){
+    $super(options.scene,0,options.scene.activeLane, options)
+    console.log(options)
     this.type = "crowd_member";
     this.rotationPoints = []
     this.name = options.name
     var self = this
+    this.hp = this.maxHp = specs.hp
+    this.water = this.maxWater =  specs.water
+    this.attack = specs.attack
+    this.defense = specs.defense 
     var crowdCommandFilters = [
         {command: function(){return self.rotating}, callback: function(){self.circleMove()}},
         {command:function(){return self.pushing}, callback: function(){self.pushMove()}}
     ]
-    this.commandFilters = crowdCommandFilters.concat(this.commandFilters)
-      
-    this.hp = 1000;
-    this.maxHp = 1000;
-          
-    x = x + this.xShift
+    this.commandFilters = crowdCommandFilters.concat(this.commandFilters)      
     this.originalPosition = {x:0,y:0}
     
-    this.originalPosition.y = this.handler.initialPositions[y].y - this.handler.crowdMembersPerColumn * 10
-    this.originalPosition.x = this.handler.initialPositions[y].x + 15*this.handler.crowdMembersPerColumn
+    this.originalPosition.y = this.handler.initialPositions[this.lane].y - this.handler.crowdMembersPerColumn * 10
+    this.originalPosition.x = this.handler.initialPositions[this.lane].x + 15*this.handler.crowdMembersPerColumn
+    this.coords.x = this.originalPosition.x
+    this.coords.y = this.originalPosition.y
     this.handler.crowdMembersPerColumn-- 
     if(this.handler.crowdMembersPerColumn == -1){
       this.handler.crowdMembersPerColumn = 2
@@ -175,7 +178,7 @@ var CrowdMember = Class.create(Unit,{
   },
   
   pushMove : function(){
-    if(!this.target || this.target.getSize() <4){
+    if(!this.target || this.chargeTolerance <=0){
       this.pushing = false  
       return
     } 
@@ -188,7 +191,7 @@ var CrowdMember = Class.create(Unit,{
     if(this.coords.x + this.getWidth()/2 > this.target.coords.x && this.pushDirection == this.pushDirections.forward){
         directionDone = true
         this.target.takePush()
-        if(this.target.pushes==0){
+        if(this.target.chargeTolerance==0){
             this.target = null
             this.pushing = false
         }
@@ -208,7 +211,7 @@ var CrowdMember = Class.create(Unit,{
       return
     }
       if (this.rotationPoints.length == 0) {
-        this.target.takeHit(this.power)
+        this.target.takeHit(this.attack)
         if (this.target.hp < 0) {
           console.log('reset 2')
           this.resetRotation()
@@ -229,7 +232,7 @@ var CrowdMember = Class.create(Unit,{
   },
   
   setTarget: function($super,target){
-    if(target && target.getSize() > 3 && this.target!=target){
+    if(target && target.chargeTolerance > 0 && this.target!=target){
         this.pushing = true   
         this.scene.direction = 0
     }  

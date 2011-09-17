@@ -7,7 +7,9 @@ var BackgroundHandler = Class.create({
 		
 		this.addDropEvent('bgLayer1');
 		this.addDropEvent('bgLayer2');
-		this.addDropEvent('day_night');
+		this.addDropEvent('landmarks');
+		
+		this.layer1 = $("");
 	},
 	
 	addDropEvent: function(dropTarget){
@@ -16,15 +18,31 @@ var BackgroundHandler = Class.create({
 			hoverclass : 'hoverActive',
 			onDrop : function (draggable) {
 				if($(draggable).getAttribute('category') == 'background')
-					self.addCloseEvent($(dropTarget).insert({bottom:self.createHTMLElement(draggable)}).lastChild);
+					self.addObject(draggable, dropTarget);
 			}
 		});
 	},
 	
-	createHTMLElement: function(draggable){
+	loadObject: function(obj, container){
+	  this.createObject(obj, $(container)); 
+	},
+	
+	addObject: function(draggable, dropTarget){
+    var obj = {};
+    obj.name = draggable.name;
+    obj.category = $(draggable).getAttribute('category');
+    obj.image = draggable.src;
+	  this.createObject(obj, dropTarget);
+	},
+	
+	createObject: function(obj, container){
+	  this.addCloseEvent($(container).insert({bottom:this.createHTMLElement(obj)}).lastChild);
+	},
+	
+	createHTMLElement: function(obj){
 		return '<div style="float:left;position: relative">'+
 		'<div class="loCloseIcon"></div>'+
-		this.createDraggedItem(draggable)+
+		this.createDraggedItem(obj)+
 		'</div>';
 	},
 	
@@ -38,8 +56,8 @@ var BackgroundHandler = Class.create({
 		});	
 	},
 		
-	createDraggedItem : function (draggable){
-		return '<img src="'+draggable.src+'" name="'+draggable.name+'" category="'+$(draggable).getAttribute('category')+'" />';
+	createDraggedItem : function (obj){
+		return '<img src="'+obj.image+'" name="'+obj.name+'" category="'+obj.category+'" />';
 	},
 	
 	remove: function(tile){
@@ -54,9 +72,13 @@ var BackgroundHandler = Class.create({
 		return this._exportData('bgLayer2');
 	},
 
-	getDayNightData: function(){
-		return this._exportData('day_night');
+	getLandMarks: function(){
+		return this._exportData('landmarks');
 	},
+	
+  loadData: function(data){
+    
+  }, 
 	
 	_exportData: function(container){
 		var data = [];

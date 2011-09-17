@@ -53,6 +53,8 @@ var Carousel = Class.create( {
         this.right = $$('#' + this.id +  ' .right img')[0];
         this.right.carousel = this;
         this.left = $$('#' + this.id +  ' .left img')[0];
+        if($$('#' + this.id +  ' .first')[0]) this.first = $$('#' + this.id +  ' .first img')[0];
+        if($$('#' + this.id +  ' .last')[0]) this.last = $$('#' + this.id +  ' .last img')[0];
         this.left.carousel = this;
         this.right.observe('click', function(event){    
                                                         Event.element(event).carousel.scrollLeft();
@@ -60,12 +62,26 @@ var Carousel = Class.create( {
         this.left.observe('click', function(event){
                                                         Event.element(event).carousel.scrollRight();
                                                     });
+        if(this.first) {
+          this.first.carousel = this;
+          this.first.observe('click', function(event){    
+                                                          Event.element(event).carousel.scrollTo(0);
+                                                      });
+        }
+        if(this.last) {
+          this.last.carousel = this;
+          this.last.observe('click', function(event){
+                                                        Event.element(event).carousel.scrollTo(Event.element(event).carousel.listSize-1);
+                                                    });
+        }
         this.checkButtons()
     },
     
     destroy : function(){
         this.right.stopObserving('click');
         this.left.stopObserving('click');
+        if(this.first) this.first.stopObserving('click');
+        if(this.last) this.last.stopObserving('click');
     },
     
     scrollRight : function(){
@@ -102,7 +118,7 @@ var Carousel = Class.create( {
     },
     
     scrollTo : function(index){
-        if(index > (this.listSize - this.displayCount))
+        if(index > Math.abs(this.listSize - this.displayCount))
             index = this.listSize - this.displayCount
         var distance = this.direction * (this.currIndex - index) * this.width;
         this.currIndex = index;
@@ -116,20 +132,36 @@ var Carousel = Class.create( {
             this.left.addClassName('leftOff');
             this.left.src = this.images['left-disabled'];
             this.left.removeClassName('leftOn');
+            if(this.first){
+              this.first.addClassName('leftOff');
+              this.first.removeClassName('leftOn');
+            }
         }else{
             this.left.addClassName('leftOn');
             this.left.src = this.images['left'];
             this.left.removeClassName('leftOff');
+            if(this.first){
+              this.first.addClassName('leftOn');
+              this.first.removeClassName('leftOff');
+            }
         }
-		if( (this.currIndex == (this.listSize - this.displayCount )) || (this.listSize < this.displayCount))
+    		if( (this.currIndex == (this.listSize - this.displayCount )) || (this.listSize < this.displayCount))
         {
             this.right.addClassName('rightOff');
             this.right.src = this.images['right-disabled'];
             this.right.removeClassName('rightOn');
+            if(this.last){
+              this.last.addClassName('rightOff');
+              this.last.removeClassName('rightOn');
+            }
         }else{
             this.right.addClassName('rightOn');
             this.right.src = this.images['right'];
             this.right.removeClassName('rightOff');
+            if(this.last){
+              this.last.addClassName('rightOn');
+              this.last.removeClassName('rightOff');
+            }
         }
     }
     

@@ -183,9 +183,9 @@ var FBConnect = {
         link: link,
         name: name,
         caption: caption,
-        description : description,
+        description : description
 //        actions : [{name : , link : }],
-        privacy : privacy
+//        privacy : privacy
       }, function(response) {
         
       });
@@ -204,6 +204,7 @@ var FBConnect = {
         picture: picture,
         link: link,
         name: name,
+        description : description,
         caption: caption
 //        actions : [{name : , link : }],
       }, function(response) {
@@ -253,7 +254,7 @@ var FBConnect = {
             function(response){
                   var ids = null;
                   if(response && response['request_ids'])
-                      var ids = response['request_ids'].join(',');
+                      ids = response['request_ids'].join(',');
                   FB.api('/?ids=' + ids, function(response) 
                   {
                       if(callback) callback(response);
@@ -294,52 +295,6 @@ var FBConnect = {
               });
     },
     
-    publish : function(attachment, usePrompt, actionLink, successCallback) {
-        FB.ui(
-              {
-                  method: 'stream.publish',
-                  display: 'dialog',
-                  message: '',
-                  attachment: attachment,
-                  action_links: actionLink,
-                  user_message_prompt: usePrompt
-              }, 
-              function(response) {
-                  if (response && response.post_id) {
-                      successCallback();
-                  }
-              }
-        );
-        window.setTimeout(function(){
-                              var divs = $$('#fb-root .fb_dialog');
-                              if( divs.length > 1 && (parseInt(divs.last().getStyle('top')) < 0 ))
-                              {
-                                  divs.last().style["top"] = "203.6px";
-                                  divs.last().style["left"] = "82.5px";
-                              }
-                          }, 10000);
-    },
-    
-    invite : function(inviteMsg, userPrompt, appName){
-        $('invite').src = "html/invite.html?" +
-                                "msg=" + escape(inviteMsg) + "&propmt=" + escape(userPrompt) + "&name=" + escape(appName)
-        $('invite').show();
-/*        var win = window.open( "html/invite.html?" +
-                                "msg=" + escape(inviteMsg) + "&propmt=" + escape(userPrompt) + "&name=" + escape(appName) ,
-                               'Invite',
-                               'height=550,width=640, left=100, top =100');*/
-                               
-/*          var size = FB.UIServer.Methods['fbml.dialog'].size;
-          FB.UIServer.Methods['fbml.dialog'].size.height = 500;*/
-          
-    },
-
-    request : function(inviteMsg, userPrompt, appName) {
-        $('invite').src = "html/request_condensed.html?" +
-                                "msg=" + escape(inviteMsg) + "&propmt=" + escape(userPrompt) + "&name=" + escape(appName)
-        $('invite').show();
-    },  
-
     friends : function(callback){
         var callback = callback;
         FB.api( 'me/friends', function(response) 

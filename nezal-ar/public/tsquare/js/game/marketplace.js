@@ -5,21 +5,19 @@ var Marketplace = Class.create({
   powerups : {},
   special : {},
   crowd_items :{},
-  initialize : function(){
+  initialize : function(gameManager){
     var self = this;
+    this.gameManager = gameManager;
     var loaderFinishCallback = function(){
-      self.network = new TSquareNetwork();
-      self.templateManager = new TemplatesManager(self.network);
-      self.network.initializeGame(function(gameData){
-        var itemsData = JSON.parse(gameData.responseText).game_data.data;
-        
-        var moves = itemsData.commands;
-        var members = itemsData.crowd_members;
-        var items = itemsData.holder_items;
-        var powerups = itemsData.power_ups;
-        var special = itemsData.special_items;
-        var crowd_items = itemsData.crowd_items;
-      });
+      self.network = self.gameManager.network;
+      self.templateManager = self.gameManager.templateManager;
+      var itemsData = self.gameManager.gameData;
+      var moves = itemsData.commands;
+      var members = itemsData.crowd_members;
+      var items = itemsData.holder_items;
+      var powerups = itemsData.power_ups;
+      var special = itemsData.special_items;
+      var crowd_items = itemsData.crowd_items;
       $('marketplace').innerHTML = self.templateManager.load('marketplace', { marketplace: self });
     }
     

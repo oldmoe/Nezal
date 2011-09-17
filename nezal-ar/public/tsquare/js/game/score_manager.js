@@ -2,10 +2,10 @@ var ScoreManager = Class.create({
 
 
   images : {
-              'left' : 'images/tmp/left.png',
-              'left-disabled' : 'images/tmp/left-disabled.png',
-              'right' : 'images/tmp/right.png',
-              'right-disabled' :'images/tmp/right-disabled.png'
+              'left' : 'images/friends/previous_button.png',
+              'left-disabled' : 'images/friends/previous_button.png',
+              'right' : 'images/friends/next_button.png',
+              'right-disabled' :'images/friends/next_button.png'
             },
 
   modes : {
@@ -30,10 +30,11 @@ var ScoreManager = Class.create({
   */
   gameMode : null,
 
-  initialize : function(){
+  initialize : function(game){
     /* This should be MOVED to initialize game part */
-    this.network = new TSquareNetwork();    
-    this.templateManager = new TemplatesManager(this.network);
+    this.network = game.network;    
+    this.templateManager = game.templateManager;
+    this.loadFriendsTab('global')
   },
 
   loadFriendsTab : function(gameMode) {
@@ -104,7 +105,7 @@ var ScoreManager = Class.create({
     if(self.mode == 'friends')
     {
       if(self.carousel) self.carousel.destroy();      
-      self.carousel = new Carousel("friends", self.images, 2);
+      self.carousel = new Carousel("friends", self.images, 2.3);
       var rank = 0;
       for(var i=0; i< self.friends.length; i++)
       {
