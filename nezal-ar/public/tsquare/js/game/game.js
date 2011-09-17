@@ -96,3 +96,35 @@ var Game = Class.create({
     })
   }
 });
+
+Game.addLoadedImagesToDiv = function(divId){
+  $$('#' + divId + ' .loadedImg').each(function(imgSpan){
+    var classes = null
+    if (imgSpan.getAttribute('imgClasses')) {
+      var classes = imgSpan.getAttribute('imgClasses').split('-')
+    }
+    var imgPath = imgSpan.getAttribute('imgSrc').split('/')
+    var imgPart = Loader
+    for (var i = 0; i < imgPath.length; i++) {
+      imgPart = imgPart[imgPath[i]]
+    }
+    var img = $(imgPart).clone()
+    var parent = $(imgSpan.parentNode)
+    img = parent.insertBefore(img, imgSpan)
+    parent.removeChild(imgSpan)
+    if (imgSpan.getAttribute('imgId')) 
+      img.id = imgSpan.getAttribute('imgId')
+    if (imgSpan.getAttribute('hidden') == "true") 
+      img.setStyle({
+        "display": 'none'
+      });
+    if (classes) {
+      for (var i = 0; i < classes.length; i++) {
+        img.addClassName(classes[i])
+      }
+    }
+    var style = imgSpan.getAttribute('imgStyle')
+    if (style) 
+      img.setAttribute('style', style)
+  })
+}
