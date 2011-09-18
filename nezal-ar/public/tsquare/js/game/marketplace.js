@@ -21,10 +21,7 @@ var Marketplace = Class.create({
     this.items = itemsData.holder_items;
     this.powerups = itemsData.power_ups;
     this.special = itemsData.special_items;
-    this.crowd_items = itemsData.crowd_items;
-    
-    this.openMarketplace();
-    
+    this.crowd_items = itemsData.crowd_items;    
   },
   
   openMarketplace : function(){
