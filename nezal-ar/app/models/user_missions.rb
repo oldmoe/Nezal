@@ -8,13 +8,14 @@ class UserMissions
         missions[key] = { :name => mission['name'] }
       end
       missions
+      Mission.all
     end 
 
     def data user_profile, mission_id
       data = {}
-      if user_profile.missions[mission_id]
+#      if user_profile.missions[mission_id]
         data = Mission.get(mission_id)
-      end
+#      end
       data
     end
 

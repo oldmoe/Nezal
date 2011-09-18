@@ -5,10 +5,9 @@ var Game = Class.create({
     this.imagesLoaded = false;
     this.missionLoaded = false;
     this.gameManager = gameManager;
-    this.startLoading();	
-    this.data = missionData;
-//    gameData = gameManager.gameData;
-//    userData = gameManager.userData;
+    gameData = gameManager.gameData;
+    userData = gameManager.userData;
+    this.startLoading();
 	},
 
   startLoading : function(){
@@ -40,6 +39,7 @@ var Game = Class.create({
     var hoveringIconsImages = ['lock.png', 'circle.png', 'march.png', 'push.png'];
     
 	  var self = this
+
 	  new Loader().load([ {images: gameElementsImages, path: 'images/game_elements/', store: 'gameElements'},
                         {images: characterImages, path: 'images/characters/', store: 'characters'},
                         {images: hoveringIconsImages, path: 'images/icons/', store: 'hoveringIcons'},
@@ -58,8 +58,10 @@ var Game = Class.create({
   },
 
   play : function(mission){
-    this.misssionLoaded = false;
+    this.data = mission;
     this.mission = mission;
+    missionData = mission;
+    this.misssionLoaded = false;
 	  var backgroundImages = ['land.png' , '3amod.png', 'street_marks.png']
     backgroundImages.push(mission.backgrounds[0][0].name)
     backgroundImages.push(mission.backgrounds[1][0].name)
@@ -85,6 +87,7 @@ var Game = Class.create({
   },
 
   show : function() {
+
   },
   
   addLoadedImagesToDiv: function(divId){

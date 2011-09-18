@@ -55,6 +55,14 @@
   </div>
 </textarea>
 
+<textarea style="display:none;" id='missions'>
+  {for mission in missions}
+  <div class="mission" id="${mission.id}">
+    <a  href="javascript:void(0);">${mission.name}</a>
+  </div>
+  {/for}
+</textarea>
+
 <textarea style="display:none;" id='meterBar'>
 	<div class="container game">
   	<!--Game Currency Bar-->

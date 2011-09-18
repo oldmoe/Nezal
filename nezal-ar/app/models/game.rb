@@ -23,7 +23,7 @@ class Game < DataStore::Model
   def user_data user_profile
     data = {}
     data = @data.clone
-    data.delete('missions')
+#    data.delete('missions')
     data
   end
 

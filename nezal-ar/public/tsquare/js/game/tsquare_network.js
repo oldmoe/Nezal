@@ -24,11 +24,11 @@ var TSquareNetwork = Class.create(Network, {
                           });
   },
 
-  missionData : function(id){
+  missionData : function(id, callback){
     this.genericGetRequest( 'mission', {'id' : id},
                     function(response) {
-                      scores = JSON.parse(response.responseText);
-                      if(callback) callback(scores);
+                      data = JSON.parse(response.responseText);
+                      if(callback) callback(data);
                     });
   }
 

@@ -29,10 +29,10 @@ var ScoreManager = Class.create({
   */
   gameMode : null,
 
-  initialize : function(game){
+  initialize : function(gameManager){
     /* This should be MOVED to initialize game part */
-    this.network = game.network;    
-    this.templateManager = game.templateManager;
+    this.network = gameManager.network;    
+    this.templateManager = gameManager.templateManager;
     var self = this;
     new Loader().load([ {images : ["1.png", "2.png", "3.png", "first_button.png", "last_button.png", 'next_button.png', 'previous_button.png',
                                   "friend_box.png", "friends_bar.png", "friendsRank.png", "friendsScore.png", "functions_background.png",
