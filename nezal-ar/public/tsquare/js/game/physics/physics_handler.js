@@ -6,7 +6,7 @@ var PhysicsHandler = Class.create({
         this.worlds = []
         this.tearGasBombs = []
         this.createWorlds()
-        this.ctx = $('physics').getContext('2d')
+        //this.ctx = $('physics').getContext('2d')
     },
     createWorlds : function(scene){
        this.scene = scene

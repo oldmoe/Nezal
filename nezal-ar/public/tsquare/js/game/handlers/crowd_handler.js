@@ -1,17 +1,18 @@
 var CrowdHandler = Class.create(UnitHandler, {
-    
    type : "left",   
    initialPositions : [{x:150,y:30},{x:150,y:100},{x:150,y:200}],
    crowdMembersPerColumn : 2,
    marchingStates: ["normal", "walk", "jog", "run"],
    commands: ["circle", "hold", "march", "retreat"],
-   
    initialize: function($super,scene){
        $super(scene)
        this.addCommandObservers()
        this.registerStateObservers();
    },
-    
+    tick : function($super){
+      if(this.pushing)this.pushMove()
+      else $super()
+    },
     getUserCrowds : function(){
        this.userCrowds = []
        var userCrowds = user_data['crowd_members']
@@ -97,8 +98,46 @@ var CrowdHandler = Class.create(UnitHandler, {
    },
 
    march: function(){
-       this.executeCommand("march");
+     if(this.target && this.target.chargeTolerance <= 0) this.target = null
+     if (!this.target) {
+      return this.executeCommand("march");
+     }
+     this.pushing = true
+     this.pushMove()
    },
+   pushMove : function(){
+    if(!this.target || this.target.chargeTolerance <= 0){
+      this.target = null
+      this.pushing = false
+      return
+    }
+    var closestIndex = -1;
+    var maxX = 0
+    for (var j = 0; j < this.objects[this.target.lane].length; j++) {
+      if(this.objects[this.target.lane][j].coords.x > maxX){
+        closestIndex = j
+        maxX = this.objects[this.target.lane][j].coords.x
+      }
+    }
+    var reverseDirection = false
+    for (var j = 0; j < this.objects[this.target.lane].length; j++) {
+      var ret = this.objects[this.target.lane][j].pushMove(this.target)
+      if(j == closestIndex && ret == true && 
+      true//this.objects[this.target.lane][j].pushDirection == this.objects[this.target.lane][j].pushDirections.forward
+      ){
+        reverseDirection = true
+      }
+    }
+    if (reverseDirection) {
+      this.target.takePush()
+      console.log(this.target.chargeTolerance)
+      for (var j = 0; j < this.objects[this.target.lane].length; j++) {
+        this.objects[this.target.lane][j].pushDirection = 1 - this.objects[this.target.lane][j].pushDirection
+        this.objects[this.target.lane][j].moved = 0
+      }
+    }  
+   },
+   
    
    retreat: function(){
        this.executeCommand("retreat");
@@ -123,7 +162,9 @@ var CrowdHandler = Class.create(UnitHandler, {
            self.scene.observe(event,function(){self.setCrowdMembersState(event)})
        });
    },
-   
+   end : function(){
+     this.scene.end(false)
+   },
    setCrowdMembersState : function(event){
        for(var i=0;i<this.objects.length;i++){
            if(this.objects[i])
