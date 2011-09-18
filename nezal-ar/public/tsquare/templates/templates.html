@@ -61,7 +61,9 @@
   	<!--Game funcations-->
   	<div class="gameFunctions">
     	<!--Crowd menu button-->
-    	<a class="crowdMenuItem" href="#"><span class="loadedImg" imgSrc="images/friends/menu_icon.png" alt="Menu Item" /></a>
+    	<a class="crowdMenuItem" href="javascript:void(0);" onclick="gameManager.marketplace.openMarketplace();">
+        <span class="loadedImg" imgSrc="images/friends/menu_icon.png" alt="Menu Item" />
+      </a>
       <!--Marketplace button-->
       <a class="marketplaceMenuItem" href="#"><span class="loadedImg" imgSrc="images/friends/menu_icon.png" alt="Menu Item" /></a>
       <!--Rank button-->
@@ -102,7 +104,7 @@
         </div>
         <!--Friend-->
         <div class="friend">
-          <a href="#">
+          <a href="javascript:void(0);" onclick="socialEngine.inviteFriends();">
             <span class="friendsScore">
             	<span>Invite</span>
             	<span class="loadedImg" imgSrc="images/friends/friendsScore.png" alt="Friends score" imgClasses="positioned"></span>
