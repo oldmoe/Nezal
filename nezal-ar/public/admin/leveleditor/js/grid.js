@@ -38,8 +38,7 @@ var Grid = Class.create({
 		};
 	},
 	
-	valid: function(type, tileIndex, laneIndex){
-	  var newCount = type.cols * type.rows;
+	valid: function(newCount, tileIndex, laneIndex){
     if((newCount+this.getObjectsCount(this.lanes[laneIndex].tiles[tileIndex].objects)) > 27){
       alert("You can't add this item in this tile. This tile reached the maximum number of allowed objects. Items can be added in this thile but in other lanes.");
       return false;

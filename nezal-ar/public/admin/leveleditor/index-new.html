@@ -15,6 +15,7 @@
 		<script type="text/javascript" src="js/lane.js"> </script>
 		<script type="text/javascript" src="js/grid.js"> </script>
 		<script type="text/javascript" src="js/message.js"> </script>
+		<script type="text/javascript" src="js/level_loader.js"> </script>
 		<script type="text/javascript" src="js/data_export.js"> </script>
 		<script type="text/javascript" src="js/data_loader.js"> </script>
 		<script type="text/javascript" src="js/background_handler.js"> </script>
@@ -30,8 +31,8 @@
       		
       var levelEditor = null;  
 			document.observe("dom:loaded", function() {
-        //Mission.initialize();
 				levelEditor = new LevelEditor();
+				Mission.initialize();
 			});
 			
 		</script>
@@ -76,12 +77,12 @@
 		<div id="bgDropbox">
 			<div class="bgTitle">Background Layer 1</div>
 			<div class="bgTitle">Background Layer 2</div>
-			<div class="bgTitle">Day Night Images</div>
+			<div class="bgTitle">Landmarks Images</div>
 			<div id="bgLayer1" class="bgDropbox">
 			</div>
 			<div id="bgLayer2" class="bgDropbox">
 			</div>
-			<div id="day_night" class="bgDropbox">
+			<div id="landmarks" class="bgDropbox">
 			</div>
 		</div>	
 

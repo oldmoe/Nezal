@@ -55,49 +55,110 @@
   </div>
 </textarea>
 
-<textarea id='friends'>
-  <div  id="friends" class="users">
-    <div class="left">
-      <img src="" />
+<textarea style="display:none;" id='friends'>
+	<!--Friends Bar-->
+  <div class="friendsBar">
+  	<!--Game funcations-->
+  	<div class="gameFunctions">
+    	<!--Crowd menu button-->
+    	<a class="crowdMenuItem" href="#"><span class="loadedImg" imgSrc="images/friends/menu_icon.png" alt="Menu Item" /></a>
+      <!--Marketplace button-->
+      <a class="marketplaceMenuItem" href="#"><span class="loadedImg" imgSrc="images/friends/menu_icon.png" alt="Menu Item" /></a>
+      <!--Rank button-->
+      <a class="rankMenuItem" href="#"><span class="loadedImg" imgSrc="images/friends/menu_icon.png" alt="Menu Item" /></a>
+      <!--Vote button-->
+      <a class="voteMenuItem" href="#"><span class="loadedImg" imgSrc="images/friends/menu_icon.png" alt="Menu Item" /></a>
+      <a class="homeMenuItem" href="#"><span class="loadedImg" imgSrc="images/friends/home_icon.png" alt="Menu Item" /></a>
+    	<span class="loadedImg" imgSrc="images/friends/functions_background.png" alt="Functions" imgClasses="positioned" />
     </div>
-    <div id="friends-container" class="container">
-      <ul id='defense-ul'>
-        {for friend in scoreManager.friends}
-          <li>
-            <div class="user">
-              <div class="score"> ${friend['scores'][scoreManager.gameMode]} </div>
-			        <img class='photo' src='${friend['picture']}' />	
-              <div class="name"> ${friend['name']} </div>
-              {if friend['greenNotification']==true}
-                <div class="notification greenNotification" id="${friend.service_id}">  
-                </div>
-              {/if}
-              {if friend['redNotification']==true}
-                <div class="notification redNotification" id="${friend.service_id}">  
-                </div>
-              {/if}
+      
+    <!--Friends-->
+    <div class="friendsWrapper">
+    	<!--Friend-->
+      {for friend in topThree}
+    	<div class="friend">
+        <a href="${friend['url']}">
+        	<span class="loadedImg" imgSrc="images/friends/${parseInt(friend_index)+1}.png" alt="rank" imgClasses="rankSign"></span>
+          <span class="friendsScore">
+          	<span>${friend['scores'][scoreManager.gameMode]}</span>
+          	<span class="loadedImg" imgSrc="images/friends/friendsScore.png" alt="Friends score" imgClasses="positioned"></span>
+          </span>
+          <img class="friendAvatar" src="${friend['picture']}" alt="Firend avatar" />
+          <span class="friendName">${friend['first_name']}</span>
+        	<span class="loadedImg" imgSrc="images/friends/friend_box.png" alt="friend" />
+        </a>
+      </div>
+      {/for}
+
+      <!--Left controls-->
+      <div id="friends">
+        <div class="leftControls">
+          <div class="left">
+            <span class="loadedImg" imgSrc="images/friends/previous_button.png" alt="Previous" />       
+          </div>    
+          <div class="first">      
+            <span class="loadedImg" imgSrc="images/friends/first_button.png" alt="First" />      	
+          </div>
+        </div>
+        <!--Friend-->
+        <div class="friend">
+          <a href="#">
+            <span class="friendsScore">
+            	<span>Invite</span>
+            	<span class="loadedImg" imgSrc="images/friends/friendsScore.png" alt="Friends score" imgClasses="positioned"></span>
+            </span>
+            <div class="inviteFriend friendAvatar">
+              <span class="loadedImg" imgSrc="images/friends/friendsRank.png" alt="Invite Friend" imgClasses="friendAvatar" />
             </div>
-          </li>
-        {/for}
+            <span class="friendName">Invite</span>
+            <span class="loadedImg" imgSrc="images/friends/friend_box.png" alt="friend" />
+          </a>
+        </div>
+        <div id="friends-container" class="floatingFriends">
+        	<ul id="friends-ul">
+            {for friend in list}
+          	<li>
+              <!--Friend-->
+              <div class="friend">
+                <a href="${friend['url']}">
+                  <span class="friendsScore">
+                  	<span>${friend['scores'][scoreManager.gameMode]}</span>
+                  	<span class="loadedImg" imgSrc="images/friends/friendsScore.png" alt="Friends score" imgClasses="positioned"></span>
+                  </span>
+                  <img class="friendAvatar" src="${friend['picture']}" alt="Firend avatar" />
+                  <span class="friendName">${friend['first_name']}</span>
+                  <span class="loadedImg" imgSrc="images/friends/friend_box.png" alt="friend" />
+                </a>
+              </div>
+            </li>
+            {/for}
+          </ul>
+        </div>
+        <!--Right controls-->
+        <div class="rightControls">
+          <div class="right">
+            <span class="loadedImg" imgSrc="images/friends/next_button.png" alt="Next" />
+          </div>
+          <div class="last">
+            <span class="loadedImg" imgSrc="images/friends/last_button.png" alt="Last" />
+          </div>
+        </div>
+      </div>
+    	<span class="loadedImg" imgSrc="images/friends/friends_bar.png" alt="friends background" imgClasses="positioned"/>
+    </div>
+
+    <!--Switching tabs-->
+    <div class="swithcingTabs">
+      <ul>
+      	<li {if scoreManager.mode=="global"} class="selected" {/if}>
+          <a href="javascript:void(0)"><span class="loadedImg" imgSrc="images/friends/worldRank.png" alt="World Rank" /></a>
+        </li>
+        <li {if scoreManager.mode=="friends"} class="selected" {/if}>
+          <a href="javascript:void(0)"><span class="loadedImg" imgSrc="images/friends/friendsRank.png" alt="Friends Rank" /></a>
+        </li>
       </ul>
     </div>
-    <div class="right">
-      <img src="" />
-    </div>
-  </div>
-</textarea>
 
-<textarea id='topScorers'>
-  <div  id="topScorers" class="users">
-    {for user in scoreManager.topScorers.top}
-    <div class="user">
-      <div class="score"> ${user['scores'][scoreManager.gameMode]} </div>
-      <div>
-  			<img class='photo' src="${user['picture']}" />	
-      </div>
-      <div class="name"> ${user['name']} </div>
-    </div>
-    {/for}
   </div>
 </textarea>
 
@@ -112,17 +173,6 @@
       ${mode_index.capitalize()} Score
     </div>
   {/for}
-  </div>
-  <div id="gameModes">
-    {for mode in scoreManager.gameModes}
-        <span id="${mode}" {if mode == scoreManager.gameMode}
-                            class="gameModeTab selected"  
-                          {else}  
-                            class="gameModeTab"
-                          {/if} > 
-          ${mode} 
-        </span>                      
-    {/for}
   </div>
 </textarea>
 
@@ -149,3 +199,19 @@
     </div>
   </div>
 </textarea>
+
+
+<textarea style="display:none;" id='topScorersddd'>
+  <div id="gameModes">
+    {for mode in scoreManager.gameModes}
+        <span id="${mode}" {if mode == scoreManager.gameMode}
+                            class="gameModeTab selected"  
+                          {else}  
+                            class="gameModeTab"
+                          {/if} > 
+          ${mode} 
+        </span>                      
+    {/for}
+  </div>
+</textarea>
+

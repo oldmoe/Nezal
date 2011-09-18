@@ -1,11 +1,11 @@
 var EditorData = [
-  {src:'images/objects/amn_markazy.png', name:'wood_stick_cs', category:'enemy', type: "1_1"},
-  {src:'images/objects/amn_markazy.png', name:'wood_stick_cs', category:'enemy', type: "1_2"},
-  {src:'images/objects/amn_markazy.png', name:'wood_stick_cs', category:'enemy', type: "1_3"},
-  {src:'images/objects/amn_markazy.png', name:'wood_stick_cs', category:'enemy', type: "2_3"},
-  {src:'images/objects/amn_markazy.png', name:'wood_stick_cs', category:'enemy', type: "3_3"},
-  {src:'images/objects/amn_markazy.png', name:'wood_stick_cs', category:'enemy', type: "6_3"},
-  {src:'images/objects/amn_markazy.png', name:'wood_stick_cs', category:'enemy', type: "9_3"},
+  {src:'images/objects/am1.png', name:'wood_stick_cs', category:'enemy', type: "1_1"},
+  {src:'images/objects/am2.png', name:'wood_stick_cs', category:'enemy', type: "1_2"},
+  {src:'images/objects/am3.png', name:'wood_stick_cs', category:'enemy', type: "1_3"},
+  {src:'images/objects/am6.png', name:'wood_stick_cs', category:'enemy', type: "2_3"},
+  {src:'images/objects/am9.png', name:'wood_stick_cs', category:'enemy', type: "3_3"},
+  {src:'images/objects/am18.png', name:'wood_stick_cs', category:'enemy', type: "6_3"},
+  {src:'images/objects/am27.png', name:'wood_stick_cs', category:'enemy', type: "9_3"},
   {src:'images/objects/amn_markazy_car.png', name:'amn_markazy_car', category:'enemy'}, 
   {src:'images/objects/box_car.png', name:'box_car', category:'enemy'},
   
@@ -29,11 +29,11 @@ var EditorData = [
   {src:'images/objects/salafi.png', name:'salafi', category:'crowd'}, 
   {src:'images/objects/ultras.png', name:'ultras', category:'crowd'},
   //backgrounds
-  {src:'images/backgrounds/3amod.png', name:'3amod', category:'background'},
-  {src:'images/backgrounds/land.png', name:'land', category:'background'},
-  {src:'images/backgrounds/sky1.png', name:'sky1', category:'background'},
-  {src:'images/backgrounds/sky2.png', name:'sky2', category:'background'},
-  {src:'images/backgrounds/sky3.png', name:'sky3', category:'background'},
-  {src:'images/backgrounds/skyline.png', name:'skyline', category:'background'},
-  {src:'images/backgrounds/street_marks.png', name:'street_marks', category:'background'} 
+  {src:'images/backgrounds/3amod.png', name:'3amod.png', category:'background'},
+  {src:'images/backgrounds/land.png', name:'land.png', category:'background'},
+  {src:'images/backgrounds/sky1.png', name:'sky1.png', category:'background'},
+  {src:'images/backgrounds/sky2.png', name:'sky2.png', category:'background'},
+  {src:'images/backgrounds/sky3.png', name:'sky3.png', category:'background'},
+  {src:'images/backgrounds/skylines_icon.png', name:'skyline.png', category:'background'},
+  {src:'images/backgrounds/street_marks.png', name:'street_marks.png', category:'background'} 
 ];

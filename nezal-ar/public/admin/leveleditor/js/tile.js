@@ -82,11 +82,17 @@ var Tile = Class.create({
     
     this.loadType(obj, type);
     
-    if(!this.parent.parent.valid(obj.type, this.getPosition(), this.parent.getPosition())){
-      return;
+    var count = 1;
+    if(obj.category == 'enemy')
+      count = obj.type.clos * obj.type.rows;
+    
+    if(!this.parent.parent.valid(count, this.getPosition(), this.parent.getPosition())){
+      return false;
     }
     
     this.createObject(obj, multiple);
+    
+    return true;
 	},
 
   loadType: function(obj, type){

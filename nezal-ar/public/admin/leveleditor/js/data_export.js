@@ -71,7 +71,13 @@ var DataExporter = Class.create({
 		
 		var gameData = {};
 		gameData.data = data;
-		gameData.backgrounds = [this.levelEditor.backgroundHandler.getLayer1Data(), this.levelEditor.backgroundHandler.getLayer2Data(), this.levelEditor.backgroundHandler.getDayNightData()];
+		
+		gameData.backgrounds = {
+		  layer1:this.levelEditor.backgroundHandler.getLayer1Data(), 
+		  layer2: this.levelEditor.backgroundHandler.getLayer2Data(), 
+		  landmarks: this.levelEditor.backgroundHandler.getLandMarks()
+	  };
+		  
 		var settings = this.levelEditor.settingsHandler.getData();
 		gameData.energy = settings.energy;
 		gameData.environment = settings.environment;
@@ -84,7 +90,6 @@ var DataExporter = Class.create({
     var gameData = this.exportData();
 		$(this.containerId).select('[id=dataMessage]')[0].value = Object.toJSON(gameData);
 		$(this.containerId).style.display = 'block';
-  }	
-	
+  }
 	
 });
