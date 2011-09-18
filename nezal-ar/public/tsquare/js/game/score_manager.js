@@ -232,6 +232,7 @@ var ScoreManager = Class.create({
     userList.each(function(user){
                     if(user.service_id == socialEngine.userId())  self.currentUser = user;
                     if(socialDataHash[user.service_id])
+                    {
                       user.name = socialDataHash[user.service_id].name;
                       user.first_name = socialDataHash[user.service_id].first_name;
                       user.last_name = socialDataHash[user.service_id].last_name;
