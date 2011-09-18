@@ -63,6 +63,8 @@ var Game = Class.create({
     missionData = mission;
     this.misssionLoaded = false;
 	  var backgroundImages = ['land.png' , '3amod.png', 'street_marks.png']
+    backgrounds = [mission.backgrounds['layer1'], mission.backgrounds['layer2'], mission.backgrounds['landmarks']]
+    mission.backgrounds = backgrounds;
     backgroundImages.push(mission.backgrounds[0][0].name)
     backgroundImages.push(mission.backgrounds[1][0].name)
     backgroundImages.push(mission.backgrounds[2][0].name)
