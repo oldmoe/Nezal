@@ -43,6 +43,7 @@ var ScoreManager = Class.create({
                           self.loadFriendsTab('global');
                         }
                       });
+//    this.openMarketplace();
   },
 
   loadFriendsTab : function(gameMode) {

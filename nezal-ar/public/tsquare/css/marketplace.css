@@ -5,7 +5,7 @@ ul { list-style:none; margin:0px; padding:0px; }
 
 #marketplace { position: absolute; z-index: 201; }
 
-.container { width:760px; height:685px; background:url(../images/marketplace/dummy/background.gif) no-repeat top; margin:0 auto; }
+.container { width:760px; height:685px; margin:0 auto; }
 .positioned { position:absolute; top:0px; left:0px; z-index:1; }
 
 /*-------Widnow-------*/
@@ -32,11 +32,11 @@ ul { list-style:none; margin:0px; padding:0px; }
 /*-------Scrolled Items-------*/
 .leftControls { float:left; width:33px; position:absolute; left:-21px; top:130px; }
 .leftControls a { display:block; width:33px; height:33px; margin:3px 0;  overflow:hidden; position:relative; }
-.leftControls a:hover img, .leftControls a.selected img { position:absolute; top:-33px;  }
+.leftControls a.selected img { position:absolute; top:-33px;  }
 
 .rightControls { float:left; width:33px; position:absolute; right:-21px; top:130px; }
 .rightControls a { display:block; width:33px; height:33px; margin:3px 0;  overflow:hidden; position:relative;  }
-.rightControls a:hover img, .rightControls a.selected img { position:absolute; top:-33px;  }
+.rightControls a.selected img { position:absolute; top:-33px;  }
 
 .floatingItems { float:left; width:678px; overflow:hidden; margin:8px 8px 5px 8px; position:relative; }
 .floatingItems ul { float:left; width:680px; }
