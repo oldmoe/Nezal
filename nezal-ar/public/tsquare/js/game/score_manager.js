@@ -231,11 +231,13 @@ var ScoreManager = Class.create({
     // Fill social data
     userList.each(function(user){
                     if(user.service_id == socialEngine.userId())  self.currentUser = user;
-                    user.name = socialDataHash[user.service_id].name;
-                    user.first_name = socialDataHash[user.service_id].first_name;
-                    user.last_name = socialDataHash[user.service_id].last_name;
-                    user.picture = socialDataHash[user.service_id].pic_square;
-                    user.url = socialDataHash[user.service_id].profile_url;
+                    if(socialDataHash[user.service_id])
+                      user.name = socialDataHash[user.service_id].name;
+                      user.first_name = socialDataHash[user.service_id].first_name;
+                      user.last_name = socialDataHash[user.service_id].last_name;
+                      user.picture = socialDataHash[user.service_id].pic_square;
+                      user.url = socialDataHash[user.service_id].profile_url;
+                    }
                   });
   }
   
