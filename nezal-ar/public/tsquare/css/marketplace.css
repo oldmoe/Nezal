@@ -9,7 +9,7 @@ ul { list-style:none; margin:0px; padding:0px; }
 .positioned { position:absolute; top:0px; left:0px; z-index:1; }
 
 /*-------Widnow-------*/
-.window { float:left; width:715px; background:url(../images/marketplace/window_background.png) no-repeat top; margin:105px 27px 0 19px; position:relative; height:401px; }
+.window { float:left; width:715px; background:url(../images/marketplace/window_background.png) no-repeat top; margin:46px 27px 0 19px; position:relative; height:401px; }
 .windowTitle { float:left; width:254px; height:44px; position:relative; top:-44px; left:240px; }
 .close { float:left; width:39px; height:39px; position:relative; left:436px; top:-15px; overflow:hidden }
 .close a { display:block; width:39px; height:39px; }
@@ -31,12 +31,12 @@ ul { list-style:none; margin:0px; padding:0px; }
 
 /*-------Scrolled Items-------*/
 .leftControls { float:left; width:33px; position:absolute; left:-21px; top:130px; }
-.leftControls a { display:block; width:33px; height:33px; margin:3px 0;  overflow:hidden; position:relative; }
-.leftControls a.selected img { position:absolute; top:-33px;  }
+.leftControls a { display:block; width:33px; height:33px; margin:3px 0;  overflow:hidden; position:relative; cursor:default; }
+.leftControls a.selected img { position:absolute; top:-33px; cursor:pointer; }
 
 .rightControls { float:left; width:33px; position:absolute; right:-21px; top:130px; }
-.rightControls a { display:block; width:33px; height:33px; margin:3px 0;  overflow:hidden; position:relative;  }
-.rightControls a.selected img { position:absolute; top:-33px;  }
+.rightControls a { display:block; width:33px; height:33px; margin:3px 0;  overflow:hidden; position:relative; cursor:default; }
+.rightControls a.selected img { position:absolute; top:-33px; cursor:pointer;  }
 
 .floatingItems { float:left; width:678px; overflow:hidden; margin:8px 8px 5px 8px; position:relative; }
 .floatingItems ul { float:left; width:680px; }

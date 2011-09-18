@@ -5,17 +5,20 @@ var GameManager = Class.create({
     this.urlParams = urlParams;
     this.network = new TSquareNetwork();
     this.templateManager = new TemplatesManager(this.network);
+    this.loader = new Loader();
     this.start();
   },
 
   start : function(){
     var self = this;
     var callback = function(data) {
-      self.user = data.user_data.data;
-      self.user.coins = data.user_data.coins;
+      self.userData = data.user_data.data;
+      self.userData.coins = data.user_data.coins;
       self.gameData = data.game_data.data;
+      console.log(self.gameData);
       self.missions = data.missions_data.data;
-      self.currentMission = data.current_mission.data;
+      self.currentMission = missionData;//data.current_mission.data;
+      self.meterBar = new MeterBar(self);
       self.scoreManager = new ScoreManager(self);
       self.inbox = new Inbox(self);
       self.marketplace = new Marketplace(self);

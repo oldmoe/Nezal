@@ -24,6 +24,7 @@ class Game < DataStore::Model
     data = {}
     data = @data.clone
     data.delete('missions')
+    data
   end
 
   class << self  

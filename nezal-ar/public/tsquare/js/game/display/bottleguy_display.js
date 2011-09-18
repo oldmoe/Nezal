@@ -8,7 +8,7 @@ BottleguyDisplay = Class.create(CrowdMemberDisplay,{
     this.holdImg = Loader.images.characters['bottleguy_hold.png']
   },
   createSprites : function(){
-    this.sprites.character = new DomImgSprite(this.owner, {img : this.characterImg,noOfFrames : 8})
+    this.sprites.character = new DomImgSprite(this.owner, {img : this.characterImg,noOfFrames : 7})
     this.sprites.character.createAnimation({name:'hold',img:this.holdImg,noOfFrames:1})
     this.sprites.character.createAnimation({name:'walk',img:this.walkImg,noOfFrames:8})
     this.sprites.character.createAnimation({name:'front',img:this.frontImg,noOfFrames:4})
