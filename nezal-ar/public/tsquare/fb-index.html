@@ -1,6 +1,8 @@
 <html>
 	<head>
 		<link type="text/css" href="css/style.css" rel="stylesheet" />
+		<link type="text/css" href="css/main.css" rel="stylesheet" />
+		<link type="text/css" href="css/meter_bar.css" rel="stylesheet" />
 		<link type="text/css" href="css/scores.css" rel="stylesheet" />
     <link type="text/css" href="css/inbox.css" rel="stylesheet" />
     <link type="text/css" href="css/marketplace.css" rel="stylesheet" />
@@ -34,6 +36,7 @@
 
     <script src="js/game/social_engine.js" type="text/javascript"></script>
     <script src="js/game/game_manager.js" type="text/javascript"></script>
+    <script src="js/game/meter_bar.js" type="text/javascript"></script>
     <script src="js/game/score_manager.js" type="text/javascript"></script>
     <script src="js/game/marketplace.js" type="text/javascript"></script>
     <script src="js/game/inbox.js" type="text/javascript"></script>
@@ -113,15 +116,16 @@
 		</script>
 	</head>
 	<body>
-	  <div id="fps">0</div>
-	  <div id="beatFlash" style="display:none;"></div>
-	  <div id="mySquare"></div>
-	  <div id="inProgress" style=""></div>
-    <canvas id="physics" width="760" height="500" style="position:absolute;left:9px;top:9px;"></canvas>
-    <div id="world">
+	  <div id="gameContainer">
+  	  <div id="fps">0</div>
+  	  <div id="beatFlash" style="display:none;"></div>
+  	  <div id="mySquare"></div>
+  	  <div id="inProgress" style=""></div>
+      <div id="world">
+      </div>
+  		<div id="container" style="dislay:none;"></div>
+      <div id="gameCanvas" style="display:none;"></div>
     </div>
-		<div id="container" style="dislay:none;"></div>
-    <div id="gameCanvas" style="display:none;"></div>
     <div id="modalWindowMsg" style="display:none;">
       <div id="contents">
       </div>
@@ -130,20 +134,26 @@
       </div>
     </div>
     
+
     <div id="marketplace">
     </div>
     
-    <div id="send_requests">
+    <div id="send_requests" style="display:none;">
     </div>
     
-    <div id="inbox">
+    <div id="inbox" style="display:none;">
     </div>
     
-    <div id="scores">
+    <div id="uiContainer" class="uiContainer">
+      <div id="background"></div>
+      <div id="meterBar"></div>
+      <div id="missions"></div>
+      <div id="scores"></div>
+      <div id="scoresInProgress" style="display:none;"></div>
     </div>
-    <div id="scoresInProgress" style="display:none;">
-    </div>
+
     <div id="interaction" style="display:none;">
     </div>
+
 	</body>
 </html>
