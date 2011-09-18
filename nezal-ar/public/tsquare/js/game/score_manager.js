@@ -114,17 +114,17 @@ var ScoreManager = Class.create({
     var params = {scoreManager:this};
     if(this.mode == 'friends')
     {
-        params['topThree'] = this.friends.slice(0,3);
+        params['topThree'] = this.friends.slice(0,1);
         params['list'] = this.friends
     }else
     {
-        params['topThree'] = this.topScorers.top.slice(0,3);
+        params['topThree'] = this.topScorers.top.slice(0,1);
         params['list'] = this.topScorers['list'];
     }
     $('scores').innerHTML = this.templateManager.load('friends', params);
     Game.addLoadedImagesToDiv('scores');
     if(self.carousel) self.carousel.destroy();      
-    self.carousel = new Carousel("friends", self.images, 2);
+    self.carousel = new Carousel("friends", self.images, 4);
     var rank = 0;
     for(var i=0; i< params['list'].length; i++)
     {
