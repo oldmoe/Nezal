@@ -43,7 +43,6 @@ var ScoreManager = Class.create({
                           self.loadFriendsTab('global');
                         }
                       });
-//    this.openMarketplace();
   },
 
   loadFriendsTab : function(gameMode) {
@@ -59,7 +58,7 @@ var ScoreManager = Class.create({
       var callback = function(scores){
         self.friends = scores;
         self.sortFriends();
-        self.fillSocialData(self.friends, socialData);
+        socialEngine.fillSocialData(self.friends, socialData);
         self.display();
       }
       self.network.friends(friendsIds, callback);
@@ -75,8 +74,8 @@ var ScoreManager = Class.create({
       var ids = self.topScorers['top'].collect(function(user){return user['service_id']});
       ids = ids.concat(self.topScorers['list'].collect(function(user){return user['service_id']}));
       socialEngine.getUsersInfo(ids, function(data){
-        self.fillSocialData(self.topScorers['top'], data)
-        self.fillSocialData(self.topScorers['list'], data)
+        socialEngine.fillSocialData(self.topScorers['top'], data)
+        socialEngine.fillSocialData(self.topScorers['list'], data)
         self.display();
       })
     }
@@ -95,6 +94,26 @@ var ScoreManager = Class.create({
     var self = this;
     // Set green_notification field to true to users whom current user passed
     // Set red_notification field to true to users who passed current user
+    var params = {scoreManager:this};
+    if(this.mode == 'friends')
+    {
+        params['topThree'] = this.friends.slice(0,1);
+        params['list'] = this.friends
+    }else
+    {
+        params['topThree'] = this.topScorers.top.slice(0,1);
+        params['list'] = this.topScorers['list'];
+    }
+    var rank = 0;
+    for(var i=0; i< params['list'].length; i++)
+    {
+      if(params['list'][i].service_id != socialEngine.userId())
+        rank ++;
+      else{
+        this.currentUser = params['list'][i]; 
+        break;   
+      }
+    }
     if(self.mode == 'friends')
     {
       for(var i=0; i< this.friends.length; i++)
@@ -112,28 +131,10 @@ var ScoreManager = Class.create({
         }        
       }
     }
-    var params = {scoreManager:this};
-    if(this.mode == 'friends')
-    {
-        params['topThree'] = this.friends.slice(0,1);
-        params['list'] = this.friends
-    }else
-    {
-        params['topThree'] = this.topScorers.top.slice(0,1);
-        params['list'] = this.topScorers['list'];
-    }
     $('scores').innerHTML = this.templateManager.load('friends', params);
     Game.addLoadedImagesToDiv('scores');
     if(self.carousel) self.carousel.destroy();      
     self.carousel = new Carousel("friends", self.images, 3);
-    var rank = 0;
-    for(var i=0; i< params['list'].length; i++)
-    {
-      if(params['list'][i].service_id != socialEngine.userId())
-        rank ++;
-      else
-        break;   
-    }
     self.carousel.scrollTo(rank);
     self.carousel.checkButtons();
     this.attachListeners();
@@ -219,34 +220,6 @@ var ScoreManager = Class.create({
   sortFriends : function() {
     var self = this
     this.friends  = this.friends.sortBy(function(friend){ return friend.scores[self.gameMode]}).reverse();
-  }, 
-
-  /*
-    Set currentUser field
-    Megre the scoring data with the social data(name, picture) in one Array 
-  */
-  fillSocialData : function(userList, socialData){
-    var self = this;
-    var socialDataHash = {};
-    socialData.each(function(user){ socialDataHash[user.uid] = user });
-    // Fill social data
-    var invalid = [];
-    userList.each(function(user, index){
-                    if(user.service_id == socialEngine.userId())  self.currentUser = user;
-                    if(socialDataHash[user.service_id])
-                    {
-                      user.name = socialDataHash[user.service_id].name;
-                      user.first_name = socialDataHash[user.service_id].first_name;
-                      user.last_name = socialDataHash[user.service_id].last_name;
-                      user.picture = socialDataHash[user.service_id].pic_square;
-                      user.url = socialDataHash[user.service_id].profile_url;
-                    }else{
-                      invalid.push(index);
-                    }
-                  });
-    invalid.each(function(index){
-      userList.splice(index, 1);
-    });
   }
   
 })
