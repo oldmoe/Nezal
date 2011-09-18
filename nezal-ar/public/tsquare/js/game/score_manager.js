@@ -34,7 +34,15 @@ var ScoreManager = Class.create({
     /* This should be MOVED to initialize game part */
     this.network = game.network;    
     this.templateManager = game.templateManager;
-    this.loadFriendsTab('global')
+    var self = this;
+    new Loader().load([ {images : ["1.png", "2.png", "3.png", "first_button.png", "last_button.png", 'next_button.png', 'previous_button.png',
+                                  "friend_box.png", "friends_bar.png", "friendsRank.png", "friendsScore.png", "functions_background.png",
+                                  "home_icon.png", "menu_icon.png", "worldRank.png"], path: 'images/friends/', store: 'friends'}],
+                      {
+                        onFinish: function(){
+                          self.loadFriendsTab('global');
+                        }
+                      });
   },
 
   loadFriendsTab : function(gameMode) {
@@ -75,6 +83,7 @@ var ScoreManager = Class.create({
   },
 
   switchScoringMode : function(gameMode) {
+    $('scoresInProgress').show();
     if(this.mode == 'global')
       this.loadFriendsTab(this.gameMode);
     else
@@ -113,6 +122,7 @@ var ScoreManager = Class.create({
         params['list'] = this.topScorers['list'];
     }
     $('scores').innerHTML = this.templateManager.load('friends', params);
+    Game.addLoadedImagesToDiv('scores');
     if(self.carousel) self.carousel.destroy();      
     self.carousel = new Carousel("friends", self.images, 2);
     var rank = 0;
@@ -123,10 +133,10 @@ var ScoreManager = Class.create({
       else
         break;   
     }
-    console.log(rank)
     self.carousel.scrollTo(rank);
     self.carousel.checkButtons();
     this.attachListeners();
+    $('scoresInProgress').hide();
   },
 
   attachListeners : function() {
@@ -219,13 +229,23 @@ var ScoreManager = Class.create({
     var socialDataHash = {};
     socialData.each(function(user){ socialDataHash[user.uid] = user });
     // Fill social data
-    userList.each(function(user){
+    var invalid = [];
+    userList.each(function(user, index){
                     if(user.service_id == socialEngine.userId())  self.currentUser = user;
-                    user.name = socialDataHash[user.service_id].name;
-                    user.first_name = socialDataHash[user.service_id].first_name;
-                    user.last_name = socialDataHash[user.service_id].last_name;
-                    user.picture = socialDataHash[user.service_id].pic_square;
+                    if(socialDataHash[user.service_id])
+                    {
+                      user.name = socialDataHash[user.service_id].name;
+                      user.first_name = socialDataHash[user.service_id].first_name;
+                      user.last_name = socialDataHash[user.service_id].last_name;
+                      user.picture = socialDataHash[user.service_id].pic_square;
+                      user.url = socialDataHash[user.service_id].profile_url;
+                    }else{
+                      invalid.push(index);
+                    }
                   });
+    invalid.each(function(index){
+      userList.splice(index, 1);
+    });
   }
   
 })
