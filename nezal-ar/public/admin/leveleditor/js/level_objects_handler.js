@@ -87,7 +87,6 @@ var LevelObjectsHandler = new Class.create({
 			var i = tile.settings.random.start;
 			var stop = false;
 			while(i<=end && !stop){
-				
 				for (var k=0; k < freq; k++) {
 					this.placeItemRandomly(lanes[j], tile, interval, i)
 				}

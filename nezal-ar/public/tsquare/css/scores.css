@@ -31,7 +31,7 @@ ul { list-style:none; margin:0px; padding:0px; }
 .friendsWrapper { float:right; width:542px; position:relative; top:48px; padding:0 0 0 5px; height:112px; }
 .friend { display:inline-block; width:85px; position:relative; z-index:2; margin:5px 2px 0 2px; }
 .friend a { font-weight:bold; color:#000; text-decoration:none; }
-.friendAvatar { position:absolute; top:10px; left:13px; width:60px;}
+.friendAvatar { position:absolute; top:12px; left:12px; width:60px;}
 .friendName { position:absolute; top:75px; left:5px; width:75px; text-align:center; display:inline-block;  text-shadow:1px 1px 0 #ffce57; }
 .rankSign { position:absolute; width:25px; height:26px; top:70px; left:-4px; z-index: 10;}
 
@@ -43,7 +43,7 @@ ul { list-style:none; margin:0px; padding:0px; }
 .friendsWrapper .rightControls img.rightOff, .friendsWrapper .leftControls img.leftOff { position:absolute; top:0px; }
 .friendsWrapper .rightControls img.rightOn, .friendsWrapper .leftControls img.leftOn { position:absolute; top:-33px; }
 
-.floatingFriends { display:inline-block; width:372px; overflow:hidden; position:relative; top:3px; }
+.floatingFriends { display:inline-block; width:278px; overflow:hidden; position:relative; top:3px; }
 .floatingFriends ul { width:1200px; }
 .floatingFriends li { display:inline-block; }
 
@@ -57,13 +57,16 @@ ul { list-style:none; margin:0px; padding:0px; }
 .friendsScore { position:absolute; width:59px; height:32px; z-index:3; left:10px; top:-4px; }
 .friendsScore span { position:relative; z-index:2; width:59px; height:17px; display:block; padding:3px 2px 2px 2px; text-align:center; text-shadow:1px 1px 0 #fffaae; color:#763d00; }
 
+.inviteFriend { overflow:hidden; height:60px; left:0px; width:70px; height:60px;}
+
 #scores{
   background: none repeat scroll 0 0 black;
   height: 180px;
   left: 0;
   position: absolute;
-  top: 448px;
-  width: 760px;
+  top: 440px;
+  width: 770px;
+  padding: 0px 5px;
   z-index: 1000;
 }
 #scoresInProgress{
@@ -71,8 +74,8 @@ ul { list-style:none; margin:0px; padding:0px; }
   height: 180px;
   left: 0;
   position: absolute;
-  top: 515px;
-  width: 760px;
+  top: 440px;
+  width: 780px;
   z-index: 1010;  
   opacity : 0.6;
   cursor : progress;
