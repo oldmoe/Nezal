@@ -11,6 +11,7 @@ var LevelLoader = Class.create({
     if(this.missionData){
       this.loadObjects(this.missionData.data);
       this.loadBackgrounds(this.missionData.backgrounds);
+      alert("Data loaded successfully.");
     }else{
       alert("No data to load.");
     }

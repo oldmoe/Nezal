@@ -87,10 +87,12 @@ var Tile = Class.create({
       count = obj.type.clos * obj.type.rows;
     
     if(!this.parent.parent.valid(count, this.getPosition(), this.parent.getPosition())){
-      return;
+      return false;
     }
     
     this.createObject(obj, multiple);
+    
+    return true;
 	},
 
   loadType: function(obj, type){
