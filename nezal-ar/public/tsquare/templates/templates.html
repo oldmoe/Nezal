@@ -61,15 +61,15 @@
   	<!--Game funcations-->
   	<div class="gameFunctions">
     	<!--Crowd menu button-->
-    	<a class="crowdMenuItem" href="#"><img src="images/friends/menu_icon.png" alt="Menu Item" /></a>
+    	<a class="crowdMenuItem" href="#"><span class="loadedImg" imgSrc="images/friends/menu_icon.png" alt="Menu Item" /></a>
       <!--Marketplace button-->
-      <a class="marketplaceMenuItem" href="#"><img src="images/friends/menu_icon.png" alt="Menu Item" /></a>
+      <a class="marketplaceMenuItem" href="#"><span class="loadedImg" imgSrc="images/friends/menu_icon.png" alt="Menu Item" /></a>
       <!--Rank button-->
-      <a class="rankMenuItem" href="#"><img src="images/friends/menu_icon.png" alt="Menu Item" /></a>
+      <a class="rankMenuItem" href="#"><span class="loadedImg" imgSrc="images/friends/menu_icon.png" alt="Menu Item" /></a>
       <!--Vote button-->
-      <a class="voteMenuItem" href="#"><img src="images/friends/menu_icon.png" alt="Menu Item" /></a>
-      <a class="homeMenuItem" href="#"><img src="images/friends/home_icon.png" alt="Menu Item" /></a>
-    	<img class="positioned" src="images/friends/functions_background.png" alt="Functions" />
+      <a class="voteMenuItem" href="#"><span class="loadedImg" imgSrc="images/friends/menu_icon.png" alt="Menu Item" /></a>
+      <a class="homeMenuItem" href="#"><span class="loadedImg" imgSrc="images/friends/home_icon.png" alt="Menu Item" /></a>
+    	<span class="loadedImg" imgSrc="images/friends/functions_background.png" alt="Functions" imgClasses="positioned" />
     </div>
       
     <!--Friends-->
@@ -78,14 +78,14 @@
       {for friend in topThree}
     	<div class="friend">
       	<a href="#">
-        	<img class="rankSign" src="images/friends/${parseInt(friend_index)+1}.png" alt="rank" />
+        	<span class="loadedImg" imgSrc="images/friends/${parseInt(friend_index)+1}.png" alt="rank" imgClasses="rankSign"></span>
           <span class="friendsScore">
           	<span>${friend['scores'][scoreManager.gameMode]}</span>
-          	<img class="positioned" src="images/friends/friendsScore.png" alt="Friends score" />
+          	<span class="loadedImg" imgSrc="images/friends/friendsScore.png" alt="Friends score" imgClasses="positioned"></span>
           </span>
           <img class="friendAvatar" src="${friend['picture']}" alt="Firend avatar" />
           <span class="friendName">${friend['first_name']}</span>
-          <img src="images/friends/friend_box.png" alt="friend" />
+        	<span class="loadedImg" imgSrc="images/friends/friend_box.png" alt="friend" />
         </a>
       </div>
       {/for}
@@ -94,10 +94,10 @@
       <div id="friends">
         <div class="leftControls">
           <div class="left">
-            <img src="images/friends/previous_button.png" alt="Previous" />       
+            <span class="loadedImg" imgSrc="images/friends/previous_button.png" alt="Previous" />       
           </div>    
           <div class="first">      
-            <img src="images/friends/first_button.png" alt="First" />      	
+            <span class="loadedImg" imgSrc="images/friends/first_button.png" alt="First" />      	
           </div>
         </div>
         <div id="friends-container" class="floatingFriends">
@@ -109,11 +109,11 @@
                 <a href="#">
                   <span class="friendsScore">
                   	<span>${friend['scores'][scoreManager.gameMode]}</span>
-                  	<img class="positioned" src="images/friends/friendsScore.png" alt="Friends score" />
+                  	<span class="loadedImg" imgSrc="images/friends/friendsScore.png" alt="Friends score" imgClasses="positioned"></span>
                   </span>
                   <img class="friendAvatar" src="${friend['picture']}" alt="Firend avatar" />
                   <span class="friendName">${friend['first_name']}</span>
-                  <img src="images/friends/friend_box.png" alt="friend" />
+                  <span class="loadedImg" imgSrc="images/friends/friend_box.png" alt="friend" />
                 </a>
               </div>
             </li>
@@ -123,24 +123,24 @@
         <!--Right controls-->
         <div class="rightControls">
           <div class="right">
-            <img src="images/friends/next_button.png" alt="Next" />
+            <span class="loadedImg" imgSrc="images/friends/next_button.png" alt="Next" />
           </div>
           <div class="last">
-            <img src="images/friends/last_button.png" alt="Last" />
+            <span class="loadedImg" imgSrc="images/friends/last_button.png" alt="Last" />
           </div>
         </div>
       </div>
-    	<img class="positioned" src="images/friends/friends_bar.png" alt="friends background" />
+    	<span class="loadedImg" imgSrc="images/friends/friends_bar.png" alt="friends background" imgClasses="positioned"/>
     </div>
 
     <!--Switching tabs-->
     <div class="swithcingTabs">
       <ul>
       	<li {if scoreManager.mode=="global"} class="selected" {/if}>
-          <a href="javascript:void(0)"><img src="images/friends/worldRank.png" alt="World Rank" /></a>
+          <a href="javascript:void(0)"><span class="loadedImg" imgSrc="images/friends/worldRank.png" alt="World Rank" /></a>
         </li>
         <li {if scoreManager.mode=="friends"} class="selected" {/if}>
-          <a href="javascript:void(0)"><img src="images/friends/friendsRank.png" alt="Friends Rank" /></a>
+          <a href="javascript:void(0)"><span class="loadedImg" imgSrc="images/friends/friendsRank.png" alt="Friends Rank" /></a>
         </li>
       </ul>
     </div>
@@ -188,35 +188,6 @@
 
 
 <textarea style="display:none;" id='topScorersddd'>
-  <div  id="friends" class="users">
-    <div class="left">
-      <img src="" />
-    </div>
-    <div id="friends-container" class="container">
-      <ul id='defense-ul'>
-        {for friend in scoreManager.friends}
-          <li>
-            <div class="user">
-              <div class="score"> ${friend['scores'][scoreManager.gameMode]} </div>
-			        <img class='photo' src='${friend['picture']}' />	
-              <div class="name"> ${friend['name']} </div>
-              {if friend['greenNotification']==true}
-                <div class="notification greenNotification" id="${friend.service_id}">  
-                </div>
-              {/if}
-              {if friend['redNotification']==true}
-                <div class="notification redNotification" id="${friend.service_id}">  
-                </div>
-              {/if}
-            </div>
-          </li>
-        {/for}
-      </ul>
-    </div>
-    <div class="right">
-      <img src="" />
-    </div>
-  </div>
   <div id="gameModes">
     {for mode in scoreManager.gameModes}
         <span id="${mode}" {if mode == scoreManager.gameMode}

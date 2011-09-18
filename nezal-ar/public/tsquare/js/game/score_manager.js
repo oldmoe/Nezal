@@ -34,7 +34,15 @@ var ScoreManager = Class.create({
     /* This should be MOVED to initialize game part */
     this.network = game.network;    
     this.templateManager = game.templateManager;
-    this.loadFriendsTab('global')
+    var self = this;
+    new Loader().load([ {images : ["1.png", "2.png", "3.png", "first_button.png", "last_button.png", 'next_button.png', 'previous_button.png',
+                                  "friend_box.png", "friends_bar.png", "friendsRank.png", "friendsScore.png", "functions_background.png",
+                                  "home_icon.png", "menu_icon.png", "worldRank.png"], path: 'images/friends/', store: 'friends'}],
+                      {
+                        onFinish: function(){
+                          self.loadFriendsTab('global');
+                        }
+                      });
   },
 
   loadFriendsTab : function(gameMode) {
@@ -113,6 +121,7 @@ var ScoreManager = Class.create({
         params['list'] = this.topScorers['list'];
     }
     $('scores').innerHTML = this.templateManager.load('friends', params);
+    Game.addLoadedImagesToDiv('scores');
     if(self.carousel) self.carousel.destroy();      
     self.carousel = new Carousel("friends", self.images, 2);
     var rank = 0;
