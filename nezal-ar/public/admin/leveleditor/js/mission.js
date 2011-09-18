@@ -23,6 +23,7 @@ var Mission = {
   saveToServer : function(){
     var data = levelEditor.dataExporter.exportData();
     this.currMission.data = data;
+    console.log(data);
     new Ajax.Request( '/' + this.adminUrl + "/" + this.game + '/missions/' + this.id + '.json' , {
                       method : 'put',
                       parameters : { "data" : JSON.stringify(Mission.currMission) },
