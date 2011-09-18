@@ -23,7 +23,7 @@ var Marketplace = Class.create({
     this.special = itemsData.special_items;
     this.crowd_items = itemsData.crowd_items;    
     
-    //this.openMarketplace();
+    this.openMarketplace();
   },
   
   openMarketplace : function(){
@@ -39,6 +39,7 @@ var Marketplace = Class.create({
           self.adjustedMoves.push({name : ItemName + ' 4'});
           self.adjustedMoves.push({name : ItemName + ' 5'});
           self.adjustedMoves.push({name : ItemName + ' 6'});
+          self.adjustedMoves.push({name : ItemName + ' 7'});
         }
       }
       
@@ -49,6 +50,10 @@ var Marketplace = Class.create({
       $$('#moves ul')[0].setStyle( { width: self.containerWidth + 'px' } );
       
       self.adjustNavigators('moves');
+      $$('#marketplace .close')[0].stopObserving('click');
+      $$('#marketplace .close')[0].observe('click', function(event){
+        $('marketplace').innerHTML = "";
+      })
     }
     
     new Loader().load([ {images : ["buy_window_title.png", "close_button.png", "tab_background.png"], path: 'images/marketplace/', store: 'marketplace'}],
@@ -67,7 +72,7 @@ var Marketplace = Class.create({
       return Number(stringStyle.substr(0, length-2));
     }
     var left = getIntegerStyle( $$('#' + marketTab + ' ul')[0].getStyle('marginLeft') );
-    
+    console.log( "left : " + left );
     //Adjusting left controls states
     if( left == 0 ){
       $$('.leftControls a')[0].removeClassName('selected');
@@ -97,19 +102,29 @@ var Marketplace = Class.create({
     
     $$('.leftControls a')[0].observe('click', function(event){
       if( left != 0 ){
-        var marginLeft = getIntegerStyle( $$('#' + marketTab + ' ul')[0].getStyle( 'marginLeft' ) );
-        $$('#' + marketTab + ' ul')[0].setStyle( { marginLeft:  (marginLeft - self.itemWidth)+'px' } );
+        $$('#' + marketTab + ' ul')[0].setStyle( { marginLeft:  (left + self.itemWidth)+'px' } );
         self.adjustNavigators(marketTab);
       }
     });
     $$('.leftControls a')[1].observe('click', function(event){
-      
+      if( left != 0 ){
+        var maxShift = Math.min( self.columns*self.itemWidth, -left );
+        $$('#' + marketTab + ' ul')[0].setStyle( { marginLeft:  (left + maxShift)+'px' } );
+        self.adjustNavigators(marketTab);
+      }
     });
     $$('.rightControls a')[0].observe('click', function(event){
-      
+      if (right != 0) {
+        $$('#' + marketTab + ' ul')[0].setStyle({marginLeft: (left - self.itemWidth) + 'px'});
+        self.adjustNavigators(marketTab);
+      }
     });
     $$('.rightControls a')[1].observe('click', function(event){
-      
+      if( right != 0 ){
+        var maxShift = Math.min( self.columns*self.itemWidth, right );
+        $$('#' + marketTab + ' ul')[0].setStyle( { marginLeft:  (left - maxShift)+'px' } );
+        self.adjustNavigators(marketTab);
+      }
     });
   }
 });
