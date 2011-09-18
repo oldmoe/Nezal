@@ -21,7 +21,7 @@ var CrowdHandler = Class.create(UnitHandler, {
                var crowdMember = userCrowds[crowdType][crowd]
                var level = crowdMember.level
                var category = gameData.crowd_members.category[crowdType]
-               if(!category) category = crowdType
+               if(category == "special" || category == "limited_edition") category = crowdType
                var specs = gameData.crowd_members.specs[category][level]
                this.addCrowdMember(crowdType,specs)
            }

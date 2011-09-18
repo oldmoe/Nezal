@@ -5,7 +5,7 @@ var CrowdMember = Class.create(Unit,{
   maxWater : 700,
   randomDx : 0,
   randomDy : 0,
-  waterDecreaseRate : 0.001,
+  waterDecreaseRate : 0.1,
   commandFilters: [],
   rotationPoints : null,
   rotationSpeed : 15,
@@ -43,7 +43,7 @@ var CrowdMember = Class.create(Unit,{
     this.handler.crowdMembersPerColumn-- 
     if(this.handler.crowdMembersPerColumn == -1){
       this.handler.crowdMembersPerColumn = 2
-      this.handler.initialPositions[y].x-=60
+      this.handler.initialPositions[this.lane].x-=60
     }
     this.randomDx = Math.round(Math.random()*50)
     this.coords.x +=this.randomDx
