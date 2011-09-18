@@ -1,21 +1,19 @@
 var Game = Class.create({
   
+
   initialize: function(gameManager){
+    this.imagesLoaded = false;
+    this.missionLoaded = false;
     this.gameManager = gameManager;
-    this.data = this.gameData;	
-    this.data = missionData	
-    this.startLoading()	
+    this.startLoading();	
+    this.data = missionData;
+//    gameData = gameManager.gameData;
+//    userData = gameManager.userData;
 	},
+
   startLoading : function(){
-    var self = this
-//    this.templatesManager = new TemplatesManager(this.network);
-//    new Loader().load([{images : ['logo.png'], path: 'images/loading/', store: 'loading'}],
-//                      {onFinish : function(){
-//                         $('inProgress').show();
-//                        $('inProgress').innerHTML = self.templatesManager.load("loadingScreen");
-// 					            self.addLoadedImagesToDiv('inProgress');
-                          self.initializeGame();
-//                      }});
+    var self = this;
+    self.initializeGame();
   },
   
   initializeGame : function(){
@@ -26,12 +24,6 @@ var Game = Class.create({
     $('gameCanvas').observe('mouseover',function(e){
      //   console.log(e.pointerX(),e.pointerY())
     })
-    this.scene = new TsquareScene()
-		
-	  var backgroundImages = ['land.png' , '3amod.png', 'street_marks.png']
-    backgroundImages.push(this.data.backgrounds[0][0].name)
-    backgroundImages.push(this.data.backgrounds[1][0].name)
-    backgroundImages.push(this.data.backgrounds[2][0].name)
     
     var gameElementsImages = ['arrow_up.png','arrow_down.png', 'bubble.png', 'world.png']
     var characterNames = ['journalist', 'libralymic','medic', 'normal', 'salafy','ultras_green',
@@ -48,20 +40,51 @@ var Game = Class.create({
     var hoveringIconsImages = ['lock.png', 'circle.png', 'march.png', 'push.png'];
     
 	  var self = this
-	  new Loader().load([{images: backgroundImages, path: 'images/background/', store: 'background'},
-    {images: gameElementsImages, path: 'images/game_elements/', store: 'gameElements'},
-    {images: characterImages, path: 'images/characters/', store: 'characters'},
-    {images: hoveringIconsImages, path: 'images/icons/', store: 'hoveringIcons'},
-    {images: enemiesImages, path: 'images/enemies/', store: 'enemies'}], {
-      onProgress : function(progress){
-          if($$('#inProgress #loadingBarFill')[0])
-          $$('#inProgress #loadingBarFill')[0].style.width = Math.min(progress,88)+"%"
-      },
-      onFinish:function(){
-          
-			self.scene.start()
-		}})
+	  new Loader().load([ {images: gameElementsImages, path: 'images/game_elements/', store: 'gameElements'},
+                        {images: characterImages, path: 'images/characters/', store: 'characters'},
+                        {images: hoveringIconsImages, path: 'images/icons/', store: 'hoveringIcons'},
+                        {images: enemiesImages, path: 'images/enemies/', store: 'enemies'}], 
+                        {
+                          onProgress : function(progress){
+                              if($$('#inProgress #loadingBarFill')[0])
+                              $$('#inProgress #loadingBarFill')[0].style.width = Math.min(progress,88)+"%"
+                          },
+                          onFinish:function(){        
+                            self.imagesLoaded = true;
+                            self.start();
+                          }
+                        });
 
+  },
+
+  play : function(mission){
+    this.misssionLoaded = false;
+    this.mission = mission;
+	  var backgroundImages = ['land.png' , '3amod.png', 'street_marks.png']
+    backgroundImages.push(mission.backgrounds[0][0].name)
+    backgroundImages.push(mission.backgrounds[1][0].name)
+    backgroundImages.push(mission.backgrounds[2][0].name)
+	  var self = this;
+	  new Loader().load([{images: backgroundImages, path: 'images/background/', store: 'background'}],
+                        { onFinish:function(){        
+                            self.missionLoaded = true;
+                            self.start();
+                        }
+                      })
+  },
+
+  start : function(){
+    if(this.imagesLoaded == true &&  this.missionLoaded == true)
+    {
+      this.scene = new TsquareScene();
+	  	this.scene.start();
+    }
+  },
+
+  hide : function() {
+  },
+
+  show : function() {
   },
   
   addLoadedImagesToDiv: function(divId){
@@ -95,6 +118,7 @@ var Game = Class.create({
         img.setAttribute('style', style)
     })
   }
+
 });
 
 Game.addLoadedImagesToDiv = function(divId){
