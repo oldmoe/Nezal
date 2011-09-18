@@ -229,7 +229,7 @@ var ScoreManager = Class.create({
     var socialDataHash = {};
     socialData.each(function(user){ socialDataHash[user.uid] = user });
     // Fill social data
-    userList.push("43343")
+    var invalid = [];
     userList.each(function(user, index){
                     if(user.service_id == socialEngine.userId())  self.currentUser = user;
                     if(socialDataHash[user.service_id])
@@ -240,9 +240,12 @@ var ScoreManager = Class.create({
                       user.picture = socialDataHash[user.service_id].pic_square;
                       user.url = socialDataHash[user.service_id].profile_url;
                     }else{
-                      userList.splice(index,1)
+                      invalid.push(index);
                     }
                   });
+    invalid.each(function(index){
+      userList.splice(index, 1);
+    });
   }
   
 })
