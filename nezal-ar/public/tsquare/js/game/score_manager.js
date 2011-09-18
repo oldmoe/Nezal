@@ -125,7 +125,7 @@ var ScoreManager = Class.create({
     $('scores').innerHTML = this.templateManager.load('friends', params);
     Game.addLoadedImagesToDiv('scores');
     if(self.carousel) self.carousel.destroy();      
-    self.carousel = new Carousel("friends", self.images, 4);
+    self.carousel = new Carousel("friends", self.images, 3);
     var rank = 0;
     for(var i=0; i< params['list'].length; i++)
     {
