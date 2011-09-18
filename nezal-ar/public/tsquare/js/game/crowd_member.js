@@ -199,7 +199,12 @@ var CrowdMember = Class.create(Unit,{
       return true
     }
   },
-  
+  reversePushDirection : function(){
+    this.pushDirection = 1 - this.pushDirection
+//    if(this.pushDirection == this.pushDirections.forward){
+//    }else{
+//    } 
+  },
   circleMove : function(){
     if (!this.target|| this.target.hp <= 0 || this.target.dead) {
       this.resetRotation()

@@ -130,9 +130,8 @@ var CrowdHandler = Class.create(UnitHandler, {
     }
     if (reverseDirection) {
       this.target.takePush()
-      console.log(this.target.chargeTolerance)
       for (var j = 0; j < this.objects[this.target.lane].length; j++) {
-        this.objects[this.target.lane][j].pushDirection = 1 - this.objects[this.target.lane][j].pushDirection
+        this.objects[this.target.lane][j].reversePushDirection()
         this.objects[this.target.lane][j].moved = 0
       }
     }  
@@ -144,6 +143,7 @@ var CrowdHandler = Class.create(UnitHandler, {
    },
 
    circle: function(){
+       if(this.target && this.target.chargeTolerance > 0) return
        this.executeCommand("circle");
    },
    

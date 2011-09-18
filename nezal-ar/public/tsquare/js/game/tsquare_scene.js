@@ -14,7 +14,7 @@ var TsquareScene = Class.create(Scene,{
     direction : 1,
     holdPowerDepression: 0.2,
     energy : {current:0, rate: 3,max:30},
-    view: {width: 760, height: 410, xPos: 0, tileWidth: 50, laneMiddle : 25},
+    view: {width: 760, height: 410, xPos: 0, tileWidth: 500, laneMiddle : 25},
     observer: null,
     activeLane: 1,
     win : false,

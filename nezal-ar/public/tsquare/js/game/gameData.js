@@ -6,15 +6,15 @@ var missionData =
       "type": '3_3',
       "index": 0,
       "lane": 1,
-      "x": 10,
+      "x": 1,
       "order": 1
   }, 
      {
       "category": "enemies",
       "name" : "wood_stick_cs",
-      "type" : '1_1',
+      "type" : '3_3',
       "lane": 1,
-      "x": 200,
+      "x": 2,
       "index": 0
     },
     {
