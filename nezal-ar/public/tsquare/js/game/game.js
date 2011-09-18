@@ -26,6 +26,8 @@ var Game = Class.create({
     $('gameCanvas').observe('mouseover',function(e){
      //   console.log(e.pointerX(),e.pointerY())
     })
+    
+    
     this.scene = new TsquareScene()
 		
 	  var backgroundImages = ['land.png' , '3amod.png', 'street_marks.png']
@@ -61,7 +63,6 @@ var Game = Class.create({
           
 			self.scene.start()
 		}})
-
   },
   
   addLoadedImagesToDiv: function(divId){
