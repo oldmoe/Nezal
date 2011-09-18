@@ -14,12 +14,12 @@
       <div class="tabsWrapper">
         <!--Tabs-->
         <ul class="tabs">
-          <li class="selected"><a href="#">Moves</a><img class="positioned" src="images/marketplace/tab_background.png" alt="Tab" /></li>
-          <li><a href="#">Members</a><img class="positioned" src="images/marketplace/tab_background.png" alt="Tab" /></li>
-          <li><a href="#">Items</a><img class="positioned" src="images/marketplace/tab_background.png" alt="Tab" /></li>
-          <li><a href="#">Powerups</a><img class="positioned" src="images/marketplace/tab_background.png" alt="Tab" /></li>
-          <li><a href="#">Special</a><img class="positioned" src="images/marketplace/tab_background.png" alt="Tab" /></li>
-          <li><a href="#">Crowd Items</a><img class="positioned" src="images/marketplace/tab_background.png" alt="Tab" /></li>
+          <li class="selected"><a href="#">Moves</a><span class="loadedImg" imgSrc="images/marketplace/tab_background.png" class="positioned" alt="Tab"/></li>
+          <li><a href="#">Members</a><span class="loadedImg" imgSrc="images/marketplace/tab_background.png" class="positioned" alt="Tab"/></li>
+          <li><a href="#">Items</a><span class="loadedImg" imgSrc="images/marketplace/tab_background.png" class="positioned" alt="Tab"/></li>
+          <li><a href="#">Powerups</a><span class="loadedImg" imgSrc="images/marketplace/tab_background.png" class="positioned" alt="Tab"/></li>
+          <li><a href="#">Special</a><span class="loadedImg" imgSrc="images/marketplace/tab_background.png" class="positioned" alt="Tab"/></li>
+          <li><a href="#">Crowd Items</a><span class="loadedImg" imgSrc="images/marketplace/tab_background.png" class="positioned" alt="Tab"/></li>
         </ul>
         <!--Tabs Content-->
         <div class="tabsContent">
@@ -29,15 +29,16 @@
             <a href="#"><img src="images/marketplace/first_button.png" alt="First" /></a>              
           </div>
           <!--Floating Items-->
-          <div class="floatingItems">
+          <div id="moves" class="floatingItems">
             <ul>
               <!--Crowed Item-->
+              {for move in marketplace.adjustedMoves}
               <li>
                 <div class="crowedItem">
                   <img class="positioned" src="images/marketplace/item_background.png" alt="Item background" />
                   <!--Crowed Title-->
                   <div class="crowedItemTitle">
-                    <h2>Medical</h2>
+                    <h2>${move.name}</h2>
                     <img class="positioned" src="images/marketplace/item_title_background.png" alt="Title" />
                   </div>
                   <!--Crowed Image-->
@@ -55,228 +56,13 @@
                   </div>
                 </div>
               </li>
-              <!--Crowed Item-->
-              <li>
-                <div class="crowedItem">
-                  <img class="positioned" src="images/marketplace/item_background.png" alt="Item background" />
-                  <!--Crowed Title-->
-                  <div class="crowedItemTitle">
-                    <h2>Medical</h2>
-                    <img class="positioned" src="images/marketplace/item_title_background.png" alt="Title" />
-                  </div>
-                  <!--Crowed Image-->
-                  <div class="crowedItemImage">
-                    <img class="positioned" src="images/marketplace/dummy/crowd_memeber.png" alt="Crowed" />
-                  </div>
-                  <!--Crowed Price-->
-                  <div class="crowedItemPrice">
-                    <h5>1200</h5>
-                    <img class="positioned" src="images/marketplace/item_price.png" alt="Item price" />
-                  </div>
-                  <div class="crowedItemDetails">
-                    <a href="#">Details</a>
-                    <img class="positioned" src="images/marketplace/item_details.png"  alt="Item Details" />
-                  </div>
-                </div>
-              </li>
-              <!--Crowed Item-->
-              <li>
-                <div class="crowedItem">
-                  <img class="positioned" src="images/marketplace/item_background.png" alt="Item background" />
-                  <!--Crowed Title-->
-                  <div class="crowedItemTitle">
-                    <h2>Medical</h2>
-                    <img class="positioned" src="images/marketplace/item_title_background.png" alt="Title" />
-                  </div>
-                  <!--Crowed Image-->
-                  <div class="crowedItemImage">
-                    <img class="positioned" src="images/marketplace/dummy/crowd_memeber.png" alt="Crowed" />
-                  </div>
-                  <!--Crowed Price-->
-                  <div class="crowedItemPrice">
-                    <h5>1200</h5>
-                    <img class="positioned" src="images/marketplace/item_price.png" alt="Item price" />
-                  </div>
-                  <div class="crowedItemDetails">
-                    <a href="#">Details</a>
-                    <img class="positioned" src="images/marketplace/item_details.png"  alt="Item Details" />
-                  </div>
-                </div>
-              </li>
-              <!--Crowed Item-->
-              <li>
-                <div class="crowedItem">
-                  <img class="positioned" src="images/marketplace/item_background.png" alt="Item background" />
-                  <!--Crowed Title-->
-                  <div class="crowedItemTitle">
-                    <h2>Medical</h2>
-                    <img class="positioned" src="images/marketplace/item_title_background.png" alt="Title" />
-                  </div>
-                  <!--Crowed Image-->
-                  <div class="crowedItemImage">
-                    <img class="positioned" src="images/marketplace/dummy/crowd_memeber.png" alt="Crowed" />
-                  </div>
-                  <!--Crowed Price-->
-                  <div class="crowedItemPrice">
-                    <h5>1200</h5>
-                    <img class="positioned" src="images/marketplace/item_price.png" alt="Item price" />
-                  </div>
-                  <div class="crowedItemDetails">
-                    <a href="#">Details</a>
-                    <img class="positioned" src="images/marketplace/item_details.png"  alt="Item Details" />
-                  </div>
-                </div>
-              </li>
-              <!--Crowed Item-->
-              <li>
-                <div class="crowedItem">
-                  <img class="positioned" src="images/marketplace/item_background.png" alt="Item background" />
-                  <!--Crowed Title-->
-                  <div class="crowedItemTitle">
-                    <h2>Medical</h2>
-                    <img class="positioned" src="images/marketplace/item_title_background.png" alt="Title" />
-                  </div>
-                  <!--Crowed Image-->
-                  <div class="crowedItemImage">
-                    <img class="positioned" src="images/marketplace/dummy/crowd_memeber.png" alt="Crowed" />
-                  </div>
-                  <!--Crowed Price-->
-                  <div class="crowedItemPrice">
-                    <h5>1200</h5>
-                    <img class="positioned" src="images/marketplace/item_price.png" alt="Item price" />
-                  </div>
-                  <div class="crowedItemDetails">
-                    <a href="#">Details</a>
-                    <img class="positioned" src="images/marketplace/item_details.png"  alt="Item Details" />
-                  </div>
-                </div>
-              </li>
-              <!--Crowed Item-->
-              <li>
-                <div class="crowedItem">
-                  <img class="positioned" src="images/marketplace/item_background.png" alt="Item background" />
-                  <!--Crowed Title-->
-                  <div class="crowedItemTitle">
-                    <h2>Medical</h2>
-                    <img class="positioned" src="images/marketplace/item_title_background.png" alt="Title" />
-                  </div>
-                  <!--Crowed Image-->
-                  <div class="crowedItemImage">
-                    <img class="positioned" src="images/marketplace/dummy/crowd_memeber.png" alt="Crowed" />
-                  </div>
-                  <!--Crowed Price-->
-                  <div class="crowedItemPrice">
-                    <h5>1200</h5>
-                    <img class="positioned" src="images/marketplace/item_price.png" alt="Item price" />
-                  </div>
-                  <div class="crowedItemDetails">
-                    <a href="#">Details</a>
-                    <img class="positioned" src="images/marketplace/item_details.png"  alt="Item Details" />
-                  </div>
-                </div>
-              </li>
-              <!--Crowed Item-->
-              <li>
-                <div class="crowedItem">
-                  <img class="positioned" src="images/marketplace/item_background.png" alt="Item background" />
-                  <!--Crowed Title-->
-                  <div class="crowedItemTitle">
-                    <h2>Medical</h2>
-                    <img class="positioned" src="images/marketplace/item_title_background.png" alt="Title" />
-                  </div>
-                  <!--Crowed Image-->
-                  <div class="crowedItemImage">
-                    <img class="positioned" src="images/marketplace/dummy/crowd_memeber.png" alt="Crowed" />
-                  </div>
-                  <!--Crowed Price-->
-                  <div class="crowedItemPrice">
-                    <h5>1200</h5>
-                    <img class="positioned" src="images/marketplace/item_price.png" alt="Item price" />
-                  </div>
-                  <div class="crowedItemDetails">
-                    <a href="#">Details</a>
-                    <img class="positioned" src="images/marketplace/item_details.png"  alt="Item Details" />
-                  </div>
-                </div>
-              </li>
-              <!--Crowed Item-->
-              <li>
-                <div class="crowedItem">
-                  <img class="positioned" src="images/marketplace/item_background.png" alt="Item background" />
-                  <!--Crowed Title-->
-                  <div class="crowedItemTitle">
-                    <h2>Medical</h2>
-                    <img class="positioned" src="images/marketplace/item_title_background.png" alt="Title" />
-                  </div>
-                  <!--Crowed Image-->
-                  <div class="crowedItemImage">
-                    <img class="positioned" src="images/marketplace/dummy/crowd_memeber.png" alt="Crowed" />
-                  </div>
-                  <!--Crowed Price-->
-                  <div class="crowedItemPrice">
-                    <h5>1200</h5>
-                    <img class="positioned" src="images/marketplace/item_price.png" alt="Item price" />
-                  </div>
-                  <div class="crowedItemDetails">
-                    <a href="#">Details</a>
-                    <img class="positioned" src="images/marketplace/item_details.png"  alt="Item Details" />
-                  </div>
-                </div>
-              </li>
-              <!--Crowed Item-->
-              <li>
-                <div class="crowedItem">
-                  <img class="positioned" src="images/marketplace/item_background.png" alt="Item background" />
-                  <!--Crowed Title-->
-                  <div class="crowedItemTitle">
-                    <h2>Medical</h2>
-                    <img class="positioned" src="images/marketplace/item_title_background.png" alt="Title" />
-                  </div>
-                  <!--Crowed Image-->
-                  <div class="crowedItemImage">
-                    <img class="positioned" src="images/marketplace/dummy/crowd_memeber.png" alt="Crowed" />
-                  </div>
-                  <!--Crowed Price-->
-                  <div class="crowedItemPrice">
-                    <h5>1200</h5>
-                    <img class="positioned" src="images/marketplace/item_price.png" alt="Item price" />
-                  </div>
-                  <div class="crowedItemDetails">
-                    <a href="#">Details</a>
-                    <img class="positioned" src="images/marketplace/item_details.png"  alt="Item Details" />
-                  </div>
-                </div>
-              </li>
-              <!--Crowed Item-->
-              <li>
-                <div class="crowedItem">
-                  <img class="positioned" src="images/marketplace/item_background.png" alt="Item background" />
-                  <!--Crowed Title-->
-                  <div class="crowedItemTitle">
-                    <h2>Medical</h2>
-                    <img class="positioned" src="images/marketplace/item_title_background.png" alt="Title" />
-                  </div>
-                  <!--Crowed Image-->
-                  <div class="crowedItemImage">
-                    <img class="positioned" src="images/marketplace/dummy/crowd_memeber.png" alt="Crowed" />
-                  </div>
-                  <!--Crowed Price-->
-                  <div class="crowedItemPrice">
-                    <h5>1200</h5>
-                    <img class="positioned" src="images/marketplace/item_price.png" alt="Item price" />
-                  </div>
-                  <div class="crowedItemDetails">
-                    <a href="#">Details</a>
-                    <img class="positioned" src="images/marketplace/item_details.png"  alt="Item Details" />
-                  </div>
-                </div>
-              </li>
+              {/for}
             </ul>
           </div>
           <!--Right controls-->
           <div class="rightControls">
-            <a class="selected" href="#"><img src="images/marketplace/next_button.png" alt="Next" /></a>
-            <a class="selected" href="#"><img src="images/marketplace/last_button.png" alt="Last" /></a>
+            <a href="#"><img src="images/marketplace/next_button.png" alt="Next" /></a>
+            <a href="#"><img src="images/marketplace/last_button.png" alt="Last" /></a>
           </div>
         </div>
       </div>

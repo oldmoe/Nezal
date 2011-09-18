@@ -1,9 +1,9 @@
 var Inbox = Class.create({
   requests : {help : [], gift : [], challenge : []},
   
-  initialize : function(){
-    this.network = new TSquareNetwork();    
-    this.templateManager = new TemplatesManager(this.network);
+  initialize : function(game){
+    this.network = game.network;    
+    this.templateManager = game.templateManager;
     $('send_requests').innerHTML = this.templateManager.load('send_requests');
     this.requestTrigger("help");
     this.requestTrigger("gift");

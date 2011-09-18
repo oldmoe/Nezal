@@ -8,13 +8,11 @@ class GamesController < ApplicationController
   get '/:game_name/data' do
     data = {
       :game_data => { :data => Game::current.user_data(user_game_profile) } , 
-      :user_data => { :coins => user.coins, 
-                      :rank => user_game_profile.rank,
-                      :exp => user_game_profile.exp,
-                      :locale => user_game_profile.locale, 
+      :user_data => { :coins => user.coins,
                       :data => user_game_profile.data
                     },
-      :ranks => Game::current.ranks
+      :missions_data => { :data => UserMissions.all(user_game_profile) },
+      :current_mission => { :data => UserMissions.current(user_game_profile) }
     }
     data[:user_data][:volatile_data] = user_game_profile['volatile_data'] || {}
     encode(data)
@@ -45,6 +43,12 @@ class GamesController < ApplicationController
     encode(result)
   end
   
+  get '/:game_name/mission' do
+    data = decode(params['data'])
+    result = UserMissions.data(user_game_profile, data['id'])
+    encode(result)
+  end
+
   # Change User to be nolonger a newbie
   post '/:game_name/users/newbie' do
     if @game_profile.newbie

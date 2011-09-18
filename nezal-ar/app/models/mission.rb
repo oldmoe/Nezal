@@ -1,13 +1,25 @@
 class Mission
 
-  class << self  
+  class << self
   
     def init
       game = Game::current
-      game.missions ||= {}
-      game.missions['id_generator'] ||= 1
-      game.missions['list'] ||= {}
-      game.save
+      save = false
+      if game.missions.nil?
+        game.missions = {}
+        save = true
+      end
+      if game.missions['id_generator'].nil?
+        game.missions['id_generator'] = 1
+        save = true
+      end
+      if game.missions['list'].nil?
+        game.missions['list'] = {}
+        save = true
+      end
+      if save
+        game.save
+      end    
     end
 
     def all

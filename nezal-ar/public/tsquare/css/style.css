@@ -37,7 +37,7 @@ body{
 	position: absolute
 }
 #gameCanvas{
-  height: 550px;
+  height: 430px;
   left: 9px;
   overflow: hidden;
   position: absolute;

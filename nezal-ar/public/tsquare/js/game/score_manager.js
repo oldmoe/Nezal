@@ -2,10 +2,10 @@ var ScoreManager = Class.create({
 
 
   images : {
-              'left' : 'images/tmp/left.png',
-              'left-disabled' : 'images/tmp/left-disabled.png',
-              'right' : 'images/tmp/right.png',
-              'right-disabled' :'images/tmp/right-disabled.png'
+              'left' : 'images/friends/previous_button.png',
+              'left-disabled' : 'images/friends/previous_button.png',
+              'right' : 'images/friends/next_button.png',
+              'right-disabled' :'images/friends/next_button.png'
             },
 
   modes : {
@@ -30,10 +30,20 @@ var ScoreManager = Class.create({
   */
   gameMode : null,
 
-  initialize : function(){
+  initialize : function(game){
     /* This should be MOVED to initialize game part */
-    this.network = new TSquareNetwork();    
-    this.templateManager = new TemplatesManager(this.network);
+    this.network = game.network;    
+    this.templateManager = game.templateManager;
+    var self = this;
+    new Loader().load([ {images : ["1.png", "2.png", "3.png", "first_button.png", "last_button.png", 'next_button.png', 'previous_button.png',
+                                  "friend_box.png", "friends_bar.png", "friendsRank.png", "friendsScore.png", "functions_background.png",
+                                  "home_icon.png", "menu_icon.png", "worldRank.png"], path: 'images/friends/', store: 'friends'}],
+                      {
+                        onFinish: function(){
+                          self.loadFriendsTab('global');
+                        }
+                      });
+//    this.openMarketplace();
   },
 
   loadFriendsTab : function(gameMode) {
@@ -63,8 +73,10 @@ var ScoreManager = Class.create({
     var callback = function(result){
       self.topScorers = result;
       var ids = self.topScorers['top'].collect(function(user){return user['service_id']});
+      ids = ids.concat(self.topScorers['list'].collect(function(user){return user['service_id']}));
       socialEngine.getUsersInfo(ids, function(data){
         self.fillSocialData(self.topScorers['top'], data)
+        self.fillSocialData(self.topScorers['list'], data)
         self.display();
       })
     }
@@ -72,6 +84,7 @@ var ScoreManager = Class.create({
   },
 
   switchScoringMode : function(gameMode) {
+    $('scoresInProgress').show();
     if(this.mode == 'global')
       this.loadFriendsTab(this.gameMode);
     else
@@ -99,30 +112,38 @@ var ScoreManager = Class.create({
         }        
       }
     }
-    $('scores').innerHTML = this.templateManager.load('scoreTabs', { scoreManager : this}) + 
-                 this.templateManager.load(this.modes[this.mode]['display'], { scoreManager : this});
-    if(self.mode == 'friends')
+    var params = {scoreManager:this};
+    if(this.mode == 'friends')
     {
-      if(self.carousel) self.carousel.destroy();      
-      self.carousel = new Carousel("friends", self.images, 2);
-      var rank = 0;
-      for(var i=0; i< self.friends.length; i++)
-      {
-        if(self.friends[i].service_id != socialEngine.userId())
-          rank ++;
-        else
-          break;   
-      }
-      self.carousel.scrollTo(rank);
-      self.carousel.checkButtons();
+        params['topThree'] = this.friends.slice(0,1);
+        params['list'] = this.friends
+    }else
+    {
+        params['topThree'] = this.topScorers.top.slice(0,1);
+        params['list'] = this.topScorers['list'];
     }
+    $('scores').innerHTML = this.templateManager.load('friends', params);
+    Game.addLoadedImagesToDiv('scores');
+    if(self.carousel) self.carousel.destroy();      
+    self.carousel = new Carousel("friends", self.images, 4);
+    var rank = 0;
+    for(var i=0; i< params['list'].length; i++)
+    {
+      if(params['list'][i].service_id != socialEngine.userId())
+        rank ++;
+      else
+        break;   
+    }
+    self.carousel.scrollTo(rank);
+    self.carousel.checkButtons();
     this.attachListeners();
+    $('scoresInProgress').hide();
   },
 
   attachListeners : function() {
     var self = this;
-    $$('#scores .scoreTab').each( function(element) {
-      if(element.id != self.mode)         
+    $$('#scores .swithcingTabs li').each( function(element) {
+      if(element.hasClassName('selected') == false)         
       {
         element.observe('click', function(event){
           self.switchScoringMode(self.gameMode);
@@ -202,20 +223,30 @@ var ScoreManager = Class.create({
 
   /*
     Set currentUser field
-    Megre the scoring data with the social data(name, picture) in one Aمحمود العسيلى مين انا rray 
+    Megre the scoring data with the social data(name, picture) in one Array 
   */
   fillSocialData : function(userList, socialData){
     var self = this;
     var socialDataHash = {};
     socialData.each(function(user){ socialDataHash[user.uid] = user });
     // Fill social data
-    userList.each(function(user){
+    var invalid = [];
+    userList.each(function(user, index){
                     if(user.service_id == socialEngine.userId())  self.currentUser = user;
-                    user.name = socialDataHash[user.service_id].name;
-                    user.first_name = socialDataHash[user.service_id].first_name;
-                    user.last_name = socialDataHash[user.service_id].last_name;
-                    user.picture = socialDataHash[user.service_id].pic_square;
+                    if(socialDataHash[user.service_id])
+                    {
+                      user.name = socialDataHash[user.service_id].name;
+                      user.first_name = socialDataHash[user.service_id].first_name;
+                      user.last_name = socialDataHash[user.service_id].last_name;
+                      user.picture = socialDataHash[user.service_id].pic_square;
+                      user.url = socialDataHash[user.service_id].profile_url;
+                    }else{
+                      invalid.push(index);
+                    }
                   });
+    invalid.each(function(index){
+      userList.splice(index, 1);
+    });
   }
   
 })

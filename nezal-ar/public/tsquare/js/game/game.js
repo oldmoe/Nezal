@@ -1,12 +1,13 @@
 var Game = Class.create({
   
-  initialize: function(){
+  initialize: function(gameManager){
+    this.gameManager = gameManager;
+    this.data = this.gameManager.gameData;	
     this.data = missionData	
     this.startLoading()	
 	},
   startLoading : function(){
     var self = this
-    this.network = new Network()
 //    this.templatesManager = new TemplatesManager(this.network);
 //    new Loader().load([{images : ['logo.png'], path: 'images/loading/', store: 'loading'}],
 //                      {onFinish : function(){
