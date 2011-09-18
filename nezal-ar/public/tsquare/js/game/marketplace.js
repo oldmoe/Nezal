@@ -23,7 +23,7 @@ var Marketplace = Class.create({
     this.special = itemsData.special_items;
     this.crowd_items = itemsData.crowd_items;    
     
-    this.openMarketplace();
+    //this.openMarketplace();
   },
   
   openMarketplace : function(){
@@ -78,9 +78,9 @@ var Marketplace = Class.create({
     }
     
     //Adjusting right controls states
-    var right = this.columns * this.itemWidth + left;
+    var right = self.containerWidth + left - ( self.columns * self.itemWidth );
     console.log( "right : " + right );
-    if( right == self.containerWidth ){
+    if( right == 0 ){
       $$('.rightControls a')[0].removeClassName('selected');
       $$('.rightControls a')[1].removeClassName('selected');
     } else {
@@ -93,6 +93,8 @@ var Marketplace = Class.create({
     $$('.leftControls a')[1].stopObserving('click');
     $$('.rightControls a')[0].stopObserving('click');
     $$('.rightControls a')[1].stopObserving('click');
+    
+    
     $$('.leftControls a')[0].observe('click', function(event){
       if( left != 0 ){
         var marginLeft = getIntegerStyle( $$('#' + marketTab + ' ul')[0].getStyle( 'marginLeft' ) );
