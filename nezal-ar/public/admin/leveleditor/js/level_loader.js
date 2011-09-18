@@ -39,11 +39,13 @@ var LevelLoader = Class.create({
       };
     };
     
+    //adjusting the size of lanes to fit the new data
     levelEditor.grid.adjustLength(laneLength);
+    
     
     for (var i=0; i < objects.length; i++) {
       for (var j=0; j < objects[i].length; j++) {
-        levelEditor.grid.lanes[i].tiles[objects[i][j].x-1].loadObject(this.loadImagePath(objects[i][j]));
+        levelEditor.grid.lanes[i].tiles[objects[i][j].x].loadObject(this.loadImagePath(objects[i][j]));
       };
     };
   },
