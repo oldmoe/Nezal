@@ -82,12 +82,10 @@ var Block = Class.create(Enemy,{
             var options = this.options
             options.type = "3_1";
             var blocks = [] 
-            var lanes = [1,0,2]
             for(var i=0;i<this.elements.length;i++){
-              var b = new Block(this.scene,this.elements[i][0].coords.x ,lanes[i], options)
+              var b = new Block(this.scene,this.elements[i][0].coords.x ,1, options)
               b.coords.y = this.coords.y
-              var targetY = this.scene.view.laneMiddle*2*lanes[i]+this.scene.view.laneMiddle
-              b.moveToTarget({x:this.coords.x + (100+150*i),y:targetY})
+              b.moveToTarget({x:this.coords.x + (100+150*i),y:this.coords.y})
               b.elements = [this.elements[i]]              
               blocks.pushFirst(b)
             }
