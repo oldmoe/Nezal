@@ -41,9 +41,10 @@ var Marketplace = Class.create({
     var membersImages = []
     for(var item in this.members['specs']){
       this.adjustedMembers.push({name : item});
-      membersImages.push(name + ".png");
+      membersImages.push(item + ".png");
     }
-    new Loader().load([ {images : membersImages, path: 'images/marketplace/members/', store: 'members'}], {
+    console.log(membersImages);
+    new Loader().load([ {images : membersImages, path: 'images/marketplace/members/', store: 'marketplace'}], {
       onFinish : function(){}
     });
   },
@@ -56,6 +57,7 @@ var Marketplace = Class.create({
     $('marketMembers').stopObserving('click');
     $('marketMembers').observe('click', function(event){
       $$('#marketplace #floatingItems')[0].innerHTML = self.templateManager.load('floatingItems', { categoryItems: self.adjustedMembers });
+      Game.addLoadedImagesToDiv('marketplace');
       $('marketMembers').parentNode.addClassName("selected");
       $('marketMoves').parentNode.removeClassName("selected");
     });
@@ -63,6 +65,7 @@ var Marketplace = Class.create({
     $('marketMoves').stopObserving('click');
     $('marketMoves').observe('click', function(event){
       $$('#marketplace #floatingItems')[0].innerHTML = self.templateManager.load('floatingItems', { categoryItems: self.adjustedMoves });
+      Game.addLoadedImagesToDiv('marketplace');
       $('marketMoves').parentNode.addClassName("selected");
       $('marketMembers').parentNode.removeClassName("selected");
     });
