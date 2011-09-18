@@ -6,25 +6,10 @@ var missionData =
       "type": '3_3',
       "index": 0,
       "lane": 1,
-      "x": 10,
+      "x": 1,
       "order": 1
   }, 
-     {
-      "category": "enemies",
-      "name" : "wood_stick_cs",
-      "type" : '1_1',
-      "lane": 1,
-      "x": 200,
-      "index": 0
-    },
-    {
-        "name": "amn_markazy",
-        "category": "enemy",
-        "index": 0,
-        "lane": 1,
-        "x": 1000,
-        "order": 2
-    },
+    
     {"name":"amn_markazy","category":"enemy","index":0,"lane":2,"x":1000,"order":3}]],
    "backgrounds":[[{"name":"skyline.png"}],[{"name":"skyline.png"}],[{"name":"sky1.png"}]],"environment":"day","gameModes":["normal"]} 
 
@@ -33,6 +18,9 @@ var user_data = {
   'crowd_members' : { 
       'ultras_green' : { 1 : {'level' : 1, 'upgrades' : { 'hp' : [], 'water' : [], 'attack' : [], 'defense' : [], 'arrest' : 0, 'block' : 0 } } },
       'journalist' : { 1 : {'level' : 1, 'upgrades' : { 'hp' : [], 'water' : [], 'attack' : [], 'defense' : [], 'arrest' : 0, 'block' : 0 } } },  
+      'ultras_white' : { 1 : {'level' : 1, 'upgrades' : { 'hp' : [], 'water' : [], 'attack' : [], 'defense' : [], 'arrest' : 0, 'block' : 0 } } },
+      'ultras_red' : { 1 : {'level' : 1, 'upgrades' : { 'hp' : [], 'water' : [], 'attack' : [], 'defense' : [], 'arrest' : 0, 'block' : 0 } } },
+      'bottleguy' : { 1 : {'level' : 1, 'upgrades' : { 'hp' : [], 'water' : [], 'attack' : [], 'defense' : [], 'arrest' : 0, 'block' : 0 } } },
    }, 
   'holder_items' : { 'cap' : 0, 'umbrella' : 0 },
   'special_items' : { },
@@ -65,7 +53,7 @@ var gameData = {
                       'invencible' :  { 1 : { 'time' : 30 }, 2 : { 'time' : 60 }, 3 : {  'time' : 120 } }, 
                       'cure' : { 'hp' : 100 }, 
                       'healer' : { 1 : { 'time' : 30}, 2 : { 'time' : 60}, 3 : { 'time' : 90} },
-                      'dehydrator' : { 1 : { 'time' : 30 }, 2 : { 'time' : 60 }, 3 : { 'time' : 120 } },
+                      'bottleguy' : { 1 : { 'time' : 30 }, 2 : { 'time' : 60 }, 3 : { 'time' : 120 } },
                       'defense_1' : { 1 : { 'time' : 30 , 'amount' : 25 }, 2 : { 'time' : 60 , 'amount' : 25 }, 3 : { 'time' : 120 , 'amount' : 25 } },
                       'defense_2' : { 1 : { 'time' : 30 , 'amount' : 50 }, 2 : { 'time' : 60 , 'amount' : 50 }, 3 : { 'time' : 120 , 'amount' : 50 } },
                       'attack_1' : { 1 : { 'time' : 30 , 'amount' : 25 }, 2 : { 'time' : 60 , 'amount' : 25 }, 3 : { 'time' : 120 , 'amount' : 25 } },
@@ -73,7 +61,7 @@ var gameData = {
                      },
       'ingame_power_ups' : { 
                       'healer' : { 1 : 10, 2 : 20, 3 : 30 },
-                      'dehydrator' : { 1 : 10, 2 : 20, 3 : 30 }
+                      'bottleguy' : { 1 : 10, 2 : 20, 3 : 30 }
                      },
       'crowd_members' : {
               'category' : { 'salafi' : 'normal',
@@ -84,7 +72,7 @@ var gameData = {
                         'attacker' : 'special',
                         'leader' : 'special',
                         'healer' : 'special',
-                        'dehydrator' : 'special',
+                        'bottleguy' : 'special',
                         'supplier' : 'special',
                         'energy_booster' : 'special',
                         'wael_ghoneim' : 'limited_edition',
@@ -97,7 +85,7 @@ var gameData = {
                     'healer' : { 1 : { 'special' : { 'time' : 2, 'units' : 1, 'hp' : 10 }, 
                                                        'hp' : 75, 'water' : 75, 'attack' : 2, 'defense' : 75 } 
                                 },
-                    'dehydrator' : { 1 : { 'special' : { 'time' : 2, 'units' : 1, 'water' : 10}, 
+                    'bottleguy' : { 1 : { 'special' : { 'time' : 2, 'units' : 1, 'water' : 10}, 
                                                             'hp' : 75 , 'water' : 75 , 'attack' : 2  , 'defense' : 75 }  
                                 },
                     'supplier' : { 1 : {'special' : { 'item' : 1, 'slots_to_power' : 1 },

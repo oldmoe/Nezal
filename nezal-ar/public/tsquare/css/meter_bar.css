@@ -1,0 +1,19 @@
+/*--------Game meters-----------*/
+
+.gameCurrencyBar { position:absolute; width:133px; height:32px; top:20px; left:10px; }
+.gameCurrencyBar span { position:absolute; z-index:3; width:84px; height:19px; font-weight:bold; font-size:1.2em; text-shadow:1px 1px 0 #d0e0aa; left:40px; top:6px; color:#2c4600; }
+
+.facebookCurrencyBar { position:absolute; width:127px; height:32px; top:20px; left:156px; }
+.facebookCurrencyBar span { position:absolute; z-index:3; width:84px; height:19px; font-weight:bold; font-size:1.2em; text-shadow:1px 1px 0 #a6afd7; left:40px; top:6px; color:#30385b; }
+.facebookCurrencyBar a { position:absolute; right:3px; top:4px; height:22px; width:42px; overflow:hidden; }
+.facebookCurrencyBar a img { position:absolute; z-index:4; }
+.facebookCurrencyBar a:hover img { top:-22px; }
+
+.experienceBar {position:absolute; width:127px; height:32px; top:17px; left:386px;}
+.experienceBar .bar { position:absolute; width:140px; height:20px; z-index:4; left:3px; top:9px; }
+.experienceBar span {position:absolute; width:140px; height:20px; z-index:5; left:3px; top:9px; font-weight:bold; font-size:1.2em; color:#05233a; text-shadow:1px 1px 0 #73a2c7; text-align:center; }
+
+
+.energyBar {position:absolute; width:180px; height:32px; top:5px; right:10px;}
+.energyBar .bar { position:absolute; width:140px; height:20px; z-index:4; left:3px; top:21px; }
+.energyBar span {position:absolute; width:140px; height:20px; z-index:5; left:3px; top:21px; font-weight:bold; font-size:1.2em; color:#512d09; text-shadow:1px 1px 0 #fffce0; text-align:center; }

@@ -1,6 +1,5 @@
 var ScoreManager = Class.create({
 
-
   images : {
               'left' : 'images/friends/previous_button.png',
               'left-disabled' : 'images/friends/previous_button.png',

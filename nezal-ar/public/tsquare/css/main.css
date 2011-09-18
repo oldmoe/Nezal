@@ -1,0 +1,13 @@
+@charset "utf-8";
+/* CSS Document */
+body { margin:0px; padding:0px; font-size:12px; font-family:Tahoma, Geneva, sans-serif; }
+ul { list-style:none; margin:0px; padding:0px; }
+
+.uiContainer { width:780px; height:685px; position:absolute; top:0px; left:0px;}
+
+.uiContainer { width:780px; height:685px; background:url(../images/game_elements/background.gif) no-repeat top; margin:0 auto; }
+.positioned { position:absolute; top:0px; left:0px; z-index:1; }
+
+
+#gameContainer { position:absolute; top:70px; left:0px; z-index:10;}
+

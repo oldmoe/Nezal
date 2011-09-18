@@ -77,25 +77,21 @@ var Block = Class.create(Enemy,{
 //                this.elements[0][i].moveToTarget({x:this.coords.x+i*100 + this.getWidth()/2,y:this.elements[0][i].coords.y})
 //            }
 //        }else 
-         if(this.elements.length == 3){
-            var options = this.options
-            options.type = "3_1" 
+         if(this.elements.length == 3 || this.elements.length == 2){
             this.setTarget(null)
-            var b1 = new Block(this.scene,this.elements[0][0].coords.x ,1, options)
-            b1.coords.y = this.coords.y
-            b1.elements = [this.elements[0]]
-            var b2 = new Block(this.scene,this.elements[1][0].coords.x  ,1,options)
-            b2.elements = [this.elements[1]]
-            b2.coords.y = this.coords.y
-            var b3 = new Block(this.scene,this.elements[2][1].coords.x,1,options)
-            b3.elements = [this.elements[2]]
-            b3.coords.y = this.coords.y
-            b1.moveToTarget({x:this.coords.x + 100,y:this.coords.y})
-            b2.moveToTarget({x:this.coords.x + 250,y:this.coords.y})
-            b3.moveToTarget({x:this.coords.x + 400,y:this.coords.y})
-            this.handler.objects[this.lane].pushFirst(b3)
-            this.handler.objects[this.lane].pushFirst(b2)
-            this.handler.objects[this.lane].pushFirst(b1)
+            var options = this.options
+            options.type = "3_1";
+            var blocks = [] 
+            for(var i=0;i<this.elements.length;i++){
+              var b = new Block(this.scene,this.elements[i][0].coords.x ,1, options)
+              b.coords.y = this.coords.y
+              b.moveToTarget({x:this.coords.x + (100+150*i),y:this.coords.y})
+              b.elements = [this.elements[i]]              
+              blocks.pushFirst(b)
+            }
+            for (var i = 0; i < this.elements.length; i++) {
+              this.handler.objects[this.lane].pushFirst(blocks[i])
+            }
         }
         this.handler.objects[this.lane].remove(this)
     },

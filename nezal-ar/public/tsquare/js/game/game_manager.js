@@ -5,6 +5,7 @@ var GameManager = Class.create({
     this.urlParams = urlParams;
     this.network = new TSquareNetwork();
     this.templateManager = new TemplatesManager(this.network);
+    this.loader = new Loader();
     this.start();
   },
 
@@ -16,6 +17,7 @@ var GameManager = Class.create({
       self.gameData = data.game_data.data;
       self.missions = data.missions_data.data;
       self.currentMission = data.current_mission.data;
+      self.meterBar = new MeterBar(self);
       self.scoreManager = new ScoreManager(self);
       self.inbox = new Inbox(self);
       self.marketplace = new Marketplace(self);
