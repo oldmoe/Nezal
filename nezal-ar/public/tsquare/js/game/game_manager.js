@@ -17,7 +17,9 @@ var GameManager = Class.create({
       self.gameData = data.game_data.data;
       console.log(self.gameData);
       self.missions = data.missions_data.data;
+
       self.currentMission = missionData;//data.current_mission.data;
+//      self.currentMission = data.current_mission.data;
       self.meterBar = new MeterBar(self);
       self.scoreManager = new ScoreManager(self);
       self.inbox = new Inbox(self);
