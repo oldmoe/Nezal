@@ -107,13 +107,26 @@ ul { list-style:none; margin:0px; padding:0px; }
 .friendsScore span { position:relative; z-index:2; width:59px; height:17px; display:block; padding:3px 2px 2px 2px; text-align:center; text-shadow:1px 1px 0 #fffaae; color:#763d00; }
 
 #scores{
-  position : absolute;
-  top : 980px;
-  left : 0px;
-  width : 780px;
-  height : 180px;
-  background : gray;
+  background: none repeat scroll 0 0 black;
+  height: 180px;
+  left: 0;
+  position: absolute;
+  top: 515px;
+  width: 760px;
+  z-index: 1000;
 }
+#scoresInProgress{
+  background: none repeat scroll 0 0 black;
+  height: 180px;
+  left: 0;
+  position: absolute;
+  top: 515px;
+  width: 760px;
+  z-index: 1010;  
+  opacity : 0.6;
+  cursor : progress;
+}
+
 
 #scores .notification {
   height: 25px;

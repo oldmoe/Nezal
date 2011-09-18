@@ -77,7 +77,7 @@
     	<!--Friend-->
       {for friend in topThree}
     	<div class="friend">
-      	<a href="#">
+        <a href="${friend['url']}">
         	<span class="loadedImg" imgSrc="images/friends/${parseInt(friend_index)+1}.png" alt="rank" imgClasses="rankSign"></span>
           <span class="friendsScore">
           	<span>${friend['scores'][scoreManager.gameMode]}</span>
@@ -106,7 +106,7 @@
           	<li>
               <!--Friend-->
               <div class="friend">
-                <a href="#">
+                <a href="${friend['url']}">
                   <span class="friendsScore">
                   	<span>${friend['scores'][scoreManager.gameMode]}</span>
                   	<span class="loadedImg" imgSrc="images/friends/friendsScore.png" alt="Friends score" imgClasses="positioned"></span>

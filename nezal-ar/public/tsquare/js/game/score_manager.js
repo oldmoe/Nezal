@@ -83,6 +83,7 @@ var ScoreManager = Class.create({
   },
 
   switchScoringMode : function(gameMode) {
+    $('scoresInProgress').show();
     if(this.mode == 'global')
       this.loadFriendsTab(this.gameMode);
     else
@@ -132,10 +133,10 @@ var ScoreManager = Class.create({
       else
         break;   
     }
-    console.log(rank)
     self.carousel.scrollTo(rank);
     self.carousel.checkButtons();
     this.attachListeners();
+    $('scoresInProgress').hide();
   },
 
   attachListeners : function() {
@@ -234,6 +235,7 @@ var ScoreManager = Class.create({
                     user.first_name = socialDataHash[user.service_id].first_name;
                     user.last_name = socialDataHash[user.service_id].last_name;
                     user.picture = socialDataHash[user.service_id].pic_square;
+                    user.url = socialDataHash[user.service_id].profile_url;
                   });
   }
   
