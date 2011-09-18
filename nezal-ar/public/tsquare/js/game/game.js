@@ -2,7 +2,7 @@ var Game = Class.create({
   
   initialize: function(gameManager){
     this.gameManager = gameManager;
-    this.data = this.gameManager.gameData;	
+    this.data = this.gameData;	
     this.data = missionData	
     this.startLoading()	
 	},
