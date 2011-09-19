@@ -17,10 +17,13 @@ var BackgroundHandler = Class.create({
 		Droppables.add($(dropTarget), {
 			hoverclass : 'hoverActive',
 			onDrop : function (draggable) {
-				if($(draggable).getAttribute('category') == 'background')
-					self.addObject(draggable, dropTarget);
 			}
 		});
+	},
+	
+	drop: function(draggable, dropTarget){
+      if($(draggable).getAttribute('category') == 'background')
+        this.addObject(draggable, dropTarget);
 	},
 	
 	loadObject: function(obj, container){

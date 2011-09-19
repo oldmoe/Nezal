@@ -7,6 +7,9 @@ var Mission = {
   id : null,
 
   initialize : function(){
+    Mission.currMission.data = gameData;
+    var levelLoader = new LevelLoader();
+    
     this.id = parseInt(window.location.toString().split('?')[1].split('&')[0].split('=')[1]);
     this.game = window.location.toString().split('?')[1].split('&')[1].split('=')[1];
     $$('#controls .saveButton')[0].stopObserving('click');

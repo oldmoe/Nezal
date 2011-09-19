@@ -40,7 +40,7 @@ var LevelLoader = Class.create({
     };
     
     //adjusting the size of lanes to fit the new data
-    levelEditor.grid.adjustLength(laneLength);
+    levelEditor.grid.adjustLength(laneLength+1);
     
     
     for (var i=0; i < objects.length; i++) {
