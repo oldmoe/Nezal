@@ -2,7 +2,7 @@ var missionData =
   {"data":[[],[
   {
       "name": "wood_stick_cs",
-      "category": 'enemies',
+      "category": 'enemy',
       "type": '3_3',
       "index": 0,
       "lane": 1,
@@ -10,11 +10,19 @@ var missionData =
       "order": 1
   }, 
     
-    {"name":"amn_markazy","category":"enemy","index":0,"lane":2,"x":1000,"order":3}]],
-   "backgrounds":[[{"name":"skyline.png"}],[{"name":"skyline.png"}],[{"name":"sky1.png"}]],"environment":"day","gameModes":["normal"]} 
+    ]],
+    "backgrounds":{
+
+      layer1: [{"name":"skyline.png"}],
+
+      layer2: [{"name":"skyline.png"}],
+
+      landmarks: [{"name":"landmark_1.png"}, {"name":"landmark_2.png"}, {"name":"landmark_3.png"}]
+
+    },"environment":"day","gameModes":["normal"]} 
 
 
-var user_data = {
+var userData = {
   'crowd_members' : { 
       'ultras_green' : { 1 : {'level' : 1, 'upgrades' : { 'hp' : [], 'water' : [], 'attack' : [], 'defense' : [], 'arrest' : 0, 'block' : 0 } } },
       'journalist' : { 1 : {'level' : 1, 'upgrades' : { 'hp' : [], 'water' : [], 'attack' : [], 'defense' : [], 'arrest' : 0, 'block' : 0 } } },  

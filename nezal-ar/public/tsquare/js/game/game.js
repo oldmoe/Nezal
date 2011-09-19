@@ -5,8 +5,8 @@ var Game = Class.create({
     this.imagesLoaded = false;
     this.missionLoaded = false;
     this.gameManager = gameManager;
-    gameData = gameManager.gameData;
-    userData = gameManager.userData;
+    if(gameManager)gameData = gameManager.gameData;
+    if(gameManager)userData = gameManager.userData;
     this.startLoading();
 	},
 
@@ -62,12 +62,10 @@ var Game = Class.create({
     this.mission = mission;
     missionData = mission;
     this.misssionLoaded = false;
-	  var backgroundImages = ['land.png' , '3amod.png', 'street_marks.png']
-    backgrounds = [mission.backgrounds['layer1'], mission.backgrounds['layer2'], mission.backgrounds['landmarks']]
-    mission.backgrounds = backgrounds;
-    backgroundImages.push(mission.backgrounds[0][0].name)
-    backgroundImages.push(mission.backgrounds[1][0].name)
-    backgroundImages.push(mission.backgrounds[2][0].name)
+	  var backgroundImages = [mission.backgrounds['layer1'][0].name, mission.backgrounds['layer2'][0].name]
+    backgroundImages.push('land.png'); 
+    backgroundImages.push('3amod.png');
+    backgroundImages.push('street_marks.png');
 	  var self = this;
 	  new Loader().load([{images: backgroundImages, path: 'images/background/', store: 'background'}],
                         { onFinish:function(){        
@@ -78,7 +76,7 @@ var Game = Class.create({
   },
 
   start : function(){
-    if(this.imagesLoaded == true &&  this.missionLoaded == true)
+    if(this.imagesLoaded == true && this.missionLoaded == true)
     {
       this.scene = new TsquareScene();
 	  	this.scene.start();

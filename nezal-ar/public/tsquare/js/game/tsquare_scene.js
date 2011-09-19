@@ -33,13 +33,14 @@ var TsquareScene = Class.create(Scene,{
             "crowd" : new CrowdHandler(this),
             "enemies" : new EnemyHandler(this)  
         };  
+        var mapping = {'enemy':'enemies'}
         this.data = missionData.data;
         this.noOfLanes = this.data.length;
         for(var i =0;i<this.data.length;i++){
             for(var j=0;j<this.data[i].length;j++){
                 var elem = this.data[i][j]
-                if(this.handlers[elem.category])
-                    this.handlers[elem.category].add(elem);
+                if(this.handlers[mapping[elem.category]])
+                    this.handlers[mapping[elem.category]].add(elem);
             }
         }
     },
