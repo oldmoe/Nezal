@@ -31,7 +31,7 @@ var Mission = {
                       parameters : { "data" : JSON.stringify(Mission.currMission) },
                       onSuccess : function(response){
                         Mission.showSuccessMsg();
-                        Mission.initialize();
+                        // Mission.initialize();
                       },
                       onFailure : function(response){
                         Mission.showErrorMsg();
