@@ -9,7 +9,7 @@ var Grid = Class.create({
 		this.levelEditor = levelEditor;
 		this.lanes =  [];	
 		this.domObject = $(this.gridContainer);
-		
+
 		this.addLane();
 		this.addLane();
 		this.addLane();
@@ -19,6 +19,7 @@ var Grid = Class.create({
 			self.addLane();
 		});
 		
+
 	},
 	
 	addLane : function(){
@@ -46,7 +47,7 @@ var Grid = Class.create({
       
     var totalCount = 0;
     for (var i=0; i < this.lanes.length; i++) {
-      if(laneIndex != i)
+      if(laneIndex != i && this.lanes[i].tiles[tileIndex])
           totalCount += this.getObjectsCount(this.lanes[i].tiles[tileIndex].objects);
     }
     

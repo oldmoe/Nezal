@@ -41,7 +41,8 @@ var Lane = Class.create({
 	},
 
 	addTile: function(index){
-		this.tiles.splice(index+1,0,new Tile(this, this.tiles[index].domObject));
+	  var tile = new Tile(this, this.tiles[index].domObject);
+		this.tiles.splice(index+1,0, tile);
 		this.updateTilePositionsLabel();		
 	},
 	

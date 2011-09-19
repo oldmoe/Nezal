@@ -114,7 +114,16 @@ var LevelObjectsHandler = new Class.create({
 	},
 	
 	addDropEvent: function(){
-		var self = this; 
+		var self = this;
+    this.domObject.ondragover = function(e){
+      return false
+    }
+    this.domObject.ondrop = function(event){
+      self.drop(event.dataTransfer.mozSourceNode);
+      return false;
+    }
+		
+/*		 
 		Droppables.add(this.domObject, {
 			hoverclass : 'hoverActive',
 			onDrop : function (draggable) {
@@ -123,11 +132,20 @@ var LevelObjectsHandler = new Class.create({
 					self.addLOTile(draggable);
 			}
 		});
+		
+*/		
+	},
+	
+	drop: function(draggable){
+        if(draggable.parentNode == this.domObject) return;
+        if($(draggable).getAttribute('category') != 'background')
+          this.addLOTile(draggable);
 	},
 	
 	addLOTile: function(draggable){
 		var tile = new LOTile(this, draggable);
 		this.tiles.push(tile);
+		tile.domObject.style.position = "relative";
 	},
 
 	removeAll: function(){

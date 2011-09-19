@@ -22,7 +22,7 @@ var LOTile = Class.create({
 			}
 		});	
 				
-		new Draggable(this.domObject, {revert : true});
+		// new Draggable(this.domObject, {revert : true});
 	},
 
 	getPosition: function(){

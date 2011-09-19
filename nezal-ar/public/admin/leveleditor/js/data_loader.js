@@ -12,7 +12,7 @@ var DataLoader = Class.create({
 	initialize: function(){
 		this.initData();
 		this.load();
-		this.addDraggableEvent();
+		// this.addDraggableEvent();
 	},
 	
 	initData: function(){

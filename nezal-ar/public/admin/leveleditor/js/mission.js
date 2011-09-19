@@ -2,7 +2,7 @@ var Mission = {
 
   adminUrl : 'nezal-admin',
 
-  currMission : null,
+  currMission : {},
   
   id : null,
 
@@ -22,8 +22,7 @@ var Mission = {
 
   saveToServer : function(){
     var data = levelEditor.dataExporter.exportData();
-    this.currMission.data = data;
-    console.log(data);
+    Mission.currMission.data = data;
     new Ajax.Request( '/' + this.adminUrl + "/" + this.game + '/missions/' + this.id + '.json' , {
                       method : 'put',
                       parameters : { "data" : JSON.stringify(Mission.currMission) },

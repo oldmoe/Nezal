@@ -59,14 +59,17 @@ var Tile = Class.create({
 	
 	addDropEvent: function(){
 		var self = this;
-		Droppables.add(self.domObject, {
-			hoverclass : 'hoverActive',
-			onDrop : function (draggable) {
-				if($(draggable).getAttribute('category') != 'background'){
-					self.addObject(draggable, true);
-				}
-			}
-		});
+    this.domObject.ondragover = function(){return false}
+    this.domObject.ondrop = function(event){
+      self.drop(event.dataTransfer.mozSourceNode);
+      return false;
+    }
+	},
+	
+	drop: function(draggable){
+      if($(draggable).getAttribute('category') != 'background'){
+        this.addObject(draggable, true);
+      }
 	},
 	
 	addObject: function(item, multiple){
@@ -113,7 +116,7 @@ var Tile = Class.create({
 	createObject: function(obj, multiple){
     if(!multiple){
       for(var i=0; i<this.objects.length; i++){
-        if(this.objects[i].name == obj.name && this.objects[i].category == obj.category){
+        if(this.objects[i].name == obj.name && this.objects[i].category == obj.category && this.objects[i].type == obj.type){
           return false;
         } 
       }
