@@ -1,0 +1,9 @@
+#missions {
+    background: none repeat scroll 0 0 gray;
+    height: 300px;
+    left: 5%;
+    opacity: 0.6;
+    position: absolute;
+    top: 150px;
+    width: 90%;
+}

@@ -1,13 +1,13 @@
 var UnitHandler = Class.create({
    
    objects: null,
-   incomming: null,
+   incoming: null,
    scene: null,
    unitsClassMappings : null,
-   
+   target : null,
    initialize: function(scene){
        this.unitsClassMappings = {}
-       this.incomming = [];
+       this.incoming = [[],[],[]];
        this.objects = [[],[],[]];
        this.scene = scene;       
    },
@@ -21,8 +21,8 @@ var UnitHandler = Class.create({
        
    },
    add: function(elem){
-       if(this.incomming[elem.lane] == null){
-         this.incomming[elem.lane] = [];
+       if(this.incoming[elem.lane] == null){
+         this.incoming[elem.lane] = [];
          this.objects[elem.lane] = [];  
        }
        elem.options = {}
@@ -31,7 +31,7 @@ var UnitHandler = Class.create({
            elem.name = this.unitsClassMappings[elem.name]
        }
        elem.options.handler = this
-      this.incomming[elem.lane].push(elem)
+      this.incoming[elem.lane].push(elem)
    },
    
   checkObjectsState : function(){
@@ -44,11 +44,11 @@ var UnitHandler = Class.create({
          }  
       }
     }
-    for(var i=0;i<this.incomming.length;i++){
-      for(var j=0; this.incomming[i] && j<this.incomming[i].length;j++){
-        if (this.incomming[i][j].x < this.scene.view.xPos + this.scene.view.width) {
-          this.objects[i].push(this.addObject(this.incomming[i][j]))
-          this.incomming[i].splice(0, 1)
+    for(var i=0;i<this.incoming.length;i++){
+      for(var j=0; this.incoming[i] && j<this.incoming[i].length;j++){
+        if (this.incoming[i][j].x < this.scene.view.xPos + this.scene.view.width) {
+          this.objects[i].push(this.addObject(this.incoming[i][j]))
+          this.incoming[i].splice(0, 1)
           j--;
         }
         else {
@@ -56,7 +56,24 @@ var UnitHandler = Class.create({
         }
       }
     }
+    var done = true
+    for(var i=0;i<this.objects.length;i++){
+      if (this.objects[i].length > 0) {
+        done = false;
+        break
+      }
+    }
+    for (var i = 0; i < this.incoming.length; i++) {
+      if(this.incoming[i].length > 0){
+        done = false
+      } 
+    }
+    if(done) this.end()
   },
+  end : function(){
+    
+  },
+  
   addObject : function(obj){
     return this.scene.addObject(obj)  
   },
@@ -80,7 +97,8 @@ var UnitHandler = Class.create({
            }
            for(var j=0;j<this.objects[i].length;j++){                      
                 if(collided){
-                    this.objects[i][j].setTarget(others[i][0]);       
+                    this.objects[i][j].setTarget(others[i][0]);     
+                    this.target = others[i][0]  
                 }else{
                     this.objects[i][j].setTarget(null); 
                 }
@@ -92,7 +110,6 @@ var UnitHandler = Class.create({
     if(collision.length > 0) return true
     return false
   },
-  
    removeObject: function(object, lane){
       if(this.objects[lane].indexOf(object)!=-1){
           this.objects[lane].remove(object);

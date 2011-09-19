@@ -14,9 +14,10 @@ var TsquareScene = Class.create(Scene,{
     direction : 1,
     holdPowerDepression: 0.2,
     energy : {current:0, rate: 3,max:30},
-    view: {width: 760, height: 410, xPos: 0, tileWidth: 50, laneMiddle : 25},
+    view: {width: 760, height: 410, xPos: 0, tileWidth: 500, laneMiddle : 25},
     observer: null,
     activeLane: 1,
+    win : false,
     commands : ["circle","march","wrongHold","rightHold","retreat"],
     
     initialize: function($super){
@@ -102,7 +103,12 @@ var TsquareScene = Class.create(Scene,{
             this.handlers[handler].tick();
         }
     },
-
+  end : function(win){
+    this.reactor.stop()
+    this.win = win
+    this.fire('end')
+    //send to the server
+  },
   addObject : function(objHash){
      var klassName = objHash.name.formClassName()
      var klass = eval(klassName)
