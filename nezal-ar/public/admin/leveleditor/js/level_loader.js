@@ -35,7 +35,7 @@ var LevelLoader = Class.create({
   
   loadObjects: function(objects){
     var laneLength = 0;
-    for (var i=0; i < objects.length; i++) {
+    for (var i=0; objects && i < objects.length; i++) {
       for (var j=0; j < objects[i].length; j++) {
         if(laneLength < objects[i][j].x)
           laneLength = objects[i][j].x;
