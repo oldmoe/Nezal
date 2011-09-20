@@ -27,7 +27,7 @@ var LevelLoader = Class.create({
   },
   
   loadBackgroundContainer: function(objects, container){
-    for (var i=0; i < objects.length; i++) {
+    for (var i=0; objects && i < objects.length; i++) {
       objects[i].category = "background";
       levelEditor.backgroundHandler.loadObject(this.loadImagePath(objects[i]), container);
     };
