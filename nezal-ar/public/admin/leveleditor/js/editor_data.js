@@ -30,10 +30,12 @@ var EditorData = [
   {src:'images/objects/ultras.png', name:'ultras', category:'crowd'},
   //backgrounds
   {src:'images/backgrounds/3amod.png', name:'3amod.png', category:'background'},
+  {src:'images/backgrounds/3amod2.png', name:'3amod2.png', category:'background'},
   {src:'images/backgrounds/land.png', name:'land.png', category:'background'},
-  {src:'images/backgrounds/sky1.png', name:'sky1.png', category:'background'},
-  {src:'images/backgrounds/sky2.png', name:'sky2.png', category:'background'},
-  {src:'images/backgrounds/sky3.png', name:'sky3.png', category:'background'},
-  {src:'images/backgrounds/skylines_icon.png', name:'skyline.png', category:'background'},
-  {src:'images/backgrounds/street_marks.png', name:'street_marks.png', category:'background'} 
+  {src:'images/backgrounds/fence.png', name:'fence.png', category:'background'},
+  {src:'images/backgrounds/landmark_1.png', name:'landmark_1.png', category:'background'},
+  {src:'images/backgrounds/landmark_2.png', name:'landmark_2.png', category:'background'},
+  {src:'images/backgrounds/landmark_3.png', name:'landmark_3.png', category:'background'},
+  {src:'images/backgrounds/main_skyline.png', name:'main_skyline.png', category:'background'},
+  {src:'images/backgrounds/secondary_skyline.png', name:'secondary_skyline.png', category:'background'},
 ];

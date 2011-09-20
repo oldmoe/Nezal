@@ -61,7 +61,8 @@ var Tile = Class.create({
 		var self = this;
     this.domObject.ondragover = function(){return false}
     this.domObject.ondrop = function(event){
-      self.drop(event.dataTransfer.mozSourceNode);
+      if(event.dataTransfer.mozSourceNode.getAttribute('category'))
+        self.drop(event.dataTransfer.mozSourceNode);
       return false;
     }
 	},

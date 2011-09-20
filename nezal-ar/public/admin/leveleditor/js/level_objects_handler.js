@@ -119,7 +119,8 @@ var LevelObjectsHandler = new Class.create({
       return false
     }
     this.domObject.ondrop = function(event){
-      self.drop(event.dataTransfer.mozSourceNode);
+      if(event.dataTransfer.mozSourceNode.getAttribute('category'))
+        self.drop(event.dataTransfer.mozSourceNode);
       return false;
     }
 		

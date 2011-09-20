@@ -228,7 +228,7 @@
 
 .bgDropbox{
 	overflow: auto;
-	width: 390px;
+	width: 184px;
 	height: 75px;
 	border: 1px solid black;
 	margin: 10px;
@@ -245,7 +245,7 @@
 .bgTitle{
 	float: left;
 	height: 20px;
-	width: 390px;
+	width: 185px;
 	margin: 10px;
 	font-family: Verdana;
 }

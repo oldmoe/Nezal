@@ -7,18 +7,20 @@ var BackgroundHandler = Class.create({
 		
 		this.addDropEvent('bgLayer1');
 		this.addDropEvent('bgLayer2');
-		this.addDropEvent('landmarks');
-		
-		this.layer1 = $("");
+		this.addDropEvent('bgLandmarks');
+		this.addDropEvent('bgFence');
+		this.addDropEvent('bgLand');
+		this.addDropEvent('bgLamp');
 	},
 	
 	addDropEvent: function(dropTarget){
 		var self = this; 
-		Droppables.add($(dropTarget), {
-			hoverclass : 'hoverActive',
-			onDrop : function (draggable) {
-			}
-		});
+    $(dropTarget).ondragover = function(){return false}
+    $(dropTarget).ondrop = function(event){
+      if(event.dataTransfer.mozSourceNode.getAttribute('category'))
+        self.drop(event.dataTransfer.mozSourceNode, dropTarget);
+      return false;
+    }
 	},
 	
 	drop: function(draggable, dropTarget){
@@ -75,9 +77,21 @@ var BackgroundHandler = Class.create({
 		return this._exportData('bgLayer2');
 	},
 
-	getLandMarks: function(){
-		return this._exportData('landmarks');
+	getLandMarksData: function(){
+		return this._exportData('bgLandmarks');
 	},
+
+  getFenceData: function(){
+    return this._exportData('bgFence');
+  },
+
+  getLandData: function(){
+    return this._exportData('bgLand');
+  },
+
+  getLampData: function(){
+    return this._exportData('bgLamp');
+  },
 	
   loadData: function(data){
     
