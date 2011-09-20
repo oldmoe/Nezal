@@ -68,6 +68,7 @@ var DataExporter = Class.create({
 			x=0;
 			l++;
 		}
+	
 		
 		var gameData = {};
 		gameData.data = data;

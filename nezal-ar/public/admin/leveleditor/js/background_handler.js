@@ -85,6 +85,7 @@ var BackgroundHandler = Class.create({
     return this._exportData('bgFence');
   },
 
+
   getLandData: function(){
     return this._exportData('bgLand');
   },

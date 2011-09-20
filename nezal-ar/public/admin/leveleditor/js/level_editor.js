@@ -22,13 +22,15 @@ var gameData =
     }]],
     
    "backgrounds":{
-      layer1: [{"name":"sky1"}],
-      layer2: [{"name":"sky1"}],
-      landmarks: [{"name":"3amod"}]
-    },
+     "layer1":[{"name":"secondary_skyline.png"}],
+     "layer2":[{"name":"main_skyline.png"}],
+     "landmarks":[{"name":"landmark_1.png"},{"name":"landmark_2.png"}],
+     "fence":[{"name":"fence.png"}],
+     "lamp":[{"name":"3amod.png"}],
+     "land":[{"name":"land.png"}]},
+     
+     "environment":"day","gameModes":["normal"]}
    
-   "environment":"day","gameModes":["normal"]} 
-
 var LevelEditor = Class.create({
 	
 	settings: {},

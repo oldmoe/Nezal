@@ -20,7 +20,10 @@ var LevelLoader = Class.create({
   loadBackgrounds: function(backgrounds){
     this.loadBackgroundContainer(backgrounds.layer1, "bgLayer1");
     this.loadBackgroundContainer(backgrounds.layer2, "bgLayer2");
-    this.loadBackgroundContainer(backgrounds.landmarks, "landmarks");
+    this.loadBackgroundContainer(backgrounds.landmarks, "bgLandmarks");
+    this.loadBackgroundContainer(backgrounds.land, "bgLand");
+    this.loadBackgroundContainer(backgrounds.fence, "bgFence");
+    this.loadBackgroundContainer(backgrounds.lamp, "bgLamp");
   },
   
   loadBackgroundContainer: function(objects, container){
