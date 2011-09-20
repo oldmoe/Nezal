@@ -46,7 +46,7 @@ var LevelLoader = Class.create({
     levelEditor.grid.adjustLength(laneLength+1);
     
     
-    for (var i=0; i < objects.length; i++) {
+    for (var i=0; objects && i < objects.length; i++) {
       for (var j=0; j < objects[i].length; j++) {
         levelEditor.grid.lanes[i].tiles[objects[i][j].x].loadObject(this.loadImagePath(objects[i][j]));
       };
