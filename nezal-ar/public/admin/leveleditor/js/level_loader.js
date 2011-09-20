@@ -9,8 +9,8 @@ var LevelLoader = Class.create({
   
   load: function(){
     if(this.missionData){
-      this.loadObjects(this.missionData.data);
-      this.loadBackgrounds(this.missionData.backgrounds);
+      if(this.missionData.data)this.loadObjects(this.missionData.data);
+      if(this.missionData.backgrounds)this.loadBackgrounds(this.missionData.backgrounds);
       alert("Data loaded successfully.");
     }else{
       alert("No data to load.");
