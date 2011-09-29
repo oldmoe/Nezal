@@ -340,18 +340,22 @@ var Game = Class.create({
     this.creepFactory = new CreepFactory(this);
     this.workerFactory = new WorkerFactory(this);
     this.workerPanel = new WorkerPanel();
-    if(!this.globalMapManager)this.globalMapManager  = new GlobalMapManager(this);
+    //if(!this.globalMapManager)this.globalMapManager  = new GlobalMapManager(this);
     this.invadeDisplay = new InvadeDisplay(this);
     this.protectionDisplay = new ProtectionDisplay(this)
+    
     if(!this.attackIterfaceManager)this.attackIterfaceManager = new AttackIterfaceManager(this)
-    if( !this.buildingMode )
+    if (!this.buildingMode) {
+      console.log( this.buildingMode );
       this.buildingMode = new BuildingMode(this);
-    else{
+      console.log( this.buildingMode );
+    } else {
       var selectedBuilding = this.buildingMode.selectedBuilding;
-      if( selectedBuilding && selectedBuilding.state == selectedBuilding.states.NOT_PLACED ){
-        
+      if (selectedBuilding && selectedBuilding.state == selectedBuilding.states.NOT_PLACED) {
+      
         var newBuilding = this[selectedBuilding.name.dasherize().camelize() + 'Factory'].newBuilding();
-        this.buildingMode.on( newBuilding, function(){} );
+        this.buildingMode.on(newBuilding, function(){
+        });
       }
     }
     
