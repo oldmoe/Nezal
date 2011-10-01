@@ -74,12 +74,6 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
         this.sprites.building.replaceImg(Loader.images.buildings['townhall_door.png'])
         this.doorOpening = true
         this.sprites.building.currentAnimationFrame = 0
-      } 
-      if(this.sprites.building.currentAnimationFrame == this.doorFrames-1){
-        this.doorOpening = false
-        this.doorClosing = true
-        if(this.owner.producingCallback)this.owner.producingCallback()
-        return
       }
       if(this.sprites.building.currentAnimationFrame == 0 && this.doorClosing){
         this.doorClosing = false
@@ -90,7 +84,13 @@ var TownhallDisplay = Class.create(BuildingDisplay, {
       else if (this.doorOpening)
       this.sprites.building.currentAnimationFrame = (this.sprites.building.currentAnimationFrame + 1);
       else if (this.doorClosing)
-      this.sprites.building.currentAnimationFrame = (this.sprites.building.currentAnimationFrame - 1);
+      this.sprites.building.currentAnimationFrame = (this.sprites.building.currentAnimationFrame - 1); 
+      if(this.sprites.building.currentAnimationFrame == this.doorFrames-1){
+        this.doorOpening = false
+        this.doorClosing = true
+        if(this.owner.producingCallback)this.owner.producingCallback()
+        return
+      }
   },
   
   renderAnimation : function(){

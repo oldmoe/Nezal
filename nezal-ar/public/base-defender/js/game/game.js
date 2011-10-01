@@ -346,9 +346,7 @@ var Game = Class.create({
     
     if(!this.attackIterfaceManager)this.attackIterfaceManager = new AttackIterfaceManager(this)
     if (!this.buildingMode) {
-      console.log( this.buildingMode );
       this.buildingMode = new BuildingMode(this);
-      console.log( this.buildingMode );
     } else {
       var selectedBuilding = this.buildingMode.selectedBuilding;
       if (selectedBuilding && selectedBuilding.state == selectedBuilding.states.NOT_PLACED) {
