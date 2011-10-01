@@ -10,7 +10,6 @@ FBDefender = {
     processParams : function(params){
       var callback = function(requests_data){      
         var request = requests_data[params['request_ids']];
-        console.log(request)
         if(params['request_ids'])
         {
           game.network.genericPostRequest('requests/accept', {request_id : params['request_ids'], from : request['from']['id']});

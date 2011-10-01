@@ -71,7 +71,6 @@ var AttackIterfaceManager = Class.create({
       if (this.game.zoomFactor == 1) {
         game.controlsPanel.zoom()
       }
-        console.log('here')
         this.initializeCaruosel()
         this.registerCornerListeners()
         this.registerPanelListeners()

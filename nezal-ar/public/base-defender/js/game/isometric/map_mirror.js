@@ -56,7 +56,6 @@ var x = e.pointerX()-this.monitorGlassLeft;
 var y = e.pointerY()-this.monitorGlassTop;
 var dx = ((x*13.21)-Map.viewWidth/2)- Map.x ;
 var dy = ((y*15.7)-Map.viewHeight/2)- Map.y ;
-console.log(dx,dy)
 // Conditions relative to monitorGlass sizes to keep the imgMirror in borders	
 	if(x<19)
 	{

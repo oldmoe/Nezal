@@ -60,7 +60,6 @@ var AttackManager = Class.create({
 		this.creepsDone++
     if(stolenResources)this.addStolenResources(stolenResources)
 		var attackSuccess = false
-    console.log(this.creepsDone, this.noOfCreeps)
 		if(this.creepsDone == this.noOfCreeps){
       var userData = this.formUserData()
       this.game.network.storeAttackResult(userData, this.creepsArr)
