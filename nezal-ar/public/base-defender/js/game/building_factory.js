@@ -7,6 +7,7 @@ var BuildingFactory = Class.create({
   buildingDisplayClass :null,
   noOfBuildings : 0,
   initialize : function(game, buildingName){
+    this.canBeBuiltOn = "grass";
     this.factoryRegistry = {};
     this.name = buildingName;
     this.newBuildingSpecs = {'state' : Building.prototype.states.NOT_PLACED, 'level' : 0, 'coords' : {'x' : null, 'y' : null}}  
