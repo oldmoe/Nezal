@@ -42,13 +42,13 @@ module BD
                 quest['conditions']['buildings'].each_pair do |building, hash|
                   data['quests'][id]['conditionMsgs'][building] ||= {}
                   hash.keys.each do |key|
-                    data['quests'][id]['conditionMsgs'][building][key] = ''
+                    data['quests'][id]['conditionMsgs'][building][key] ||= ''
                   end
                 end
               end
               if quest['conditions'] && quest['conditions']['resources']
                 quest['conditions']['resources'].keys do |key|
-                  data['quests'][ id]['conditionMsgs'][key] = ''
+                  data['quests'][ id]['conditionMsgs'][key] ||= ''
                 end
               end
             end
