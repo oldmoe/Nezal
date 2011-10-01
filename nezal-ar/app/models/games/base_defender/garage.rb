@@ -32,7 +32,7 @@ module BD
       @ugp.total_garage_units+= (garage_levels[@level.to_s]['storage_units']-garage_levels[(@level-1).to_s]['storage_units'])
     end
 
-    def check_stopped_war_factories ugp, game_metadata
+    def check_stopped_war_factories ugp, game_data
       war_factories = ugp.war_factory
       return if(war_factories.nil?)
       war_factories.each_pair do |k,building|
