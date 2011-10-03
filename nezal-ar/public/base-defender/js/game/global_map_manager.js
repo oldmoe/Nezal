@@ -13,12 +13,12 @@ var GlobalMapManager = Class.create({
   },
   getFriends :function(callback){
       var self = this
-		  userID = FB.getSession().uid
-		  var	query = FB.Data.query("SELECT uid FROM user WHERE is_app_user=1 and uid IN (SELECT uid2 FROM friend WHERE uid1 = {0})", FB.getSession().uid);
+		  userID = serviceProvider.session.userID
+		  var	query = FB.Data.query("SELECT uid FROM user WHERE is_app_user=1 and uid IN (SELECT uid2 FROM friend WHERE uid1 = {0})", serviceProvider.session.userID);
 		  FB.Data.waitOn([query], function(){
 			  if(!query.value.length)query.value=[]
 			  self.friendIds = query.value.collect(function(row){return Number(row.uid)}) 
-			  self.friendIds.push(Number(FB.getSession().uid))
+			  self.friendIds.push(Number(serviceProvider.session.userID))
         if(callback)callback()
       })	
   },
@@ -58,7 +58,7 @@ var GlobalMapManager = Class.create({
       toBeLoaded[i] = this.globalMap[i]
       toBeLoaded[i]['position'] = positions[i]
     }
-    $('globalMap').innerHTML = game.templatesManager.load('globalMap',{'neighbors':toBeLoaded,'userID':FB.getSession().uid})
+    $('globalMap').innerHTML = game.templatesManager.load('globalMap',{'neighbors':toBeLoaded,'userID':serviceProvider.session.userID})
     game.addLoadedImagesToDiv('globalMap')
     this.registerGlobalMapListeners()
     $('interaction').show()
@@ -132,7 +132,7 @@ var GlobalMapManager = Class.create({
 			div.observe('click', function(e){
         self.selectedNeighborId = div.id.replace("neighbor","")
         self.selectedNeighborNetworkId = div.getAttribute("serviceId")
-        if (self.selectedNeighborNetworkId != FB.getSession().uid) {
+        if (self.selectedNeighborNetworkId != serviceProvider.session.userID) {
           if (this.getAttribute('protected') == 'true') {
             $$('#globalMap #globalMapNeighborMenu #invadeButton img')[0].setStyle({
               marginTop:"-58px"

@@ -340,7 +340,7 @@ var Game = Class.create({
     this.creepFactory = new CreepFactory(this);
     this.workerFactory = new WorkerFactory(this);
     this.workerPanel = new WorkerPanel();
-    //if(!this.globalMapManager)this.globalMapManager  = new GlobalMapManager(this);
+    if(!this.globalMapManager)this.globalMapManager  = new GlobalMapManager(this);
     this.invadeDisplay = new InvadeDisplay(this);
     this.protectionDisplay = new ProtectionDisplay(this)
     
