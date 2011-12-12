@@ -14,11 +14,11 @@ require Dir.pwd + '/app/models/campaign'
 require Dir.pwd + '/app/models/game'
 
 
-@base = Dir.pwd + "/public/city-defender/"
+@base = Dir.pwd + "/public/local-arabian-shield/"
 
 @game_name = ENV['app']
 unless @game_name
-	@game_name =  ENV['env'] == 'production' ? "defenderofarabia" : "ie-city-defender"
+	@game_name =  ENV['env'] == 'production' ? "local-arabian-shield" : "local-arabian-shield"
 end 
 STDERR.puts "Generating campaign list for #{@game_name}"
 

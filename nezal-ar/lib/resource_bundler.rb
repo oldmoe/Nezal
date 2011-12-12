@@ -8,7 +8,7 @@ load Dir.pwd + '/lib/jsmin.rb'
 
 
 
-@base = Dir.pwd + "/public/tunisia-defender/"
+@base = Dir.pwd + "/public/arabian-shield/"
 
 @files = {
 	'base' => [
@@ -64,7 +64,7 @@ load Dir.pwd + '/lib/jsmin.rb'
 
 def bundle
 	total = ''
-  @base = Dir.pwd + "/public/tunisia-defender/"
+  @base = Dir.pwd + "/public/arabian-shield/"
 	[['base','js'], ['nezal','js'], ['game', 'js'], ['intro', 'css'],['payments', 'js'],['payments', 'css']].each do |folder|
 		STDERR.print "Processing #{folder.join('.')} ... "
 		if folder[0] != 'nezal' && folder[0] != 'payments'
@@ -116,7 +116,7 @@ end
 
 def render
 	STDERR.print "Processing game.html ... "
-	template = ERB.new(File.read(Dir.pwd + '/app/views/games/tunisia-defender/index.erb'))
+	template = ERB.new(File.read(Dir.pwd + '/app/views/games/arabian-shield/index.erb'))
 	result = template.result(binding)
 	File.open("#{@base}index.html", "w") do |file|
 		file.write(result)

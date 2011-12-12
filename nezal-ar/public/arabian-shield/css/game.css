@@ -1,0 +1,1120 @@
+body{
+	padding : 0px;
+	margin : 0px;
+}
+*{
+	-moz-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;
+}
+textarea{
+  -moz-user-select: auto;
+  -khtml-user-select: auto;
+  user-select: auto;
+}
+.baloon{
+	direction:rtl;
+}
+#gameContainer{
+	/*-webkit-transform: rotate(90deg);
+	-moz-transform: scale(0.8)*/
+}
+
+#gameContainer {
+	padding-top: 0px;
+	position : relative;
+	width : 462px;
+	height: 550px;
+	bottom: 0px;
+	/*margin-left:auto;
+	margin-right:auto;*/
+	font-family : verdana;
+}
+
+#gameElements{
+	visibility:hidden;
+	width : 760px;
+	height: 550px;
+	position: absolute;
+	top:0px;
+	left:0px;
+}
+
+#result{
+	width : 760px;
+	height: 550px;
+	position: absolute;
+	top:40px;
+	left:73px;
+	font-size : 18px;
+	font-weight : normal;
+	font-family : verdana;
+	color : #fff;
+	vertical-align:middle;
+	z-index : 500;
+}
+
+#splashScreen{
+	width : 760px;
+	height: 550px;
+	position: absolute;
+	top:0px;
+	left:0px;
+	z-index : 101;
+}
+
+#waitScreen{
+	width : 760px;
+	height: 550px;
+	position: absolute;
+	top:0px;
+	left:0px;
+	z-index : 101;
+	background: center url('../images/background/ajax-loader.gif') no-repeat;
+}
+
+
+#splashScreen .loading_bar_bg{
+	width : 280px;
+	height: 40px;
+	position: absolute;
+	left:230px;
+	top: 430px;
+}
+
+#splashScreen .loading_bar_bg #loading_bar{
+	position: absolute;
+	height:36px;
+	left :0px;
+	top: 0px;
+	width: 0%;	
+}
+
+#gameElements .fps{
+	position:absolute;
+	top:8px;
+	left:60px;
+	font-weight: bold;
+}
+
+#gameElements .rank{
+	position:absolute;
+	top:17px;
+	left:650px;
+	width:100px;
+	height:60px;
+}
+
+#gameElements .rankName{
+	position:absolute;
+	font-family: AdLib, Arial Black, Tahoma;
+	color: orange;
+	top: 70px;
+	left:650px;
+	width:100px;
+	height:40px;
+	text-align: center;
+  text-transform : uppercase;
+}
+#gameElements #exp {
+	color:orange;
+	font-family:AdLib,Arial Black,Tahoma;
+	font-size:12px;
+	height:40px;
+	left:650px;
+	position:absolute;
+	text-align:center;
+	text-transform:uppercase;
+	top:3px;
+	width:105px;
+}
+
+#gameElements .start{
+	  height: 82px;
+    left: 0;
+    position: absolute;
+    top: 473px;
+    width: 155px;
+}
+
+#gameElements .startText {
+	-moz-user-select: none;
+	color: white;
+	cursor: pointer;
+	font-family: Tahoma,AdLib,Arial Black;
+	font-size: 30px;
+	height: 72px;
+	left: 0;
+	line-height: 2.4;
+	position: absolute;
+	text-align: center;
+	text-shadow: 2px 2px 1px #000000;
+	top: 8px;
+	width: 155px;
+	z-index:10;
+}
+.startImg{
+	left:2px;
+	top:1px;
+	position : absolute;
+}
+
+#gameElements .towers{
+	position : absolute;
+	top : 128px;
+	left: 665px;
+	width: 94px;
+	height: 180px;
+}
+
+#gameElements .towers div{
+	float:left;
+	width:44px;
+	height:43px;
+	margin-right: 3px;
+	margin-bottom: 2px;
+	background-image: url('../images/background/mystry_button.png')	
+}
+#gameElements .towerInfo {
+	color:white;
+	font-family:tahoma;
+	font-size:10px;
+	height:186px;
+	left:642px;
+	text-align:center;
+	padding:2px;
+	position:absolute;
+	top:354px;
+	width:113px;
+}
+
+#gameElements hr{
+ border : 1px sold orange;
+	margin :1px;
+}
+
+#gameElements #maxUpgrade{
+ padding-top : 0px;
+ line-height: 15px;
+ opacity: 0.5;
+ width: 91px;
+ opacity :0.5;
+}
+#gameElements #sellTower{
+	color: white;
+	cursor: pointer;
+	font-family: tahoma;
+	font-size: 12px;
+	font-weight: bold;
+	left: 7px;
+	position: absolute;
+	text-align: center;
+	top: 13px;
+	width: 50px;
+	z-index: 10;
+}
+#gameElements #towerPrice{
+  color: #FFCC00;
+	cursor: pointer;
+	font-family: Helvetica;
+	font-size: 19px;
+	font-weight: bold;
+	position: absolute;
+	text-align: center;
+	top: 15px;
+	width: 50px;
+	z-index: 10;
+}
+#towerData #sellTowerImgHover{
+	 left: 3px;
+   position: absolute;
+   top: 8px;	
+}
+#towerData #sellTowerImg{
+	 left: 6px;
+   position: absolute;
+   top: 10px;	
+	
+}
+#towerData #towerName{
+  	left: 74px;
+    position: absolute;
+    top: 46px;	
+}	
+
+
+
+#gameElements #upgradeTower {
+	color: #FFCC00;
+	cursor: pointer;
+	font-family: tahoma;
+	font-size: 14px;
+	font-weight: bold;
+	height: 37px;
+	left: 5px;
+	position: absolute;
+	text-align: center;
+	top: 151px;
+	width: 87%;
+	z-index: 10;
+}
+
+
+#gameElements #upgradeTower #upgradeWord{
+	color:white;
+	font-family:tahoma;
+	font-size:11px;
+	font-weight:bold;
+	text-align:center;
+	margin:0;
+}
+#towerData #upgradeTowerImgHover{
+	left:7px;
+	top:144px;
+	position:absolute;
+}
+
+#towerData #upgradeTowerImg{
+	left:10px;
+	top:147px;
+	position:absolute;
+}
+
+#gameElements .towerInfo table {
+	border:medium none;
+	padding:0;
+	width:69px;
+	margin:64px 0px 3px 0px;
+}
+#gameElements .towerInfo #diagramRank{
+	padding-left : 35px;
+}
+
+#gameElements .towerInfo th{
+	border:none;
+	/*color: white;*/
+	font-weight:bold;
+	text-align :left;
+	padding: 0px;
+	margin: 0px;
+	line-height: 9px;
+	font-size : 10px;
+}
+#gameElements .towerInfo td {
+	border:1px solid gray;
+	color:white;
+	font-family:Helvetica;
+	font-size:12px;
+	font-weight:bold;
+	line-height:12px;
+	margin:0;
+	text-align:left;
+	width:90px;
+	background-color: black;
+}
+
+#gameElements .towerInfo td .meter{
+	background-color: #003A7E;
+	padding-left:2px;
+	float:left;
+}
+
+#gameElements .towerInfo td .meterExtension{
+	background-color:FAC200;
+	padding-left:2px;
+	float:left;
+	width:0px;
+}
+
+#gameElements .towerInfo:hover td .meterExtension{
+	width:10px;
+}
+
+#gameElements .towerInfo tr:nth-child(odd)    { color : #fc0; }
+
+#gameElements .towerInfo h4 {
+	color: #FFCC00;
+	font-family: tahoma;
+	font-size: 15px;
+	margin: 1px 2px 0;
+}
+
+#money{
+  color:white;
+  font-family:Digital, Arial Black, Tahoma;
+  font-size:18px;
+  font-weight:bold;
+  height:20px;
+  left:672px;
+  text-align:center;
+  text-shadow:-1px 1px black;
+  top:93px;
+  width:79px;
+  position:absolute;
+}
+
+#gameElements .diagram{
+	position:absolute;
+	top:6px;
+	left: 62px;
+	width: 48px;
+	height: 42px;
+	background-position: right;
+	background-repeat: no-repeat;
+}
+
+#gameElements .diagram{
+	position:absolute;
+	top:6px;
+	left: 62px;
+	width: 48px;
+	height: 42px;
+	background-position: right;
+	background-repeat: no-repeat;
+}
+
+#gameElements .diagram.tower{
+	background-image: url('../images/background/tower1 outline.png');
+}
+
+#gameElements .diagram.doubleTower{
+	background-image: url('../images/background/tower4 outline.png');
+}
+
+#gameElements .diagram.rocketLauncher{
+	background-image: url('../images/background/tower3 outline.png');
+}
+
+#gameElements .diagram.patriot{
+	background-image: url('../images/background/tower2 outline.png');
+}
+
+#gameElements .superWeapons{
+	width:45px;
+	height:120px;
+	position:absolute;
+	top: 115px;
+	left: 615px;
+	z-index: 100;
+}
+
+#gameElements .superWeaponsOff{
+	width:45px;
+	height:120px;
+	position:absolute;
+	top: 115px;
+	left: 615px;
+	z-index: 99;
+}
+
+#gameElements .superWeapons div{
+	position: relative;
+	width: 45px;
+	height: 43px;
+	margin-bottom:2px;
+	color: black;
+}
+
+#gameElements .superWeapons div div{
+	font-family : tahoma;
+	position: absolute;
+	color: #FFD32E;
+	font-size: 10px;
+	font-weight: bold;
+	top : 2px;
+	left: -12px;
+	background-color: #094A67;
+	width: 8px;
+	padding: 2px;
+	height: 12px
+}
+
+#gameElements .superWeapons div div#splash{
+	top : 14px;
+}
+
+#gameElements .superWeaponsOff div{
+	width: 45px;
+	height: 43px;
+	margin-bottom:2px;
+}
+
+#gameElements .superWeapons div.splash{
+	height: 56px;
+}
+
+
+#gameElements .superWeaponsOff div.splash{
+	height: 56px;
+}
+
+
+
+#gameElements .controls{
+	position:absolute;
+	height: 40px;
+	width: 40px;
+	margin-bottom: 4px;
+	opacity : 0.7;
+	z-index:101;
+	margin-left:3px;
+	background-repeat:no-repeat;
+}
+
+#gameElements .controls:hover{
+	opacity : 1.0;
+}
+
+#gameElements  .sound.controls.on{
+	width: 40px;
+	background-image: url('../images/intro/sound_on.png');		
+	top:7px
+}
+
+#gameElements  .sound.controls.off{
+	width: 40px;
+	top:7px;
+	background:none;
+	background-image: url('../images/intro/sound_off.png');				
+}
+
+#gameElements .music.controls.on{
+	width: 40px;
+	background-image: url('../images/intro/music_on.png');			
+	top:48px;
+}
+#gameElements  .music.controls.off{
+	width: 40px;
+	background:none;
+	background-image: url('../images/intro/music_off.png');			
+	top:48px;
+}
+
+#gameElements  .bookmark{
+	background-image: url('../images/background/bookmark_button.png');
+	top :75px;
+}
+#gameElements  .snapshot{
+	background-image: url('../images/background/subscribe_button.png');
+	top :159px;
+}
+#snapshotWindow{
+	z-index:300;
+	position:absolute;
+	top:100px;
+	left:117px;
+}
+#snapshotWindow #snapshot{
+	border:5px solid white;
+	left:53px;
+	position:absolute;
+	top:27px;
+	width:326px;
+
+}
+#snapshotWindow #share,#save{
+	background-color:orange;
+	height:25px;
+	left:443px;
+	position:absolute;
+	width:61px;
+	cursor:pointer;
+}
+
+#snapshotWindow #share{
+	top:207px;
+}
+#snapshotWindow #save{
+	top:109px;
+}
+#snapshotWindow #close{
+	height:30px;
+	left:523px;
+	position:absolute;
+	top:10px;
+	width:30px;
+}
+.status {
+	color:white;
+	font-family:verdana;
+	font-size:14px;
+	font-weight:bold;
+	height:28px;
+	left:115px;
+	position:absolute;
+	top:0px;
+	width:365px;
+	z-index:300;
+	width:450px;
+	cursor:default;
+}
+ .status #statusBarEmpty{
+	background-image:url("../images/background/filling_bar_background.png");
+	background-repeat:no-repeat;
+	height:27px;
+	left:-3px;
+	padding:1px;
+	position:absolute;
+	top:0px;
+	width:450px;		
+}
+
+.status #statusBarEmpty div{
+	height : 23px;
+	float : left;
+}
+
+.status #statusBarEmpty #statusBarRight{
+	background-image: url('../images/background/filling_bar_right.png');				
+	width : 7px;
+}
+
+.status #statusBarEmpty #statusBarFill{
+	background-image: url('../images/background/filling_bar_middle.png');
+	background-repeat:repeat-x;				
+}
+
+.status #statusBarEmpty #statusBarLeft{
+	background-image: url('../images/background/filling_bar_left.png');
+	width : 7px;
+}
+
+
+.status .score{
+	position:absolute;
+	left:187px;
+	top: 1px;
+	width:130px;
+	height:20px;
+	line-height:20px;
+}
+
+.status .lives{
+	position:absolute;
+	left:354px;
+	top: 1px;
+	width:80px;
+	height:20px;
+	line-height:20px;
+}
+
+.status .waves{
+	position:absolute;
+	top: 1px;
+	width:150px;
+	height:20px;
+	line-height:20px;
+	left:15px
+}
+
+
+#canvasHeader{
+	background: #2b2;
+	padding: 8px;
+	height: 20px;
+	font-weight: bold;
+	font-size: 16px;
+	color: white;
+}
+
+#canvasHeader #escaped{
+	margin-right: 30px;
+}
+
+#canvasFooter{
+	margin-top : -5px;
+	background: #2b2;
+	padding: 4px;
+	position: relative;
+	height: 36px;
+}
+
+#canvasContainer{
+	width:736px;
+	height: auto;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	visibility:hidden;
+	
+}
+
+#gameContainer .off{
+	background : black;
+}
+
+#static{
+	position : absolute;
+	width:640px;
+	height:480px;
+	top:0px;
+	background-image: url('../images/background/snow.gif');
+}
+
+#gameContainer #gameForeground{
+	position :absolute;	
+	top : 0px;
+	left: 0px;
+	
+}
+#gameContainer #gameBackground{
+	position :absolute;	
+	top : 0px;
+	left: 0px;
+}
+
+#gameContainer #droppingGround{
+	position :absolute;	
+	top : 0px;
+	left: 0px;
+}
+
+#gameContainer #towers{
+	position : relative;
+	padding: 2px;
+	height:32px;
+	float :  left;
+}
+
+#gameContainer #creeps {
+	position : relative;
+	left: 36px;
+	padding: 2px;
+	width:32px;
+	height:32px;
+	float: right;
+	padding-right : 32px;
+}
+
+#gameContainer #towers .frame{
+	position : relative;
+	width:34px;
+	height:34px;
+	float: left;
+	margin-right: 6px;
+}
+
+#gameContainer #towers img{
+	display : block;
+	position : absolute;
+	top: 1px;
+	left: 1px;
+}
+
+#gameContainer #towers .selected{
+	background-color: white;
+}
+
+
+#gameContainer #creeps img.top{
+	top	: 17px;
+	left : 	19px;
+}
+
+
+#gameContainer #creeps img{
+	display : block;
+	position : absolute;
+	top : 2px;
+}
+
+#unitData {
+	padding: 4px;
+	background: #ee9;
+	height : 106px;
+}
+
+#unitData td{
+	font-weight: bold;
+	font-size: 12px;
+	margin: 4px;
+	padding: 4px;
+	background : #cc7;
+	width: 150px;
+}
+
+#audio {
+	display : none;
+}
+#modalWindow
+{
+  width : 400px;
+  height : 170px;
+  position : absolute;
+  top : 200px;
+  left : 100px;
+  z-index : 200;
+}
+#modalWindow #character
+{
+  width : 400px;
+  height : 170px;
+  position : absolute;
+  top : 0px;
+  left : 0px;
+  z-index : 200;
+}
+#modalWindow .content
+{
+  font-size:13px;	
+  width : 245px;
+  height : 105px;
+  position : absolute;
+  top : 10px;
+  left : 125px;
+  z-index : 201;
+  font-family: AdLib, Arial Black, Tahoma;
+}
+#modalWindow .innerContent{
+  width : 245px;
+  height : 105px;
+  vertical-align:middle;
+  display:table-cell;
+  font-family:Tahoma;
+  font-weight:bold;
+}
+#modalWindow #ok
+{
+  width : 40px;
+  height : 30px;
+  position : absolute;
+  top : 120px;
+  left : 300px;
+  z-index : 202;
+  cursor:pointer;
+}
+#modalWindow #ok img{
+	height:100%;
+	position:absolute;
+	width:185%;
+	cursor:pointer;
+}
+#modalWindow #ok #rogerText{
+	color:gold;
+	padding:5px;
+	font-family:tahoma;
+	font-weight:bold;
+	position:absolute;
+	font-size:14px;
+}
+#popup
+{
+	position : absolute;
+	top : 100px;
+	left : 90px;
+	width : 585px;
+	height : 350px;
+	z-index : 600;
+	opacity : 1;
+}
+#popup #congratsContent
+{
+	position : absolute;
+	top : 20px;
+	left : 50px;
+	width : 390px;
+	height : 50px;
+	color : orange;
+	font-size : 30px;
+	text-shadow: #000 2px 2px 1px;
+}
+#popup #promotedContent
+{
+	position : absolute;
+	top : 90px;
+	left : 50px;
+	width : 390px;
+	height : 100px;
+	font-family: AdLib, Arial Black, Tahoma;
+	font-size : 20px;
+	color : white;
+	text-align: center;
+}
+#popup #rankImg
+{
+	position : absolute;
+	top : 40px;
+	left : 430px;
+	width : 172px;
+	height : 148px;
+}
+#popup #popupClose
+{
+	position : absolute;
+	width : 30px;
+	height : 30px;
+	left : 523px;
+	top : 10px;
+}
+#popup #popupOk
+{
+	position : absolute;
+	width : 30px;
+	height : 30px;
+	left : 440px;
+	top : 250px;
+	cursor:pointer;
+}
+#popup #popupOk .text
+{
+  color:white;
+  position:absolute;
+  top:13px;
+  left:30px;
+  width : 100%;
+  text-align:center;
+}
+#pauseeWindow
+{
+position:"absolute";
+	width: 760px;
+	height:550px;
+	z-index:300;
+}
+#gameElements #moneyAnimation
+{
+	color : #FF6600;
+	font-size : 12px;
+	font-weight : bold;
+}
+#container{
+	left : 165px;
+	top : 485px;
+	width: 462px;
+	height: 62px;
+	position : absolute;
+	overflow : hidden;
+}
+#incomingWaves{
+	position : absolute;
+}
+#incomingWaves div.wave {
+	background-color:#082245;
+	border : 2px solid #082245;
+	-moz-border-radius:8px 8px 8px 8px;
+	-webkit-border-radius:8px 8px 8px 8px;
+	-o-border-radius:8px 8px 8px 8px;
+	border-radius:8px 8px 8px 8px;
+	float:right;
+	height:30px;
+	margin:13px 1px 1px;
+	width:148px;
+}
+#incomingWaves div.active {
+	background-color:#003A7E;
+	border : 2px solid #003A7E;
+}
+#incomingWaves div.passed {
+}
+#incomingWaves div.wave div.creep{
+	float:right;
+	height:38;
+}
+#incomingWaves div.wave div.creep img{
+	height: 24px;		
+	margin-top:3px;
+}
+#planeSilhouette{
+	position:absolute;
+	top:91px;
+	left:14px;
+}
+#tankSilhouette{
+	position:absolute;
+	top:63px;
+	left:14px;
+}
+
+#pauseWindow{
+	z-index : 299;
+	width :760px;
+	height :550px; 
+	position :absolute;
+	background-color :white;
+	opacity:0.7;
+}
+
+#gameElements .buttonTextContainer {
+	position:absolute;
+}
+
+#gameElements  .buttonText {
+	color: white;
+	display: table-cell;
+	font-family: tahoma;
+	font-size: 17px;
+	font-weight: bold;
+	height: 70px;
+	text-align: center;
+	top: 26px;
+	vertical-align: middle;
+	width: 114px;
+}
+#result{
+	font-family:tahoma;
+}
+#gameElements #gameMenu {
+	width:200px;
+	padding-left:12px;
+	padding-top:5px;
+	height:238px;
+	position : absolute;
+	left: 236px;
+	top:96px;
+	z-index:301;
+}
+
+#gameElements #gameMenu .button {
+	margin: 5px;
+	cursor: pointer;
+}
+
+#result img,#result div{
+  position:absolute;
+}
+#result .hover{
+  left: -2px;
+  top:-4px;
+}
+/*style of win screen*/
+#win .resultBackground{
+  top : 50px;
+}
+#win .win_logo{
+  left : 100px;
+	top :8px;
+}
+#win .exit{
+  cursor : pointer;
+  left: 99px;
+  top: 310px;
+}
+#win .right_hover{
+  left: 105px;
+  top: 310px;
+}
+#win .citiesImg{
+  left:29px;
+  top:10px;
+}
+#win .playAgain{
+  cursor : pointer; 
+  left: 218px;
+  top: 310px;
+}
+#win .replayImg{
+  left: 20px;
+  top: 7px;
+}
+#win .nextCity{
+  cursor : pointer;
+  left: 332px;
+  top: 310px;
+}
+#win .nextImg{
+  left: 15px;
+  top: 10px;
+}
+#win .nextImg{
+  left: 15px;
+  top: 10px;
+}
+#win .nextImg{
+  left: 15px;
+  top: 10px;
+}
+#win .nextImg{
+  left: 15px;
+  top: 10px;
+}
+
+
+/*style of lose screen*/
+#lose .resultBackground{
+  top : 50px;
+}
+#lose .lose_logo{
+  left : 119px;
+}
+#lose .exit{
+  cursor : pointer;
+  left: 142px;
+  top: 310px;
+}
+
+#lose .citiesImg{
+  left:29px;
+  top:10px;
+}
+#lose .playAgain{
+  cursor : pointer;
+  left: 262px;
+  top: 310px;
+}
+#lose .replayImg{
+  left: 20px;
+  top: 10px;
+}
+
+
+#result #resultCoin{
+  left:15px;
+  top:119px;
+}
+#result #coins,#result #score{
+	color: white;
+	font-size: 17px;
+	font-weight: bold;
+	left: 45px;
+	
+}
+#result #coins{
+	top: 118px;
+}
+
+#result #score{
+	top: 93px;
+}
+#result #coinsWord,#result #scoreWord{
+  left:64px;
+}
+#result #coinsValue,#result #scoreValue{
+  color:#EE9911;
+}
+#result .cityName{
+	direction: rtl;
+	left: 353px;
+	font-weight:bold;
+	position: absolute;
+	text-align: center;
+	top: 101px;
+	width: 200px;
+}
+#result .stars
+{
+  position: relative;
+  text-align: center;
+  top: 110px;
+  left: 424px;  
+  text-align : center
+  padding : 0px;
+}
+#result .star-img
+{
+  position: relative;
+  top : 0px;
+  right : 19px;
+  width : 60px;
+  text-align : right;
+}
+#gameElements #InGamecityName{
+	color: white;
+	direction: rtl;
+	font-family: tahoma;
+	font-weight: bold;
+	height: 29px;
+	left: 651px;
+	position: absolute;
+	top: 71px;
+	width: 100px;
+}

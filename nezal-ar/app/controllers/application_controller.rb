@@ -75,7 +75,7 @@ class ApplicationController < Sinatra::Base
   end
   
   def get_helper_klass
-    helper = ActiveSupport::Inflector.camelize(@app_configs['game_name'].sub("-", "_"))
+    helper = ActiveSupport::Inflector.camelize(@app_configs['game_name'].gsub("-", "_"))
     Kernel.const_get(helper)
   end
   

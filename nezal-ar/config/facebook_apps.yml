@@ -1,41 +1,6 @@
-"110196392331352" :
-  id : "110196392331352"
-  name : local-city-defender
-  key : 3f08e7205c0eb87bdebeb26638946e1d
-  secret : 3f4b0e3df4fa2786d206303a884c2fd1
-  game_name : tunisia-defender
-    
-"107418339291733"	: 
-  id : "107418339291733"
-  name : city-defender
-  key : 345228e4699e2112c66ea8855b2ee88c
-  secret : f764f516364dee05b5a23500cebe137e
-  game_name : city-defender
-
-"156711934356799" : 
-  id : "156711934356799"
-  name : local-base-defender
-  key : "59cde5fd0d13844ba08f50a8e00ff824"
-  secret : "e4d78ff55c23165a378464a798c93bcb"
-  game_name : base-defender
-
-"122519734470004"	: 
-  id : "122519734470004"
-  name : defenderofarabia
-  key : 3cc1b8d9d893b939336aac20af2afa93
-  secret : 460416248260f9d2cb7e68eb30ca04df
-  game_name : city-defender
-  
-"149722381737500"   :
-  id : "149722381737500"
-  name : ie-city-defender
-  key : 324b0d8a10e79194af166a0303c4cddd
-  secret : 4c5d9b5240fe16e6ecf61fc6850e349a
-  game_name : tunisia-defender
-
-"133771943353718"  :
-  id : "133771943353718"
-  name : defenderoftunisia
-  key : 9e9b1562fb03c6368ff86b9c36cef76e
-  secret : 4ff1ee922d1897ad21cb35a7f286564e
-  game_name : tunisia-defender
+"323491894330124" :
+  id : "323491894330124"
+  name : local-arabian-shield
+  key : 6d20066541f5195f3e506e254b56fb33
+  secrent : 6d20066541f5195f3e506e254b56fb33
+  game_name : arabian-shield

@@ -1,0 +1,1271 @@
+@font-face {
+  font-family: "Adlib";
+  src: url("../fonts/ADLIB.TTF");
+}
+@font-face {
+  font-family: "Digital";
+  src: url("../fonts/DIGITAL.TTF");
+}
+@font-face {
+  font-family: "Pakgirl";
+  src: url("../fonts/30pakgirl_bold_TBS.ttf");
+}
+@font-face {
+  font-family: "Arabic";
+  src: url("../fonts/arabic.TTF");
+}
+#intro.arabic{
+  font-family : Arabic, Tahoma,Arial Black;
+  font-weight : bold;
+  direction : rtl;
+}
+#intro.arabic .buttonText
+{
+  font-family : Arabic, Tahoma;
+  text-transform : capitalize;
+  text-align:center;
+  font-size : 17px;
+}
+
+
+#invite {
+  position : absolute;
+  top : 125px;
+  left : 55px;
+  z-index : 1001;
+  width : 650px;
+  height : 550px;
+  -moz-border-radius:8px 8px 8px 8px;
+  -webkit-border-radius: 8px 8px 8px 8px;
+  -khtml-border-radius: 8px 8px 8px 8px;
+  background:none repeat scroll 0 0 rgba(82, 82, 82, 0.698);
+}
+
+
+#pause
+{
+  position:absolute;
+  left:0;
+  width : 760px;
+  height : 550px;
+  z-index:1000;
+}
+#pause #inProgress
+{
+  height:100%;
+  left:0;
+  position:absolute;
+  top:60px;
+  width:100%;
+}
+#inProgress #logo
+{
+  left:175px;
+  position:absolute;
+  top:24px;
+}
+#inProgress #title
+{
+  left:300px;
+  position:absolute;
+  top:142px;
+  z-index:1;
+}
+#inProgress #titleAr
+{
+  left:314px;
+  position:absolute;
+  top:245px;
+}
+#inProgress #blank
+{
+  left:247px;
+  position:absolute;
+  top:234px;
+}
+#congrates.arabic{
+  font-family : Arabic,Tahoma,Arial Black;
+  font-weight : bold;
+  direction : rtl;
+}
+#congrates.english, #congrates.french{
+  font-family : Adlib,Tahoma,Arial Black;
+  font-weight : bold;
+  direction : ltr;
+}
+#congrates
+{
+  position : absolute;
+  left : 180px;
+  top : 180px;
+  width : 400px;
+  height : 170px;
+  z-index:1002;
+}
+#congrates .congratesBg
+{
+  width : 400px;
+}
+#congrates .logo {
+    left: 20px;
+    position: absolute;
+    top: 35px;
+    width: 130px;
+}
+#congrates .content {
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  height: 70px;
+  left: 160px;
+  position: absolute;
+  top: 50px;
+  width: 200px;
+}
+#congrates .ok
+{
+  height: 30px;
+  left: 160px;
+  position: absolute;
+  text-align: center;
+  top: 146px;
+  width: 79px;
+}
+#congrates .ok div.hover img
+{
+  width : 79px;
+}
+#congrates .ok div.hover
+{
+  display:none;
+  position : absolute;
+  top : 0px;
+  left : 0px;
+  width : 79px;
+}
+#ok:hover div.hover
+{
+  display:block;
+}
+#congrates .ok .button
+{
+  position: absolute;
+  z-index: 10;
+  top : 2px;
+  right : 2px;
+}
+#congrates .ok .button img
+{
+  width:75px;
+  position : absolute;
+  top :0px;
+}
+#congrates #rogerText
+{
+  color: white;
+  font-size: 17px;
+  font-weight: bold;
+  height: 52px;
+  line-height: 52px;
+  position: absolute;
+  text-align: center;
+  top: 0;
+  width: 73px;
+}
+#intro
+{
+  width : 760px;
+  height : 550px;
+  position : absolute;
+}
+
+
+#campaign #background,#previousCampaigns #background
+{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+#campaign #paper,#previousCampaigns #paper
+{
+  left: 60px;
+  position: absolute;
+  top: 194px;
+  z-index : 100;
+}
+#campaign #map
+{
+  left: 266px;
+  position: absolute;
+  top: 60px;
+}
+#campaign #name {
+  left: 280px;
+  position: absolute;
+  top: 85px;
+  z-index: 100;
+}
+#campaign .wrapper
+{
+  position : absolute;
+  left : 0px;
+  top : 0px;
+  width : 100%;
+  height : 100%;
+  z-index : 101;
+}
+#campaign .camp-header
+{
+  left:0px;
+  position:absolute;
+  top:00px;
+  vertical-align:top;
+  width:100%;
+  height : 178px;
+}
+#campaign .market-link
+{
+  height: 100px;
+  position: absolute;
+  right: 30px;
+  top: 54px;
+  width: 320px;
+  z-index : 102;
+}
+#campaign .market-link .button {
+  cursor: pointer;
+  display: inline-block;
+  position: absolute;
+  right: 12px;
+  top: 16px;
+}
+#campaign .market-link .button .buttonImg {
+  position: absolute;
+  right: 2px;
+  top: 2px;
+}
+#campaign .camp-header .logo
+{
+  height: 100%;
+  left: 0;
+  position: absolute;
+  width:280px;
+  overflow : hidden;
+}
+#campaign .camp-header .logo img {
+  left: 38px;
+  position: absolute;
+  top: 20px;
+}
+#campaign #camp-map
+{
+  display:inline-block;
+  margin-top:15px;
+  width:270px;
+}
+#campaign #missions {
+  height: 350px;
+  position: absolute;
+  right: 30px;
+  top: 184px;
+  width: 710px;
+}
+#campaign .mission
+{
+  width : 112px;
+  height : 85px;
+  display:inline-block;
+  overflow : hidden;
+  vertical-align : top;
+}
+#campaign .mission .missionScore
+{
+  color: #FFCA00;
+  display: inline-block;
+  font-weight: normal;
+  position: relative;
+  text-align: center;
+  top: -172px;
+  width: 101px;
+  font-size : 20px;
+  z-index : 10;
+}
+#campaign .mission .clickableButton
+{
+  height: 58px;
+  position: relative;
+  top: -63px;
+  right : 2px;
+  width: 102px;
+  z-index: 10000;
+  cursor : pointer;
+}
+#campaign .mission .mission-normal
+{
+  position: relative;
+  top: -121px;
+  right : 3px;
+  width: 102px;
+  height : 82px;
+}
+#campaign .mission .stars
+{
+  position: relative;
+  text-align: center;
+  top: -170px;
+  width: 105px;
+  text-align : center
+  padding : 0px;
+}
+#campaign .mission .star-img
+{
+  position: relative;
+  top : 0px;
+  right : 19px;
+  width : 61px;
+  text-align : right;
+}
+#campaign .mission .mission-hover
+{
+  position: relative;
+  right: 0;
+  top: -2px;
+  width: 112px;
+  height : 65px;
+}
+#campaign .mission .inactive-mission
+{
+  position : relative;
+  top : 2px;
+  right : 2px;
+}
+#marketPlace #background
+{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+#marketPlace #background .map
+{
+  position: absolute;
+  top: 55px;
+  left: 265px;
+}
+#marketPlace #background .name {
+  position: absolute;
+  right: 275px;
+  top: 95px;
+}
+#marketPlace #upperPart {
+  height: 160px;
+  left: 0;
+  position: absolute;
+  top: 20px;
+  width: 100%;
+}
+#marketPlace #upperPart .logo {
+  position: absolute;
+  top: 0px;
+  left: 40px;
+  width: 200px;
+  height: 160px;
+}
+#marketPlace #upperPart .logo img
+{
+  width : 185px;
+  float : left;
+}
+#marketPlace #upperPart .coins
+{
+  height: 70px;
+  left: 537px;
+  position: absolute;
+  text-align: center;
+  top: 24px;
+  width: 200px;
+}
+#marketPlace #upperPart .coins .background
+{
+  position: absolute;
+  left : 0px;
+  top : 0px;
+}
+#marketPlace #upperPart .coins .money
+{
+  direction: ltr;
+  height: 26px;
+  left: 60px;
+  position: absolute;
+  text-align: center;
+  top: 19px;
+  width: 100px;
+}
+#marketPlace #upperPart .coins .money .text
+{
+  font-family: Digital,Verdana,Tahoma;
+  font-size: 25px;
+  color : #FFCA00;
+  font-weight: normal;
+  display : inline-block;
+  line-height : 25px;
+  height : 25px;
+  overflow : hidden;
+}
+#marketPlace #upperPart .like
+{
+  position: absolute;
+  top: 128px;
+  left: 288px;
+  width: 200px;
+  height: 30px;
+  cursor : pointer;
+}
+#marketPlace #playerProgressIframeContainer{
+	-moz-border-radius:5px 5px 5px 5px;
+	-webkit-border-radius:5px 5px 5px 5px;
+	-o-border-radius:5px 5px 5px 5px;
+	-ms-border-radius:5px 5px 5px 5px;
+	border-radius:5px 5px 5px 5px;
+	background-color:white;
+	border:1px solid black;
+	color:black;
+	height:100px;
+	left:140px;
+	opacity:0.9;
+	position:absolute;
+	top:160px;
+	z-index:1000;
+}
+#marketPlace #playerProgressIframeContainer .close{
+	cursor:pointer;
+	float:right;
+	font-family:Adlib;
+	margin-right:5px;
+	margin-top:5px;
+}
+#marketPlace #playerProgressIframeContainer iframe{
+	margin:10px;
+}
+#marketPlace #upperPart .addMoney
+{
+  position: absolute;
+  top: 98px;
+  left: 590px;
+  width: 97px;
+  height: 33px;
+  cursor : pointer;
+}
+#marketPlace #upperPart .addMoney .image
+{
+  position : absolute;
+  left : 2px;
+  top : 2px;
+  z-index : 10;
+}
+#marketPlace #upperPart .addMoney .hover
+{
+  position : absolute;
+  left : 0px;
+  top : 0px;
+}
+#marketPlace .descriptionText
+{
+  position: absolute;
+  right: 245px;
+  top: 315px;
+}
+
+#marketPlace #weapons
+{
+  font-size:14px;
+  position:absolute;
+  top:185px;
+  text-align : center;
+  direction : ltr;
+  width : 100%;
+  height : 130px;
+}
+#marketPlace #towers
+{
+  font-size:14px;
+  position:absolute;
+  top:343px;
+  text-align : center;
+  direction : ltr;
+  width : 100%;
+  height : 130px;
+}
+#marketPlace #weaponsDisplay, #marketPlace #towersDisplay
+{
+  height: 115px;
+  left: 34px;
+  position: absolute;
+  top: 8px;
+  width: 693px;
+}
+#marketPlace .upgradeLevel
+{
+  font-family: Adlib,Arial Black,Tahoma;
+  font-size: 28px;
+  font-weight: normal;
+  height: 30px;
+  position: absolute;
+  text-align: right;
+  top: 86px;
+  width: 90px;
+  direction : rtl;
+}
+#marketPlace .qBoxImage
+{
+  position : absolute;
+  top : 14px;
+  width : 124px;
+}
+#marketPlace #weapons .lockImage, #marketPlace #towers .lockImage
+{
+  text-align : center;
+  width : 124px;
+  position:absolute;
+  top:55px;
+}
+#marketPlace li .content
+{
+  position:absolute;
+  top:6px;
+  width:124px;
+}
+#marketPlace li .content .itemImage
+{
+  position: absolute;
+  text-align: center;
+  top: 7px;
+  width: 124px;
+}
+#marketPlace li .content  .coinImage
+{
+  padding-left : 20px;
+  float : left;
+}
+#marketPlace li .content .itemPrice
+{
+  color:#FAC200;
+  font-family:Digital, Arial Black, Tahoma;
+  font-size:20px;
+  text-align:center;
+  float : left;
+  width:60px;
+  font-weight : normal;
+}
+#marketPlace #info
+{
+  position:absolute;
+  top:80px;
+  width:124px;
+}
+#marketPlace .infoImage
+{
+  cursor:pointer;
+  float:right;
+  margin-right:12px;
+}
+#marketPlace .unlockImage
+{
+  position:relative;
+  top:-24px;
+}
+#marketPlace .unlockText
+{
+  color:white;
+  cursor:pointer;
+  font-size:14px;
+  left:1px;
+  position:relative;
+  text-align:center;
+  width:68px;
+  z-index:100;
+  height : 24px;
+  line-height : 24px;
+}
+#intro.french #marketPlace .unlockText
+{
+  font-size:9px;
+}
+
+#marketPlace #actionContainer
+{
+  position : absolute;
+  top : 490px;
+  width : 690px;
+  left:27px;
+  height : 45px;
+  cursor : pointer;
+  color : #FAC200;
+}
+#marketPlace #ready, #marketPlace #back
+{
+  width : 100px;
+  height : 45px;
+  cursor : pointer;
+  color : #FAC200;
+  display:inline-block;
+}
+#marketPlace #ready
+{
+  left : 600px;
+}
+div.clickableButton, span.clickableButton
+{
+  cursor : pointer;
+}
+
+
+#marketPlace #floatBg
+{
+  color:#FAC200;
+  height:222px;
+  left:130px;
+  position:absolute;
+  top:150px;
+  width:520px;
+  z-index:101;
+}
+#marketPlace #floatBg .background
+{
+  position : absolute;
+  top : 0px;
+  left : 0px;
+}
+
+#marketPlace #paymentFloatBg
+{
+  -moz-border-radius:25px;
+  -webkit-border-radius: 25px;
+  -khtml-border-radius: 25px;
+  background:none repeat scroll 0 0 black;
+  color:#FAC200;
+  height:335px;
+  left:73px;
+  position:absolute;
+  top:150px;
+  width:610px;
+  z-index:102;
+}
+
+#marketPlace #contactUsFloatBg
+{
+  -moz-border-radius:25px;
+  -webkit-border-radius: 25px;
+  -khtml-border-radius: 25px;
+  background:none repeat scroll 0 0 black;
+  color:#FAC200;
+  height:335px;
+  left:73px;
+  position:absolute;
+  top:150px;
+  width:610px;
+  z-index:103;
+  direction: ltr;
+}
+
+#marketPlace #daopayFloatBg
+{
+  -moz-border-radius: 25px;
+  -webkit-border-radius: 25px;
+  -khtml-border-radius: 25px;
+  background: none repeat scroll 0 0 black;
+  color: #FAC200;
+  height: 478px;
+  left: 140px;
+  position: absolute;
+  top: 30px;
+  width: 500px;
+  z-index: 103;
+}
+
+#marketPlace #daopayFloatBg iframe {
+  border: none;
+  height: 440px;
+  position: absolute;
+  left: 30px;
+  top: 20px;
+  width: 440px;
+
+}
+#marketPlace #paymentFloatBg #paymentClose {
+   left: 580px;
+   position: absolute;
+   top: 10px;
+}
+#marketPlace #contactUsClose {
+  margin-left: 585px;
+  margin-top: 10px;
+}
+
+#contact-us-form-title {
+  margin-left: 30px;
+}
+
+#contactUsFloatBg form textarea {
+  height: 200px;
+  width: 550px;
+  margin-left: 30px;
+  -webkit-user-select: normal;
+}
+
+#contact-us-submit-button {
+  right: 24px;
+  top: 6px;
+  cursor: pointer;
+  position: absolute;
+}
+
+#contact-us-submit-container {
+  position: relative;
+  height: 60px;
+}
+
+#contact-us-submit-button-text {
+  position: absolute;
+  top: 21px;
+  right: 47px;
+  margin-left: 515px;
+  z-index: 1;
+  cursor: pointer;
+}
+
+#marketPlace #floatBg #close,
+#marketPlace #paymentFloatBg #paymentClose,
+#marketPlace #contactUsFloatBg #contactUsClose
+{
+  cursor:pointer;
+  display:inline-block;
+  font-family:PakGirl, Arial Black, Tahoma;
+  font-size:20px;
+  height:20px;
+  vertical-align:top;
+  width:20px;
+  font-weight : normal;
+}
+#marketPlace #floatBg .content
+{
+  position : absolute;
+  left : 0px;
+  top : 0px;
+  display:inline-block;
+  height:150px;
+  margin:10px;
+  width:500px;
+}
+#marketPlace #floatBg .content .spans
+{
+  display:inline-block;
+  height:100%;
+  margin:10px 13px;
+  width:70%;
+}
+#marketPlace #floatBg .content .image
+{
+  display:inline-block;
+  text-align:center;
+  vertical-align:top;
+  width:23%;
+}
+#marketPlace #floatBg .content .image .skeleton
+{
+  height : 100px;
+  margin:5px 0;
+}
+#marketPlace #floatBg .content .image .cost img
+{
+  float : right;
+}
+#marketPlace #floatBg .image .cost
+{
+  width: 100%;
+  height : 24px;
+  font-weight : normal;
+}
+#marketPlace #floatBg .image .cost .img
+{
+  width: 30%;
+  margin-left : 4%;
+  float : left;
+}
+#marketPlace #floatBg .image .cost .value
+{
+  float:left;
+  font-family:Digital, Verdana, Tahoma;
+  font-size:26px;
+  margin-top:-6px;
+  text-align:center;
+  width:60%;
+}
+#marketPlace #floatBg .name
+{
+  font-size:20px;
+  font-weight:bold;
+  line-height:150%;
+  text-decoration:underline;
+  text-transform:uppercase;
+}
+#intro.french #marketPlace #floatBg .name
+{
+  font-size:19px;
+}
+#marketPlace #floatBg .desc
+{
+  font-size:14px;
+  font-weight:normal;
+  line-height:130%;
+  white-space:normal;
+  word-wrap:break-word;
+  color:#FAC200;
+}
+#intro.arabic #marketPlace #floatBg .desc
+{
+  font-size:15px;
+}
+#marketPlace #floatBg .actions
+{
+  height:30px;
+  margin:0 25px;
+  position:absolute;
+  top:170px;
+  width:470px;
+}
+#marketPlace #floatBg .actions .action
+{
+  position : absolute;
+  left : 10px;
+  top : 5px;
+  width:75px;
+  height : 28px;
+}
+#marketPlace #floatBg .actions .action .active
+{
+  position : absolute;
+  top : 0px;
+  left : 0px;
+  text-align: center;
+}
+#marketPlace #floatBg .actions .action .inactive
+{
+  color:silver;
+  font-size:19px;
+  cursor : default;
+  display:inline-block;
+  padding-top:10px;
+  width : 81px;
+  text-align: center;
+}
+#marketPlace #floatBg .actions .action .active .buttonText
+{
+  font-size: 16px;
+  height: 28px;
+  left: 0;
+  line-height: 27px;
+  position: absolute;
+  top: 0;
+  width: 75px;
+  color:white;
+}
+
+#marketPlace #floatBg #upgrade .content .spans
+{
+  display:inline-block;
+  font-size:10px;
+  height:100%;
+  margin:0 9px;
+  vertical-align:top;
+  width:35%;
+}
+#marketPlace  #floatBg #upgrade .upgradeInfo
+{
+  display:inline-block;
+  height:80%;
+  margin-top:30px;
+  width:36%;
+}
+#marketPlace  #floatBg #upgrade .desc
+{
+  font-size : 10px;
+  font-weight : bold;
+}
+#intro.arabic #marketPlace  #floatBg #upgrade .desc
+{
+  font-size : 12px;
+  font-weight : bold;
+}
+#marketPlace  #floatBg #upgrade .towerText
+{
+  font-size:13px;
+  padding-top:5px;
+  vertical-align:top;
+  width:33px;
+  display:inline-block;
+  font-weight : normal;
+}
+#marketPlace  #floatBg #upgrade .beforeText
+{
+  color : #b30000;
+}
+#marketPlace  #floatBg #upgrade .parent
+{
+  height:35px;
+  margin:0px 0px;
+}
+#marketPlace  #floatBg #upgrade .bar
+{
+  display:inline-block;
+  height:25px;
+  width:100px;
+}
+#marketPlace  #floatBg #upgrade .barRed
+{
+  display:inline-block;
+  width : 70%;
+  height : 25px;
+  background : #b30000;
+  margin:0 -4px;
+}
+#marketPlace  #floatBg #upgrade .barYellow
+{
+  display:inline-block;
+  width : 25%;
+  height : 25px;
+  background : #fac200;
+}
+#marketPlace  #floatBg #upgrade .towerMargin
+{
+  margin : 0px -5px;
+}
+#marketPlace  #floatBg #upgrade .optionName
+{
+  position:relative;
+  text-align:center;
+  top:-25px;
+  width:100%;
+  color : white;
+}
+#marketPlace  #floatBg #upgrade .currUpgrade, #marketPlace  #floatBg #upgrade .newUpgrade
+{
+  font-size:11px;
+  height:55px;
+  margin-bottom:15px;
+}
+#marketPlace  #floatBg #upgrade .currUpgrade
+{
+  color:#b30000;
+}
+#pause  #loadingBarEmpty{
+	background:url("../../images/intro/loading_background.png");
+	height:33px;
+	left:224px;
+	position:absolute;
+	top:321px;
+	width:240px;
+}
+#pause  #loadingBarEmpty div{
+	height : 25px;
+	float : left;
+	margin-top:4px;
+}
+
+#pause  #loadingBarEmpty #loadingBarRight{
+	width : 10px;
+}
+
+#pause  #loadingBarEmpty #loadingBarFill{
+	background-repeat:repeat-x;
+}
+
+#pause  #loadingBarEmpty #loadingBarLeft{
+	width : 10px;
+}
+#inProgress  #loadingPercentage, #inProgress #fileName{
+	font-family:tahoma;
+	font-size:x-small;
+	font-weight:bold;
+	position:absolute;
+	top:330px
+}
+#inProgress  #loadingPercentage{
+	left:395px;
+  color:white;
+}
+#inProgress #fileName{
+	left:250px;
+  color:white;
+}
+
+#scores {
+	overflow : hidden;
+}
+
+#game{
+	position:relative;
+}
+
+
+#publishScreen
+{
+	width : 550px;
+	height : 275px;
+	position : absolute;
+	top: 190px;
+	left: 60px;
+	color : white;
+	z-index : 1000;
+}
+#publishScreen #publishConfirm
+  height: 100%;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+#publishScreen .background
+{
+  position : absolute;
+  top : 0px;
+  right : 0px;
+}
+#publishScreen .logo
+{
+  position : absolute;
+  top : 40px;
+  left : 35px;
+}
+#publishScreen .content
+{
+  font-family: Tahoma;
+  font-size: 30px;
+  font-weight: bold;
+  position: absolute;
+  right: 40px;
+  top: 70px;
+  width: 280px;
+  line-height : 150%;
+}
+#publishScreen .ok
+{
+  height: 80px;
+  position: absolute;
+  right: 140px;
+  top: 195px;
+  width: 250px;
+}
+#publishScreen .ok #right
+{
+  position : absolute;
+  right : 0px;
+  top : 0px;
+}
+#right .button
+{
+  position : absolute;
+  top : 3px;
+  right : 2px;
+}
+#left .button
+{
+  position : absolute;
+  top : 3px;
+  right : 3px;
+}
+#right div.hover-right, #left div.hover-left
+{
+  position : absolute;
+  top : 0px;
+  display : none;
+}
+#right:hover div.hover-right
+{
+  display : block;
+}
+#left:hover div.hover-left
+{
+  display : block;
+}
+#publishScreen .ok #left
+{
+  position : absolute;
+  right : 130px;
+  top : 0px;
+}
+#publishScreen .ok #rogerText
+{
+  font-size: 20px;
+  line-height: 60px;
+  position: absolute;
+  text-align: center;
+  top: 10px;
+  width: 100%;
+	font-family : tahoma;
+}
+
+
+.arabic{
+		direction :rtl;
+}
+#gameIntro{
+	border: 0px;
+	height: 600px;
+	position: absolute;
+	width: 770px;
+	z-index: 1;
+	overflow:hidden;
+}
+
+/* Horizontal Carousel */
+#creeps-scroll{
+  float:left;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+#creeps-scroll .container, #global-rank-scroll .container {
+  position: absolute;
+  top: 0px;
+  left: 18px;
+  width: 392px;
+  height: 100%;
+  overflow:hidden;
+}
+
+#creeps-scroll .right, #global-rank-scroll .right {
+  position: absolute;
+  right: 0px;
+  width: 18px;
+  margin-top : 17px;
+  z-index: 100;
+  text-align : center;
+}
+
+#creeps-scroll .left,  #global-rank-scroll .left {
+  position: absolute;
+  left: 0px;
+  width: 18px;
+  margin-top : 17px;
+  z-index: 100;
+  text-align : center;
+}
+
+#creeps-scroll ul {
+  margin: 0;
+  padding:0;
+  width: 100000px;
+  position: relative;
+  top: 0;
+  left: 0;
+  height: 100%;
+}
+
+#creeps-scroll ul li {
+  font-family:verdana,arial,sans-serif;
+  font-size:10px;
+  border : 0px solid green;
+  color : #E3EDFA;
+  margin : 0px 3px;
+  width : 94px;
+  height : 72px;
+  list-style : none;
+  float : left;
+  text-align : center;
+  overflow : hidden;
+}
+
+.leftOn
+{
+/*  background : url('../images/carousel/left.png') no-repeat left center;*/
+  cursor:pointer;
+}
+.leftOff
+{
+/*  background : url('../images/carousel/left-disabled.png') no-repeat left center;*/
+  cursor:default;
+}
+.rightOn
+{
+/*  background : url('../images/carousel/right.png') no-repeat right center;*/
+  cursor:pointer;
+}
+.rightOff
+{
+/*  background : url('../images/carousel/right-disabled.png') no-repeat right center;*/
+  cursor:default;
+}
+/* Horizontal Carousel */
+#weapons-scroll, #towers-scroll{
+  float:left;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+#weapons-scroll .container, #towers-scroll .container{
+  height: 100%;
+  left: 39px;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  width: 620px;
+}
+
+#weapons-scroll .right, #towers-scroll .right{
+  position: absolute;
+  right: 0px;
+  width: 36px;
+  margin-top : 8px;
+  z-index: 100;
+  text-align : center;
+}
+
+#weapons-scroll .left, #towers-scroll .left{
+  position: absolute;
+  left: 0px;
+  width: 36px;
+  margin-top : 8px;
+  z-index: 100;
+  text-align : center;
+}
+
+#weapons-scroll ul, #towers-scroll ul{
+  margin: 0;
+  padding:0;
+  width: 100000px;
+  position: relative;
+  top: 0;
+  left: 0;
+  height: 100%;
+}
+
+#weapons-scroll ul li, #towers-scroll ul li {
+  font-family:verdana,arial,sans-serif;
+  font-size:10px;
+  border : 0px solid green;
+  color : #E3EDFA;
+  width : 123px;
+  height : 115px;
+  list-style : none;
+  float : left;
+  text-align : center;
+  overflow : hidden;
+}
+
+.leftOn
+{
+  cursor:pointer;
+}
+.leftOff
+{
+  cursor:default;
+}
+.rightOn
+{
+  cursor:pointer;
+}
+.rightOff
+{
+  cursor:default;
+}
