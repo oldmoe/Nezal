@@ -1,7 +1,8 @@
 var FBConnect = {
 
     appIds : {
-      "local-arabian-shield" : "323491894330124"
+      "local-arabian-shield" : "323491894330124",
+      "arabian-shield" : "179518805477513"
 	  },
 	  
     channelPath : "xd_receiver.html",

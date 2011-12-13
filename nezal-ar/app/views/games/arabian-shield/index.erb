@@ -191,9 +191,12 @@
 		}
 		$('iframe').src = Loader.toLoad[0]
 	}
-
-  payment = new Payment();
-  gameLoaded()
+  
+  document.observe("dom:loaded", function(){
+    payment = new Payment();
+    gameLoaded();
+  })
+  
 </script>
 <link type="text/css" href="<%=bust_cache('css/game.css')%>" rel="stylesheet" />
 </html>
