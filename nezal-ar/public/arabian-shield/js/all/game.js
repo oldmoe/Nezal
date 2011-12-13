@@ -218,7 +218,7 @@ if(loops)attributes.loops=loops
 var sound=soundManager.createSound(attributes);store.push(sound)
 store.push(count)
 store.push(0)}
-function createBackgroundMusic(){var gameSound=soundManager.createSound({id:"gameSound",url:'sounds/sfx/mp3/tunis_game.mp3',autoLoad:true,autoPlay:false,volume:50,loops:10000});Sounds.gameSounds.game=[]
+function createBackgroundMusic(){var gameSound=soundManager.createSound({id:"gameSound",url:'sounds/sfx/mp3/game.mp3',autoLoad:true,autoPlay:false,volume:50,loops:10000});Sounds.gameSounds.game=[]
 Sounds.gameSounds.game.push(gameSound)}
 soundManager.onready(function(){if(soundManager.supported()){createSounds()}});var Loader={dumb:false,callbacks:{},events:{intro:{loaded:false,onLoad:function(){Intro.start();}},tutorial:{loaded:false,onLoad:null},game:{loaded:false,onLoad:null},challenge:{loaded:false,onLoad:null}},loaded:{},fire:function(event){Loader.events[event].loaded=true;if(Loader.events[event].onLoad)Loader.events[event].onLoad();},fileLoading:null,notify:function(win,resources,dumb){if(Loader.toLoad[Loader.index]&&Loader.toLoad[Loader.index].split)Loader.loaded[Loader.toLoad[Loader.index].split('.')[0]]=true
 if(!dumb){for(var i=0;i<resources.length-1;i++){var image=new Image
