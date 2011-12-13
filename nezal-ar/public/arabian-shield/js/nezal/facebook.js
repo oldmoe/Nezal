@@ -92,7 +92,7 @@ var FBConnect = {
                     // redirect to login page 
                     redirect_url = "http://www.facebook.com/login.php?v=1.0&app_id=" +
                                    FBConnect.appIds[FBConnect.url()] + 
-                                   "&canvas=1&next=http://127.0.0.1:4000/fb-games/" + 
+                                   "&canvas=1&next=http://games.nezal.com:11500/fb-games/" + 
                                    FBConnect.url();
                 }else if(response.status == "notConnected" )
                 {
@@ -105,7 +105,7 @@ var FBConnect = {
                     }
                     redirect_url = "http://www.facebook.com/connect/uiserver.php?app_id=" + 
                                    FBConnect.appIds[FBConnect.url()] +  
-                                   "&next=http://127.0.0.1:4000/fb-games/"+ 
+                                   "&next=http://games.nezal.com:11500/fb-games/"+ 
                                    FBConnect.url() + "/" + appendParam +
                                  "&display=page&locale=en_US&return_session=0&" +
                                  "fbconnect=0&canvas=1&legacy_return=1&method=permissions.request&perms=email";
