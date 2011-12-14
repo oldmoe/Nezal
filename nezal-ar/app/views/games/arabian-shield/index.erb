@@ -117,7 +117,7 @@
 	$$('#pause  #loadingBarEmpty #loadingBarRight').first().style.backgroundImage = "url('images/intro/loading_bar_right.png')"
 	$$('#pause  #loadingBarEmpty #loadingBarFill').first().style.backgroundImage = "url('images/intro/loading_bar_middle.png')"
 	function gameLoaded(){
-
+	  
     if(window.location.search.indexOf('replay') > -1){
       var options = window.location.search.split('?')[1].split('&')
       Nezal.replay = true
@@ -128,6 +128,7 @@
 			connected = true;
 			startLoading()							
 		});
+		
     	$$('#inProgress img').each(function(image){
   	      	image.onload = onFinishProgress;
       			image.src = "images/intro/"+image.getAttribute('name')
@@ -192,10 +193,8 @@
 		$('iframe').src = Loader.toLoad[0]
 	}
   
-  document.observe("dom:loaded", function(){
-    payment = new Payment();
-    gameLoaded();
-  })
+  payment = new Payment();
+  gameLoaded();
   
 </script>
 <link type="text/css" href="<%=bust_cache('css/game.css')%>" rel="stylesheet" />

@@ -243,13 +243,13 @@
 		var userID = null
 		var currCamp = null
 		document.observe('dom:loaded', function(){
-			FBConnect.init(function(){        
-				userID = FB.getSession().uid
-				var	query = FB.Data.query("SELECT uid FROM user WHERE is_app_user=1 and uid IN (SELECT uid2 FROM friend WHERE uid1 = {0})", FB.getSession().uid);
+			FBConnect.init(function(){
+				userID = FBConnect.userId()
+				var	query = FB.Data.query("SELECT uid FROM user WHERE is_app_user=1 and uid IN (SELECT uid2 FROM friend WHERE uid1 = {0})", FBConnect.userId());
 				FB.Data.waitOn([query], function(){
 					if(!query.value.length)query.value=[]
 					friendsIds = query.value.collect(function(row){return Number(row.uid)}) 
-					friendsIds.push(Number(FB.getSession().uid))	
+					friendsIds.push(Number(FBConnect.userId()))	
 					if(window.parent.GameConfigs)
 					currCamp = window.parent.GameConfigs.campaign
 					else currCamp="tunisia"
@@ -298,7 +298,7 @@
 					});
 		}
 		function getFriendsRanks(callback){
-			var url = '../'+currCamp+'/'+FB.getSession().uid+'/friendsranks'
+			var url = '../'+currCamp+'/'+FBConnect.userId()+'/friendsranks'
 				new Ajax.Request( url ,{ 	
 					method:'post',
 					parameters: { 'friends' : Object.toJSON(friendsIds).gsub(/\[/,"").gsub(/\]/,"") }, 
@@ -310,15 +310,15 @@
 				});
 		}
 		function getWorldRanks(callback){
-				var url = '../'+currCamp+'/'+FB.getSession().uid+'/worldranks'
-							new Ajax.Request( url ,
-					     { method:'post',
-					            onSuccess : function(t){
-									var response = JSON.parse(t.responseText)
-									response = filterResponse(response)
-									fillUsersData(response,callback)
-					            }
-					      });
+				var url = '../'+currCamp+'/'+FBConnect.userId()+'/worldranks'
+				new Ajax.Request( url ,
+		     { method:'post',
+		            onSuccess : function(t){
+						var response = JSON.parse(t.responseText)
+						response = filterResponse(response)
+						fillUsersData(response,callback)
+		            }
+		      });
 		}
 		function filterResponse(response){
 			for(var i=0;i<response['top'].length;i++){

@@ -61,4 +61,14 @@ class FbUser < ActiveRecord::Base
     self.ranking(camp_id, friends(), limit)
   end
   
+  class << self
+
+    SEP = '-'.freeze
+
+    def generate_key(*args)
+      args.join(SEP)
+    end    
+  
+  end
+  
 end

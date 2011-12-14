@@ -1,13 +1,13 @@
 "323491894330124" :
   id : "323491894330124"
   name : local-arabian-shield
-  key : 6d20066541f5195f3e506e254b56fb33
-  secrent : 6d20066541f5195f3e506e254b56fb33
+  key : 323491894330124
+  secret : bb5973e98bf1e236d000a8b529ce1601
   game_name : arabian-shield
 
 "179518805477513" :
   id : "179518805477513"
   name : arabian-shield
-  key : 540a5f4ecfb2c915f850d6b7d38f83bf
-  secrent : 540a5f4ecfb2c915f850d6b7d38f83bf
+  key : 179518805477513
+  secret : 540a5f4ecfb2c915f850d6b7d38f83bf
   game_name : arabian-shield
