@@ -23,6 +23,7 @@ class ApplicationController < Sinatra::Base
 				@game_profile.game= @game
 				@game_profile.user= @user
 				get_helper_klass.init_game_profile(@game_profile)
+        register_user_to_games_pipe params['Trackingcode'], @user.id if(!params['Trackingcode'].nil?)
 				@game_profile.save!()
 				LOGGER.debug params["inviter"]
 				if(params["inviter"])
@@ -77,6 +78,15 @@ class ApplicationController < Sinatra::Base
   def get_helper_klass
     helper = ActiveSupport::Inflector.camelize(@app_configs['game_name'].gsub("-", "_"))
     Kernel.const_get(helper)
+  end
+  
+  def register_user_to_games_pipe tracking_code, user_id
+    developer_id = 468
+    game_id      = 36121
+    api_key      = 'w00f76vmwzeyy#pr'
+    test_mode    = true
+    games_pipe = Gamespipe::new( developer_id, game_id, api_key, test_mode) 
+    games_pipe.report_registration(tracking_code, user_id)
   end
   
 end
