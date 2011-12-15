@@ -292,14 +292,13 @@ var Intro = {
 										Intro.show();
 										$('intro').show();
 										Intro.disablePauseScreen();
-                    if(!Intro.sound)
-                    {
-											Sounds.gameSounds.game[0].stop()
-										  Sounds.gameSounds.game[0].play()
-                      Intro.sound = 1;
-                    }
+//                    if(!Intro.sound)
+//                    {
+//											Sounds.gameSounds.game[0].stop()
+//										  Sounds.gameSounds.game[0].play()
+//                      Intro.sound = 1;
+//                    }
 										$('gameStart').hide();
-										$('scores').src = 'scores/friends.html?'+Object.toQueryString(FBConnect.session)
 								});
             }
         },

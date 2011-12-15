@@ -271,7 +271,6 @@ var DisplayScene = Class.create(CityDefenderScene, {
 				})
 				game.scene.push(60,function(){self.displayStats()})
 			}
-			$('scores').src = 'scores/friends.html?'+Object.toQueryString(FBConnect.session)
 		})
 	},
 	updateMeters : function(){

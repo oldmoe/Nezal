@@ -20,7 +20,6 @@ var Game = Class.create({
 			this.prepareConfig()
 			this.config = Nezal.clone_obj(Config)
 			this.config.waves.reverse()
-			$$('#game #scores').first().show()
 		   if(!replay){this.scene = new DisplayScene(this.config,33,this.ctx,this.topCtx, replay);
 						   this.registerHandlers();
 				}
@@ -248,7 +247,7 @@ var Game = Class.create({
 		Intro.enablePauseScreen();
 		$("gameStart").innerHTML = Intro.templates['game'];
 		game.scene.reactor.stop()
-		Sounds.resumeTrack()
+		//Sounds.resumeTrack()
 		$('gameStart').hide()
 		Intro.replay();	
 		//onFinish()
