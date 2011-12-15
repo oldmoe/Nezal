@@ -11,7 +11,7 @@
   <script src="http://connect.facebook.net/en_US/all.js"></script>
   <script src="js/game/replay_creator.js?t=lw36p3"></script>
   <script src="js/all/base.js?t=lw36p2"></script>
-  <script src="js/all/nezal.js?t=lw3abr"></script>
+  <script src="js/all/nezal.js?t=lw8xuj"></script>
   <script src="js/all/payments.js?t=lw36p2"></script>
   <script>
     soundManager.url = 'swf/';
@@ -20,7 +20,7 @@
     // enable HTML5 audio support, if you're feeling adventurous.
     soundManager.useHTML5Audio = false;
   </script>
-  <script src="js/all/game.js?t=lw4vtv" type="text/javascript"></script>
+  <script src="js/all/game.js?t=lw8w4y" type="text/javascript"></script>
   <script type="text/javascript">
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-19379382-1']);
@@ -117,7 +117,7 @@
 	$$('#pause  #loadingBarEmpty #loadingBarRight').first().style.backgroundImage = "url('images/intro/loading_bar_right.png')"
 	$$('#pause  #loadingBarEmpty #loadingBarFill').first().style.backgroundImage = "url('images/intro/loading_bar_middle.png')"
 	function gameLoaded(){
-
+	  
     if(window.location.search.indexOf('replay') > -1){
       var options = window.location.search.split('?')[1].split('&')
       Nezal.replay = true
@@ -128,6 +128,7 @@
 			connected = true;
 			startLoading()							
 		});
+		
     	$$('#inProgress img').each(function(image){
   	      	image.onload = onFinishProgress;
       			image.src = "images/intro/"+image.getAttribute('name')
@@ -191,9 +192,10 @@
 		}
 		$('iframe').src = Loader.toLoad[0]
 	}
-
+  
   payment = new Payment();
-  gameLoaded()
+  gameLoaded();
+  
 </script>
 <link type="text/css" href="css/game.css?t=lw36p0" rel="stylesheet" />
 </html>
