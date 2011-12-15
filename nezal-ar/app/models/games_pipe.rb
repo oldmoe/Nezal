@@ -27,8 +27,25 @@ class Gamespipe
             'UserGender'   => user_gender,
             'UserBirthday' => user_birthday,
             'Test'         => @test_mode,
-            'T'             => time,
-            'Auth'          => Digest::SHA1.hexdigest(tracking_code + time + @API_key)
+            'T'            => time,
+            'Auth'         => Digest::SHA1.hexdigest(tracking_code + time + @API_key)
+          }
+    make_request(request);
+  end
+  
+  def report_payment(transaction_id, user_id, datetime, gross, fee, vat_percent, currency, net = nil)
+    time = Time.now.utc.to_s
+    request = {
+            'Method'       => "ReportRegistration",
+            'Trackingcode' => tracking_code,
+            'UserID'       => user_id,
+            'Gross'        => gross,
+            'Fee'          => fee,
+            'VAT'          => vat_percent,
+            'Curreny'      => currency,
+            'Test'         => @test_mode,
+            'T'            => time,
+            'Auth'         => Digest::SHA1.hexdigest(sTransactionID + time + @API_key)
           }
     make_request(request);
   end
