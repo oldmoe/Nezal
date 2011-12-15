@@ -3,16 +3,16 @@
 <head>
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta http-equiv="Content-Type" content="text/html;" charset="utf-8">
-  <link type="text/css" href="css/all/intro.css?t=lw38hp" rel="stylesheet" />
-  <link type="text/css" href="css/all/payments.css?t=lw36p0" rel="stylesheet" />
+  <link type="text/css" href="css/all/intro.css?t=lw51wg" rel="stylesheet" />
+  <link type="text/css" href="css/all/payments.css?t=lw51wg" rel="stylesheet" />
   <!--[if IE]>
     <script src="swf/flashcanvas.js"></script>
   <![endif]-->
   <script src="http://connect.facebook.net/en_US/all.js"></script>
-  <script src="js/game/replay_creator.js?t=lw36p3"></script>
-  <script src="js/all/base.js?t=lw36p2"></script>
-  <script src="js/all/nezal.js?t=lw3abr"></script>
-  <script src="js/all/payments.js?t=lw36p2"></script>
+  <script src="js/game/replay_creator.js?t=lw51wh"></script>
+  <script src="js/all/base.js?t=lw51wh"></script>
+  <script src="js/all/nezal.js?t=lw72o9"></script>
+  <script src="js/all/payments.js?t=lw8wr9"></script>
   <script>
     soundManager.url = 'swf/';
     soundManager.flashVersion = 9; // optional: shiny features (default = 8)
@@ -20,7 +20,7 @@
     // enable HTML5 audio support, if you're feeling adventurous.
     soundManager.useHTML5Audio = false;
   </script>
-  <script src="js/all/game.js?t=lw4vtv" type="text/javascript"></script>
+  <script src="js/all/game.js?t=lw8vc2" type="text/javascript"></script>
   <script type="text/javascript">
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-19379382-1']);
@@ -117,7 +117,7 @@
 	$$('#pause  #loadingBarEmpty #loadingBarRight').first().style.backgroundImage = "url('images/intro/loading_bar_right.png')"
 	$$('#pause  #loadingBarEmpty #loadingBarFill').first().style.backgroundImage = "url('images/intro/loading_bar_middle.png')"
 	function gameLoaded(){
-
+	  
     if(window.location.search.indexOf('replay') > -1){
       var options = window.location.search.split('?')[1].split('&')
       Nezal.replay = true
@@ -128,6 +128,7 @@
 			connected = true;
 			startLoading()							
 		});
+		
     	$$('#inProgress img').each(function(image){
   	      	image.onload = onFinishProgress;
       			image.src = "images/intro/"+image.getAttribute('name')
@@ -135,23 +136,23 @@
 		if(!Loader.dumb){
       if(!Nezal.replay){
 			  Loader.toLoad = [
-				'html_resources/payments.html?t=lw38hp',
-				  'html_resources/intro.html?t=lw38hp',
+				'html_resources/payments.html?t=lw51wh',
+				  'html_resources/intro.html?t=lw51wg',
 				  function(){Loader.fire('intro')},
-				  'html_resources/animations.html?t=lw38hp',
-				  'html_resources/game.html?t=lw38hp',
-				  'html_resources/background.html?t=lw38hp',
+				  'html_resources/animations.html?t=lw51wg',
+				  'html_resources/game.html?t=lw51wg',
+				  'html_resources/background.html?t=lw5d52',
 				  function(){Loader.fire('tutorial')},
-				  'html_resources/weapons.html?t=lw38hq',
+				  'html_resources/weapons.html?t=lw51wh',
 				  function(){Loader.fire('game')}
 			  ]
       }else{
         Loader.toLoad = [
- 				    'html_resources/intro.html?t=lw38hp',
-            'html_resources/animations.html?t=lw38hp',
-				    'html_resources/game.html?t=lw38hp',
-				    'html_resources/background.html?t=lw38hp',
-  				  'html_resources/weapons.html?t=lw38hq',
+ 				    'html_resources/intro.html?t=lw51wg',
+            'html_resources/animations.html?t=lw51wg',
+				    'html_resources/game.html?t=lw51wg',
+				    'html_resources/background.html?t=lw5d52',
+  				  'html_resources/weapons.html?t=lw51wh',
 				    function(){
                new Ajax.Request('replays/'+Nezal.replayId, { method : 'get', onSuccess : function(res){
                   data = JSON.parse(res.responseText)
@@ -191,9 +192,10 @@
 		}
 		$('iframe').src = Loader.toLoad[0]
 	}
-
+  
   payment = new Payment();
-  gameLoaded()
+  gameLoaded();
+  
 </script>
-<link type="text/css" href="css/game.css?t=lw36p0" rel="stylesheet" />
+<link type="text/css" href="css/game.css?t=lw51wg" rel="stylesheet" />
 </html>

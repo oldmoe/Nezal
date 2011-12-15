@@ -32,7 +32,9 @@ var Payment = Class.create({
 	[$('top-' + position + '-selection'), $('middle-selection')].invoke("observe", "click", function(){
       //document.location.href = "http://daopay.com/payment/?appcode=62070&price=" + priceCategory;
       //Intro.showDaopayBg("http://daopay.com/pay/?appcode=62070&price=" + priceCategory);
-      window.open("social_gold/sign_request?price=" + priceCategory, null, "width=400,height=550");
+      //window.open("social_gold/sign_request?price=" + priceCategory, null, "width=400,height=550");
+      
+      FBConnect.buyItem(priceCategory);
     });
     
     this.positions.without(position).each(function(element){
