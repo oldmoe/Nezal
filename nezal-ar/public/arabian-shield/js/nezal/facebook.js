@@ -107,7 +107,7 @@ var FBConnect = {
                               var user = { 'fb_sig_user' : FBConnect.session.userID,
                                          'fb_sig_expires' : FBConnect.session.expiresIn,
                                          'signed_request' : FBConnect.session.signedRequest }
-                              var trackingCode = FBConnect.getUrlParams()['Trackingcode']
+                              var trackingCode = FBConnect.getUrlParams()['tc']
                               if (trackingCode) {
                                 user['Trackingcode'] = trackingCode
                               }
