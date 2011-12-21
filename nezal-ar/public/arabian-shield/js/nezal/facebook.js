@@ -2,7 +2,7 @@ var FBConnect = {
 
     appIds : {
       "local-arabian-shield" : {id : "323491894330124", redirectPath : "http://127.0.0.1:4000/fb-games/"},
-      "arabian-shield" : {id : "179518805477513", redirectPath : "http://games.nezal.com/fb-games/"}
+      "arabian-shield" : {id : "179518805477513", redirectPath : "http://arabianshield.nezal.com/fb-games/"}
     },
     
     location : null,
