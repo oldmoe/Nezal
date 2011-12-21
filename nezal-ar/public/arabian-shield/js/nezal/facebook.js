@@ -2,7 +2,7 @@ var FBConnect = {
 
     appIds : {
       "local-arabian-shield" : {id : "323491894330124", redirectPath : "http://127.0.0.1:4000/fb-games/"},
-      "arabian-shield" : {id : "179518805477513", redirectPath : "http://games.nezal.com:11500/fb-games/"}
+      "arabian-shield" : {id : "179518805477513", redirectPath : "http://games.nezal.com"}
     },
     
     location : null,
@@ -57,8 +57,7 @@ var FBConnect = {
               {
                   // redirect to login page
                   redirect_url = "http://www.facebook.com/login.php?v=1.0&app_id=" +
-                                 FBConnect.appIds[FBConnect.url()].id + "&canvas=1&next=" 
-                                 + FBConnect.appIds[FBConnect.url()].redirectPath + FBConnect.url();
+                                 FBConnect.appIds[FBConnect.url()].id + "&canvas=1&next=";
               }else if(response.status == "not_authorized" )
               {
                   var inviter = FBConnect.location.split("inviter")[1];
