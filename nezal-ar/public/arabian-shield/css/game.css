@@ -3,14 +3,8 @@ body{
 	margin : 0px;
 }
 body { background:#542500; margin:0px; padding:0px; }
+.gameContainer { float:left; width:100%; background:url(../images/background.png) no-repeat top; height:768px; }
 
-.container { float:left; width:100%; background:url(../images/background.png) no-repeat top; height:768px; }
-
-.hideText{text-indent:-10000px; line-height:0px; text-decoration:none; font-size:0px; overflow:hidden; display:block; color:#ffffff;}
-.gameWrapper{margin:0 auto; width:983px; text-align:left; clear:both;position:relative;}
-
-h1 { margin:0px; padding:0px; }
-.frameContainer { width:760px; height:550px; margin:100px auto 0 auto; position:relative; right:5px; }
 *{
 	-moz-user-select: none;
   -khtml-user-select: none;
@@ -25,7 +19,8 @@ textarea{
 	direction:rtl;
 }
 #startingGame{
-   left: 288px;
+   left: 50%;
+   margin-left: -384px;
    position: absolute;
    top: 20px;
 }
