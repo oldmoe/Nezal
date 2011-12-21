@@ -572,7 +572,6 @@
     
     <div id="background">
       <img src="${Loader.images.intro['background.png'].getAttribute('data')}"/>
-      <img class="map" src="${Loader.images.intro['tunisia-map.png'].getAttribute('data')}"/>
       <img class="name" src="${Loader.images.intro['market/map-word.png'].getAttribute('data')}"/>
     </div>
     <div id="upperPart">
@@ -588,13 +587,7 @@
           </div>
         </div>
         {if (!Intro.userData.like)}
-          <div id='playerProgressIframeContainer' style='display:none'>
-          	<div class="close" onclick="$('playerProgressIframeContainer').hide();FBDefender.isFan()">X</div>
-          	<iframe id="playerProgressIframe"  scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:80px;" allowTransparency="true"></iframe>
-          </div>
-          <div class="like" onclick="$('playerProgressIframe').src='http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.facebook.com%2Fapps%2Fapplication.php%3Fid%3D'+FBConnect.appIds[FBConnect.url()]+'&layout=standard&show_faces=true&width=450&action=like&colorscheme=light&height=80';$('playerProgressIframeContainer').show();">
-            <img src="${Loader.images.intro['market/like.png'].getAttribute('data')}" > </img>
-          </div>
+          
         {/if}
         <div class="addMoney clickSound">
           <img class="image" src="${Loader.images.intro['market/buy-button.png'].getAttribute('data')}" > </img>
