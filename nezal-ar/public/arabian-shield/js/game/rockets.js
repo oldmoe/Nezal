@@ -119,7 +119,8 @@ var Rocket = Class.create(Unit, {
 		var targetUnit = this.targetUnit
 		targets.each(function(target){
 			if(target != targetUnit){
-				target.takeHit(Math.round(power * 0.2))
+        //console.log('target')
+				target.takeHit(Math.round(power * 0.4))
 			}
 		})
 	},

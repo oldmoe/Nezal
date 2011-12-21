@@ -11,7 +11,11 @@ var FBConnect = {
         var data = FBConnect.location;
         data = data.split("/");
         data = data[4];
-        return data;
+        if (data) {
+          return data;
+        }else{
+          return "arabian-shield"
+        }
     },
 
     retry : 10,

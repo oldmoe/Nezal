@@ -250,10 +250,10 @@ var DisplayScene = Class.create(CityDefenderScene, {
 								$('pauseWindow').show()
 							})
 							game.scene.push(60,function(){self.displayStats()})
-							game.scene.push(80,function(){
-							  FBDefender.publishMissionCompletion({name : GameConfigs.missionPath,
-														 score : self.score});
-											   });
+//							game.scene.push(80,function(){
+//							  FBDefender.publishMissionCompletion({name : GameConfigs.missionPath,
+//														 score : self.score});
+//											   });
 						}
 						win()
 			}

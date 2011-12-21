@@ -216,7 +216,6 @@
     <div id="background">
       <img src="${Loader.images.intro['background.png'].getAttribute('data')}"/>
       <img id="paper" src="${Loader.images.intro['campaign/cities.png'].getAttribute('data')}"/>
-      <img id="map" src="${Loader.images.intro['tunisia-map.png'].getAttribute('data')}"/>
       <img id="name" src="${Loader.images.intro['campaign/map-word.png'].getAttribute('data')}"/>
     </div>
     <div class="wrapper"> </div>

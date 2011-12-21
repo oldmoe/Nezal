@@ -2,6 +2,10 @@ body{
 	padding : 0px;
 	margin : 0px;
 }
+body { background:#542500; margin:0px; padding:0px; }
+
+.container { float:left; width:100%; background:url(../images/background.png) no-repeat top; height:768px; }
+
 *{
 	-moz-user-select: none;
   -khtml-user-select: none;
@@ -16,9 +20,9 @@ textarea{
 	direction:rtl;
 }
 #startingGame{
-  left: 250px;
-  position: absolute;
-  top: 60px;
+   left: 288px;
+   position: absolute;
+   top: 20px;
 }
 #gameContainer{
 	/*-webkit-transform: rotate(90deg);

@@ -17,7 +17,7 @@ class Gamespipe
   end
   
   def report_registration(tracking_code, user_id, user_name = '', user_mail = '', user_gender = '', user_birthday = '') 
-    time = Time.now.utc.to_s
+    time = Time.now.to_s
     request = {
             'Method'       => "ReportRegistration",
             'Trackingcode' => tracking_code,
@@ -33,21 +33,30 @@ class Gamespipe
     make_request(request);
   end
   
-  def report_payment(transaction_id, user_id, datetime, gross, fee, vat_percent, currency, net = nil)
-    time = Time.now.utc.to_s
+  def report_payment(transaction_id, user_id, gross, fee, vat_percent, currency, net = nil)
+    time = get_formatted_time
     request = {
-            'Method'       => "ReportRegistration",
-            'Trackingcode' => tracking_code,
-            'UserID'       => user_id,
-            'Gross'        => gross,
-            'Fee'          => fee,
-            'VAT'          => vat_percent,
-            'Curreny'      => currency,
-            'Test'         => @test_mode,
-            'T'            => time,
-            'Auth'         => Digest::SHA1.hexdigest(sTransactionID + time + @API_key)
+            'Method'          => "ReportPayment",
+            'TransactionID'   => transaction_id,
+            'UserID'          => user_id,
+            'Date'            => time,
+            'Gross'           => gross,
+            'Fee'             => fee,
+            'VAT'             => vat_percent,
+            'Curreny'         => currency,
+            'Test'            => @test_mode,
+            'T'               => time,
+            'Auth'            => Digest::SHA1.hexdigest(transaction_id + time + @API_key)
           }
+    puts "request = #{request}"
     make_request(request);
+  end
+  
+  def get_formatted_time
+     t = Time.now.to_s.split
+     t.pop
+     t = t.join(" ")
+     return t
   end
   
   def make_request(param)
