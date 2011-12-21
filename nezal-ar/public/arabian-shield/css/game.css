@@ -15,6 +15,11 @@ textarea{
 .baloon{
 	direction:rtl;
 }
+#startingGame{
+  left: 250px;
+  position: absolute;
+  top: 60px;
+}
 #gameContainer{
 	/*-webkit-transform: rotate(90deg);
 	-moz-transform: scale(0.8)*/
