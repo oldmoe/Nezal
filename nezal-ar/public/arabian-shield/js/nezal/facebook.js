@@ -57,7 +57,8 @@ var FBConnect = {
               {
                   // redirect to login page
                   redirect_url = "http://www.facebook.com/login.php?v=1.0&app_id=" +
-                                 FBConnect.appIds[FBConnect.url()].id + "&canvas=1&next=";
+                                 FBConnect.appIds[FBConnect.url()].id + "&canvas=1&next=" 
+                                 + FBConnect.appIds[FBConnect.url()].redirectPath + FBConnect.url();
               }else if(response.status == "not_authorized" )
               {
                   var inviter = FBConnect.location.split("inviter")[1];
