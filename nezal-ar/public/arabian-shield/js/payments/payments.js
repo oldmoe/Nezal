@@ -4,7 +4,7 @@ var Payment = Class.create({
   oneCardDetails : {
     merchantID : "Nezal@onecard.com",
     currency : "USD",
-    productDesc : "Arabian Shield Coins",
+    productDesc : " عملات درع العرب - ",
     returnURL : "http://" + window.location.host + window.location.pathname + "onecard_response/",
   },
   
@@ -44,7 +44,7 @@ var Payment = Class.create({
       var paymentParams = { merchantID : self.oneCardDetails.merchantID, 
                             amount : priceCategory,
                             currency : self.oneCardDetails.currency,
-                            productDesc : self.oneCardDetails.productDesc,
+                            productDesc : self.oneCardDetails.productDesc + self.packages[position]['coins'] + " عملة ",
                             returnURL : self.oneCardDetails.returnURL,
                            }
       

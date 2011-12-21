@@ -1,0 +1,45 @@
+body { 
+  background : white;
+  padding : 0px; 
+  font-family : georgia; 
+  font-size : 13px;
+  line-height: 18px;
+  color : chocolate; 
+  
+}
+
+#main {
+  min-height : 400px;
+  margin : 40px;
+}
+a { color: DarkoliveGreen; }
+a:visited { color: DarkoliveGreen; }
+.fieldWithErrors {
+  padding: 2px;
+  background-color: red;
+  display: table;
+}
+
+#header, #footer { 
+  height : 65px;
+  background : #444433;
+  font-weight: bold;
+  text-align : center;
+  vertical-align : middle;
+}
+#footer {
+  margin-top : 20px;
+  padding : 10px 0px 0px 20px;
+  height : 30px;
+}
+#header {
+  margin-bottom : 20px;
+  padding : 20px 0px 0px 20px;
+  font-size : 24px;
+  
+}
+#header span{
+  font-size : 24px;
+}
+
+
