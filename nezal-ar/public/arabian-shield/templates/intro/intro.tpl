@@ -466,7 +466,7 @@
 <textarea id="payment-options-template" style="display:none;">
   <a href="javascript:void(0);" class="pay clickSound" id="middle-selection">
     <div>
-      <!--img id="daopay-logo" src="${Loader.images.payments['social_gold_logo.png'].getAttribute('data')}"></img-->
+      <img id="daopay-logo" src="${Loader.images.payments['social_gold_logo.png'].getAttribute('data')}"></img>
       <span id="daopay-description">
         ${Text.payments['daopay']['description']}
       </span>
