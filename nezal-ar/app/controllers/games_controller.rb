@@ -177,6 +177,20 @@ class GamesController < ApplicationController
         user.coins += @@packages[ params["OneCard_Amount"] ];
         user.save
         payment.save
+        
+        #sending the payment process to gamespipe
+        payment_value = params["OneCard_Amount"].to_f
+        user_id = user.id
+        transaction_id = params["OneCard_TransID"]
+        developer_id = 468
+        game_id      = 36121
+        api_key      = 'w00f76vmwzeyy#pr'
+        test_mode    = true
+        games_pipe = Gamespipe::new( developer_id, game_id, api_key, test_mode) 
+        gross = payment_value*100
+        fee = gross * 0.1
+        response = games_pipe.report_payment(transaction_id, user_id, gross, fee, 0, 'USD')
+        LOGGER.debug "new payment with id #{user_id}, transaction #{transaction_id} gross = #{gross} response = #{response}"
       end
     end
     redirect payment_redirection
