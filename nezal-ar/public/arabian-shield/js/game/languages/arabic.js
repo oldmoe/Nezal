@@ -4,7 +4,7 @@
   payments : {
     daopay : {
       description : '',
-      packageCommand : 'ادفع *price* دولار وأحصل على *reward* من النقود'
+      packageCommand : 'ادفع *price* دولار عن طريق One Card وأحصل على *reward* من النقود'
     },
     success : 'مبروك، لقد قمت بشراء *coins* من النقود، سوف يتم اضافتها إلى رصيد نقودك خلال بضع ثواني' ,
     contactUsMessage : 'For any issue, please',
