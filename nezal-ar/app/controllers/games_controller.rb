@@ -182,10 +182,10 @@ class GamesController < ApplicationController
         payment_value = params["OneCard_Amount"].to_f
         user_id = user.id
         transaction_id = params["OneCard_TransID"]
-        developer_id = 468
-        game_id      = 36121
-        api_key      = 'w00f76vmwzeyy#pr'
-        test_mode    = true
+        developer_id = 546
+        game_id      = 36129
+        api_key      = 'cb9h6ji5txto12?d'
+        test_mode    = false
         games_pipe = Gamespipe::new( developer_id, game_id, api_key, test_mode) 
         gross = payment_value*100
         fee = gross * 0.1
