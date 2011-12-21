@@ -147,7 +147,8 @@ class GamesController < ApplicationController
   
   
   
-  @@onecard = {:trans_key => "ejrTryKn", :keyword => "ahGszYmF", :merchant_id => "Nezal@onecard.com"}
+  #@@onecard = {:trans_key => "ejrTryKn", :keyword => "ahGszYmF", :merchant_id => "Nezal@onecard.com"} #Staging Credentials
+  @@onecard = {:trans_key => "M7YGeyen", :keyword => "GXR5xaME", :merchant_id => "Nezal@onecard.com"} #Production Credentials
   def self.onecard
     @@onecard
   end

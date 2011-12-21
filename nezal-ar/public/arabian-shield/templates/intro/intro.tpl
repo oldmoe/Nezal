@@ -626,7 +626,9 @@
 </textarea>
 
 <textarea id='oneCardTemplate' style="display:none">
-  <form name="onecard" action="http://onecard.n2vsb.com/customer/integratedPayment.html" method="post" />
+  <!-- form name="onecard" action="http://onecard.n2vsb.com/customer/integratedPayment.html" method="post" /-->
+  <form name="onecard" action="https://www.onecard.net/customer/integratedPayment.html" method="post" />
+  https://www.onecard.net/customer/integratedPayment.html
     <input type="hidden" id="OneCard_MerchID" name="OneCard_MerchID" value="${merchantID}" />
     <input type="hidden" id="OneCard_TransID" name="OneCard_TransID" value="${transID}" />
     <input type="hidden" id="OneCard_Amount" name="OneCard_Amount" value="${amount}" />
