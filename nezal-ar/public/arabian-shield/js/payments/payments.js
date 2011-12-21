@@ -1,6 +1,13 @@
 var Payment = Class.create({
   positions : ['left', 'middle', 'right'],
   
+  oneCardDetails : {
+    merchantID : "Nezal@onecard.com",
+    currency : "USD",
+    productDesc : "Arabian Shield Coins",
+    returnURL : "http://" + window.location.host + window.location.pathname + "onecard_response/",
+  },
+  
   packages : {
     left : {
       priceCategory : '1',
@@ -30,11 +37,32 @@ var Payment = Class.create({
     });
     
 	[$('top-' + position + '-selection'), $('middle-selection')].invoke("observe", "click", function(){
-      //document.location.href = "http://daopay.com/payment/?appcode=62070&price=" + priceCategory;
-      //Intro.showDaopayBg("http://daopay.com/pay/?appcode=62070&price=" + priceCategory);
-      //window.open("social_gold/sign_request?price=" + priceCategory, null, "width=400,height=550");
+      // document.location.href = "http://daopay.com/payment/?appcode=62070&price=" + priceCategory;
+      // Intro.showDaopayBg("http://daopay.com/pay/?appcode=62070&price=" + priceCategory);
+      // window.open("social_gold/sign_request?price=" + priceCategory, null, "width=400,height=550");
       
-      FBConnect.buyItem(priceCategory);
+      var paymentParams = { merchantID : self.oneCardDetails.merchantID, 
+                            amount : priceCategory,
+                            currency : self.oneCardDetails.currency,
+                            productDesc : self.oneCardDetails.productDesc,
+                            returnURL : self.oneCardDetails.returnURL,
+                           }
+      
+      new Ajax.Request("onecard", {
+          method: 'get',
+          parameters : paymentParams,
+          onSuccess: function(t){
+            var response = JSON.parse(t.responseText);
+            var timein = response.timein;
+            var hashKey = response.hashKey;
+            paymentParams.transID = paymentParams.timein = timein;
+            paymentParams.hashKey = hashKey
+            $("onecardForm").innerHTML = TrimPath.parseTemplate($('oneCardTemplate').value).process( paymentParams );
+            document.onecard.submit();
+          }
+        })
+      
+      
     });
     
     this.positions.without(position).each(function(element){
