@@ -58,7 +58,7 @@ class ApplicationController < Sinatra::Base
     if Service::PROVIDERS[@service_provider] && Service::PROVIDERS[@service_provider][:prefix] == Service::KONGREGATE
       if params[:kongregate_user_id] && params[:kongregate_game_auth_token]
         @service_id = params[:kongregate_user_id]
-        @session_key = params[:kongregate_game_auth_token]        
+        @session_key = params[:kongregate_game_auth_token]
       elsif params[:session_key] && params[:uid]
         @service_id = params[:uid] 
         @session_key = params[:session_key]

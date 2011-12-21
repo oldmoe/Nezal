@@ -548,7 +548,7 @@
     <div id="contactUsFloatBg" style="display: none;">
     </div>
   
-  <div id="paymentFloatBg" style="display : none;">
+  <!--div id="paymentFloatBg" style="display : none;">
     <div id="paymentClose" onclick="Intro.hidePaymentBg();" class="clickSound"> X </div>
     <div class="pay" style="width:520px;text-align:center;">
       payment is temporarily disabled, if you have a problem with previous payment please send a message
@@ -556,8 +556,8 @@
     <div id="contact-us-message"> ${Text.payments.contactUsMessage}
       <a class="clickSound" href="javascript:void(0);" id="contact-us-trigger" onclick="Intro.showContactUsForm();"> ${Text.payments.contactUsTrigger} </a> 
     </div>
-  </div>
-	<!-- div id="paymentFloatBg" style="display : none;">
+  </div-->
+	<div id="paymentFloatBg" style="display : none;">
 		<div class="pay">
       <img id="pay-left-image" src="${Loader.images.payments['pay_left.png'].getAttribute('data')}" />
       <img id="pay-middle-image" src="${Loader.images.payments['pay_middle.png'].getAttribute('data')}" />
@@ -568,7 +568,7 @@
     </div>
     
     <div id="paymentClose" onclick="Intro.hidePaymentBg();" class="clickSound"> X </div>
-	</div-->
+	</div>
     
     
     <div id="background">
@@ -624,6 +624,22 @@
         <div style="width : 28px; height : 10px;display:inline-block;"></div>
       </div>
     </div>
+</textarea>
+
+<textarea id='oneCardTemplate' style="display:none">
+  <form name="onecard" action="http://onecard.n2vsb.com/customer/integratedPayment.html" method="post" />
+    <input type="hidden" id="OneCard_MerchID" name="OneCard_MerchID" value="${merchantID}" />
+    <input type="hidden" id="OneCard_TransID" name="OneCard_TransID" value="${transID}" />
+    <input type="hidden" id="OneCard_Amount" name="OneCard_Amount" value="${amount}" />
+    <input type="hidden" id="OneCard_Currency" name="OneCard_Currency" value="${currency}" />
+    <input type="hidden" id="OneCard_Timein" name="OneCard_Timein" value="${timein}" />
+    <input type="hidden" id="OneCard_MProd" name="OneCard_MProd" value="${productDesc}" />
+    <input type="hidden" id="OneCard_ReturnURL" name="OneCard_ReturnURL" value = "${returnURL}" />
+    <input type="hidden" id="OneCard_Field1" name="OneCard_Field1" value="" />
+    <input type="hidden" id="OneCard_Field2" name="OneCard_Field2" value="" />
+    <input type="hidden" id="OneCard_HashKey" name="OneCard_HashKey" value="${hashKey}" />
+    <input id="OneCard_Submit" type="submit" value="submit" />
+  </form> 
 </textarea>
 
 <textarea id='marketScrollerTemplate' style="display:none">

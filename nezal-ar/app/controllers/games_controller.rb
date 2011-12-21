@@ -145,87 +145,42 @@ class GamesController < ApplicationController
     @@packages
   end
   
-  post '/:game_name/credits' do
-    LOGGER.debug ">>>>>>>>>>>> Facebook credits"
-    LOGGER.debug ">>>>>>>>  #{params}"
-    result = nil
-    data = Service::PROVIDERS[service_provider][:helper]::decode params['signed_request'], app_configs if params['signed_request']
-    if data
-      case params['method']
-      when 'payments_get_items'
-        result = {'content' => [], 'method' => 'payments_get_items' }
-        product = Game::current.products[service_provider][data['credits']['order_info'].delete("\"")]
-        product['item_id'] = data['order_info']
-        result['content'] << product
-      when 'payments_status_update'
-        LOGGER.debug "!!!!!!!!!!!!!!!!!!!!!!! #{data}"
-        result = {'content' => {}, 'method' => 'payments_status_update' }
-        if params['status'] == 'placed'
-          game = Game::current
-          order_details = Nezal::Decoder.decode( data['credits']['order_details'] )
-          user_id = UserGameProfile::generate_key(Service::PROVIDERS[service_provider][:prefix], game.key, order_details['receiver'])
-          user_game_profile = UserGameProfile.get user_id
-          product_title = order_details['items'][0]['title']
-          product = game.products[service_provider][ product_title.delete("\"") ]
-          crowd_member_name = product['item_id'].split(".")[-1]
-
-          Marketplace.buyCrowdMember user_game_profile, crowd_member_name, false
-          
-          result['content']['status'] = 'settled'
-          result['content']['order_id'] = data['order_id']
-        end
+  
+  
+  @@onecard = {:trans_key => "ejrTryKn", :keyword => "ahGszYmF", :merchant_id => "Nezal@onecard.com"}
+  def self.onecard
+    @@onecard
+  end
+  
+  require 'digest/md5'
+  get '/:game_name/onecard' do
+    timein = Time.now.utc.to_i
+    to_sign = params["merchantID"] + timein.to_s + params["amount"] + params["currency"] + timein.to_s
+    
+    Payment.create('trans_id' => timein, 'trans_done' => false, 'profile_id' => @user.fb_id, 'price' => params["amount"] )
+    
+    {:timein => timein, :hashKey => Digest::MD5.hexdigest(to_sign + @@onecard[:trans_key])}.to_json
+  end
+  
+  post '/:game_name/onecard_response' do
+    if params["OneCard_Code"] == "18" || params["OneCard_Code"] == "00"
+      to_sign = @@onecard[:merchant_id] + params["OneCard_TransID"] + params["OneCard_Amount"] + params["OneCard_Currency"] +
+                params["OneCard_RTime"] + @@onecard[:keyword] + params["OneCard_Code"]
+      digest = Digest::MD5.hexdigest(to_sign)
+      
+      if params["OneCard_RHashKey"] == digest
+        payment = Payment.where( 'trans_id' => params["OneCard_TransID"] ).first
+        payment.trans_done = true
+        user = FbUser.where( 'fb_id' => payment.profile_id ).first
+        
+        user.coins += @@packages[ params["OneCard_Amount"] ];
+        user.save
+        payment.save
       end
     end
-    encode(result)
+    redirect payment_redirection
   end
   
-  get '/:game_name/social_gold/sign_request' do
-    logfile = File.join( "payment.log" )
-    logger = Logger.new( logfile )
-    offer_id = 'efl3ru5v71w42nzr97fivqtjf'
-    secretMerchantKey = "dfgjbt7idwah2w0ua8wzppah2"
-    api_server_name = "api.jambool.com"
-    api_server_port = :defaults
-    is_production = true
-    
-    payments_client = PaymentsClient.new(api_server_name, api_server_port, offer_id, secretMerchantKey, logger, is_production)
-    
-    user_id = @user.id
-    format = "iframe"
-    usdAmount = params["price"]
-    currency_label = 'Coins'
-    app_params = 'Defender of Tunisia'
-    platform = 'Facebook'
-    currency_xrate= nil
-    currency_amount= nil
-    quantity = @@packages[params["price"]]
-    
-    url = payments_client.get_buy_currency_url(user_id, usdAmount, currency_label, currency_xrate, currency_amount, quantity, format, app_params, platform)
-    
-    redirect url
-  end
-  
-  get '/:game_name/sync/coins' do
-    @user.coins.to_s
-  end
-  
-  get '/:game_name/social_gold/success' do
-    @package_coins = @@packages[(params["amount"].to_i/100).to_s]
-    erb :"#{@app_configs["game_name"]}/social_gold_confirmation"
-  end
-  
-  # Do not remove 127.0.0.1 from the valid gateway, it is safe 
-  @@valid_gateways = ['195.58.177.2','195.58.177.3','195.58.177.4','195.58.177.5', "127.0.0.1"]
-  
-  get '/:game_name/daopay/confirmation' do
-    redirect payment_fault_redirection unless @@valid_gateways.include? request.ip
-    @package_coins = @@packages[params["price"]]
-    @user.coins += @@packages[params["price"]]
-    @user.save
-	  payment = Payment.create!({:profile_id=>@game_profile.id,:price=>params['price']})
-    erb :"#{@app_configs["game_name"]}/daopay_confirmation"
-  end
-
   get '/:game_name' do 
     File.read(File.join( 'public', @app_configs["game_name"], 'index.html'))
   end
@@ -251,8 +206,8 @@ class GamesController < ApplicationController
 
   protected
   
-  def payment_fault_redirection
-    "/fb-games/#{@app_configs["game_name"]}/"
+  def payment_redirection
+    "/fb-games/#{@app_configs["name"]}/"
   end
 
   post '/:game_name/:camp_name/:userid/friendsranks' do 
