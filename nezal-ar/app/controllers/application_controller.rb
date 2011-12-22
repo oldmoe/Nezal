@@ -85,7 +85,7 @@ class ApplicationController < Sinatra::Base
     developer_id = 546
     game_id      = 36129
     api_key      = 'cb9h6ji5txto12?d'
-    test_mode    = false
+    test_mode    = 0
     games_pipe = Gamespipe::new( developer_id, game_id, api_key, test_mode) 
     response = games_pipe.report_registration(tracking_code, user_id)
     LOGGER.debug "new user with id #{user_id}, tacking_code #{tracking_code} responses = #{response}"

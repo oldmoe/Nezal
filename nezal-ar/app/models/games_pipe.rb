@@ -13,7 +13,7 @@ class Gamespipe
     @developer_id = developer_id
     @game_id = game_id
     @API_key = api_key
-    @test_mode = (test ? '1' : '0')
+    @test_mode = 1
   end
   
   def report_registration(tracking_code, user_id, user_name = '', user_mail = '', user_gender = '', user_birthday = '') 
@@ -64,8 +64,8 @@ class Gamespipe
     param['GameID']      = @game_id
 
     parsed_params = "#{API_PATH}?".concat(param.collect { |k,v| "#{k}=#{CGI::escape(v.to_s)}" }.join('&'))
-    return Net::HTTP.get(API_DOMAIN, parsed_params) if not param.nil?
-    return Net::HTTP.get(API_DOMAIN, API_PATH)
+    res = Net::HTTP.get(API_DOMAIN, parsed_params)
+    return res
   end
   
 end
