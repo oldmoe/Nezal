@@ -13,7 +13,7 @@ class Gamespipe
     @developer_id = developer_id
     @game_id = game_id
     @API_key = api_key
-    @test_mode = 1
+    @test_mode = 0
   end
   
   def report_registration(tracking_code, user_id, user_name = '', user_mail = '', user_gender = '', user_birthday = '') 
