@@ -118,7 +118,7 @@ var Rocket = Class.create(Unit, {
 		var power = this.power
 		var targetUnit = this.targetUnit
 		targets.each(function(target){
-			if(target != targetUnit){
+			if(target != targetUnit && target.name!="Plane"){
         //console.log('target')
 				target.takeHit(Math.round(power * 0.4))
 			}
