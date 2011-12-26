@@ -1,7 +1,7 @@
 var Plane = Class.create(Creep, {
 	name : 'Plane',parent : 'Plane',
 	flying : true,
-	hp:125,maxHp:125,speed:4, power:1, rate:0.1, range: 2,price:2,
+	hp:150,maxHp:150,speed:4, power:1, rate:0.1, range: 2,price:2,
 	initialize : function($super,x,y,extension){
 		$super(x,y,extension)
 		this.x = 0
@@ -51,5 +51,5 @@ var Plane = Class.create(Creep, {
 })
 
 var RedPlane = Class.create(Plane, {
-	hp:125,maxHp:125,speed : 6,power:1, rate:0.1, range: 2,price:3
+	hp:175,maxHp:175,speed : 6,power:1, rate:0.1, range: 2,price:2
 })	
