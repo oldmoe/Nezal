@@ -53,12 +53,15 @@ var FBConnect = {
                * First case he is not logged in : status = unknown
                * He is logged in but hasnot added the application : status = notConnected
                */
+              var tc_token = ''
+              if(FBConnect.getUrlParams()['tc'])tc_token="?tc="+FBConnect.getUrlParams()['tc']
               if(response.status == "unknown" )
               {
                   // redirect to login page
+                  
                   redirect_url = "http://www.facebook.com/login.php?v=1.0&app_id=" +
                                  FBConnect.appIds[FBConnect.url()].id + "&canvas=1&next=" 
-                                 + FBConnect.appIds[FBConnect.url()].redirectPath + FBConnect.url();
+                                 + FBConnect.appIds[FBConnect.url()].redirectPath + FBConnect.url() + tc_token;
               }else if(response.status == "not_authorized" )
               {
                   var inviter = FBConnect.location.split("inviter")[1];
@@ -70,9 +73,11 @@ var FBConnect = {
                   }
                   redirect_url = "https://www.facebook.com/dialog/oauth?client_id=" + 
                                         FBConnect.appIds[FBConnect.url()].id + "&redirect_uri=" + 
-                                        FBConnect.appIds[FBConnect.url()].redirectPath + FBConnect.url() + "/" + 
-                                        "&response_type=token";          
+                                        FBConnect.appIds[FBConnect.url()].redirectPath + FBConnect.url() + "/" + tc_token+ 
+                                        "&response_type=token";
+                            
               }
+              alert(redirect_url)
               window.top.location = redirect_url;
           }
       });

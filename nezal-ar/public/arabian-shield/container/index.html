@@ -15,6 +15,16 @@
 		
 	</style>
 	<body>
-		<iframe src="/fb-games/arabian-shield/" id="frame0"> </iframe>
+		<iframe src="" id="frame0"> </iframe>
+    <script>
+      var search = window.location.search
+      if (search) {
+        search = '?'+search.split('?')[1]
+      }else{
+        search = ''
+      }
+      alert(search) 
+      document.getElementById('frame0').src = '/fb-games/arabian-shield/' + search
+    </script>
 	</body>
 </html>
