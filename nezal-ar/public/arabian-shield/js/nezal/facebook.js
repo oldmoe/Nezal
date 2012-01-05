@@ -77,7 +77,6 @@ var FBConnect = {
                                         "&response_type=token";
                             
               }
-              alert(redirect_url)
               window.top.location = redirect_url;
           }
       });
