@@ -14,15 +14,12 @@
   <script src="<%=bust_cache('js/all/nezal.js')%>"></script>
   <script src="<%=bust_cache('js/all/payments.js')%>"></script>
   <script>
-    soundManager.url = 'swf/';
+    soundManager.url = 'swf';
     soundManager.flashVersion = 9; // optional: shiny features (default = 8)
-    soundManager.useFlashBlock = false; // optionally, enable when you're ready to dive in
-    // enable HTML5 audio support, if you're feeling adventurous.
-    soundManager.useHTML5Audio = false;
   </script>
   <!--[if gte IE 9]>
     <script>
-      soundManager.useHTML5Audio = true;
+       soundManager.useHTML5Audio = true;
     </script>
   <![endif]-->
   <script src="<%=bust_cache('js/all/game.js')%>" type="text/javascript"></script>

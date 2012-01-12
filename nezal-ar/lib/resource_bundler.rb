@@ -14,7 +14,7 @@ load Dir.pwd + '/lib/jsmin.rb'
 	'base' => [
 		"prototype.js",
 		"effects.js",
-		"soundmanager2-nodebug-jsmin.js",
+		"soundmanager2.nodebug.jsmin.js",
 		"template.js"
 	],
 

@@ -209,8 +209,8 @@ function createBackgroundMusic(){
 }
 
 soundManager.onready(function() {
-  if (soundManager.supported()) {
+//  if (soundManager.supported()) {
     // SM2 is ready to go!
     createSounds()
-  } 
+//  } 
 });
