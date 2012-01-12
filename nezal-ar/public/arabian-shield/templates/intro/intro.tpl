@@ -218,7 +218,6 @@
       <img id="paper" src="${Loader.images.intro['campaign/cities.png'].getAttribute('data')}"/>
       <img id="name" src="${Loader.images.intro['campaign/map-word.png'].getAttribute('data')}"/>
     </div>
-    <div class="wrapper"> </div>
     <div class="camp-header">
       <div class="market-link">
         <img src="${Loader.images.intro['campaign/market-link.png'].getAttribute('data')}"/>
@@ -240,8 +239,7 @@
               <div class="mission-hover">
                 <img src="${Loader.images.intro['campaign/mission-hover.png'].getAttribute('data')}" style="display:none;"/>
               </div>
-              <div path="${mission['path']}" class="clickSound clickableButton">
-              </div>
+              <img src="images/background/transparent1x1.png" path="${mission['path']}" class="clickSound clickableButton" />
               <div class="mission-normal">
                 <img src="${Loader.images.intro['campaign/mission-button.png'].getAttribute('data')}"/>
                 <img src="${Loader.images.intro['campaign/mission-clicked.png'].getAttribute('data')}" style="display:none; z-index:5;"/>

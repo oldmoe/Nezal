@@ -251,7 +251,7 @@ FBDefender = {
 			body : post
 		}
 		var values = {message:'the caption',filename:'image.png',image:img}
-		FB.api('/'+FBConnect.session.uid+'/photos?access_token='+FBConnect.session.access_token,function(){alert(1)},values,'post')
+		FB.api('/'+FBConnect.session.uid+'/photos?access_token='+FBConnect.session.access_token,function(){},values,'post')
 		//FB.api('/'+FBConnect.session.uid+'/photos',function(){alert(1)},values,'post')
     }
 	

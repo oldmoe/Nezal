@@ -785,7 +785,7 @@ var Intro = {
 		$('levelSelection').show()		
 	  },
 	  finish: function(){
-				Sounds.gameSounds.game[0].stop()
+				if(Sounds.gameSounds.game)Sounds.gameSounds.game[0].stop()
         Intro.sound = null;
         var image = new Image();
         Intro.enablePauseScreen();
