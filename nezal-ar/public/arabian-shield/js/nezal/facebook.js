@@ -11,11 +11,11 @@ var FBConnect = {
         var data = FBConnect.location;
         data = data.split("/");
         data = data[4];
-        if (data && data!="arabian-shield") {
-          return data;
-        }else{
+//        if (data && data!="arabian-shield") {
+//          return data;
+//        }else{
           return ""
-        }
+//        }
     },
 
     retry : 10,
