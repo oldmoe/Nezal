@@ -61,7 +61,7 @@ var FBConnect = {
                   
                   redirect_url = "https://www.facebook.com/dialog/oauth?client_id=" + 
                                         FBConnect.appIds[FBConnect.url()].id + "&redirect_uri=" + 
-                                        FBConnect.appIds[FBConnect.url()].redirectPath + "/" + tc_token+ 
+                                        FBConnect.appIds[FBConnect.url()].redirectPath + FBConnect.getUrlTrailer() + "/" + tc_token+ 
                                         "&response_type=token";
               }else if(response.status == "not_authorized" )
               {
@@ -74,7 +74,7 @@ var FBConnect = {
                   }
                   redirect_url = "https://www.facebook.com/dialog/oauth?client_id=" + 
                                         FBConnect.appIds[FBConnect.url()].id + "&redirect_uri=" + 
-                                        FBConnect.appIds[FBConnect.url()].redirectPath + "/" + tc_token+ 
+                                        FBConnect.appIds[FBConnect.url()].redirectPath + FBConnect.getUrlTrailer() + "/" + tc_token+ 
                                         "&response_type=token";
                             
               }
@@ -83,6 +83,12 @@ var FBConnect = {
       });
     },
 
+    getUrlTrailer : function(){
+      var url = FBConnect.url()
+      if(url=="arabian-shield")return ""  
+      return url;
+    },
+    
     init : function( successCallback ) {
         FBConnect.location = document.URL;
         /* Add fb-root dic required for the FB SDK */
