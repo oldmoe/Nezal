@@ -14,7 +14,7 @@ var FBConnect = {
         if (data) {
           return data;
         }else{
-          return "arabian-shield/"
+          return ""
         }
     },
 
