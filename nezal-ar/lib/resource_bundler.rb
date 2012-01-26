@@ -127,7 +127,7 @@ end
 def generateImageHTMLFile resourceDir,fileToWrite,id
 		Dir.entries(resourceDir).each do |filename|
 			unless ['.', '..'].include? filename
-				if filename.include? '.png'
+				if (filename.include? '.png') || (filename.include? '.gif')
 					file = File.open("#{resourceDir}/#{filename}", 'rb')
 					data = Base64.strict_encode64(file.read)
 					#file.close
@@ -149,7 +149,11 @@ def generateImageHTMLFile resourceDir,fileToWrite,id
 							image_id.sub!('/', '#').sub!('/', '#')							
 						end					
 					end
-					fileToWrite.puts "['#{image_id}', 'data:image/png;base64,#{data}'],"
+					if filename.include? '.png'
+            fileToWrite.puts "['#{image_id}', 'data:image/png;base64,#{data}'],"
+          elsif filename.include? '.gif'
+            fileToWrite.puts "['#{image_id}', 'data:image/gif;base64,#{data}'],"
+          end
 					#fileToWrite.puts "<img id='#{image_id}' src='data:image/png;base64,#{data}'/>"
 				elsif File.directory? "#{resourceDir}/#{filename}"
 					generateImageHTMLFile "#{resourceDir}/#{filename}",fileToWrite,id
@@ -161,7 +165,7 @@ end
 def generateDumbImageHTMLFile resourceDir,fileToWrite,id
 	Dir.entries(resourceDir).each do |filename|
 		unless ['.', '..'].include? filename
-			if filename.include? '.png'
+			if (filename.include? '.png') || (filename.include? '.gif')
 				image_id = "images#"+id +"#"+filename
 				["animations", "intro", "challenges"].each do |folder|
 					if resourceDir.include? folder

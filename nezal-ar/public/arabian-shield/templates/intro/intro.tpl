@@ -223,7 +223,7 @@
         <img src="${Loader.images.intro['campaign/market-link.png'].getAttribute('data')}"/>
         <div class="button clickSound">
           <img src="${Loader.images.intro['campaign/market-hover.png'].getAttribute('data')}" style="display:none;"/>
-          <img src="${Loader.images.intro['campaign/market-button.png'].getAttribute('data')}" class="buttonImg"/>
+          <img src="${Loader.images.intro['campaign/market-button.gif'].getAttribute('data')}" class="buttonImg"/>
           <img src="${Loader.images.intro['campaign/market-click.png'].getAttribute('data')}" class="buttonImg" style="display:none;"/>
         </div>
       </div>
