@@ -244,8 +244,8 @@
 }
 #campaign .market-link .button .buttonImg {
   position: absolute;
-  right: 2px;
-  top: 2px;
+  right: -7px;
+  top: -7px;
 }
 #campaign .camp-header .logo
 {
