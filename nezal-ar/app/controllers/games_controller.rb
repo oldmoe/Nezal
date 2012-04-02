@@ -185,10 +185,10 @@ class GamesController < ApplicationController
         developer_id = 546
         game_id      = 36129
         api_key      = 'cb9h6ji5txto12?d'
-        test_mode    = true
+        test_mode    = false
         games_pipe = Gamespipe::new( developer_id, game_id, api_key, test_mode) 
-        gross = payment_value*100
-        fee = gross * 0.1
+        gross = (payment_value*100).to_i
+        fee = (gross * 0.1).to_i
         response = games_pipe.report_payment(transaction_id, user_id, gross, fee, 0, 'USD')
         LOGGER.debug "new payment with id #{user_id}, transaction #{transaction_id} gross = #{gross} response = #{response}"
       end

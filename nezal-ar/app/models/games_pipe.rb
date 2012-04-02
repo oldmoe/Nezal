@@ -33,7 +33,7 @@ class Gamespipe
     make_request(request);
   end
   
-  def report_payment(transaction_id, user_id, gross, fee, vat_percent, currency, net = nil)
+  def report_payment(transaction_id, user_id, gross, fee, vat_percent = 0, currency = "USD", net = nil)
     time = get_formatted_time
     request = {
             'Method'          => "ReportPayment",
@@ -43,7 +43,7 @@ class Gamespipe
             'Gross'           => gross,
             'Fee'             => fee,
             'VAT'             => vat_percent,
-            'Curreny'         => currency,
+            'Currency'        => currency,
             'Test'            => @test_mode,
             'T'               => time,
             'Auth'            => Digest::SHA1.hexdigest(transaction_id + time + @API_key)
