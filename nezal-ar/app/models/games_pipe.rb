@@ -17,7 +17,7 @@ class Gamespipe
   end
   
   def report_registration(tracking_code, user_id, user_name = '', user_mail = '', user_gender = '', user_birthday = '') 
-    time = Time.now.to_s
+    time = get_formatted_time
     request = {
             'Method'       => "ReportRegistration",
             'Trackingcode' => tracking_code,
